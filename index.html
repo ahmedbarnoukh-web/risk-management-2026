@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الدورة الشاملة في إدارة المخاطر - المهندس أحمد برنوخ</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
+        body { display: flex; background-color: #f8fafc; color: #334155; min-height: 100vh; font-size: 16.5px; }
+        
+        /* القائمة الجانبية الفاخرة المحدثة */
+        .sidebar {
+            width: 360px; background-color: #0b1426; color: white; padding: 30px 20px;
+            display: flex; flex-direction: column; justify-content: space-between;
+            flex-shrink: 0; position: sticky; top: 0; height: 100vh; box-shadow: -4px 0 20px rgba(0,0,0,0.1);
+        }
+        .sidebar-header { text-align: center; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid #1e293b; }
+        .sidebar-header .logo-icon { font-size: 38px; color: #eab308; margin-bottom: 10px; }
+        .sidebar-header h2 { font-size: 18px; font-weight: 700; color: #ffffff; line-height: 1.6; }
+        .sidebar-header p { font-size: 14px; color: #eab308; margin-top: 10px; letter-spacing: 0.5px; font-weight: 700; background: rgba(255,255,255,0.05); padding: 6px 10px; border-radius: 6px; }
+        
+        /* التبويبات ثنائية اللغة */
+        .menu-items { list-style: none; display: flex; flex-direction: column; gap: 12px; overflow-y: auto; flex-grow: 1; margin-top: 15px; padding-left: 5px; }
+        .menu-item { padding: 12px 16px; border-radius: 10px; cursor: pointer; transition: 0.25s; display: flex; align-items: center; gap: 14px; color: #cbd5e1; border: 1px solid transparent; }
+        .menu-item:hover { background-color: rgba(255,255,255,0.04); color: white; border-color: rgba(255,255,255,0.08); }
+        .menu-item .tab-icon { font-size: 22px; flex-shrink: 0; }
+        .menu-item .tab-text { display: flex; flex-direction: column; gap: 2px; }
+        .menu-item .tab-text .ar-title { font-size: 15px; font-weight: 700; line-height: 1.3; }
+        .menu-item .tab-text .en-title { font-size: 11.5px; color: #94a3b8; font-weight: 400; letter-spacing: 0.3px; transition: 0.25s; }
+        
+        .menu-item:hover .tab-text .en-title { color: #eab308; }
+        
+        /* حالة التبويب النشط */
+        .menu-item.active { background-color: #eab308; color: #0b1426; box-shadow: 0 4px 15px rgba(234, 179, 8, 0.25); border-color: #eab308; }
+        .menu-item.active .tab-text .ar-title { color: #0b1426; font-weight: 800; }
+        .menu-item.active .tab-text .en-title { color: #1e293b; font-weight: 600; }
+
+        .sidebar-footer { border-top: 1px solid #1e293b; padding-top: 15px; font-size: 13px; color: #94a3b8; text-align: center; line-height: 1.6; }
+        .sidebar-footer strong { color: #eab308; display: block; font-size: 16px; margin-top: 4px; font-weight: 700; }
+        .sidebar-footer .footer-title { font-size: 12px; color: #cbd5e1; display: block; margin-top: 2px; font-weight: 600; }
+
+        /* مساحة المحتوى الرئيسية */
+        .main-content { flex-grow: 1; padding: 50px; overflow-y: auto; max-width: 1350px; width: 100%; }
+        .tab-content { display: none; animation: slideUp 0.4s ease; }
+        .tab-content.active { display: block; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+
+        .section-card { background: white; border-radius: 16px; padding: 35px; box-shadow: 0 4px 20px rgba(0,0,0,0.02); margin-bottom: 30px; border: 1px solid #edf2f7; }
+        .main-title { font-size: 28px; font-weight: 700; color: #0f172a; margin-bottom: 12px; border-bottom: 2px solid #f1f5f9; padding-bottom: 12px; }
+        .sub-title-context { font-size: 17px; color: #64748b; margin-bottom: 35px; line-height: 1.8; }
+        .card-heading { font-size: 22px; font-weight: 700; color: #0f172a; margin-top: 25px; margin-bottom: 18px; border-right: 5px solid #eab308; padding-right: 12px; }
+
+        /* تعديل وتوضيح تصميم القاعدة الذهبية بناءً على طلبك لمنع عيوب الخط المائل */
+        .golden-rule-container { 
+            background: linear-gradient(135deg, #fffdf5 0%, #fffbeb 100%); 
+            border-right: 8px solid #eab308; 
+            padding: 30px 35px; 
+            border-radius: 14px; 
+            margin-bottom: 40px; 
+            box-shadow: 0 4px 15px rgba(234,179,8,0.08); 
+            position: relative;
+        }
+        .golden-rule-container p { 
+            font-size: 22px; 
+            color: #0f172a; 
+            font-weight: 800; /* خط عريض جداً واضح لقراءة حاسمة */
+            line-height: 1.8; 
+            text-align: justify;
+        }
+
+        .question-box { background-color: #f0fdfa; border-right: 6px solid #0d9488; padding: 20px; border-radius: 12px; margin: 25px 0; }
+        .question-box h3 { font-size: 20px; color: #115e59; font-weight: 700; margin-bottom: 8px; }
+
+        p, li { font-size: 16.5px; line-height: 1.9; color: #475569; }
+        ul, ol { margin-right: 25px; margin-bottom: 20px; }
+        li { margin-bottom: 8px; }
+
+        /* خطوات دورة الحياة السبعة */
+        .step-process-list { list-style-type: none; margin-right: 0; display: flex; flex-direction: column; gap: 15px; }
+        .step-process-list li { background-color: #f8fafc; padding: 20px 25px; border-radius: 12px; border-right: 6px solid #cbd5e1; font-size: 18px; line-height: 1.8; color: #1e293b; transition: 0.2s; }
+        .step-process-list li:hover { border-right-color: #eab308; background-color: #f1f5f9; transform: translateX(-5px); }
+        .step-process-list li strong { font-size: 20px; color: #0f172a; font-weight: 700; }
+        .step-number { background: #0b1426; color: white; display: inline-flex; width: 32px; height: 32px; border-radius: 50%; align-items: center; justify-content: center; font-size: 15px; margin-left: 10px; font-weight: bold; vertical-align: middle; }
+
+        /* الجداول الدراسية */
+        .table-wrapper { overflow-x: auto; margin: 20px 0; border-radius: 12px; border: 1px solid #e2e8f0; box-shadow: 0 2px 10px rgba(0,0,0,0.01); }
+        .data-table { width: 100%; border-collapse: collapse; background: white; text-align: right; }
+        .data-table th, .data-table td { padding: 16px 18px; border-bottom: 1px solid #e2e8f0; font-size: 15.5px; }
+        .data-table th { background-color: #f8fafc; color: #1e293b; font-weight: 700; font-size: 16px; }
+        .data-table tr:hover { background-color: #f8fafc; }
+
+        .status-pill { padding: 4px 10px; border-radius: 6px; font-size: 12.5px; font-weight: 700; display: inline-block; }
+        .pill-critical { background: #fee2e2; color: #991b1b; }
+        .pill-high { background: #ffedd5; color: #9a3412; }
+        .pill-medium { background: #fef9c3; color: #854d0e; }
+        .pill-low { background: #dcfce7; color: #166534; }
+
+        /* الحاسبة والمصفوفة التفاعلية */
+        .calculator-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 20px; }
+        .result-display { background: #f1f5f9; padding: 25px; border-radius: 12px; text-align: center; border: 1px solid #e2e8f0; margin-top: 20px; }
+        .heatmap-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; max-width: 360px; margin: 0 auto; direction: ltr; }
+        .heatmap-cell { aspect-ratio: 1; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; border-radius: 6px; transition: 0.2s; }
+        .hm-g { background-color: #22c55e; color: white; }
+        .hm-y { background-color: #facc15; color: #1e293b; }
+        .hm-o { background-color: #f97316; color: white; }
+        .hm-r { background-color: #ef4444; color: white; }
+        .active-cell { transform: scale(1.18); border: 3px solid #0f172a; box-shadow: 0 0 15px rgba(0,0,0,0.4); z-index: 10; }
+
+        .emv-container { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px; }
+        .emv-box { background-color: #f0fdf4; border: 1px dashed #16a34a; padding: 20px; border-radius: 12px; }
+        .emv-box.blue-box { background-color: #f0f9ff; border-color: #0284c7; }
+        .contracts-section { border-top: 2px solid #e2e8f0; padding-top: 30px; margin-top: 35px; }
+
+        .custom-select { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #cbd5e1; background: #f8fafc; cursor: pointer; outline: none; font-size: 15px; font-weight: 600; margin-top: 5px; }
+        .custom-select:focus { border-color: #eab308; box-shadow: 0 0 0 3px rgba(234,179,8,0.15); }
+        label { font-size: 15px; font-weight: 700; color: #334155; }
+
+        /* كارت شاشة النهاية */
+        .thank-you-card { text-align: center; padding: 60px 40px; background: radial-gradient(circle, #ffffff 0%, #fdfbf7 100%); border: 2px dashed #eab308; border-radius: 24px; box-shadow: 0 10px 30px rgba(0,0,0,0.03); max-width: 850px; margin: 40px auto; animation: scaleIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); }
+        @keyframes scaleIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        .thank-you-title { font-size: 34px; font-weight: 700; color: #0b1426; margin-bottom: 25px; }
+        .thank-you-text { font-size: 24px; font-weight: 600; color: #1e293b; line-height: 2; margin-bottom: 20px; }
+        .thank-you-badge { background-color: #0b1426; color: #eab308; padding: 12px 30px; border-radius: 50px; font-size: 19px; font-weight: 700; display: inline-block; box-shadow: 0 4px 15px rgba(11,20,38,0.2); }
+    </style>
+</head>
+<body>
+
+    <div class="sidebar">
+        <div>
+            <div class="sidebar-header">
+                <div class="logo-icon">📊</div>
+                <h2>الدورة الشاملة في إدارة المخاطر: من النظرية إلى التطبيق العملي</h2>
+                <p>Risk Management Course & Full Case Study</p>
+            </div>
+            <ul class="menu-items">
+                <li id="btn_tab1" class="menu-item active" onclick="switchTab('tab1')">
+                    <span class="tab-icon">📋</span>
+                    <div class="tab-text">
+                        <span class="ar-title">المفاهيم الأساسية</span>
+                        <span class="en-title">Core Concepts</span>
+                    </div>
+                </li>
+                <li id="btn_tab2" class="menu-item" onclick="switchTab('tab2')">
+                    <span class="tab-icon">🔄</span>
+                    <div class="tab-text">
+                        <span class="ar-title">دورة حياة المخاطر</span>
+                        <span class="en-title">Risk Life Cycle</span>
+                    </div>
+                </li>
+                <li id="btn_tab3" class="menu-item" onclick="switchTab('tab3')">
+                    <span class="tab-icon">📊</span>
+                    <div class="tab-text">
+                        <span class="ar-title">حاسبة المخاطر التفاعلية</span>
+                        <span class="en-title">Interactive Risk Calculator</span>
+                    </div>
+                </li>
+                <li id="btn_tab4" class="menu-item" onclick="switchTab('tab4')">
+                    <span class="tab-icon">🛡️</span>
+                    <div class="tab-text">
+                        <span class="ar-title">استراتيجيات الاستجابة</span>
+                        <span class="en-title">Risk Response Strategies</span>
+                    </div>
+                </li>
+                <li id="btn_tab5" class="menu-item" onclick="switchTab('tab5')">
+                    <span class="tab-icon">💼</span>
+                    <div class="tab-text">
+                        <span class="ar-title">دراسة الحالة المشتركة</span>
+                        <span class="en-title">Integrated Case Study</span>
+                    </div>
+                </li>
+                <li id="btn_tab6" class="menu-item" onclick="switchTab('tab6')">
+                    <span class="tab-icon">🏅</span>
+                    <div class="tab-text">
+                        <span class="ar-title">النتائج النهائية للمشروع</span>
+                        <span class="en-title">Final Project Outcomes</span>
+                    </div>
+                </li>
+                <li id="btn_tab7" class="menu-item" onclick="switchTab('tab7')">
+                    <span class="tab-icon">🎓</span>
+                    <div class="tab-text">
+                        <span class="ar-title">نهاية الدورة</span>
+                        <span class="en-title">Course Conclusion</span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="sidebar-footer">
+            إعداد وتنفيذ العرض:
+            <strong>المهندس أحمد برنوخ</strong>
+            <span class="footer-title">مهندس كهرباء أول - خطيب وعلمي</span>
+        </div>
+    </div>
+
+    <div class="main-content">
+        
+        <div id="tab1" class="tab-content active">
+            <div class="section-card">
+                <h2 class="main-title">القسم الأول: الأسس المنهجية والفلسفية للمخاطر الهندسيّة</h2>
+                
+                <div class="golden-rule-container">
+                    <p>"لا تدع الخطر يُفاجئك؛ فالمخاطرة التي يتم التخطيط لها هي نصف الحل، والمخاطرة التي تتجاهلها هي بداية الفشل."</p>
+                </div>
+
+                <div class="card-heading">🌐 المرجعية العالمية: تعريف الخطر حسب معيار ISO 31000</div>
+                <p>تنص المواصفة الدولية لإدارة المخاطر <strong>ISO 31000</strong> على التعريف العلمي الدقيق للمخاطر بأنه:</p>
+                <p style="background: #f1f5f9; padding: 15px; border-radius: 8px; font-weight: 600; color: #0f172a; margin-top: 10px; border-left: 5px solid #0f172a;">
+                    "تأثير عدم اليقين على تحقيق الأهداف" <span style="color:#64748b; font-size:14px; font-weight:normal;">(The effect of uncertainty on objectives)</span>
+                </p>
+
+                <div class="question-box">
+                    <h3>💡 سؤال جوهري لإدارة الجلسات الفنية:</h3>
+                    <p><strong>هل سألت نفسك يوماً: ما هو الفرق الجوهري والعملي بين "الخطر الكامن" و "المخاطرة الفنية"؟</strong></p>
+                    <p style="font-size: 15px; margin-top: 5px; color: #0f766e;">عدم التمييز الدقيق بينهما في الاجتماعات يقود لمناقشات عقيمة وعروض عشوائية للعملاء. إليك التوضيح بأقوى الأمثلة القياسية:</p>
+                </div>
+
+                <div class="card-heading">🔬 المثال الأول (المعملي والهندسي): المادة الكيميائية في المختبر</div>
+                <ul style="list-style-type: disc; margin-right: 30px;">
+                    <li><strong>الخطر الكامن (Hazard / Risk Source):</strong> <span style="color: #0d9488; font-weight: 700;">وجود برميل مادة كيميائية سامة مخزنة بالمعمل.</span> المادة في ذاتها تمثل تهديداً كامناً مستقراً يمتلك قدرة تدميرية كامنة، طالما لم يقترب منها أحد.</li>
+                    <li style="margin-top: 10px;"><strong>المخاطرة أو الحدث الفعلي (Risk / Risk Event):</strong> <span style="color: #dc2626; font-weight: 700;">احتمالية استنشاق المهندسين للمادة أو تسربها وإحداث إصابة فعلية.</span> هنا تحول الخطر من تهديد ساكن إلى مخاطرة ديناميكية ترتبط باحتمالية حدوث ضرر مباشر لأهداف وسلامة الكادر البشري.</li>
+                </ul>
+
+                <div class="card-heading">🦁 المثال الثاني (الفلسفي المعتمد): الأسد والقفص</div>
+                <ul style="list-style-type: disc; margin-right: 30px;">
+                    <li><strong>الخطر الكامن (Hazard):</strong> <span style="color: #b45309; font-weight: 700;">الأسد داخل القفص.</span> يمثل مصدر الخطر الدائم الذي لا ينكره عاقل، طالما الأسد متواجد فهو خطر يمتلك القوة المطلقة للأذى.</li>
+                    <li style="margin-top: 10px;"><strong>الحدث الفعلي (Risk Event):</strong> <span style="color: #dc2626; font-weight: 700;">أن يهاجمك الأسد ويؤذيك.</span> وهو وقوع الضرر السلبي الفعلي نتيجة التقرب المفرط من القفص أو فتحه دون دروع ووقاية، مما يعصف مباشرة بمخرجات وأهداف المشروع الثلاثية الأساسية <strong>(الوقت، التكلفة، الجودة)</strong>.</li>
+                </ul>
+
+                <div class="card-heading">🎯 تصنيف وفهم طبيعة المخاطر أثناء مرحلة التحديد (Identify Risks)</div>
+                <p style="margin-bottom: 15px;">عند جلوسك لتحديد المخاطر، يجب تصنيفها إلى ثلاثة أنواع رئيسية ومختلفة تماماً في الأثر والتعامل:</p>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; margin-top: 15px;">
+                    <div style="background: #fef2f2; border: 1px solid #fee2e2; padding: 20px; border-radius: 12px; border-top: 5px solid #ef4444;">
+                        <h4 style="color: #b91c1c; font-weight: 700; margin-bottom: 8px;">1. مخاطر سلبية بحتة (Pure Risks)</h4>
+                        <p style="font-size: 14.5px; color: #7f1d1d;">تُعرف بالتهديدات الصريحة، ولا تحتمل سوى نتيجة واحدة: الخسارة أو الضرر ولا مكسب فيها أبداً. <br><strong>مثال:</strong> حدوث حريق في الموقع أو أخطاء كارثية في حسابات الأحمال الكهربائية والكابلات.</p>
+                    </div>
+                    
+                    <div style="background: #f0fdf4; border: 1px solid #dcfce7; padding: 20px; border-radius: 12px; border-top: 5px solid #22c55e;">
+                        <h4 style="color: #15803d; font-weight: 700; margin-bottom: 8px;">2. مخاطر إيجابية (Opportunities)</h4>
+                        <p style="font-size: 14.5px; color: #14532d;">مخاطر تحمل في طياتها مخرجات ومكاسب استثنائية للمشروع إذا تم استغلالها بنجاح.<br><strong>مثال:</strong> انخفاض مفاجئ في أسعار كابلات النحاس عالمياً، أو توفر تقنية ذكاء اصطناعي تسرّع زمن التصميم الهندسي للنصف.</p>
+                    </div>
+                    
+                    <div style="background: #fef9c3; border: 1px solid #fef08a; padding: 20px; border-radius: 12px; border-top: 5px solid #eab308;">
+                        <h4 style="color: #a16207; font-weight: 700; margin-bottom: 8px;">3. مخاطر مختلطة / مضاربة (Speculative)</h4>
+                        <p style="font-size: 14.5px; color: #713f12;">مخاطر تحتمل وتتأرجح بين الوجهين (ربح أو خسارة) وتعتمد كلياً على طريقة إدارتها وتحليل ظروف السوق.<br><strong>مثال:</strong> تغيير مورد رئيسي للمشروع، أو تحديث مفاجئ في معايير كود البناء السعودي أثناء العمل.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="tab2" class="tab-content">
+            <div class="section-card">
+                <h2 class="main-title">دورة حياة إدارة المخاطر (The 7-Step Process)</h2>
+                <p class="sub-title-context" style="font-size: 18px;">العمليات السبعة المعتمدة والمطورة لإدارة أي مشروع هندسي بكفاءة تامة:</p>
+                
+                <ul class="step-process-list">
+                    <li>
+                        <span class="step-number">1</span>
+                        <strong>تخطيط إدارة المخاطر (Plan Risk Management):</strong> وضع الاستراتيجية العامة وخارطة الطريق لتوزيع الأدوار الفنية والمالية وتحديد الميزانيات العريضة.
+                    </li>
+                    <li>
+                        <span class="step-number">2</span>
+                        <strong>تحديد المخاطر (Identify Risks):</strong> حصر وجمع كافة التهديدات والفرص المحتملة وتوثيقها بانتظام داخل سجل المخاطر عبر هيكل تصنيف المخاطر (RBS).
+                    </li>
+                    <li>
+                        <span class="step-number">3</span>
+                        <strong>التحليل النوعي للمخاطر (Qualitative Risk Analysis):</strong> تقييم المخاطر وترتيبها حسب الأولوية بناءً على حاصل ضرب الاحتمالية في شدة الأثر (Risk Score).
+                    </li>
+                    <li>
+                        <span class="step-number">4</span>
+                        <strong>التحليل الكمي للمخاطر (Quantitative Risk Analysis):</strong> تحويل المخاطر الحرجة إلى أرقام مالية صريحة لتقدير حجم الخسائر عبر حساب القيمة النقدية المتوقعة (EMV).
+                    </li>
+                    <li>
+                        <span class="step-number">5</span>
+                        <strong>تخطيط الاستجابة للمخاطر (Plan Risk Responses):</strong> وضع استراتيجيات واضحة ومسبقة للتعامل مع التهديدات السلبية وحماية أهداف المشروع الكبرى.
+                    </li>
+                    <li>
+                        <span class="step-number">6</span>
+                        <strong>تنفيذ استجابات المخاطر (Implement Risk Responses):</strong> تفعيل وتطبيق الخطط المتفق عليها على أرض الواقع وتحويلها إلى قرارات تنفيذية ملموسة.
+                    </li>
+                    <li>
+                        <span class="step-number">7</span>
+                        <strong>المراقبة والتحكم (Monitor & Control):</strong> المراجعة الأسبوعية والمستمرة لسجل المخاطر (Risk Register) ورصد ظهور أي تغييرات وتحديث الأولويات.
+                    </li>
+                </ul>
+
+                <div class="card-heading" style="font-size:24px; margin-top:40px;">🧠 مفهوم متقدم: عنصر الزمن في ترتيب الأولويات</div>
+                <p style="font-size:17.5px;">ليس بالضرورة أن يكون الخطر "شديد جداً" هو الأهم دائماً؛ فقد يكون التعامل مع خطر "شديد" أهم وأولى للتدخل الفوري من الخطر "شديد الجدية" بسبب عنصر الزمن (قرب حدوثه أو تأثيره اللحظي).</p>
+                <p style="margin-top: 15px; background: #f8fafc; padding: 20px; border-radius: 12px; border-left: 5px solid #64748b; font-size: 17px;">
+                    <strong>مثال عملي: خطر استقالة مدير المشروع فجأة بسبب ضغط العمل قبل مرحلة التسليم الوشيكة للمالك الحكومي.</strong> على الرغم من وجود مخاطر فنية أو معمارية تصنف كـ "شديدة جداً" على الورق، إلا أن خطر الاستقالة يصبح هو الأولوية القصوى بسبب عامل الزمن الحرج الذي يتطلب تدخلاً فورياً للحفاظ على الهيكل الإداري للمشروع وتجنب غرامات التأخير القاسية.
+                </p>
+
+                <div class="card-heading" style="font-size:24px;">🔍 مصطلحات ومفاهيم متقدمة في المراقبة والتحكم</div>
+                <ul style="font-size: 17.5px; line-height: 2;">
+                    <li><strong>قائمة المراقبة (Watch List):</strong> تخصص بالكامل للمخاطر ذات التأثير المنخفض والاحتمالية الضئيلة. لا يتم إهمالها بل تراقب بصفة دورية لضمان عدم تغيير ظروفها.</li>
+                    <li><strong>المخاطر المتبقية (Residual Risk):</strong> هي كمية المخاطر التي تتبقى في المشروع بشكل طبيعي حتى بعد تنفيذ كافة استراتيجيات التخفيف والوقاية بنجاح (مثل احتمال حدوث أخطاء بشرية طفيفة).</li>
+                    <li><strong>المخاطر الثانوية (Secondary Risk):</strong> هي مخاطر جديدة تماماً تنشأ كأثر جانبي أو نتيجة مباشرة لتنفيذ استراتيجية استجابة لخطر أصلي (مثل ظهور عيوب فنية في التصميم بسبب الاستعانة بمصمم خارجي لتخفيف خطر التأخير).</li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="tab3" class="tab-content">
+            <div class="section-card">
+                <h2 class="main-title">حاسبة المخاطر التفاعلية (Risk Score Calculator)</h2>
+                <p class="sub-title-context">قم بضبط المعايير لاحتساب درجة الخطر وتحديد أولويته تلقائياً على مصفوفة الخريطة الحرارية المعتمدة رسمياً.</p>
+                
+                <div class="calculator-layout">
+                    <div>
+                        <div style="margin-bottom:20px;">
+                            <label>الاحتمالية المكتشفة (Probability) [1-5]:</label>
+                            <select id="calc_p" class="custom-select" onchange="updateCalc()">
+                                <option value="1">1 - نادر جداً / ضئيل</option>
+                                <option value="2">2 - غير محتمل</option>
+                                <option value="3" selected>3 - محتمل حدوثه</option>
+                                <option value="4">4 - محتمل جداً</option>
+                                <option value="5">5 - متوقع بشدة</option>
+                            </select>
+                        </div>
+                        <div style="margin-bottom:20px;">
+                            <label>الأثر المتوقع (Impact) [1-5]:</label>
+                            <select id="calc_i" class="custom-select" onchange="updateCalc()">
+                                <option value="1">1 - لا يذكر / بسيط</option>
+                                <option value="2">2 - محدود</option>
+                                <option value="3" selected>3 - متوسط الأثر</option>
+                                <option value="4">4 - جسيم / شديد</option>
+                                <option value="5">5 - كارثي للمشروع</option>
+                            </select>
+                        </div>
+                        <div class="result-display">
+                            <div style="font-size: 14px; font-weight: 700; color: #64748b;">حاصل تقييم معادلة المخاطر (Risk Score)</div>
+                            <div style="font-size: 46px; font-weight: 700; color: #0f172a; margin: 10px 0;" id="score_val">9</div>
+                            <div style="font-size: 14px; color: #64748b; margin-bottom: 12px;">من أصل 25 درجة (P × I)</div>
+                            <div id="score_label" class="status-pill pill-medium">أولوية متوسطة (Medium)</div>
+                        </div>
+                    </div>
+                    <div>
+                        <div style="text-align: center; margin-bottom: 15px; font-weight: 700; font-size: 15px;">خريطة المخاطر الحرارية (Risk Heat Map)</div>
+                        <div class="heatmap-grid" id="hmap"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="tab4" class="tab-content">
+            <div class="section-card">
+                <h2 class="main-title">منهجية التعامل مع التهديدات (Risk Response Strategies)</h2>
+                <p class="sub-title-context">الاستراتيجيات الخمس المعتمدة عالمياً لحصار وتقليل آثار التهديدات السلبية:</p>
+                
+                <ul style="list-style-type: none;">
+                    <li style="background: #f8fafc; padding: 20px; border-radius: 10px; margin-bottom: 15px; border-right: 4px solid #dc2626;">
+                        <strong>1. التجنب (Avoid):</strong> إزالة الخطر تماماً أو تعديل خطة المشروع لحماية المخرجات من التأثير (مثل اشتراط توقيع واعتماد مسبق من العميل لبدء التصميم الكهربائي).
+                    </li>
+                    <li style="background: #f8fafc; padding: 20px; border-radius: 10px; margin-bottom: 15px; border-right: 4px solid #f97316;">
+                        <strong>2. التخفيف (Mitigate):</strong> اتخاذ إجراءات استباقية لتقليل الاحتمالية أو الأثر (مثل استخدام برمجيات ونمذجة الـ BIM لمنع تعارضات الأنظمة MEP قسراً).
+                    </li>
+                    <li style="background: #f8fafc; padding: 20px; border-radius: 10px; margin-bottom: 15px; border-right: 4px solid #2563eb;">
+                        <strong>3. التحويل (Transfer):</strong> نقل مسؤولية الخطر وتبعاته المالية والتعاقدية بالكامل إلى طرف ثالث متخصص (مثل عقود التأمين أو إسناد الأعمال الحساسة لمقاول باطن متخصص).
+                    </li>
+                    <li style="background: #f8fafc; padding: 20px; border-radius: 10px; margin-bottom: 15px; border-right: 4px solid #71717a;">
+                        <strong>4. القبول (Accept):</strong> الاعتراف بوجود الخطر دون اتخاذ إجراء استباقي نظراً لقلة الأثر، مع تخصيص ميزانية احتياطي طوارئ (Contingency Reserve) للتعامل معه حال وقوعه.
+                    </li>
+                    <li style="background: #f8fafc; padding: 20px; border-radius: 10px; margin-bottom: 15px; border-right: 4px solid #7c3aed;">
+                        <strong>5. التصعيد (Escalate):</strong> رفع الخطر فوراً وبشكل منظم إلى الإدارة العليا أو الجهة المالكة عند تجاوز حدود صلاحيات مدير المشروع أو عندما يتطلب حلاً تعاقدياً يتخطى الميزانية المعتمدة.
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="tab5" class="tab-content">
+            <div class="section-card">
+                <h2 class="main-title">دراسة حالة تطبيقية: مشروع عمل تصاميم شاملة لمبنى إداري حكومي</h2>
+                <p class="sub-title-context">تحليل متكامل يربط بين المخاطر الفنية والهندسية (قسم الكهرباء) والمخاطر التعاقدية والمالية (قسم العقود والتكاليف) لنفس المشروع لعام 2026 بميزانية مرصودة تبلغ 250,000 ريال سعودي.</p>
+                
+                <div class="card-heading">📌 أولاً: دراسة قسم التصميم الكهربائي (Technical Study)</div>
+                <div class="table-wrapper">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>الخطر الفني المكتشف</th>
+                                <th>الاحتمالية (1-5)</th>
+                                <th>الأثر (1-5)</th>
+                                <th>الدرجة (Score)</th>
+                                <th>تصنيف الخطر التنفيذي</th>
+                                <th>الاستجابة الفنية المعتمدة</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Architectural Delay</strong> (تأخر المخططات المعمارية)</td>
+                                <td>5</td>
+                                <td>5</td>
+                                <td>25</td>
+                                <td><span class="status-pill pill-critical">حرج جداً (Critical)</span></td>
+                                <td><strong>تجنب (Avoid):</strong> اشتراط استلام المخططات المعمارية النهائية المعتمدة رسمياً قبل بدء عمل مهندس الكهرباء.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Client Changes</strong> (تغييرات العميل المفاجئة لمتطلباته)</td>
+                                <td>5</td>
+                                <td>3</td>
+                                <td>15</td>
+                                <td><span class="status-pill pill-critical">حرج جداً (Critical)</span></td>
+                                <td><strong>تجنب (Avoid):</strong> طلب توقيع واعتماد رسمي مكتوب ومسبق (Sign-off) بالمتطلبات الوظيفية قبل بدء التصميم.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Approval Delay</strong> (تأخر الاعتمادات الفنية من الجهة الحكومية)</td>
+                                <td>4</td>
+                                <td>4</td>
+                                <td>16</td>
+                                <td><span class="status-pill pill-high">عالي الأهمية (High)</span></td>
+                                <td><strong>تصعيد (Escalate):</strong> التصعيد الفوري لممثل المالك لحثهم على تسريع إصدار الموافقات لتجنب تأخير المشروع.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Load Errors</strong> (أخطاء حسابات الأحمال والكابلات)</td>
+                                <td>3</td>
+                                <td>5</td>
+                                <td>15</td>
+                                <td><span class="status-pill pill-high">عالي الأهمية (High)</span></td>
+                                <td><strong>تخفيف (Mitigate):</strong> تكليف مراجع فني مستقل لتدقيق حسابات الأحمال والـ Single Line Diagram بالكامل قبل التصدير.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>MEP Clash</strong> (تعارض أنظمة التكييف والحريق مع الكهرباء)</td>
+                                <td>4</td>
+                                <td>3</td>
+                                <td>12</td>
+                                <td><span class="status-pill pill-medium">متوسط (Medium)</span></td>
+                                <td><strong>تخفيف (Mitigate):</strong> عقد اجتماعات تنسيق أسبوعية مكثفة بين الأقسام واستخدام برمجية ونمذجة الـ BIM لمنع التداخلات.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>SBC Compliance</strong> (مخاطر عدم مطابقة كود البناء السعودي)</td>
+                                <td>2</td>
+                                <td>5</td>
+                                <td>10</td>
+                                <td><span class="status-pill pill-medium">متوسط (Medium)</span></td>
+                                <td><strong>تخفيف (Mitigate):</strong> إلزام المهندسين المصممين بتطبيق واستخدام قائمة فحص كود البناء السعودي (SBC Checklist) قبل التسليم.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="contracts-section">
+                    <div class="card-heading">📌 ثانياً: دراسة قسم العقود والتكاليف (Contracts & Costs Study)</div>
+                    <p style="margin-bottom: 15px;">تحليل متعمق للمخاطر المالية والتعاقدية التي تؤمن ربحية وتكلفة المشروع وتمنع النزاعات القانونية مع المالك الحكومي أو مقاولي الباطن:</p>
+                    
+                    <div class="table-wrapper">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>خطر العقود والتكاليف</th>
+                                    <th>الاحتمالية (1-5)</th>
+                                    <th>الأثر (1-5)</th>
+                                    <th>الدرجة (Score)</th>
+                                    <th>استراتيجية الاستجابة والتحوط التعاقدي</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>تذبذب أسعار المواد الخام</strong> (ارتفاع النحاس/الحديد بالمواصفات)</td>
+                                    <td>5</td>
+                                    <td>4</td>
+                                    <td>20</td>
+                                    <td><span class="status-pill pill-critical">التخفيف / التحويل</span> (إدراج بند تقلب الأسعار في عقود الباطن وتحميل جزء للمورد)</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>تأخر صرف الدفعات المالية</strong> من المالك الحكومي</td>
+                                    <td>4</td>
+                                    <td>4</td>
+                                    <td>16</td>
+                                    <td><span class="status-pill pill-high">القبول النشط</span> (تأمين سيولة احتياطية وتضمين بند ربط تسليم المراحل بصرف الدفعات السابقة)</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>غموض في بنود وفجوات العقد</strong> (Scope Gap)</td>
+                                    <td>3</td>
+                                    <td>5</td>
+                                    <td>15</td>
+                                    <td><span class="status-pill pill-high">التجنب الكامل</span> (صياغة ملحق تفصيلي يحدد بدقة مسؤولية ومخرجات المكتب الاستشاري)</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>عدم دقة تقدير جداول الكميات</strong> (BOQ Errors)</td>
+                                    <td>2</td>
+                                    <td>4</td>
+                                    <td>8</td>
+                                    <td><span class="status-pill pill-medium">التخفيف</span> (إلزام فريق التكاليف بعمل مراجعة مزدوجة للحصر التقديري ومقارنته بالمخططات الأولية)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="emv-container">
+                        <div class="emv-box">
+                            <h4 style="color:#16a34a; font-size:16px; font-weight:700;">📊 التحليل الكمي المالي لقسم الكهرباء (EMV):</h4>
+                            <p style="font-size: 14.5px; margin-top:8px; line-height: 1.7;">
+                                <strong>الخطر:</strong> طلب العميل تعديلات مفاجئة بعد اعتماد المخططات (Client Changes).<br>
+                                <strong>الاحتمالية المحددة:</strong> 30% | <strong>التكلفة الإضافية التقديرية للعمل:</strong> 25,000 ريال سعودي.<br>
+                                <strong>القيمة النقدية المتوقعة الحالية:</strong> 0.30 × 25,000 = <strong style="color:#16a34a;">7,500 SAR</strong>.<br>
+                                <em>الإجراء: تم حجز هذا المبلغ بالكامل كاحتياطي طوارئ صريح في ميزانية المشروع لمواجهة التعديلات دون عجز.</em>
+                            </p>
+                        </div>
+                        
+                        <div class="emv-box blue-box">
+                            <h4 style="color:#0284c7; font-size:16px; font-weight:700;">📊 التحليل الكمي المالي لقسم العقود والتكاليف (EMV):</h4>
+                            <p style="font-size: 14.5px; margin-top:8px; line-height: 1.7;">
+                                <strong>الخطر:</strong> ارتفاع مفاجئ في أسعار الكابلات النحاسية بنسبة 20% بالأسواق.<br>
+                                <strong>الاحتمالية المحددة:</strong> 40% | <strong>الأثر المالي المباشر المتوقع:</strong> 50,000 ريال سعودي.<br>
+                                <strong>القيمة النقدية المتوقعة الحالية:</strong> 0.40 × 50,000 = <strong style="color:#0284c7;">20,000 SAR</strong>.<br>
+                                <em>الإجراء التعاقدي: تم إضافة "بند تقلب الأسعار" في عقد مقاول الباطن لتحويل النسبة الكبرى من الخطر وتأمين الربحية.</em>
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div id="tab6" class="tab-content">
+            <div class="section-card">
+                <h2 class="main-title">🏅 النتائج النهائية لتطبيق منهجية إدارة المخاطر 2026</h2>
+                <p class="sub-title-context">ثمار تطبيق إدارة المخاطر بشكل منهجي صارم ومتكامل فنيّاً (كهرباء) وماليّاً وعقديّاً (عقود وتكاليف) على مشروع المبنى الإداري الحكومي:</p>
+                
+                <ul style="list-style-type: none; margin-right: 0; display: flex; flex-direction: column; gap: 15px;">
+                    <li style="background: #f0fdf4; padding: 22px; border-radius: 12px; border-right: 5px solid #22c55e;">
+                        <strong style="font-size: 18px; color: #166534; display: block; margin-bottom: 5px;">📉 خفض إعادة الأعمال بنسبة 90% (Rework Reduction) - قسم الكهرباء</strong>
+                        بفضل اشتراطات الاعتمادات المعمارية المسبقة والتوقيعات الرسمية المكتوبة من ممثل العميل قبل بدء التصميم الكهربائي الفعلي.
+                    </li>
+                    <li style="background: #f0fdf4; padding: 22px; border-radius: 12px; border-right: 5px solid #22c55e;">
+                        <strong style="font-size: 18px; color: #166534; display: block; margin-bottom: 5px;">🛡️ مطابقة هندسية كاملة 100% لكود البناء السعودي (SBC Compliance) - قسم الكهرباء</strong>
+                        خلو التصاميم والأنظمة الكهربائية من أي أخطاء حسابية أو أحمال غير مطابقة بفضل التدقيق المستقل وقوائم الفحص الإلزامية.
+                    </li>
+                    <li style="background: #f0fdf4; padding: 22px; border-radius: 12px; border-right: 5px solid #22c55e;">
+                        <strong style="font-size: 18px; color: #166534; display: block; margin-bottom: 5px;">📐 جاهزية تامة للتنفيذ الفوري (IFC Drawings) - قسم الكهرباء</strong>
+                        تسليم مخططات إنشائية فنية نهائية خالية تماماً من التعارضات والتداخلات مع الأنظمة الأخرى (MEP Clashes)، مما يسهل مهمة مقاولي الموقع.
+                    </li>
+                    <li style="background: #fdf8f6; padding: 22px; border-radius: 12px; border-right: 5px solid #ea580c;">
+                        <strong style="font-size: 18px; color: #c2410c; display: block; margin-bottom: 5px;">💰 تأمين الربحية والتحكم المطلق في تقلّبات الأسعار - قسم العقود والتكاليف</strong>
+                        نجاح أداة "تحويل المخاطر" عبر إدراج بنود تقلب الأسعار المحكمة مع مقاولي الباطن والموردين، مما حمى ميزانية الـ 250,000 ريال من التضخم المباغت للنحاس والحديد.
+                    </li>
+                    <li style="background: #fdf8f6; padding: 22px; border-radius: 12px; border-right: 5px solid #ea580c;">
+                        <strong style="font-size: 18px; color: #c2410c; display: block; margin-bottom: 5px;">📜 صفر نزاعات تعاقدية وإغلاق تام للفجوات (Zero Scope Gaps) - قسم العقود والتكاليف</strong>
+                        أدى توقيع الملاحق التفصيلية الصارمة مع العميل الحكومي والاعتمادات المرحلية المتتالية إلى حماية التدفقات النقدية (Cash Flow) ومنع أي مطالبات مالية غير مغطاة تعاقدياً.
+                    </li>
+                    <li style="background: #f0fdf4; padding: 22px; border-radius: 12px; border-right: 5px solid #22c55e;">
+                        <strong style="font-size: 18px; color: #166534; display: block; margin-bottom: 5px;">⏱️ الالتزام التام بالجدول الزمني الكلي للمشروع</strong>
+                        تكامل الإجراءات الفنية مع الاستقرار المالي أثمر عن تسليم كامل وثائق المشروع للمالك الحكومي في موعدها المحدد تماماً، متجنبين أي غرامات تأخير قاسية.
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="tab7" class="tab-content">
+            <div class="thank-you-card">
+                <div style="font-size: 65px; margin-bottom: 15px;">🎓</div>
+                <h2 class="thank-you-title">نهاية الدورة الشاملة</h2>
+                <p class="thank-you-text">
+                    شكراً، تم إنجاز هذا الدليل وتطبيقه بواسطة المهندس<br>
+                    <strong style="color: #0b1426; font-size: 32px; display: block; margin: 12px 0;">أحمد برنوخ</strong>
+                    <span style="font-size: 21px; color: #0284c7; font-weight: 700; display: block; background: #f0f9ff; padding: 10px 20px; border-radius: 12px; border: 1px dashed #0284c7; max-width: 650px; margin: 15px auto;">
+                        مهندس كهرباء أول بشركة الاتحاد الهندسي ( خطيب وعلمي ) — 2026
+                    </span>
+                </p>
+                <p class="thank-you-text" style="font-size: 20px; color: #64748b; font-style: italic; margin-top: 25px;">
+                    متمنياً للجميع التوفيق وشكراً جزيلاً لكم.
+                </p>
+                <div style="margin-top: 30px;">
+                    <span class="thank-you-badge">✨ تمّ بحمد الله وتوفيقه ✨</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.menu-item').forEach(m => m.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            document.getElementById('btn_'+tabId).classList.add('active');
+            if(tabId==='tab3') initMap();
+        }
+
+        function initMap() {
+            const map = document.getElementById('hmap');
+            map.innerHTML = '';
+            for(let p=5; p>=1; p--) {
+                for(let i=1; i<=5; i++) {
+                    let s = p*i;
+                    let cls = s>=15?'hm-r':s>=12?'hm-o':s>=6?'hm-y':'hm-g';
+                    map.innerHTML += `<div class="heatmap-cell ${cls}" id="c_${p}_${i}">${s}</div>`;
+                }
+            }
+            updateCalc();
+        }
+
+        function updateCalc() {
+            let p = parseInt(document.getElementById('calc_p').value);
+            let i = parseInt(document.getElementById('calc_i').value);
+            let s = p*i;
+            document.getElementById('score_val').innerText = s;
+            let lbl = document.getElementById('score_label');
+            
+            if(s>=15) {
+                lbl.innerText = 'حرج جداً (Critical Risk)';
+                lbl.className = 'status-pill pill-critical';
+            } else if(s>=12) {
+                lbl.innerText = 'أولوية عالية (High Priority)';
+                lbl.className = 'status-pill pill-high';
+            } else if(s>=6) {
+                lbl.innerText = 'أولوية متوسطة (Medium Priority)';
+                lbl.className = 'status-pill pill-medium';
+            } else {
+                lbl.innerText = 'منخفض الأهمية (Low Priority)';
+                lbl.className = 'status-pill pill-low';
+            }
+            
+            document.querySelectorAll('.heatmap-cell').forEach(c => c.classList.remove('active-cell'));
+            let active = document.getElementById(`c_${p}_${i}`);
+            if(active) active.classList.add('active-cell');
+        }
+        
+        window.onload = function() {
+            initMap();
+        };
+    </script>
+</body>
+</html>
