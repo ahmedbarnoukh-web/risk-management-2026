@@ -175,12 +175,76 @@
                         <span class="ar-title">النتائج النهائية للدراسة</span>
                         <span class="en-title">Final study results</span>
                     </div>
-<li id="risk_tab_trigger" class="menu-item" style="cursor:pointer;">
-    <span class="tab-icon">⚠️</span>
+<style>
+    @keyframes pulse {
+        0% {
+            transform: scale(1);
+            box-shadow: 0 0 0 0 rgba(46, 204, 113, 0.6);
+        }
+        70% {
+            transform: scale(1.02);
+            box-shadow: 0 0 0 12px rgba(46, 204, 113, 0);
+        }
+        100% {
+            transform: scale(1);
+            box-shadow: 0 0 0 0 rgba(46, 204, 113, 0);
+        }
+    }
+
+    .risk-highlight {
+        background: linear-gradient(135deg, #2ecc71, #1e9e5a);
+        border-radius: 14px;
+        color: #fff;
+        padding: 14px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        cursor: pointer;
+        animation: pulse 2.5s infinite;
+        transition: 0.3s;
+    }
+
+    .risk-highlight:hover {
+        transform: scale(1.02);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+    }
+
+    .risk-highlight .tab-icon {
+        font-size: 24px;
+    }
+
+    .risk-highlight .tab-text {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .risk-highlight .ar-title {
+        font-size: 16px;
+        font-weight: 800;
+        color: #fff;
+        margin-bottom: 4px;
+    }
+
+    /* 🔥 التعديل المهم هنا */
+    .risk-highlight .en-title {
+        font-size: 18px;          /* كبرناه */
+        font-weight: 900;         /* أثقل */
+        color: #ffffff;           /* أبيض صريح */
+        text-shadow: 2px 2px 6px rgba(0,0,0,0.7);
+        letter-spacing: 0.8px;
+        opacity: 1;
+        line-height: 1.2;
+    }
+</style>
+
+<li id="risk_tab_trigger" class="menu-item risk-highlight">
+    <span class="tab-icon">🛡️</span>
+
     <div class="tab-text">
-        <span class="ar-title">تصميم وتسجيل المخاطر</span>
-        <span class="en-title">Design & Risk Log</span>
+        <span class="ar-title">سجل مخاطر مشروعك الآن</span>
+        <span class="en-title">Start Risk Register</span>
     </div>
+
 </li>
                 </li>
                 <li id="btn_tab7" class="menu-item" onclick="switchTab('tab7')">
@@ -514,7 +578,7 @@
                         </div>
                     </div>
 <div class="risk-container" style="direction: rtl; font-family: sans-serif; margin: 20px 0;">
-    <h2 style="color: #2c3e50; text-align: center;">سجل إدارة المخاطر الهندسي</h2>
+    <h2 style="color: #2c3e50; text-align: center;"> نموذج لمركز التحكم في مخاطر المشروع</h2>
     <div style="overflow-x: auto;">
         <table style="width: 100%; border-collapse: collapse; min-width: 900px; border: 1px solid #ddd;">
             <thead style="background-color: #2c3e50; color: white;">
@@ -655,7 +719,7 @@
                     متمنياً للجميع التوفيق وشكراً جزيلاً لكم.
                 </p>
 <footer>
-    <p>&copy; 2026 All Rights Reserved.</p>
+    <p>&copy; © 2026 All Rights Reserved. This tool is continuously updated and enhanced.</p>
 </footer>
                 <div style="margin-top: 30px;">
                     <span class="thank-you-badge">✨ تمّ بحمد الله وتوفيقه ✨</span>
@@ -829,6 +893,29 @@
             updateDashboard();
         }
     }
+</script>
+<script>
+document.getElementById('risk_tab_trigger').addEventListener('click', function(event) {
+    // منع أي سلوك افتراضي للزر
+    event.preventDefault(); 
+    event.stopPropagation();
+    
+    const secretPassword = "ELEC123"; // ضع رقمك السري هنا
+    let userInput = prompt("يرجى إدخال كلمة المرور:");
+
+    // التحقق: إذا كان المدخل يساوي الباسورد، افتح النافذة
+    if (userInput === secretPassword) {
+        document.getElementById('riskModal').style.display = 'block';
+    } 
+    // إذا كان الإدخال فارغاً (إلغاء) أو خطأ، لا تفعل شيئاً
+    else {
+        if (userInput !== null) {
+            alert("     Incorrect Password. Please contact the engineer to access this tool!");
+        }
+        // هنا لا نفتح النافذة
+        document.getElementById('riskModal').style.display = 'none';
+    }
+});
 </script>
 </script>
 </body>
