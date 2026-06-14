@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الأكاديمية الهندسية المتكاملة | BA Academy Portal</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-sidebar: #ffffff;
+            --bg-main: #f8fafc;
+            --primary-blue: #1e3a8a;
+            --accent-gold: #b45309;
+            --text-dark: #0f172a;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --active-blue: #eff6ff;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        body {
+            display: flex;
+            height: 100vh;
+            background-color: var(--bg-main);
+            color: var(--text-dark);
+            overflow: hidden;
+        }
+
+        /* 💎 القائمة الجانبية الفاخرة (Light Sidebar) */
+        .master-sidebar {
+            width: 360px;
+            background-color: var(--bg-sidebar);
+            display: flex;
+            flex-direction: column;
+            border-left: 1px solid var(--border-color);
+            box-shadow: 4px 0 20px rgba(0,0,0,0.02);
+            z-index: 100;
+        }
+
+        .brand-header {
+            padding: 40px 25px;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+            background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
+        }
+
+        .brand-logo-wrapper {
+            width: 65px;
+            height: 65px;
+            background: #ffffff;
+            border: 2px solid var(--primary-blue);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 12px auto;
+            box-shadow: 0 10px 15px -3px rgba(30, 58, 138, 0.1);
+        }
+
+        .brand-logo-wrapper i {
+            font-size: 28px;
+            color: var(--primary-blue);
+        }
+
+        .brand-header h1 {
+            font-size: 22px;
+            font-weight: 900;
+            color: var(--primary-blue);
+            letter-spacing: 0.5px;
+        }
+
+        .brand-header p {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 4px;
+            font-weight: 700;
+        }
+
+        /* 📑 حاوية التبويبات والقوائم المنسدلة */
+        .nav-container {
+            flex-grow: 1;
+            padding: 20px 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            overflow-y: auto;
+        }
+
+        .section-label {
+            font-size: 11px;
+            font-weight: 800;
+            color: #94a3b8;
+            letter-spacing: 1px;
+            margin: 12px 10px 4px 0;
+        }
+
+        /* التبويب الرئيسي الكلاسيكي */
+        .nav-tab {
+            padding: 14px 16px;
+            border-radius: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: #475569;
+            font-size: 14.5px;
+            font-weight: 700;
+            transition: all 0.2s ease;
+            border: 1px solid transparent;
+        }
+
+        .tab-content {
+            display: flex;
+            flex-direction: column; /* ترتيب اللغتين فوق بعض بشكل أنيق */
+            line-height: 1.4;
+        }
+
+        .en-text {
+            font-size: 11.5px;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .tab-title-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .nav-tab i.main-icon {
+            font-size: 18px;
+            width: 24px;
+            text-align: center;
+            color: #64748b;
+        }
+
+        .nav-tab:hover {
+            background-color: #f1f5f9;
+            color: var(--primary-blue);
+        }
+
+        .nav-tab.active-parent {
+            background-color: #f8fafc;
+            color: var(--primary-blue);
+            border: 1px solid var(--border-color);
+        }
+
+        /* 🔽 القائمة المنسدلة الفرعية (Dropdown Menu) */
+        .dropdown-container {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            padding-right: 15px; /* إزاحة التبويبات الفرعية لجعل الهيكل واضح */
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .dropdown-container.open {
+            max-height: 300px; /* الارتفاع الأقصى المسموح للقائمة عند الفتح */
+        }
+
+        .sub-tab {
+            padding: 10px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            color: #64748b;
+            font-size: 13.5px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.2s ease;
+            border-right: 2px solid transparent;
+        }
+
+        .sub-tab:hover {
+            color: var(--primary-blue);
+            background-color: #f8fafc;
+        }
+
+        .sub-tab.active {
+            background-color: var(--active-blue);
+            color: var(--primary-blue);
+            border-right-color: var(--primary-blue);
+        }
+
+        .sub-tab .sub-en {
+            font-size: 11px;
+            color: #94a3b8;
+            font-weight: 600;
+        }
+
+        /* شارات التنبيه وقريباً */
+        .badge-upcoming {
+            font-size: 10px;
+            background: #fef3c7;
+            color: var(--accent-gold);
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-weight: 700;
+        }
+
+        .chevron-icon {
+            font-size: 12px;
+            transition: transform 0.3s ease;
+            color: #94a3b8;
+        }
+
+        .open .chevron-icon {
+            transform: rotate(-90deg); /* تدوير السهم عند الفتح في اتجاه التصفح */
+        }
+
+        /* 📺 منطقة العرض الرئيسية (Light Viewer) */
+        .content-viewer {
+            flex-grow: 1;
+            background-color: #ffffff;
+            position: relative;
+        }
+
+        .screen-frame {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: none;
+            opacity: 0;
+        }
+
+        .screen-frame.active {
+            display: block;
+            opacity: 1;
+        }
+
+        /* 🚧 شاشة تحت الإنشاء الفاخرة المتناسقة مع الثيم الفاتح */
+        .placeholder-screen {
+            width: 100%;
+            height: 100%;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: radial-gradient(circle at center, #ffffff 0%, #f8fafc 100%);
+            text-align: center;
+            padding: 40px;
+        }
+
+        .placeholder-screen.active {
+            display: flex;
+        }
+
+        .construction-icon-box {
+            position: relative;
+            margin-bottom: 25px;
+        }
+
+        .construction-icon-box .main-gear {
+            font-size: 75px;
+            color: #cbd5e1;
+            animation: spin 10s linear infinite;
+        }
+
+        .construction-icon-box .sub-gear {
+            font-size: 38px;
+            color: var(--primary-blue);
+            position: absolute;
+            bottom: -5px;
+            right: -15px;
+            animation: spin-reverse 7s linear infinite;
+        }
+
+        .placeholder-screen h2 {
+            font-size: 26px;
+            font-weight: 900;
+            color: var(--primary-blue);
+            margin-bottom: 12px;
+        }
+
+        .placeholder-screen p {
+            font-size: 15px;
+            color: var(--text-muted);
+            max-width: 480px;
+            line-height: 1.7;
+            margin-bottom: 25px;
+        }
+
+        .academy-tag {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: #94a3b8;
+            border-top: 1px solid var(--border-color);
+            padding-top: 12px;
+            width: 180px;
+        }
+
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes spin-reverse { 0% { transform: rotate(0deg); } 100% { transform: rotate(-360deg); } }
+
+        .master-footer {
+            padding: 20px;
+            text-align: center;
+            font-size: 11.5px;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border-color);
+            font-weight: 600;
+            background-color: #f8fafc;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="master-sidebar">
+        <div class="brand-header">
+            <div class="brand-logo-wrapper">
+                <i class="fa-solid fa-graduation-cap"></i>
+            </div>
+            <h1>BA ACADEMY</h1>
+            <p>المنصة الهندسية التعليمية المتكاملة</p>
+        </div>
+
+        <div class="nav-container">
+            <div class="section-label">المسارات التدريبية | TRAINING TRACKS</div>
+            
+            <div class="nav-tab active-parent" onclick="toggleDropdown('risk-drop')">
+                <div class="tab-title-wrapper">
+                    <i class="fa-solid fa-shield-halved main-icon" style="color: var(--primary-blue);"></i>
+                    <div class="tab-content">
+                        <span>إدارة مخاطر المشاريع</span>
+                        <span class="en-text">Project Risk Management</span>
+                    </div>
+                </div>
+                <i class="fa-solid fa-chevron-left chevron-icon" id="risk-drop-chevron"></i>
+            </div>
+
+            <div class="dropdown-container open" id="risk-drop">
+                <div class="sub-tab active" onclick="switchScreen('main', false, this)">
+                    <div class="tab-content">
+                        <span>المحاضرات والكورس الرئيسي</span>
+                        <span class="sub-en">Main Course Lectures</span>
+                    </div>
+                </div>
+                <div class="sub-tab" onclick="switchScreen('guide', false, this)">
+                    <div class="tab-content">
+                        <span>دليل الدراسة الشامل</span>
+                        <span class="sub-en">Comprehensive Study Guide</span>
+                    </div>
+                </div>
+                <div class="sub-tab" onclick="switchScreen('tools', false, this)">
+                    <div class="tab-content">
+                        <span>حاسبة وأدوات المخاطر</span>
+                        <span class="sub-en">Risk Calculator & Tools</span>
+                    </div>
+                </div>
+                <div class="sub-tab" onclick="switchScreen('quiz', false, this)">
+                    <div class="tab-content">
+                        <span>إختبار التقييم النهائي</span>
+                        <span class="sub-en">Final Evaluation Quiz</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="nav-tab" onclick="switchScreen('contracts', true, this)">
+                <div class="tab-title-wrapper">
+                    <i class="fa-solid fa-file-signature main-icon"></i>
+                    <div class="tab-content">
+                        <span>إدارة العقود والتكاليف</span>
+                        <span class="en-text">Contracts & Cost Management</span>
+                    </div>
+                </div>
+                <span class="badge-upcoming">قريباً</span>
+            </div>
+            
+            <div class="nav-tab" onclick="switchScreen('datacenter', true, this)">
+                <div class="tab-title-wrapper">
+                    <i class="fa-solid fa-server main-icon"></i>
+                    <div class="tab-content">
+                        <span>هندسة مراكز البيانات</span>
+                        <span class="en-text">Data Center Engineering</span>
+                    </div>
+                </div>
+                <span class="badge-upcoming">قريباً</span>
+            </div>
+
+            <div class="nav-tab" onclick="switchScreen('hse', true, this)">
+                <div class="tab-title-wrapper">
+                    <i class="fa-solid fa-helmet-safety main-icon"></i>
+                    <div class="tab-content">
+                        <span>الأمن والسلامة المهنية</span>
+                        <span class="en-text">Health, Safety & Environment (HSE)</span>
+                    </div>
+                </div>
+                <span class="badge-upcoming">قريباً</span>
+            </div>
+        </div>
+
+        <div class="master-footer">
+            جميع الحقوق محفوظة &copy; 2026
+        </div>
+    </div>
+
+    <div class="content-viewer">
+        <iframe id="screen-main" class="screen-frame active" src="main.html"></iframe>
+        <iframe id="screen-guide" class="screen-frame" src="STUDY GUIDE.html"></iframe>
+        <iframe id="screen-tools" class="screen-frame" src="tools-4.html"></iframe>
+        <iframe id="screen-quiz" class="screen-frame" src="50 PMI Question.HTML"></iframe>
+
+        <div id="screen-placeholder" class="placeholder-screen">
+            <div class="construction-icon-box">
+                <i class="fa-solid fa-circle-notch main-gear"></i>
+                <i class="fa-solid fa-screwdriver-wrench sub-gear"></i>
+            </div>
+            <h2 id="placeholder-title">القسم قيد التطوير والتجهيز</h2>
+            <p>نقوم حالياً بإعداد وصياغة هذا المنهج الاحترافي وفقاً لأحدث الأكواد والممارسات العالمية المعتمدة ليكون متاحاً لك قريباً جداً.</p>
+            <div class="academy-tag">BA ACADEMY PREMIUM</div>
+        </div>
+    </div>
+
+    <script>
+        // دالة فتح وإغلاق القائمة المنسدلة لإدارة المخاطر
+        function toggleDropdown(dropId) {
+            const container = document.getElementById(dropId);
+            const chevron = document.getElementById(dropId + '-chevron');
+            container.classList.toggle('open');
+            
+            // تدوير السهم بناءً على الحالة
+            if(container.classList.contains('open')) {
+                chevron.style.transform = 'rotate(-90deg)';
+            } else {
+                chevron.style.transform = 'rotate(0deg)';
+            }
+        }
+
+        // دالة تنقل الشاشات الموحدة
+        function switchScreen(screenId, isUpcoming, clickedElement) {
+            // إزالة التفعيل من كل التبويبات الرئيسية والفرعية
+            document.querySelectorAll('.sub-tab').forEach(st => st.classList.remove('active'));
+            document.querySelectorAll('.nav-tab').forEach(nt => {
+                // الحفاظ على تمييز التبويب الأب فقط إذا كنا نتصفح ملفات إدارة المخاطر
+                if(clickedElement.classList.contains('sub-tab')) {
+                    document.querySelector('.nav-tab').classList.add('active-parent');
+                } else {
+                    nt.classList.remove('active-parent');
+                }
+            });
+
+            // تطبيق التفعيل على العنصر الحالي الذي تم الضغط عليه
+            clickedElement.classList.add('active');
+
+            // إخفاء كل إطارات العرض وشاشة الانتظار
+            document.querySelectorAll('.screen-frame').forEach(frame => {
+                frame.classList.remove('active');
+                frame.style.display = 'none';
+            });
+            document.getElementById('screen-placeholder').classList.remove('active');
+
+            // إذا كان التبويب مضغوطاً وهو "تحت الإنشاء"
+            if (isUpcoming) {
+                const placeholder = document.getElementById('screen-placeholder');
+                const titleElement = document.getElementById('placeholder-title');
+                
+                if(screenId === 'contracts') {
+                    titleElement.innerText = "قسم إدارة العقود والتكاليف | Contracts & Cost Management";
+                } else if(screenId === 'datacenter') {
+                    titleElement.innerText = "قسم هندسة مراكز البيانات | Data Center Engineering";
+                } else if(screenId === 'hse') {
+                    titleElement.innerText = "قسم الأمن والسلامة المهنية | Health, Safety & Environment";
+                }
+                
+                placeholder.classList.add('active');
+            } else {
+                // إذا كان ملفاً جاهزاً للتشغيل الفوري
+                const activeFrame = document.getElementById('screen-' + screenId);
+                activeFrame.style.display = 'block';
+                setTimeout(() => {
+                    activeFrame.classList.add('active');
+                }, 40);
+            }
+        }
+    </script>
+</body>
+</html>

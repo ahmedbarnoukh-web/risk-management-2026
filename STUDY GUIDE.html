@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الدليل الاحترافي الشامل في إدارة مخاطر المشاريع | BA Academy</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0f172a;
+            --secondary: #0284c7;
+            --accent: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --bg-light: #f8fafc;
+            --text-main: #334155;
+            --text-light: #64748b;
+            --border: #e2e8f0;
+            --gold: #d4af37;
+        }
+
+        * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.8; }
+        
+        body { margin: 0; padding: 0; background-color: #e2e8f0; color: var(--text-main); }
+
+        /* الغلاف / الهيدر الفخم */
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, #1e293b 100%);
+            color: white;
+            padding: 80px 20px;
+            text-align: center;
+            border-bottom: 5px solid var(--gold);
+            position: relative;
+            overflow: hidden;
+        }
+        header::after {
+            content: "\f085"; /* أيقونة ترس */
+            font-family: "FontAwesome";
+            position: absolute;
+            font-size: 300px;
+            color: rgba(255,255,255,0.03);
+            top: -50px;
+            right: -50px;
+        }
+        header h1 { margin: 0; font-size: 42px; font-weight: 900; letter-spacing: 1px; color: #f8fafc; }
+        header p { margin: 15px 0 0; color: #cbd5e1; font-size: 20px; font-weight: 300; }
+        .academy-badge { display: inline-block; background: var(--gold); color: var(--primary); padding: 5px 15px; border-radius: 20px; font-size: 14px; font-weight: bold; margin-bottom: 20px; letter-spacing: 2px;}
+
+        .container {
+            max-width: 1100px;
+            margin: -40px auto 40px;
+            padding: 0 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .chapter {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            border: 1px solid var(--border);
+        }
+
+        .chapter-title {
+            color: var(--secondary);
+            font-size: 28px;
+            font-weight: 900;
+            border-bottom: 2px solid var(--bg-light);
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .term {
+            background: #f1f5f9;
+            padding: 3px 10px;
+            border-radius: 6px;
+            color: var(--primary);
+            font-weight: 800;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            font-size: 14px;
+            direction: ltr;
+            display: inline-block;
+            border: 1px solid #cbd5e1;
+            margin: 0 5px;
+        }
+
+        .concept-box {
+            background: #f8fafc;
+            border-right: 5px solid var(--secondary);
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 6px;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+        }
+        .concept-title { font-weight: 900; color: var(--primary); margin-bottom: 10px; font-size: 18px; }
+        
+        .example-box {
+            background: #ecfdf5;
+            border: 1px solid #a7f3d0;
+            border-right: 5px solid var(--accent);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 25px 0;
+        }
+        .example-title { color: #047857; font-weight: 900; margin-bottom: 10px; font-size: 18px;}
+
+        .important-note {
+            background: #fffbeb;
+            border: 1px solid #fde68a;
+            border-right: 5px solid var(--warning);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 25px 0;
+            display: flex;
+            gap: 15px;
+        }
+        .important-note i { color: var(--warning); font-size: 24px; margin-top: 5px; }
+
+        /* تنسيق دراسة الحالة */
+        .case-study {
+            background: linear-gradient(to left, #ffffff, #f8fafc);
+            border: 2px solid var(--gold);
+            border-radius: 12px;
+            padding: 40px;
+            margin-top: 50px;
+            box-shadow: 0 15px 30px rgba(212, 175, 55, 0.15);
+        }
+        .case-title {
+            color: var(--primary);
+            font-size: 26px;
+            font-weight: 900;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .case-step {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border);
+            border-right: 4px solid var(--gold);
+        }
+        .case-step h4 { margin-top: 0; color: var(--secondary); font-size: 18px; }
+
+        table { width: 100%; border-collapse: collapse; margin: 25px 0; background: white; }
+        th, td { border: 1px solid var(--border); padding: 15px; text-align: right; }
+        th { background-color: var(--primary); color: white; font-weight: bold; }
+        tr:nth-child(even) { background-color: #f8fafc; }
+        
+        ul, ol { padding-right: 25px; margin-bottom: 20px; }
+        li { margin-bottom: 12px; }
+
+        .quote {
+            font-size: 20px;
+            font-style: italic;
+            color: var(--text-light);
+            text-align: center;
+            margin: 40px 0;
+            padding: 20px;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        /* الفوتر الاحترافي */
+        footer {
+            background-color: var(--primary);
+            color: #94a3b8;
+            text-align: center;
+            padding: 40px 20px;
+            margin-top: 60px;
+            border-top: 5px solid var(--gold);
+        }
+        footer .footer-logo { font-size: 24px; font-weight: 900; color: white; margin-bottom: 10px; letter-spacing: 1px; }
+        footer .footer-logo span { color: var(--gold); }
+        footer p { margin: 5px 0; font-size: 14px; }
+        footer .social-icons { margin-top: 20px; }
+        footer .social-icons i { font-size: 20px; margin: 0 10px; color: #cbd5e1; cursor: pointer; transition: 0.3s; }
+        footer .social-icons i:hover { color: var(--gold); }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="academy-badge">PREMIUM STUDY GUIDE</div>
+        <h1>المرجع الشامل في إدارة المخاطر الاحترافية</h1>
+        <p>دليلك الهندسي المتكامل لاجتياز اختبار PMI-RMP وتطبيق المخاطر باحترافية</p>
+    </header>
+
+    <div class="container">
+        
+        <div class="chapter">
+            <div class="chapter-title"><i class="fa-solid fa-book-open"></i> الفصل التمهيدي: مفاهيم وفلسفة إدارة المخاطر</div>
+            
+            <p>الهندسة ليست مجرد تصاميم وحسابات، بل هي القدرة على التنبؤ بما قد يفشل، والاستعداد له قبل حدوثه. في هذا الفصل نضع الأساسيات.</p>
+            
+            <div class="concept-box">
+                <div class="concept-title">تعريف الخطر <span class="term">Project Risk</span></div>
+                <p>وفقاً لمعهد إدارة المشاريع (PMI)، الخطر هو <strong>حدث أو ظرف غير مؤكد</strong>، إذا وقع، سيكون له تأثير (إيجابي أو سلبي) على هدف أو أكثر من أهداف المشروع (الوقت، التكلفة، الجودة، النطاق).<br>
+                المخاطر السلبية تسمى <strong>تهديدات <span class="term">Threats</span></strong>، والمخاطر الإيجابية تسمى <strong>فرص <span class="term">Opportunities</span></strong>.</p>
+            </div>
+
+            <p><strong>من هو المسؤول الأول؟</strong><br>
+            المسؤول الأول والنهائي عن نجاح إدارة المخاطر الشاملة داخل المشروع هو <strong>مدير المشروع <span class="term">Project Manager</span></strong>، وليس راعي المشروع أو مدير المخاطر.</p>
+
+            <div class="important-note">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+                <div>
+                    <strong>مفاهيم حيوية للمؤسسة:</strong>
+                    <ul>
+                        <li><strong>شهية المخاطر <span class="term">Risk Appetite</span>:</strong> درجة عدم اليقين التي تكون المنظمة على استعداد لقبولها في سبيل تحقيق عوائد (هل الشركة جريئة أم متحفظة؟).</li>
+                        <li><strong>تسامح المخاطر <span class="term">Risk Tolerance</span>:</strong> الحجم أو النطاق القابل للقياس من التباين المسموح به حول هدف معين.</li>
+                        <li><strong>عتبة المخاطر <span class="term">Risk Threshold</span>:</strong> المستوى الرقمي أو الحد الأقصى من المخاطر الذي يوجب التدخل الفوري أو التصعيد (مثال: أي تأخير يتجاوز 5 أيام يستوجب تدخل الإدارة).</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="chapter">
+            <div class="chapter-title"><i class="fa-solid fa-sitemap"></i> الفصل الأول: التخطيط لإدارة المخاطر <span class="term">Plan Risk Management</span></div>
+            <p><strong>الهدف:</strong> تحديد كيفية إجراء وخطوات أنشطة إدارة المخاطر للمشروع. يجب أن تبدأ هذه العملية في <strong>أقرب وقت ممكن</strong> عند بدء المشروع أو صياغة ميثاق المشروع.</p>
+            
+            <div class="example-box">
+                <div class="example-title">أهمية إشراك أصحاب المصلحة <span class="term">Stakeholder Involvement</span></div>
+                <p>تخيل أنك تدير مشروعاً وتضع خطة طوارئ بتكلفة 10% من الميزانية، بينما العميل (الراعي) لديه عتبة مخاطر لا تسمح بتجاوز الميزانية بـ 2% فقط! إشراك أصحاب المصلحة في التخطيط يضمن توافق التوقعات وفهم مستويات تحملهم للمخاطر بدقة قبل بدء العمل.</p>
+            </div>
+
+            <div class="concept-box">
+                <div class="concept-title">المخرج الرئيسي: خطة إدارة المخاطر <span class="term">Risk Management Plan</span></div>
+                <p>وثيقة تحتوي على المنهجية، الأدوار، المسؤوليات، والميزانية الخاصة بالتعامل مع المخاطر عموماً. <em>(ملاحظة هامة جداً للامتحان: هذه الخطة لا تحتوي على قائمة المخاطر نفسها، بل تشرح "كيف" سنديرها).</em></p>
+                <p>من أهم محتوياتها <strong>هيكل تجزئة المخاطر <span class="term">Risk Breakdown Structure (RBS)</span>:</strong> وهي أداة هيكلية هرمية تُستخدم لتصنيف المخاطر وتنظيمها حسب المصدر (مثال: مخاطر تقنية، بيئية، إدارية، خارجية).</p>
+            </div>
+        </div>
+
+        <div class="chapter">
+            <div class="chapter-title"><i class="fa-solid fa-magnifying-glass"></i> الفصل الثاني: تحديد المخاطر <span class="term">Identify Risks</span></div>
+            <p>عملية تحديد المخاطر الفردية ومصادر المخاطر العامة وتوثيق خصائصها. وهي <strong>عملية دورية ومستمرة</strong> طوال دورة حياة المشروع وليست نشاطاً يتم لمرة واحدة فقط.</p>
+
+            <p><strong>أهم الأدوات والتقنيات المستخدمة:</strong></p>
+            <ul>
+                <li><strong>العصف الذهني <span class="term">Brainstorming</span>:</strong> جمع أكبر عدد ممكن من المخاطر المحتملة عبر تفاعل الفريق بشكل مفتوح.</li>
+                <li><strong>تقنية دلفي <span class="term">Delphi Technique</span>:</strong> جمع آراء الخبراء <em>دون الكشف عن هوياتهم</em> لتجنب الانحياز للرأي السائد أو تأثير المديرين.</li>
+                <li><strong>تحليل SWOT:</strong> دراسة المشروع من 4 محاور: نقاط القوة (Strengths)، نقاط الضعف (Weaknesses)، الفرص (Opportunities)، والتهديدات (Threats).</li>
+                <li><strong>قوائم الفحص <span class="term">Checklist Analysis</span>:</strong> الاعتماد على المعلومات والدروس المستفادة من مشاريع سابقة مماثلة.</li>
+                <li><strong>مخطط السبب والأثر <span class="term">Ishikawa / Fishbone Diagram</span>:</strong> يستخدم لتحديد الأسباب الجذرية الكامنة وراء المخاطر المحتملة.</li>
+            </ul>
+
+            <div class="concept-box">
+                <div class="concept-title">المخرج الرئيسي: سجل المخاطر <span class="term">Risk Register</span></div>
+                <p>الوثيقة الحية التي تولد هنا، وتحتوي مبدئياً على قائمة بالمخاطر المحددة، ملاك المخاطر المحتملين (Potential Owners)، والاستجابات الأولية. <em>(ملاحظة: الاستجابات النهائية والممولة لا تُنتج هنا، بل في مرحلة تخطيط الاستجابات).</em></p>
+            </div>
+        </div>
+
+        <div class="chapter">
+            <div class="chapter-title"><i class="fa-solid fa-filter"></i> الفصل الثالث: التحليل الكيفي للمخاطر <span class="term">Qualitative Risk Analysis</span></div>
+            <p>التحليل الكيفي هو الفلتر الأول. ينصب التركيز هنا على تقييم <strong>(الاحتمالية Probability)</strong> و <strong>(الأثر Impact)</strong> لترتيب المخاطر حسب أولوياتها. وتتميز هذه العملية بأنها <strong>سريعة، قليلة التكلفة نسبياً، وإلزامية</strong> لجميع المخاطر.</p>
+
+            <p><strong>أهم الأدوات والمفاهيم:</strong></p>
+            <ul>
+                <li><strong>مصفوفة الاحتمالية والأثر <span class="term">P&I Matrix</span>:</strong> الأداة الأكثر شيوعاً لتصنيف وترتيب المخاطر كيفياً.</li>
+                <li><strong>تقييم جودة بيانات المخاطر <span class="term">Risk Data Quality Assessment</span>:</strong> التأكد من أن البيانات والمعلومات المستخدمة في تقييم الخطر دقيقة، موضوعية، وموثوقة.</li>
+                <li><strong>الاستعجال / الإلحاح <span class="term">Urgency</span>:</strong> عامل مهم يقيس مدى سرعة استجابة المنظمة المطلوبة للخطر (متى يجب أن نتحرك؟).</li>
+            </ul>
+
+            <div class="important-note">
+                <i class="fa-solid fa-list-check"></i>
+                <div>
+                    <strong>قائمة المراقبة <span class="term">Watchlist</span>:</strong><br>
+                    المخرجات الأساسية لهذه العملية هي تحديث سجل المخاطر بترتيب الأولويات. المخاطر ذات الأولوية المنخفضة جداً يتم إبعادها عن التركيز الرئيسي ووضعها في قائمة المراقبة للرجوع إليها مستقبلاً إذا تغيرت الظروف.
+                </div>
+            </div>
+        </div>
+
+        <div class="chapter">
+            <div class="chapter-title"><i class="fa-solid fa-chart-line"></i> الفصل الرابع: التحليل الكمي للمخاطر <span class="term">Quantitative Risk Analysis</span></div>
+            <p>يهدف إلى تحليل <strong>التأثير الرقمي والمالي الإجمالي</strong> للمخاطر على أهداف المشروع ككل. <strong>هذه العملية اختيارية / غير إلزامية</strong>، وتجرى غالباً للمشاريع الكبيرة، المعقدة، أو الاستراتيجية.</p>
+
+            <p><strong>أهم الأدوات التقنية والرياضية:</strong></p>
+            <ul>
+                <li><strong>محاكاة مونت كارلو <span class="term">Monte Carlo Simulation</span>:</strong> برنامج حاسوبي يعطينا "المنحنى الاحتمالي" (S-Curve) لمعرفة نسبة فرصة إنهاء المشروع في تاريخ محدد أو بتكلفة محددة.</li>
+                <li><strong>تحليل الحساسية <span class="term">Sensitivity Analysis</span>:</strong> يقيس مدى تأثير تغير متغير واحد فقط على الأهداف مع تثبيت الباقي. ويُعرض عادةً باستخدام <strong>مخطط الإعصار <span class="term">Tornado Diagram</span></strong> والذي يرتب المخاطر من الأكثر تأثيراً في الأعلى للأقل في الأسفل.</li>
+            </ul>
+
+            <div class="example-box">
+                <div class="example-title">شجرة القرارات والقيمة المالية المتوقعة <span class="term">Decision Tree & EMV</span></div>
+                <p>تستخدم لمقارنة المسارات البديلة واختيار الأفضل مالياً. تُحسب بالمعادلة البسيطة:<br>
+                <strong>EMV = Probability × Impact</strong><br><br>
+                <em>مثال للامتحان:</em> خطر احتمالية حدوثه 20%، وتأثيره المالي حال حدوثه هو خسارة 10,000 دولار.<br>
+                القيمة المالية المتوقعة = 20% × (-10,000) = <strong>خسارة 2,000 دولار</strong>.</p>
+            </div>
+        </div>
+
+        <div class="chapter">
+            <div class="chapter-title"><i class="fa-solid fa-shield-halved"></i> الفصل الخامس: تخطيط الاستجابة للمخاطر <span class="term">Plan Risk Responses</span></div>
+            
+            <p><strong>1. استراتيجيات التهديدات السلبية <span class="term">Negative Risks</span>:</strong></p>
+            <table>
+                <tr><th>الاستراتيجية</th><th>الشرح الدقيق</th></tr>
+                <tr><td><strong>تجنب <span class="term">Avoid</span></strong></td><td>تغيير خطة المشروع، الجدول الزمني، أو النطاق للقضاء على الخطر تماماً (مثال: تغيير مسار الحفر لتجنب خط غاز).</td></tr>
+                <tr><td><strong>نقل <span class="term">Transfer</span></strong></td><td>نقل الأثر المالي أو المسؤولية لطرف ثالث (مثال: شراء بوليصة تأمين، أو إسناد العمل لمقاول باطن).</td></tr>
+                <tr><td><strong>تخفيف <span class="term">Mitigate</span></strong></td><td>تقليل احتمالية أو أثر الخطر ليكون ضمن الحدود المقبولة (مثال: إجراء اختبارات إضافية للتربة).</td></tr>
+                <tr><td><strong>قبول <span class="term">Accept</span></strong></td><td>الاعتراف بالخطر دون اتخاذ إجراء استباقي (قد يكون القبول نشطاً بتخصيص ميزانية طوارئ، أو سلبياً بعدم فعل شيء).</td></tr>
+                <tr><td><strong>تصعيد <span class="term">Escalate</span></strong></td><td>رفع الخطر للإدارة العليا لأنه خارج نطاق أو صلاحيات مدير المشروع.</td></tr>
+            </table>
+
+            <p><strong>2. استراتيجيات الفرص الإيجابية <span class="term">Positive Risks</span>:</strong></p>
+            <ul>
+                <li><strong>استغلال <span class="term">Exploit</span>:</strong> التأكد من حدوث الفرصة 100% وإزالة أي شكوك (مثل تخصيص أفضل المهندسين للمشروع لإنهاءه مبكراً ونيل مكافأة).</li>
+                <li><strong>مشاركة <span class="term">Share</span>:</strong> تخصيص الفرصة لطرف ثالث قادر على اقتناصها بشكل أفضل (مثل الدخول في شراكة / Joint Venture).</li>
+                <li><strong>تعزيز <span class="term">Enhance</span>:</strong> زيادة احتمالية أو أثر الفرصة (عكس التخفيف).</li>
+            </ul>
+
+            <div class="concept-box">
+                <div class="concept-title">مفاهيم مابعد تخطيط الاستجابة:</div>
+                <ul>
+                    <li><strong>الخطر المتبقي <span class="term">Residual Risk</span>:</strong> الخطر الذي يتبقى متوقعاً وقائماً حتى بعد تنفيذ خطط الاستجابة المصممة له.</li>
+                    <li><strong>الخطر الثانوي <span class="term">Secondary Risk</span>:</strong> خطر جديد ينشأ كـنتيجة مباشرة لتنفيذ استجابة لخطر أصلي.</li>
+                    <li><strong>خطة الطوارئ <span class="term">Contingency Plan</span>:</strong> خطة لا يتم تفعيلها إلا عند وقوع <strong>محفزات أو مؤشرات قاطعة <span class="term">Triggers</span></strong>.</li>
+                </ul>
+            </div>
+
+            <div class="important-note">
+                <i class="fa-solid fa-sack-dollar"></i>
+                <div>
+                    <strong>من يملك المال؟ (سؤال امتحان مؤكد)</strong>
+                    <ul>
+                        <li><strong>احتياطي الطوارئ <span class="term">Contingency Reserve</span>:</strong> تحت الصلاحية المباشرة لـ (مدير المشروع)، ويستخدم لمواجهة المخاطر المحددة مسبقاً (Known-Unknowns).</li>
+                        <li><strong>احتياطي الإدارة <span class="term">Management Reserve</span>:</strong> تحت صلاحية (الإدارة العليا/الراعي)، ولا يستخدم إلا بعد موافقتهم، ويخصص للمخاطر غير المتوقعة (Unknown-Unknowns).</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="chapter">
+            <div class="chapter-title"><i class="fa-solid fa-eye"></i> الفصل السادس: تنفيذ ومراقبة المخاطر <span class="term">Implement & Monitor Risks</span></div>
+            <p>هنا ننتقل من الورق إلى أرض الموقع. أثناء التنفيذ، يجب التأكد من تطبيق الاستجابات المتفق عليها، وتقييم فاعليتها.</p>
+            
+            <ul>
+                <li><strong>مراجعات المخاطر <span class="term">Risk Audits</span>:</strong> أداة هامة تستخدم لتقييم فاعلية عمليات إدارة المخاطر الشاملة والاستجابات المنفذة. هل نعمل بشكل صحيح؟</li>
+                <li><strong>الحلول الالتفافية <span class="term">Workarounds</span>:</strong> استجابات غير مخطط لها سلفاً، يتم ابتكارها وتنفيذها للتعامل مع مخاطر حدثت فجأة (لم تكن في السجل).</li>
+            </ul>
+            
+            <div class="concept-box">
+                <div class="concept-title">إغلاق الخطر <span class="term">Close Risk</span></div>
+                <p>عند التأكد من زوال خطر معين تماماً أو انتهاء فترته الزمنية المحددة دون وقوعه، يجب على مدير المشروع فوراً <strong>تحديث سجل المخاطر بإغلاقه وتوثيق الدروس المستفادة</strong>.</p>
+            </div>
+        </div>
+
+        <div class="case-study">
+            <div class="case-title">دراسة حالة تطبيقية متكاملة <br><span style="font-size: 18px; color: var(--text-light); font-weight: normal;">مشروع إنشاء مركز بيانات (Data Center) رئيسي في الرياض</span></div>
+            
+            <p><strong>السيناريو:</strong> أنت مدير مشروع مكلف بإنشاء "Data Center" متطور لصالح جهة حكومية. المشروع معقد تقنياً، ذو ميزانية ضخمة، وجدوله الزمني حرج جداً. كيف ستطبق إدارة المخاطر؟</p>
+
+            <div class="case-step">
+                <h4>1. التخطيط <span class="term">Plan</span></h4>
+                <p>جلست مع الإدارة والجهة المالكة لتحديد "عتبة المخاطر". المالك أكد أن (وقت التسليم) هو الأهم، ولديهم استعداد لدفع تكاليف إضافية (تسامح في التكلفة) مقابل عدم التأخير (شهية مخاطر صفرية للوقت). قمت بإصدار "خطة إدارة المخاطر" التي توضح أننا سنجتمع أسبوعياً لمراجعة المخاطر.</p>
+            </div>
+
+            <div class="case-step">
+                <h4>2. التحديد <span class="term">Identify</span></h4>
+                <p>قمت بعمل جلسة "عصف ذهني" مع مهندسي الكهرباء، الميكانيكا، وموردي الـ IT. تم تحديد عدة مخاطر، منها: <em>"احتمالية تأخر وصول السيرفرات (Servers) وأجهزة التبريد الدقيق (PAC) بسبب مشاكل سلاسل الإمداد العالمية"</em>. تم تسجيل هذا الخطر في <strong>سجل المخاطر</strong>.</p>
+            </div>
+
+            <div class="case-step">
+                <h4>3. التحليل الكيفي <span class="term">Qualitative</span></h4>
+                <p>باستخدام P&I Matrix، قيّم الفريق أن احتمالية هذا التأخير (عالية 80%)، وأثره على المشروع (كارثي، سيوقف التسليم). فتم تصنيف الخطر كـ <strong>أولوية قصوى (High Severity)</strong>.</p>
+            </div>
+
+            <div class="case-step">
+                <h4>4. التحليل الكمي <span class="term">Quantitative</span></h4>
+                <p>لأن المشروع استراتيجي، قمت بعمل تحليل EMV. تأخير السيرفرات سيكلف غرامات تأخير بقيمة 100,000 ريال. (100 ألف × 80% = 80,000 ريال). هذا الرقم يجب أخذه في الاعتبار في ميزانية المخاطر.</p>
+            </div>
+
+            <div class="case-step">
+                <h4>5. تخطيط الاستجابة <span class="term">Response</span></h4>
+                <p>اخترت استراتيجية <strong>التخفيف (Mitigate)</strong>: قمنا بإصدار أوامر الشراء (PO) مبكراً جداً وشحنها جوياً بدلاً من الشحن البحري لتقليل احتمالية التأخير. كما اخترت استراتيجية <strong>النقل (Transfer)</strong> عبر عمل بوليصة تأمين شاملة على الشحنة ضد أضرار النقل.</p>
+            </div>
+
+            <div class="case-step">
+                <h4>6. المراقبة <span class="term">Monitor</span></h4>
+                <p>أثناء التنفيذ، تابعت خطوط الشحن. وصلت المعدات بسلام وتم تركيب السيرفرات. قمت بفتح سجل المخاطر، وعملت <strong>(إغلاق الخطر - Close Risk)</strong>، وتم تحرير المبلغ المتبقي من احتياطي الطوارئ الخاص بهذا الخطر.</p>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <div class="footer-logo">BA <span>Academy</span></div>
+        <p>Project Risk Management Professional (PMI-RMP) Study Guide</p>
+        <p>تم إعداد هذا المرجع للارتقاء بمهندسي ومحترفي إدارة المشاريع في الوطن العربي.</p>
+        <div class="social-icons">
+            <i class="fa-brands fa-linkedin"></i>
+            <i class="fa-brands fa-youtube"></i>
+            <i class="fa-solid fa-globe"></i>
+        </div>
+        <p style="margin-top: 20px; font-size: 12px; color: #64748b;">
+            &copy; 2026 BA Engineering Academy. جميع الحقوق محفوظة. لا يجوز نسخ أو توزيع هذا المحتوى دون إذن مسبق.
+        </p>
+    </footer>
+
+</body>
+</html>
