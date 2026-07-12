@@ -1,16 +1,14 @@
-
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>الأكاديمية الهندسية المتكاملة | BA Academy Portal</title>
+    <title>BA Engineering Academy | الأكاديمية الهندسية المتكاملة</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
     <style>
+        /* 🎨 متغيرات الألوان (الوضع الفاتح الافتراضي) */
         :root {
-            --bg-sidebar: #ffffff;
             --bg-main: #f8fafc;
             --primary-blue: #1e3a8a;
             --accent-gold: #b45309;
@@ -18,6 +16,25 @@
             --text-muted: #64748b;
             --border-color: #e2e8f0;
             --active-blue: #eff6ff;
+            --card-bg: #ffffff;
+            --topbar-bg: #1e3a8a;
+            --topbar-text: #ffffff;
+            --modal-overlay: rgba(15, 23, 42, 0.6);
+        }
+
+        /* 🌙 متغيرات الألوان (الوضع الليلي) */
+        [data-theme="dark"] {
+            --bg-main: #0f172a;
+            --primary-blue: #60a5fa; /* أزرق فاتح ليناسب الخلفية الداكنة */
+            --accent-gold: #fbbf24;
+            --text-dark: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: #334155;
+            --active-blue: #1e293b;
+            --card-bg: #1e293b;
+            --topbar-bg: #020617;
+            --topbar-text: #f8fafc;
+            --modal-overlay: rgba(0, 0, 0, 0.8);
         }
 
         * {
@@ -25,205 +42,319 @@
             margin: 0;
             padding: 0;
             font-family: 'Cairo', sans-serif;
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
         }
 
         body {
-            display: flex;
-            height: 100vh;
             background-color: var(--bg-main);
             color: var(--text-dark);
-            overflow: hidden;
+            overflow-x: hidden;
         }
 
-        /* 💎 القائمة الجانبية الفاخرة (Light Sidebar) */
-        .master-sidebar {
-            width: 360px;
-            background-color: var(--bg-sidebar);
+        /* 🌐 الشريط العلوي */
+        .top-bar {
+            background-color: var(--topbar-bg);
+            color: var(--topbar-text);
+            padding: 10px 30px;
             display: flex;
-            flex-direction: column;
-            border-left: 1px solid var(--border-color);
-            box-shadow: 4px 0 20px rgba(0,0,0,0.02);
-            z-index: 100;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+            font-weight: 600;
         }
 
-        .brand-header {
-            padding: 40px 25px;
-            text-align: center;
-            border-bottom: 1px solid var(--border-color);
-            background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
-        }
-
-        .brand-logo-wrapper {
-            width: 65px;
-            height: 65px;
-            background: #ffffff;
-            border: 2px solid var(--primary-blue);
-            border-radius: 16px;
+        .top-bar-actions {
             display: flex;
             align-items: center;
-            justify-content: center;
-            margin: 0 auto 12px auto;
-            box-shadow: 0 10px 15px -3px rgba(30, 58, 138, 0.1);
+            gap: 15px;
         }
 
-        .brand-logo-wrapper i {
-            font-size: 28px;
-            color: var(--primary-blue);
-        }
-
-        .brand-header h1 {
-            font-size: 22px;
-            font-weight: 900;
-            color: var(--primary-blue);
-            letter-spacing: 0.5px;
-        }
-
-        .brand-header p {
-            font-size: 12px;
-            color: var(--text-muted);
-            margin-top: 4px;
-            font-weight: 700;
-        }
-
-        /* 📑 حاوية التبويبات والقوائم المنسدلة */
-        .nav-container {
-            flex-grow: 1;
-            padding: 20px 15px;
+        .top-bar a {
+            color: var(--topbar-text);
+            text-decoration: none;
             display: flex;
-            flex-direction: column;
+            align-items: center;
             gap: 6px;
-            overflow-y: auto;
+            transition: color 0.3s ease;
         }
 
-        .section-label {
-            font-size: 11px;
-            font-weight: 800;
-            color: #94a3b8;
-            letter-spacing: 1px;
-            margin: 12px 10px 4px 0;
-        }
-
-        /* التبويب الرئيسي الكلاسيكي */
-        .nav-tab {
-            padding: 14px 16px;
-            border-radius: 10px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            color: #475569;
-            font-size: 14.5px;
-            font-weight: 700;
-            transition: all 0.2s ease;
-            border: 1px solid transparent;
-        }
-
-        .tab-content {
-            display: flex;
-            flex-direction: column; /* ترتيب اللغتين فوق بعض بشكل أنيق */
-            line-height: 1.4;
-        }
-
-        .en-text {
-            font-size: 11.5px;
-            color: var(--text-muted);
-            font-weight: 600;
-        }
-
-        .tab-title-wrapper {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .nav-tab i.main-icon {
-            font-size: 18px;
-            width: 24px;
-            text-align: center;
-            color: #64748b;
-        }
-
-        .nav-tab:hover {
-            background-color: #f1f5f9;
-            color: var(--primary-blue);
-        }
-
-        .nav-tab.active-parent {
-            background-color: #f8fafc;
-            color: var(--primary-blue);
-            border: 1px solid var(--border-color);
-        }
-
-        /* 🔽 القائمة المنسدلة الفرعية (Dropdown Menu) */
-        .dropdown-container {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease-out;
-            padding-right: 15px; /* إزاحة التبويبات الفرعية لجعل الهيكل واضح */
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-
-        .dropdown-container.open {
-            max-height: 300px; /* الارتفاع الأقصى المسموح للقائمة عند الفتح */
-        }
-
-        .sub-tab {
-            padding: 10px 14px;
-            border-radius: 8px;
-            cursor: pointer;
-            color: #64748b;
-            font-size: 13.5px;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            transition: all 0.2s ease;
-            border-right: 2px solid transparent;
-        }
-
-        .sub-tab:hover {
-            color: var(--primary-blue);
-            background-color: #f8fafc;
-        }
-
-        .sub-tab.active {
-            background-color: var(--active-blue);
-            color: var(--primary-blue);
-            border-right-color: var(--primary-blue);
-        }
-
-        .sub-tab .sub-en {
-            font-size: 11px;
-            color: #94a3b8;
-            font-weight: 600;
-        }
-
-        /* شارات التنبيه وقريباً */
-        .badge-upcoming {
-            font-size: 10px;
-            background: #fef3c7;
+        .top-bar a:hover {
             color: var(--accent-gold);
-            padding: 2px 8px;
+        }
+
+        /* زر التسجيل المضاف */
+        .register-btn {
+            background: var(--accent-gold);
+            color: white !important;
+            padding: 6px 15px;
             border-radius: 6px;
             font-weight: 700;
         }
+        .register-btn:hover { background: #d97706 !important; }
 
-        .chevron-icon {
-            font-size: 12px;
-            transition: transform 0.3s ease;
-            color: #94a3b8;
+        .theme-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: var(--topbar-text);
+            cursor: pointer;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.3s;
+        }
+        
+        .theme-btn:hover {
+            background: rgba(255, 255, 255, 0.4);
+            transform: scale(1.1);
         }
 
-        .open .chevron-icon {
-            transform: rotate(-90deg); /* تدوير السهم عند الفتح في اتجاه التصفح */
+        /* 💎 لوحة التحكم الرئيسية */
+        #dashboard-view {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            padding: 30px 20px 50px 20px;
+            animation: fadeIn 0.4s ease-in-out;
         }
 
-        /* 📺 منطقة العرض الرئيسية (Light Viewer) */
-        .content-viewer {
+        .brand-header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .brand-logo-wrapper {
+            width: 100px;
+            height: 100px;
+            background: var(--card-bg);
+            border: 3px solid var(--primary-blue);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px auto;
+            box-shadow: 0 15px 25px -5px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .brand-logo-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .brand-logo-wrapper i {
+            font-size: 45px;
+            color: var(--primary-blue);
+            display: none;
+        }
+
+        .brand-header h1 {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--primary-blue);
+            margin-bottom: 5px;
+            text-transform: uppercase;
+        }
+
+        .brand-header p {
+            font-size: 16px;
+            color: var(--text-muted);
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        /* زر من نحن بدلاً من القسم الثابت */
+        .btn-about {
+            background: var(--active-blue);
+            color: var(--primary-blue);
+            border: 1px solid var(--border-color);
+            padding: 10px 25px;
+            border-radius: 25px;
+            font-weight: 800;
+            font-size: 14px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+        .btn-about:hover {
+            background: var(--primary-blue);
+            color: #ffffff;
+            transform: translateY(-2px);
+        }
+
+        /* 📑 حاوية المربعات */
+        .dashboard-content {
+            max-width: 1200px;
+            margin: 30px auto 0 auto;
+            width: 100%;
             flex-grow: 1;
-            background-color: #ffffff;
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--text-dark);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .section-title span {
+            color: var(--text-muted);
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+
+        /* ⬛ تصميم المربعات */
+        .nav-card {
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            padding: 30px 20px;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            aspect-ratio: 1;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            border-color: var(--primary-blue);
+            background-color: var(--active-blue);
+        }
+
+        .nav-card i.main-icon {
+            font-size: 45px;
+            color: var(--primary-blue);
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-card:hover i.main-icon {
+            transform: scale(1.1);
+        }
+
+        .nav-card h3 {
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--text-dark);
+            margin-bottom: 5px;
+        }
+
+        .nav-card p.en-text {
+            font-size: 13px;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .badge-upcoming {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 11px;
+            background: rgba(251, 191, 36, 0.2);
+            color: var(--accent-gold);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: 800;
+        }
+
+        /* 📺 منطقة العرض */
+        #viewer-view {
+            display: none;
+            flex-direction: column;
+            height: 100vh;
+            background-color: var(--bg-main);
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .viewer-navbar {
+            height: auto;
+            min-height: 70px;
+            background-color: var(--card-bg);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+            z-index: 10;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .viewer-controls {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .back-btn {
+            background-color: var(--active-blue);
+            color: var(--primary-blue);
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .back-btn:hover {
+            background-color: var(--primary-blue);
+            color: #ffffff;
+        }
+
+        /* مسار التنقل (Breadcrumb) */
+        .breadcrumb {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .breadcrumb span {
+            color: var(--primary-blue);
+        }
+
+        .breadcrumb i {
+            font-size: 10px;
+            color: var(--border-color);
+        }
+
+        .content-frame-container {
+            flex-grow: 1;
             position: relative;
         }
 
@@ -233,6 +364,7 @@
             border: none;
             display: none;
             opacity: 0;
+            transition: opacity 0.5s ease;
         }
 
         .screen-frame.active {
@@ -240,7 +372,31 @@
             opacity: 1;
         }
 
-        /* 🚧 شاشة تحت الإنشاء الفاخرة المتناسقة مع الثيم الفاتح */
+        /* ⏳ شاشة التحميل (Loading Screen) */
+        .loading-screen {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: var(--bg-main);
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 5;
+            color: var(--primary-blue);
+        }
+
+        .loading-screen i {
+            font-size: 50px;
+            margin-bottom: 15px;
+        }
+
+        .loading-screen h3 {
+            font-size: 18px;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+
+        /* 🚧 شاشة تحت الإنشاء */
         .placeholder-screen {
             width: 100%;
             height: 100%;
@@ -248,13 +404,14 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            background: radial-gradient(circle at center, #ffffff 0%, #f8fafc 100%);
+            background: radial-gradient(circle at center, var(--card-bg) 0%, var(--bg-main) 100%);
             text-align: center;
             padding: 40px;
         }
 
         .placeholder-screen.active {
             display: flex;
+            opacity: 1;
         }
 
         .construction-icon-box {
@@ -263,13 +420,13 @@
         }
 
         .construction-icon-box .main-gear {
-            font-size: 75px;
-            color: #cbd5e1;
+            font-size: 85px;
+            color: var(--border-color);
             animation: spin 10s linear infinite;
         }
 
         .construction-icon-box .sub-gear {
-            font-size: 38px;
+            font-size: 45px;
             color: var(--primary-blue);
             position: absolute;
             bottom: -5px;
@@ -278,212 +435,363 @@
         }
 
         .placeholder-screen h2 {
-            font-size: 26px;
+            font-size: 28px;
             font-weight: 900;
             color: var(--primary-blue);
             margin-bottom: 12px;
         }
 
         .placeholder-screen p {
-            font-size: 15px;
+            font-size: 16px;
             color: var(--text-muted);
-            max-width: 480px;
+            max-width: 500px;
             line-height: 1.7;
             margin-bottom: 25px;
         }
 
-        .academy-tag {
-            font-size: 11px;
-            font-weight: 700;
-            letter-spacing: 2px;
-            color: #94a3b8;
+        /* 🏅 نافذة من نحن (Modal) */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--modal-overlay);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(5px);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-content {
+            background: var(--card-bg);
+            padding: 40px 30px;
+            border-radius: 20px;
+            max-width: 600px;
+            width: 90%;
+            text-align: center;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            position: relative;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 20px;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        
+        .close-modal:hover { color: var(--accent-gold); }
+
+        .modal-icon {
+            background: var(--active-blue);
+            color: var(--primary-blue);
+            width: 60px; height: 60px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center; justify-content: center;
+            font-size: 25px;
+            margin-bottom: 20px;
+        }
+
+        .modal-content h2 {
+            color: var(--primary-blue);
+            font-size: 22px;
+            font-weight: 900;
+            margin-bottom: 15px;
+        }
+
+        .modal-content p {
+            color: var(--text-dark);
+            font-size: 16px;
+            line-height: 1.8;
+            font-weight: 600;
+        }
+
+        /* التذييل */
+        .master-footer {
+            padding: 25px 20px;
+            text-align: center;
             border-top: 1px solid var(--border-color);
-            padding-top: 12px;
-            width: 180px;
+            margin-top: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .footer-text {
+            font-size: 13px;
+            color: var(--text-muted);
+            font-weight: 700;
+        }
+
+        .linkedin-btn {
+            background-color: #0a66c2;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: background 0.3s;
+        }
+
+        .linkedin-btn:hover {
+            background-color: #084e96;
+            color: white;
         }
 
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         @keyframes spin-reverse { 0% { transform: rotate(0deg); } 100% { transform: rotate(-360deg); } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .master-footer {
-            padding: 20px;
-            text-align: center;
-            font-size: 11.5px;
-            color: var(--text-muted);
-            border-top: 1px solid var(--border-color);
-            font-weight: 600;
-            background-color: #f8fafc;
-        }
     </style>
 </head>
 <body>
 
-    <div class="master-sidebar">
+    <!-- 🌐 الشريط العلوي -->
+    <div class="top-bar" id="dashboard-topbar">
+        <div>مرحباً بكم في منصة التدريب الهندسي الأولى</div>
+        <div class="top-bar-actions">
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSdObqHCrVw77H87oI5-yZlk6wc7_QuaKMLP3ZNbC5Fp767qHw/viewform?pli=1" target="_blank" class="register-btn">
+                <i class="fa-solid fa-pen-to-square"></i> تواصل معنا للتسجيل
+            </a>
+            <a href="https://www.linkedin.com/company/ba-engineering-academy/?viewAsMember=true" target="_blank">
+                <i class="fa-brands fa-linkedin"></i> تابعنا على لينكد إن
+            </a>
+            <!-- زر الوضع الليلي -->
+            <button class="theme-btn" onclick="toggleTheme()" title="تبديل المظهر">
+                <i class="fa-solid fa-moon" id="theme-icon"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- 🌟 لوحة التحكم الرئيسية -->
+    <div id="dashboard-view">
         <div class="brand-header">
             <div class="brand-logo-wrapper">
+                <img src="logo.png" alt="BA Engineering Academy Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
                 <i class="fa-solid fa-graduation-cap"></i>
             </div>
-            <h1>BA ACADEMY</h1>
+            <h1>BA Engineering Academy</h1>
             <p>المنصة الهندسية التعليمية المتكاملة</p>
+            
+            <!-- زر تعرف علينا -->
+            <button class="btn-about" onclick="openAboutModal()">
+                <i class="fa-solid fa-circle-info"></i> تعرف علينا
+            </button>
         </div>
 
-        <div class="nav-container">
-            <div class="section-label">المسارات التدريبية | TRAINING TRACKS</div>
-            
-            <div class="nav-tab active-parent" onclick="toggleDropdown('risk-drop')">
-                <div class="tab-title-wrapper">
-                    <i class="fa-solid fa-shield-halved main-icon" style="color: var(--primary-blue);"></i>
-                    <div class="tab-content">
-                        <span>إدارة مخاطر المشاريع</span>
-                        <span class="en-text">Project Risk Management</span>
-                    </div>
-                </div>
-                <i class="fa-solid fa-chevron-left chevron-icon" id="risk-drop-chevron"></i>
+        <div class="dashboard-content">
+            <!-- القسم الأول -->
+            <div class="section-title">
+                إدارة مخاطر المشاريع <span>| Project Risk Management</span>
             </div>
-
-            <div class="dropdown-container open" id="risk-drop">
-                <div class="sub-tab active" onclick="switchScreen('main', false, this)">
-                    <div class="tab-content">
-                        <span>المحاضرات والكورس الرئيسي</span>
-                        <span class="sub-en">Main Course Lectures</span>
-                    </div>
+            <div class="cards-grid">
+                <div class="nav-card" onclick="openScreen('main', false, 'المحاضرات والكورس')">
+                    <i class="fa-solid fa-person-chalkboard main-icon"></i>
+                    <h3>المحاضرات والكورس</h3>
+                    <p class="en-text">Main Course Lectures</p>
                 </div>
-                <div class="sub-tab" onclick="switchScreen('guide', false, this)">
-                    <div class="tab-content">
-                        <span>دليل الدراسة الشامل</span>
-                        <span class="sub-en">Comprehensive Study Guide</span>
-                    </div>
+                <div class="nav-card" onclick="openScreen('guide', false, 'دليل الدراسة الشامل')">
+                    <i class="fa-solid fa-book-open-reader main-icon"></i>
+                    <h3>دليل الدراسة الشامل</h3>
+                    <p class="en-text">Comprehensive Study Guide</p>
                 </div>
-               <div class="sub-tab" style="display: none;" onclick="switchScreen('tools', false, this)">
-    <div class="tab-content">
-        <span>حاسبة وأدوات المخاطر</span>
-        <span class="sub-en">Risk Calculator & Tools</span>
-    </div>
-</div>
-                <div class="sub-tab" onclick="switchScreen('quiz', false, this)">
-                    <div class="tab-content">
-                        <span>إختبار التقييم النهائي</span>
-                        <span class="sub-en">Final Evaluation Quiz</span>
-                    </div>
+                <div class="nav-card" onclick="openScreen('tools', false, 'حاسبة وأدوات المخاطر')">
+                    <i class="fa-solid fa-calculator main-icon"></i>
+                    <h3>حاسبة وأدوات المخاطر</h3>
+                    <p class="en-text">Risk Calculator & Tools</p>
+                </div>
+                <div class="nav-card" onclick="openScreen('quiz', false, 'إختبار التقييم النهائي')">
+                    <i class="fa-solid fa-list-check main-icon"></i>
+                    <h3>إختبار التقييم النهائي</h3>
+                    <p class="en-text">Final Evaluation Quiz</p>
                 </div>
             </div>
 
-            <div class="nav-tab" onclick="switchScreen('contracts', true, this)">
-                <div class="tab-title-wrapper">
-                    <i class="fa-solid fa-file-signature main-icon"></i>
-                    <div class="tab-content">
-                        <span>إدارة العقود والتكاليف</span>
-                        <span class="en-text">Contracts & Cost Management</span>
-                    </div>
-                </div>
-                <span class="badge-upcoming">قريباً</span>
+            <!-- القسم الثاني -->
+            <div class="section-title">
+                المسارات التدريبية الأخرى <span>| Other Training Tracks</span>
             </div>
-            
-            <div class="nav-tab" onclick="switchScreen('datacenter', true, this)">
-                <div class="tab-title-wrapper">
-                    <i class="fa-solid fa-server main-icon"></i>
-                    <div class="tab-content">
-                        <span>هندسة مراكز البيانات</span>
-                        <span class="en-text">Data Center Engineering</span>
-                    </div>
+            <div class="cards-grid">
+                <div class="nav-card" onclick="openScreen('contracts', true, 'إدارة العقود والتكاليف')">
+                    <span class="badge-upcoming">قريباً</span>
+                    <i class="fa-solid fa-file-signature main-icon" style="color: var(--text-muted);"></i>
+                    <h3>إدارة العقود والتكاليف</h3>
+                    <p class="en-text">Contracts & Cost</p>
                 </div>
-                <span class="badge-upcoming">قريباً</span>
-            </div>
-
-            <div class="nav-tab" onclick="switchScreen('hse', true, this)">
-                <div class="tab-title-wrapper">
-                    <i class="fa-solid fa-helmet-safety main-icon"></i>
-                    <div class="tab-content">
-                        <span>الأمن والسلامة المهنية</span>
-                        <span class="en-text">Health, Safety & Environment (HSE)</span>
-                    </div>
+                <div class="nav-card" onclick="openScreen('datacenter', true, 'هندسة مراكز البيانات')">
+                    <span class="badge-upcoming">قريباً</span>
+                    <i class="fa-solid fa-server main-icon" style="color: var(--text-muted);"></i>
+                    <h3>هندسة مراكز البيانات</h3>
+                    <p class="en-text">Data Center Engineering</p>
                 </div>
-                <span class="badge-upcoming">قريباً</span>
+                <div class="nav-card" onclick="openScreen('hse', true, 'الأمن والسلامة المهنية')">
+                    <span class="badge-upcoming">قريباً</span>
+                    <i class="fa-solid fa-helmet-safety main-icon" style="color: var(--text-muted);"></i>
+                    <h3>الأمن والسلامة المهنية</h3>
+                    <p class="en-text">HSE Management</p>
+                </div>
             </div>
         </div>
 
         <div class="master-footer">
-            جميع الحقوق محفوظة &copy; 2026
+            <a href="https://www.linkedin.com/company/ba-engineering-academy/?viewAsMember=true" target="_blank" class="linkedin-btn">
+                <i class="fa-brands fa-linkedin-in"></i> تواصل معنا عبر لينكد إن
+            </a>
+            <div class="footer-text">
+                جميع الحقوق محفوظة &copy; 2026 لـ BA Engineering Academy
+            </div>
         </div>
     </div>
 
-    <div class="content-viewer">
-        <iframe id="screen-main" class="screen-frame active" src="core.html"></iframe>
-        <iframe id="screen-guide" class="screen-frame" src="STUDY GUIDE.html"></iframe>
-        <iframe id="screen-tools" class="screen-frame" src="tools-4.html"></iframe>
-        <iframe id="screen-quiz" class="screen-frame" src="50 PMI Question.HTML"></iframe>
-
-        <div id="screen-placeholder" class="placeholder-screen">
-            <div class="construction-icon-box">
-                <i class="fa-solid fa-circle-notch main-gear"></i>
-                <i class="fa-solid fa-screwdriver-wrench sub-gear"></i>
+    <!-- 📺 منطقة عرض المحتوى -->
+    <div id="viewer-view">
+        <div class="viewer-navbar">
+            <div class="viewer-controls">
+                <button class="back-btn" onclick="closeScreen()">
+                    <i class="fa-solid fa-arrow-right"></i>
+                    العودة للرئيسية
+                </button>
+                <!-- 🗺️ مسار التنقل (Breadcrumb) -->
+                <div class="breadcrumb">
+                    الرئيسية <i class="fa-solid fa-chevron-left"></i> <span id="breadcrumb-current">القسم</span>
+                </div>
             </div>
-            <h2 id="placeholder-title">القسم قيد التطوير والتجهيز</h2>
-            <p>نقوم حالياً بإعداد وصياغة هذا المنهج الاحترافي وفقاً لأحدث الأكواد والممارسات العالمية المعتمدة ليكون متاحاً لك قريباً جداً.</p>
-            <div class="academy-tag">BA ACADEMY PREMIUM</div>
+            <i class="fa-solid fa-graduation-cap" style="color: var(--primary-blue); font-size: 24px;"></i>
+        </div>
+
+        <div class="content-frame-container">
+            <!-- ⏳ شاشة التحميل -->
+            <div id="loading-screen" class="loading-screen">
+                <i class="fa-solid fa-circle-notch fa-spin"></i>
+                <h3>جاري تجهيز المحتوى...</h3>
+            </div>
+
+            <iframe id="screen-main" class="screen-frame" src="core.html"></iframe>
+            <iframe id="screen-guide" class="screen-frame" src="STUDY GUIDE.html"></iframe>
+            <iframe id="screen-tools" class="screen-frame" src="tools-4.html"></iframe>
+            <iframe id="screen-quiz" class="screen-frame" src="50 PMI Question.HTML"></iframe>
+
+            <!-- 🚧 شاشة البناء -->
+            <div id="screen-placeholder" class="placeholder-screen">
+                <div class="construction-icon-box">
+                    <i class="fa-solid fa-circle-notch main-gear"></i>
+                    <i class="fa-solid fa-screwdriver-wrench sub-gear"></i>
+                </div>
+                <h2 id="placeholder-title">القسم قيد التطوير والتجهيز</h2>
+                <p>نقوم حالياً بإعداد وصياغة هذا المنهج الاحترافي وفقاً لأحدث الأكواد والممارسات العالمية المعتمدة ليكون متاحاً لك قريباً جداً.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 🏅 نافذة (Modal) تعرف علينا -->
+    <div id="about-modal" class="modal-overlay">
+        <div class="modal-content">
+            <i class="fa-solid fa-xmark close-modal" onclick="closeAboutModal()"></i>
+            <div class="modal-icon">
+                <i class="fa-solid fa-building-columns"></i>
+            </div>
+            <h2>عن الأكاديمية</h2>
+            <p>
+                منصة هندسية تعليمية رائدة، تأسست على خلاصة خبرة عملية تمتد لأكثر من <strong>20 عاماً</strong> في قيادة وتنفيذ المشاريع الحكومية والخاصة وتقديم الاستشارات الهندسية. نهدف إلى سد الفجوة بين الجانب الأكاديمي والواقع العملي، وتقديم مسارات تدريبية احترافية تنقل لك خبرات السنين لتكون جاهزاً لتحديات سوق العمل الهندسي بكفاءة واحترافية.
+            </p>
         </div>
     </div>
 
     <script>
-        // دالة فتح وإغلاق القائمة المنسدلة لإدارة المخاطر
-        function toggleDropdown(dropId) {
-            const container = document.getElementById(dropId);
-            const chevron = document.getElementById(dropId + '-chevron');
-            container.classList.toggle('open');
+        // 🌙 تفعيل الوضع الليلي
+        function toggleTheme() {
+            const body = document.body;
+            const themeIcon = document.getElementById('theme-icon');
             
-            // تدوير السهم بناءً على الحالة
-            if(container.classList.contains('open')) {
-                chevron.style.transform = 'rotate(-90deg)';
+            if (body.getAttribute('data-theme') === 'dark') {
+                body.removeAttribute('data-theme');
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
             } else {
-                chevron.style.transform = 'rotate(0deg)';
+                body.setAttribute('data-theme', 'dark');
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
             }
         }
 
-        // دالة تنقل الشاشات الموحدة
-        function switchScreen(screenId, isUpcoming, clickedElement) {
-            // إزالة التفعيل من كل التبويبات الرئيسية والفرعية
-            document.querySelectorAll('.sub-tab').forEach(st => st.classList.remove('active'));
-            document.querySelectorAll('.nav-tab').forEach(nt => {
-                // الحفاظ على تمييز التبويب الأب فقط إذا كنا نتصفح ملفات إدارة المخاطر
-                if(clickedElement.classList.contains('sub-tab')) {
-                    document.querySelector('.nav-tab').classList.add('active-parent');
-                } else {
-                    nt.classList.remove('active-parent');
-                }
-            });
+        // 🏅 نوافذ (Modal) من نحن
+        function openAboutModal() {
+            document.getElementById('about-modal').style.display = 'flex';
+        }
 
-            // تطبيق التفعيل على العنصر الحالي الذي تم الضغط عليه
-            clickedElement.classList.add('active');
+        function closeAboutModal() {
+            document.getElementById('about-modal').style.display = 'none';
+        }
 
-            // إخفاء كل إطارات العرض وشاشة الانتظار
+        // إغلاق النافذة عند الضغط خارجها
+        window.onclick = function(event) {
+            const modal = document.getElementById('about-modal');
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+
+        // 📺 التحكم في الشاشات (SPA Logic)
+        const dashboardTopbar = document.getElementById('dashboard-topbar');
+        const dashboardView = document.getElementById('dashboard-view');
+        const viewerView = document.getElementById('viewer-view');
+        const breadcrumbCurrent = document.getElementById('breadcrumb-current');
+        const placeholderTitle = document.getElementById('placeholder-title');
+        const loadingScreen = document.getElementById('loading-screen');
+
+        function openScreen(screenId, isUpcoming, titleAr) {
+            // 1. تحديث مسار التنقل (Breadcrumb)
+            breadcrumbCurrent.innerText = titleAr;
+            
+            // 2. إخفاء الرئيسية وإظهار منطقة العرض وشاشة التحميل
+            dashboardTopbar.style.display = 'none';
+            dashboardView.style.display = 'none';
+            viewerView.style.display = 'flex';
+            
+            // إخفاء كافة الإطارات أولاً
             document.querySelectorAll('.screen-frame').forEach(frame => {
                 frame.classList.remove('active');
-                frame.style.display = 'none';
             });
             document.getElementById('screen-placeholder').classList.remove('active');
+            
+            // إظهار شاشة التحميل
+            loadingScreen.style.display = 'flex';
 
-            // إذا كان التبويب مضغوطاً وهو "تحت الإنشاء"
-            if (isUpcoming) {
-                const placeholder = document.getElementById('screen-placeholder');
-                const titleElement = document.getElementById('placeholder-title');
-                
-                if(screenId === 'contracts') {
-                    titleElement.innerText = "قسم إدارة العقود والتكاليف | Contracts & Cost Management";
-                } else if(screenId === 'datacenter') {
-                    titleElement.innerText = "قسم هندسة مراكز البيانات | Data Center Engineering";
-                } else if(screenId === 'hse') {
-                    titleElement.innerText = "قسم الأمن والسلامة المهنية | Health, Safety & Environment";
-                }
-                
-                placeholder.classList.add('active');
-            } else {
-                // إذا كان ملفاً جاهزاً للتشغيل الفوري
-                const activeFrame = document.getElementById('screen-' + screenId);
-                activeFrame.style.display = 'block';
-                setTimeout(() => {
+            // 3. محاكاة وقت التحميل (مثلاً 800 ملي ثانية) ثم إظهار المحتوى
+            setTimeout(() => {
+                loadingScreen.style.display = 'none';
+
+                if (isUpcoming) {
+                    const placeholder = document.getElementById('screen-placeholder');
+                    if(screenId === 'contracts') {
+                        placeholderTitle.innerText = "قسم إدارة العقود والتكاليف | Contracts & Cost";
+                    } else if(screenId === 'datacenter') {
+                        placeholderTitle.innerText = "قسم هندسة مراكز البيانات | Data Center";
+                    } else if(screenId === 'hse') {
+                        placeholderTitle.innerText = "قسم الأمن والسلامة المهنية | HSE";
+                    }
+                    placeholder.classList.add('active');
+                } else {
+                    const activeFrame = document.getElementById('screen-' + screenId);
                     activeFrame.classList.add('active');
-                }, 40);
-            }
+                }
+            }, 800); // <-- تغيير هذا الرقم للتحكم في مدة التحميل الوهمية
+        }
+
+        function closeScreen() {
+            viewerView.style.display = 'none';
+            dashboardTopbar.style.display = 'flex';
+            dashboardView.style.display = 'flex';
         }
     </script>
 </body>
