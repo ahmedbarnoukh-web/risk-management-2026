@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>شهادة إتمام تدريب احترافي | BA Engineering Academy</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;600;700;800&family=Great+Vibes&family=Montserrat:wght@600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+        }
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #051911;
+            color: #064e3b;
+            margin: 0;
+            padding: 0;
+        }
+        .cert-title-font {
+            font-family: 'Amiri', serif;
+        }
+        .signature-font {
+            font-family: 'Great Vibes', cursive;
+        }
+        @media print {
+            body { 
+                background: #fcfdfa !important; 
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                height: 100vh !important;
+                padding: 0 !important;
+                margin: 0 !important;
+            }
+            .no-print { display: none !important; }
+            #certificate-card {
+                box-shadow: none !important;
+                border: 8px solid #064e3b !important;
+                margin: auto !important;
+                width: 1120px !important;
+                height: 750px !important;
+                border-radius: 0 !important;
+                position: relative !important;
+            }
+        }
+        @page {
+            size: A4 landscape;
+            margin: 0;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center p-4">
+
+    <!-- زر الطباعة -->
+    <div class="no-print mb-6">
+        <button onclick="window.print()" class="bg-emerald-700 hover:bg-emerald-800 text-white px-8 py-3 rounded-xl font-bold shadow-xl transition-all flex items-center gap-2 cursor-pointer text-base">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+            </svg>
+            طباعة أو حفظ الشهادة PDF
+        </button>
+    </div>
+
+    <!-- حاوية الشهادة -->
+    <div id="certificate-card" class="bg-[#fcfdfa] w-[1120px] h-[750px] rounded-2xl shadow-2xl p-8 md:px-14 md:py-10 relative border-[8px] border-solid border-[#064e3b] text-center flex flex-col justify-between box-border overflow-hidden">
+        
+        <!-- علامة مائية خلفية شفافة -->
+        <div class="absolute inset-0 flex items-center justify-center pointer-events-none opacity-[0.03] z-0">
+            <img src="logo_4.jpg" alt="Watermark" class="w-[550px] h-[550px] object-contain">
+        </div>
+
+        <!-- إطار ذهبي داخلي أنيق ونظيف -->
+        <div class="absolute inset-4 border border-amber-600/60 pointer-events-none rounded-xl z-10"></div>
+
+        <!-- رأس الشهادة: اللوجو والاسم المنسق -->
+        <div class="flex flex-col items-center justify-center relative z-20 pb-3 border-b-2 border-emerald-900/15">
+            <div class="flex items-center gap-6" style="direction: ltr;">
+                <div class="bg-white p-3 rounded-2xl shadow-lg border-2 border-amber-500/50 flex items-center justify-center">
+                    <img src="logo_4.jpg" alt="BA Engineering Academy Logo" class="w-28 h-28 md:w-32 md:h-32 object-contain" style="image-rendering: -webkit-optimize-contrast; image-rendering: crisp-edges;" onerror="this.style.display='none';">
+                </div>
+                <div class="text-left">
+                    <h2 class="text-3xl md:text-4xl font-black text-[#022c22] tracking-tight font-['Montserrat']">BA Engineering Academy</h2>
+                    <div class="w-full h-[2px] bg-amber-600/70 my-1.5"></div>
+                    <p class="text-xs md:text-sm text-emerald-800 font-bold tracking-[0.35em] uppercase">FROM VISION TO EXECUTION</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- محتوى الشهادة الأساسي -->
+        <div class="relative z-20 my-auto py-2 w-full max-w-5xl mx-auto">
+            <h1 class="cert-title-font text-3xl font-bold text-[#022c22] mb-2">شهادة إتمام تدريب احترافي</h1>
+            <p class="text-slate-700 text-base mb-3 font-semibold">تُمنح هذه الشهادة إقرارًا بإتمام التدريب الشامل إلى:</p>
+
+            <!-- اسم المتدرب -->
+            <div class="my-3 w-full">
+                <span id="trainee-name" class="cert-title-font text-4xl md:text-5xl font-bold text-[#022c22] border-b-4 border-amber-600 pb-1.5 inline-block px-16 tracking-wide">اسم المتدرب الكريم</span>
+            </div>
+
+            <!-- وصف التدريب -->
+            <p class="text-slate-800 text-base md:text-lg leading-relaxed w-full mx-auto font-medium mt-3 px-4">
+                لاجتيازه بنجاح تدريب إدارة المخاطر الاحترافية المتقدمة <br>
+                <strong class="text-[#022c22] font-bold text-lg md:text-xl">(PMI-RMP Comprehensive Training Course)</strong> <br>
+                بما شمله من المحاضرات النظرية والتطبيقات العملية، وتزويده بأداة احترافية لتسجيل وتحليل المخاطر يمكن توظيفها بكفاءة في إدارة المشاريع المختلفة.
+            </p>
+        </div>
+
+        <!-- تذييل الشهادة -->
+        <div class="flex justify-between items-end relative z-20 pt-4 border-t-2 border-emerald-900/10 text-base w-full">
+            
+            <!-- مجموعة التحقق (الباركود ورقم الشهادة) -->
+            <div class="flex items-center gap-3 text-right">
+                <img id="qr-code" src="" alt="QR Verification" class="w-16 h-16 border border-emerald-900/20 rounded-lg p-1 bg-white shadow-sm">
+                <div>
+                    <p class="text-xs text-emerald-900 font-bold">رقم الشهادة:</p>
+                    <p id="cert-id" class="text-sm font-mono font-bold text-[#022c22]">BA-2026-9482</p>
+                    <p class="text-xs text-slate-500 mt-1">تاريخ الإصدار: <span id="issue-date" class="font-mono text-slate-800"></span></p>
+                </div>
+            </div>
+
+            <!-- الختم الرقمي الأمني والبيانات -->
+            <div class="flex items-center gap-4" style="direction: ltr;">
+                
+                <!-- الختم الرقمي الدائري بكلمة (مُوثَّق) -->
+                <div class="relative w-20 h-20 rounded-full border-2 border-dashed border-amber-600 flex items-center justify-center p-1 bg-emerald-950/5 shadow-inner">
+                    <div class="absolute inset-1 rounded-full border border-emerald-800/40"></div>
+                    <div class="text-center z-10 flex flex-col items-center justify-center">
+                        <span class="text-[9px] font-black text-amber-600 font-['Montserrat'] uppercase tracking-tight">SECURE</span>
+                        <svg class="w-4 h-4 text-emerald-800 my-0.5" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                        </svg>
+                        <span class="text-[10px] font-bold text-[#022c22] font-['Cairo']">مُوثَّق</span>
+                    </div>
+                </div>
+
+                <!-- اسم الأكاديمية في الأعلى واسمك وتحته -->
+                <div class="text-left w-64 flex flex-col items-start">
+                    <p class="text-[11px] font-extrabold text-emerald-800 font-['Montserrat'] tracking-wider">BA Engineering Academy</p>
+                    <div class="flex items-center gap-1.5 justify-start my-0.5">
+                        <span class="signature-font text-2xl md:text-3xl font-extrabold text-[#022c22] tracking-wide">Eng. Ahmed Ali</span>
+                    </div>
+                    <p class="text-[11px] font-bold text-slate-600 font-['Montserrat']">Founder & CEO</p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- السكريبت البرمجي لربط البيانات -->
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        
+        const name = urlParams.get('name') || 'Eng. Ahmed Ali';
+        const certId = urlParams.get('id') || 'BA-' + Math.floor(100000 + Math.random() * 900000);
+        const date = urlParams.get('date') || new Date().toLocaleDateString('ar-SA', { year: 'numeric', month: 'long', day: 'numeric' });
+
+        document.getElementById('trainee-name').innerText = decodeURIComponent(name);
+        document.getElementById('cert-id').innerText = certId;
+        document.getElementById('issue-date').innerText = date;
+
+        const platformUrl = 'https://ba-engineering-academy.netlify.app/';
+        document.getElementById('qr-code').src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(platformUrl)}`;
+    </script>
+</body>
+</html>

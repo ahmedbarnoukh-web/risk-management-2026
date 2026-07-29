@@ -6,200 +6,439 @@
     <title>الدليل الاحترافي الشامل في إدارة مخاطر المشاريع | BA Academy</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
+        /* شجرة الألوان الجديدة - طابع عصري (Emerald & Indigo) */
         :root {
-            --primary: #0f172a;
-            --secondary: #0284c7;
-            --accent: #10b981;
-            --danger: #ef4444;
-            --warning: #f59e0b;
-            --bg-light: #f8fafc;
-            --text-main: #334155;
-            --text-light: #64748b;
-            --border: #e2e8f0;
-            --gold: #d4af37;
+            --primary-dark: #111827;
+            --primary: #1e293b;
+            --secondary: #059669; /* أخضر زمردي */
+            --secondary-light: #d1fae5;
+            --accent: #4f46e5; /* أزرق نيلي */
+            --accent-light: #e0e7ff;
+            --warning: #ea580c; /* برتقالي داكن */
+            --warning-light: #ffedd5;
+            --bg-page: #f3f4f6;
+            --card-bg: #ffffff;
+            --text-main: #374151;
+            --text-light: #6b7280;
+            --border-color: #e5e7eb;
         }
 
-        * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.8; }
+        * { 
+            box-sizing: border-box; 
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; 
+            line-height: 1.8; 
+        }
         
-        body { margin: 0; padding: 0; background-color: #e2e8f0; color: var(--text-main); }
+        html {
+            scroll-behavior: smooth;
+        }
 
-        /* الغلاف / الهيدر الفخم */
+        body { 
+            margin: 0; 
+            padding: 0; 
+            background-color: var(--bg-page); 
+            color: var(--text-main); 
+            overflow-x: hidden;
+        }
+
+        /* شريط التمرير الجديد */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-page); 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--secondary); 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #047857; 
+        }
+
+        /* شريط تقدم القراءة */
+        #progress-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: transparent;
+            z-index: 9999;
+        }
+        #progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--secondary), var(--accent));
+            width: 0%;
+            transition: width 0.1s ease-out;
+            box-shadow: 0 2px 5px rgba(5, 150, 105, 0.4);
+        }
+
+        /* الهيدر الجديد - تصميم عصري ومنحني */
         header {
-            background: linear-gradient(135deg, var(--primary) 0%, #1e293b 100%);
+            background: var(--primary-dark);
             color: white;
-            padding: 80px 20px;
+            padding: 120px 20px 100px;
             text-align: center;
-            border-bottom: 5px solid var(--gold);
             position: relative;
             overflow: hidden;
+            border-bottom-left-radius: 50% 10%;
+            border-bottom-right-radius: 50% 10%;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
-        header::after {
-            content: "\f085"; /* أيقونة ترس */
-            font-family: "FontAwesome";
+        
+        header::before {
+            content: '';
             position: absolute;
-            font-size: 300px;
-            color: rgba(255,255,255,0.03);
-            top: -50px;
-            right: -50px;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(79, 70, 229, 0.15) 0%, rgba(17, 24, 39, 0) 70%);
+            animation: pulseBg 8s infinite alternate;
         }
-        header h1 { margin: 0; font-size: 42px; font-weight: 900; letter-spacing: 1px; color: #f8fafc; }
-        header p { margin: 15px 0 0; color: #cbd5e1; font-size: 20px; font-weight: 300; }
-        .academy-badge { display: inline-block; background: var(--gold); color: var(--primary); padding: 5px 15px; border-radius: 20px; font-size: 14px; font-weight: bold; margin-bottom: 20px; letter-spacing: 2px;}
+
+        @keyframes pulseBg {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.1); }
+        }
+
+        header h1 { 
+            margin: 0; 
+            font-size: 40px; 
+            font-weight: 800; 
+            color: #f9fafb; 
+            position: relative;
+            z-index: 2;
+        }
+        header p { 
+            margin: 20px 0 0; 
+            color: #9ca3af; 
+            font-size: 18px; 
+            position: relative;
+            z-index: 2;
+        }
+        .academy-badge { 
+            display: inline-block; 
+            background: rgba(5, 150, 105, 0.2); 
+            color: #34d399; 
+            padding: 8px 20px; 
+            border-radius: 30px; 
+            font-size: 13px; 
+            font-weight: 700; 
+            margin-bottom: 25px; 
+            letter-spacing: 1px;
+            position: relative;
+            z-index: 2;
+            border: 1px solid #059669;
+            backdrop-filter: blur(5px);
+        }
 
         .container {
             max-width: 1100px;
-            margin: -40px auto 40px;
+            margin: -50px auto 50px;
             padding: 0 20px;
             position: relative;
             z-index: 10;
         }
 
+        /* تصميم البطاقات (الفصول) الجديد */
         .chapter {
-            background: white;
-            border-radius: 12px;
-            padding: 40px;
-            margin-bottom: 40px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-            border: 1px solid var(--border);
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 45px;
+            margin-bottom: 35px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+
+        .chapter::after {
+            content: '';
+            position: absolute;
+            top: 45px;
+            right: 0;
+            width: 4px;
+            height: 40px;
+            background: var(--accent);
+            border-radius: 4px 0 0 4px;
+            transition: height 0.3s ease, top 0.3s ease;
+        }
+
+        .chapter:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.02);
+        }
+
+        .chapter:hover::after {
+            height: calc(100% - 90px);
         }
 
         .chapter-title {
-            color: var(--secondary);
-            font-size: 28px;
-            font-weight: 900;
-            border-bottom: 2px solid var(--bg-light);
-            padding-bottom: 15px;
-            margin-bottom: 30px;
+            color: var(--primary);
+            font-size: 26px;
+            font-weight: 800;
+            margin-bottom: 25px;
             display: flex;
             align-items: center;
             gap: 15px;
         }
+        
+        .chapter-title i {
+            background: var(--accent-light);
+            color: var(--accent);
+            padding: 12px;
+            border-radius: 12px;
+            font-size: 20px;
+        }
 
         .term {
-            background: #f1f5f9;
-            padding: 3px 10px;
-            border-radius: 6px;
-            color: var(--primary);
-            font-weight: 800;
-            font-family: 'Segoe UI', Arial, sans-serif;
-            font-size: 14px;
+            background: var(--bg-page);
+            padding: 4px 12px;
+            border-radius: 20px;
+            color: var(--accent);
+            font-weight: 700;
+            font-family: monospace;
+            font-size: 13px;
             direction: ltr;
             display: inline-block;
-            border: 1px solid #cbd5e1;
+            border: 1px dashed var(--accent);
             margin: 0 5px;
         }
 
-        .concept-box {
-            background: #f8fafc;
-            border-right: 5px solid var(--secondary);
-            padding: 20px;
-            margin: 25px 0;
-            border-radius: 6px;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+        /* صناديق المحتوى بتصميم Modern/Clean */
+        .concept-box, .example-box, .important-note {
+            padding: 25px;
+            border-radius: 16px;
+            margin: 30px 0;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
         }
-        .concept-title { font-weight: 900; color: var(--primary); margin-bottom: 10px; font-size: 18px; }
+
+        .concept-box {
+            background: var(--accent-light);
+            border: 1px solid rgba(79, 70, 229, 0.2);
+        }
+        .concept-box::before {
+            content: '\f0eb';
+            font-family: 'FontAwesome';
+            position: absolute;
+            left: -20px;
+            bottom: -30px;
+            font-size: 120px;
+            color: rgba(79, 70, 229, 0.05);
+            z-index: -1;
+            transform: rotate(-15deg);
+        }
+        .concept-title { font-weight: 800; color: var(--accent); margin-bottom: 12px; font-size: 18px; display: flex; align-items: center; gap: 10px;}
         
         .example-box {
-            background: #ecfdf5;
-            border: 1px solid #a7f3d0;
-            border-right: 5px solid var(--accent);
-            padding: 20px;
-            border-radius: 8px;
-            margin: 25px 0;
+            background: var(--secondary-light);
+            border: 1px solid rgba(5, 150, 105, 0.2);
         }
-        .example-title { color: #047857; font-weight: 900; margin-bottom: 10px; font-size: 18px;}
+        .example-title { color: var(--secondary); font-weight: 800; margin-bottom: 12px; font-size: 18px; display: flex; align-items: center; gap: 10px;}
 
         .important-note {
-            background: #fffbeb;
-            border: 1px solid #fde68a;
-            border-right: 5px solid var(--warning);
-            padding: 20px;
-            border-radius: 8px;
-            margin: 25px 0;
+            background: var(--warning-light);
+            border: 1px solid rgba(234, 88, 12, 0.2);
             display: flex;
-            gap: 15px;
+            gap: 20px;
+            align-items: flex-start;
         }
-        .important-note i { color: var(--warning); font-size: 24px; margin-top: 5px; }
+        .important-note i { 
+            color: var(--warning); 
+            font-size: 28px; 
+            background: white;
+            padding: 15px;
+            border-radius: 50%;
+            box-shadow: 0 4px 10px rgba(234, 88, 12, 0.15);
+        }
 
-        /* تنسيق دراسة الحالة */
+        /* دراسة الحالة (تصميم بطاقة مميزة) */
         .case-study {
-            background: linear-gradient(to left, #ffffff, #f8fafc);
-            border: 2px solid var(--gold);
-            border-radius: 12px;
-            padding: 40px;
-            margin-top: 50px;
-            box-shadow: 0 15px 30px rgba(212, 175, 55, 0.15);
+            background: linear-gradient(145deg, #ffffff, #f9fafb);
+            border: 2px dashed var(--secondary);
+            border-radius: 24px;
+            padding: 50px;
+            margin-top: 60px;
+            box-shadow: 0 10px 30px rgba(5, 150, 105, 0.08);
         }
         .case-title {
-            color: var(--primary);
-            font-size: 26px;
+            color: var(--primary-dark);
+            font-size: 28px;
             font-weight: 900;
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 40px;
         }
         .case-step {
             background: white;
-            padding: 20px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            border: 1px solid var(--border);
-            border-right: 4px solid var(--gold);
+            padding: 25px;
+            border-radius: 16px;
+            margin-bottom: 25px;
+            border: 1px solid var(--border-color);
+            position: relative;
+            padding-right: 40px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
         }
-        .case-step h4 { margin-top: 0; color: var(--secondary); font-size: 18px; }
+        .case-step::before {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 6px;
+            height: 60%;
+            background: var(--secondary);
+            border-radius: 4px 0 0 4px;
+        }
+        .case-step h4 { margin-top: 0; color: var(--primary); font-size: 19px; font-weight: 700; }
 
-        table { width: 100%; border-collapse: collapse; margin: 25px 0; background: white; }
-        th, td { border: 1px solid var(--border); padding: 15px; text-align: right; }
-        th { background-color: var(--primary); color: white; font-weight: bold; }
-        tr:nth-child(even) { background-color: #f8fafc; }
+        /* الجداول بتصميم نظيف */
+        table { 
+            width: 100%; 
+            border-collapse: separate; 
+            border-spacing: 0;
+            margin: 30px 0; 
+            background: white; 
+            border-radius: 12px; 
+            overflow: hidden; 
+            border: 1px solid var(--border-color);
+        }
+        th, td { 
+            padding: 18px; 
+            text-align: right; 
+            border-bottom: 1px solid var(--border-color);
+        }
+        th { 
+            background-color: var(--bg-page); 
+            color: var(--primary); 
+            font-weight: 800; 
+            font-size: 15px;
+        }
+        tr:last-child td { border-bottom: none; }
+        tr:hover td { background-color: var(--bg-page); }
         
         ul, ol { padding-right: 25px; margin-bottom: 20px; }
-        li { margin-bottom: 12px; }
+        li { margin-bottom: 15px; position: relative; }
+        ul li::marker { color: var(--accent); }
 
-        .quote {
-            font-size: 20px;
-            font-style: italic;
-            color: var(--text-light);
-            text-align: center;
-            margin: 40px 0;
-            padding: 20px;
-            border-top: 1px solid var(--border);
-            border-bottom: 1px solid var(--border);
+        /* زر العودة للأعلى (حديث) */
+        #scrollTopBtn {
+            position: fixed;
+            bottom: 40px;
+            left: 40px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            width: 50px;
+            height: 50px;
+            font-size: 18px;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        #scrollTopBtn.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        #scrollTopBtn:hover {
+            background: var(--accent);
+            transform: translateY(-5px);
         }
 
-        /* الفوتر الاحترافي */
+        /* حركات الظهور */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* الفوتر الجديد */
         footer {
-            background-color: var(--primary);
-            color: #94a3b8;
+            background-color: var(--primary-dark);
+            color: #9ca3af;
             text-align: center;
-            padding: 40px 20px;
-            margin-top: 60px;
-            border-top: 5px solid var(--gold);
+            padding: 60px 20px 40px;
+            margin-top: 80px;
+            border-top: 4px solid var(--accent);
         }
-        footer .footer-logo { font-size: 24px; font-weight: 900; color: white; margin-bottom: 10px; letter-spacing: 1px; }
-        footer .footer-logo span { color: var(--gold); }
-        footer p { margin: 5px 0; font-size: 14px; }
-        footer .social-icons { margin-top: 20px; }
-        footer .social-icons i { font-size: 20px; margin: 0 10px; color: #cbd5e1; cursor: pointer; transition: 0.3s; }
-        footer .social-icons i:hover { color: var(--gold); }
+        footer .footer-logo { 
+            font-size: 28px; 
+            font-weight: 900; 
+            color: white; 
+            margin-bottom: 15px; 
+        }
+        footer .footer-logo span { color: var(--secondary); }
+        footer p { margin: 8px 0; font-size: 15px; }
+        footer .social-icons { margin-top: 25px; }
+        footer .social-icons i { 
+            font-size: 20px; 
+            margin: 0 12px; 
+            color: #6b7280; 
+            cursor: pointer; 
+            transition: 0.3s; 
+            background: rgba(255,255,255,0.05);
+            padding: 12px;
+            border-radius: 50%;
+        }
+        footer .social-icons i:hover { 
+            color: white; 
+            background: var(--accent);
+            transform: translateY(-3px); 
+        }
+        .instructor-signature {
+            color: var(--secondary);
+            font-weight: bold;
+            font-size: 15px;
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px dashed rgba(255,255,255,0.1);
+            display: inline-block;
+            letter-spacing: 0.5px;
+        }
     </style>
 </head>
 <body>
 
+    <!-- شريط التقدم -->
+    <div id="progress-container">
+        <div id="progress-bar"></div>
+    </div>
+
+    <!-- زر العودة للأعلى -->
+    <button id="scrollTopBtn" onclick="scrollToTop()" title="العودة للأعلى">
+        <i class="fa-solid fa-arrow-up"></i>
+    </button>
+
     <header>
-        <div class="academy-badge">PREMIUM STUDY GUIDE</div>
+        <div class="academy-badge"><i class="fa-solid fa-bolt"></i> الدليل المتقدم</div>
         <h1>المرجع الشامل في إدارة المخاطر الاحترافية</h1>
         <p>دليلك الهندسي المتكامل لاجتياز اختبار PMI-RMP وتطبيق المخاطر باحترافية</p>
     </header>
 
     <div class="container">
         
-        <div class="chapter">
+        <div class="chapter reveal">
             <div class="chapter-title"><i class="fa-solid fa-book-open"></i> الفصل التمهيدي: مفاهيم وفلسفة إدارة المخاطر</div>
             
             <p>الهندسة ليست مجرد تصاميم وحسابات، بل هي القدرة على التنبؤ بما قد يفشل، والاستعداد له قبل حدوثه. في هذا الفصل نضع الأساسيات.</p>
             
             <div class="concept-box">
-                <div class="concept-title">تعريف الخطر <span class="term">Project Risk</span></div>
+                <div class="concept-title"><i class="fa-solid fa-lightbulb"></i> تعريف الخطر <span class="term">Project Risk</span></div>
                 <p>وفقاً لمعهد إدارة المشاريع (PMI)، الخطر هو <strong>حدث أو ظرف غير مؤكد</strong>، إذا وقع، سيكون له تأثير (إيجابي أو سلبي) على هدف أو أكثر من أهداف المشروع (الوقت، التكلفة، الجودة، النطاق).<br>
                 المخاطر السلبية تسمى <strong>تهديدات <span class="term">Threats</span></strong>، والمخاطر الإيجابية تسمى <strong>فرص <span class="term">Opportunities</span></strong>.</p>
             </div>
@@ -220,23 +459,23 @@
             </div>
         </div>
 
-        <div class="chapter">
+        <div class="chapter reveal">
             <div class="chapter-title"><i class="fa-solid fa-sitemap"></i> الفصل الأول: التخطيط لإدارة المخاطر <span class="term">Plan Risk Management</span></div>
             <p><strong>الهدف:</strong> تحديد كيفية إجراء وخطوات أنشطة إدارة المخاطر للمشروع. يجب أن تبدأ هذه العملية في <strong>أقرب وقت ممكن</strong> عند بدء المشروع أو صياغة ميثاق المشروع.</p>
             
-            <div class="example-box">
-                <div class="example-title">أهمية إشراك أصحاب المصلحة <span class="term">Stakeholder Involvement</span></div>
+            <div class="example-box reveal">
+                <div class="example-title"><i class="fa-solid fa-users-gear"></i> أهمية إشراك أصحاب المصلحة <span class="term">Stakeholder Involvement</span></div>
                 <p>تخيل أنك تدير مشروعاً وتضع خطة طوارئ بتكلفة 10% من الميزانية، بينما العميل (الراعي) لديه عتبة مخاطر لا تسمح بتجاوز الميزانية بـ 2% فقط! إشراك أصحاب المصلحة في التخطيط يضمن توافق التوقعات وفهم مستويات تحملهم للمخاطر بدقة قبل بدء العمل.</p>
             </div>
 
-            <div class="concept-box">
-                <div class="concept-title">المخرج الرئيسي: خطة إدارة المخاطر <span class="term">Risk Management Plan</span></div>
+            <div class="concept-box reveal">
+                <div class="concept-title"><i class="fa-solid fa-file-contract"></i> المخرج الرئيسي: خطة إدارة المخاطر <span class="term">Risk Management Plan</span></div>
                 <p>وثيقة تحتوي على المنهجية، الأدوار، المسؤوليات، والميزانية الخاصة بالتعامل مع المخاطر عموماً. <em>(ملاحظة هامة جداً للامتحان: هذه الخطة لا تحتوي على قائمة المخاطر نفسها، بل تشرح "كيف" سنديرها).</em></p>
                 <p>من أهم محتوياتها <strong>هيكل تجزئة المخاطر <span class="term">Risk Breakdown Structure (RBS)</span>:</strong> وهي أداة هيكلية هرمية تُستخدم لتصنيف المخاطر وتنظيمها حسب المصدر (مثال: مخاطر تقنية، بيئية، إدارية، خارجية).</p>
             </div>
         </div>
 
-        <div class="chapter">
+        <div class="chapter reveal">
             <div class="chapter-title"><i class="fa-solid fa-magnifying-glass"></i> الفصل الثاني: تحديد المخاطر <span class="term">Identify Risks</span></div>
             <p>عملية تحديد المخاطر الفردية ومصادر المخاطر العامة وتوثيق خصائصها. وهي <strong>عملية دورية ومستمرة</strong> طوال دورة حياة المشروع وليست نشاطاً يتم لمرة واحدة فقط.</p>
 
@@ -249,13 +488,13 @@
                 <li><strong>مخطط السبب والأثر <span class="term">Ishikawa / Fishbone Diagram</span>:</strong> يستخدم لتحديد الأسباب الجذرية الكامنة وراء المخاطر المحتملة.</li>
             </ul>
 
-            <div class="concept-box">
-                <div class="concept-title">المخرج الرئيسي: سجل المخاطر <span class="term">Risk Register</span></div>
+            <div class="concept-box reveal">
+                <div class="concept-title"><i class="fa-solid fa-clipboard-list"></i> المخرج الرئيسي: سجل المخاطر <span class="term">Risk Register</span></div>
                 <p>الوثيقة الحية التي تولد هنا، وتحتوي مبدئياً على قائمة بالمخاطر المحددة، ملاك المخاطر المحتملين (Potential Owners)، والاستجابات الأولية. <em>(ملاحظة: الاستجابات النهائية والممولة لا تُنتج هنا، بل في مرحلة تخطيط الاستجابات).</em></p>
             </div>
         </div>
 
-        <div class="chapter">
+        <div class="chapter reveal">
             <div class="chapter-title"><i class="fa-solid fa-filter"></i> الفصل الثالث: التحليل الكيفي للمخاطر <span class="term">Qualitative Risk Analysis</span></div>
             <p>التحليل الكيفي هو الفلتر الأول. ينصب التركيز هنا على تقييم <strong>(الاحتمالية Probability)</strong> و <strong>(الأثر Impact)</strong> لترتيب المخاطر حسب أولوياتها. وتتميز هذه العملية بأنها <strong>سريعة، قليلة التكلفة نسبياً، وإلزامية</strong> لجميع المخاطر.</p>
 
@@ -266,7 +505,7 @@
                 <li><strong>الاستعجال / الإلحاح <span class="term">Urgency</span>:</strong> عامل مهم يقيس مدى سرعة استجابة المنظمة المطلوبة للخطر (متى يجب أن نتحرك؟).</li>
             </ul>
 
-            <div class="important-note">
+            <div class="important-note reveal">
                 <i class="fa-solid fa-list-check"></i>
                 <div>
                     <strong>قائمة المراقبة <span class="term">Watchlist</span>:</strong><br>
@@ -275,18 +514,26 @@
             </div>
         </div>
 
-        <div class="chapter">
+        <div class="chapter reveal">
             <div class="chapter-title"><i class="fa-solid fa-chart-line"></i> الفصل الرابع: التحليل الكمي للمخاطر <span class="term">Quantitative Risk Analysis</span></div>
             <p>يهدف إلى تحليل <strong>التأثير الرقمي والمالي الإجمالي</strong> للمخاطر على أهداف المشروع ككل. <strong>هذه العملية اختيارية / غير إلزامية</strong>، وتجرى غالباً للمشاريع الكبيرة، المعقدة، أو الاستراتيجية.</p>
 
-            <p><strong>أهم الأدوات التقنية والرياضية:</strong></p>
+            <div class="concept-box reveal">
+                <div class="concept-title"><i class="fa-solid fa-microchip"></i> محاكاة مونت كارلو بالتفصيل <span class="term">Monte Carlo Simulation</span></div>
+                <p>هي تقنية تحليل كمي متقدمة تعتمد على النمذجة الحاسوبية لتنفيذ آلاف التكرارات (Iterations) لسيناريوهات المشروع المختلفة. بدلاً من الاعتماد على قيمة تقديرية واحدة (Single-point estimate) مثل القول: "المشروع سينتهي في 100 يوم"، تستخدم مونت كارلو التوزيعات الاحتمالية (مثل التوزيع الطبيعي أو الثلاثي PERT) لتقديم نطاق كامل من النتائج الممكنة.</p>
+                <ul>
+                    <li><strong>المنحنى الاحتمالي (S-Curve):</strong> هو المخرج الأساسي والأهم لهذه المحاكاة. يوضح الاحتمالية التراكمية لتحقيق أهداف المشروع بتكلفة أو مدة معينة. <em>(مثال يهمك كمهندس: يعرض المنحنى أن هناك فرصة 85% لإنهاء المشروع بميزانية لا تتجاوز 5 ملايين، وفرصة 15% فقط لإنهائه بـ 4.5 مليون).</em></li>
+                    <li><strong>التطبيق الهندسي في الموقع:</strong> عند التخطيط لعملية سحب كابلات رئيسية أو صب خرسانة ضخمة، قد تتراوح المدة بين 10 إلى 20 يوماً بناءً على عوامل الطقس وكفاءة العمالة. محاكاة مونت كارلو تحسب تأثير هذا التباين الدقيق على المسار الحرج (Critical Path) للمشروع بالكامل، لتعطيك تاريخ تسليم واقعي ومبني على أسس رياضية.</li>
+                </ul>
+            </div>
+
+            <p><strong>أدوات أخرى هامة:</strong></p>
             <ul>
-                <li><strong>محاكاة مونت كارلو <span class="term">Monte Carlo Simulation</span>:</strong> برنامج حاسوبي يعطينا "المنحنى الاحتمالي" (S-Curve) لمعرفة نسبة فرصة إنهاء المشروع في تاريخ محدد أو بتكلفة محددة.</li>
                 <li><strong>تحليل الحساسية <span class="term">Sensitivity Analysis</span>:</strong> يقيس مدى تأثير تغير متغير واحد فقط على الأهداف مع تثبيت الباقي. ويُعرض عادةً باستخدام <strong>مخطط الإعصار <span class="term">Tornado Diagram</span></strong> والذي يرتب المخاطر من الأكثر تأثيراً في الأعلى للأقل في الأسفل.</li>
             </ul>
 
-            <div class="example-box">
-                <div class="example-title">شجرة القرارات والقيمة المالية المتوقعة <span class="term">Decision Tree & EMV</span></div>
+            <div class="example-box reveal">
+                <div class="example-title"><i class="fa-solid fa-calculator"></i> شجرة القرارات والقيمة المالية المتوقعة <span class="term">Decision Tree & EMV</span></div>
                 <p>تستخدم لمقارنة المسارات البديلة واختيار الأفضل مالياً. تُحسب بالمعادلة البسيطة:<br>
                 <strong>EMV = Probability × Impact</strong><br><br>
                 <em>مثال للامتحان:</em> خطر احتمالية حدوثه 20%، وتأثيره المالي حال حدوثه هو خسارة 10,000 دولار.<br>
@@ -294,7 +541,7 @@
             </div>
         </div>
 
-        <div class="chapter">
+        <div class="chapter reveal">
             <div class="chapter-title"><i class="fa-solid fa-shield-halved"></i> الفصل الخامس: تخطيط الاستجابة للمخاطر <span class="term">Plan Risk Responses</span></div>
             
             <p><strong>1. استراتيجيات التهديدات السلبية <span class="term">Negative Risks</span>:</strong></p>
@@ -314,16 +561,28 @@
                 <li><strong>تعزيز <span class="term">Enhance</span>:</strong> زيادة احتمالية أو أثر الفرصة (عكس التخفيف).</li>
             </ul>
 
-            <div class="concept-box">
-                <div class="concept-title">مفاهيم مابعد تخطيط الاستجابة:</div>
+            <div class="example-box reveal" style="background: var(--warning-light); border-color: rgba(234, 88, 12, 0.2);">
+                <div class="example-title" style="color: var(--warning);"><i class="fa-solid fa-bolt"></i> محفزات الخطر (علامات الإنذار المبكر) <span class="term" style="border-color: var(--warning); color: var(--warning);">Risk Triggers / Early Warning Signs</span></div>
+                <p style="color: var(--text-main);">محفز الخطر (Trigger) ليس هو الخطر نفسه، بل هو <strong>المؤشر أو العَرَض</strong> الذي يدل على أن الخطر على وشك الحدوث، أو أنه قد بدأ في الحدوث فعلياً. مراقبة هذه المحفزات هي ما يخبر مدير المشروع ومالك الخطر باللحظة الدقيقة التي يجب فيها تفعيل <strong>خطة الطوارئ <span class="term" style="border-color: var(--warning); color: var(--warning);">Contingency Plan</span></strong>.</p>
+                <p><strong>أمثلة هندسية وعملية لترسيخ المفهوم:</strong></p>
+                <ul>
+                    <li><strong>الخطر:</strong> تأخر المورد الخارجي في تسليم اللوحات الكهربائية الرئيسية (MDBs). <br>
+                    <strong>المحفز (Trigger):</strong> فشل المورد في تزويدنا بالمخططات التصميمية (Shop Drawings) للاعتماد خلال أول أسبوعين من تاريخ التعاقد. بمجرد ظهور هذا المحفز، نُفعّل خطة الطوارئ (كالبحث عن مورد بديل).</li>
+                    <li><strong>الخطر:</strong> توقف العمل بسبب إضراب العمالة لظروف الموقع. <br>
+                    <strong>المحفز (Trigger):</strong> تزايد الشكاوى الشفهية المتكررة من العمال وانخفاض معدل الإنتاجية اليومية بنسبة 20% لمدة ثلاثة أيام متتالية.</li>
+                </ul>
+                <p><em>نقطة هامة للمنصة:</em> نجاح إدارة المخاطر الاستباقية يعتمد كلياً على التوثيق الدقيق للمحفزات في "سجل المخاطر"، وتكليف "مالك الخطر - Risk Owner" بمسؤولية مراقبة هذا المحفز دون غيره.</p>
+            </div>
+
+            <div class="concept-box reveal">
+                <div class="concept-title"><i class="fa-solid fa-layer-group"></i> مفاهيم مابعد تخطيط الاستجابة:</div>
                 <ul>
                     <li><strong>الخطر المتبقي <span class="term">Residual Risk</span>:</strong> الخطر الذي يتبقى متوقعاً وقائماً حتى بعد تنفيذ خطط الاستجابة المصممة له.</li>
                     <li><strong>الخطر الثانوي <span class="term">Secondary Risk</span>:</strong> خطر جديد ينشأ كـنتيجة مباشرة لتنفيذ استجابة لخطر أصلي.</li>
-                    <li><strong>خطة الطوارئ <span class="term">Contingency Plan</span>:</strong> خطة لا يتم تفعيلها إلا عند وقوع <strong>محفزات أو مؤشرات قاطعة <span class="term">Triggers</span></strong>.</li>
                 </ul>
             </div>
 
-            <div class="important-note">
+            <div class="important-note reveal">
                 <i class="fa-solid fa-sack-dollar"></i>
                 <div>
                     <strong>من يملك المال؟ (سؤال امتحان مؤكد)</strong>
@@ -335,7 +594,7 @@
             </div>
         </div>
 
-        <div class="chapter">
+        <div class="chapter reveal">
             <div class="chapter-title"><i class="fa-solid fa-eye"></i> الفصل السادس: تنفيذ ومراقبة المخاطر <span class="term">Implement & Monitor Risks</span></div>
             <p>هنا ننتقل من الورق إلى أرض الموقع. أثناء التنفيذ، يجب التأكد من تطبيق الاستجابات المتفق عليها، وتقييم فاعليتها.</p>
             
@@ -344,45 +603,45 @@
                 <li><strong>الحلول الالتفافية <span class="term">Workarounds</span>:</strong> استجابات غير مخطط لها سلفاً، يتم ابتكارها وتنفيذها للتعامل مع مخاطر حدثت فجأة (لم تكن في السجل).</li>
             </ul>
             
-            <div class="concept-box">
-                <div class="concept-title">إغلاق الخطر <span class="term">Close Risk</span></div>
+            <div class="concept-box reveal">
+                <div class="concept-title"><i class="fa-solid fa-flag-checkered"></i> إغلاق الخطر <span class="term">Close Risk</span></div>
                 <p>عند التأكد من زوال خطر معين تماماً أو انتهاء فترته الزمنية المحددة دون وقوعه، يجب على مدير المشروع فوراً <strong>تحديث سجل المخاطر بإغلاقه وتوثيق الدروس المستفادة</strong>.</p>
             </div>
         </div>
 
-        <div class="case-study">
-            <div class="case-title">دراسة حالة تطبيقية متكاملة <br><span style="font-size: 18px; color: var(--text-light); font-weight: normal;">مشروع إنشاء مركز بيانات (Data Center) رئيسي في الرياض</span></div>
+        <div class="case-study reveal">
+            <div class="case-title">دراسة حالة تطبيقية متكاملة <br><span style="font-size: 16px; color: var(--text-light); font-weight: normal; display: block; margin-top: 10px;">مشروع إنشاء مركز بيانات (Data Center) رئيسي في الرياض</span></div>
             
-            <p><strong>السيناريو:</strong> أنت مدير مشروع مكلف بإنشاء "Data Center" متطور لصالح جهة حكومية. المشروع معقد تقنياً، ذو ميزانية ضخمة، وجدوله الزمني حرج جداً. كيف ستطبق إدارة المخاطر؟</p>
+            <p style="text-align: center; margin-bottom: 40px;"><strong>السيناريو:</strong> أنت مدير مشروع مكلف بإنشاء "Data Center" متطور لصالح جهة حكومية. المشروع معقد تقنياً، ذو ميزانية ضخمة، وجدوله الزمني حرج جداً. كيف ستطبق إدارة المخاطر؟</p>
 
-            <div class="case-step">
+            <div class="case-step reveal">
                 <h4>1. التخطيط <span class="term">Plan</span></h4>
                 <p>جلست مع الإدارة والجهة المالكة لتحديد "عتبة المخاطر". المالك أكد أن (وقت التسليم) هو الأهم، ولديهم استعداد لدفع تكاليف إضافية (تسامح في التكلفة) مقابل عدم التأخير (شهية مخاطر صفرية للوقت). قمت بإصدار "خطة إدارة المخاطر" التي توضح أننا سنجتمع أسبوعياً لمراجعة المخاطر.</p>
             </div>
 
-            <div class="case-step">
+            <div class="case-step reveal">
                 <h4>2. التحديد <span class="term">Identify</span></h4>
                 <p>قمت بعمل جلسة "عصف ذهني" مع مهندسي الكهرباء، الميكانيكا، وموردي الـ IT. تم تحديد عدة مخاطر، منها: <em>"احتمالية تأخر وصول السيرفرات (Servers) وأجهزة التبريد الدقيق (PAC) بسبب مشاكل سلاسل الإمداد العالمية"</em>. تم تسجيل هذا الخطر في <strong>سجل المخاطر</strong>.</p>
             </div>
 
-            <div class="case-step">
+            <div class="case-step reveal">
                 <h4>3. التحليل الكيفي <span class="term">Qualitative</span></h4>
                 <p>باستخدام P&I Matrix، قيّم الفريق أن احتمالية هذا التأخير (عالية 80%)، وأثره على المشروع (كارثي، سيوقف التسليم). فتم تصنيف الخطر كـ <strong>أولوية قصوى (High Severity)</strong>.</p>
             </div>
 
-            <div class="case-step">
+            <div class="case-step reveal">
                 <h4>4. التحليل الكمي <span class="term">Quantitative</span></h4>
-                <p>لأن المشروع استراتيجي، قمت بعمل تحليل EMV. تأخير السيرفرات سيكلف غرامات تأخير بقيمة 100,000 ريال. (100 ألف × 80% = 80,000 ريال). هذا الرقم يجب أخذه في الاعتبار في ميزانية المخاطر.</p>
+                <p>لأن المشروع استراتيجي، قمت بعمل تحليل EMV. تأخير السيرفرات سيكلف غرامات تأخير بقيمة 100,000 ريال. (100 ألف × 80% = 80,000 ريال). هذا الرقم يجب أخذه في الاعتبار في ميزانية المخاطر. كما تم تشغيل <strong>محاكاة مونت كارلو</strong> لمعرفة نسبة احتمال تأثر المسار الحرج للمشروع بالكامل بناءً على هذا التأخير.</p>
             </div>
 
-            <div class="case-step">
+            <div class="case-step reveal">
                 <h4>5. تخطيط الاستجابة <span class="term">Response</span></h4>
-                <p>اخترت استراتيجية <strong>التخفيف (Mitigate)</strong>: قمنا بإصدار أوامر الشراء (PO) مبكراً جداً وشحنها جوياً بدلاً من الشحن البحري لتقليل احتمالية التأخير. كما اخترت استراتيجية <strong>النقل (Transfer)</strong> عبر عمل بوليصة تأمين شاملة على الشحنة ضد أضرار النقل.</p>
+                <p>اخترت استراتيجية <strong>التخفيف (Mitigate)</strong>: قمنا بإصدار أوامر الشراء (PO) مبكراً جداً وشحنها جوياً بدلاً من الشحن البحري لتقليل احتمالية التأخير. كما اخترت استراتيجية <strong>النقل (Transfer)</strong> عبر عمل بوليصة تأمين شاملة على الشحنة ضد أضرار النقل. وتم تحديد <strong>محفز (Trigger)</strong> وهو "عدم استلام بوليصة الشحن الجوي خلال 30 يوماً من التعاقد" للبدء في خطة الطوارئ.</p>
             </div>
 
-            <div class="case-step">
+            <div class="case-step reveal">
                 <h4>6. المراقبة <span class="term">Monitor</span></h4>
-                <p>أثناء التنفيذ، تابعت خطوط الشحن. وصلت المعدات بسلام وتم تركيب السيرفرات. قمت بفتح سجل المخاطر، وعملت <strong>(إغلاق الخطر - Close Risk)</strong>، وتم تحرير المبلغ المتبقي من احتياطي الطوارئ الخاص بهذا الخطر.</p>
+                <p>أثناء التنفيذ، تمت مراقبة المحفزات بدقة. وصلت المعدات بسلام وتم تركيب السيرفرات. قمت بفتح سجل المخاطر، وعملت <strong>(إغلاق الخطر - Close Risk)</strong>، وتم تحرير المبلغ المتبقي من احتياطي الطوارئ الخاص بهذا الخطر.</p>
             </div>
         </div>
 
@@ -392,15 +651,68 @@
         <div class="footer-logo">BA <span>Academy</span></div>
         <p>Project Risk Management Professional (PMI-RMP) Study Guide</p>
         <p>تم إعداد هذا المرجع للارتقاء بمهندسي ومحترفي إدارة المشاريع في الوطن العربي.</p>
+        
+        <div class="instructor-signature">
+            إشراف وإعداد: الإدارة الهندسية | Senior Engineering Team
+        </div>
+        
         <div class="social-icons">
             <i class="fa-brands fa-linkedin"></i>
             <i class="fa-brands fa-youtube"></i>
             <i class="fa-solid fa-globe"></i>
         </div>
-        <p style="margin-top: 20px; font-size: 12px; color: #64748b;">
+        <p style="margin-top: 30px; font-size: 13px; color: #4b5563;">
             &copy; 2026 BA Engineering Academy. جميع الحقوق محفوظة. لا يجوز نسخ أو توزيع هذا المحتوى دون إذن مسبق.
         </p>
     </footer>
 
+    <!-- سكريبت التفاعلية وحركات السكرول -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            
+            // 1. تفعيل حركات الظهور (Scroll Reveal) باستخدام Intersection Observer
+            const reveals = document.querySelectorAll('.reveal');
+            
+            const revealOptions = {
+                threshold: 0.1, 
+                rootMargin: "0px 0px -50px 0px"
+            };
+
+            const revealOnScroll = new IntersectionObserver(function(entries, observer) {
+                entries.forEach(entry => {
+                    if (!entry.isIntersecting) return;
+                    entry.target.classList.add("active");
+                    observer.unobserve(entry.target); 
+                });
+            }, revealOptions);
+
+            reveals.forEach(reveal => {
+                revealOnScroll.observe(reveal);
+            });
+
+            // 2. تحديث شريط التقدم وزر العودة للأعلى عند التمرير
+            window.addEventListener("scroll", function() {
+                const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+                const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                const scrolled = (winScroll / height) * 100;
+                document.getElementById("progress-bar").style.width = scrolled + "%";
+
+                const topBtn = document.getElementById("scrollTopBtn");
+                if (winScroll > 400) {
+                    topBtn.classList.add("show");
+                } else {
+                    topBtn.classList.remove("show");
+                }
+            });
+        });
+
+        // 3. دالة زر العودة للأعلى
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+    </script>
 </body>
 </html>
