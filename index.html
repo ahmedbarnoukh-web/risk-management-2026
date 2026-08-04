@@ -7,39 +7,38 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
     <style>
-        /* نفس التنسيقات (CSS) السابقة لم يتم تغييرها */
         :root {
             --bg-main: #f8fafc;
             --primary-blue: #1e3a8a;
             --primary-blue-hover: #152c69;
-            --accent-gold: #b45309;
+            --accent-color: #0d9488;
             --text-dark: #0f172a;
             --text-muted: #64748b;
             --border-color: rgba(226, 232, 240, 0.8);
             --active-blue: #eff6ff;
-            --card-bg: rgba(255, 255, 255, 0.85);
-            --topbar-bg: rgba(30, 58, 138, 0.85);
+            --card-bg: rgba(255, 255, 255, 0.9);
+            --topbar-bg: rgba(30, 58, 138, 0.9);
             --topbar-text: #ffffff;
             --footer-bg: #0f172a;
-            --glass-shadow: 0 10px 30px 0 rgba(31, 38, 135, 0.07);
-            --glass-border: 1px solid rgba(255, 255, 255, 0.18);
+            --glass-shadow: 0 10px 25px 0 rgba(31, 38, 135, 0.06);
+            --glass-border: 1px solid rgba(255, 255, 255, 0.25);
         }
 
         [data-theme="dark"] {
             --bg-main: #060913;
             --primary-blue: #60a5fa; 
             --primary-blue-hover: #3b82f6;
-            --accent-gold: #fbbf24;
+            --accent-color: #2dd4bf;
             --text-dark: #f8fafc;
             --text-muted: #94a3b8;
             --border-color: rgba(51, 65, 85, 0.6);
-            --active-blue: rgba(30, 41, 59, 0.7);
-            --card-bg: rgba(30, 41, 59, 0.75);
-            --topbar-bg: rgba(2, 6, 23, 0.85);
+            --active-blue: rgba(30, 41, 59, 0.75);
+            --card-bg: rgba(30, 41, 59, 0.8);
+            --topbar-bg: rgba(2, 6, 23, 0.9);
             --topbar-text: #f8fafc;
             --footer-bg: #020617;
-            --glass-shadow: 0 10px 30px 0 rgba(0, 0, 0, 0.37);
-            --glass-border: 1px solid rgba(255, 255, 255, 0.05);
+            --glass-shadow: 0 10px 25px 0 rgba(0, 0, 0, 0.4);
+            --glass-border: 1px solid rgba(255, 255, 255, 0.08);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
@@ -60,30 +59,49 @@
 
         .ambient-mesh {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            overflow: hidden;
-            z-index: -1;
-            pointer-events: none;
-            filter: blur(80px);
-            opacity: 0.6;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            overflow: hidden; z-index: -1; pointer-events: none;
+            filter: blur(90px); opacity: 0.65;
         }
-        .mesh-blob {
-            position: absolute;
-            border-radius: 50%;
-            transition: transform 1s ease-out;
-            will-change: transform;
-        }
-        .mesh-blob-1 { width: 450px; height: 450px; background: rgba(30, 58, 138, 0.15); top: -10%; right: -5%; animation: floatMesh 18s ease-in-out infinite alternate; }
-        .mesh-blob-2 { width: 500px; height: 500px; background: rgba(180, 83, 9, 0.12); bottom: -10%; left: -5%; animation: floatMesh 22s ease-in-out infinite alternate-reverse; }
-        .mesh-blob-3 { width: 300px; height: 300px; background: rgba(16, 185, 129, 0.1); top: 40%; left: 35%; animation: floatMesh 15s ease-in-out infinite; }
+        .mesh-blob { position: absolute; border-radius: 50%; transition: transform 1s ease-out; will-change: transform; }
+        .mesh-blob-1 { width: 400px; height: 400px; background: rgba(30, 58, 138, 0.12); top: -10%; right: -5%; animation: floatMesh 18s ease-in-out infinite alternate; }
+        .mesh-blob-2 { width: 450px; height: 450px; background: rgba(13, 148, 136, 0.1); bottom: -10%; left: -5%; animation: floatMesh 22s ease-in-out infinite alternate-reverse; }
+        .mesh-blob-3 { width: 300px; height: 300px; background: rgba(14, 165, 233, 0.08); top: 40%; left: 35%; animation: floatMesh 15s ease-in-out infinite; }
 
         @keyframes floatMesh {
             0% { transform: translate(0, 0) scale(1); }
-            50% { transform: translate(40px, -50px) scale(1.08); }
-            100% { transform: translate(-30px, 30px) scale(0.95); }
+            50% { transform: translate(30px, -40px) scale(1.05); }
+            100% { transform: translate(-20px, 20px) scale(0.95); }
+        }
+
+        .whatsapp-float {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #25d366;
+            color: white;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            box-shadow: 0 5px 14px rgba(37, 211, 102, 0.35);
+            z-index: 9999;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-decoration: none;
+            cursor: pointer;
+            animation: pulseWhatsapp 2s infinite;
+        }
+        .whatsapp-float:hover {
+            transform: scale(1.1) rotate(10deg);
+            background: #20ba5a;
+        }
+        @keyframes pulseWhatsapp {
+            0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.6); }
+            70% { box-shadow: 0 0 0 10px rgba(37, 211, 102, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
         }
 
         .top-bar {
@@ -91,7 +109,7 @@
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             color: var(--topbar-text);
-            padding: 14px 6%;
+            padding: 10px 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -99,332 +117,358 @@
             position: sticky;
             top: 0;
             border-bottom: var(--glass-border);
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
             transition: all 0.3s ease;
         }
 
         .brand-logo-container {
-            background: rgba(255, 255, 255, 0.9);
-            padding: 6px 14px;
-            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.92);
+            padding: 4px 10px;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.06);
             border: 1px solid rgba(255, 255, 255, 0.4);
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
+            transition: transform 0.3s ease;
         }
-        .brand-logo-container:hover { transform: translateY(-3px) scale(1.04); box-shadow: 0 12px 30px rgba(30, 58, 138, 0.15); }
-        .brand-logo-container img { height: 50px; object-fit: contain; }
+        .brand-logo-container:hover { transform: translateY(-2px) scale(1.03); }
+        .brand-logo-container img { height: 40px; object-fit: contain; }
 
-        .top-bar-actions { display: flex; align-items: center; gap: 12px; flex-wrap: wrap;}
+        .top-bar-actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap;}
         
         .nav-link {
-            color: var(--topbar-text); text-decoration: none; background: rgba(255, 255, 255, 0.05); border: var(--glass-border);
-            font-size: 14px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 8px; 
-            padding: 10px 18px; border-radius: 12px; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            color: var(--topbar-text); text-decoration: none; background: rgba(255, 255, 255, 0.06); border: var(--glass-border);
+            font-size: 13px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 6px; 
+            padding: 8px 14px; border-radius: 10px; transition: all 0.3s ease;
             backdrop-filter: blur(4px);
         }
-        .nav-link:hover { color: var(--accent-gold); background: rgba(255,255,255,0.12); transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        .nav-link:hover { color: var(--accent-color); background: rgba(255,255,255,0.15); transform: translateY(-1px); }
+
+        .nav-link.home-highlight {
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            font-weight: 900;
+        }
 
         .theme-btn {
             background: rgba(255, 255, 255, 0.08); border: var(--glass-border); color: var(--topbar-text);
-            cursor: pointer; width: 44px; height: 44px; border-radius: 14px;
-            display: flex; align-items: center; justify-content: center; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); font-size: 16px;
+            cursor: pointer; width: 38px; height: 38px; border-radius: 10px;
+            display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; font-size: 15px;
             backdrop-filter: blur(4px);
         }
-        .theme-btn:hover { background: rgba(255, 255, 255, 0.2); transform: rotate(15deg) scale(1.08); }
+        .theme-btn:hover { background: rgba(255, 255, 255, 0.22); transform: rotate(15deg) scale(1.05); }
 
-        .app-view { display: none; flex-direction: column; flex-grow: 1; animation: fadeInNeural 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; opacity: 0; }
+        .app-view { display: none; flex-direction: column; flex-grow: 1; animation: fadeInNeural 0.4s ease forwards; opacity: 0; }
         .app-view.active { display: flex; }
 
         @keyframes fadeInNeural {
-            from { opacity: 0; transform: translateY(15px) scale(0.99); }
-            to { opacity: 1; transform: translateY(0) scale(1); }
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .hero-section {
             display: flex; align-items: center; justify-content: space-between;
-            padding: 70px 6%; background: radial-gradient(circle at top right, rgba(30, 58, 138, 0.06), transparent 50%),
-                                      radial-gradient(circle at bottom left, rgba(180, 83, 9, 0.04), transparent 50%);
-            border-bottom: var(--glass-border); gap: 40px; flex-wrap: wrap;
+            padding: 40px 5%; background: radial-gradient(circle at top right, rgba(30, 58, 138, 0.06), transparent 50%),
+                                      radial-gradient(circle at bottom left, rgba(13, 148, 136, 0.05), transparent 50%);
+            border-bottom: var(--glass-border); gap: 25px; flex-wrap: wrap;
             position: relative; overflow: hidden;
         }
-        .hero-content { flex: 1; min-width: 320px; z-index: 2; }
-        .hero-content h1 { font-size: clamp(2.3rem, 4.5vw, 3.8rem); font-weight: 900; color: var(--primary-blue); margin-bottom: 12px; line-height: 1.15; letter-spacing: -1px; }
-        .hero-content h2 { font-size: clamp(1.1rem, 2.5vw, 1.6rem); color: var(--accent-gold); font-weight: 800; margin-bottom: 20px; }
-        .hero-content p { font-size: 1.05rem; color: var(--text-muted); font-weight: 600; margin-bottom: 25px; line-height: 1.75; max-width: 620px; }
+        .hero-content { flex: 1; min-width: 280px; z-index: 2; }
+        .hero-content h1 { font-size: clamp(2rem, 3.8vw, 3.2rem); font-weight: 900; color: var(--primary-blue); margin-bottom: 8px; line-height: 1.15; letter-spacing: -0.5px; }
+        .hero-content h2 { font-size: clamp(1rem, 2vw, 1.4rem); color: var(--accent-color); font-weight: 800; margin-bottom: 14px; }
+        .hero-content p { font-size: 0.98rem; color: var(--text-muted); font-weight: 600; margin-bottom: 16px; line-height: 1.6; max-width: 580px; }
         
         .hero-quote-box {
             background: var(--card-bg);
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
-            border-right: 5px solid var(--accent-gold);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-right: 4px solid var(--accent-color);
             border: var(--glass-border);
-            padding: 16px 20px;
-            border-radius: 14px;
-            margin-bottom: 25px;
+            padding: 12px 16px;
+            border-radius: 12px;
+            margin-bottom: 16px;
             box-shadow: var(--glass-shadow);
-            max-width: 620px;
+            max-width: 580px;
         }
         .hero-quote-box p {
             margin-bottom: 0 !important;
-            font-size: 0.98rem !important;
+            font-size: 0.92rem !important;
             color: var(--text-dark) !important;
             font-weight: 700 !important;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
         }
-        .hero-quote-box i {
-            color: var(--accent-gold);
-            font-size: 1.4rem;
-        }
+        .hero-quote-box i { color: var(--accent-color); font-size: 1.2rem; }
 
-        .hero-buttons { display: flex; gap: 15px; flex-wrap: wrap; }
+        .hero-buttons { display: flex; gap: 12px; flex-wrap: wrap; }
         .btn-primary, .btn-outline {
-            padding: 12px 26px; border-radius: 12px; font-weight: 800; font-size: 15px; 
-            cursor: pointer; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); display: inline-flex; align-items: center; justify-content: center; gap: 10px; text-decoration: none;
+            padding: 10px 22px; border-radius: 10px; font-weight: 800; font-size: 14px; 
+            cursor: pointer; transition: all 0.3s ease; display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none;
             position: relative; overflow: hidden;
         }
         .btn-primary { 
             background: linear-gradient(135deg, var(--primary-blue) 0%, #152c69 100%); 
-            color: white; border: none; box-shadow: 0 8px 20px rgba(30, 58, 138, 0.25); 
+            color: white; border: none; box-shadow: 0 6px 15px rgba(30, 58, 138, 0.2); 
         }
-        .btn-primary:hover { transform: translateY(-4px); box-shadow: 0 12px 25px rgba(30, 58, 138, 0.35); filter: brightness(1.1); }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(30, 58, 138, 0.3); filter: brightness(1.08); }
         
         .btn-outline { 
             background: var(--card-bg); color: var(--primary-blue); border: 2px solid var(--primary-blue); 
-            backdrop-filter: blur(10px); box-shadow: var(--glass-shadow);
+            backdrop-filter: blur(8px); box-shadow: var(--glass-shadow);
         }
-        .btn-outline:hover { background: var(--primary-blue); color: white; transform: translateY(-4px); }
+        .btn-outline:hover { background: var(--primary-blue); color: white; transform: translateY(-2px); }
         
-        .hero-image { flex: 1; min-width: 280px; display: flex; justify-content: center; position: relative; z-index: 2; }
+        .hero-image { flex: 1; min-width: 240px; display: flex; justify-content: center; position: relative; z-index: 2; }
         .hero-image-neural-card {
-            background: transparent;
-            padding: 10px;
-            border-radius: 28px;
+            background: transparent; padding: 5px; border-radius: 20px;
             position: relative;
-            transform-style: preserve-3d;
-            perspective: 1000px;
-            animation: heroCardFloat 6s ease-in-out infinite;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: none;
-            border: none;
+            animation: heroCardFloat 5s ease-in-out infinite; display: flex; align-items: center; justify-content: center;
         }
         .hero-image-neural-card img {
-            width: 310px;
-            height: 310px;
-            object-fit: contain;
-            border-radius: 50%;
-            background: white;
-            padding: 12px;
-            box-shadow: 0 20px 45px rgba(30, 58, 138, 0.15);
-            border: 3px solid rgba(255, 255, 255, 0.8);
+            width: 240px; height: 240px; object-fit: contain; border-radius: 50%;
+            background: white; padding: 10px; box-shadow: 0 15px 35px rgba(30, 58, 138, 0.12);
+            border: 2px solid rgba(255, 255, 255, 0.8);
         }
         
         @keyframes heroCardFloat {
-            0%, 100% { transform: translateY(0px) rotateX(0deg) rotateY(0deg); }
-            50% { transform: translateY(-12px) rotateX(4deg) rotateY(-4deg); }
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
         }
 
         .stats-section { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); 
-            padding: 25px 6%; 
-            background: transparent; 
-            gap: 16px; 
-            margin-top: -25px; 
-            position: relative; 
-            z-index: 10; 
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); 
+            padding: 20px 5%; background: transparent; gap: 12px; margin-top: -15px; position: relative; z-index: 10; 
         }
         .stat-box { 
-            background: var(--card-bg); 
-            backdrop-filter: blur(14px); 
-            -webkit-backdrop-filter: blur(14px);
-            padding: 16px 14px; 
-            border-radius: 16px; 
-            text-align: center; 
-            box-shadow: var(--glass-shadow); 
-            border: var(--glass-border); 
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            background: var(--card-bg); backdrop-filter: blur(12px);
+            padding: 14px 10px; border-radius: 14px; text-align: center; box-shadow: var(--glass-shadow); 
+            border: var(--glass-border); transition: all 0.3s ease;
         }
-        .stat-box:hover { 
-            transform: translateY(-5px); 
-            box-shadow: 0 12px 25px rgba(30, 58, 138, 0.12); 
-            border-color: var(--primary-blue); 
-        }
-        .stat-number { font-size: 2rem; font-weight: 900; color: var(--primary-blue); display: block; margin-bottom: 4px; letter-spacing: -0.5px; }
-        .stat-label { font-size: 0.85rem; color: var(--text-muted); font-weight: 700; }
+        .stat-box:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(30, 58, 138, 0.1); border-color: var(--primary-blue); }
+        .stat-number { font-size: 1.8rem; font-weight: 900; color: var(--primary-blue); display: block; margin-bottom: 2px; }
+        .stat-label { font-size: 0.82rem; color: var(--text-muted); font-weight: 700; }
 
-        .features-section { padding: 70px 6%; background: var(--card-bg); backdrop-filter: blur(20px); text-align: center; border-bottom: var(--glass-border); border-top: var(--glass-border); }
-        .features-section h2 { color: var(--primary-blue); font-size: 2.2rem; font-weight: 900; margin-bottom: 12px; position: relative; display: inline-block; }
-        .features-section h2::after { content: ''; position: absolute; bottom: -10px; right: 20%; width: 60%; height: 4px; background: var(--accent-gold); border-radius: 2px; }
-        .features-subtitle { color: var(--text-muted); font-weight: 700; font-size: 1.05rem; margin-top: 20px; margin-bottom: 40px; }
+        .features-section { padding: 45px 5%; background: var(--card-bg); backdrop-filter: blur(16px); text-align: center; border-bottom: var(--glass-border); border-top: var(--glass-border); }
+        .features-section h2 { color: var(--primary-blue); font-size: 2rem; font-weight: 900; margin-bottom: 8px; position: relative; display: inline-block; }
+        .features-section h2::after { content: ''; position: absolute; bottom: -6px; right: 20%; width: 60%; height: 3px; background: var(--accent-color); border-radius: 2px; }
+        .features-subtitle { color: var(--text-muted); font-weight: 700; font-size: 0.98rem; margin-top: 14px; margin-bottom: 30px; }
         
-        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 25px; perspective: 1000px; }
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px; }
         .feature-card { 
-            background: var(--bg-main); backdrop-filter: blur(10px); padding: 35px 25px; border-radius: 20px; 
+            background: var(--bg-main); backdrop-filter: blur(8px); padding: 25px 20px; border-radius: 16px; 
             border: var(--glass-border); box-shadow: var(--glass-shadow); 
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); position: relative; overflow: hidden;
-            text-align: right;
+            transition: all 0.3s ease; position: relative; overflow: hidden; text-align: right;
         }
-        .feature-card::before { content: ''; position: absolute; top: 0; right: 0; width: 100%; height: 4px; background: var(--primary-blue); transition: background 0.3s; }
-        .feature-card:hover { 
-            transform: translateY(-8px); 
-            border-color: var(--primary-blue); 
-            box-shadow: 0 20px 40px rgba(30, 58, 138, 0.12); 
-        }
-        .feature-card:hover::before { background: var(--accent-gold); }
-        .feature-card i { font-size: 2.8rem; color: var(--accent-gold); margin-bottom: 18px; display: inline-block; transition: transform 0.3s ease; }
-        .feature-card:hover i { transform: scale(1.1) rotate(6deg); }
-        .feature-card h4 { font-size: 1.25rem; color: var(--primary-blue); font-weight: 900; margin-bottom: 12px; }
-        .feature-card p { font-size: 0.95rem; color: var(--text-muted); font-weight: 600; line-height: 1.7; }
+        .feature-card::before { content: ''; position: absolute; top: 0; right: 0; width: 100%; height: 3px; background: var(--primary-blue); transition: background 0.3s; }
+        .feature-card:hover { transform: translateY(-5px); border-color: var(--primary-blue); box-shadow: 0 15px 30px rgba(30, 58, 138, 0.1); }
+        .feature-card:hover::before { background: var(--accent-color); }
+        .feature-card i { font-size: 2.2rem; color: var(--accent-color); margin-bottom: 12px; display: inline-block; transition: transform 0.3s ease; }
+        .feature-card:hover i { transform: scale(1.08) rotate(5deg); }
+        .feature-card h4 { font-size: 1.1rem; color: var(--primary-blue); font-weight: 900; margin-bottom: 8px; }
+        .feature-card p { font-size: 0.9rem; color: var(--text-muted); font-weight: 600; line-height: 1.6; }
 
-        /* Story Section Added */
-        .story-section {
-            padding: 70px 6%; 
-            background: var(--active-blue); 
-            border-bottom: var(--glass-border); 
+        .professional-testimonials {
+            padding: 50px 5%;
+            background: linear-gradient(180deg, var(--bg-main) 0%, var(--active-blue) 100%);
+            border-bottom: var(--glass-border);
             text-align: center;
         }
-        .story-content {
-            max-width: 900px;
-            margin: auto;
+        .testimonials-heading-container { max-width: 650px; margin: 0 auto 30px auto; }
+        .testimonials-heading-container h2 { color: var(--primary-blue); font-size: 2rem; font-weight: 900; margin-bottom: 8px; }
+        .testimonials-heading-container p { color: var(--text-muted); font-size: 0.98rem; font-weight: 700; }
+        .testimonials-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; max-width: 1200px; margin: 0 auto; }
+        .testimonial-card-pro {
+            background: var(--card-bg); backdrop-filter: blur(12px);
+            border: var(--glass-border); box-shadow: var(--glass-shadow); border-radius: 16px; padding: 22px;
+            text-align: right; display: flex; flex-direction: column; justify-content: space-between;
+            transition: all 0.3s ease; position: relative; overflow: hidden;
         }
-        .story-content h2 {
-            color: var(--primary-blue); 
-            font-size: 2.2rem; 
-            font-weight: 900; 
-            margin-bottom: 25px;
+        .testimonial-card-pro::before { content: ''; position: absolute; top: 0; right: 0; width: 100%; height: 3px; background: var(--accent-color); opacity: 0.8; }
+        .testimonial-card-pro:hover { transform: translateY(-5px); border-color: var(--accent-color); }
+        .testimonial-header-info { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+        .testimonial-avatar-badge {
+            width: 42px; height: 42px; border-radius: 12px; background: linear-gradient(135deg, var(--primary-blue), var(--accent-color));
+            color: white; font-weight: 900; font-size: 1rem; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 5px 15px rgba(30, 58, 138, 0.2); flex-shrink: 0;
         }
+        .testimonial-titles h4 { font-size: 1rem; color: var(--text-dark); font-weight: 800; margin-bottom: 2px; }
+        .testimonial-titles span { font-size: 0.8rem; color: var(--accent-color); font-weight: 700; }
+        .testimonial-stars { display: flex; gap: 2px; color: #f59e0b; font-size: 10px; margin-bottom: 10px; }
+        .testimonial-body-text { font-size: 0.92rem; color: var(--text-muted); font-weight: 600; line-height: 1.6; font-style: italic; }
+
+        .story-section { padding: 45px 5%; background: var(--active-blue); border-bottom: var(--glass-border); text-align: center; }
+        .story-content { max-width: 850px; margin: auto; }
+        .story-content h2 { color: var(--primary-blue); font-size: 2rem; font-weight: 900; margin-bottom: 18px; }
         .story-content p {
-            font-size: 1.15rem; 
-            line-height: 2; 
-            color: var(--text-dark); 
-            font-weight: 600; 
-            background: var(--card-bg);
-            padding: 30px;
-            border-radius: 20px;
-            border: var(--glass-border);
-            box-shadow: var(--glass-shadow);
+            font-size: 1.05rem; line-height: 1.8; color: var(--text-dark); font-weight: 600; background: var(--card-bg);
+            padding: 25px 30px; border-radius: 16px; border: var(--glass-border); box-shadow: var(--glass-shadow);
         }
 
-        .dashboard-content { max-width: 1300px; margin: 0 auto; width: 100%; padding: 60px 6%; }
-        .section-title { font-size: 28px; font-weight: 900; color: var(--text-dark); margin-bottom: 35px; display: flex; align-items: center; gap: 14px; padding-bottom: 12px; border-bottom: 3px solid var(--border-color); }
-        
-        .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 30px; }
+        .dashboard-content { max-width: 1200px; margin: 0 auto; width: 100%; padding: 40px 5%; }
+        .section-title { font-size: 24px; font-weight: 900; color: var(--text-dark); margin-bottom: 18px; display: flex; align-items: center; gap: 10px; padding-bottom: 8px; border-bottom: 2px solid var(--border-color); }
+
+        .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
 
         .nav-card {
-            background-color: var(--card-bg); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
-            border-radius: 24px; padding: 40px 25px; cursor: pointer;
+            background-color: var(--card-bg); backdrop-filter: blur(12px);
+            border-radius: 20px; padding: 25px 20px; cursor: pointer;
             display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
             border: var(--glass-border); box-shadow: var(--glass-shadow);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); position: relative; overflow: hidden;
+            transition: all 0.3s ease; position: relative; overflow: hidden;
         }
         .nav-card:hover { 
-            transform: translateY(-10px) scale(1.01); 
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.12); 
-            border-color: var(--primary-blue); 
-            background-color: var(--active-blue); 
+            transform: translateY(-6px); box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1); 
+            border-color: var(--primary-blue); background-color: var(--active-blue); 
         }
-        .nav-card i.main-icon { font-size: 50px; color: var(--primary-blue); margin-bottom: 20px; transition: all 0.3s ease; }
-        .nav-card:hover i.main-icon { transform: scale(1.15) rotate(5deg); color: var(--accent-gold); }
-        .nav-card h3 { font-size: 22px; font-weight: 800; color: var(--text-dark); margin-bottom: 10px; }
-        .nav-card p.en-text { font-size: 14px; color: var(--text-muted); font-weight: 700; letter-spacing: 0.5px; }
+        .nav-card i.main-icon { font-size: 42px; color: var(--primary-blue); margin-bottom: 14px; transition: transform 0.3s ease; }
+        .nav-card:hover i.main-icon { transform: scale(1.1) rotate(5deg); color: var(--accent-color); }
+        .nav-card h3 { font-size: 19px; font-weight: 800; color: var(--text-dark); margin-bottom: 6px; }
+        .nav-card p.en-text { font-size: 13px; color: var(--text-muted); font-weight: 700; }
         
-        .course-card-main { border: 2px solid #10b981; background: linear-gradient(135deg, var(--card-bg) 0%, rgba(16, 185, 129, 0.05) 100%); }
-        .course-card-main:hover { border-color: #059669; }
-        .badge-available { position: absolute; top: 18px; right: 18px; font-size: 12px; background: #10b981; color: white; padding: 5px 15px; border-radius: 20px; font-weight: 900; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.35); animation: pulseGreen 2.5s infinite; }
+        .course-card-main { border: 2px solid var(--primary-blue); background: linear-gradient(135deg, var(--card-bg) 0%, rgba(30, 58, 138, 0.03) 100%); }
+        .badge-available { 
+            position: absolute; top: 14px; right: 14px; font-size: 11px; background: var(--primary-blue); color: white; padding: 4px 12px; border-radius: 20px; font-weight: 900; box-shadow: 0 3px 10px rgba(30, 58, 138, 0.2); 
+            display: inline-flex; align-items: center; gap: 6px;
+        }
+
+        @keyframes shimmerCard {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        @keyframes bounceCelebration {
+            0%, 100% { transform: translateY(0) scale(1); filter: drop-shadow(0 0 4px rgba(30, 58, 138, 0.4)); }
+            50% { transform: translateY(-6px) scale(1.08); filter: drop-shadow(0 0 10px rgba(30, 58, 138, 0.7)); }
+        }
+
+        .course-card-featured { 
+            border: 2.5px solid var(--primary-blue) !important; 
+            background: linear-gradient(135deg, var(--card-bg) 0%, rgba(30, 58, 138, 0.06) 100%) !important;
+            box-shadow: 0 15px 35px rgba(30, 58, 138, 0.12) !important;
+            position: relative;
+            overflow: hidden;
+        }
+        .course-card-featured::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -150%;
+            width: 150%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            animation: shimmerCard 3.5s infinite;
+        }
+        .celebrate-icon-box {
+            animation: bounceCelebration 2s ease-in-out infinite;
+            display: inline-block;
+        }
 
         .course-card-upcoming { border: var(--glass-border); background: linear-gradient(135deg, var(--card-bg) 0%, var(--bg-main) 100%); }
-        .course-card-upcoming:hover { border-color: var(--accent-gold); }
         
         .status-badge-box {
-            margin-top: 15px;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 8px 16px;
-            border-radius: 12px;
-            font-size: 13px;
-            font-weight: 800;
-            background: rgba(180, 83, 9, 0.1);
-            color: var(--accent-gold);
-            border: 1px dashed var(--accent-gold);
+            margin-top: 12px; display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px;
+            border-radius: 10px; font-size: 12px; font-weight: 800; background: rgba(30, 58, 138, 0.08);
+            color: var(--primary-blue); border: 1px dashed var(--primary-blue);
         }
-        .status-badge-box.design {
-            background: rgba(30, 58, 138, 0.08);
+        .status-badge-box.design { background: rgba(30, 58, 138, 0.08); color: var(--primary-blue); border-color: var(--primary-blue); }
+        .status-badge-box.launching {
+            background: rgba(30, 58, 138, 0.1);
             color: var(--primary-blue);
-            border-color: var(--primary-blue);
+            border: 1.5px solid var(--primary-blue);
+            font-weight: 900;
+        }
+        .status-badge-box.soon-badge {
+            background: rgba(14, 165, 233, 0.1);
+            color: #0284c7;
+            border: 1.5px solid #0ea5e9;
+            font-weight: 900;
         }
 
-        .course-details-header { background: linear-gradient(135deg, var(--primary-blue) 0%, #0a1128 100%); color: white; padding: 70px 30px; text-align: center; border-radius: 24px; margin-bottom: 40px; box-shadow: 0 20px 40px rgba(0,0,0,0.12); position: relative; overflow: hidden; }
-        .course-details-header h2 { font-size: clamp(2rem, 3.5vw, 3rem); font-weight: 900; margin-bottom: 18px; letter-spacing: -1px; }
-        .course-details-header p { font-size: 1.2rem; color: #cbd5e1; font-weight: 600; max-width: 750px; margin: 0 auto; line-height: 1.7; }
-        .course-meta { display: flex; justify-content: center; gap: 16px; margin-top: 30px; flex-wrap: wrap; }
-        .meta-item { background: rgba(255,255,255,0.12); backdrop-filter: blur(8px); padding: 10px 20px; border-radius: 12px; font-weight: 800; font-size: 14px; display: flex; align-items: center; gap: 8px; border: 1px solid rgba(255,255,255,0.15); }
+        .green-dot-pulse {
+            width: 8px;
+            height: 8px;
+            background-color: #22c55e;
+            border-radius: 50%;
+            display: inline-block;
+            box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+            animation: pulseGreenDot 1.5s infinite;
+        }
+        @keyframes pulseGreenDot {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(34, 197, 94, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+        }
         
-        .course-content-split { display: grid; grid-template-columns: 2fr 1fr; gap: 35px; align-items: start; }
+        .course-details-header { background: linear-gradient(135deg, var(--primary-blue) 0%, #0a1128 100%); color: white; padding: 45px 20px; text-align: center; border-radius: 20px; margin-bottom: 25px; box-shadow: 0 15px 30px rgba(0,0,0,0.1); position: relative; overflow: hidden; }
+        .course-details-header h2 { font-size: clamp(1.8rem, 3vw, 2.5rem); font-weight: 900; margin-bottom: 12px; }
+        .course-details-header p { font-size: 1.05rem; color: #cbd5e1; font-weight: 600; max-width: 700px; margin: 0 auto; line-height: 1.6; }
+        .course-meta { display: flex; justify-content: center; gap: 12px; margin-top: 20px; flex-wrap: wrap; }
+        .meta-item { background: rgba(255,255,255,0.12); backdrop-filter: blur(6px); padding: 8px 16px; border-radius: 10px; font-weight: 800; font-size: 13px; display: flex; align-items: center; gap: 6px; border: 1px solid rgba(255,255,255,0.15); }
+        
+        .course-content-split { display: grid; grid-template-columns: 2fr 1fr; gap: 25px; align-items: start; }
         @media (max-width: 950px) { .course-content-split { grid-template-columns: 1fr; } }
         
-        .content-box { background: var(--card-bg); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); padding: 40px; border-radius: 24px; border: var(--glass-border); margin-bottom: 30px; box-shadow: var(--glass-shadow); }
-        .content-box h2 { color: var(--primary-blue); margin-bottom: 30px; font-size: 1.9rem; font-weight: 900; border-bottom: 2px solid var(--border-color); padding-bottom: 15px; }
-        .content-box h3 { color: var(--accent-gold); margin-top: 30px; margin-bottom: 16px; font-size: 1.35rem; display: flex; align-items: center; gap: 10px; font-weight: 800; }
-        .content-box p, .content-box li { color: var(--text-dark); line-height: 2; font-weight: 600; font-size: 1.05rem; margin-bottom: 12px; }
-        .content-box ul { padding-right: 25px; }
+        .content-box { background: var(--card-bg); backdrop-filter: blur(12px); padding: 25px 30px; border-radius: 20px; border: var(--glass-border); margin-bottom: 20px; box-shadow: var(--glass-shadow); }
+        .content-box h2 { color: var(--primary-blue); margin-bottom: 20px; font-size: 1.6rem; font-weight: 900; border-bottom: 2px solid var(--border-color); padding-bottom: 10px; }
+        .content-box h3 { color: var(--accent-color); margin-top: 20px; margin-bottom: 10px; font-size: 1.2rem; display: flex; align-items: center; gap: 8px; font-weight: 800; }
+        .content-box p, .content-box li { color: var(--text-dark); line-height: 1.8; font-weight: 600; font-size: 0.98rem; margin-bottom: 10px; }
+        .content-box ul { padding-right: 20px; }
 
-        .sales-checklist { list-style: none; padding: 0; margin-top: 12px; }
-        .sales-checklist li { display: flex; align-items: center; gap: 12px; font-weight: 700; font-size: 1.05rem; margin-bottom: 10px; color: var(--text-dark); background: var(--active-blue); padding: 10px 18px; border-radius: 12px; border-right: 4px solid var(--primary-blue); border: var(--glass-border); }
-        .sales-checklist li i { color: #10b981; font-size: 1.15rem; }
+        .sales-checklist { list-style: none; padding: 0; margin-top: 10px; }
+        .sales-checklist li { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 0.98rem; margin-bottom: 8px; color: var(--text-dark); background: var(--active-blue); padding: 8px 14px; border-radius: 10px; border-right: 4px solid var(--primary-blue); border: var(--glass-border); }
+        .sales-checklist li i { color: var(--primary-blue); font-size: 1.05rem; }
 
-        .faq-item { margin-bottom: 25px; border-bottom: 1px solid var(--border-color); padding-bottom: 20px; }
-        .faq-question { font-weight: 800; color: var(--primary-blue); font-size: 1.2rem; margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
-        .faq-answer { color: var(--text-muted); font-weight: 600; line-height: 1.8; padding-right: 28px; font-size: 1.05rem; }
+        .faq-item { margin-bottom: 18px; border-bottom: 1px solid var(--border-color); padding-bottom: 15px; }
+        .faq-question { font-weight: 800; color: var(--primary-blue); font-size: 1.1rem; margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
+        .faq-answer { color: var(--text-muted); font-weight: 600; line-height: 1.6; padding-right: 24px; font-size: 0.98rem; }
 
-        .progress-wrapper { background: var(--card-bg); backdrop-filter: blur(16px); padding: 30px; border-radius: 20px; margin-bottom: 35px; border: var(--glass-border); box-shadow: var(--glass-shadow); }
-        .progress-header { display: flex; justify-content: space-between; margin-bottom: 16px; font-weight: 900; color: var(--primary-blue); font-size: 19px; }
-        .progress-container { width: 100%; height: 18px; background-color: var(--active-blue); border-radius: 10px; overflow: hidden; border: var(--glass-border); }
-        .progress-bar { height: 100%; width: 0%; background: linear-gradient(90deg, var(--primary-blue), #3b82f6); transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1); border-radius: 10px; }
+        .progress-wrapper { background: var(--card-bg); backdrop-filter: blur(12px); padding: 20px 25px; border-radius: 16px; margin-bottom: 25px; border: var(--glass-border); box-shadow: var(--glass-shadow); }
+        .progress-header { display: flex; justify-content: space-between; margin-bottom: 10px; font-weight: 900; color: var(--primary-blue); font-size: 17px; }
+        .progress-container { width: 100%; height: 14px; background-color: var(--active-blue); border-radius: 8px; overflow: hidden; border: var(--glass-border); }
+        .progress-bar { height: 100%; width: 0%; background: linear-gradient(90deg, var(--primary-blue), #3b82f6); transition: width 1s ease; border-radius: 8px; }
 
-        .viewer-navbar { background-color: var(--card-bg); backdrop-filter: blur(16px); border-bottom: var(--glass-border); display: flex; align-items: center; justify-content: space-between; padding: 15px 35px; }
+        .viewer-navbar { background-color: var(--card-bg); backdrop-filter: blur(12px); border-bottom: var(--glass-border); display: flex; align-items: center; justify-content: space-between; padding: 12px 25px; }
         .content-frame-container { flex-grow: 1; position: relative; }
-        .screen-frame { width: 100%; height: 100%; min-height: calc(100vh - 80px); border: none; display: none; opacity: 0; transition: opacity 0.4s ease; }
+        .screen-frame { width: 100%; height: 100%; min-height: calc(100vh - 70px); border: none; display: none; opacity: 0; transition: opacity 0.3s ease; }
         .screen-frame.active { display: block; opacity: 1; }
 
-        .full-page-loader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-main); display: none; flex-direction: column; align-items: center; justify-content: center; z-index: 9999; backdrop-filter: blur(20px); }
-        .full-page-loader i { font-size: 60px; color: var(--primary-blue); margin-bottom: 20px; animation: pulseNeural 1.5s infinite; }
+        .full-page-loader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-main); display: none; flex-direction: column; align-items: center; justify-content: center; z-index: 9999; backdrop-filter: blur(16px); }
+        .full-page-loader i { font-size: 50px; color: var(--primary-blue); margin-bottom: 15px; animation: pulseNeural 1.5s infinite; }
         
-        #toast-container { position: fixed; bottom: 30px; left: 30px; display: flex; flex-direction: column; gap: 12px; z-index: 10000; }
-        .toast { background: var(--primary-blue); color: white; padding: 16px 24px; border-radius: 14px; font-weight: 800; font-size: 14px; display: flex; align-items: center; gap: 12px; box-shadow: 0 12px 30px rgba(0,0,0,0.2); animation: slideInNeural 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; border: 1px solid rgba(255,255,255,0.2); }
+        #toast-container { position: fixed; bottom: 20px; left: 20px; display: flex; flex-direction: column; gap: 10px; z-index: 10000; }
+        .toast { background: var(--primary-blue); color: white; padding: 12px 20px; border-radius: 12px; font-weight: 800; font-size: 13px; display: flex; align-items: center; gap: 10px; box-shadow: 0 8px 20px rgba(0,0,0,0.15); animation: slideInNeural 0.3s ease forwards; border: 1px solid rgba(255,255,255,0.2); }
         .toast.error { background: #dc2626; }
         .toast.fadeOut { animation: fadeOutNeural 0.3s ease-in forwards; }
 
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(6, 9, 19, 0.75); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); z-index: 9999; display: none; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.4s ease; }
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(6, 9, 19, 0.7); backdrop-filter: blur(10px); z-index: 9999; display: none; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s ease; }
         .modal-overlay.active { display: flex; opacity: 1; }
-        .login-modal { background: var(--card-bg); backdrop-filter: blur(24px); padding: 40px; border-radius: 24px; width: 90%; max-width: 400px; text-align: center; box-shadow: 0 25px 50px rgba(0,0,0,0.25); border: var(--glass-border); }
-        .login-input { width: 100%; padding: 14px; border: 2px solid var(--border-color); border-radius: 12px; font-size: 16px; font-weight: 700; text-align: center; margin-bottom: 20px; background: var(--bg-main); color: var(--text-dark); transition: border-color 0.3s; }
-        .login-input:focus { outline: none; border-color: var(--primary-blue); box-shadow: 0 0 12px rgba(96, 165, 250, 0.3); }
+        .login-modal { background: var(--card-bg); backdrop-filter: blur(20px); padding: 30px; border-radius: 20px; width: 90%; max-width: 380px; text-align: center; box-shadow: 0 20px 40px rgba(0,0,0,0.2); border: var(--glass-border); }
+        .login-input { width: 100%; padding: 12px; border: 2px solid var(--border-color); border-radius: 10px; font-size: 15px; font-weight: 700; text-align: center; margin-bottom: 16px; background: var(--bg-main); color: var(--text-dark); transition: border-color 0.3s; }
+        .login-input:focus { outline: none; border-color: var(--primary-blue); box-shadow: 0 0 10px rgba(96, 165, 250, 0.3); }
 
-        .mega-footer { background: var(--footer-bg); color: #94a3b8; padding: 70px 6% 30px; margin-top: auto; border-top: 4px solid var(--primary-blue); position: relative; }
-        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 40px; margin-bottom: 40px; }
-        .footer-col h3 { color: #f8fafc; font-size: 1.25rem; font-weight: 900; margin-bottom: 22px; }
-        .footer-links { list-style: none; }
-        .footer-links li { margin-bottom: 12px; }
-        .footer-links a { color: #94a3b8; text-decoration: none; font-weight: 600; transition: all 0.3s ease; display: flex; align-items: center; gap: 8px; cursor: pointer; }
-        .footer-links a:hover { color: var(--accent-gold); padding-right: 6px; }
-        .social-icons { display: flex; gap: 12px; margin-top: 18px; }
-        .social-icons a { color: white; background: rgba(255,255,255,0.08); width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 12px; transition: all 0.3s ease; border: 1px solid rgba(255,255,255,0.1); }
-        .social-icons a:hover { background: var(--primary-blue); transform: translateY(-3px) scale(1.05); }
-        .footer-bottom { text-align: center; padding-top: 25px; border-top: 1px solid rgba(255,255,255,0.08); font-weight: 600; font-size: 0.9rem; }
+        .mega-footer { background: var(--footer-bg); color: #94a3b8; padding: 45px 5% 20px; margin-top: auto; border-top: 3px solid var(--primary-blue); position: relative; }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 30px; margin-bottom: 30px; max-width: 1200px; margin-left: auto; margin-right: auto; }
+        .footer-col h3 { color: #f8fafc; font-size: 1.15rem; font-weight: 900; margin-bottom: 16px; }
+        
+        .footer-links { list-style: none; display: flex; flex-wrap: wrap; gap: 10px; }
+        .footer-links li { margin-bottom: 0; }
+        .footer-links a { 
+            color: #94a3b8; text-decoration: none; font-weight: 600; transition: all 0.3s ease; 
+            display: flex; align-items: center; gap: 6px; cursor: pointer; font-size: 0.9rem; 
+            background: rgba(255, 255, 255, 0.04); padding: 6px 12px; border-radius: 8px; 
+            border: 1px solid rgba(255, 255, 255, 0.08); 
+        }
+        .footer-links a:hover { color: var(--accent-color); background: rgba(255, 255, 255, 0.08); transform: translateY(-2px); border-color: var(--accent-color); }
 
-        @keyframes fadeInNeural { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes slideInNeural { from { opacity: 0; transform: translateY(20px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
-        @keyframes fadeOutNeural { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(15px); } }
-        @keyframes pulseNeural { 0% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.1); opacity: 0.6; } 100% { transform: scale(1); opacity: 1; } }
-        @keyframes pulseGreen { 0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); } 70% { box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); } 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); } }
+        .social-icons { display: flex; gap: 10px; margin-top: 14px; }
+        .social-icons a { color: white; background: rgba(255,255,255,0.08); width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; border-radius: 10px; transition: all 0.3s ease; border: 1px solid rgba(255,255,255,0.1); }
+        .social-icons a:hover { background: var(--primary-blue); transform: translateY(-2px); }
+        .footer-bottom { text-align: center; padding-top: 18px; border-top: 1px solid rgba(255,255,255,0.08); font-weight: 600; font-size: 0.85rem; max-width: 1200px; margin: 0 auto; }
+
+        @keyframes fadeInNeural { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes slideInNeural { from { opacity: 0; transform: translateY(15px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
+        @keyframes fadeOutNeural { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(10px); } }
+        @keyframes pulseNeural { 0% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.08); opacity: 0.6; } 100% { transform: scale(1); opacity: 1; } }
+        @keyframes pulseGreen { 0% { box-shadow: 0 0 0 0 rgba(30, 58, 138, 0.4); } 70% { box-shadow: 0 0 0 6px rgba(30, 58, 138, 0); } 100% { box-shadow: 0 0 0 0 rgba(30, 58, 138, 0); } }
     </style> 
     <script type="text/javascript">
     (function(c,l,a,r,i,t,y){
@@ -435,6 +479,10 @@
     </script>
 </head>
 <body>
+
+    <a href="javascript:void(0);" onclick="showWhatsAppNotice(event)" class="whatsapp-float" title="تواصل معنا عبر واتساب">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
 
     <div class="ambient-mesh">
         <div class="mesh-blob mesh-blob-1"></div>
@@ -449,15 +497,42 @@
         <h2>جاري التحميل...</h2>
     </div>
 
+    <div class="modal-overlay" id="cert-modal-overlay">
+        <div class="login-modal">
+            <i class="fa-solid fa-certificate" style="font-size: 2.5rem; color: var(--accent-color); margin-bottom: 12px;"></i>
+            <h3>التحقق من اعتماد الشهادة</h3>
+            <p style="color: var(--text-muted); margin-bottom: 16px; font-weight: 600; font-size: 0.9rem;">أدخل كود الشهادة الموجود أسفل المستند للتأكد من صحتها:</p>
+            <input type="text" id="cert-code-input" class="login-input" placeholder="مثال: BA-2026-9850" style="text-transform: uppercase;">
+            <div id="cert-result-box" style="margin-bottom: 12px; font-weight: 800; font-size: 13px; min-height: 22px;"></div>
+            <div style="display: flex; gap: 8px;">
+                <button class="btn-primary" style="flex: 1;" onclick="verifyCertificate()">تحقق</button>
+                <button class="btn-outline" style="flex: 1;" onclick="closeCertModal()">إغلاق</button>
+            </div>
+        </div>
+    </div>
+
     <div class="modal-overlay" id="login-modal-overlay">
         <div class="login-modal">
-            <i class="fa-solid fa-shield-halved" style="font-size: 3rem; color: var(--accent-gold); margin-bottom: 16px;"></i>
+            <i class="fa-solid fa-shield-halved" style="font-size: 2.5rem; color: var(--accent-color); margin-bottom: 12px;"></i>
             <h3>بوابة المتدربين</h3>
-            <p style="color: var(--text-muted); margin-bottom: 20px; font-weight: 600;">الرجاء إدخال كود المرور الخاص بالكورس للمتابعة</p>
+            <p style="color: var(--text-muted); margin-bottom: 16px; font-weight: 600; font-size: 0.9rem;">الرجاء إدخال كود المرور الخاص بالكورس للمتابعة</p>
             <input type="password" id="course-password" class="login-input" placeholder="أدخل كود المرور...">
-            <div style="display: flex; gap: 10px;">
+            <div style="display: flex; gap: 8px;">
                 <button class="btn-primary" style="flex: 1;" onclick="verifyLogin()">دخول</button>
                 <button class="btn-outline" style="flex: 1;" onclick="closeModal()">إلغاء</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="va-login-modal-overlay">
+        <div class="login-modal">
+            <i class="fa-solid fa-lock" style="font-size: 2.5rem; color: var(--accent-color); margin-bottom: 12px;"></i>
+            <h3>بوابة متدربي الهندسة القيمية</h3>
+            <p style="color: var(--text-muted); margin-bottom: 16px; font-weight: 600; font-size: 0.9rem;">الرجاء إدخال الرمز السري المخصص للدخول إلى المقرر</p>
+            <input type="password" id="va-course-password" class="login-input" placeholder="أدخل الرمز السري...">
+            <div style="display: flex; gap: 8px;">
+                <button class="btn-primary" style="flex: 1;" onclick="verifyVALogin()">دخول</button>
+                <button class="btn-outline" style="flex: 1;" onclick="closeVAModal()">إلغاء</button>
             </div>
         </div>
     </div>
@@ -467,17 +542,15 @@
             <img src="e842ee15-fc5d-491b-a6ae-17e6f345bccd.jpg" alt="BA Academy Logo">
         </div>
         <nav class="top-bar-actions">
-            <!-- إضافة رابط تواصل معنا هنا -->
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLSdObqHCrVw77H87oI5-yZlk6wc7_QuaKMLP3ZNbC5Fp767qHw/viewform?pli=1" target="_blank" class="nav-link" style="color: var(--accent-gold);"><i class="fa-solid fa-envelope"></i> تواصل معنا</a>
-            <button class="nav-link" onclick="switchMainView('home-view')"><i class="fa-solid fa-house"></i> الرئيسية</button>
+            <button class="nav-link home-highlight" onclick="switchMainView('home-view')"><i class="fa-solid fa-house"></i> الرئيسية</button>
             <button class="nav-link" onclick="switchMainView('about-view')"><i class="fa-solid fa-circle-info"></i> من نحن</button>
+            <button class="nav-link" onclick="openCertModal()" style="color: var(--accent-color); font-weight: 900;"><i class="fa-solid fa-award"></i> التحقق من شهادة</button>
             <button class="theme-btn" onclick="toggleTheme()" title="تبديل المظهر">
                 <i class="fa-solid fa-moon" id="theme-icon"></i>
             </button>
         </nav>
     </header>
 
-    <!-- 1. الرئيسية -->
     <main id="home-view" class="app-view active">
         <section class="hero-section">
             <div class="hero-content">
@@ -488,8 +561,7 @@
                     <p><i class="fa-solid fa-quote-right"></i> لأن المعرفة الحقيقية ليست أكثر تعقيدًا... بل أكثر وضوحًا. نصمم تجربة تعلم تساعدك على إتقان المهارات التي تحتاجها في المشاريع، دون إهدار وقتك.</p>
                 </div>
 
-                <!-- تم تعديل شهادات حضور إلى شهادات إتمام (Professional Certificates) -->
-                <p>طور مهاراتك الهندسية وانتقل من الجانب الأكاديمي النظري إلى الواقع التطبيقي من خلال مسارات تدريبية احترافية مدعومة بخبرات ميدانية وشهادات إتمام (Professional Certificates).</p>
+                <p>طور مهاراتك الهندسية وانتقل من الجانب الأكاديمي النظري إلى الواقع التطبيقي من خلال مسارات تدريبية احترافية مدعومة بخبرات ميدانية وشهادات إتمام.</p>
                 <div class="hero-buttons">
                     <button class="btn-primary" onclick="document.getElementById('courses-section').scrollIntoView({behavior: 'smooth'})">
                         <i class="fa-solid fa-play"></i> استعرض المسارات
@@ -503,42 +575,23 @@
             </div>
         </section>
 
-        <!-- قسم الإحصائيات المصغر والمضغوط -->
         <section class="stats-section">
-            <div class="stat-box">
-                <span class="stat-number" data-target="20">0</span>
-                <span class="stat-label">عاماً خبرة ميدانية</span>
-            </div>
-            <div class="stat-box">
-                <span class="stat-number" data-target="24">0</span>
-                <span class="stat-label">ساعة تدريبية مكثفة</span>
-            </div>
-            <div class="stat-box">
-                <span class="stat-number" data-target="15">0</span>
-                <span class="stat-label">نموذج وأداة عملية</span>
-            </div>
-            <div class="stat-box">
-                <span class="stat-number" data-target="100">0</span>
-                <span class="stat-label">% تركيز تطبيقي</span>
-            </div>
+            <div class="stat-box"><span class="stat-number" data-target="20">0</span><span class="stat-label">عاماً خبرة ميدانية</span></div>
+            <div class="stat-box"><span class="stat-number" data-target="24">0</span><span class="stat-label">ساعة تدريبية مكثفة</span></div>
+            <div class="stat-box"><span class="stat-number" data-target="15">0</span><span class="stat-label">نموذج وأداة عملية</span></div>
+            <div class="stat-box"><span class="stat-number" data-target="100">0</span><span class="stat-label">% تركيز تطبيقي</span></div>
         </section>
 
-        <!-- قصة منصة BA Academy (مضافة حديثاً) -->
         <section class="story-section">
             <div class="story-content">
                 <h2>لماذا أنشأنا BA Academy؟</h2>
                 <p>
-                    <i class="fa-solid fa-quote-right" style="color: var(--accent-gold); font-size: 1.5rem; margin-bottom: 10px; display: block;"></i>
-                    "لم ننشئ BA Academy لنضيف دورة جديدة إلى الإنترنت، بل أنشأناها لنقدم تجربة تعلم مختلفة.
-
-نؤمن أن أفضل طريقة للتعلم هي تبسيط المفاهيم المعقدة، وربطها بالتطبيق العملي، حتى يتمكن كل مهندس من تحويل المعرفة إلى نتائج حقيقية في مشاريعه.
-
-لهذا صُممت جميع دوراتنا لتكون واضحة، عملية، ومبنية على الخبرة الميدانية والمعايير العالمية.."
+                    <i class="fa-solid fa-quote-right" style="color: var(--accent-color); font-size: 1.2rem; margin-bottom: 6px; display: block;"></i>
+                    "لم ننشئ BA Academy لنضيف دورة جديدة إلى الإنترنت، بل أنشأناها لنقدم تجربة تعلم مختلفة. نؤمن أن أفضل طريقة للتعلم هي تبسيط المفاهيم المعقدة وربطها بالتطبيق العملي لتمكين المهندسين من تحويل المعرفة إلى نتائج حقيقية."
                 </p>
             </div>
         </section>
 
-        <!-- قسم لماذا تختارنا -->
         <section class="features-section">
             <h2>لماذا تختار BA Academy؟</h2>
             <p class="features-subtitle">نضع بين يديك معايير احترافية فريدة لتطوير مسيرتك الهندسية</p>
@@ -555,75 +608,87 @@
                 </div>
                 <div class="feature-card">
                     <i class="fa-solid fa-certificate"></i>
-                    <!-- تم التغيير من شهادات حضور إلى Professional Certificate -->
                     <h4>Professional Certificate</h4>
-                    <p>توثيق رسمي لحضورك وإتمامك للمسار التدريبي يرفع من قيمتك وقدرتك في سوق العمل.</p>
+                    <p>توثيق رسمي لحضورك وإتمامك للمسار التدريبي يرفع من قيمتك في سوق العمل.</p>
                 </div>
                 <div class="feature-card">
                     <i class="fa-solid fa-headset"></i>
-                    <h4>متابعة ودعم فني</h4>
-                    <p>إشراف مباشر ومتابعة مستمرة لضمان تحقيق الاستفادة القصوى وتجاوز كافة العقبات.</p>
+                    <h4>متابعة ودعم مستمر</h4>
+                    <p>إشراف مباشر ومتابعة مستمرة لضمان تحقيق الاستفادة القصوى وتجاوز العقبات.</p>
                 </div>
             </div>
         </section>
 
-        <!-- آراء المتدربين - Social Proof (مضافة حديثاً) -->
-        <section class="features-section" style="background: var(--bg-main); border-top: none;">
-            <h2>آراء المتدربين</h2>
-            <p class="features-subtitle">نجاحكم هو هدفنا الحقيقي</p>
-            <div class="features-grid">
-                <div class="feature-card" style="text-align: right; background: var(--card-bg);">
-                    <div style="color: #fbbf24; font-size: 1.2rem; margin-bottom: 15px;">
-                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+        <section class="professional-testimonials">
+            <div class="testimonials-heading-container">
+                <h2>آراء المتدربين</h2>
+                <p>نجاحكم وتطوركم المهني هو هدفنا الحقيقي في كل خطوة</p>
+            </div>
+            <div class="testimonials-grid">
+                <div class="testimonial-card-pro">
+                    <div>
+                        <div class="testimonial-header-info">
+                            <div class="testimonial-avatar-badge">أ.ح</div>
+                            <div class="testimonial-titles"><h4>م. أحمد حسين</h4><span>مهندس ميكانيكا</span></div>
+                        </div>
+                        <div class="testimonial-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                        <p class="testimonial-body-text">"عجبني تصميم الموقع وكورس إدارة المخاطر، استفدت منه جداً في عملي وتطبيق المفاهيم بشكل عملي."</p>
                     </div>
-                    <h4 style="font-size: 1.2rem; color: var(--text-dark); margin-bottom: 5px;">م. أحمد حسين</h4>
-                    <p style="font-size: 0.9rem; color: var(--primary-blue); font-weight: 800; margin-bottom: 15px;">مهندس ميكانيكا</p>
-                    <p style="font-size: 1.05rem; color: var(--text-muted); font-weight: 600; font-style: italic; line-height: 1.7;">"عجبني تصميم الموقع وكورس إدارة المخاطر، استفدت منه جداً في عملي."</p>
                 </div>
-                
-                <div class="feature-card" style="text-align: right; background: var(--card-bg);">
-                    <div style="color: #fbbf24; font-size: 1.2rem; margin-bottom: 15px;">
-                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                <div class="testimonial-card-pro">
+                    <div>
+                        <div class="testimonial-header-info">
+                            <div class="testimonial-avatar-badge">أ.م</div>
+                            <div class="testimonial-titles"><h4>م. أحمد محمود</h4><span>مهندس شبكات وذكاء اصطناعي</span></div>
+                        </div>
+                        <div class="testimonial-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                        <p class="testimonial-body-text">"المحتوى رائع بالفعل وتجربة مختلفة في تبسيط العلم. تحياتي للأكاديمية وننتظر باقي الكورسات بفارغ الصبر."</p>
                     </div>
-                    <h4 style="font-size: 1.2rem; color: var(--text-dark); margin-bottom: 5px;">م. أحمد محمود</h4>
-                    <p style="font-size: 0.9rem; color: var(--primary-blue); font-weight: 800; margin-bottom: 15px;">مهندس شبكات وذكاء اصطناعي</p>
-                    <p style="font-size: 1.05rem; color: var(--text-muted); font-weight: 600; font-style: italic; line-height: 1.7;">"المحتوى رائع بالفعل وتجربة مختلفة في تبسيط العلم. تحياتي للأكاديمية وننتظر باقي الكورسات."</p>
                 </div>
-
-                <div class="feature-card" style="text-align: right; background: var(--card-bg);">
-                    <div style="color: #fbbf24; font-size: 1.2rem; margin-bottom: 15px;">
-                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                <div class="testimonial-card-pro">
+                    <div>
+                        <div class="testimonial-header-info">
+                            <div class="testimonial-avatar-badge">س.أ</div>
+                            <div class="testimonial-titles"><h4>م. سيد أبو بكر</h4><span>مهندس مدني</span></div>
+                        </div>
+                        <div class="testimonial-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                        <p class="testimonial-body-text">"استفدت جداً من كورس إدارة المخاطر، وطريقة العرض شيقة ومبسطة جداً. بانتظار المزيد من الدورات."</p>
                     </div>
-                    <h4 style="font-size: 1.2rem; color: var(--text-dark); margin-bottom: 5px;">م. سيد أبو بكر</h4>
-                    <p style="font-size: 0.9rem; color: var(--primary-blue); font-weight: 800; margin-bottom: 15px;">مهندس مدني</p>
-                    <p style="font-size: 1.05rem; color: var(--text-muted); font-weight: 600; font-style: italic; line-height: 1.7;">"استفدت جداً من كورس إدارة المخاطر، وطريقة العرض شيقة. بانتظار المزيد من الدورات."</p>
                 </div>
             </div>
         </section>
 
         <div class="dashboard-content" id="courses-section">
-            <!-- الدورات المتاحة -->
-            <h2 class="section-title"><i class="fa-solid fa-layer-group" style="color: #10b981;"></i> الدورات المتاحة</h2>
-            <div class="cards-grid" style="margin-bottom: 45px;">
+            <h2 class="section-title"><i class="fa-solid fa-layer-group" style="color: var(--primary-blue);"></i> الدورات المتاحة</h2>
+            <div class="cards-grid" style="margin-bottom: 30px;">
                 <div class="nav-card course-card-main" onclick="switchMainView('course-landing-view')">
-                    <span class="badge-available">متاح الآن</span>
-                    <i class="fa-solid fa-chart-line main-icon" style="color: #10b981;"></i>
+                    <span class="badge-available"><span class="green-dot-pulse"></span> متاح الآن</span>
+                    <i class="fa-solid fa-chart-line main-icon" style="color: var(--primary-blue);"></i>
                     <h3>إدارة مخاطر المشاريع</h3>
                     <p class="en-text">Project Risk Management</p>
                 </div>
+
+                <div class="nav-card course-card-main course-card-featured" onclick="switchMainView('value-landing-view')">
+                    <span class="badge-available" style="background: var(--primary-blue);"><span class="green-dot-pulse"></span> متاح الآن 🚀</span>
+                    <div class="celebrate-icon-box">
+                        <i class="fa-solid fa-lightbulb main-icon" style="color: var(--primary-blue);"></i>
+                    </div>
+                    <h3>الهندسة القيمية</h3>
+                    <p class="en-text" style="color: var(--primary-blue); font-weight: 900;">Value Engineering (2026)</p>
+                </div>
             </div>
 
-            <!-- الدورات القادمة -->
-            <h2 class="section-title"><i class="fa-solid fa-clock-rotate-left" style="color: var(--accent-gold);"></i> الدورات القادمة</h2>
+            <h2 class="section-title"><i class="fa-solid fa-clock-rotate-left" style="color: #0ea5e9;"></i> الدورات القادمة</h2>
             <div class="cards-grid">
-                <div class="nav-card course-card-upcoming" onclick="switchMainView('datacenter-info-view')">
-                    <i class="fa-solid fa-server main-icon"></i>
-                    <h3>هندسة مراكز البيانات</h3>
-                    <p class="en-text">Data Center Infrastructure</p>
-                    <div class="status-badge-box">
-                        <i class="fa-solid fa-spinner fa-spin"></i> قيد التنفيذ 🛠️
+                <div class="nav-card course-card-upcoming" onclick="switchMainView('electrical-loads-info-view')">
+                    <i class="fa-solid fa-bolt main-icon" style="color: var(--primary-blue);"></i>
+                    <h3>حساب الأحمال الكهربائية</h3>
+                    <p class="en-text">Electrical Load Calculation</p>
+                    <div class="status-badge-box design">
+                        <i class="fa-solid fa-compass fa-spin"></i> قريباً / قيد التطوير ⚡
                     </div>
                 </div>
+
                 <div class="nav-card course-card-upcoming" onclick="switchMainView('contracts-info-view')">
                     <i class="fa-solid fa-file-signature main-icon"></i>
                     <h3>إدارة العقود والتكاليف</h3>
@@ -632,87 +697,56 @@
                         <i class="fa-solid fa-compass fa-spin"></i> قيد التصميم والتطوير 💡
                     </div>
                 </div>
-                <div class="nav-card course-card-upcoming" onclick="switchMainView('value-info-view')">
-                    <i class="fa-solid fa-lightbulb main-icon"></i>
-                    <h3>الهندسة القيمية</h3>
-                    <p class="en-text">Value Engineering</p>
-                    <div class="status-badge-box design">
-                        <i class="fa-solid fa-compass fa-spin"></i> قيد التصميم والتطوير 💡
+
+                <div class="nav-card course-card-upcoming" onclick="switchMainView('datacenter-info-view')">
+                    <i class="fa-solid fa-server main-icon"></i>
+                    <h3>هندسة مراكز البيانات</h3>
+                    <p class="en-text">Data Center Infrastructure</p>
+                    <div class="status-badge-box soon-badge">
+                        <i class="fa-solid fa-hourglass-half"></i> قريباً ⏳
                     </div>
                 </div>
             </div>
         </div>
     </main>
 
-    <!-- 2. صفحة تفاصيل كورس المخاطر -->
     <main id="course-landing-view" class="app-view">
-        <div class="dashboard-content" style="padding-top: 30px;">
-            <button class="btn-outline" onclick="switchMainView('home-view')" style="margin-bottom: 20px; border-radius: 12px; padding: 10px 20px;">
+        <div class="dashboard-content" style="padding-top: 20px;">
+            <button class="btn-outline" onclick="switchMainView('home-view')" style="margin-bottom: 15px; border-radius: 10px; padding: 8px 16px;">
                 <i class="fa-solid fa-arrow-right"></i> العودة للمسارات
             </button>
-
             <div class="course-details-header">
                 <h2>دورة إدارة مخاطر المشاريع الاحترافية</h2>
                 <p>تعلم كيفية التنبؤ، التحليل، والتعامل مع المخاطر الهندسية باحترافية لتأمين مشاريعك من التعثر</p>
                 <div class="course-meta">
                     <div class="meta-item"><i class="fa-regular fa-clock"></i> 24 ساعة تدريبية</div>
                     <div class="meta-item"><i class="fa-solid fa-video"></i> محاضرات مسجلة</div>
-                    <!-- تم التغيير لـ Certificate of Completion هنا لأن الطالب سيكون قد أنهى الدورة -->
                     <div class="meta-item"><i class="fa-solid fa-certificate"></i> Certificate of Completion</div>
                     <div class="meta-item"><i class="fa-solid fa-signal"></i> المستوى: متقدم</div>
                 </div>
             </div>
-
             <div class="course-content-split">
                 <div class="content-box">
                     <h3 style="margin-top: 0;"><i class="fa-solid fa-bullseye"></i> أهداف الدورة</h3>
                     <p>تزويد المهندسين ومديري المشاريع بالمهارات العملية لبناء سجل مخاطر (Risk Register) متكامل، وتطبيق استراتيجيات الاستجابة للمخاطر لتجنب تجاوز الميزانية والجدول الزمني.</p>
-                    
-                    <div style="background: var(--active-blue); border-right: 4px solid var(--primary-blue); padding: 16px; border-radius: 12px; margin: 20px 0; border: var(--glass-border);">
-                        <h4 style="color: var(--primary-blue); font-size: 1.1rem; font-weight: 900; margin-bottom: 6px;"><i class="fa-solid fa-toolbox"></i> أداة حاسبة المخاطر التفاعلية المرفقة:</h4>
-                        <p style="font-size: 0.98rem; margin-bottom: 0; color: var(--text-dark);">تتيح لك هذه الأداة إدخال المخاطر المحتملة لمشروعك، حساب معامل الخطورة تلقائياً (الاحتمالية × التأثير)، وتوليد سجل مخاطر جاهز للتصدير والتطبيق الفوري في مشروعك الحقيقي.</p>
-                    </div>
-
                     <h3><i class="fa-solid fa-list-check"></i> محاور البرنامج التدريبي</h3>
                     <ul>
                         <li>مقدمة في إدارة المخاطر وفقاً لمنهجية المشاريع الاحترافية.</li>
                         <li>كيفية التعرف على المخاطر وتصنيفها.</li>
                         <li>التحليل النوعي والكمي للمخاطر.</li>
                         <li>استراتيجيات الاستجابة للمخاطر (التجنب، التخفيف، النقل، القبول).</li>
-                        <li>مراقبة والتحكم في المخاطر أثناء تنفيذ المشروع.</li>
-                    </ul>
-
-                    <h3 style="margin-top: 35px;"><i class="fa-solid fa-users-rectangle"></i> هذه الدورة مناسبة لـ:</h3>
-                    <ul class="sales-checklist">
-                        <li><i class="fa-solid fa-check-circle"></i> Site Engineer (مهندسو المواقع)</li>
-                        <li><i class="fa-solid fa-check-circle"></i> Planning (مهندسو التخطيط والمتابعة)</li>
-                        <li><i class="fa-solid fa-check-circle"></i> QA/QC (مهندسو ضبط الجودة)</li>
-                        <li><i class="fa-solid fa-check-circle"></i> Technical Office (مهندسو المكتب الفني)</li>
-                        <li><i class="fa-solid fa-check-circle"></i> Project Manager (مديرو المشاريع)</li>
-                    </ul>
-
-                    <h3 style="margin-top: 35px;"><i class="fa-solid fa-trophy"></i> بعد الدورة ستستطيع:</h3>
-                    <ul class="sales-checklist">
-                        <li><i class="fa-solid fa-square-check"></i> إنشاء Risk Register احترافي</li>
-                        <li><i class="fa-solid fa-square-check"></i> تقييم Probability (الاحتمالية) بدقة</li>
-                        <li><i class="fa-solid fa-square-check"></i> تحليل Impact (التأثير) على التكلفة والوقت</li>
-                        <li><i class="fa-solid fa-square-check"></i> إدارة المخاطر بالكامل باحترافية ميدانية</li>
                     </ul>
                 </div>
-
-                <div class="content-box" style="text-align: center; padding: 35px 25px;">
-                    <i class="fa-solid fa-user-tie" style="font-size: 3.5rem; color: var(--primary-blue); margin-bottom: 15px;"></i>
+                <div class="content-box" style="text-align: center; padding: 25px 20px;">
+                    <i class="fa-solid fa-user-tie" style="font-size: 3rem; color: var(--primary-blue); margin-bottom: 12px;"></i>
                     <h3 style="margin-top: 0; color: var(--text-dark); justify-content: center;">المدرب: مهندس أحمد علي</h3>
-                    <p style="color: var(--primary-blue); font-weight: 800; margin-bottom: 8px;">Senior Electrical Engineer</p>
-                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px;">خبرة هندسية وميدانية 20 عاماً في إدارة المشاريع الهندسية.</p>
-                    
-                    <hr style="border: 0; border-top: 1px solid var(--border-color); margin: 20px 0;">
-                    
-                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSdObqHCrVw77H87oI5-yZlk6wc7_QuaKMLP3ZNbC5Fp767qHw/viewform?pli=1" target="_blank" class="btn-primary" style="width: 100%; margin-bottom: 15px; display: inline-flex; align-items: center; justify-content: center; gap: 10px; text-decoration: none; font-size: 16px; background: linear-gradient(135deg, #10b981 0%, #059669 100%); box-shadow: 0 8px 18px rgba(16, 185, 129, 0.3);">
+                    <p style="color: var(--primary-blue); font-weight: 800; margin-bottom: 6px;">Senior Electrical Engineer</p>
+                    <p style="color: var(--text-muted); font-size: 0.88rem; margin-bottom: 16px;">خبرة هندسية وميدانية 20 عاماً في إدارة المشاريع الهندسية.</p>
+                    <hr style="border: 0; border-top: 1px solid var(--border-color); margin: 15px 0;">
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSdObqHCrVw77H87oI5-yZlk6wc7_QuaKMLP3ZNbC5Fp767qHw/viewform?pli=1" target="_blank" class="btn-primary" style="width: 100%; margin-bottom: 12px; text-decoration: none; font-size: 15px;">
                         <i class="fa-solid fa-paper-plane"></i> تواصل معنا للتسجيل
                     </a>
-
-                    <p style="font-size: 1.1rem; font-weight: 900; color: var(--accent-gold); margin-bottom: 12px;">دخول المتدربين</p>
+                    <p style="font-size: 1rem; font-weight: 900; color: var(--primary-blue); margin-bottom: 10px;">دخول المتدربين</p>
                     <button class="btn-outline" onclick="openLoginModal()" style="width: 100%;">
                         <i class="fa-solid fa-lock-open"></i> الدخول للمقرر
                     </button>
@@ -721,30 +755,170 @@
         </div>
     </main>
 
-    <!-- صفحة تفاصيل كورس هندسة مراكز البيانات -->
-    <main id="datacenter-info-view" class="app-view">
-        <div class="dashboard-content" style="padding-top: 30px; max-width: 950px;">
-            <button class="btn-outline" onclick="switchMainView('home-view')" style="margin-bottom: 20px; border-radius: 12px; padding: 10px 20px;">
+    <main id="value-landing-view" class="app-view">
+        <div class="dashboard-content" style="padding-top: 20px;">
+            <button class="btn-outline" onclick="switchMainView('home-view')" style="margin-bottom: 15px; border-radius: 10px; padding: 8px 16px;">
                 <i class="fa-solid fa-arrow-right"></i> العودة للمسارات
             </button>
-            <div class="course-details-header" style="background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%); padding: 50px 20px;">
-                <span style="background: rgba(255,255,255,0.2); padding: 6px 16px; border-radius: 20px; font-size: 13px; font-weight: 800; display: inline-block; margin-bottom: 12px;"><i class="fa-solid fa-spinner fa-spin"></i> قيد التنفيذ 🛠️</span>
+            <div class="course-details-header" style="background: linear-gradient(135deg, var(--primary-blue) 0%, #0f172a 100%);">
+                <h2>دورة الهندسة القيمية الاحترافية</h2>
+                <p>منهجية هندسية منظمة لتعظيم القيمة وخفض التكاليف الإجمالية للمشاريع دون المساس بالجودة</p>
+                <div class="course-meta">
+                    <div class="meta-item"><i class="fa-regular fa-clock"></i> 20 ساعة تدريبية</div>
+                    <div class="meta-item"><i class="fa-solid fa-video"></i> محاضرات مسجلة وأداة تطبيقية</div>
+                    <div class="meta-item"><i class="fa-solid fa-certificate"></i> Certificate of Completion</div>
+                    <div class="meta-item"><i class="fa-solid fa-signal"></i> المستوى: متقدم</div>
+                </div>
+            </div>
+            <div class="course-content-split">
+                <div class="content-box">
+                    <h3 style="margin-top: 0;"><i class="fa-solid fa-bullseye"></i> ماذا ستتعلم في الدورة؟</h3>
+                    <p>محتوى مبسط وعملي يعلمك كيف تحلل وظائف المشروع، وتبتكر بدائل تصميمية ذكية ومستدامة تقلل التكاليف بشكل فعال مع الحفاظ على أعلى معايير الأمان والجودة.</p>
+                    
+                    <!-- تم تحديث وصف أداة هدية الكورس بالنص الجديد -->
+                    <h3><i class="fa-solid fa-gift" style="color: var(--accent-color);"></i> هدية الكورس: أداة تطبيقية مخصصة</h3>
+                    <p>صممنا لك هذه الأداة البسيطة لتكون هديتك مع الكورس، عشان تساعدك على تطبيق اللي اتعلمته بشكل فوري ومباشر:</p>
+                    <ul class="sales-checklist">
+                        <li><i class="fa-solid fa-check-circle"></i> <strong>Value Engineering Toolkit:</strong> أداة تفاعلية تساعدك على تطبيق منهجية الهندسة القيمية عمليًا، بدءًا من تحليل الوظائف والتكلفة، مرورًا بتقييم البدائل وحساب مؤشر القيمة (Value Index)، وانتهاءً باختيار أفضل الحلول واتخاذ قرارات مدعومة بالبيانات والرسوم البيانية، كما تُسهّل توثيق نتائج دراسة القيمة بطريقة منظمة واحترافية.</li>
+                    </ul>
+
+                    <h3><i class="fa-solid fa-list-check"></i> محاور البرنامج التدريبي</h3>
+                    <ul>
+                        <li>مفهوم الهندسة القيمية وأهميتها في المشاريع الحديثة.</li>
+                        <li>مراحل خطة عمل الهندسة القيمية (VE Job Plan).</li>
+                        <li>تحليل الوظائف (Function Analysis) وتحديد التكاليف غير الضرورية.</li>
+                        <li>تقييم واختيار البدائل الهندسية الفعالة.</li>
+                    </ul>
+                </div>
+                <div class="content-box" style="text-align: center; padding: 25px 20px;">
+                    <i class="fa-solid fa-lightbulb" style="font-size: 3rem; color: var(--primary-blue); margin-bottom: 12px;"></i>
+                    <h3 style="margin-top: 0; color: var(--text-dark); justify-content: center;">المدرب: مهندس أحمد علي</h3>
+                    <p style="color: var(--primary-blue); font-weight: 800; margin-bottom: 6px;">Senior Electrical Engineer</p>
+                    <p style="color: var(--text-muted); font-size: 0.88rem; margin-bottom: 16px;">خبير في تحسين التصاميم الهندسية وخفض التكاليف للمشاريع الكبرى.</p>
+                    <hr style="border: 0; border-top: 1px solid var(--border-color); margin: 15px 0;">
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSdObqHCrVw77H87oI5-yZlk6wc7_QuaKMLP3ZNbC5Fp767qHw/viewform?pli=1" target="_blank" class="btn-primary" style="width: 100%; margin-bottom: 12px; text-decoration: none; font-size: 15px;">
+                        <i class="fa-solid fa-paper-plane"></i> تواصل معنا للتسجيل
+                    </a>
+                    <p style="font-size: 1rem; font-weight: 900; color: var(--primary-blue); margin-bottom: 10px;">دخول المتدربين</p>
+                    <button class="btn-outline" onclick="openVALoginModal()" style="width: 100%;">
+                        <i class="fa-solid fa-lock-open"></i> الدخول للمقرر
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <main id="electrical-loads-info-view" class="app-view">
+        <div class="dashboard-content" style="padding-top: 20px; max-width: 950px;">
+            <button class="btn-outline" onclick="switchMainView('home-view')" style="margin-bottom: 15px; border-radius: 10px; padding: 8px 16px;">
+                <i class="fa-solid fa-arrow-right"></i> العودة للمسارات
+            </button>
+            <div class="course-details-header" style="background: linear-gradient(135deg, var(--primary-blue) 0%, #0369a1 100%); padding: 45px 20px;">
+                <span style="background: rgba(255,255,255,0.2); padding: 5px 14px; border-radius: 16px; font-size: 12px; font-weight: 800; display: inline-block; margin-bottom: 10px;"><i class="fa-solid fa-compass fa-spin"></i> قريباً / قيد التطوير ⚡</span>
                 <h2>BA Engineering Academy</h2>
-                <p style="font-size: 1.4rem; font-weight: 800; color: #fff; margin-top: 5px;">هندسة مراكز البيانات (Data Center Infrastructure)</p>
+                <p style="font-size: 1.25rem; font-weight: 800; color: #fff; margin-top: 4px;">حساب الأحمال الكهربائية (Electrical Load Calculation)</p>
             </div>
             
             <div class="content-box">
-                <div style="text-align: center; background: rgba(30, 58, 138, 0.08); border: 2px dashed var(--primary-blue); padding: 20px; border-radius: 16px; margin-bottom: 30px;">
-                    <span style="font-size: 1.3rem; font-weight: 900; color: var(--primary-blue);"><i class="fa-solid fa-screwdriver-wrench"></i> الكورس حالياً: قيد التنفيذ 🛠️</span>
-                    <p style="color: var(--text-muted); margin-top: 8px; font-size: 1rem;">نعمل على إعداد محتوى هندسي متقدم ومخصص لتصميم وبنية مرافق مراكز البيانات الحيوية.</p>
+                <div style="text-align: center; background: rgba(30, 58, 138, 0.08); border: 2px dashed var(--primary-blue); padding: 18px; border-radius: 16px; margin-bottom: 25px;">
+                    <span style="font-size: 1.15rem; font-weight: 900; color: var(--primary-blue);"><i class="fa-solid fa-bolt"></i> الكورس حالياً: قيد التطوير والإعداد ⚡</span>
+                    <p style="color: var(--text-muted); margin-top: 6px; font-size: 0.95rem;">نعمل على إعداد محتوى هندسي متكامل وفقاً للأكواد العالمية لحساب الأحمال للمنشآت السكنية والتجارية والصناعية.</p>
+                </div>
+
+                <h2><i class="fa-solid fa-circle-info"></i> ملخص بسيط وواضح لمحتوى الكورس</h2>
+                <p>مقرر هندسي تخصصي يغطي أسس حساب الأحمال الكهربائية للوحات التوزيع، مع شرح تطبيقي دقيق لـ <span style="color: #059669; font-weight: 900; background: rgba(5, 150, 105, 0.1); padding: 2px 8px; border-radius: 6px; border: 1px solid rgba(5, 150, 105, 0.2);">معامل الطلب (Demand Factor)</span> و <span style="color: #059669; font-weight: 900; background: rgba(5, 150, 105, 0.1); padding: 2px 8px; border-radius: 6px; border: 1px solid rgba(5, 150, 105, 0.2);">معامل التنوع (Diversity Factor)</span>، بالإضافة لاختيار أحجام الكابلات والقواطع طبقاً للأكواد المعيارية.</p>
+
+                <div style="background: var(--active-blue); border-right: 4px solid var(--primary-blue); padding: 14px; border-radius: 10px; margin: 18px 0; border: var(--glass-border);">
+                    <h4 style="color: var(--primary-blue); font-size: 1.05rem; font-weight: 900; margin-bottom: 4px;"><i class="fa-solid fa-toolbox"></i> أداة حاسبة الأحمال التلقائية (قادمة مع الكورس):</h4>
+                    <p style="font-size: 0.95rem; margin-bottom: 0; color: var(--text-dark);">ستوفر لك الأداة إمكانية إدخال أحمال الإنارة والقوى والمكيفات واستخراج إجمالي التيار وأحجام القواطع والكابلات بشكل آلي ودقيق.</p>
+                </div>
+
+                <h3><i class="fa-solid fa-bullseye"></i> الأهداف الرئيسية</h3>
+                <ul class="sales-checklist">
+                    <li><i class="fa-solid fa-check-circle"></i> إتقان حساب الأحمال الكهربائية للمباني المختلفة طبقاً للكود.</li>
+                    <li><i class="fa-solid fa-check-circle"></i> حساب معامل القدرة (Power Factor) وتصميم تحسينه.</li>
+                    <li><i class="fa-solid fa-check-circle"></i> اختيار القواطع والكابلات المناسبة لضمان أمان النظام الكهربائي.</li>
+                </ul>
+
+                <h3><i class="fa-solid fa-triangle-exclamation" style="color: #dc2626;"></i> المخاطر التي يعالجها الكورس</h3>
+                <ul class="sales-checklist" style="border-color: #dc2626;">
+                    <li><i class="fa-solid fa-shield-halved" style="color: #dc2626;"></i> الأخطاء الجسيمة في تقدير أحجام الكابلات والتي تؤدي لسخونة وخطورة إنشائية.</li>
+                    <li><i class="fa-solid fa-shield-halved" style="color: #dc2626;"></i> هبوط الجهد المفرط (Voltage Drop) الناتج عن سوء التصميم الحسابي.</li>
+                </ul>
+
+                <h3><i class="fa-solid fa-users"></i> الفئة المستهدفة</h3>
+                <p>مخصص للمهندسين الكهربائيين ومهندسي المكتب الفني.</p>
+            </div>
+        </div>
+    </main>
+
+    <main id="contracts-info-view" class="app-view">
+        <div class="dashboard-content" style="padding-top: 20px; max-width: 950px;">
+            <button class="btn-outline" onclick="switchMainView('home-view')" style="margin-bottom: 15px; border-radius: 10px; padding: 8px 16px;">
+                <i class="fa-solid fa-arrow-right"></i> العودة للمسارات
+            </button>
+            <div class="course-details-header" style="background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%); padding: 45px 20px;">
+                <span style="background: rgba(255,255,255,0.2); padding: 5px 14px; border-radius: 16px; font-size: 12px; font-weight: 800; display: inline-block; margin-bottom: 10px;"><i class="fa-solid fa-compass fa-spin"></i> قيد التصميم والتطوير 💡</span>
+                <h2>BA Engineering Academy</h2>
+                <p style="font-size: 1.25rem; font-weight: 800; color: #fff; margin-top: 4px;">إدارة العقود والتكاليف (Contracts & Cost)</p>
+            </div>
+            
+            <div class="content-box">
+                <div style="text-align: center; background: rgba(30, 58, 138, 0.08); border: 2px dashed var(--primary-blue); padding: 18px; border-radius: 16px; margin-bottom: 25px;">
+                    <span style="font-size: 1.15rem; font-weight: 900; color: var(--primary-blue);"><i class="fa-solid fa-pen-ruler"></i> الكورس حالياً: قيد التصميم والتطوير 💡</span>
+                    <p style="color: var(--text-muted); margin-top: 6px; font-size: 0.95rem;">نعمل حالياً على إعداد وتصوير المحتوى الميداني والأمثلة التطبيقية لطرحه قريباً بأعلى جودة.</p>
+                </div>
+
+                <h2><i class="fa-solid fa-circle-info"></i> ملخص بسيط وواضح لمحتوى الكورس</h2>
+                <p>مقرر متخصص في صياغة وإدارة العقود الإنشائية، تتبع المستخلصات، دراسة مطالبات التغيير، والتحكم الصارم في ميزانية المشروع وتكاليفه لضمان عدم التعثر المالي.</p>
+
+                <div style="background: var(--active-blue); border-right: 4px solid var(--primary-blue); padding: 14px; border-radius: 10px; margin: 18px 0; border: var(--glass-border);">
+                    <h4 style="color: var(--primary-blue); font-size: 1.05rem; font-weight: 900; margin-bottom: 4px;"><i class="fa-solid fa-toolbox"></i> أداة نموذج حساب المستخلصات وتتبع التدفقات (قادمة مع الكورس):</h4>
+                    <p style="font-size: 0.95rem; margin-bottom: 0; color: var(--text-dark);">ستمكنك هذه الأداة من إدارة المستخلصات الجارية وحساب أوامر التغيير وتتبع تباين التكاليف بدقة لتفادي أي عجز مالي في مشروعك.</p>
+                </div>
+
+                <h3><i class="fa-solid fa-bullseye"></i> الأهداف الرئيسية</h3>
+                <ul class="sales-checklist">
+                    <li><i class="fa-solid fa-check-circle"></i> الإلمام التام بأنواع العقود الهندسية وشروطها العامة والخاصة، بما في ذلك عقود الفيديك (FIDIC).</li>
+                    <li><i class="fa-solid fa-check-circle"></i> مهارات إعداد واعتماد المستخلصات الجارية الختامية بدقة.</li>
+                    <li><i class="fa-solid fa-check-circle"></i> إدارة المطالبات وأوامر التغيير وفقاً للممارسات العقدية المعتمدة.</li>
+                </ul>
+
+                <h3><i class="fa-solid fa-triangle-exclamation" style="color: #dc2626;"></i> المخاطر التي يعالجها الكورس</h3>
+                <ul class="sales-checklist" style="border-color: #dc2626;">
+                    <li><i class="fa-solid fa-shield-halved" style="color: #dc2626;"></i> الوقوع في ثغرات قانونية وبنود عقابية مجحفة بالمقاول أو المالك.</li>
+                    <li><i class="fa-solid fa-shield-halved" style="color: #dc2626;"></i> تآكل أرباح المشروع نتيجة ضعف إدارة أوامر التغيير والمطالبات.</li>
+                </ul>
+
+                <h3><i class="fa-solid fa-users"></i> الفئة المستهدفة</h3>
+                <p>مديرو المشاريع، مهندسو العقود والتكاليف، مهندسو المكتب الفني، والمقاولون الراغبون في تأمين موقفهم المالي والقانوني.</p>
+            </div>
+        </div>
+    </main>
+
+    <main id="datacenter-info-view" class="app-view">
+        <div class="dashboard-content" style="padding-top: 20px; max-width: 950px;">
+            <button class="btn-outline" onclick="switchMainView('home-view')" style="margin-bottom: 15px; border-radius: 10px; padding: 8px 16px;">
+                <i class="fa-solid fa-arrow-right"></i> العودة للمسارات
+            </button>
+            <div class="course-details-header" style="background: linear-gradient(135deg, #0ea5e9 0%, #0369a1 100%); padding: 45px 20px;">
+                <span style="background: rgba(255,255,255,0.2); padding: 5px 14px; border-radius: 16px; font-size: 12px; font-weight: 800; display: inline-block; margin-bottom: 10px;"><i class="fa-solid fa-hourglass-half"></i> قريباً ⏳</span>
+                <h2>BA Engineering Academy</h2>
+                <p style="font-size: 1.25rem; font-weight: 800; color: #fff; margin-top: 4px;">هندسة مراكز البيانات (Data Center Infrastructure)</p>
+            </div>
+            
+            <div class="content-box">
+                <div style="text-align: center; background: rgba(14, 165, 233, 0.08); border: 2px dashed #0ea5e9; padding: 18px; border-radius: 16px; margin-bottom: 25px;">
+                    <span style="font-size: 1.15rem; font-weight: 900; color: #0284c7;"><i class="fa-solid fa-hourglass-half"></i> الكورس حالياً: قريباً ⏳</span>
+                    <p style="color: var(--text-muted); margin-top: 6px; font-size: 0.95rem;">نعمل على إعداد محتوى هندسي متقدم ومخصص لتصميم وبنية مرافق مراكز البيانات الحيوية.</p>
                 </div>
 
                 <h2><i class="fa-solid fa-circle-info"></i> ملخص بسيط وواضح لمحتوى الكورس</h2>
                 <p>مقرر هندسي متقدم يغطي معايير تصميم وبناء مرافق مراكز البيانات، بما يشمل أنظمة الطاقة الكهربائية الحرجة، التكييف والتبريد، التمديدات، وإدارة الموثوقية العالية.</p>
 
-                <div style="background: var(--active-blue); border-right: 4px solid var(--primary-blue); padding: 16px; border-radius: 12px; margin: 20px 0; border: var(--glass-border);">
-                    <h4 style="color: var(--primary-blue); font-size: 1.1rem; font-weight: 900; margin-bottom: 6px;"><i class="fa-solid fa-toolbox"></i> أداة حاسبة أحمال وكفاءة الداتا سنتر (قادمة مع الكورس):</h4>
-                    <p style="font-size: 0.98rem; margin-bottom: 0; color: var(--text-dark);">ستوفر لك الأداة إمكانية تقدير أحمال الطاقة الكهربائية وحساب مؤشر كفاءة استخدام الطاقة (PUE) لمشروعك لضمان مطابقة التصميم لمعايير الموثوقية العالمية.</p>
+                <div style="background: var(--active-blue); border-right: 4px solid var(--primary-blue); padding: 14px; border-radius: 10px; margin: 18px 0; border: var(--glass-border);">
+                    <h4 style="color: var(--primary-blue); font-size: 1.05rem; font-weight: 900; margin-bottom: 4px;"><i class="fa-solid fa-toolbox"></i> أداة حاسبة أحمال وكفاءة الداتا سنتر (قادمة مع الكورس):</h4>
+                    <p style="font-size: 0.95rem; margin-bottom: 0; color: var(--text-dark);">ستوفر لك الأداة إمكانية تقدير أحمال الطاقة الكهربائية وحساب مؤشر كفاءة استخدام الطاقة (PUE) لمشروعك لضمان مطابقة التصميم لمعايير الموثوقية العالمية.</p>
                 </div>
 
                 <h3><i class="fa-solid fa-bullseye"></i> الأهداف الرئيسية</h3>
@@ -758,7 +932,6 @@
                 <ul class="sales-checklist" style="border-color: #dc2626;">
                     <li><i class="fa-solid fa-shield-halved" style="color: #dc2626;"></i> انقطاع التيار الكهربائي وفقدان استمرارية الأعمال (Downtime).</li>
                     <li><i class="fa-solid fa-shield-halved" style="color: #dc2626;"></i> الأعطال الناتجة عن سوء إدارة التبريد وارتفاع درجات الحرارة.</li>
-                    <li><i class="fa-solid fa-shield-halved" style="color: #dc2626;"></i> عدم مطابقة المرافق لمعايير الموثوقية والأمان العالمية.</li>
                 </ul>
 
                 <h3><i class="fa-solid fa-users"></i> الفئة المستهدفة</h3>
@@ -767,139 +940,36 @@
         </div>
     </main>
 
-    <!-- صفحة تفاصيل كورس إدارة العقود والتكاليف -->
-    <main id="contracts-info-view" class="app-view">
-        <div class="dashboard-content" style="padding-top: 30px; max-width: 950px;">
-            <button class="btn-outline" onclick="switchMainView('home-view')" style="margin-bottom: 20px; border-radius: 12px; padding: 10px 20px;">
-                <i class="fa-solid fa-arrow-right"></i> العودة للمسارات
-            </button>
-            <div class="course-details-header" style="background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%); padding: 50px 20px;">
-                <span style="background: rgba(255,255,255,0.2); padding: 6px 16px; border-radius: 20px; font-size: 13px; font-weight: 800; display: inline-block; margin-bottom: 12px;"><i class="fa-solid fa-compass fa-spin"></i> قيد التصميم والتطوير 💡</span>
-                <h2>BA Engineering Academy</h2>
-                <p style="font-size: 1.4rem; font-weight: 800; color: #fff; margin-top: 5px;">إدارة العقود والتكاليف (Contracts & Cost)</p>
-            </div>
-            
-            <div class="content-box">
-                <div style="text-align: center; background: rgba(30, 58, 138, 0.08); border: 2px dashed var(--primary-blue); padding: 20px; border-radius: 16px; margin-bottom: 30px;">
-                    <span style="font-size: 1.3rem; font-weight: 900; color: var(--primary-blue);"><i class="fa-solid fa-pen-ruler"></i> الكورس حالياً: قيد التصميم والتطوير 💡</span>
-                    <p style="color: var(--text-muted); margin-top: 8px; font-size: 1rem;">نعمل حالياً على إعداد وتصوير المحتوى الميداني والأمثلة التطبيقية لطرحه قريباً بأعلى جودة.</p>
-                </div>
-
-                <h2><i class="fa-solid fa-circle-info"></i> ملخص بسيط وواضح لمحتوى الكورس</h2>
-                <p>مقرر متخصص في صياغة وإدارة العقود الإنشائية، تتبع المستخلصات، دراسة مطالبات التغيير، والتحكم الصارم في ميزانية المشروع وتكاليفه لضمان عدم التعثر المالي.</p>
-
-                <div style="background: var(--active-blue); border-right: 4px solid var(--primary-blue); padding: 16px; border-radius: 12px; margin: 20px 0; border: var(--glass-border);">
-                    <h4 style="color: var(--primary-blue); font-size: 1.1rem; font-weight: 900; margin-bottom: 6px;"><i class="fa-solid fa-toolbox"></i> أداة نموذج حساب المستخلصات وتتبع التدفقات (قادمة مع الكورس):</h4>
-                    <p style="font-size: 0.98rem; margin-bottom: 0; color: var(--text-dark);">ستمكنك هذه الأداة من إدارة المستخلصات الجارية وحساب أوامر التغيير وتتبع تباين التكاليف بدقة لتفادي أي عجز مالي في مشروعك.</p>
-                </div>
-
-                <h3><i class="fa-solid fa-bullseye"></i> الأهداف الرئيسية</h3>
-                <ul class="sales-checklist">
-                    <li><i class="fa-solid fa-check-circle"></i> الإلمام التام بأنواع العقود الهندسية وشروطها العامة والخاصة، بما في ذلك المفاهيم الأساسية لعقود الفيديك (FIDIC) وتأثيرها المباشر على التكاليف والمستخلصات.</li>
-                    <li><i class="fa-solid fa-check-circle"></i> مهارات إعداد واعتماد المستخلصات الجارية الختامية بدقة.</li>
-                    <li><i class="fa-solid fa-check-circle"></i> إدارة المطالبات وأوامر التغيير وفقاً للممارسات العقدية المعتمدة.</li>
-                    <li><i class="fa-solid fa-check-circle"></i> حساب وتحليل تباين التكاليف والتحكم بالميزانية.</li>
-                </ul>
-
-                <h3><i class="fa-solid fa-triangle-exclamation" style="color: #dc2626;"></i> المخاطر التي يعالجها الكورس</h3>
-                <ul class="sales-checklist" style="border-color: #dc2626;">
-                    <li><i class="fa-solid fa-shield-halved" style="color: #dc2626;"></i> الوقوع في ثغرات قانونية وبنود عقابية مجحفة بالمقاول أو المالك.</li>
-                    <li><i class="fa-solid fa-shield-halved" style="color: #dc2626;"></i> تآكل أرباح المشروع نتيجة ضعف إدارة أوامر التغيير والمطالبات.</li>
-                    <li><i class="fa-solid fa-shield-halved" style="color: #dc2626;"></i> تجاوز الميزانية المرصودة وعدم القدرة على ضبط التدفقات النقدية.</li>
-                </ul>
-
-                <h3><i class="fa-solid fa-users"></i> الفئة المستهدفة</h3>
-                <p>مديرو المشاريع، مهندسو العقود والتكاليف، مهندسو المكتب الفني، والمقاولون الراغبون في تأمين موقفهم المالي والقانوني.</p>
-            </div>
-        </div>
-    </main>
-
-    <!-- صفحة تفاصيل كورس الهندسة القيمية -->
-    <main id="value-info-view" class="app-view">
-        <div class="dashboard-content" style="padding-top: 30px; max-width: 950px;">
-            <button class="btn-outline" onclick="switchMainView('home-view')" style="margin-bottom: 20px; border-radius: 12px; padding: 10px 20px;">
-                <i class="fa-solid fa-arrow-right"></i> العودة للمسارات
-            </button>
-            <div class="course-details-header" style="background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%); padding: 50px 20px;">
-                <span style="background: rgba(255,255,255,0.2); padding: 6px 16px; border-radius: 20px; font-size: 13px; font-weight: 800; display: inline-block; margin-bottom: 12px;"><i class="fa-solid fa-compass fa-spin"></i> قيد التصميم والتطوير 💡</span>
-                <h2>BA Engineering Academy</h2>
-                <p style="font-size: 1.4rem; font-weight: 800; color: #fff; margin-top: 5px;">الهندسة القيمية (Value Engineering)</p>
-            </div>
-            
-            <div class="content-box">
-                <div style="text-align: center; background: rgba(30, 58, 138, 0.08); border: 2px dashed var(--primary-blue); padding: 20px; border-radius: 16px; margin-bottom: 30px;">
-                    <span style="font-size: 1.3rem; font-weight: 900; color: var(--primary-blue);"><i class="fa-solid fa-pen-ruler"></i> الكورس حالياً: قيد التصميم والتطوير 💡</span>
-                    <p style="color: var(--text-muted); margin-top: 8px; font-size: 1rem;">نضع اللمسات الهندسية ومنهجيات التحليل الوظيفي المتقدمة لتوفير أداة تدريبية فريدة من نوعها.</p>
-                </div>
-
-                <h2><i class="fa-solid fa-circle-info"></i> ملخص بسيط وواضح لمحتوى الكورس</h2>
-                <p>منهجية هندسية منظمة تهدف إلى تحسين قيمة المشروع من خلال تحليل الوظائف الأساسية وتخفيض التكاليف الإجمالية للإنشاء والتشغيل دون المساس بالجودة أو الكفاءة أو الأمان.</p>
-
-                <div style="background: var(--active-blue); border-right: 4px solid var(--primary-blue); padding: 16px; border-radius: 12px; margin: 20px 0; border: var(--glass-border);">
-                    <h4 style="color: var(--primary-blue); font-size: 1.1rem; font-weight: 900; margin-bottom: 6px;"><i class="fa-solid fa-toolbox"></i> أداة مصفوفة تقييم الوظائف والبدائل (قادمة مع الكورس):</h4>
-                    <p style="font-size: 0.98rem; margin-bottom: 0; color: var(--text-dark);">ستساعدك الأداة على إجراء التحليل الوظيفي (Function Analysis) ومقارنة البدائل الهندسية رقمياً لاستخراج أعلى نسبة توفير ممكنة دون الإخلال بالأداء.</p>
-                </div>
-
-                <h3><i class="fa-solid fa-bullseye"></i> الأهداف الرئيسية</h3>
-                <ul class="sales-checklist">
-                    <li><i class="fa-solid fa-check-circle"></i> إتقان تطبيق منهجية مراحل الهندسة القيمية (VE Job Plan).</li>
-                    <li><i class="fa-solid fa-check-circle"></i> إجراء تحليل الوظائف (Function Analysis) للعناصر الإنشائية.</li>
-                    <li><i class="fa-solid fa-check-circle"></i> ابتكار بدائل تصميمية ذكية ومستدامة توفر في التكاليف.</li>
-                </ul>
-
-                <h3><i class="fa-solid fa-triangle-exclamation" style="color: #dc2626;"></i> المخاطر التي يعالجها الكورس</h3>
-                <ul class="sales-checklist" style="border-color: #dc2626;">
-                    <li><i class="fa-solid fa-shield-halved" style="color: #dc2626;"></i> المبالغة في التكاليف الإنشائية والتصميمية غير الضرورية (Over-design).</li>
-                    <li><i class="fa-solid fa-shield-halved" style="color: #dc2626;"></i> الهدر المالي والموارد بسبب غياب آليات تقييم البدائل الاقتصادية.</li>
-                    <li><i class="fa-solid fa-shield-halved" style="color: #dc2626;"></i> تراجع تنافسية العطاءات الهندسية بسبب ارتفاع التكلفة التشغيلية المستقبلية.</li>
-                </ul>
-
-                <h3><i class="fa-solid fa-users"></i> الفئة المستهدفة</h3>
-                <p>مهندسو التصميم والمكتب الفني، مديرو المشاريع، الاستشاريون، والمهندسون المعماريون والمدنيون والكهربائيون.</p>
-            </div>
-        </div>
-    </main>
-
-    <!-- 3. لوحة تحكم الكورس الداخلي -->
     <main id="course-dashboard-view" class="app-view">
         <div class="viewer-navbar">
-            <button class="btn-outline" onclick="switchMainView('course-landing-view')" style="padding: 8px 18px; font-size: 14px; border-radius: 10px;">
+            <button class="btn-outline" onclick="switchMainView('course-landing-view')" style="padding: 6px 14px; font-size: 13px; border-radius: 8px;">
                 <i class="fa-solid fa-arrow-right"></i> تسجيل الخروج
             </button>
-            <div style="display: flex; align-items: center; gap: 15px;">
-                <h3 style="color: var(--primary-blue); font-weight: 800; font-size: 18px; margin: 0;">مقرر إدارة مخاطر المشاريع</h3>
-                <img src="e842ee15-fc5d-491b-a6ae-17e6f345bccd.jpg" alt="BA Academy Logo" style="height: 35px; border-radius: 50%;">
+            <div style="display: flex; align-items: center; gap: 12px;">
+                <h3 style="color: var(--primary-blue); font-weight: 800; font-size: 16px; margin: 0;">مقرر إدارة مخاطر المشاريع</h3>
+                <img src="e842ee15-fc5d-491b-a6ae-17e6f345bccd.jpg" alt="BA Academy Logo" style="height: 30px; border-radius: 50%;">
             </div>
         </div>
-        <div class="dashboard-content" style="padding-top: 35px;">
+        <div class="dashboard-content" style="padding-top: 25px;">
             <div class="progress-wrapper">
                 <div class="progress-header"><span>نسبة إنجازك في المقرر</span><span id="progress-percent">0%</span></div>
                 <div class="progress-container"><div id="progress-bar" class="progress-bar"></div></div>
             </div>
             <div class="cards-grid">
-                <div class="nav-card" onclick="trackAndOpen(25, 'main', 'المحاضرات والكورس')">
-                    <i class="fa-solid fa-person-chalkboard main-icon"></i><h3>المحاضرات</h3>
-                </div>
-                <div class="nav-card" onclick="trackAndOpen(50, 'guide', 'دليل الدراسة')">
-                    <i class="fa-solid fa-book-open-reader main-icon"></i><h3>دليل الدراسة</h3>
-                </div>
-                <div class="nav-card" onclick="trackAndOpen(75, 'tools', 'الأدوات والحاسبة')">
-                    <i class="fa-solid fa-calculator main-icon"></i><h3>الأدوات</h3>
-                </div>
-                <div class="nav-card" onclick="trackAndOpen(100, 'quiz', 'الاختبار النهائي')">
-                    <i class="fa-solid fa-list-check main-icon"></i><h3>الاختبار والشهادة</h3>
-                </div>
+                <div class="nav-card" onclick="trackAndOpen(25, 'main', 'المحاضرات والكورس')"><i class="fa-solid fa-person-chalkboard main-icon"></i><h3>المحاضرات</h3></div>
+                <div class="nav-card" onclick="trackAndOpen(50, 'guide', 'دليل الدراسة')"><i class="fa-solid fa-book-open-reader main-icon"></i><h3>دليل الدراسة</h3></div>
+                <div class="nav-card" onclick="trackAndOpen(75, 'tools', 'الأدوات والحاسبة')"><i class="fa-solid fa-calculator main-icon"></i><h3>الأدوات</h3></div>
+                <div class="nav-card" onclick="trackAndOpen(100, 'quiz', 'الاختبار النهائي')"><i class="fa-solid fa-list-check main-icon"></i><h3>الاختبار والشهادة</h3></div>
             </div>
         </div>
     </main>
 
-    <!-- 4. عارض الـ Iframes والملفات -->
     <main id="viewer-view" class="app-view">
         <div class="viewer-navbar">
-            <button class="btn-outline" onclick="switchMainView('course-dashboard-view')" style="padding: 8px 18px; font-size: 14px; border-radius: 10px;"><i class="fa-solid fa-arrow-right"></i> العودة للوحة التحكم</button>
-            <div style="display: flex; align-items: center; gap: 15px;">
-                <div style="font-size: 15px; font-weight: 700; color: var(--primary-blue);" id="breadcrumb-current">القسم</div>
-                <img src="e842ee15-fc5d-491b-a6ae-17e6f345bccd.jpg" alt="BA Academy Logo" style="height: 35px; border-radius: 50%;">
+            <button class="btn-outline" onclick="switchMainView('course-dashboard-view')" style="padding: 6px 14px; font-size: 13px; border-radius: 8px;"><i class="fa-solid fa-arrow-right"></i> العودة لوحة التحكم</button>
+            <div style="display: flex; align-items: center; gap: 12px;">
+                <div style="font-size: 14px; font-weight: 700; color: var(--primary-blue);" id="breadcrumb-current">القسم</div>
+                <img src="e842ee15-fc5d-491b-a6ae-17e6f345bccd.jpg" alt="BA Academy Logo" style="height: 30px; border-radius: 50%;">
             </div>
         </div>
         <div class="content-frame-container">
@@ -910,26 +980,22 @@
         </div>
     </main>
 
-    <!-- صفحة من نحن الشاملة والمحدثة -->
     <main id="about-view" class="app-view">
-        <div class="dashboard-content" style="max-width: 950px;">
+        <div class="dashboard-content" style="max-width: 900px;">
             <div class="content-box">
                 <h2>من نحن</h2>
+                <p style="margin-bottom: 15px; font-size: 1.02rem; line-height: 1.8;">
+                    <strong>BA Engineering Academy</strong> هي منصة هندسية متكاملة تهدف إلى سد الفجوة الحقيقية بين المناهج الأكاديمية النظرية ومتطلبات سوق العمل الميداني والمشاريع الكبرى. تأسست الأكاديمية لتكون مرجعاً لكل مهندس طموح يسعى لصقل مهاراته وتطوير مسيرته المهنية بمعايير عالمية واضحة ومبسطة.
+                </p>
                 
-                <h3><i class="fa-solid fa-user-tie"></i> من هو المدرب</h3>
-                <p><strong>مهندس أحمد علي</strong>، Senior Electrical Engineer بخبرة ميدانية وهندسية تتجاوز 20 عاماً في إدارة وتنفيذ المشاريع الكبرى. يجمع بين الخبرة الأكاديمية والممارسات التنفيذية الدقيقة ليضع خلاصة سنوات العمل بين يديك.</p>
+                <h3><i class="fa-solid fa-user-tie"></i> المؤسس والمدرب الرئيسي</h3>
+                <p><strong>مهندس أحمد علي</strong>، Senior Electrical Engineer بخبرة ميدانية وهندسية تتجاوز 20 عاماً في إدارة، تخطيط، وتنفيذ المشاريع الهندسية الضخمة. يتميز بأسلوب فريد في تبسيط المفاهيم الهندسية المعقدة وتحويلها إلى أدوات عملية قابلة للتطبيق الفوري في الميدان.</p>
+                
+                <h3><i class="fa-solid fa-eye"></i> الرؤية والأهداف</h3>
+                <p>نسعى لأن نكون الوجهة الأولى والمنصة الهندسية الرائدة في المنطقة العربية والعالم لتمكين المهندسين ومديري المشاريع من إتقان المهارات الإدارية والفنية المتقدمة، مع توفير بيئة تعليمية مرنة، تفاعلية، ومواكبة لأحدث المعايير العالمية.</p>
 
-                <h3><i class="fa-solid fa-eye"></i> الرؤية</h3>
-                <p>أن نكون المنصة الهندسية الرائدة عالمياً في سد الفجوة بين التعليم الأكاديمي النظري والتطبيق الميداني الاحترافي لمديري وهندسي المشاريع.</p>
-
-                <h3><i class="fa-solid fa-bullhorn"></i> الرسالة</h3>
-                <p>تمكين المهندسين العرب بأدوات، نماذج، ومهارات عملية معتمدة ترفع من كفاءتهم وقدرتهم التنافسية في إدارة المشاريع بكفاءة وأمان تام.</p>
-
-                <h3><i class="fa-solid fa-circle-question"></i> لماذا أنشأت الأكاديمية؟</h3>
-                <p>تأسست BA Engineering Academy إيماناً بأن التحدي الحقيقي في سوق العمل الهندسي لا يكمن فقط في النظريات، بل في كيفية مواجهة المشاكل الميدانية، إدارة العقود، والتحكم في المخاطر بدقة تامة لتجنب خسائر المشاريع الفادحة.</p>
-
-                <h3><i class="fa-solid fa-briefcase"></i> سنوات الخبرة والمشاريع</h3>
-                <p>أكثر من <strong>20 عاماً</strong> من الخبرة التراكمية في قطاع الهندسة والمقاولات، تم خلالها إنجاز العشرات من التصاميم المتقدمة، دراسات الجدوى، وتقديرات التكاليف الاحترافية للمشاريع الكبرى.</p>
+                <h3><i class="fa-solid fa-bullseye"></i> رسالتنا</h3>
+                <p>نؤمن أن المعرفة الحقيقية يجب أن تكون واضحة وعملية؛ لذلك نركز على تقديم محتوى مستخلص من خلاصة التجارب والمشاريع الواقعية بعيداً عن التعقيد النظري البحت، لنساعد كل مهندس على الانتقال من التخطيط إلى التنفيذ بثقة واحترانية تامة.</p>
             </div>
         </div>
     </main>
@@ -939,12 +1005,20 @@
             <div class="content-box">
                 <h2>الأسئلة الشائعة</h2>
                 <div class="faq-item">
-                    <div class="faq-question"><i class="fa-solid fa-circle-question"></i> هل أحتاج لخبرة سابقة للتسجيل في دورة إدارة المخاطر؟</div>
-                    <div class="faq-answer">الدورة مصممة لتناسب المهندسين حديثي التخرج وصولاً إلى مديري المشاريع، حيث تبدأ من المفاهيم الأساسية وتتدرج خطوة بخطوة حتى التطبيق الاحترافي.</div>
+                    <div class="faq-question"><i class="fa-solid fa-circle-question"></i> ما هي منصة BA Engineering Academy؟</div>
+                    <div class="faq-answer">هي منصة هندسية متكاملة تقدم مسارات تدريبية تطبيقية متخصصة لإعداد المهندسين ومديري المشاريع لسوق العمل باحترافية تامة وخبرات ميدانية حقيقية.</div>
                 </div>
-                <div class="faq-item" style="border-bottom: none;">
-                    <div class="faq-question"><i class="fa-solid fa-circle-question"></i> هل توجد شهادة حضور بعد إتمام الدورة؟</div>
-                    <div class="faq-answer">بالتأكيد، ستحصل على شهادة حضور إلكترونية من BA Engineering Academy بعد إنهائك للمقرر واجتياز الاختبار النهائي بنجاح.</div>
+                <div class="faq-item">
+                    <div class="faq-question"><i class="fa-solid fa-circle-question"></i> هل يوجد دعم فني ومتابعة مستمرة بعد الانضمام للدورات؟</div>
+                    <div class="faq-answer">نعم، نوفر دعماً مستمراً ومتابعة إشرافية مباشرة لضمان تحقيق الاستفادة القصوى، الإجابة عن استفساراتكم، ومساعدتكم على تطبيق المفاهيم الهندسية بكفاءة عالية.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question"><i class="fa-solid fa-circle-question"></i> كيف يمكنني التحقق من صحة الشهادة التي أحصل عليها؟</div>
+                    <div class="faq-answer">تتيح لك المنصة خاصية "التحقق من شهادة" في أعلى الموقع، حيث يمكنك إدخال كود الشهادة الفريد والتأكد من اعتمادها وصحتها بشكل فوري.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question"><i class="fa-solid fa-circle-question"></i> هل الدورات مناسبة للمبتدئين أم للمهندسين ذوي الخبرة فقط؟</div>
+                    <div class="faq-answer">تم تصميم محتوى الدورات ليتدرج معك من الأساسيات وحتى المستويات المتقدمة، مما يجعلها مناسبة لحديثي التخرج والمهندسين ذوي الخبرة الراغبين في صقل مهاراتهم الإدارية والميدانية.</div>
                 </div>
             </div>
         </div>
@@ -954,8 +1028,8 @@
         <div class="dashboard-content" style="max-width: 850px;">
             <div class="content-box">
                 <h2>شروط الاستخدام</h2>
-                <h3>1. الملكية الفكرية</h3>
-                <p>جميع المحتويات المتوفرة على منصة BA Engineering Academy هي ملكية حصرية للأكاديمية. يُمنع إعادة نشرها أو استخدامها لأغراض تجارية دون إذن مسبق.</p>
+                <p>جميع المحتويات، الدورات، الملفات، والأدوات المتوفرة على منصة BA Engineering Academy هي ملكية حصرية للأكاديمية ومحمية بموجب قوانين الملكية الفكرية. يُمنع إعادة نشرها، تداولها، أو استخدامها لأغراض تجارية دون إذن كتابي مسبق.</p>
+                <p>باستخدامك للمنصة، فإنك توافق على الالتزام ببيانات الحساب الشخصية وعدم مشاركة أكواد المرور الخاصة بالدورات مع الآخرين لضمان حقوق الملكية والدعم.</p>
             </div>
         </div>
     </main>
@@ -964,7 +1038,8 @@
         <div class="dashboard-content" style="max-width: 850px;">
             <div class="content-box">
                 <h2>سياسة الخصوصية</h2>
-                <p>نحن نتعهد بالحفاظ على سرية بياناتك الشخصية واستخدامها حصرياً لإدارة تجربتك التعليمية وإصدار الشهادات.</p>
+                <p>نحن في BA Engineering Academy نولي اهتماماً بالغاً بحماية خصوصيتك وبياناتك الشخصية. نتعهد بالحفاظ على سرية معلوماتك واستخدامها حصرياً لإدارة تجربتك التعليمية، تتبع تقدمك في المقررات، وإصدار الشهادات المعتمدة.</p>
+                <p>لا يتم مشاركة بياناتك الشخصية مع أي طرف ثالث، ونستخدم تقنيات أمان متقدمة لضمان حماية حسابك ومعلومات تواصلك بالكامل.</p>
             </div>
         </div>
     </main>
@@ -972,29 +1047,30 @@
     <footer class="mega-footer" id="main-footer">
         <div class="footer-grid">
             <div class="footer-col">
-                <div class="brand-logo-container" style="margin-bottom: 20px; width: max-content;">
+                <div class="brand-logo-container" style="margin-bottom: 15px; width: max-content;">
                     <img src="e842ee15-fc5d-491b-a6ae-17e6f345bccd.jpg" alt="BA Academy Logo">
                 </div>
-                <p>منصتك الهندسية للانتقال من التخطيط إلى التنفيذ باحترافية تامة. نضع بين يديك خلاصة الخبرات الميدانية.</p>
+                <p style="font-size: 0.9rem; line-height: 1.6;">منصتك الهندسية للانتقال من التخطيط إلى التنفيذ باحترافية تامة. نضع بين يديك خلاصة الخبرات الميدانية.</p>
                 <div class="social-icons">
                     <a href="https://www.linkedin.com/company/ba-engineering-academy/" target="_blank"><i class="fa-brands fa-linkedin-in"></i></a>
                 </div>
             </div>
-            <div class="footer-col">
+            <div class="footer-col" style="grid-column: span 2;">
                 <h3>روابط هامة</h3>
                 <ul class="footer-links">
                     <li><a onclick="switchMainView('home-view')"><i class="fa-solid fa-angle-left"></i> الرئيسية</a></li>
                     <li><a onclick="switchMainView('about-view')"><i class="fa-solid fa-angle-left"></i> من نحن</a></li>
-                    <li><a href="https://docs.google.com/forms/d/e/1FAIpQLSdObqHCrVw77H87oI5-yZlk6wc7_QuaKMLP3ZNbC5Fp767qHw/viewform?pli=1" target="_blank"><i class="fa-solid fa-angle-left"></i> تواصل معنا</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h3>الدعم والمساعدة</h3>
-                <ul class="footer-links">
                     <li><a onclick="switchMainView('faq-view')"><i class="fa-solid fa-angle-left"></i> الأسئلة الشائعة</a></li>
                     <li><a onclick="switchMainView('terms-view')"><i class="fa-solid fa-angle-left"></i> شروط الاستخدام</a></li>
                     <li><a onclick="switchMainView('privacy-view')"><i class="fa-solid fa-angle-left"></i> سياسة الخصوصية</a></li>
                 </ul>
+            </div>
+            <div class="footer-col">
+                <h3>تواصل معنا</h3>
+                <p style="margin-bottom: 10px; font-size: 0.9rem; color: #94a3b8; font-weight: 600;">نسعد بتواصلكم واستفساراتكم وانضمامكم إلينا في أي وقت.</p>
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSdObqHCrVw77H87oI5-yZlk6wc7_QuaKMLP3ZNbC5Fp767qHw/viewform?pli=1" target="_blank" class="btn-primary" style="display: inline-flex; padding: 8px 16px; font-size: 13px; text-decoration: none; border-radius: 10px;">
+                    <i class="fa-solid fa-envelope"></i> نموذج التواصل المباشر
+                </a>
             </div>
         </div>
         <div class="footer-bottom">
@@ -1009,11 +1085,7 @@
         });
 
         document.addEventListener('keydown', function(e) {
-            if (
-                e.key === 'F12' || 
-                (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) || 
-                (e.ctrlKey && e.key === 'U')
-            ) {
+            if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) || (e.ctrlKey && e.key === 'U')) {
                 e.preventDefault();
                 showToast('هذا الإجراء غير مسموح به.', 'error');
             }
@@ -1065,7 +1137,7 @@
                     current += increment;
                     if(current < target) {
                         counter.innerText = Math.ceil(current) + (target >= 15 && target !== 100 && target !== 24 ? '+' : '');
-                        setTimeout(updateCounter, 40);
+                        setTimeout(updateCounter, 30);
                     } else {
                         counter.innerText = target + (target >= 15 && target !== 100 && target !== 24 ? '+' : '');
                     }
@@ -1075,7 +1147,14 @@
             countersAnimated = true;
         }
 
-        window.onload = animateCounters;
+        window.onload = function() {
+            animateCounters();
+        };
+
+        function showWhatsAppNotice(e) {
+            e.preventDefault();
+            showToast('جروبنا على الواتساب قيد التحضير والتجهيز حالياً، وسيكون متاحاً قريباً لتواصلكم!', 'success');
+        }
 
         function showToast(message, type = 'success') {
             const container = document.getElementById('toast-container');
@@ -1089,19 +1168,24 @@
             }, 3000);
         }
 
-        function openLoginModal() {
-            document.getElementById('login-modal-overlay').classList.add('active');
-            document.getElementById('course-password').focus();
+        function openCertModal() { document.getElementById('cert-modal-overlay').classList.add('active'); document.getElementById('cert-code-input').focus(); }
+        function closeCertModal() { document.getElementById('cert-modal-overlay').classList.remove('active'); document.getElementById('cert-code-input').value = ''; document.getElementById('cert-result-box').innerHTML = ''; }
+
+        function verifyCertificate() {
+            let code = document.getElementById('cert-code-input').value.trim().toUpperCase();
+            let resBox = document.getElementById('cert-result-box');
+            if (code.startsWith('BA-') && code.length >= 8) {
+                resBox.innerHTML = `<span style="color: var(--primary-blue);"><i class="fa-solid fa-circle-check"></i> الشهادة معتمدة وصحيحة وممنوحة من BA Engineering Academy بنجاح!</span>`;
+            } else {
+                resBox.innerHTML = `<span style="color: #dc2626;"><i class="fa-solid fa-circle-xmark"></i> كود غير صحيح أو غير مسجل في قاعدة البيانات.</span>`;
+            }
         }
 
-        function closeModal() {
-            document.getElementById('login-modal-overlay').classList.remove('active');
-            document.getElementById('course-password').value = '';
-        }
+        function openLoginModal() { document.getElementById('login-modal-overlay').classList.add('active'); document.getElementById('course-password').focus(); }
+        function closeModal() { document.getElementById('login-modal-overlay').classList.remove('active'); document.getElementById('course-password').value = ''; }
 
         function verifyLogin() {
-            let pass = document.getElementById('course-password-input') || document.getElementById('course-password');
-            let val = pass ? pass.value : '';
+            let val = document.getElementById('course-password').value;
             if (val === "1234") {
                 closeModal();
                 const loader = document.getElementById('full-page-loader');
@@ -1109,18 +1193,43 @@
                 setTimeout(() => {
                     loader.style.display = 'none';
                     switchMainView('course-dashboard-view');
-                }, 800);
+                }, 600);
             } else {
                 showToast('كود المرور غير صحيح!', 'error');
             }
         }
 
-        const pwdField = document.getElementById('course-password');
-        if(pwdField) {
-            pwdField.addEventListener('keypress', function (e) {
-                if (e.key === 'Enter') verifyLogin();
-            });
+        document.getElementById('course-password').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') verifyLogin();
+        });
+
+        function openVALoginModal() { 
+            document.getElementById('va-login-modal-overlay').classList.add('active'); 
+            document.getElementById('va-course-password').focus(); 
         }
+        function closeVAModal() { 
+            document.getElementById('va-login-modal-overlay').classList.remove('active'); 
+            document.getElementById('va-course-password').value = ''; 
+        }
+
+        function verifyVALogin() {
+            let val = document.getElementById('va-course-password').value;
+            if (val === "2026") {
+                closeVAModal();
+                const loader = document.getElementById('full-page-loader');
+                loader.style.display = 'flex';
+                setTimeout(() => {
+                    loader.style.display = 'none';
+                    window.location.href = "va_core.html";
+                }, 600);
+            } else {
+                showToast('الرمز السري غير صحيح!', 'error');
+            }
+        }
+
+        document.getElementById('va-course-password').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') verifyVALogin();
+        });
 
         function trackAndOpen(percent, screenId, titleAr) {
             if (percent > currentProgress) {
