@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>محاكي اختبار الهندسة القيمية الاحترافي | BA Engineering Academy</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;600;700;800;900&family=Great+Vibes&family=Montserrat:wght@600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+        }
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #f1f5f9;
+            color: #1e293b;
+            overflow-x: hidden;
+        }
+        .clean-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+        }
+        .option-card {
+            transition: all 0.2s ease;
+        }
+        .option-card:hover:not(:disabled) {
+            transform: translateX(-4px);
+            border-color: #0284c7;
+            background-color: #f8fafc;
+        }
+        #progress-fill {
+            transition: width 0.3s ease;
+        }
+        .cert-title-font {
+            font-family: 'Amiri', serif;
+        }
+        .signature-font {
+            font-family: 'Great Vibes', cursive;
+        }
+
+        @media print {
+            .no-print-area { 
+                display: none !important; 
+            }
+            #certificate-standalone-view {
+                display: flex !important;
+                background: #fcfdfa !important; 
+                align-items: center !important;
+                justify-content: center !important;
+                height: 100vh !important;
+                padding: 0 !important;
+                margin: 0 !important;
+            }
+            #certificate-card {
+                box-shadow: none !important;
+                border: 8px solid #064e3b !important;
+                margin: auto !important;
+                width: 1120px !important;
+                height: 750px !important;
+                border-radius: 0 !important;
+                position: relative !important;
+            }
+        }
+        @page {
+            size: A4 landscape;
+            margin: 0;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between">
+
+    <div id="main-app-wrapper" class="no-print-area flex flex-col min-h-screen">
+        
+        <header class="clean-card sticky top-0 z-50 px-6 py-3.5 border-b border-slate-200 backdrop-blur-md bg-white/95">
+            <div class="max-w-5xl mx-auto flex justify-between items-center">
+                <div class="flex items-center gap-3.5">
+                    <img src="logo_4.jpg" alt="BA Engineering Academy" class="w-11 h-11 object-contain rounded-xl border border-slate-200 p-1 bg-white" onerror="this.src='logo.jpg'; this.onerror=null;">
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <h1 class="text-base md:text-lg font-black text-slate-800">BA Engineering Academy</h1>
+                            <span class="bg-sky-100 text-sky-800 text-[10px] font-black px-2 py-0.5 rounded-full">v2.5</span>
+                        </div>
+                        <span class="text-xs text-slate-500 font-bold">محاكي اختبار الهندسة القيمية (Value Engineering)</span>
+                    </div>
+                </div>
+                
+                <div id="timer-display" class="flex items-center gap-2.5 bg-slate-100 px-4 py-2 rounded-2xl font-mono text-lg md:text-xl text-sky-700 border border-slate-200 font-bold shadow-inner">
+                    <span id="time">75:00</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-sky-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                </div>
+            </div>
+        </header>
+
+        <main class="flex-grow container mx-auto px-4 py-8 flex flex-col items-center justify-center">
+            <div class="w-full max-w-3xl">
+                
+                <div id="intro-screen" class="clean-card rounded-3xl p-8 md:p-12 text-center">
+                    <div class="w-24 h-24 bg-white border-2 border-slate-100 rounded-3xl mx-auto flex items-center justify-center p-2 mb-6 shadow-md">
+                        <img src="logo_4.jpg" alt="BA Engineering Academy" class="w-full h-full object-contain" onerror="this.src='logo.jpg'; this.onerror=null;">
+                    </div>
+                    
+                    <h2 class="text-2xl md:text-3xl font-black text-slate-800 mb-2">محاكي اختبار الهندسة القيمية الاحترافي</h2>
+                    <p class="text-xs font-bold text-sky-700 uppercase tracking-widest mb-6">BA Engineering Academy • مقسم حسب خطة العمل (Job Plan)</p>
+                    
+                    <p class="text-slate-600 mb-8 text-sm md:text-base leading-relaxed max-w-xl mx-auto font-semibold">
+                        مرحباً بك في المحاكي المطور. يغطي هذا التقييم 50 سؤالاً موزعة بدقة على مراحل خطة عمل الهندسة القيمية (الأساسيات، المعلومات، التحليل الوظيفي، الإبداع، التقييم، والتطوير) لقياس جاهزيتك الكاملة.
+                    </p>
+                    
+                    <div class="max-w-md mx-auto mb-8 text-right">
+                        <label class="block text-sm text-slate-700 font-bold mb-2">اسم المتدرب الثلاثي (كما سيظهر على شهادة الاجتياز):</label>
+                        <input type="text" id="trainee-name" class="w-full bg-slate-50 border border-slate-300 rounded-2xl px-5 py-4 text-slate-800 focus:outline-none focus:ring-2 focus:ring-sky-600 font-semibold text-base md:text-lg shadow-sm" placeholder="ادخل اسمك الكامل هنا..." autofocus>
+                    </div>
+
+                    <button onclick="initQuiz()" class="bg-sky-800 hover:bg-sky-900 text-white font-bold py-4 px-10 rounded-2xl transition-all transform hover:scale-105 shadow-xl w-full md:w-auto text-lg cursor-pointer">
+                        ابدأ الاختبار الآن (Enter)
+                    </button>
+                </div>
+
+                <div id="quiz-area" class="hidden">
+                    <div class="w-full bg-slate-200 h-2.5 rounded-full mb-6 overflow-hidden shadow-inner">
+                        <div id="progress-fill" class="bg-sky-700 h-full w-0"></div>
+                    </div>
+
+                    <div class="clean-card rounded-3xl p-6 md:p-10 mb-5">
+                        <div class="flex flex-wrap justify-between items-center gap-2 mb-6 border-b border-slate-100 pb-4">
+                            <div class="flex items-center gap-2 flex-wrap">
+                                <span class="bg-sky-800 text-white px-3.5 py-1.5 rounded-xl text-sm font-black shadow-sm" id="question-badge">سؤال 1</span>
+                                <span class="bg-amber-100 text-amber-800 px-3 py-1 rounded-xl text-xs font-bold" id="domain-badge">المحور</span>
+                                <span class="text-slate-400 font-bold text-sm" id="question-total-label">من 50 سؤال</span>
+                            </div>
+                            <button onclick="toggleFlag()" id="flag-btn" class="flex items-center gap-1.5 text-slate-400 hover:text-amber-600 font-semibold transition-colors cursor-pointer bg-slate-50 px-3 py-1.5 rounded-xl border border-slate-200 text-sm">
+                                <span id="flag-text">تمييز للمراجعة</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9" />
+                                </svg>
+                            </button>
+                        </div>
+
+                        <h3 id="question-text" class="text-lg md:text-xl font-bold mb-8 leading-loose text-slate-800 break-words py-1">جاري التحميل...</h3>
+
+                        <div id="options-container" class="grid gap-4 text-sm md:text-base font-semibold text-slate-700">
+                        </div>
+                    </div>
+
+                    <div class="flex justify-between items-center gap-4">
+                        <button onclick="prevQuestion()" id="prev-btn" class="flex-1 bg-white border border-slate-300 hover:bg-slate-100 text-slate-700 py-4 rounded-2xl font-bold disabled:opacity-40 transition-colors cursor-pointer shadow-sm text-sm md:text-base">السابق</button>
+                        <button onclick="nextQuestion()" id="next-btn" class="flex-1 bg-sky-800 hover:bg-sky-900 text-white py-4 rounded-2xl font-bold shadow-lg transition-colors cursor-pointer text-sm md:text-base">التالي (Enter)</button>
+                        <button onclick="confirmSubmit()" id="finish-btn" class="hidden flex-1 bg-emerald-700 hover:bg-emerald-800 text-white py-4 rounded-2xl font-bold shadow-lg transition-colors cursor-pointer text-sm md:text-base">تسليم الاختبار (Enter)</button>
+                    </div>
+                </div>
+
+                <div id="result-screen" class="hidden clean-card rounded-3xl p-8 md:p-12 text-center">
+                    <div class="inline-block bg-slate-100 border border-slate-200 px-4 py-1.5 rounded-full text-xs font-bold text-slate-600 mb-4">تقييم أداء رسمي • BA Engineering Academy</div>
+                    <h2 id="result-title" class="text-3xl md:text-4xl font-black mb-2"></h2>
+                    <p id="result-name" class="text-slate-600 text-xl font-bold mb-8"></p>
+                    
+                    <div class="flex justify-center gap-8 md:gap-16 mb-10 border-y border-slate-100 py-8">
+                        <div class="text-center">
+                            <div id="final-score" class="text-4xl md:text-6xl font-black text-sky-800 mb-2">0%</div>
+                            <div class="text-xs md:text-sm font-bold text-slate-400 uppercase tracking-wider">الدرجة النهائية</div>
+                        </div>
+                        <div class="w-px bg-slate-200"></div>
+                        <div class="text-center">
+                            <div id="correct-count" class="text-4xl md:text-6xl font-black text-slate-700 mb-2">0/50</div>
+                            <div class="text-xs md:text-sm font-bold text-slate-400 uppercase tracking-wider">الإجابات الصحيحة</div>
+                        </div>
+                    </div>
+
+                    <div id="certificate-action-area" class="mb-8"></div>
+
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                        <button onclick="reviewMistakes()" class="bg-slate-800 hover:bg-slate-900 text-white px-8 py-4 rounded-2xl font-bold shadow-lg transition-colors text-base cursor-pointer">مراجعة الأخطاء والإجابات والتفسيرات</button>
+                        <button onclick="location.reload()" class="bg-sky-800 hover:bg-sky-900 text-white px-8 py-4 rounded-2xl font-bold shadow-lg transition-colors text-base cursor-pointer">إعادة الاختبار</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="certificate-standalone-view" class="hidden fixed inset-0 z-[200] bg-slate-950/80 backdrop-blur-md flex-col items-center justify-center p-4 overflow-y-auto">
+        <div class="no-print flex gap-4 mb-6 z-50">
+            <button onclick="window.print()" class="bg-emerald-700 hover:bg-emerald-800 text-white px-8 py-3 rounded-xl font-bold shadow-xl transition-all flex items-center gap-2 cursor-pointer text-base">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+                </svg>
+                طباعة أو حفظ الشهادة PDF
+            </button>
+            <button onclick="closeCertificate()" class="bg-slate-700 hover:bg-slate-800 text-white px-6 py-3 rounded-xl font-bold shadow-xl transition-all cursor-pointer text-base">
+                إغلاق والعودة
+            </button>
+        </div>
+
+        <div id="certificate-card" class="bg-[#fcfdfa] w-[1120px] h-[750px] rounded-2xl shadow-2xl p-8 md:px-14 md:py-10 relative border-[8px] border-solid border-[#064e3b] text-center flex flex-col justify-between box-border overflow-hidden shrink-0">
+            <div class="absolute inset-0 flex items-center justify-center pointer-events-none opacity-[0.03] z-0">
+                <img src="logo_4.jpg" alt="Watermark" class="w-[550px] h-[550px] object-contain" onerror="this.src='logo.jpg'; this.onerror=null;">
+            </div>
+
+            <div class="absolute inset-4 border border-amber-600/60 pointer-events-none rounded-xl z-10"></div>
+
+            <div class="flex flex-col items-center justify-center relative z-20 pb-3 border-b-2 border-emerald-900/15">
+                <div class="flex items-center gap-6" style="direction: ltr;">
+                    <div class="bg-white p-3 rounded-2xl shadow-lg border-2 border-amber-500/50 flex items-center justify-center">
+                        <img src="logo_4.jpg" alt="BA Engineering Academy Logo" class="w-28 h-28 md:w-32 md:h-32 object-contain" style="image-rendering: -webkit-optimize-contrast; image-rendering: crisp-edges;" onerror="this.src='logo.jpg'; this.onerror=null;">
+                    </div>
+                    <div class="text-left">
+                        <h2 class="text-3xl md:text-4xl font-black text-[#022c22] tracking-tight font-['Montserrat']">BA Engineering Academy</h2>
+                        <div class="w-full h-[2px] bg-amber-600/70 my-1.5"></div>
+                        <p class="text-xs md:text-sm text-emerald-800 font-bold tracking-[0.35em] uppercase">FROM VISION TO EXECUTION</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="relative z-20 my-auto py-2 w-full max-w-5xl mx-auto">
+                <h1 class="cert-title-font text-3xl font-bold text-[#022c22] mb-2">شهادة إتمام تدريب احترافي</h1>
+                <p class="text-slate-700 text-base mb-3 font-semibold">تُمنح هذه الشهادة إقرارًا بإتمام التدريب الشامل إلى:</p>
+
+                <div class="my-3 w-full">
+                    <span id="cert-trainee-name" class="cert-title-font text-4xl md:text-5xl font-bold text-[#022c22] border-b-4 border-amber-600 pb-1.5 inline-block px-16 tracking-wide">اسم المتدرب الكريم</span>
+                </div>
+
+                <p class="text-slate-800 text-base md:text-lg leading-relaxed w-full mx-auto font-medium mt-3 px-4">
+                    لاجتيازه بنجاح تدريب الهندسة القيمية الاحترافية المتقدمة <br>
+                    <strong class="text-[#022c22] font-bold text-lg md:text-xl">(Value Engineering & Methodology Comprehensive Course)</strong> <br>
+                    بما شمله من إتقان تحليل الوظائف (FAST) وتطبيق مراحل خطة العمل لإدارة وتحسين القيمة في المشاريع.
+                </p>
+            </div>
+
+            <div class="flex justify-between items-end relative z-20 pt-4 border-t-2 border-emerald-900/10 text-base w-full">
+                <div class="flex items-center gap-3 text-right">
+                    <img id="cert-qr-code" src="" alt="QR Verification" class="w-16 h-16 border border-emerald-900/20 rounded-lg p-1 bg-white shadow-sm">
+                    <div>
+                        <p class="text-xs text-emerald-900 font-bold">رقم الشهادة:</p>
+                        <p id="cert-id" class="text-sm font-mono font-bold text-[#022c22]">BA-2026-9482</p>
+                        <p class="text-xs text-slate-500 mt-1">تاريخ الإصدار: <span id="cert-issue-date" class="font-mono text-slate-800"></span></p>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-4" style="direction: ltr;">
+                    <div class="relative w-20 h-20 rounded-full border-2 border-dashed border-amber-600 flex items-center justify-center p-1 bg-emerald-950/5 shadow-inner">
+                        <div class="absolute inset-1 rounded-full border border-emerald-800/40"></div>
+                        <div class="text-center z-10 flex flex-col items-center justify-center">
+                            <span class="text-[9px] font-black text-amber-600 font-['Montserrat'] uppercase tracking-tight">SECURE</span>
+                            <svg class="w-4 h-4 text-emerald-800 my-0.5" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                            </svg>
+                            <span class="text-[10px] font-bold text-[#022c22] font-['Cairo']">مُوثَّق</span>
+                        </div>
+                    </div>
+
+                    <div class="text-left w-64 flex flex-col items-start">
+                        <p class="text-[11px] font-extrabold text-emerald-800 font-['Montserrat'] tracking-wider">BA Engineering Academy</p>
+                        <div class="flex items-center gap-1.5 justify-start my-0.5">
+                            <span class="signature-font text-2xl md:text-3xl font-extrabold text-[#022c22] tracking-wide">Eng. Ahmed Ali</span>
+                        </div>
+                        <p class="text-[11px] font-bold text-slate-600 font-['Montserrat']">Founder & CEO</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="review-modal" class="no-print-area fixed inset-0 z-[100] bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="clean-card w-full max-w-3xl rounded-3xl max-h-[85vh] overflow-y-auto p-6 md:p-8 relative shadow-2xl">
+            <button onclick="closeReview()" class="absolute top-6 left-6 text-slate-400 hover:text-red-500 bg-slate-100 p-2.5 rounded-full transition-colors cursor-pointer">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+            <h3 class="text-2xl font-black mb-6 text-slate-800 border-b pb-4">تفاصيل مراجعة الإجابات والتفسيرات</h3>
+            <div id="review-content" class="space-y-6"></div>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = "https://script.google.com/macros/s/AKfycbyfx9qaiPzgWqfHXOdFV1TsNzeK-fEt0Lu2K1EUH3Npftweay3adOhi-9nOsSN4NvOR/exec";
+        
+        const questions = [
+            { domain: "أساسيات ومفاهيم", q: "ما هي المعادلة الرياضية الأساسية التي تُعرّف 'القيمة' (Value) في منهجية الهندسة القيمية؟", options: ["القيمة = التكلفة / الوظيفة", "القيمة = الوظيفة / التكلفة", "القيمة = الجودة × التكلفة", "القيمة = الوقت / الموارد"], correct: 1, explanation: "القيمة تُعرّف على أنها العلاقة بين الوظيفة المؤداة (Function) والتكلفة (Cost) اللازمة لتحقيقها." },
+            { domain: "أساسيات ومفاهيم", q: "من هو المؤسس والأب الروحي لمنهجية الهندسة القيمية؟", options: ["فريدريك تايلور", "هنري جانت", "لورنس مايلز", "إدوارد ديمينج"], correct: 2, explanation: "لورنس مايلز (Lawrence Miles) هو من ابتكر منهجية الهندسة القيمية أثناء عمله في شركة جنرال إلكتريك خلال الحرب العالمية الثانية." },
+            { domain: "أساسيات ومفاهيم", q: "ما هو الهدف الرئيسي والنهائي لتطبيق الهندسة القيمية في أي مشروع؟", options: ["تقليل التكلفة بأي شكل حتى لو على حساب الجودة", "تحسين القيمة من خلال تحقيق الوظائف المطلوبة بأقل تكلفة دون المساس بالجودة أو الأداء", "زيادة التكلفة لرفع رفاهية المستخدم", "تقليص الجدول الزمني للمشروع فقط"], correct: 1, explanation: "الهدف هو التخلص من التكاليف غير الضرورية التي لا تساهم في الجودة أو الأداء أو العمر الافتراضي أو المظهر المطلوب." },
+            { domain: "أساسيات ومفاهيم", q: "متى يكون الوقت الأمثل (Best Time) لتطبيق دراسة الهندسة القيمية في دورة حياة المشروع لتحقيق أقصى عائد؟", options: ["أثناء مرحلة التنفيذ والإنشاء", "بعد تسليم المشروع للمالك", "في مرحلة التخطيط والتصميم الابتدائي (Schematic Design)", "عند ظهور مشاكل مالية في نهاية المشروع"], correct: 2, explanation: "كلما كان التطبيق مبكراً في مراحل التصميم، كانت إمكانية التوفير أعلى وتكلفة التغيير أقل." },
+            { domain: "أساسيات ومفاهيم", q: "ما هو الفرق الجوهري بين 'الهندسة القيمية' (Value Engineering) و'خفض التكاليف التقليدي' (Cost Reduction)؟", options: ["خفض التكلفة يركز على الوظائف، والهندسة القيمية تركز على المواد", "الهندسة القيمية تركز على تحليل الوظائف لخفض التكلفة دون المساس بالأداء، بينما خفض التكلفة التقليدي غالباً ما يقلل الجودة لتقليل السعر", "لا يوجد فرق، هما مصطلحان لنفس العملية", "الهندسة القيمية تزيد من التكلفة دائماً"], correct: 1, explanation: "التحليل الوظيفي هو ما يميز الهندسة القيمية ويضمن عدم التضحية بالجودة المطلوبة." },
+            { domain: "أساسيات ومفاهيم", q: "أي من العبارات التالية تصف بدقة مصطلح 'دورة حياة التكلفة' (Life Cycle Cost)؟", options: ["التكلفة المبدئية للبناء فقط", "تكلفة الصيانة والتشغيل بعد الانتهاء من المشروع فقط", "إجمالي التكاليف من مرحلة الفكرة، مروراً بالتصميم والإنشاء، والتشغيل والصيانة، حتى التخلص من الأصل (Salvage)", "تكلفة المواد الخام الموردة للموقع"], correct: 2, explanation: "تكلفة دورة الحياة تشمل كل قرش يُصرف على الأصل منذ بداية فكرته وحتى نهاية عمره الافتراضي وإزالته." },
+            { domain: "أساسيات ومفاهيم", q: "في أي قطاع بدأت منهجية الهندسة القيمية وتطورت لأول مرة؟", options: ["قطاع التشييد والبناء", "قطاع التصنيع (Manufacturing)", "قطاع تكنولوجيا المعلومات", "قطاع الرعاية الصحية"], correct: 1, explanation: "بدأت في قطاع التصنيع بشركة جنرال إلكتريك لحل مشكلة نقص المواد الخام، ثم انتقلت لاحقاً لقطاع التشييد." },
+            { domain: "أساسيات ومفاهيم", q: "منهجية العمل (Job Plan) في الهندسة القيمية حسب معايير (SAVE International) تتكون من عدة مراحل. أي مرحلة تعتبر 'القلب النابض' والجوهر لهذه المنهجية؟", options: ["مرحلة المعلومات", "مرحلة التحليل الوظيفي (Function Analysis)", "مرحلة العرض والتنفيذ", "مرحلة الإبداع"], correct: 1, explanation: "مرحلة التحليل الوظيفي هي ما يميز الهندسة القيمية عن أي منهجية إدارية أو هندسية أخرى لحل المشكلات." },
+            
+            { domain: "مرحلة المعلومات", q: "ما هو الهدف الأساسي من 'مرحلة المعلومات' (Information Phase) في خطة عمل الهندسة القيمية؟", options: ["عصف ذهني لابتكار حلول جديدة", "فهم المشروع بالكامل، جمع البيانات الدقيقة، وتحديد متطلبات ورغبات المالك بوضوح", "تقييم الأفكار واختيار أفضلها", "توقيع العقود مع المقاولين"], correct: 1, explanation: "مرحلة المعلومات تهدف لتأسيس قاعدة صلبة من البيانات الموثوقة لفهم نطاق العمل وتطلعات العميل قبل البدء بالتحليل." },
+            { domain: "مرحلة المعلومات", q: "أثناء مرحلة المعلومات، يتم إعداد 'نموذج التكلفة' (Cost Model). ما الغرض الرئيسي منه؟", options: ["توزيع أرباح الشركة على المساهمين", "تحديد بنود المشروع التي تستحوذ على النسبة الأكبر من التكلفة لتوجيه جهود دراسة الهندسة القيمية إليها", "حساب الضرائب المستحقة على المشروع", "تحديد أسماء الموردين المعتمدين"], correct: 1, explanation: "نموذج التكلفة يبرز المجالات ذات التكلفة العالية التي تمتلك أكبر إمكانية للتوفير وتحسين القيمة." },
+            { domain: "مرحلة المعلومات", q: "في تحليل نماذج التكلفة، غالباً ما يستخدم قانون 'باريتو' (Pareto Principle). ماذا يعني هذا المبدأ في هذا السياق؟", options: ["80% من التكلفة تتركز في 20% من بنود أو عناصر المشروع", "يجب خفض التكلفة بنسبة 80% لنجاح المشروع", "20% من المهندسين يقومون بـ 80% من العمل", "المشروع يجب أن ينجز في 20% من الوقت المخصص له"], correct: 0, explanation: "مبدأ باريتو (80/20) يوجه فريق الهندسة القيمية للتركيز على الأقلية القليلة من البنود التي تشكل الغالبية العظمى من التكلفة." },
+            { domain: "مرحلة المعلومات", q: "أي من الأدوات التالية يُستخدم بشكل شائع في مرحلة المعلومات لتحديد المتطلبات الحقيقية للعميل؟", options: ["تحليل الحساسية", "استبيانات ومقابلات المستخدمين (User/Owner Needs Analysis)", "محاكاة مونت كارلو", "مصفوفة التقييم الموزونة"], correct: 1, explanation: "فهم متطلبات ورغبات المالك يتم من خلال المقابلات والاستبيانات لضمان توجيه المشروع نحو ما يضيف قيمة حقيقية للعميل." },
+            { domain: "مرحلة المعلومات", q: "في مرحلة المعلومات، من المهم التفريق بين 'الاحتياجات' (Needs) و'الرغبات' (Wants). ما الوصف الدقيق لهما؟", options: ["الاحتياجات هي كماليات، والرغبات هي الأساسيات", "الاحتياجات هي متطلبات أساسية لأداء الوظيفة، والرغبات هي ميزات إضافية ترفع التكلفة وقد لا تكون ضرورية", "كلاهما يحمل نفس المعنى في الهندسة القيمية", "الاحتياجات تخص المقاول، والرغبات تخص الاستشاري"], correct: 1, explanation: "التفريق بين الاحتياج والرغبة خطوة حاسمة لتحديد التكاليف غير الضرورية (الرغبات التي لا تتناسب مع ميزانية أو أهداف المشروع)." },
+            { domain: "مرحلة المعلومات", q: "أي مما يلي يُعد من مخرجات مرحلة المعلومات في دراسة الهندسة القيمية؟", options: ["مخطط FAST مكتمل", "قائمة بالأفكار الإبداعية للحلول", "فهم واضح لنطاق العمل، وتكلفة البنود، وأهداف المشروع", "تقرير التوصيات النهائي للإدارة"], correct: 2, explanation: "مخرجات مرحلة المعلومات هي البيانات المجهزة، نماذج التكلفة، وتوثيق واضح لفهم المشروع قبل البدء في التحليل الوظيفي." },
+            { domain: "مرحلة المعلومات", q: "لماذا يُعتبر إشراك فريق متعدد التخصصات (Multidisciplinary Team) ضرورياً في مرحلة المعلومات وما بعدها؟", options: ["لتقليل تكلفة أتعاب الاستشاريين", "لضمان تنوع وجهات النظر وتغطية جميع الجوانب الفنية والمالية للمشروع", "لأن معايير الجودة تمنع عمل المهندسين بشكل فردي", "لإطالة مدة الدراسة قدر الإمكان"], correct: 1, explanation: "الفريق متعدد التخصصات يضمن عدم إغفال أي بُعد من أبعاد المشروع ويسهم في فهم أعمق وتوليد أفكار أشمل لاحقاً." },
+
+            { domain: "التحليل الوظيفي", q: "كيف يتم تعريف 'الوظيفة' (Function) في منهجية الهندسة القيمية؟", options: ["بجملة إنشائية طويلة تصف طريقة العمل", "باستخدام كلمتين فقط: (فعل نشط + اسم قابل للقياس)", "من خلال تحديد تكلفة العنصر", "بواسطة المواصفات الفنية للشركة المصنعة"], correct: 1, explanation: "تعريف الوظيفة بـ (فعل واسم) يُجرد العنصر من شكله المادي ويركز على غرضه الأساسي، مما يفتح المجال للإبداع." },
+            { domain: "التحليل الوظيفي", q: "في تحليل قلم الرصاص، ما هي 'الوظيفة الأساسية' (Primary Function) له؟", options: ["يحتوي الجرافيت", "يترك أثراً (Make Mark)", "يُمسك باليد", "يمحو الخطأ"], correct: 1, explanation: "الغرض الأساسي الذي صُنع من أجله القلم هو 'يترك أثراً' أو 'يصنع علامة'، وبدون هذه الوظيفة يفقد القلم قيمته." },
+            { domain: "التحليل الوظيفي", q: "ما هي 'الوظيفة الثانوية' (Secondary Function) في سياق التحليل الوظيفي؟", options: ["وظيفة لا فائدة منها ويجب حذفها فوراً", "الوظيفة التي تدعم الوظيفة الأساسية أو تلبي متطلبات المستخدم، ولكن غيابها لا يفقد المنتج غرضه الأساسي", "الوظيفة التي تكلف أكثر من الوظيفة الأساسية", "هي دائماً وظيفة جمالية فقط"], correct: 1, explanation: "الوظائف الثانوية (مثل تسهيل الاستخدام أو تحسين المظهر) تدعم الأساسية، وقد تكون ضرورية أو غير ضرورية حسب احتياجات العميل." },
+            { domain: "التحليل الوظيفي", q: "ماذا يعني اختصار (FAST) في الهندسة القيمية؟", options: ["Fast Analysis of System Time", "Function Analysis System Technique", "Functional And Structural Testing", "Financial Assessment of Systems and Tools"], correct: 1, explanation: "FAST تعني (تقنية تحليل نظام الوظائف)، وهي أداة بصرية لربط الوظائف بشكل منطقي." },
+            { domain: "التحليل الوظيفي", q: "عند قراءة مخطط FAST من اليسار إلى اليمين (Left to Right)، ما هو السؤال المنطقي الذي يتم طرحه؟", options: ["لماذا؟ (Why?)", "متى؟ (When?)", "كيف؟ (How?)", "أين؟ (Where?)"], correct: 2, explanation: "قراءة المخطط من اليسار لليمين تجيب على سؤال 'كيف نؤدي هذه الوظيفة؟'." },
+            { domain: "التحليل الوظيفي", q: "عند قراءة مخطط FAST من اليمين إلى اليسار (Right to Left)، ما هو السؤال المنطقي الذي يتم طرحه؟", options: ["كيف؟ (How?)", "لماذا؟ (Why?)", "متى؟ (When?)", "كم التكلفة؟ (How much?)"], correct: 1, explanation: "القراءة من اليمين لليسار تجيب على سؤال 'لماذا نؤدي هذه الوظيفة؟' للتأكد من تسلسل المنطق والوصول للوظيفة الأعلى." },
+            { domain: "التحليل الوظيفي", q: "في مخطط FAST الكلاسيكي، ماذا تسمى الوظيفة التي تقع مباشرة على يسار خط النطاق الأيسر (Left Scope Line)؟", options: ["وظيفة التكلفة الأعلى", "وظيفة ثانوية غير مرغوبة", "وظيفة الترتيب الأعلى (Highest Order Function) أو الغرض الأساسي للمشروع", "وظيفة التصميم المحددة"], correct: 2, explanation: "الوظيفة خارج النطاق الأيسر تمثل الهدف النهائي أو الغرض الأعلى (Higher Order Function) الذي يبرر وجود المشروع بأكمله." },
+            { domain: "التحليل الوظيفي", q: "ما الذي تمثله الوظائف الموجودة على نفس الخط الرأسي (العمودي) في مخطط FAST؟", options: ["وظائف تحدث في نفس الوقت أو وظائف مستمرة (All-the-time / Same time)", "وظائف لا علاقة لها ببعضها", "وظائف يجب إلغاؤها", "الوظائف الأساسية فقط"], correct: 0, explanation: "القراءة العمودية في المخطط (بناءً على سؤال 'متى؟') تمثل الوظائف المتزامنة أو المستمرة التي تحدث في نفس الوقت." },
+            { domain: "التحليل الوظيفي", q: "في عملية 'توزيع التكاليف على الوظائف' (Function-Cost Allocation)، ما هي الخطوة التي يقوم بها الفريق؟", options: ["إلغاء التكاليف غير المبررة عشوائياً", "ربط تكلفة أجزاء المشروع بالوظائف التي تؤديها تلك الأجزاء لمعرفة كم تكلف كل 'وظيفة'", "زيادة رواتب فريق العمل", "حساب التكلفة الزمنية لبرنامج المشروع"], correct: 1, explanation: "يتم ترجمة تكلفة الأجزاء (Parts) إلى تكلفة الوظائف (Functions) لتحديد ما إذا كانت الوظيفة تستحق هذه التكلفة." },
+            { domain: "التحليل الوظيفي", q: "ما هو 'مؤشر القيمة' (Value Index) وكيف يُحسب في التحليل الوظيفي؟", options: ["مؤشر القيمة = التكلفة / الوزن", "مؤشر القيمة = التكلفة الفعلية للوظيفة (Cost) مقسومة على قيمتها المستحقة أو جدارتها (Worth)", "مؤشر القيمة = الوظائف الأساسية / الوظائف الثانوية", "مؤشر القيمة = الأرباح / الضرائب"], correct: 1, explanation: "مؤشر القيمة (Cost-to-Worth Ratio) يساعد في قياس كفاءة القيمة، حيث تشير القيمة العالية للمؤشر إلى إمكانية تحسين كبيرة." },
+            { domain: "التحليل الوظيفي", q: "إذا كان 'مؤشر القيمة' (Value Index) لوظيفة معينة أكبر بكثير من 1 (مثلاً 5)، ماذا يعني ذلك بالنسبة لفريق الهندسة القيمية؟", options: ["أن الوظيفة تؤدى بكفاءة عالية ولا تحتاج لتحسين", "أن التكلفة مساوية تماماً للجدارة", "أن هذه الوظيفة تكلّف أكثر بكثير مما تستحق (فرصة ذهبية لتحسين القيمة وخفض التكلفة)", "أن الوظيفة مستحيلة التنفيذ"], correct: 2, explanation: "عندما تتجاوز التكلفة الجدارة (Worth) بكثير، فهذا مؤشر قوي على وجود تكاليف غير ضرورية يجب دراستها وإزالتها." },
+            { domain: "التحليل الوظيفي", q: "ما هي الوظيفة التي تنبع من 'النهج أو التصميم الحالي' المستخدم لتحقيق الوظيفة الأساسية، وإذا تغير التصميم قد تختفي؟", options: ["الوظيفة الجمالية (Aesthetic Function)", "وظيفة المسار الحرج (Critical Path Function)", "الوظيفة الثانوية الناتجة عن التصميم (Design Dependent Function)", "الوظيفة العليا"], correct: 2, explanation: "الوظائف المعتمدة على التصميم (Design Dependent) توجد فقط لأننا اخترنا طريقة معينة للحل، وتتغير بتغير الحل." },
+            { domain: "التحليل الوظيفي", q: "في تحليل الوظائف لمنتجات المستهلكين، يتم تقسيم الوظائف إلى نوعين رئيسيين هما:", options: ["وظائف عمل (Work Functions) ووظائف بيع (Sell Functions)", "وظائف رخيصة ووظائف باهظة", "وظائف هندسية ووظائف طبية", "وظائف داخلية ووظائف خارجية"], correct: 0, explanation: "الوظائف إما أن تقوم بالعمل (Work) أو تجذب المشتري (Sell/Aesthetic)، وكلاهما له قيمة يجب إدارتها." },
+            { domain: "التحليل الوظيفي", q: "المسار الأفقي الرئيسي المتصل بأسهم من اليسار لليمين ومن اليمين لليسار في مخطط FAST يُعرف بـ:", options: ["المسار الحرج للوظائف (Critical Path of Functions)", "مسار التكلفة", "خط النطاق الأيمن", "المسار الموازي"], correct: 0, explanation: "المسار الحرج (Critical Path) يربط الوظائف الأساسية التي لا يمكن الاستغناء عنها لتحقيق الغرض الرئيسي بنجاح منطقي متسلسل." },
+            { domain: "التحليل الوظيفي", q: "أي من العبارات التالية يمثل 'وظيفة' صحيحة مصاغة بطريقة (فعل واسم) لباب الغرفة؟", options: ["مصنوع من الخشب", "يفتح ويغلق بسرعة", "يتحكم بالوصول (Control Access)", "باب جميل"], correct: 2, explanation: "يتحكم بالوصول (فعل نشط + اسم) يعبر عن الغرض المجرد للباب بعيداً عن مادته أو شكله." },
+
+            { domain: "مرحلة الإبداع", q: "ما هو الهدف الرئيسي لـ 'مرحلة الإبداع' (Creative Phase) في الهندسة القيمية؟", options: ["انتقاد التصميم القديم ورفضه", "توليد أكبر عدد ممكن من الأفكار والبدائل لأداء 'الوظائف' التي تم تحديدها في المرحلة السابقة", "حساب تكلفة المشروع النهائية", "تحديد أسماء الشركات المنفذة"], correct: 1, explanation: "الهدف هو توليد كمية كبيرة من الأفكار البديلة لأداء نفس الوظيفة بطرق مختلفة وأكثر كفاءة." },
+            { domain: "مرحلة الإبداع", q: "واحدة من أهم قواعد جلسات العصف الذهني (Brainstorming) في مرحلة الإبداع هي:", options: ["السماح بالنقد الفوري للأفكار السخيفة لتوفير الوقت", "التركيز على الجودة بدلاً من الكمية", "تأجيل أو منع أي نقد أو تقييم للأفكار (No Criticism)", "السماح فقط لمدير المشروع بالتحدث"], correct: 2, explanation: "منع النقد (تعليق الحكم) يشجع المشاركين على التفكير بحرية وطرح أفكار غير تقليدية دون خوف من الرفض." },
+            { domain: "مرحلة الإبداع", q: "في مرحلة الإبداع، يركز الفريق في توليد الأفكار على:", options: ["الأجزاء المادية الحالية للمشروع", "الوظائف (Functions) التي يجب تلبيتها", "الأخطاء التي ارتكبها المصمم الأصلي", "كيفية زيادة ميزانية المشروع"], correct: 1, explanation: "هذا ما يميز الهندسة القيمية؛ العصف الذهني يكون حول 'كيف نؤدي هذه الوظيفة؟' وليس 'كيف نعدل هذا الجزء؟'." },
+            { domain: "مرحلة الإبداع", q: "ماذا يقصد بمصطلح 'Piggybacking' أثناء جلسات الإبداع؟", options: ["حمل الوثائق الثقيلة", "تجاهل أفكار الآخرين", "البناء على أفكار الآخرين ودمجها أو تطويرها لإنتاج أفكار جديدة (التلاقح الفكري)", "السخرية من أفكار المهندسين المبتدئين"], correct: 2, explanation: "البناء على أفكار الآخرين (Piggybacking) يعزز العمل الجماعي ويولد حلولاً هجينة ومبتكرة." },
+            { domain: "مرحلة الإبداع", q: "أي من التقنيات التالية تستخدم بكثرة في مرحلة الإبداع بجانب العصف الذهني التقليدي؟", options: ["تقنية غوردون (السينكتكس - Synectics)", "محاكاة مونت كارلو", "تحليل القيمة المكتسبة", "طريقة المسار الحرج (CPM)"], correct: 0, explanation: "السينكتكس (Synectics) وتقنية غوردون هي من أساليب تحفيز الإبداع والتفكير خارج الصندوق للبحث عن حلول للمشكلات." },
+            { domain: "مرحلة الإبداع", q: "أي من العبارات التالية تعتبر من 'عوائق الإبداع' (Creativity Blockers)؟", options: ["الرغبة في التغيير الإيجابي", "الخوف من الفشل، العادات القديمة، والاعتقاد بأن 'هذه هي الطريقة التي نعمل بها دائماً'", "الاستماع لوجهات نظر تخصصات مختلفة", "التركيز على الوظائف بدلاً من الأجزاء"], correct: 1, explanation: "العادات، التحيز للتصميم القديم، ومقاومة التغيير (Paradigms) هي أشد أعداء الإبداع والابتكار." },
+            { domain: "مرحلة الإبداع", q: "في مرحلة الإبداع، القاعدة الذهبية هي: 'الكم يولد ...'؟", options: ["الخسارة", "الكيف (الكمية الكبيرة من الأفكار تزيد احتمالية وجود أفكار ذات جودة استثنائية)", "الملل", "التكلفة العالية"], correct: 1, explanation: "في العصف الذهني، الكمية مطلوبة لأنها تؤدي في النهاية للوصول إلى الجودة المطلوبة عبر تنقيح تلك الأفكار." },
+
+            { domain: "مرحلة التقييم", q: "ما هو الغرض من 'مرحلة التقييم' (Evaluation Phase) التي تلي مرحلة الإبداع مباشرة؟", options: ["حساب التكلفة الدقيقة لكل فكرة مطروحة", "تصفية الأفكار الكثيرة، تقييمها، واختيار أفضل البدائل القابلة للتطبيق والمحققة للقيمة", "توليد المزيد من الأفكار", "إلغاء دراسة الهندسة القيمية لتوفير الوقت"], correct: 1, explanation: "بعد توليد الأفكار في مرحلة الإبداع، تأتي مرحلة التقييم لتنقيحها وتصفيتها واختيار الأنسب منها منطقياً وعملياً." },
+            { domain: "مرحلة التقييم", q: "عند تقييم الأفكار، غالباً ما تُستخدم 'مصفوفة التقييم الموزونة' (Weighted Evaluation Matrix). ما هي فائدتها؟", options: ["مقارنة الأفكار بناءً على معايير محددة ومتفق عليها مسبقاً (مثل التكلفة، الجودة، سهولة التنفيذ) بأوزان مختلفة", "تحديد أسماء المهندسين المشاركين", "حساب مدة المشروع باليوم", "رسم مخطط هندسي تفصيلي للبديل"], correct: 0, explanation: "مصفوفة التقييم تضع منهجية علمية لاختيار الأفكار بدلاً من الاعتماد على التحيز الشخصي." },
+            { domain: "مرحلة التقييم", q: "ما هي أداة 'المقارنة الزوجية' (Paired Comparison) ومتى تستخدم في الهندسة القيمية؟", options: ["لمقارنة رواتب المهندسين", "تستخدم لتحديد 'الأهمية النسبية' (الأوزان) لمعايير التقييم من خلال مقارنة كل معيار بالآخر وجهاً لوجه", "لمقارنة المشروع الحالي بمشروع في دولة أخرى", "لمقارنة سعر الحديد بسعر الإسمنت"], correct: 1, explanation: "المقارنة الزوجية أداة فعالة لتحديد أي المعايير (كالتكلفة أو الجودة أو الوقت) هو الأهم بالنسبة للعميل لإعطائه الوزن الأكبر." },
+            { domain: "مرحلة التقييم", q: "أثناء فرز الأفكار، يتم تصنيف بعضها كأفكار 'قاتلة' أو 'مرفوضة فوراً' (Fatal Flaws). أي من الأسباب التالية يبرر ذلك؟", options: ["الفكرة تخالف القوانين البيئية وأنظمة السلامة المحلية", "الفكرة جديدة ولم يسبق تجربتها", "الفكرة اقترحها مهندس حديث التخرج", "الفكرة ستوفر الكثير من التكاليف"], correct: 0, explanation: "الأفكار التي تخل باشتراطات السلامة، القوانين، أو المواصفات الإلزامية يتم استبعادها فوراً في مرحلة التقييم." },
+            { domain: "مرحلة التقييم", q: "استخدام قائمة 'المزايا والعيوب' (Advantages and Disadvantages) يُعد جزءاً من أي مرحلة في دراسة الهندسة القيمية؟", options: ["مرحلة المعلومات", "مرحلة التقييم", "مرحلة التطوير", "مرحلة العرض"], correct: 1, explanation: "تحليل المزايا والعيوب (T-Chart) هو أداة التصفية الأولية السريعة في مرحلة التقييم لمعرفة جدوى الأفكار." },
+            { domain: "مرحلة التقييم", q: "ما هو دور 'بطل الفكرة' (Idea Champion) خلال مرحلة التقييم؟", options: ["رفض كل الأفكار الأخرى بشراسة", "تطوير فكرة معينة يراها واعدة، والدفاع عن جدواها، وجمع معلومات لتبديد المخاوف حولها", "تجاهل رأي المالك تماماً", "رفع تكلفة الفكرة"], correct: 1, explanation: "بطل الفكرة هو العضو الذي يتبنى فكرة جيدة غير تقليدية ويحميها من الاستبعاد المبكر عبر توضيح قيمتها الحقيقية للفريق." },
+
+            { domain: "مرحلة التطوير والعرض", q: "ما هو الهدف الرئيسي من 'مرحلة التطوير' (Development Phase) للبدائل المختارة؟", options: ["إلغاء البدائل والعودة للتصميم الأصلي", "توسيع الأفكار الفائزة وتحويلها إلى 'مقترحات هندسة قيمية' (VE Proposals) مكتملة تشمل التصاميم الأولية والتكاليف وتقدير المخاطر", "تغيير وظائف المشروع", "عقد جلسات عصف ذهني جديدة"], correct: 1, explanation: "الهدف هو تحويل الفكرة من مجرد سطر في ورقة إلى مقترح هندسي ومالي متكامل ومقنع لصانع القرار." },
+            { domain: "مرحلة التطوير والعرض", q: "أي من العناصر التالية يجب أن يتضمنه 'مقترح الهندسة القيمية' (VE Proposal) المكتمل؟", options: ["وصف التصميم الأصلي (Before) والتصميم المقترح (After)", "تحليل تكلفة دورة الحياة (LCC) للبديلين", "توضيح الأثر على الجدول الزمني والجودة", "جميع ما سبق"], correct: 3, explanation: "المقترح الناجح يجب أن يعقد مقارنة شاملة (فنياً ومالياً وزمنياً) بين الوضع الأصلي والوضع المقترح." },
+            { domain: "مرحلة التطوير والعرض", q: "كيف يتم تطبيق 'تحليل تكلفة دورة الحياة' (LCC) في مرحلة التطوير؟", options: ["لحساب التكلفة المبدئية فقط للمقترح", "لإثبات أن المقترح الجديد قد يكلف أكثر في البناء ولكنه سيوفر مبالغ ضخمة في التشغيل والصيانة على المدى الطويل", "لحساب أتعاب فريق الهندسة القيمية", "لا يتم استخدامه في هذه المرحلة"], correct: 1, explanation: "الـ LCC يثبت الجدوى الاقتصادية الشاملة للمقترح على المدى الطويل، وهو حجر الزاوية في إقناع الملاك بالبدائل." },
+            { domain: "مرحلة التطوير والعرض", q: "ما هو الهدف من 'مرحلة العرض' (Presentation Phase) في نهاية خطة عمل الهندسة القيمية؟", options: ["استلام رواتب الفريق", "إجبار العميل قانونياً على قبول التعديلات", "تقديم المقترحات المكتملة بصورة احترافية ومقنعة لأصحاب المصلحة وصناع القرار للحصول على الموافقة", "توقيع عقود التنفيذ الفورية"], correct: 2, explanation: "بدون عرض مقنع يشرح الفوائد الفنية والمالية، لن يتم اعتماد مقترحات دراسة الهندسة القيمية." },
+            { domain: "مرحلة التطوير والعرض", q: "أثناء مرحلة العرض، إذا اعترض مصمم المشروع الأصلي (A/E) على أحد المقترحات بدعوى أنه يقلل من الجودة، كيف يجب أن ترد؟", options: ["الدخول في جدال شخصي معه أمام العميل", "استعراض التحليل الوظيفي والمقارنات الفنية التي تثبت أن المقترح يحقق 'الوظيفة المطلوبة' بنفس الجودة أو أفضل، مع توفير مالي", "سحب المقترح فوراً والاعتذار", "تجاهل رأيه لأن العميل هو من يدفع"], correct: 1, explanation: "يتم الرد بالحقائق الفنية والوظيفية التي تم إثباتها في مرحلة التطوير لإزالة المخاوف بموضوعية." },
+            { domain: "مرحلة التطوير والعرض", q: "ما هي 'خطة التنفيذ' (Implementation Plan) التي تُلحق عادة بمقترحات الهندسة القيمية؟", options: ["خطة الإخلاء في حالات الطوارئ", "جدول يوضح (من سيفعل ماذا، ومتى) لتنفيذ المقترح المعتمد لضمان تحويل الفكرة إلى واقع", "خطة تسويق للمشروع", "خطة صيانة التكييف"], correct: 1, explanation: "خطة التنفيذ تضمن ألا تُنسى المقترحات بعد الموافقة عليها، وتحدد المسؤوليات لإدخال التعديل في التصميم أو التنفيذ." },
+            { domain: "مرحلة التطوير والعرض", q: "بعد تنفيذ مقترحات الهندسة القيمية المعتمدة، ما هي الممارسة الإدارية الموصى بها في منهجية SAVE؟", options: ["نسيان المشروع بالكامل", "إجراء متابعة (Audit/Post-implementation review) للتحقق من تحقيق التوفير والأداء المتوقعين فعلياً", "مقاضاة المقاول", "إلغاء الصيانة الدورية"], correct: 1, explanation: "المتابعة اللاحقة (Audit) تؤكد مصداقية دراسة الهندسة القيمية وتقيس التوفير الفعلي الذي تحقق على أرض الواقع." }
+        ];
+
+        let state = {
+            currentIndex: 0,
+            answers: Array(questions.length).fill(null),
+            flags: Array(questions.length).fill(false),
+            timer: 75 * 60, // 75 minutes for 50 questions
+            timerId: null,
+            userName: "",
+            status: "start",
+            certGeneratedId: ""
+        };
+
+        function initQuiz() {
+            const name = document.getElementById('trainee-name').value.trim();
+            if(!name) return alert("برجاء إدخال الاسم الثلاثي بشكل صحيح لمتابعة الاختبار.");
+            
+            state.userName = name;
+            state.status = "quiz";
+            document.getElementById('intro-screen').classList.add('hidden');
+            document.getElementById('quiz-area').classList.remove('hidden');
+            
+            renderQuestion();
+            startTimer();
+        }
+
+        function renderQuestion() {
+            const q = questions[state.currentIndex];
+            
+            document.getElementById('question-badge').innerText = `سؤال ${state.currentIndex + 1}`;
+            document.getElementById('domain-badge').innerText = q.domain;
+            document.getElementById('question-total-label').innerText = `من ${questions.length} سؤال`;
+            
+            const progressPercent = ((state.currentIndex + 1) / questions.length) * 100;
+            document.getElementById('progress-fill').style.width = `${progressPercent}%`;
+
+            document.getElementById('question-text').innerText = q.q;
+            
+            const optionsCont = document.getElementById('options-container');
+            optionsCont.innerHTML = '';
+            
+            const answered = state.answers[state.currentIndex] !== null;
+            const selectedIdx = state.answers[state.currentIndex];
+
+            q.options.forEach((opt, i) => {
+                const btn = document.createElement('button');
+                let extraClass = 'bg-slate-50 border-slate-300 text-slate-700';
+                let letterBg = 'bg-slate-200 text-slate-600';
+
+                if (answered) {
+                    if (i === q.correct) {
+                        extraClass = 'bg-emerald-50 border-emerald-500 text-emerald-900 font-bold shadow-sm';
+                        letterBg = 'bg-emerald-600 text-white';
+                    } else if (i === selectedIdx && i !== q.correct) {
+                        extraClass = 'bg-red-50 border-red-500 text-red-900 font-bold shadow-sm';
+                        letterBg = 'bg-red-500 text-white';
+                    }
+                }
+
+                btn.className = `option-card w-full text-right p-4 rounded-2xl border ${extraClass} flex items-center gap-4 cursor-pointer`;
+                if (answered) btn.disabled = true;
+
+                btn.innerHTML = `
+                    <span class="letter-box w-10 h-10 rounded-xl ${letterBg} flex items-center justify-center text-base font-black shrink-0 shadow-sm">${String.fromCharCode(65 + i)}</span>
+                    <span class="flex-grow break-words font-semibold">${opt}</span>
+                `;
+                
+                if (!answered) {
+                    btn.onclick = () => selectOption(i);
+                }
+                optionsCont.appendChild(btn);
+            });
+
+            document.getElementById('prev-btn').disabled = state.currentIndex === 0;
+            document.getElementById('next-btn').classList.toggle('hidden', state.currentIndex === questions.length - 1);
+            document.getElementById('finish-btn').classList.toggle('hidden', state.currentIndex !== questions.length - 1);
+            
+            const flagBtn = document.getElementById('flag-btn');
+            const flagText = document.getElementById('flag-text');
+            if(state.flags[state.currentIndex]) {
+                flagBtn.classList.remove('text-slate-400', 'border-slate-200');
+                flagBtn.classList.add('text-amber-600', 'border-amber-300', 'bg-amber-50');
+                flagText.innerText = "محفوظ للمراجعة";
+            } else {
+                flagBtn.classList.add('text-slate-400', 'border-slate-200');
+                flagBtn.classList.remove('text-amber-600', 'border-amber-300', 'bg-amber-50');
+                flagText.innerText = "تمييز للمراجعة";
+            }
+        }
+
+        function selectOption(idx) {
+            state.answers[state.currentIndex] = idx;
+            renderQuestion();
+        }
+
+        function toggleFlag() {
+            state.flags[state.currentIndex] = !state.flags[state.currentIndex];
+            renderQuestion();
+        }
+
+        function nextQuestion() {
+            if(state.currentIndex < questions.length - 1) {
+                state.currentIndex++;
+                renderQuestion();
+            }
+        }
+
+        function prevQuestion() {
+            if(state.currentIndex > 0) {
+                state.currentIndex--;
+                renderQuestion();
+            }
+        }
+
+        function startTimer() {
+            state.timerId = setInterval(() => {
+                state.timer--;
+                const mins = Math.floor(state.timer / 60);
+                const secs = state.timer % 60;
+                const display = `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+                const el = document.getElementById('time');
+                el.innerText = display;
+
+                if(state.timer < 300) {
+                    el.parentElement.classList.add('text-red-600', 'border-red-300', 'bg-red-50');
+                }
+                if(state.timer <= 0) finishQuiz();
+            }, 1000);
+        }
+
+        function confirmSubmit() {
+            const unanswered = state.answers.filter(a => a === null).length;
+            const msg = unanswered > 0 
+                ? `لديك ${unanswered} سؤالاً بدون إجابة. هل أنت متأكد من تسليم الاختبار؟` 
+                : "هل أنت متأكد من تسليم الاختبار ورصد النتائج النهائية؟";
+            
+            if(confirm(msg)) finishQuiz();
+        }
+
+        function finishQuiz() {
+            clearInterval(state.timerId);
+            state.status = "result";
+            document.getElementById('quiz-area').classList.add('hidden');
+            document.getElementById('result-screen').classList.remove('hidden');
+
+            let score = 0;
+            state.answers.forEach((ans, i) => {
+                if(ans === questions[i].correct) score++;
+            });
+
+            const percent = (score / questions.length) * 100;
+            const passed = percent >= 70;
+
+            document.getElementById('result-title').innerText = passed ? "🎉 تهانينا! لقد اجتزت الاختبار بنجاح" : "للأسف لم تتخطى النسبة المطلوبة للاجتياز";
+            document.getElementById('result-title').className = `text-3xl md:text-4xl font-black mb-2 ${passed ? 'text-emerald-700' : 'text-red-600'}`;
+            document.getElementById('result-name').innerText = state.userName;
+            document.getElementById('final-score').innerText = `${percent.toFixed(1)}%`;
+            document.getElementById('correct-count').innerText = `${score}/${questions.length}`;
+            document.getElementById('final-score').className = `text-4xl md:text-6xl font-black mb-2 ${passed ? 'text-emerald-600' : 'text-red-600'}`;
+
+            const actionArea = document.getElementById('certificate-action-area');
+            if (passed) {
+                state.certGeneratedId = 'BA-' + new Date().getFullYear() + '-' + Math.floor(100000 + Math.random() * 900000);
+                actionArea.innerHTML = `
+                    <button onclick="openCertificate()" class="inline-flex items-center gap-2 bg-amber-600 hover:bg-amber-700 text-white font-bold py-4 px-10 rounded-2xl shadow-xl transition-all text-lg transform hover:scale-105 cursor-pointer">
+                        🏆 عرض وتنزيل شهادة الاجتياز الرسمية
+                    </button>
+                `;
+            } else {
+                actionArea.innerHTML = `<p class="text-red-700 font-bold bg-red-50 p-4 rounded-2xl border border-red-200 text-sm max-w-lg mx-auto">تتطلب شهادة الاجتياز الحصول على نسبة 70% على الأقل. يمكنك إعادة المحاولة بعد مراجعة الأخطاء.</p>`;
+            }
+
+            fetch(`${API_URL}?name=${encodeURIComponent(state.userName)}&score=${percent.toFixed(1)}%&status=${passed ? 'ناجح' : 'راسب'}`, { mode: 'no-cors' }).catch(()=>{});
+        }
+
+        function openCertificate() {
+            const formattedDate = new Date().toLocaleDateString('ar-SA', { year: 'numeric', month: 'long', day: 'numeric' });
+            
+            document.getElementById('cert-trainee-name').innerText = state.userName;
+            document.getElementById('cert-id').innerText = state.certGeneratedId;
+            document.getElementById('cert-issue-date').innerText = formattedDate;
+
+            const verificationUrl = `https://ba-engineering-academy.netlify.app/verify?id=${state.certGeneratedId}&name=${encodeURIComponent(state.userName)}`;
+            document.getElementById('cert-qr-code').src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(verificationUrl)}`;
+
+            document.getElementById('certificate-standalone-view').classList.remove('hidden');
+            document.getElementById('certificate-standalone-view').classList.add('flex');
+        }
+
+        function closeCertificate() {
+            document.getElementById('certificate-standalone-view').classList.add('hidden');
+            document.getElementById('certificate-standalone-view').classList.remove('flex');
+        }
+
+        function reviewMistakes() {
+            const container = document.getElementById('review-content');
+            container.innerHTML = '';
+            
+            questions.forEach((q, i) => {
+                const isCorrect = state.answers[i] === q.correct;
+                const div = document.createElement('div');
+                div.className = `p-5 rounded-2xl bg-slate-50 border-r-4 ${isCorrect ? 'border-emerald-500' : 'border-red-500'} border border-slate-200 shadow-sm`;
+                div.innerHTML = `
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="font-black text-xs text-slate-400">سؤال ${i+1}</span>
+                        <span class="bg-slate-200 text-slate-700 px-2.5 py-0.5 rounded-lg text-xs font-bold">${q.domain}</span>
+                    </div>
+                    <p class="mb-4 text-base md:text-lg font-bold text-slate-800">${q.q}</p>
+                    <div class="text-sm md:text-base space-y-2 font-semibold">
+                        <p class="${isCorrect ? 'text-emerald-800 bg-emerald-50 border-emerald-100' : 'text-red-700 bg-red-50 border-red-100'} p-3 rounded-xl border">
+                            إجابتك: ${state.answers[i] !== null ? q.options[state.answers[i]] : 'لم تجب'}
+                        </p>
+                        <p class="text-emerald-800 bg-emerald-50 p-3 rounded-xl border border-emerald-100">
+                            الإجابة الصحيحة: ${q.options[q.correct]}
+                        </p>
+                        <p class="text-sky-900 bg-sky-50 p-3 rounded-xl border border-sky-100 text-xs md:text-sm font-bold mt-2">
+                            💡 التفسير: ${q.explanation}
+                        </p>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+
+            document.getElementById('review-modal').classList.remove('hidden');
+        }
+
+        function closeReview() {
+            document.getElementById('review-modal').classList.add('hidden');
+        }
+
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                if (state.status === "start") {
+                    initQuiz();
+                } else if (state.status === "quiz") {
+                    if (state.currentIndex < questions.length - 1) {
+                        nextQuestion();
+                    } else {
+                        confirmSubmit();
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

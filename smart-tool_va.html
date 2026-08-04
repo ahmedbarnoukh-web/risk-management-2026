@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الدليل التفاعلي للهندسة القيمية | BA Engineering Academy</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-main: #f1f5f9;
+            --primary-navy: #022c22;
+            --secondary-emerald: #059669;
+            --secondary-hover: #047857;
+            --accent-gold: #d97706;
+            --text-dark: #0f172a;
+            --text-muted: #334155;
+            --border-color: #cbd5e1;
+            --card-bg: #ffffff;
+            --topbar-bg: #ffffff;
+            --shadow-subtle: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-dark);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .viewer-navbar {
+            background-color: var(--topbar-bg);
+            color: var(--text-dark);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 5%;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid var(--border-color);
+            box-shadow: var(--shadow-subtle);
+        }
+
+        .brand-title {
+            font-weight: 900;
+            font-size: 1.2rem;
+            color: var(--primary-navy);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--text-dark);
+            border: 2px solid var(--border-color);
+            padding: 8px 18px;
+            border-radius: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+        }
+        .btn-outline:hover { border-color: var(--secondary-emerald); color: var(--secondary-emerald); background: #ecfdf5; }
+
+        .container {
+            max-width: 850px;
+            margin: 40px auto;
+            width: 92%;
+            flex-grow: 1;
+        }
+
+        .tool-header {
+            background: linear-gradient(135deg, #022c22, #059669);
+            color: white;
+            padding: 40px 30px;
+            border-radius: 20px;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 15px 35px rgba(5, 150, 105, 0.2);
+        }
+        .tool-header h1 { font-size: 2rem; font-weight: 900; margin-bottom: 12px; }
+        .tool-header p { font-size: 1.05rem; opacity: 0.95; line-height: 1.7; max-width: 750px; margin: 0 auto; font-weight: 600; }
+
+        .form-card {
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-subtle);
+            margin-bottom: 35px;
+        }
+
+        .form-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            margin-bottom: 35px;
+        }
+
+        .form-group { 
+            display: flex; 
+            flex-direction: column; 
+            gap: 10px; 
+        }
+        
+        .form-group label {
+            font-weight: 800;
+            font-size: 1.05rem;
+            color: var(--primary-navy);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .select-custom {
+            width: 100%;
+            padding: 16px 20px;
+            background: #f8fafc;
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            cursor: pointer;
+            transition: 0.3s;
+            outline: none;
+        }
+        .select-custom:focus {
+            border-color: var(--secondary-emerald);
+            background: #ffffff;
+            box-shadow: 0 0 0 4px rgba(5, 150, 105, 0.1);
+        }
+
+        .btn-generate {
+            width: 100%;
+            background: linear-gradient(135deg, var(--secondary-emerald), var(--secondary-hover));
+            color: white;
+            border: none;
+            padding: 16px;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 900;
+            cursor: pointer;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            box-shadow: 0 10px 25px rgba(5, 150, 105, 0.3);
+        }
+        .btn-generate:hover { transform: translateY(-2px); box-shadow: 0 15px 30px rgba(5, 150, 105, 0.4); }
+
+        #results-section { display: none; animation: fadeIn 0.5s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            gap: 15px;
+            background: white;
+            padding: 20px 25px;
+            border-radius: 14px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+        }
+        .results-header h2 { font-size: 1.35rem; font-weight: 900; color: var(--primary-navy); }
+        
+        .ve-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 25px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.03);
+            border-right: 6px solid var(--secondary-emerald);
+            transition: 0.3s;
+        }
+        .ve-card:hover { transform: translateX(-4px); box-shadow: 0 12px 35px rgba(0,0,0,0.06); }
+        
+        .ve-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .ve-title { font-size: 1.15rem; font-weight: 900; color: var(--primary-navy); line-height: 1.5; }
+        
+        .badge {
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 800;
+        }
+        .badge-value-high { background: #d1fae5; color: #065f46; border: 1px solid #6ee7b7; }
+        .badge-value-ex { background: #fef3c7; color: #92400e; border: 1px solid #fcd34d; }
+        .badge-category { background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; }
+        
+        .badge-phase { background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; }
+
+        .ve-body p { color: var(--text-muted); font-size: 1rem; line-height: 1.8; margin-bottom: 15px; font-weight: 600; }
+        
+        .function-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #f8fafc;
+            border: 1px dashed var(--secondary-emerald);
+            padding: 8px 16px;
+            border-radius: 10px;
+            color: var(--primary-navy);
+            font-weight: 800;
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+        }
+
+        .response-box {
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            margin-top: 15px;
+        }
+        .response-box strong { color: var(--primary-navy); display: block; margin-bottom: 8px; font-size: 1rem; font-weight: 900; }
+        .response-box span { color: var(--text-dark); font-size: 1.05rem; line-height: 1.8; display: block; font-weight: 700; }
+
+        .placeholder-state {
+            text-align: center;
+            padding: 60px 20px;
+            background: white;
+            border-radius: 16px;
+            border: 2px dashed var(--border-color);
+            color: var(--text-muted);
+        }
+        .placeholder-state i { font-size: 50px; color: #94a3b8; margin-bottom: 15px; }
+        .placeholder-state h3 { font-size: 1.25rem; font-weight: 900; color: var(--primary-navy); margin-bottom: 8px; }
+    </style>
+</head>
+<body>
+
+    <div class="viewer-navbar">
+        <div class="brand-title">
+            <i class="fa-solid fa-gem"></i> الدليل التفاعلي للهندسة القيمية | BA Engineering Academy
+        </div>
+        <a href="va_core.html" class="btn-outline"><i class="fa-solid fa-arrow-right"></i> العودة للرئيسية </a>
+    </div>
+
+    <div class="container">
+        <div class="tool-header">
+            <h1>الدليل الذكي لتطبيق الهندسة القيمية (VE)</h1>
+            <p>اختر نطاق مشروعك، مرحلة خطة العمل (Job Plan)، وهدف تحسين القيمة لاستعراض التحليل الوظيفي واستراتيجيات رفع القيمة وخفض التكاليف غير الضرورية.</p>
+        </div>
+
+        <div class="form-card">
+            <div class="form-stack">
+                <!-- 1. القطاع / نوع المشروع -->
+                <div class="form-group">
+                    <label><i class="fa-solid fa-building-user"></i> 1. اختر القطاع أو نوع المشروع:</label>
+                    <select id="project-sector" class="select-custom">
+                        <option value="" disabled selected>-- اضغط لاختيار نوع المشروع --</option>
+                        <option value="buildings">مشاريع المباني والبنية التحتية (Buildings & Infra)</option>
+                        <option value="mep">مشاريع الكهروميكانيك والمرافق (MEP & Utilities)</option>
+                        <option value="industrial">المشاريع الصناعية والتصنيع (Industrial & Manufacturing)</option>
+                    </select>
+                </div>
+
+                <!-- 2. مرحلة خطة العمل (Job Plan Phase) -->
+                <div class="form-group">
+                    <label><i class="fa-solid fa-diagram-project"></i> 2. اختر مرحلة خطة العمل (VE Job Plan):</label>
+                    <select id="ve-phase" class="select-custom">
+                        <option value="" disabled selected>-- اضغط لاختيار مرحلة دراسة الهندسة القيمية --</option>
+                        <option value="info">مرحلة المعلومات ونموذج التكلفة (Information Phase)</option>
+                        <option value="function">مرحلة التحليل الوظيفي (Function Analysis - FAST)</option>
+                        <option value="creative">مرحلة الإبداع وتوليد البدائل (Creative Phase)</option>
+                        <option value="eval_dev">مرحلة التقييم والتطوير وتكلفة دورة الحياة (Evaluation & LCC)</option>
+                    </select>
+                </div>
+
+                <!-- 3. الهدف الرئيسي لتحسين القيمة -->
+                <div class="form-group">
+                    <label><i class="fa-solid fa-chart-line"></i> 3. اختر الهدف المباشر لدراسة القيمة:</label>
+                    <select id="ve-target" class="select-custom">
+                        <option value="" disabled selected>-- اضغط لاختيار هدف التحسين --</option>
+                        <option value="cost">خفض التكاليف المبدئية غير الضرورية (Initial Cost Reduction)</option>
+                        <option value="performance">تحسين الأداء والجودة الوظيفية (Performance Enhancement)</option>
+                        <option value="lcc">تحسين تكلفة دورة الحياة والاستدامة (Life Cycle Cost - LCC)</option>
+                    </select>
+                </div>
+            </div>
+
+            <button class="btn-generate" onclick="generateVEGuide()">
+                <i class="fa-solid fa-wand-magic-sparkles"></i> توليد تقرير استراتيجيات والتحليل الوظيفي للقيمة
+            </button>
+        </div>
+
+        <div id="results-section">
+            <div class="results-header">
+                <h2>فرص واستراتيجيات الهندسة القيمية المخصصة (<span id="result-count">0</span> توصيات دقيقة)</h2>
+                <button class="btn-outline" onclick="window.print()"><i class="fa-solid fa-print"></i> طباعة التقرير</button>
+            </div>
+            <div id="ve-container"></div>
+        </div>
+
+        <div id="placeholder-box" class="placeholder-state">
+            <i class="fa-solid fa-sliders"></i>
+            <h3>لم تقم بتحديد الخيارات بعد</h3>
+            <p>يرجى اختيار "نوع المشروع"، "مرحلة خطة العمل"، و"هدف التحسين" من القوائم أعلاه ثم اضغط على زر توليد التقرير.</p>
+        </div>
+    </div>
+
+    <script>
+        const veDatabase = {
+            buildings: {
+                info: [
+                    { title: "إعداد نموذج التكلفة (Cost Model) وتطبيق مبدأ باريتو (80/20)", functionText: "تحديد التكاليف (Identify Costs)", potential: "ممتاز", desc: "تشتت جهود الدراسة في بنود منخفضة التكلفة دون التركيز على العناصر التي تستحوذ على الشريحة الأكبر من الميزانية.", proposal: "تجميع التكاليف في نموذج تكلفة هيكلي يبرز الـ 20% من العناصر (مثل النظام الإنشائي والواجهات) التي تشكل 80% من الميزانية لتركيز دراسة القيمية عليها." },
+                    { title: "مصفوفة الاحتياجات مقابل الرغبات (Needs vs. Wants Analysis)", functionText: "ضبط النطاق (Control Scope)", potential: "مرتفع", desc: "ارتفاع الميزانية نتيجة إدراج رغبات جمالية أو كماليات لا تخدم الوظيفة الأساسية للمشروع.", proposal: "عقد ورشة عمل مع المالك لفصل الاحتياجات الأساسية عن الرغبات، وإلغاء أو تعديل العناصر ذات التكلفة العالية التي لا تضيف قيمة وظيفية." }
+                ],
+                function: [
+                    { title: "تحليل وظائف النظام الإنشائي واستبدال البلاطات المفرغة", functionText: "دعم الأحمال (Support Loads)", potential: "ممتاز", desc: "استخدام بلاطات الخرسانة التقليدية ذات التكلفة العالية والوزن الذاتي الثقيل في البحور الكبيرة.", proposal: "تطوير بديل باستخدام الخرسانة مسبقة الإجهاد (Post-Tension) لزيادة المسافات بين الأعمدة، تقليل سمك الخرسانة وكميات حديد التسليح وتخفيف أحمال القواعد." },
+                    { title: "تحليل وظائف الكسوات الخارجية للواجهات المعمارية", functionText: "حماية المبنى (Protect Building) / تحسين المظهر (Enhance Appearance)", potential: "مرتفع", desc: "المبالغة في استخدام الرخام والحجر الطبيعي الثقيل في كامل الواجهات الخارجية.", proposal: "استبدال الأحجار الثقيلة بألواح الألمنيوم المعزولة (Composite Panels) أو دهانات جرافيتية حديثة عالية الجودة مع تطعيم الحجر في أدوار المشاة فقط." }
+                ],
+                creative: [
+                    { title: "جلسة عصف ذهني لأنظمة العزل المائي للأسطح والقبوات", functionText: "منع التسرب (Prevent Leakage)", potential: "مرتفع", desc: "استخدام أنظمة العزل البيتوميني متعدد الطبقات التكلفة مع بطء التنفيذ واحتياجه لحماية خرسانية ثقيلة.", proposal: "استخدام غشاء التكثيف أحادي الطبقة (TPO Membrane) الذي يوفر سرعة تنفيذ عالية، ضمان أطول، وانعكاس حراري عالي يقلل أحمال التكييف." },
+                    { title: "إعادة رسم وتخطيط المسقط الأفقي لتقليل المساحات الضائعة", functionText: "تسهيل الحركة (Facilitate Circulation)", potential: "ممتاز", desc: "وجود ممرات حركة واسعة وغير مستغلة تزيد من مساحة البناء الكلية دون عائد وظيفي.", proposal: "إعادة توزيع الفراغات الداخلية وتقليص الممرات بنسبة 10-15% مما يقلل تكاليف التشييد الإجمالية دون المساس بمساحة الغرف الأساسية." }
+                ],
+                eval_dev: [
+                    { title: "تحليل تكلفة دورة الحياة (LCC) للزجاج المزدوج المعماري", functionText: "توفير الطاقة (Conserve Energy)", potential: "ممتاز", desc: "اختيار زجاج أحادي أو عادي يقلل التكلفة المبدئية لكنه يرفع تكاليف التكييف واستهلاك الكهرباء طوال عمر المبنى.", proposal: "اعتماد زجاج مزدوج عالي الأداء معالج بطبقة منخفضة الانبعاثية (Double Glazed Low-E)؛ ورغم زيادة التكلفة المبدئية 15%، فإنه يحقق وفر تشغيلي يسترد التكلفة خلال 3 سنوات." },
+                    { title: "مصفوفة التقييم الموزونة لبدائل تشطيبات الأرضيات", functionText: "مقاومة التآكل (Resist Wear)", potential: "مرتفع", desc: "اعتماد أرضيات رخام طبيعي باهظة الثمن في الممرات ذات الحركة العالية مما يتطلب صيانة مستمرة.", proposal: "استبدال الرخام بالبورسلين الفاخر عالي التحمل (Full Body Porcelain) الذي يحقق نفس المظهر مع صلابة أعلى وتكلفة شراء وصيانة أقل بنسبة 40%." }
+                ]
+            },
+            mep: {
+                info: [
+                    { title: "نموذج الأحمال الكهربائية وحسابات المتطلبات الفعلية", functionText: "تغذية القدرة (Supply Power)", potential: "مرتفع", desc: "تضخيم قدرات المحولات والمولدات بناءً على معاملات أمان مبالغ فيها من قبل المصمم.", proposal: "إعادة تقييم معاملات التزامن (Diversity Factors) وحساب الأحمال الفعلية بدقة لتخفيض سعة المحولات والمولدات والمفاتيح الرئيسية دون خطورة." },
+                    { title: "تتبع تكاليف شبكات التكييف المركزية (HVAC Cost Profiling)", functionText: "تبريد الفراغات (Cool Spaces)", potential: "ممتاز", desc: "استحواذ نظام التكييف على أكثر من 25% من ميزانية المشروع بسبب التوصيف المرتفع.", proposal: "تفكيك نظام التكييف المعتمد ودراسة خيارات التشغيل المباشر مقابل التبريد بالماء المثلج لربط التكلفة بالوظيفة." }
+                ],
+                function: [
+                    { title: "التحليل الوظيفي لمسارات مجاري الهواء (Ductwork Routing)", functionText: "توزيع الهواء (Distribute Air)", potential: "مرتفع", desc: "تعقيد مسارات الدكتات وزيادة أطوالها والأكواع مما يزيد فقد الضغط الاستاتيكي وحجم المراوح.", proposal: "إعادة تصميم مسارات الدكت لتكون أكثر استقامة وتقليل الأكواع، مما يقلل كميات الصاج ويسمح باستخدام مراوح بقدرات واستهلاك كهرباء أقل." },
+                    { title: "تحليل وظائف شبكة إطفاء الحريق بالمبنى", functionText: " إخفاء الحريق (Suppress Fire)", potential: "ممتاز", desc: "الجمع بين أنظمة إطفاء متعددة ومكلفة في أماكن غير معقدة.", proposal: "تحسين توزيع رؤوس الرشاشات (Sprinklers) وتحديد الأقطار الدقيقة للأنابيب حسب الحسابات الهيدروليكية المباشرة بدلاً من الجداول التقديرية." }
+                ],
+                creative: [
+                    { title: "دمج أنظمة التكييف المتغير التدفق (VRF) بدلاً من المبردات التقليدية", functionText: "التحكم بالمناخ (Control Climate)", potential: "ممتاز", desc: "ارتفاع تكاليف ومساحات غرف المبردات (Chillers) والمضخات وأنابيب المياه المثلجة.", proposal: "تطبيق نظام VRF/VRV عالي الكفاءة الذي يلغي غرف المضخات الكبيرة، يقلل العزل والأنابيب، ويوفر في استهلاك الكهرباء بنسبة تصل إلى 30%." },
+                    { title: "استخدام أنظمة الإنارة الذكية LED مع مستشعرات الحركة", functionText: "توفير الضوء (Provide Light)", potential: "مرتفع", desc: "استهلاك مرتقب مرتفع للكهرباء في المناطق الخدمية والممرات الاستثمارية.", proposal: "تطبيق إضاءة LED المربوطة بنظام حافلات التحكم الذكي (DALI) ومستشعرات الحركة، مما يقلل عدد الوحدات وتكلفة الطاقة." }
+                ],
+                eval_dev: [
+                    { title: "تقييم تكلفة دورة الحياة (LCC) لمضخات المياه ذات السرعة المتغيرة", functionText: "ضخ المياه (Pump Water)", potential: "ممتاز", desc: "شراء مضخات ثابتة السرعة منخفضة السعر المبدئي ولكنها تستهلك طاقة قصوى باستمرار.", proposal: "تركيب مضخات مجهزة بمغيرات قيادة السرعة (VFD)؛ ورغم زيادتها 20% مبدئياً، فإنها توفر 40% من تكلفة التشغيل والصيانة طوال عمرها التشغيلي." },
+                    { title: "دراسة العائد الاقتصادي لتركيب الخلايا الشمسية على الأسطح (PV Systems)", functionText: "توليد الطاقة (Generate Energy)", potential: "مرتفع", desc: "الاعتماد الكامل على الشبكة العامة مع ارتفاع تعرفة الكهرباء في المشاريع التجارية.", proposal: "دمج محطة طاقة شمسية مصغرة على السطح لتغطية الأحمال الأساسية نهاراً، مع فترة استرداد رأس المال (Payback Period) تصل إلى 4 سنوات." }
+                ]
+            },
+            industrial: {
+                info: [
+                    { title: "تحليل خطوط الإنتاج ونماذج التدفق (Flow Diagraming)", functionText: "زيادة الإنتاجية (Increase Productivity)", potential: "ممتاز", desc: "وجود اختناقات في التخزين والحركة بين مراحل التصنيع ترفع التكلفة التشغيلية.", proposal: "تخطيط نموذج تدفق العمليات وربطه بالتكاليف لمعرفة المراحل التي تستهلك وقتاً وموارد دون إضافة قيمة للمنتج النهائي." }
+                ],
+                function: [
+                    { title: "التحليل الوظيفي للهياكل المعدنية للمستودعات (Pre-Engineered Buildings)", functionText: "احتواء المعدات (Enclose Equipment)", potential: "ممتاز", desc: "تصميم القطاعات الحديدية للأسطح والأعمدة بأوزان ثقيلة دون النظر للبحور الاستثمارية.", proposal: "استخدام الأنظمة المعدنية المسبقة التصميم (PEB) ذات القطاعات المتغيرة (Tapered Members) لتقليل وزن الحديد الإجمالي بنسبة 20-25%." }
+                ],
+                creative: [
+                    { title: "أتمتة مناولة المواد وتطوير مستودعات التخزين الرأسي", functionText: "تخزين المواد (Store Materials)", potential: "مرتفع", desc: "التوسع الأفقي للمصنع مما يرفع تكلفة شراء الأراضي والإنشاءات والخرسانات.", proposal: "الاعتماد على أنظمة التخزين الرأسي الآلي (ASRS) لزيادة الطاقة الاستيعابية بداخل نفس المساحة الأرضية وتقليل المساحة الخرسانية." }
+                ],
+                eval_dev: [
+                    { title: "دراسة استرداد الحرارة الضائعة من المولدات والأفران (Heat Recovery)", functionText: "استرجاع الطاقة (Recover Energy)", potential: "ممتاز", desc: "فقدان كميات ضخمة من الطاقة الحرارية في الهواء بدون الاستفادة منها.", proposal: "تركيب مبادلات حرارية لإنتاج الماء الساخن أو تشغيل التكييف الامتصاصي (Absorption Chiller) من الحرارة المهدرة لتخفيض فاتورة الطاقة إجمالياً." }
+                ]
+            }
+        };
+
+        function generateVEGuide() {
+            const sectorSelect = document.getElementById('project-sector');
+            const phaseSelect = document.getElementById('ve-phase');
+            const targetSelect = document.getElementById('ve-target');
+
+            if (!sectorSelect.value || !phaseSelect.value || !targetSelect.value) {
+                alert("الرجاء اختيار نوع المشروع، مرحلة خطة العمل، وهدف التحسين أولاً لعرض التقرير القيمى!");
+                return;
+            }
+
+            const sectorKey = sectorSelect.value;
+            const sectorText = sectorSelect.options[sectorSelect.selectedIndex].text;
+            const phaseKey = phaseSelect.value;
+            const phaseText = phaseSelect.options[phaseSelect.selectedIndex].text;
+            const targetText = targetSelect.options[targetSelect.selectedIndex].text;
+            
+            const sectorData = veDatabase[sectorKey] || {};
+            const list = sectorData[phaseKey] || [];
+            
+            const container = document.getElementById('ve-container');
+            container.innerHTML = "";
+
+            document.getElementById('result-count').innerText = list.length;
+
+            if (list.length === 0) {
+                container.innerHTML = `
+                    <div style="text-align:center; padding: 40px; background: white; border-radius: 12px; border: 1px solid var(--border-color);">
+                        <i class="fa-solid fa-circle-info" style="font-size: 40px; color: var(--secondary-emerald); margin-bottom: 10px;"></i>
+                        <p style="font-weight: 700;">لا توجد توصيات مباشرة للدمج المحدد، يمكنك اختيار مرحلة أخرى أو نطاق آخر لاستعراض بدائل الهندسة القيمية.</p>
+                    </div>
+                `;
+            } else {
+                list.forEach((item, index) => {
+                    const card = document.createElement('div');
+                    card.className = 've-card';
+                    
+                    let potentialBadgeClass = item.potential === "ممتاز" ? "badge-value-high" : "badge-value-ex";
+
+                    card.innerHTML = `
+                        <div class="ve-top">
+                            <div class="ve-title"><span style="color: var(--secondary-emerald);">فرصة قيمة #${index + 1}:</span> ${item.title}</div>
+                            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                                <span class="badge ${potentialBadgeClass}">العائد على القيمة: ${item.potential}</span>
+                                <span class="badge badge-category">${sectorText.split(' ')[0]}</span>
+                            </div>
+                        </div>
+                        <div class="ve-body">
+                            <div class="function-tag">
+                                <i class="fa-solid fa-bullseye"></i> 
+                                <span>صياغة الوظيفة (Function):</span>
+                                <strong>${item.functionText}</strong>
+                            </div>
+                            <p><strong>التحدي والتكلفة الحالية:</strong> ${item.desc}</p>
+                            <div class="response-box">
+                                <div style="display: flex; items-center; gap: 8px; margin-bottom: 8px;">
+                                    <span class="badge badge-phase"><i class="fa-solid fa-layer-group"></i> ${phaseText}</span>
+                                    <span class="badge badge-category"><i class="fa-solid fa-bullseye"></i> ${targetText}</span>
+                                </div>
+                                <strong><i class="fa-solid fa-lightbulb"></i> المقترح القيمى وخطة رفع القيمة (VE Proposal):</strong>
+                                <span>${item.proposal}</span>
+                            </div>
+                        </div>
+                    `;
+                    container.appendChild(card);
+                });
+            }
+
+            document.getElementById('placeholder-box').style.display = 'none';
+            document.getElementById('results-section').style.display = 'block';
+            document.getElementById('results-section').scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
