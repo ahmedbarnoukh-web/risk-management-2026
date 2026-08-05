@@ -13,25 +13,29 @@
         }
         body {
             font-family: 'Cairo', sans-serif;
-            background-color: #f1f5f9;
+            background-color: #f8fafc;
             color: #1e293b;
             overflow-x: hidden;
+            min-height: 100vh;
         }
         .clean-card {
             background: #ffffff;
             border: 1px solid #e2e8f0;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.04), 0 5px 15px -5px rgba(0, 0, 0, 0.02);
         }
         .option-card {
-            transition: all 0.2s ease;
+            transition: all 0.2s ease-in-out;
+            background-color: #ffffff;
+            border-color: #cbd5e1;
         }
         .option-card:hover:not(:disabled) {
-            transform: translateX(-4px);
+            transform: translateY(-2px);
             border-color: #0284c7;
-            background-color: #f8fafc;
+            background-color: #f0f9ff;
+            box-shadow: 0 6px 16px rgba(2, 132, 199, 0.08);
         }
         #progress-fill {
-            transition: width 0.3s ease;
+            transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .cert-title-font {
             font-family: 'Amiri', serif;
@@ -69,24 +73,24 @@
         }
     </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between">
+<body class="flex flex-col justify-between">
 
     <div id="main-app-wrapper" class="no-print-area flex flex-col min-h-screen">
         
-        <header class="clean-card sticky top-0 z-50 px-6 py-3.5 border-b border-slate-200 backdrop-blur-md bg-white/95">
-            <div class="max-w-5xl mx-auto flex justify-between items-center">
+        <header class="clean-card sticky top-0 z-50 px-6 py-4 border-b border-slate-200 backdrop-blur-md bg-white/95">
+            <div class="max-w-4xl mx-auto flex justify-between items-center w-full">
                 <div class="flex items-center gap-3.5">
-                    <img src="logo_4.jpg" alt="BA Engineering Academy" class="w-11 h-11 object-contain rounded-xl border border-slate-200 p-1 bg-white" onerror="this.src='logo.jpg'; this.onerror=null;">
+                    <img src="logo_4.jpg" alt="BA Engineering Academy" class="w-12 h-12 object-contain rounded-xl border border-slate-200 p-1 bg-slate-50" onerror="this.src='logo.jpg'; this.onerror=null;">
                     <div>
                         <div class="flex items-center gap-2">
                             <h1 class="text-base md:text-lg font-black text-slate-800">BA Engineering Academy</h1>
-                            <span class="bg-sky-100 text-sky-800 text-[10px] font-black px-2 py-0.5 rounded-full">v2.5</span>
+                            <span class="bg-sky-100 text-sky-700 border border-sky-200 text-[10px] font-black px-2 py-0.5 rounded-full">v4.3 الدولية</span>
                         </div>
                         <span class="text-xs text-slate-500 font-bold">محاكي اختبار الهندسة القيمية (Value Engineering)</span>
                     </div>
                 </div>
                 
-                <div id="timer-display" class="flex items-center gap-2.5 bg-slate-100 px-4 py-2 rounded-2xl font-mono text-lg md:text-xl text-sky-700 border border-slate-200 font-bold shadow-inner">
+                <div id="timer-display" class="flex items-center gap-2.5 bg-slate-100 px-5 py-2.5 rounded-2xl font-mono text-lg md:text-xl text-sky-700 border border-slate-200 font-bold shadow-sm">
                     <span id="time">75:00</span>
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-sky-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -95,44 +99,45 @@
             </div>
         </header>
 
-        <main class="flex-grow container mx-auto px-4 py-8 flex flex-col items-center justify-center">
-            <div class="w-full max-w-3xl">
+        <main class="flex-grow container mx-auto px-4 py-10 flex flex-col items-center justify-center">
+            <!-- تم تعديل عرض الحاوية لتصبح طولية متناسقة كالصفحات العالمية (Max-w-3xl) -->
+            <div class="w-full max-w-3xl mx-auto">
                 
-                <div id="intro-screen" class="clean-card rounded-3xl p-8 md:p-12 text-center">
-                    <div class="w-24 h-24 bg-white border-2 border-slate-100 rounded-3xl mx-auto flex items-center justify-center p-2 mb-6 shadow-md">
+                <div id="intro-screen" class="clean-card rounded-3xl p-8 md:p-14 text-center">
+                    <div class="w-24 h-24 bg-slate-50 border-2 border-slate-200 rounded-3xl mx-auto flex items-center justify-center p-2 mb-6 shadow-sm">
                         <img src="logo_4.jpg" alt="BA Engineering Academy" class="w-full h-full object-contain" onerror="this.src='logo.jpg'; this.onerror=null;">
                     </div>
                     
                     <h2 class="text-2xl md:text-3xl font-black text-slate-800 mb-2">محاكي اختبار الهندسة القيمية الاحترافي</h2>
-                    <p class="text-xs font-bold text-sky-700 uppercase tracking-widest mb-6">BA Engineering Academy • مقسم حسب خطة العمل (Job Plan)</p>
+                    <p class="text-xs font-bold text-sky-600 uppercase tracking-widest mb-6">BA Engineering Academy • خطة العمل الاحترافية (Job Plan)</p>
                     
                     <p class="text-slate-600 mb-8 text-sm md:text-base leading-relaxed max-w-xl mx-auto font-semibold">
-                        مرحباً بك في المحاكي المطور. يغطي هذا التقييم 50 سؤالاً موزعة بدقة على مراحل خطة عمل الهندسة القيمية (الأساسيات، المعلومات، التحليل الوظيفي، الإبداع، التقييم، والتطوير) لقياس جاهزيتك الكاملة.
+                        مرحباً بك في النسخة المطورة المحدثة وفق المعايير الدولية. يغطي هذا التقييم 50 سؤالاً تفاعلياً موزعة بدقة على مراحل خطة العمل لقياس إتقانك التام للمنهجية.
                     </p>
                     
                     <div class="max-w-md mx-auto mb-8 text-right">
                         <label class="block text-sm text-slate-700 font-bold mb-2">اسم المتدرب الثلاثي (كما سيظهر على شهادة الاجتياز):</label>
-                        <input type="text" id="trainee-name" class="w-full bg-slate-50 border border-slate-300 rounded-2xl px-5 py-4 text-slate-800 focus:outline-none focus:ring-2 focus:ring-sky-600 font-semibold text-base md:text-lg shadow-sm" placeholder="ادخل اسمك الكامل هنا..." autofocus>
+                        <input type="text" id="trainee-name" class="w-full bg-slate-50 border border-slate-300 rounded-2xl px-5 py-4 text-slate-800 focus:outline-none focus:ring-2 focus:ring-sky-500 font-semibold text-base md:text-lg shadow-sm" placeholder="ادخل اسمك الكامل هنا..." autofocus>
                     </div>
 
-                    <button onclick="initQuiz()" class="bg-sky-800 hover:bg-sky-900 text-white font-bold py-4 px-10 rounded-2xl transition-all transform hover:scale-105 shadow-xl w-full md:w-auto text-lg cursor-pointer">
+                    <button onclick="initQuiz()" class="bg-sky-600 hover:bg-sky-700 text-white font-bold py-4 px-10 rounded-2xl transition-all transform hover:scale-105 shadow-md w-full md:w-auto text-lg cursor-pointer">
                         ابدأ الاختبار الآن (Enter)
                     </button>
                 </div>
 
                 <div id="quiz-area" class="hidden">
-                    <div class="w-full bg-slate-200 h-2.5 rounded-full mb-6 overflow-hidden shadow-inner">
-                        <div id="progress-fill" class="bg-sky-700 h-full w-0"></div>
+                    <div class="w-full bg-slate-200 h-3 rounded-full mb-6 overflow-hidden shadow-inner p-0.5">
+                        <div id="progress-fill" class="bg-gradient-to-r from-sky-500 to-sky-600 h-full w-0 rounded-full"></div>
                     </div>
 
-                    <div class="clean-card rounded-3xl p-6 md:p-10 mb-5">
-                        <div class="flex flex-wrap justify-between items-center gap-2 mb-6 border-b border-slate-100 pb-4">
-                            <div class="flex items-center gap-2 flex-wrap">
-                                <span class="bg-sky-800 text-white px-3.5 py-1.5 rounded-xl text-sm font-black shadow-sm" id="question-badge">سؤال 1</span>
-                                <span class="bg-amber-100 text-amber-800 px-3 py-1 rounded-xl text-xs font-bold" id="domain-badge">المحور</span>
-                                <span class="text-slate-400 font-bold text-sm" id="question-total-label">من 50 سؤال</span>
+                    <div class="clean-card rounded-3xl p-6 md:p-10 mb-6 relative">
+                        <div class="flex flex-wrap justify-between items-center gap-3 mb-6 border-b border-slate-100 pb-5">
+                            <div class="flex items-center gap-3 flex-wrap">
+                                <span class="bg-sky-50 border border-sky-200 text-sky-700 px-4 py-2 rounded-2xl text-base font-black shadow-sm" id="question-badge">سؤال 1</span>
+                                <span class="bg-slate-100 text-slate-700 border border-slate-200 px-4 py-2 rounded-2xl text-sm font-bold" id="domain-badge">المحور</span>
+                                <span class="text-slate-500 font-bold text-base" id="question-total-label">من 50 سؤال</span>
                             </div>
-                            <button onclick="toggleFlag()" id="flag-btn" class="flex items-center gap-1.5 text-slate-400 hover:text-amber-600 font-semibold transition-colors cursor-pointer bg-slate-50 px-3 py-1.5 rounded-xl border border-slate-200 text-sm">
+                            <button onclick="toggleFlag()" id="flag-btn" class="flex items-center gap-2 text-slate-600 hover:text-amber-600 font-semibold transition-colors cursor-pointer bg-slate-50 px-4 py-2 rounded-2xl border border-slate-200 text-sm shadow-sm">
                                 <span id="flag-text">تمييز للمراجعة</span>
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9" />
@@ -140,16 +145,19 @@
                             </button>
                         </div>
 
-                        <h3 id="question-text" class="text-lg md:text-xl font-bold mb-8 leading-loose text-slate-800 break-words py-1">جاري التحميل...</h3>
+                        <!-- نص السؤال واضح وكبير ومريح للعين بالطول -->
+                        <h3 id="question-text" class="text-xl md:text-2xl font-black mb-8 leading-relaxed text-slate-900 break-words py-1 tracking-wide">جاري التحميل...</h3>
 
-                        <div id="options-container" class="grid gap-4 text-sm md:text-base font-semibold text-slate-700">
+                        <!-- خيارات الاختبار بتنسيق طولي مريح وواضح -->
+                        <div id="options-container" class="grid gap-4 text-lg md:text-xl font-bold text-slate-800">
                         </div>
                     </div>
 
+                    <!-- أزرار السابق والتالي بحجم كبير وواضح تماماً -->
                     <div class="flex justify-between items-center gap-4">
-                        <button onclick="prevQuestion()" id="prev-btn" class="flex-1 bg-white border border-slate-300 hover:bg-slate-100 text-slate-700 py-4 rounded-2xl font-bold disabled:opacity-40 transition-colors cursor-pointer shadow-sm text-sm md:text-base">السابق</button>
-                        <button onclick="nextQuestion()" id="next-btn" class="flex-1 bg-sky-800 hover:bg-sky-900 text-white py-4 rounded-2xl font-bold shadow-lg transition-colors cursor-pointer text-sm md:text-base">التالي (Enter)</button>
-                        <button onclick="confirmSubmit()" id="finish-btn" class="hidden flex-1 bg-emerald-700 hover:bg-emerald-800 text-white py-4 rounded-2xl font-bold shadow-lg transition-colors cursor-pointer text-sm md:text-base">تسليم الاختبار (Enter)</button>
+                        <button onclick="prevQuestion()" id="prev-btn" class="flex-1 bg-white border-2 border-slate-300 hover:bg-slate-100 text-slate-800 py-4.5 rounded-2xl font-black disabled:opacity-30 transition-all cursor-pointer shadow-md text-xl">السابق</button>
+                        <button onclick="nextQuestion()" id="next-btn" class="flex-1 bg-sky-600 hover:bg-sky-700 text-white py-4.5 rounded-2xl font-black shadow-lg transition-all cursor-pointer text-xl">التالي (Enter)</button>
+                        <button onclick="confirmSubmit()" id="finish-btn" class="hidden flex-1 bg-emerald-600 hover:bg-emerald-700 text-white py-4.5 rounded-2xl font-black shadow-lg transition-all cursor-pointer text-xl">تسليم الاختبار (Enter)</button>
                     </div>
                 </div>
 
@@ -160,12 +168,12 @@
                     
                     <div class="flex justify-center gap-8 md:gap-16 mb-10 border-y border-slate-100 py-8">
                         <div class="text-center">
-                            <div id="final-score" class="text-4xl md:text-6xl font-black text-sky-800 mb-2">0%</div>
+                            <div id="final-score" class="text-4xl md:text-6xl font-black text-sky-600 mb-2">0%</div>
                             <div class="text-xs md:text-sm font-bold text-slate-400 uppercase tracking-wider">الدرجة النهائية</div>
                         </div>
                         <div class="w-px bg-slate-200"></div>
                         <div class="text-center">
-                            <div id="correct-count" class="text-4xl md:text-6xl font-black text-slate-700 mb-2">0/50</div>
+                            <div id="correct-count" class="text-4xl md:text-6xl font-black text-slate-800 mb-2">0/50</div>
                             <div class="text-xs md:text-sm font-bold text-slate-400 uppercase tracking-wider">الإجابات الصحيحة</div>
                         </div>
                     </div>
@@ -173,23 +181,23 @@
                     <div id="certificate-action-area" class="mb-8"></div>
 
                     <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                        <button onclick="reviewMistakes()" class="bg-slate-800 hover:bg-slate-900 text-white px-8 py-4 rounded-2xl font-bold shadow-lg transition-colors text-base cursor-pointer">مراجعة الأخطاء والإجابات والتفسيرات</button>
-                        <button onclick="location.reload()" class="bg-sky-800 hover:bg-sky-900 text-white px-8 py-4 rounded-2xl font-bold shadow-lg transition-colors text-base cursor-pointer">إعادة الاختبار</button>
+                        <button onclick="reviewMistakes()" class="bg-slate-100 hover:bg-slate-200 text-slate-800 px-8 py-4 rounded-2xl font-bold shadow-sm transition-colors text-base cursor-pointer border border-slate-200">مراجعة الأخطاء والإجابات والتفسيرات</button>
+                        <button onclick="location.reload()" class="bg-sky-600 hover:bg-sky-700 text-white px-8 py-4 rounded-2xl font-bold shadow-md transition-colors text-base cursor-pointer">إعادة الاختبار</button>
                     </div>
                 </div>
             </div>
         </main>
     </div>
 
-    <div id="certificate-standalone-view" class="hidden fixed inset-0 z-[200] bg-slate-950/80 backdrop-blur-md flex-col items-center justify-center p-4 overflow-y-auto">
+    <div id="certificate-standalone-view" class="hidden fixed inset-0 z-[200] bg-slate-900/80 backdrop-blur-md flex-col items-center justify-center p-4 overflow-y-auto">
         <div class="no-print flex gap-4 mb-6 z-50">
-            <button onclick="window.print()" class="bg-emerald-700 hover:bg-emerald-800 text-white px-8 py-3 rounded-xl font-bold shadow-xl transition-all flex items-center gap-2 cursor-pointer text-base">
+            <button onclick="window.print()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-3 rounded-xl font-bold shadow-lg transition-all flex items-center gap-2 cursor-pointer text-base">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
                 </svg>
                 طباعة أو حفظ الشهادة PDF
             </button>
-            <button onclick="closeCertificate()" class="bg-slate-700 hover:bg-slate-800 text-white px-6 py-3 rounded-xl font-bold shadow-xl transition-all cursor-pointer text-base">
+            <button onclick="closeCertificate()" class="bg-white hover:bg-slate-100 text-slate-700 px-6 py-3 rounded-xl font-bold shadow-lg transition-all cursor-pointer text-base border border-slate-300">
                 إغلاق والعودة
             </button>
         </div>
@@ -264,13 +272,13 @@
     </div>
 
     <div id="review-modal" class="no-print-area fixed inset-0 z-[100] bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
-        <div class="clean-card w-full max-w-3xl rounded-3xl max-h-[85vh] overflow-y-auto p-6 md:p-8 relative shadow-2xl">
-            <button onclick="closeReview()" class="absolute top-6 left-6 text-slate-400 hover:text-red-500 bg-slate-100 p-2.5 rounded-full transition-colors cursor-pointer">
+        <div class="clean-card w-full max-w-3xl rounded-3xl max-h-[85vh] overflow-y-auto p-6 md:p-8 relative shadow-2xl border border-slate-200">
+            <button onclick="closeReview()" class="absolute top-6 left-6 text-slate-500 hover:text-red-500 bg-slate-100 p-2.5 rounded-full transition-colors cursor-pointer border border-slate-200">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                 </svg>
             </button>
-            <h3 class="text-2xl font-black mb-6 text-slate-800 border-b pb-4">تفاصيل مراجعة الإجابات والتفسيرات</h3>
+            <h3 class="text-2xl font-black mb-6 text-slate-800 border-b border-slate-100 pb-4">تفاصيل مراجعة الإجابات والتفسيرات</h3>
             <div id="review-content" class="space-y-6"></div>
         </div>
     </div>
@@ -309,7 +317,7 @@
             { domain: "التحليل الوظيفي", q: "إذا كان 'مؤشر القيمة' (Value Index) لوظيفة معينة أكبر بكثير من 1 (مثلاً 5)، ماذا يعني ذلك بالنسبة لفريق الهندسة القيمية؟", options: ["أن الوظيفة تؤدى بكفاءة عالية ولا تحتاج لتحسين", "أن التكلفة مساوية تماماً للجدارة", "أن هذه الوظيفة تكلّف أكثر بكثير مما تستحق (فرصة ذهبية لتحسين القيمة وخفض التكلفة)", "أن الوظيفة مستحيلة التنفيذ"], correct: 2, explanation: "عندما تتجاوز التكلفة الجدارة (Worth) بكثير، فهذا مؤشر قوي على وجود تكاليف غير ضرورية يجب دراستها وإزالتها." },
             { domain: "التحليل الوظيفي", q: "ما هي الوظيفة التي تنبع من 'النهج أو التصميم الحالي' المستخدم لتحقيق الوظيفة الأساسية، وإذا تغير التصميم قد تختفي؟", options: ["الوظيفة الجمالية (Aesthetic Function)", "وظيفة المسار الحرج (Critical Path Function)", "الوظيفة الثانوية الناتجة عن التصميم (Design Dependent Function)", "الوظيفة العليا"], correct: 2, explanation: "الوظائف المعتمدة على التصميم (Design Dependent) توجد فقط لأننا اخترنا طريقة معينة للحل، وتتغير بتغير الحل." },
             { domain: "التحليل الوظيفي", q: "في تحليل الوظائف لمنتجات المستهلكين، يتم تقسيم الوظائف إلى نوعين رئيسيين هما:", options: ["وظائف عمل (Work Functions) ووظائف بيع (Sell Functions)", "وظائف رخيصة ووظائف باهظة", "وظائف هندسية ووظائف طبية", "وظائف داخلية ووظائف خارجية"], correct: 0, explanation: "الوظائف إما أن تقوم بالعمل (Work) أو تجذب المشتري (Sell/Aesthetic)، وكلاهما له قيمة يجب إدارتها." },
-            { domain: "التحليل الوظيفي", q: "المسار الأفقي الرئيسي المتصل بأسهم من اليسار لليمين ومن اليمين لليسار في مخطط FAST يُعرف بـ:", options: ["المسار الحرج للوظائف (Critical Path of Functions)", "مسار التكلفة", "خط النطاق الأيمن", "المسار الموازي"], correct: 0, explanation: "المسار الحرج (Critical Path) يربط الوظائف الأساسية التي لا يمكن الاستغناء عنها لتحقيق الغرض الرئيسي بنجاح منطقي متسلسل." },
+            { domain: "التحليل الوظيفي", q: "المسار الأفقي الرئيسي المتصل بأسهم من اليسار ليمين ومن اليمين لليسار في مخطط FAST يُعرف بـ:", options: ["المسار الحرج للوظائف (Critical Path of Functions)", "مسار التكلفة", "خط النطاق الأيمن", "المسار الموازي"], correct: 0, explanation: "المسار الحرج (Critical Path) يربط الوظائف الأساسية التي لا يمكن الاستغناء عنها لتحقيق الغرض الرئيسي بنجاح منطقي متسلسل." },
             { domain: "التحليل الوظيفي", q: "أي من العبارات التالية يمثل 'وظيفة' صحيحة مصاغة بطريقة (فعل واسم) لباب الغرفة؟", options: ["مصنوع من الخشب", "يفتح ويغلق بسرعة", "يتحكم بالوصول (Control Access)", "باب جميل"], correct: 2, explanation: "يتحكم بالوصول (فعل نشط + اسم) يعبر عن الغرض المجرد للباب بعيداً عن مادته أو شكله." },
 
             { domain: "مرحلة الإبداع", q: "ما هو الهدف الرئيسي لـ 'مرحلة الإبداع' (Creative Phase) في الهندسة القيمية؟", options: ["انتقاد التصميم القديم ورفضه", "توليد أكبر عدد ممكن من الأفكار والبدائل لأداء 'الوظائف' التي تم تحديدها في المرحلة السابقة", "حساب تكلفة المشروع النهائية", "تحديد أسماء الشركات المنفذة"], correct: 1, explanation: "الهدف هو توليد كمية كبيرة من الأفكار البديلة لأداء نفس الوظيفة بطرق مختلفة وأكثر كفاءة." },
@@ -340,7 +348,7 @@
             currentIndex: 0,
             answers: Array(questions.length).fill(null),
             flags: Array(questions.length).fill(false),
-            timer: 75 * 60, // 75 minutes for 50 questions
+            timer: 75 * 60,
             timerId: null,
             userName: "",
             status: "start",
@@ -380,8 +388,8 @@
 
             q.options.forEach((opt, i) => {
                 const btn = document.createElement('button');
-                let extraClass = 'bg-slate-50 border-slate-300 text-slate-700';
-                let letterBg = 'bg-slate-200 text-slate-600';
+                let extraClass = 'bg-slate-50 border-slate-200 text-slate-800';
+                let letterBg = 'bg-slate-200 text-slate-700';
 
                 if (answered) {
                     if (i === q.correct) {
@@ -389,16 +397,16 @@
                         letterBg = 'bg-emerald-600 text-white';
                     } else if (i === selectedIdx && i !== q.correct) {
                         extraClass = 'bg-red-50 border-red-500 text-red-900 font-bold shadow-sm';
-                        letterBg = 'bg-red-500 text-white';
+                        letterBg = 'bg-red-600 text-white';
                     }
                 }
 
-                btn.className = `option-card w-full text-right p-4 rounded-2xl border ${extraClass} flex items-center gap-4 cursor-pointer`;
+                btn.className = `option-card w-full text-right p-5 rounded-2xl border ${extraClass} flex items-center gap-4 cursor-pointer`;
                 if (answered) btn.disabled = true;
 
                 btn.innerHTML = `
-                    <span class="letter-box w-10 h-10 rounded-xl ${letterBg} flex items-center justify-center text-base font-black shrink-0 shadow-sm">${String.fromCharCode(65 + i)}</span>
-                    <span class="flex-grow break-words font-semibold">${opt}</span>
+                    <span class="letter-box w-11 h-11 rounded-xl ${letterBg} flex items-center justify-center text-lg font-black shrink-0 shadow-sm">${String.fromCharCode(65 + i)}</span>
+                    <span class="flex-grow break-words font-bold text-lg md:text-xl">${opt}</span>
                 `;
                 
                 if (!answered) {
@@ -414,12 +422,12 @@
             const flagBtn = document.getElementById('flag-btn');
             const flagText = document.getElementById('flag-text');
             if(state.flags[state.currentIndex]) {
-                flagBtn.classList.remove('text-slate-400', 'border-slate-200');
-                flagBtn.classList.add('text-amber-600', 'border-amber-300', 'bg-amber-50');
+                flagBtn.classList.remove('text-slate-600', 'border-slate-200');
+                flagBtn.classList.add('text-amber-600', 'border-amber-400', 'bg-amber-50');
                 flagText.innerText = "محفوظ للمراجعة";
             } else {
-                flagBtn.classList.add('text-slate-400', 'border-slate-200');
-                flagBtn.classList.remove('text-amber-600', 'border-amber-300', 'bg-amber-50');
+                flagBtn.classList.add('text-slate-600', 'border-slate-200');
+                flagBtn.classList.remove('text-amber-600', 'border-amber-400', 'bg-amber-50');
                 flagText.innerText = "تمييز للمراجعة";
             }
         }
@@ -488,7 +496,7 @@
             const passed = percent >= 70;
 
             document.getElementById('result-title').innerText = passed ? "🎉 تهانينا! لقد اجتزت الاختبار بنجاح" : "للأسف لم تتخطى النسبة المطلوبة للاجتياز";
-            document.getElementById('result-title').className = `text-3xl md:text-4xl font-black mb-2 ${passed ? 'text-emerald-700' : 'text-red-600'}`;
+            document.getElementById('result-title').className = `text-3xl md:text-4xl font-black mb-2 ${passed ? 'text-emerald-600' : 'text-red-600'}`;
             document.getElementById('result-name').innerText = state.userName;
             document.getElementById('final-score').innerText = `${percent.toFixed(1)}%`;
             document.getElementById('correct-count').innerText = `${score}/${questions.length}`;
@@ -498,7 +506,7 @@
             if (passed) {
                 state.certGeneratedId = 'BA-' + new Date().getFullYear() + '-' + Math.floor(100000 + Math.random() * 900000);
                 actionArea.innerHTML = `
-                    <button onclick="openCertificate()" class="inline-flex items-center gap-2 bg-amber-600 hover:bg-amber-700 text-white font-bold py-4 px-10 rounded-2xl shadow-xl transition-all text-lg transform hover:scale-105 cursor-pointer">
+                    <button onclick="openCertificate()" class="inline-flex items-center gap-2 bg-amber-600 hover:bg-amber-700 text-white font-bold py-4 px-10 rounded-2xl shadow-lg transition-all text-lg transform hover:scale-105 cursor-pointer">
                         🏆 عرض وتنزيل شهادة الاجتياز الرسمية
                     </button>
                 `;
@@ -535,21 +543,21 @@
             questions.forEach((q, i) => {
                 const isCorrect = state.answers[i] === q.correct;
                 const div = document.createElement('div');
-                div.className = `p-5 rounded-2xl bg-slate-50 border-r-4 ${isCorrect ? 'border-emerald-500' : 'border-red-500'} border border-slate-200 shadow-sm`;
+                div.className = `p-6 rounded-2xl bg-white border-r-4 ${isCorrect ? 'border-emerald-500' : 'border-red-500'} border border-slate-200 shadow-sm`;
                 div.innerHTML = `
-                    <div class="flex justify-between items-center mb-2">
-                        <span class="font-black text-xs text-slate-400">سؤال ${i+1}</span>
-                        <span class="bg-slate-200 text-slate-700 px-2.5 py-0.5 rounded-lg text-xs font-bold">${q.domain}</span>
+                    <div class="flex justify-between items-center mb-3">
+                        <span class="font-black text-sm text-slate-400">سؤال ${i+1}</span>
+                        <span class="bg-slate-100 text-slate-700 px-3 py-1 rounded-xl text-xs font-bold border border-slate-200">${q.domain}</span>
                     </div>
-                    <p class="mb-4 text-base md:text-lg font-bold text-slate-800">${q.q}</p>
-                    <div class="text-sm md:text-base space-y-2 font-semibold">
-                        <p class="${isCorrect ? 'text-emerald-800 bg-emerald-50 border-emerald-100' : 'text-red-700 bg-red-50 border-red-100'} p-3 rounded-xl border">
+                    <p class="mb-4 text-lg md:text-xl font-bold text-slate-900 leading-relaxed">${q.q}</p>
+                    <div class="text-base space-y-3 font-semibold">
+                        <p class="${isCorrect ? 'text-emerald-800 bg-emerald-50 border-emerald-200' : 'text-red-800 bg-red-50 border-red-200'} p-3.5 rounded-xl border">
                             إجابتك: ${state.answers[i] !== null ? q.options[state.answers[i]] : 'لم تجب'}
                         </p>
-                        <p class="text-emerald-800 bg-emerald-50 p-3 rounded-xl border border-emerald-100">
+                        <p class="text-emerald-800 bg-emerald-50 p-3.5 rounded-xl border border-emerald-200">
                             الإجابة الصحيحة: ${q.options[q.correct]}
                         </p>
-                        <p class="text-sky-900 bg-sky-50 p-3 rounded-xl border border-sky-100 text-xs md:text-sm font-bold mt-2">
+                        <p class="text-sky-900 bg-sky-50 p-3.5 rounded-xl border border-sky-200 text-sm md:text-base font-bold mt-2">
                             💡 التفسير: ${q.explanation}
                         </p>
                     </div>

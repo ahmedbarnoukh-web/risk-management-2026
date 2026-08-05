@@ -122,6 +122,38 @@
         .mp-text { font-size: 15px; font-weight: 800; color: var(--primary-navy); white-space: nowrap; }
         .mp-track { flex-grow: 1; height: 8px; background: #e2e8f0; border-radius: 10px; overflow: hidden; }
         .mp-fill { height: 100%; background: linear-gradient(90deg, var(--brand-blue), #38bdf8); border-radius: 10px; transition: width 0.5s ease; }
+        .mp-time { display: flex; align-items: center; gap: 5px; font-size: 13px; font-weight: 800; color: var(--text-muted); white-space: nowrap; background: #fff; padding: 5px 12px; border-radius: 20px; border: 1px solid #e2e8f0; }
+        .mp-time i { color: var(--brand-blue); font-size: 15px; }
+
+        .snapshot-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 14px; margin-bottom: 28px; }
+        .snapshot-card { background: linear-gradient(135deg, #0f172a, #1e293b); border-radius: 14px; padding: 18px 16px; text-align: center; box-shadow: 0 8px 20px rgba(15,23,42,0.12); }
+        .snapshot-card .snap-num { font-size: 26px; font-weight: 900; color: #38bdf8; line-height: 1.2; }
+        .snapshot-card .snap-label { font-size: 12px; font-weight: 800; color: #cbd5e1; margin-top: 4px; }
+
+        .box-fact { background: linear-gradient(135deg, #fdf4ff, #fae8ff); border: 1px solid #f0abfc; border-right: 5px solid #c026d3; }
+        .box-fact .box-title { color: #a21caf; }
+
+        .hook-box { background: linear-gradient(135deg, #0f172a, #1e3a8a); border-radius: 18px; padding: 30px 32px; margin-bottom: 28px; box-shadow: 0 15px 40px rgba(15,23,42,0.25); position: relative; overflow: hidden; }
+        .hook-box::before { content: "\ec3f"; font-family: 'boxicons'; position: absolute; left: -15px; bottom: -25px; font-size: 110px; color: rgba(255,255,255,0.05); }
+        .hook-badge { display: inline-flex; align-items: center; gap: 6px; background: #38bdf8; color: #0f172a; font-weight: 900; font-size: 12.5px; padding: 5px 14px; border-radius: 20px; margin-bottom: 14px; }
+        .hook-box h3 { color: #fff; font-size: 20px; font-weight: 900; line-height: 1.6; margin-bottom: 12px; position: relative; z-index: 1; }
+        .hook-box p { color: #cbd5e1; font-size: 15px; font-weight: 600; line-height: 1.85; position: relative; z-index: 1; margin: 0; }
+        .hook-box strong { color: #7dd3fc; }
+
+        .capability-box { background: linear-gradient(135deg, #f0fdf4, #ecfdf5); border: 1px solid #bbf7d0; border-radius: 16px; padding: 24px 28px; margin: 25px 0; }
+        .capability-title { font-size: 17px; font-weight: 900; color: #047857; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+        .capability-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; }
+        .capability-item { display: flex; align-items: flex-start; gap: 8px; font-size: 14.5px; font-weight: 700; color: var(--text-dark); line-height: 1.6; }
+        .capability-item i { color: #16a34a; font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+
+        .tool-cta { display: flex; align-items: center; justify-content: space-between; gap: 20px; background: linear-gradient(135deg, #1e3a8a, #1d4ed8); border-radius: 16px; padding: 20px 26px; margin: 28px 0; cursor: pointer; transition: 0.3s; box-shadow: 0 10px 25px rgba(29,78,216,0.25); flex-wrap: wrap; }
+        .tool-cta:hover { transform: translateY(-3px); box-shadow: 0 15px 35px rgba(29,78,216,0.4); }
+        .tool-cta-text h4 { color: #fff; font-size: 16.5px; font-weight: 900; margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
+        .tool-cta-text p { color: #bfdbfe; font-size: 13.5px; font-weight: 700; margin: 0; }
+        .tool-cta-btn { background: #fff; color: #1d4ed8; font-weight: 900; font-size: 14.5px; padding: 10px 22px; border-radius: 10px; white-space: nowrap; display: flex; align-items: center; gap: 6px; }
+
+        .case-reminder { display: flex; align-items: center; gap: 10px; background: #f1f5f9; border: 1px dashed #94a3b8; border-radius: 10px; padding: 10px 18px; margin-bottom: 22px; font-size: 13.5px; font-weight: 800; color: var(--text-muted); }
+        .case-reminder i { color: var(--brand-blue); font-size: 17px; flex-shrink: 0; }
 
         .module-objective { display: flex; align-items: center; gap: 12px; background: #f8fafc; border-right: 4px solid var(--brand-blue); padding: 15px 20px; border-radius: 8px; margin-bottom: 25px; border: 1px solid #e2e8f0; border-right-width: 4px; }
         .obj-tag { font-weight: 900; color: var(--brand-blue); white-space: nowrap; font-size: 16.5px; }
@@ -376,9 +408,16 @@
             <div class="section-card">
                 <h2 class="main-title"><i class='bx bx-bulb'></i> 1. مدخل ومفاهيم الهندسة القيمية الأساسية</h2>
 
+                <div class="hook-box reveal">
+                    <div class="hook-badge"><i class='bx bx-bulb'></i> قبل ما نبدأ...</div>
+                    <h3>مبنى بميزانية 400 مليون ريال، بتصميم هندسي سليم 100%، ومعتمد من كل الاستشاريين. ورغم كده، فريق هندسة قيمية واحد قدر يوفّر من نظام واحد فيه بس (الكابلات) نص مليون ريال — بدون ما يغيّر وظيفة واحدة أو يقلل جودة.</h3>
+                    <p>السؤال مش "هل التصميم صح هندسياً؟" — السؤال الحقيقي هو: <strong>"هل ده أرخص طريقة تحقق نفس الوظيفة؟"</strong> الفرق بين السؤالين هو بالظبط اللي هتتعلمه في الساعات الجاية.</p>
+                </div>
+
                 <div class="module-progress-bar reveal">
                     <div class="mp-text">أنت الآن في المرحلة 1 من 7 ضمن رحلة الهندسة القيمية</div>
                     <div class="mp-track"><div class="mp-fill" style="width: 14%;"></div></div>
+                    <div class="mp-time"><i class='bx bx-time-five'></i> 7 دقائق</div>
                 </div>
 
                 <div class="module-objective reveal">
@@ -386,11 +425,18 @@
                     <p class="obj-text">أن يكون المتدرب قادراً على تعريف الهندسة القيمية، وفهم معادلة القيمة، والتفريق بينها وبين تخفيض التكلفة، والتعرف على المعايير الدولية المعتمدة (SAVE / ISO 12973).</p>
                 </div>
 
+                <div class="snapshot-row reveal">
+                    <div class="snapshot-card"><div class="snap-num">1947</div><div class="snap-label">سنة النشأة (GE)</div></div>
+                    <div class="snapshot-card"><div class="snap-num">6</div><div class="snap-label">مراحل خطة العمل</div></div>
+                    <div class="snapshot-card"><div class="snap-num">3</div><div class="snap-label">معايير دولية معتمدة</div></div>
+                    <div class="snapshot-card"><div class="snap-num">2</div><div class="snap-label">كلمة لكل تعريف وظيفة</div></div>
+                </div>
+
                 <div class="case-thread reveal">
                     <div class="case-thread-badge"><i class='bx bx-briefcase-alt-2'></i> دراسة الحالة المرافقة للكورس</div>
                     <h4>مشروع مستشفى الرياض التخصصي (500 سرير)</h4>
                     <p>
-                        سنرافق طوال هذا الكورس مشروع "إنشاء وتجهيز مستشفى متكامل بسعة 500 سرير بمدينة الرياض، بميزانية تقديرية 400 مليون ريال ومدة تنفيذ 24 شهراً". فريق الهندسة القيمية مُكلَّف بدراسة نظام الواجهات الخارجية (Facade System) للمبنى في نهاية مرحلة التصميم التخطيطي، بهدف تعظيم القيمة قبل بدء التنفيذ.
+                        سنرافق طوال هذا الكورس مشروع "إنشاء وتجهيز مستشفى متكامل بسعة 500 سرير بمدينة الرياض، بميزانية تقديرية 400 مليون ريال ومدة تنفيذ 24 شهراً". فريق الهندسة القيمية مُكلَّف بدراسة <strong>نظام مسارات وتوزيع الكابلات الكهربائية</strong> (Cable Routing & Distribution System) للمبنى، بميزانية 28 مليون ريال، في نهاية مرحلة التصميم التخطيطي وقبل الطرح للمقاولين، بهدف تعظيم القيمة والتأكد من مطابقة التصميم لاشتراطات شركة الكهرباء السعودية (SEC) قبل بدء التنفيذ.
                     </p>
                 </div>
 
@@ -446,16 +492,39 @@
 
                 <div class="card-heading reveal">ثالثاً: خطة العمل السداسية (VE Job Plan)</div>
                 <p class="reveal">تعتمد دراسات الهندسة القيمية على منهجية منظمة من ست مراحل متسلسلة تُعرف بـ "خطة العمل" (Job Plan)، وهي المرجعية المعتمدة من SAVE International وموضحة في هذا الكورس بالترتيب:</p>
+
+                <div class="diagram-box reveal" style="text-align:center;">
+                    <svg viewBox="0 0 400 400" style="max-width:380px; margin:0 auto; display:block;" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M200.0,30.0 A170,170 0 0,1 347.2,115.0 L282.3,152.5 A95,95 0 0,0 200.0,105.0 Z" fill="#3b82f6" opacity="0.92"/>
+                        <path d="M347.2,115.0 A170,170 0 0,1 347.2,285.0 L282.3,247.5 A95,95 0 0,0 282.3,152.5 Z" fill="#f59e0b" opacity="0.92"/>
+                        <path d="M347.2,285.0 A170,170 0 0,1 200.0,370.0 L200.0,295.0 A95,95 0 0,0 282.3,247.5 Z" fill="#8b5cf6" opacity="0.92"/>
+                        <path d="M200.0,370.0 A170,170 0 0,1 52.8,285.0 L117.7,247.5 A95,95 0 0,0 200.0,295.0 Z" fill="#6366f1" opacity="0.92"/>
+                        <path d="M52.8,285.0 A170,170 0 0,1 52.8,115.0 L117.7,152.5 A95,95 0 0,0 117.7,247.5 Z" fill="#10b981" opacity="0.92"/>
+                        <path d="M52.8,115.0 A170,170 0 0,1 200.0,30.0 L200.0,105.0 A95,95 0 0,0 117.7,152.5 Z" fill="#ef4444" opacity="0.92"/>
+
+                        <text x="266.5" y="90" text-anchor="middle" font-size="26" font-weight="900" fill="#fff">1</text>
+                        <text x="333.0" y="205" text-anchor="middle" font-size="26" font-weight="900" fill="#fff">2</text>
+                        <text x="266.5" y="320" text-anchor="middle" font-size="26" font-weight="900" fill="#fff">3</text>
+                        <text x="133.5" y="320" text-anchor="middle" font-size="26" font-weight="900" fill="#fff">4</text>
+                        <text x="67.0" y="205" text-anchor="middle" font-size="26" font-weight="900" fill="#fff">5</text>
+                        <text x="133.5" y="90" text-anchor="middle" font-size="26" font-weight="900" fill="#fff">6</text>
+
+                        <circle cx="200" cy="200" r="90" fill="#0f172a"/>
+                        <text x="200" y="195" text-anchor="middle" font-size="17" font-weight="900" fill="#fff">خطة العمل</text>
+                        <text x="200" y="218" text-anchor="middle" font-size="12" font-weight="700" fill="#93c5fd">VE Job Plan</text>
+                    </svg>
+                </div>
+
                 <div class="table-wrapper reveal">
                     <table class="data-table">
                         <thead><tr><th>#</th><th>المرحلة</th><th>الهدف الأساسي</th></tr></thead>
                         <tbody>
-                            <tr><td>1</td><td><strong>المرحلة المعلوماتية</strong> (Information)</td><td>جمع كافة البيانات الفنية والتكلفة والمعايير المرجعية للمشروع</td></tr>
-                            <tr><td>2</td><td><strong>مرحلة تحليل الوظائف</strong> (Function Analysis)</td><td>تعريف الوظائف بصيغة (فعل + اسم) وبناء مخطط FAST</td></tr>
-                            <tr><td>3</td><td><strong>المرحلة الإبداعية</strong> (Creative)</td><td>توليد أكبر عدد من البدائل لتحقيق كل وظيفة</td></tr>
-                            <tr><td>4</td><td><strong>مرحلة التقييم</strong> (Evaluation)</td><td>فرز وترتيب البدائل باستخدام مصفوفة تقييم موزونة</td></tr>
-                            <tr><td>5</td><td><strong>مرحلة التطوير</strong> (Development)</td><td>تطوير البدائل الفائزة فنياً واقتصادياً وحساب تكلفة دورة الحياة (LCC)</td></tr>
-                            <tr><td>6</td><td><strong>مرحلة العرض والتنفيذ</strong> (Presentation & Implementation)</td><td>إعداد مقترح التغيير القيمي (VECP) ومتابعة تنفيذه واعتماده</td></tr>
+                            <tr><td><span class="status-pill" style="background:#dbeafe;color:#1d4ed8;">1</span></td><td><strong>المرحلة المعلوماتية</strong> (Information)</td><td>جمع كافة البيانات الفنية والتكلفة والمعايير المرجعية للمشروع</td></tr>
+                            <tr><td><span class="status-pill" style="background:#fef3c7;color:#b45309;">2</span></td><td><strong>مرحلة تحليل الوظائف</strong> (Function Analysis)</td><td>تعريف الوظائف بصيغة (فعل + اسم) وبناء مخطط FAST</td></tr>
+                            <tr><td><span class="status-pill" style="background:#ede9fe;color:#6d28d9;">3</span></td><td><strong>المرحلة الإبداعية</strong> (Creative)</td><td>توليد أكبر عدد من البدائل لتحقيق كل وظيفة</td></tr>
+                            <tr><td><span class="status-pill" style="background:#e0e7ff;color:#4338ca;">4</span></td><td><strong>مرحلة التقييم</strong> (Evaluation)</td><td>فرز وترتيب البدائل باستخدام مصفوفة تقييم موزونة</td></tr>
+                            <tr><td><span class="status-pill" style="background:#d1fae5;color:#047857;">5</span></td><td><strong>مرحلة التطوير</strong> (Development)</td><td>تطوير البدائل الفائزة فنياً واقتصادياً وحساب تكلفة دورة الحياة (LCC)</td></tr>
+                            <tr><td><span class="status-pill" style="background:#fee2e2;color:#b91c1c;">6</span></td><td><strong>مرحلة العرض والتنفيذ</strong> (Presentation & Implementation)</td><td>إعداد مقترح التغيير القيمي (VECP) ومتابعة تنفيذه واعتماده</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -496,6 +565,34 @@
                         </tbody>
                     </table>
                 </div>
+
+                <div class="box box-decision reveal">
+                    <div class="box-title"><i class='bx bx-help-circle'></i> تمرين تفاعلي: VE أم Cost Cutting؟</div>
+                    <p>طلب مدير المشروع تخفيض تكلفة نظام إنارة الطوارئ بحذف نصف عدد الوحدات في ممرات المستشفى توفيراً للميزانية. هل هذا القرار "هندسة قيمية"؟</p>
+                    <div class="decision-options">
+                        <button class="decision-btn" data-correct="false" onclick="handleDecision(this)">نعم، لأنه وفّر جزءاً من الميزانية</button>
+                        <button class="decision-btn" data-correct="true" onclick="handleDecision(this)">لا، لأنه ضحّى بوظيفة أساسية (السلامة) دون دراسة بديل يحافظ عليها</button>
+                        <button class="decision-btn" data-correct="false" onclick="handleDecision(this)">لا فرق، كلاهما يخفّض التكلفة</button>
+                    </div>
+                    <div class="decision-feedback">
+                        <strong>الإجابة الصحيحة: لا.</strong> هذا القرار خفض تكلفة عشوائي وليس هندسة قيمية، لأنه ضحّى بوظيفة "توفير مسار إخلاء آمن" دون بحث عن بديل يحافظ عليها بتكلفة أقل (مثل إنارة LED أعلى كفاءة بنفس عدد الوحدات). الهندسة القيمية كانت لتبدأ بسؤال: ما الحد الأدنى من الإضاءة المطلوب قانونياً للإخلاء الآمن؟ ثم تبحث عن أرخص وسيلة لتحقيقه.
+                    </div>
+                </div>
+
+                <div class="box box-fact reveal">
+                    <div class="box-title"><i class='bx bx-bulb'></i> هل تعلم؟</div>
+                    <p>الدراسات المرجعية في مجال الهندسة القيمية تشير إلى أن دراسة قيمة واحدة جيدة التنفيذ يمكن أن تحقق توفيراً يتراوح بين 5% و15% من تكلفة المشروع الإجمالية، دون أي مساس بالوظيفة أو الجودة أو السلامة — وهو ما يجعلها من أعلى أنشطة إدارة المشاريع عائداً على الوقت المستثمر فيها.</p>
+                </div>
+
+                <div class="capability-box reveal">
+                    <div class="capability-title"><i class='bx bx-badge-check'></i> أنت الآن تستطيع:</div>
+                    <div class="capability-list">
+                        <div class="capability-item"><i class='bx bx-check-circle'></i> تعريف الهندسة القيمية ومعادلة القيمة بدقة</div>
+                        <div class="capability-item"><i class='bx bx-check-circle'></i> التفرقة بينها وبين خفض التكلفة العشوائي</div>
+                        <div class="capability-item"><i class='bx bx-check-circle'></i> تحديد التوقيت الأمثل لإجراء دراسة القيمة</div>
+                        <div class="capability-item"><i class='bx bx-check-circle'></i> ذكر أهم 3 معايير دولية معتمدة (SAVE / ISO 12973 / EN 12973)</div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -507,7 +604,10 @@
                 <div class="module-progress-bar reveal">
                     <div class="mp-text">أنت الآن في المرحلة 2 من 7 ضمن رحلة الهندسة القيمية</div>
                     <div class="mp-track"><div class="mp-fill" style="width: 28%;"></div></div>
+                    <div class="mp-time"><i class='bx bx-time-five'></i> 11 دقيقة</div>
                 </div>
+
+                <div class="case-reminder reveal"><i class='bx bx-briefcase-alt-2'></i> لسه في مشروع مستشفى الرياض التخصصي — نظام مسارات وتوزيع الكابلات (28 مليون ريال)</div>
 
                 <div class="module-objective reveal">
                     <span class="obj-tag"><i class='bx bx-target-lock'></i> هدف الوحدة:</span>
@@ -516,52 +616,52 @@
 
                 <div class="card-heading reveal">أولاً: المرحلة المعلوماتية (Information Phase)</div>
                 <p class="reveal">
-                    تبدأ أي دراسة قيمة بجمع شامل للمعلومات: المخططات والمواصفات، تقديرات التكلفة التفصيلية، متطلبات المالك والمستخدم النهائي، الأنظمة واللوائح المحلية، وأي قيود زمنية أو تعاقدية. في مشروع المستشفى، يجمع الفريق مخططات الواجهات، تقرير الأحمال الحرارية، ميزانية بند الواجهات (كانت مقدرة بـ 42 مليون ريال)، ومتطلبات وزارة الصحة الخاصة بالتحكم البيئي في الأقسام الحرجة.
+                    تبدأ أي دراسة قيمة بجمع شامل للمعلومات: المخططات والمواصفات، تقديرات التكلفة التفصيلية، متطلبات المالك والمستخدم النهائي، الأنظمة واللوائح المحلية، وأي قيود زمنية أو تعاقدية. في مشروع المستشفى، جمع الفريق مخططات المسارات الكهربائية أحادي الخط (Single Line Diagrams)، تقرير حصر الأحمال (Load Schedule)، ميزانية بند الكابلات والمسارات (كانت مقدرة بـ 28 مليون ريال)، ودليل اشتراطات شركة الكهرباء السعودية (SEC) الخاص بحساب معاملات الطلب والتنوع والاستخدام لمرافق الرعاية الصحية.
                 </p>
 
                 <div class="box box-info reveal">
                     <div class="box-title"><i class='bx bx-group'></i> تشكيل فريق دراسة القيمة</div>
-                    <p>يُشترط أن يكون الفريق متعدد التخصصات (5-8 أعضاء عادة): مهندس معماري، مهندس إنشائي، مهندس ميكانيكا/كهرباء، مهندس تكاليف (Quantity Surveyor)، ممثل عن المالك أو المستخدم النهائي، ويقود الفريق ميسّر معتمد (Value Study Team Leader / CVS) يضمن الالتزام بخطة العمل السداسية دون قفز مباشر إلى الحلول.</p>
+                    <p>يُشترط أن يكون الفريق متعدد التخصصات (5-8 أعضاء عادة): مهندس كهرباء (قوى)، مهندس ميكانيكا، مهندس إنشائي، مهندس تكاليف (Quantity Surveyor)، ممثل عن المالك أو الجهة التشغيلية للمستشفى، ويقود الفريق ميسّر معتمد (Value Study Team Leader / CVS) يضمن الالتزام بخطة العمل السداسية دون قفز مباشر إلى الحلول.</p>
                 </div>
 
                 <div class="card-heading reveal">ثانياً: تحليل الوظائف (Function Analysis) — جوهر المنهجية</div>
                 <p class="reveal">
-                    يُعد تحليل الوظائف الركيزة التي تُميّز الهندسة القيمية عن أي أسلوب آخر لضبط التكلفة. القاعدة الذهبية هنا هي تعريف كل وظيفة بكلمتين فقط: <strong>فعل نشط (Active Verb) + اسم قابل للقياس (Measurable Noun)</strong>، مثل "تنظيم الحرارة" أو "توفير الإضاءة" أو "حمل الأحمال". هذا الأسلوب يُجرّد الوظيفة عن أي حل تصميمي محدد مسبقاً، ويفتح الباب أمام بدائل لم تكن لتظهر لو صيغت المشكلة كـ "كيف نصمم واجهة زجاجية أرخص؟".
+                    يُعد تحليل الوظائف الركيزة التي تُميّز الهندسة القيمية عن أي أسلوب آخر لضبط التكلفة. القاعدة الذهبية هنا هي تعريف كل وظيفة بكلمتين فقط: <strong>فعل نشط (Active Verb) + اسم قابل للقياس (Measurable Noun)</strong>، مثل "توزيع الطاقة" أو "حماية الكابلات" أو "حمل الأحمال". هذا الأسلوب يُجرّد الوظيفة عن أي حل تصميمي محدد مسبقاً، ويفتح الباب أمام بدائل لم تكن لتظهر لو صيغت المشكلة كـ "كيف نصمم مسار كابلات أرخص؟".
                 </p>
 
                 <div class="table-wrapper reveal">
                     <table class="data-table">
-                        <thead><tr><th>نوع الوظيفة</th><th>التعريف</th><th>مثال من نظام الواجهة</th></tr></thead>
+                        <thead><tr><th>نوع الوظيفة</th><th>التعريف</th><th>مثال من نظام الكابلات</th></tr></thead>
                         <tbody>
-                            <tr><td><strong>الوظيفة الأساسية (Basic)</strong></td><td>السبب الجوهري لوجود العنصر؛ لا يمكن حذفها دون فقدان الغرض بالكامل</td><td>"عزل المبنى" (Isolate Building)</td></tr>
-                            <tr><td><strong>الوظيفة الثانوية المطلوبة (Required Secondary)</strong></td><td>تدعم الوظيفة الأساسية وتلزم قانونياً أو تعاقدياً</td><td>"مقاومة الحريق" (Resist Fire)</td></tr>
-                            <tr><td><strong>الوظيفة الجمالية (Aesthetic)</strong></td><td>تخدم القبول البصري أو الهوية المعمارية دون تأثير وظيفي مباشر</td><td>"تحسين المظهر" (Enhance Appearance)</td></tr>
-                            <tr><td><strong>الوظيفة غير المرغوبة (Unwanted)</strong></td><td>أثر جانبي سلبي ناتج عن التصميم الحالي يجب تقليله</td><td>"يزيد الوزن الإنشائي" (Increase Load)</td></tr>
+                            <tr><td><strong>الوظيفة الأساسية (Basic)</strong></td><td>السبب الجوهري لوجود العنصر؛ لا يمكن حذفها دون فقدان الغرض بالكامل</td><td>"توزيع الطاقة" (Distribute Power)</td></tr>
+                            <tr><td><strong>الوظيفة الثانوية المطلوبة (Required Secondary)</strong></td><td>تدعم الوظيفة الأساسية وتلزم قانونياً أو تعاقدياً</td><td>"مقاومة الحريق" (Resist Fire — كابلات ومسارات مقاومة للحريق)</td></tr>
+                            <tr><td><strong>الوظيفة الجمالية (Aesthetic)</strong></td><td>تخدم القبول البصري أو الترتيب البصري دون تأثير وظيفي مباشر</td><td>"تنظيم المسارات الظاهرة" (Organize Exposed Routing)</td></tr>
+                            <tr><td><strong>الوظيفة غير المرغوبة (Unwanted)</strong></td><td>أثر جانبي سلبي ناتج عن التصميم الحالي يجب تقليله</td><td>"يعيق الوصول للصيانة" (Restrict Access)</td></tr>
                         </tbody>
                     </table>
                 </div>
 
                 <div class="diagram-box reveal">
-                    <div class="diagram-box-title"><i class='bx bx-sitemap'></i> مخطط FAST (Function Analysis System Technique) — نظام واجهة المستشفى</div>
+                    <div class="diagram-box-title"><i class='bx bx-sitemap'></i> مخطط FAST (Function Analysis System Technique) — نظام مسارات وتوزيع الكابلات بالمستشفى</div>
                     <svg viewBox="0 0 900 340" xmlns="http://www.w3.org/2000/svg">
                         <text x="70" y="24" text-anchor="middle" font-size="13" font-weight="900" fill="#1d4ed8">◄ لماذا؟ (Why)</text>
                         <line x1="130" y1="20" x2="770" y2="20" stroke="#cbd5e1" stroke-width="1.5" stroke-dasharray="4,4"/>
                         <text x="830" y="24" text-anchor="middle" font-size="13" font-weight="900" fill="#b45309">كيف؟ (How) ►</text>
 
                         <rect x="30" y="55" width="150" height="60" rx="10" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
-                        <text x="105" y="82" text-anchor="middle" font-size="13" font-weight="900" fill="#15803d">عزل المبنى</text>
+                        <text x="105" y="82" text-anchor="middle" font-size="13" font-weight="900" fill="#15803d">توزيع الطاقة</text>
                         <text x="105" y="100" text-anchor="middle" font-size="10.5" font-weight="700" fill="#166534">(الوظيفة الأساسية / الأعلى)</text>
 
                         <line x1="180" y1="85" x2="300" y2="85" stroke="#94a3b8" stroke-width="2"/>
                         <polygon points="180,85 190,79 190,91" fill="#94a3b8"/>
 
                         <rect x="300" y="20" width="160" height="55" rx="10" fill="#eff6ff" stroke="#1d4ed8" stroke-width="2"/>
-                        <text x="380" y="45" text-anchor="middle" font-size="12.5" font-weight="900" fill="#1d4ed8">تنظيم الحرارة</text>
-                        <text x="380" y="62" text-anchor="middle" font-size="10" font-weight="700" fill="#1e40af">Control Temperature</text>
+                        <text x="380" y="45" text-anchor="middle" font-size="12.5" font-weight="900" fill="#1d4ed8">حماية الكابلات</text>
+                        <text x="380" y="62" text-anchor="middle" font-size="10" font-weight="700" fill="#1e40af">Protect Cables</text>
 
                         <rect x="300" y="90" width="160" height="55" rx="10" fill="#eff6ff" stroke="#1d4ed8" stroke-width="2"/>
-                        <text x="380" y="115" text-anchor="middle" font-size="12.5" font-weight="900" fill="#1d4ed8">توفير الإضاءة</text>
-                        <text x="380" y="132" text-anchor="middle" font-size="10" font-weight="700" fill="#1e40af">Admit Light</text>
+                        <text x="380" y="115" text-anchor="middle" font-size="12.5" font-weight="900" fill="#1d4ed8">استيعاب التوسع</text>
+                        <text x="380" y="132" text-anchor="middle" font-size="10" font-weight="700" fill="#1e40af">Accommodate Growth</text>
 
                         <rect x="300" y="160" width="160" height="55" rx="10" fill="#fffbeb" stroke="#f59e0b" stroke-width="2"/>
                         <text x="380" y="185" text-anchor="middle" font-size="12.5" font-weight="900" fill="#b45309">مقاومة الحريق</text>
@@ -572,46 +672,65 @@
                         <line x1="300" y1="187" x2="180" y2="95" stroke="#94a3b8" stroke-width="1.5"/>
 
                         <rect x="520" y="10" width="150" height="50" rx="10" fill="#fff" stroke="#94a3b8" stroke-width="1.5"/>
-                        <text x="595" y="32" text-anchor="middle" font-size="11.5" font-weight="800" fill="var(--text-dark)">اختيار زجاج منخفض</text>
-                        <text x="595" y="48" text-anchor="middle" font-size="11.5" font-weight="800" fill="var(--text-dark)">الانبعاثية (Low-E)</text>
+                        <text x="595" y="32" text-anchor="middle" font-size="11.5" font-weight="800" fill="var(--text-dark)">Cable Tray مغلق</text>
+                        <text x="595" y="48" text-anchor="middle" font-size="11.5" font-weight="800" fill="var(--text-dark)">بالكامل (Solid Bottom)</text>
 
                         <rect x="520" y="90" width="150" height="50" rx="10" fill="#fff" stroke="#94a3b8" stroke-width="1.5"/>
-                        <text x="595" y="112" text-anchor="middle" font-size="11.5" font-weight="800" fill="var(--text-dark)">تحسين نسبة</text>
-                        <text x="595" y="128" text-anchor="middle" font-size="11.5" font-weight="800" fill="var(--text-dark)">الفتحات الزجاجية (WWR)</text>
+                        <text x="595" y="112" text-anchor="middle" font-size="11.5" font-weight="800" fill="var(--text-dark)">مسار منفصل لكل نظام</text>
+                        <text x="595" y="128" text-anchor="middle" font-size="11.5" font-weight="800" fill="var(--text-dark)">دون دمج (غير مُدمج)</text>
 
                         <line x1="520" y1="35" x2="460" y2="47" stroke="#cbd5e1" stroke-width="1.5" stroke-dasharray="3,3"/>
                         <line x1="520" y1="115" x2="460" y2="117" stroke="#cbd5e1" stroke-width="1.5" stroke-dasharray="3,3"/>
 
                         <rect x="20" y="240" width="860" height="70" rx="10" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5"/>
                         <text x="450" y="265" text-anchor="middle" font-size="12.5" font-weight="800" fill="var(--text-muted)">القراءة من اليسار لليمين (Left to Right) تجيب على "كيف؟" (How) — والقراءة من اليمين لليسار (Right to Left) تجيب على "لماذا؟" (Why)</text>
-                        <text x="450" y="288" text-anchor="middle" font-size="12" font-weight="700" fill="var(--text-muted)">هذا المخطط يكشف بوضوح أن نظام الزجاج ليس هو "الوظيفة" بل مجرد أحد الحلول الممكنة لتحقيقها — مما يفتح الباب لبدائل أخرى في المرحلة الإبداعية</text>
+                        <text x="450" y="288" text-anchor="middle" font-size="12" font-weight="700" fill="var(--text-muted)">هذا المخطط يكشف بوضوح أن Cable Tray المغلق ليس هو "الوظيفة" بل مجرد أحد الحلول الممكنة لتحقيق حماية الكابلات — مما يفتح الباب لبدائل أخرى في المرحلة الإبداعية</text>
                     </svg>
                 </div>
 
                 <div class="box box-exam reveal">
                     <div class="box-title"><i class='bx bx-check-double'></i> موضع سؤال اختبار (FAST Diagram Tip)</div>
-                    <p>الوظيفة التي تقع مباشرة على يسار "خط النطاق الأيسر" (Left Scope Line) تُسمى <strong>وظيفة الترتيب الأعلى (Highest Order Function)</strong> — وهي الغرض الأسمى الذي يبرر وجود المشروع بأكمله (هنا: "عزل المبنى"). الوظائف على نفس الخط الرأسي (مثل تنظيم الحرارة وتوفير الإضاءة) تُعد وظائف متزامنة (All-the-time Functions) تحدث في نفس الوقت.</p>
+                    <p>الوظيفة التي تقع مباشرة على يسار "خط النطاق الأيسر" (Left Scope Line) تُسمى <strong>وظيفة الترتيب الأعلى (Highest Order Function)</strong> — وهي الغرض الأسمى الذي يبرر وجود المشروع بأكمله (هنا: "توزيع الطاقة"). الوظائف على نفس الخط الرأسي (مثل حماية الكابلات واستيعاب التوسع) تُعد وظائف متزامنة (All-the-time Functions) تحدث في نفس الوقت.</p>
+                </div>
+
+                <div class="card-heading reveal">ثالثاً: كيف تبني مخطط FAST بنفسك — خطوة بخطوة</div>
+                <div class="table-wrapper reveal">
+                    <table class="data-table">
+                        <thead><tr><th>#</th><th>الخطوة</th><th>تطبيقها على مثالنا</th></tr></thead>
+                        <tbody>
+                            <tr><td>1</td><td>اكتب الوظيفة الأساسية (Basic Function) خلف "خط النطاق الأيسر" مباشرة</td><td>"توزيع الطاقة"</td></tr>
+                            <tr><td>2</td><td>اسأل <strong>"كيف؟"</strong> لتوليد الوظائف الثانوية التي تحققها، وضعها يميناً بالتتابع</td><td>حماية الكابلات، استيعاب التوسع، مقاومة الحريق</td></tr>
+                            <tr><td>3</td><td>تحقق بالعكس: اسأل <strong>"لماذا؟"</strong> من اليمين لليسار للتأكد أن كل وظيفة تخدم اللي قبلها فعلاً</td><td>"ليه بنحمي الكابلات؟" ← "عشان نوزّع الطاقة"</td></tr>
+                            <tr><td>4</td><td>ضع الوظائف التي تحدث في نفس التوقيت على نفس الخط الرأسي</td><td>حماية الكابلات + استيعاب التوسع + مقاومة الحريق (متزامنة)</td></tr>
+                            <tr><td>5</td><td>أضف الحل التصميمي الحالي كمربع منفصل بخط متقطع أقصى اليمين — لتوضيح إنه حل واحد فقط، مش الوظيفة نفسها</td><td>Cable Tray مغلق بالكامل</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="box box-decision reveal">
+                    <div class="box-title"><i class='bx bx-pencil'></i> جرّب بنفسك (على ورقة)</div>
+                    <p>قبل ما تكمل للوحدة الجاية، خد عنصر بسيط تعرفه كويس — زي "قاطع دائرة (Circuit Breaker)" أو "مفتاح كهرباء" — وطبّق الخطوات الخمس فوق: اكتب وظيفته الأساسية، اسأل "كيف؟" لتوليد وظيفتين ثانويتين على الأقل، وتأكد بالعكس بسؤال "ليه؟". مش هتُقيَّم، لكنها أسرع طريقة تثبّت بيها الفكرة قبل ما تشوفها في أمثلة أعقد.</p>
                 </div>
 
                 <div class="box box-exam reveal">
                     <div class="box-title"><i class='bx bx-check-double'></i> موضع سؤال اختبار (Function Analysis Tip)</div>
-                    <p>إذا جاء في السؤال وصف وظيفة بأكثر من كلمتين أو باسم تصميمي محدد مثل "تركيب زجاج مزدوج"، فهذا خطأ منهجي شائع — لأنه يصف <strong>حلاً (Solution)</strong> وليس <strong>وظيفة (Function)</strong>. الصياغة الصحيحة المعيارية هي "تنظيم الحرارة" أو "منع انتقال الحرارة"، تاركة الباب مفتوحاً لأي حل ممكن.</p>
+                    <p>إذا جاء في السؤال وصف وظيفة بأكثر من كلمتين أو باسم تصميمي محدد مثل "تركيب Cable Tray مجلفن"، فهذا خطأ منهجي شائع — لأنه يصف <strong>حلاً (Solution)</strong> وليس <strong>وظيفة (Function)</strong>. الصياغة الصحيحة المعيارية هي "حماية الكابلات" أو "توزيع الطاقة"، تاركة الباب مفتوحاً لأي حل ممكن.</p>
                 </div>
 
                 <div class="box box-decision reveal">
                     <div class="box-title"><i class='bx bx-help-circle'></i> تمرين تفاعلي: صنّف هذه الوظيفة</div>
-                    <p>في دراسة نظام السقف المعلق بردهات المستشفى، حُدّدت وظيفة "إخفاء التمديدات الكهروميكانيكية". كيف تصنّفها؟</p>
+                    <p>في دراسة نظام مسارات الكابلات بالمستشفى، حُدّدت وظيفة "تنظيم المسارات الظاهرة بالممرات الرئيسية بشكل مرتب". كيف تصنّفها؟</p>
                     <div class="decision-options">
                         <button class="decision-btn" data-correct="false" onclick="handleDecision(this)">وظيفة أساسية (Basic)</button>
                         <button class="decision-btn" data-correct="true" onclick="handleDecision(this)">وظيفة ثانوية جمالية (Secondary/Aesthetic)</button>
                         <button class="decision-btn" data-correct="false" onclick="handleDecision(this)">وظيفة غير مرغوبة (Unwanted)</button>
                     </div>
                     <div class="decision-feedback">
-                        <strong>الإجابة الصحيحة: وظيفة ثانوية جمالية.</strong> الوظيفة الأساسية للسقف هي "توزيع الهواء" أو "حمل الإضاءة"، أما إخفاء التمديدات فهو غرض جمالي داعم — وهذا يفتح فرصة تقييم بدائل أرخص لتحقيق نفس الغرض الجمالي، مثل أسقف شبكية مفتوحة جزئياً بدل الألواح الكاملة المكلفة.
+                        <strong>الإجابة الصحيحة: وظيفة ثانوية جمالية.</strong> الوظيفة الأساسية للمسار هي "توزيع الطاقة" أو "حماية الكابلات"، أما ترتيب المسارات الظاهرة فهو غرض بصري داعم — وهذا يفتح فرصة تقييم بدائل أرخص لتحقيق نفس الغرض، مثل استخدام Cable Ladder مرتب بدل تراي مغلق مكلف في المناطق غير الحرجة.
                     </div>
                 </div>
 
-                <div class="card-heading reveal">ثالثاً: مصطلحات متقدمة (مراجعة سريعة)</div>
+                <div class="card-heading reveal">رابعاً: مصطلحات متقدمة (مراجعة سريعة)</div>
                 <div class="table-wrapper reveal">
                     <table class="data-table">
                         <thead><tr><th>المصطلح</th><th>المعنى المختصر</th></tr></thead>
@@ -629,28 +748,34 @@
                     <p>إذا كانت تكلفة تنفيذ وظيفة "عزل الصوت" الحالية 40 ريال/م²، وأقل تكلفة ممكنة لتحقيق نفس الوظيفة (الجدارة) هي 10 ريال/م²، فإن مؤشر القيمة = 40 ÷ 10 = <strong>4</strong>. هذا الرقم المرتفع بعيداً عن 1 يشير لفرصة ذهبية لتحسين القيمة في هذا البند تحديداً.</p>
                 </div>
 
-                <div class="card-heading reveal">رابعاً: توزيع التكلفة على الوظائف (Function-Cost Allocation)</div>
+                <div class="card-heading reveal">خامساً: توزيع التكلفة على الوظائف (Function-Cost Allocation)</div>
                 <p class="reveal">
-                    مجرد تعريف الوظائف لا يكفي — جوهر منهجية SAVE هو معرفة <strong>كم تكلّف كل وظيفة فعلياً</strong> من ميزانية المشروع، ثم مقارنتها بجدارتها (Worth) لاكتشاف أين "تضيع" القيمة. في مشروع المستشفى، وزّع الفريق ميزانية الواجهات (42 مليون ريال) على الوظائف الأربع التي حدّدها مخطط FAST:
+                    مجرد تعريف الوظائف لا يكفي — جوهر منهجية SAVE هو معرفة <strong>كم تكلّف كل وظيفة فعلياً</strong> من ميزانية المشروع، ثم مقارنتها بجدارتها (Worth) لاكتشاف أين "تضيع" القيمة. في مشروع المستشفى، وزّع الفريق ميزانية نظام الكابلات (28 مليون ريال) على الوظائف الأربع التي حدّدها مخطط FAST:
                 </p>
+
+                <div class="box box-info reveal">
+                    <div class="box-title"><i class='bx bx-search'></i> إزاي تقدّر رقم "الجدارة" (Worth) عملياً؟</div>
+                    <p>مفيش معادلة جاهزة، لكن 3 مصادر يعتمد عليها فريق الدراسة عادة: <strong>(1)</strong> أرخص سعر سوقي موثّق لحل بديل يحقق نفس الوظيفة (عرض سعر فعلي من مورّد)، <strong>(2)</strong> تكلفة نفس الوظيفة في مشروع مشابه سبق تنفيذه، <strong>(3)</strong> تقدير الفريق الجماعي (خبرة المهندسين) عند غياب البيانات — وهو الأضعف، فيُستخدم كحل أخير فقط.</p>
+                </div>
+
                 <div class="table-wrapper reveal">
                     <table class="data-table">
                         <thead><tr><th>الوظيفة</th><th>% من الميزانية</th><th>التكلفة الحالية</th><th>الجدارة التقديرية</th><th>مؤشر القيمة</th></tr></thead>
                         <tbody>
-                            <tr><td>تنظيم الحرارة</td><td>55%</td><td>23.1 مليون ريال</td><td>~14 مليون ريال</td><td><span class="status-pill pill-medium">1.65</span></td></tr>
-                            <tr><td>توفير الإضاءة</td><td>15%</td><td>6.3 مليون ريال</td><td>~5 مليون ريال</td><td><span class="status-pill pill-low">1.26</span></td></tr>
-                            <tr><td>مقاومة الحريق</td><td>10%</td><td>4.2 مليون ريال</td><td>~4 مليون ريال</td><td><span class="status-pill pill-low">1.05</span></td></tr>
-                            <tr><td><strong>تحسين المظهر (جمالية)</strong></td><td>20%</td><td>8.4 مليون ريال</td><td>~3 مليون ريال</td><td><span class="status-pill pill-critical">2.80</span></td></tr>
-                            <tr><td><strong>الإجمالي</strong></td><td>100%</td><td><strong>42 مليون ريال</strong></td><td>—</td><td>—</td></tr>
+                            <tr><td>توزيع الطاقة (اللوحات والمغذيات)</td><td>40%</td><td>11.2 مليون ريال</td><td>~9 مليون ريال</td><td><span class="status-pill pill-medium">1.24</span></td></tr>
+                            <tr><td>حماية الكابلات (المسارات)</td><td>35%</td><td>9.8 مليون ريال</td><td>~5 مليون ريال</td><td><span class="status-pill pill-high">1.96</span></td></tr>
+                            <tr><td>مقاومة الحريق</td><td>10%</td><td>2.8 مليون ريال</td><td>~2.5 مليون ريال</td><td><span class="status-pill pill-low">1.12</span></td></tr>
+                            <tr><td><strong>استيعاب التوسع المستقبلي</strong></td><td>15%</td><td>4.2 مليون ريال</td><td>~1.5 مليون ريال</td><td><span class="status-pill pill-critical">2.80</span></td></tr>
+                            <tr><td><strong>الإجمالي</strong></td><td>100%</td><td><strong>28 مليون ريال</strong></td><td>—</td><td>—</td></tr>
                         </tbody>
                     </table>
                 </div>
                 <div class="box box-mistake reveal">
                     <div class="box-title"><i class='bx bx-error'></i> أين "تضيع" القيمة؟</div>
-                    <p>وظيفة "تحسين المظهر" هي أوضح حالة <strong>High Cost / Low Worth</strong> في الجدول: تستهلك 20% من الميزانية (8.4 مليون ريال) بينما جدارتها الفعلية لا تتجاوز 3 ملايين — مؤشر قيمة 2.80، وهو الأعلى بين كل الوظائف. هذا التوزيع الرقمي — وليس الانطباع الشخصي — هو ما يوجّه الفريق لتركيز المرحلة الإبداعية على هذه الوظيفة تحديداً.</p>
+                    <p>وظيفة "استيعاب التوسع المستقبلي" هي أوضح حالة <strong>High Cost / Low Worth</strong> في الجدول: تستهلك 15% من الميزانية (4.2 مليون ريال) كسعة احتياطية بينما جدارتها الفعلية لا تتجاوز 1.5 مليون — مؤشر قيمة 2.80، وهو الأعلى بين كل الوظائف. السبب الشائع لهذا الانتفاخ هو تطبيق معاملات طلب وتنوع متحفظة جداً دون مراجعة دليل اشتراطات شركة الكهرباء السعودية (SEC) بدقة. أما وظيفة "حماية الكابلات" فتأتي ثانياً بمؤشر 1.96. هذا التوزيع الرقمي — وليس الانطباع الشخصي — هو ما يوجّه الفريق لتركيز المرحلة الإبداعية على هاتين الوظيفتين تحديداً.</p>
                 </div>
 
-                <div class="card-heading reveal">خامساً: مصفوفة تقييم الوظائف وترتيب الأولويات (Function Evaluation Matrix)</div>
+                <div class="card-heading reveal">سادساً: مصفوفة تقييم الوظائف وترتيب الأولويات (Function Evaluation Matrix)</div>
                 <p class="reveal">
                     بخلاف مصفوفة تقييم <strong>البدائل</strong> التي سنستخدمها لاحقاً في مرحلة التقييم، هذه مصفوفة لتقييم <strong>الوظائف نفسها</strong> — بإضافة معيار "الأهمية" من منظور المستخدم/المالك إلى جانب التكلفة والجدارة، لتحديد أي الوظائف تستحق أولوية الدراسة العميقة.
                 </p>
@@ -658,16 +783,21 @@
                     <table class="data-table">
                         <thead><tr><th>الوظيفة</th><th>الأهمية (1-10)</th><th>التكلفة الحالية</th><th>الجدارة</th><th>مؤشر القيمة</th><th>أولوية الدراسة</th></tr></thead>
                         <tbody>
-                            <tr><td>تحسين المظهر</td><td>6</td><td>8.4M</td><td>3M</td><td>2.80</td><td><span class="status-pill pill-critical">عالية جداً</span></td></tr>
-                            <tr><td>تنظيم الحرارة</td><td>9</td><td>23.1M</td><td>14M</td><td>1.65</td><td><span class="status-pill pill-high">عالية</span></td></tr>
-                            <tr><td>توفير الإضاءة</td><td>7</td><td>6.3M</td><td>5M</td><td>1.26</td><td><span class="status-pill pill-medium">متوسطة</span></td></tr>
-                            <tr><td>مقاومة الحريق</td><td>10</td><td>4.2M</td><td>4M</td><td>1.05</td><td><span class="status-pill pill-low">منخفضة (قريبة من الجدارة)</span></td></tr>
+                            <tr><td>حماية الكابلات</td><td>8</td><td>9.8M</td><td>5M</td><td>1.96</td><td><span class="status-pill pill-critical">عالية جداً</span></td></tr>
+                            <tr><td>استيعاب التوسع المستقبلي</td><td>6</td><td>4.2M</td><td>1.5M</td><td>2.80</td><td><span class="status-pill pill-critical">عالية جداً</span></td></tr>
+                            <tr><td>توزيع الطاقة</td><td>10</td><td>11.2M</td><td>9M</td><td>1.24</td><td><span class="status-pill pill-medium">متوسطة</span></td></tr>
+                            <tr><td>مقاومة الحريق</td><td>10</td><td>2.8M</td><td>2.5M</td><td>1.12</td><td><span class="status-pill pill-low">منخفضة (مُدارة بكفاءة)</span></td></tr>
                         </tbody>
                     </table>
                 </div>
                 <div class="box box-tip reveal">
                     <div class="box-title"><i class='bx bx-bulb'></i> كيف تُقرأ هذه المصفوفة؟</div>
-                    <p>الأولوية للدراسة لا تُبنى على مؤشر القيمة وحده، بل على مزيجه مع الأهمية: "مقاومة الحريق" أهميتها قصوى (10) لكن مؤشر قيمتها منخفض (قريب من 1) فهي مُدارة بكفاءة بالفعل ولا تستحق وقتاً إضافياً. أما "تحسين المظهر" و"تنظيم الحرارة" فهما الأعلى فرصة لتحسين القيمة — ولهذا بالتحديد اخترنا وظيفة "تنظيم الحرارة" كمحور رئيسي للمرحلة الإبداعية القادمة.</p>
+                    <p>الأولوية للدراسة لا تُبنى على مؤشر القيمة وحده، بل على مزيجه مع الأهمية: "مقاومة الحريق" أهميتها قصوى (10) لكن مؤشر قيمتها منخفض (قريب من 1) فهي مُدارة بكفاءة بالفعل ولا تستحق وقتاً إضافياً. أما "حماية الكابلات" و"استيعاب التوسع المستقبلي" فهما الأعلى فرصة لتحسين القيمة — ولهذا بالتحديد اخترنا وظيفة "حماية الكابلات" (نظام مسارات الكابلات) كمحور رئيسي للمرحلة الإبداعية القادمة، مع معالجة "التوسع المستقبلي" عبر إعادة تطبيق معاملات الطلب والاستخدام الصحيحة.</p>
+                </div>
+
+                <div class="box box-fact reveal">
+                    <div class="box-title"><i class='bx bx-bulb'></i> هل تعلم؟</div>
+                    <p>قاعدة تعريف الوظيفة بكلمتين فقط (فعل + اسم) وضعها لورانس مايلز بنفسه في الأربعينيات، وما زالت حتى اليوم دون أي تعديل جوهري ضمن معايير SAVE International وISO 12973 — وهو ما يجعلها أحد أطول المفاهيم الهندسية عمراً واستقراراً في القرن الماضي.</p>
                 </div>
 
                 <div class="takeaways-box reveal">
@@ -681,6 +811,24 @@
                         <li><i class='bx bx-check'></i> مصفوفة تقييم الوظائف (أهمية + تكلفة + جدارة) هي ما يحدد أي الوظائف تستحق التركيز في المرحلة الإبداعية.</li>
                     </ul>
                 </div>
+
+                <div class="tool-cta reveal" onclick="window.open('smart-tool_va.html', '_blank')">
+                    <div class="tool-cta-text">
+                        <h4><i class='bx bx-wand-alt'></i> جرّب الآن: الدليل الذكي لتطبيق VE</h4>
+                        <p>اختر قطاع مشروعك ومرحلة الدراسة، واحصل على استراتيجيات مخصصة فوراً</p>
+                    </div>
+                    <div class="tool-cta-btn"><i class='bx bx-link-external'></i> افتح الأداة</div>
+                </div>
+
+                <div class="capability-box reveal">
+                    <div class="capability-title"><i class='bx bx-badge-check'></i> أنت الآن تستطيع:</div>
+                    <div class="capability-list">
+                        <div class="capability-item"><i class='bx bx-check-circle'></i> تعريف أي وظيفة بقاعدة (فعل + اسم)</div>
+                        <div class="capability-item"><i class='bx bx-check-circle'></i> رسم مخطط FAST بسيط لأي نظام</div>
+                        <div class="capability-item"><i class='bx bx-check-circle'></i> توزيع تكلفة المشروع على الوظائف لتحديد الأولويات</div>
+                        <div class="capability-item"><i class='bx bx-check-circle'></i> حساب مؤشر القيمة (Cost ÷ Worth)</div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -692,7 +840,10 @@
                 <div class="module-progress-bar reveal">
                     <div class="mp-text">أنت الآن في المرحلة 3 من 7 ضمن رحلة الهندسة القيمية</div>
                     <div class="mp-track"><div class="mp-fill" style="width: 42%;"></div></div>
+                    <div class="mp-time"><i class='bx bx-time-five'></i> 8 دقائق</div>
                 </div>
+
+                <div class="case-reminder reveal"><i class='bx bx-briefcase-alt-2'></i> ركّزنا على وظيفتي "حماية الكابلات" و"استيعاب التوسع المستقبلي" — دلوقتي نولّد بدائل حقيقية لهما</div>
 
                 <div class="module-objective reveal">
                     <span class="obj-tag"><i class='bx bx-target-lock'></i> هدف الوحدة:</span>
@@ -736,15 +887,45 @@
                     <p>أشد أعداء هذه المرحلة: الخوف من الفشل، التمسك بالعادات القديمة، والانحياز الذهني لـ"الطريقة المعتادة" (Paradigms) مثل "هكذا نعمل دائماً". دور الميسّر كسر هذه الحواجز لإطلاق العصف الذهني بحرية.</p>
                 </div>
 
-                <div class="card-heading reveal">ثالثاً: تطبيق عملي — بدائل وظيفة "تنظيم الحرارة" بواجهة المستشفى</div>
+                <div class="card-heading reveal">ثالثاً: كيف تدير جلسة عصف ذهني فعلياً</div>
+                <div class="table-wrapper reveal">
+                    <table class="data-table">
+                        <thead><tr><th>#</th><th>الخطوة</th><th>التفاصيل العملية</th></tr></thead>
+                        <tbody>
+                            <tr><td>1</td><td>حدّد الوظيفة المستهدفة بوضوح</td><td>اكتبها على السبورة بصياغة (فعل+اسم) — مثلاً "حماية الكابلات" — واتركها ظاهرة طول الجلسة</td></tr>
+                            <tr><td>2</td><td>حدّد الأدوار والمدة</td><td>ميسّر (يدير ويمنع النقد) + مقرّر (يكتب كل فكرة دون فلترة) + مدة 60-90 دقيقة للجلسة الواحدة</td></tr>
+                            <tr><td>3</td><td>ابدأ بدقيقتين تفكير صامت فردي</td><td>كل عضو يكتب أفكاره بنفسه قبل الطرح الجماعي، لتقليل تأثير الأصوات الأعلى</td></tr>
+                            <tr><td>4</td><td>افتح الطرح الجماعي بالتناوب</td><td>كل عضو يطرح فكرة واحدة بالدور، والمقرّر يكتبها فوراً دون تعليق من أي أحد</td></tr>
+                            <tr><td>5</td><td>لا توقف الجلسة عند أول "سكون"</td><td>أفضل الأفكار غالباً تظهر بعد أن تُستنفد الأفكار الواضحة — استمر 10 دقائق إضافية على الأقل</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="card-heading reveal">رابعاً: تطبيق عملي لتقنية SCAMPER على وظيفة "حماية الكابلات"</div>
+                <div class="table-wrapper reveal">
+                    <table class="data-table">
+                        <thead><tr><th>الحرف</th><th>السؤال</th><th>الفكرة الناتجة</th></tr></thead>
+                        <tbody>
+                            <tr><td><strong>S</strong> استبدل</td><td>هل نستبدل المادة أو النظام؟</td><td>استبدال Cable Tray المعدني بـ Ladder Tray مفتوح</td></tr>
+                            <tr><td><strong>C</strong> ادمج</td><td>هل ندمج عناصر منفصلة؟</td><td>دمج مسار الإنارة مع كابلات القوى المنخفضة في تراي واحد</td></tr>
+                            <tr><td><strong>A</strong> كيّف</td><td>هل نكيّف حلاً من مجال آخر؟</td><td>تبني تصميم مسارات مصانع الطاقة (تهوية أعلى) للممرات الحرجة</td></tr>
+                            <tr><td><strong>M</strong> عدّل</td><td>هل نعدّل الحجم أو الشكل؟</td><td>تقليل عرض التراي في المسارات ذات الحمل المنخفض</td></tr>
+                            <tr><td><strong>P</strong> استخدم لغرض آخر</td><td>هل يخدم غرضاً إضافياً؟</td><td>استخدام مسار الكابلات كخط توزيع لكاميرات المراقبة أيضاً</td></tr>
+                            <tr><td><strong>E</strong> احذف</td><td>هل نحذف عنصراً غير ضروري؟</td><td>حذف الغطاء العلوي في المسارات غير المكشوفة للعامة</td></tr>
+                            <tr><td><strong>R</strong> اعكس</td><td>هل نعكس الترتيب أو الاتجاه؟</td><td>تمرير المسار الرئيسي من السقف بدل الأرضية لتسهيل الصيانة</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="card-heading reveal">خامساً: تطبيق عملي — بدائل وظيفة "حماية الكابلات" بنظام المسارات</div>
                 <div class="reveal">
-                    <p>باستخدام مخطط FAST من الوحدة السابقة، أنتج فريق دراسة القيمة قائمة بدائل حقيقية لتحقيق وظيفة "تنظيم الحرارة" بديلاً عن نظام الزجاج المزدوج المقترح أصلاً:</p>
+                    <p>باستخدام مخطط FAST ومصفوفة تقييم الوظائف من الوحدة السابقة، أنتج فريق دراسة القيمة قائمة بدائل حقيقية لتحقيق وظيفتي "حماية الكابلات" و"استيعاب التوسع المستقبلي" بديلاً عن التصميم الأصلي:</p>
                     <ul>
-                        <li>زجاج منخفض الانبعاثية (Low-E) بطبقة واحدة بدل الزجاج المزدوج الكامل في الواجهات غير الحرجة.</li>
-                        <li>تقليل نسبة الفتحات الزجاجية إلى الجدران (WWR) من 65% إلى 40% مع تعويض الإضاءة الطبيعية بفتحات علوية موضعية.</li>
-                        <li>إضافة كاسرات شمس خارجية ثابتة (Fixed Shading Fins) لتقليل الحمل الحراري المباشر.</li>
-                        <li>استخدام نظام واجهة مزدوجة الجلد (Double Skin Facade) في الواجهات الجنوبية والغربية فقط.</li>
-                        <li>استبدال جزء من الواجهة الزجاجية بألواح معزولة مركّبة (Insulated Metal Panels) في المناطق غير المطلة.</li>
+                        <li>استبدال Cable Tray المغلق بالكامل (Solid Bottom Tray) بـ Cable Ladder المفتوح في المسارات غير الحرجة، لتحسين التهوية وخفض التكلفة.</li>
+                        <li>دمج مسارات الإنارة العادية مع كابلات القوى المنخفضة في تراي واحد أعرض بدل تراي منفصل لكل نظام، وفق الكود.</li>
+                        <li>استخدام Conduit فقط للمسارات القصيرة والفرعية بدل مد التراي بالكامل.</li>
+                        <li>إعادة حساب معامل الطلب (Demand Factor) ومعامل التنوع (Diversity Factor) ومعامل الاستخدام (Utilization Factor) طبقاً لدليل اشتراطات شركة الكهرباء السعودية (SEC)، بدل افتراض تشغيل كل الأحمال بأقصى طاقتها في نفس اللحظة.</li>
+                        <li>تقليل السعة الاحتياطية المفرطة للتوسع المستقبلي من افتراض تحفظي عام إلى نسبة محددة بناءً على خطة التوسع الفعلية للمستشفى.</li>
                     </ul>
                 </div>
 
@@ -757,6 +938,34 @@
                     <div class="box-title"><i class='bx bx-error'></i> أخطر خطأ في هذه المرحلة: التقييم المبكر</div>
                     <p><strong>التقييم المبكر (Premature Evaluation)</strong> هو أكبر قاتل للإبداع في دراسات القيمة؛ فبمجرد أن يقول أحد الأعضاء "هذا لن ينجح" أثناء التوليد، تنخفض مساهمات بقية الفريق بشكل ملحوظ. دور الميسّر (Facilitator) هنا حاسم لضبط الانضباط في تطبيق قواعد أوسبورن الأربع.</p>
                 </div>
+
+                <div class="box box-decision reveal">
+                    <div class="box-title"><i class='bx bx-help-circle'></i> تمرين تفاعلي: صنّف الموقف</div>
+                    <p>أثناء جلسة العصف الذهني، قال أحد المهندسين "استخدام Conduit للمسارات القصيرة"، فرد عليه زميله فوراً "ده مستحيل ياخد وقت زيادة في التنفيذ ومش هيفرق". ما اسم هذا الخطأ المنهجي؟</p>
+                    <div class="decision-options">
+                        <button class="decision-btn" data-correct="false" onclick="handleDecision(this)">تأجيل الحكم (Defer Judgment)</button>
+                        <button class="decision-btn" data-correct="true" onclick="handleDecision(this)">التقييم المبكر (Premature Evaluation)</button>
+                        <button class="decision-btn" data-correct="false" onclick="handleDecision(this)">Piggybacking</button>
+                    </div>
+                    <div class="decision-feedback">
+                        <strong>الإجابة الصحيحة: التقييم المبكر.</strong> الزميل انتقد الفكرة فوراً بدل تأجيل الحكم عليها لمرحلة التقييم اللاحقة — وهذا يخالف أول قواعد أوسبورن الأربع مباشرة، ويثبّط بقية الفريق عن طرح أفكار جديدة.
+                    </div>
+                </div>
+
+                <div class="box box-fact reveal">
+                    <div class="box-title"><i class='bx bx-bulb'></i> هل تعلم؟</div>
+                    <p>في تجارب العصف الذهني الموثقة، غالباً ما تظهر أعلى نسبة من الأفكار "عالية القيمة" بعد الدقيقة الـ20 من بداية الجلسة — أي بعد أن تُستنفد الأفكار الواضحة والمكرورة، ويبدأ الفريق فعلاً في التفكير خارج الصندوق. هذا سبب رئيسي وراء توصية SAVE بعدم إنهاء الجلسة الإبداعية مبكراً.</p>
+                </div>
+
+                <div class="capability-box reveal">
+                    <div class="capability-title"><i class='bx bx-badge-check'></i> أنت الآن تستطيع:</div>
+                    <div class="capability-list">
+                        <div class="capability-item"><i class='bx bx-check-circle'></i> إدارة جلسة عصف ذهني بقواعد أوسبورن الأربع</div>
+                        <div class="capability-item"><i class='bx bx-check-circle'></i> استخدام 5 تقنيات توليد إبداعي مختلفة</div>
+                        <div class="capability-item"><i class='bx bx-check-circle'></i> تجنّب أكبر خطأ منهجي (التقييم المبكر)</div>
+                        <div class="capability-item"><i class='bx bx-check-circle'></i> ربط البدائل المولّدة بالوظائف ذات الأولوية</div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -768,7 +977,10 @@
                 <div class="module-progress-bar reveal">
                     <div class="mp-text">أنت الآن في المرحلة 4 من 7 ضمن رحلة الهندسة القيمية</div>
                     <div class="mp-track"><div class="mp-fill" style="width: 57%;"></div></div>
+                    <div class="mp-time"><i class='bx bx-time-five'></i> 12 دقيقة</div>
                 </div>
+
+                <div class="case-reminder reveal"><i class='bx bx-briefcase-alt-2'></i> 24 فكرة تولّدت في المرحلة الإبداعية — دلوقتي نفرزها ونقيّمها بالأرقام</div>
 
                 <div class="module-objective reveal">
                     <span class="obj-tag"><i class='bx bx-target-lock'></i> هدف الوحدة:</span>
@@ -777,23 +989,37 @@
 
                 <div class="card-heading reveal">أولاً: مرحلة التقييم (Evaluation Phase)</div>
                 <p class="reveal">
-                    بعد توليد قائمة طويلة من البدائل، يبدأ الفريق بفرزها على مرحلتين: فرز أولي سريع (Screening) لاستبعاد الأفكار غير القابلة للتطبيق فنياً أو قانونياً، ثم تقييم تفصيلي للبدائل المتبقية باستخدام <strong>مصفوفة التقييم الموزونة (Weighted Evaluation Matrix)</strong>، حيث يمنح الفريق وزناً نسبياً لكل معيار (كالتكلفة، الأداء، سهولة الصيانة، الجدول الزمني، الجماليات)، ثم يُقيَّم كل بديل مقابل كل معيار، ويُحسب المجموع المرجّح لترتيب البدائل.
+                    بعد توليد قائمة طويلة من البدائل، يبدأ الفريق بفرزها على مرحلتين: فرز أولي سريع (Screening) لاستبعاد الأفكار غير القابلة للتطبيق فنياً أو قانونياً، ثم تقييم تفصيلي للبدائل المتبقية باستخدام <strong>مصفوفة التقييم الموزونة (Weighted Evaluation Matrix)</strong>.
                 </p>
 
                 <div class="table-wrapper reveal">
                     <table class="data-table">
-                        <thead><tr><th>المعيار</th><th>الوزن النسبي</th><th>البديل أ: تقليل WWR + كاسرات شمس</th><th>البديل ب: واجهة مزدوجة الجلد</th></tr></thead>
+                        <thead><tr><th>#</th><th>الخطوة</th><th>التفاصيل</th></tr></thead>
                         <tbody>
-                            <tr><td>خفض التكلفة الأولية</td><td>30%</td><td>9 (2.70)</td><td>4 (1.20)</td></tr>
-                            <tr><td>الأداء الحراري</td><td>25%</td><td>7 (1.75)</td><td>9 (2.25)</td></tr>
-                            <tr><td>سهولة الصيانة</td><td>15%</td><td>8 (1.20)</td><td>5 (0.75)</td></tr>
-                            <tr><td>سرعة التنفيذ</td><td>15%</td><td>8 (1.20)</td><td>4 (0.60)</td></tr>
-                            <tr><td>القبول الجمالي للمالك</td><td>15%</td><td>6 (0.90)</td><td>9 (1.35)</td></tr>
-                            <tr><td><strong>المجموع المرجّح</strong></td><td>100%</td><td><strong>7.75</strong></td><td><strong>6.15</strong></td></tr>
+                            <tr><td>1</td><td>حدّد معايير التقييم مع الفريق والمالك</td><td>عادة 3-6 معايير (تكلفة، صيانة، سرعة تنفيذ، امتثال...)</td></tr>
+                            <tr><td>2</td><td>وزّع 100% على المعايير حسب أهميتها النسبية</td><td>المعيار الأهم عند المالك ياخد الوزن الأعلى</td></tr>
+                            <tr><td>3</td><td>قيّم كل بديل مقابل كل معيار بدرجة من 1 إلى 10</td><td>تقييم جماعي من الفريق، مش فرد واحد</td></tr>
+                            <tr><td>4</td><td>اضرب: الدرجة × الوزن لكل خلية</td><td>مثال: درجة 9 × وزن 30% = 2.70</td></tr>
+                            <tr><td>5</td><td>اجمع عمود كل بديل — الأعلى مجموعاً هو الأفضل</td><td>هذا هو "المجموع المرجّح" في آخر صف الجدول</td></tr>
                         </tbody>
                     </table>
                 </div>
-                <p class="reveal">في هذا المثال، رجّح الفريق البديل (أ) لتفوقه في التكلفة والصيانة وسرعة التنفيذ رغم تفوق البديل (ب) حرارياً وجمالياً — وهذا بالضبط دور المصفوفة الموزونة في اتخاذ قرار موضوعي بدل الانطباع الشخصي.</p>
+
+                <div class="table-wrapper reveal">
+                    <table class="data-table">
+                        <thead><tr><th>المعيار</th><th>الوزن النسبي</th><th>البديل أ</th><th>البديل ب</th></tr></thead>
+                        <tbody>
+                            <tr><td>خفض التكلفة الأولية</td><td>30%</td><td>9 (2.70)</td><td>5 (1.50)</td></tr>
+                            <tr><td>سهولة الصيانة والتفتيش</td><td>20%</td><td>9 (1.80)</td><td>5 (1.00)</td></tr>
+                            <tr><td>التهوية الحرارية للكابلات (تقليل Derating)</td><td>20%</td><td>9 (1.80)</td><td>6 (1.20)</td></tr>
+                            <tr><td>الامتثال لكود السلامة (SEC/NFPA)</td><td>15%</td><td>8 (1.20)</td><td>8 (1.20)</td></tr>
+                            <tr><td>سرعة التنفيذ</td><td>15%</td><td>8 (1.20)</td><td>6 (0.90)</td></tr>
+                            <tr><td><strong>المجموع المرجّح</strong></td><td>100%</td><td><strong>8.70</strong></td><td><strong>5.80</strong></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="reveal" style="font-size:14px; color:var(--text-muted); margin-top:-10px;"><strong>البديل أ:</strong> Open Ladder Tray + دمج المسارات + إعادة حساب معاملات SEC &nbsp;|&nbsp; <strong>البديل ب:</strong> الإبقاء على Closed Tray مع تخفيض السعة الاحتياطية فقط</p>
+                <p class="reveal">في هذا المثال، تفوّق البديل (أ) بوضوح في كل المعايير تقريباً، خصوصاً التهوية الحرارية للكابلات — وهي نقطة فنية مهمة لأن ارتفاع حرارة الكابلات المتراصة في تراي مغلق يفرض تخفيض السعة الحملية (Derating) وفق الكود، مما كان أحد أسباب المبالغة في مقاسات الكابلات أصلاً. البديل (ب) تعادل معه فقط في الامتثال لكود السلامة — وهذا بالضبط دور المصفوفة الموزونة في اتخاذ قرار موضوعي بدل الانطباع الشخصي.</p>
 
                 <div class="table-wrapper reveal">
                     <table class="data-table">
@@ -805,6 +1031,11 @@
                             <tr><td><strong>بطل الفكرة (Idea Champion)</strong></td><td>عضو في الفريق يتبنى فكرة واعدة غير تقليدية ويدافع عنها بجمع بيانات تبدد المخاوف حولها بدل استبعادها مبكراً</td></tr>
                         </tbody>
                     </table>
+                </div>
+
+                <div class="box box-tip reveal">
+                    <div class="box-title"><i class='bx bx-git-compare'></i> مثال يفرّق بين الاثنين</div>
+                    <p>من قائمة أفكار المرحلة الإبداعية: فكرة "إلغاء غطاء الحماية عن الكابلات في غرفة العمليات" هي <strong>خطأ قاتل (Fatal Flaw)</strong> — تُستبعد فوراً لمخالفتها اشتراطات السلامة الإلزامية، ولا داعي لتقييمها بالمصفوفة الموزونة أصلاً. أما فكرة "استخدام Cable Ladder مفتوح بدل Tray مغلق" فهي <strong>فكرة قابلة للتطوير</strong> — قانونية ومقبولة فنياً، فتدخل مباشرة في مصفوفة التقييم الموزونة للمفاضلة الرقمية.</p>
                 </div>
 
                 <div class="card-heading reveal">ثانياً: مرحلة التطوير (Development Phase)</div>
@@ -836,6 +1067,23 @@
                         <text x="665" y="132" text-anchor="middle" font-size="12.5" font-weight="800" fill="var(--text-dark)">القيمة المتبقية</text>
                         <text x="665" y="152" text-anchor="middle" font-size="11" font-weight="700" fill="var(--text-muted)">في نهاية العمر الافتراضي</text>
                     </svg>
+                </div>
+
+                <div class="diagram-box reveal">
+                    <div class="diagram-box-title"><i class='bx bx-calculator'></i> مثال محسوب: نظام إنارة ممرات المستشفى (LCC على 20 سنة، معدل خصم 5%)</div>
+                    <div class="table-wrapper reveal" style="margin-top:0;">
+                        <table class="data-table">
+                            <thead><tr><th></th><th>البديل A (أرخص شراءً)</th><th>البديل B (أعلى كفاءة)</th></tr></thead>
+                            <tbody>
+                                <tr><td>التكلفة الأولية</td><td>800,000 ريال</td><td>1,000,000 ريال</td></tr>
+                                <tr><td>تكلفة التشغيل والصيانة السنوية</td><td>150,000 ريال/سنة</td><td>90,000 ريال/سنة (أقل 40%)</td></tr>
+                                <tr><td>معامل القيمة الحالية للأقساط (20 سنة، خصم 5%)</td><td colspan="2" style="text-align:center;">≈ 12.46 (قيمة مرجعية جاهزة)</td></tr>
+                                <tr><td>القيمة الحالية للتشغيل والصيانة</td><td>150,000 × 12.46 = 1,869,000</td><td>90,000 × 12.46 = 1,121,400</td></tr>
+                                <tr><td><strong>LCC الإجمالي (20 سنة)</strong></td><td><strong>800,000 + 1,869,000 = 2,669,000</strong></td><td><strong>1,000,000 + 1,121,400 = 2,121,400</strong></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p style="font-size:14.5px; color:var(--text-muted); font-weight:700; margin-top:14px;">رغم أن البديل B أعلى بـ200,000 ريال في التكلفة الأولية، إلا أن LCC الإجمالي على مدى 20 سنة أقل بـ<strong>547,600 ريال</strong> — وهذا بالضبط الفرق بين قرار مبني على "أرخص سعر شراء" وقرار مبني على تكلفة الدورة الحياتية الكاملة.</p>
                 </div>
 
                 <div class="box box-exam reveal">
@@ -870,8 +1118,26 @@
                     </svg>
                 </div>
                 <div class="box box-tip reveal">
-                    <div class="box-title"><i class='bx bx-bulb'></i> تطبيق على وظيفة "تحسين المظهر" من مثالنا السابق</div>
-                    <p>كانت تكلفتها 8.4 مليون ريال بمؤشر قيمة 2.80. بعد تطبيق البدائل التي طوّرها الفريق، انخفضت تكلفتها إلى نحو 4.5 مليون ريال (مؤشر قيمة جديد = 4.5 ÷ 3 = 1.5). النتيجة: <strong>نسبة التوفير</strong> = (8.4−4.5)÷8.4×100 ≈ <strong>46%</strong>، و<strong>نسبة تحسين القيمة</strong> = (2.80−1.50)÷2.80×100 ≈ <strong>46.4%</strong> — رقمان قويان يُدرجان مباشرة في مقترح VECP المُقدَّم للمالك.</p>
+                    <div class="box-title"><i class='bx bx-bulb'></i> تطبيق على وظيفة "استيعاب التوسع المستقبلي" من مثالنا السابق</div>
+                    <p>كانت تكلفتها 4.2 مليون ريال بمؤشر قيمة 2.80. بعد إعادة حساب معاملات الطلب والتنوع والاستخدام طبقاً لدليل شركة الكهرباء السعودية (SEC) وتحديد سعة احتياطية واقعية، انخفضت تكلفتها إلى نحو 2.1 مليون ريال (مؤشر قيمة جديد = 2.1 ÷ 1.5 = 1.4). النتيجة: <strong>نسبة التوفير</strong> = (4.2−2.1)÷4.2×100 = <strong>50%</strong>، و<strong>نسبة تحسين القيمة</strong> = (2.80−1.40)÷2.80×100 = <strong>50%</strong> — رقمان قويان يُدرجان مباشرة في مقترح VECP المُقدَّم للمالك.</p>
+                </div>
+
+                <div class="box box-decision reveal">
+                    <div class="box-title"><i class='bx bx-help-circle'></i> تمرين تفاعلي: قرار قائم على LCC</div>
+                    <p>بديلان لنظام إنارة الممرات: الأول أرخص بـ20% في التكلفة الأولية، لكن استهلاكه للطاقة أعلى بـ40% على مدى العمر الافتراضي. بناءً على مبادئ تكلفة الدورة الحياتية، ما القرار الصحيح؟</p>
+                    <div class="decision-options">
+                        <button class="decision-btn" data-correct="false" onclick="handleDecision(this)">اختيار الأرخص شراءً دائماً لأنه يوفر نقداً فورياً</button>
+                        <button class="decision-btn" data-correct="true" onclick="handleDecision(this)">حساب LCC الكامل لكلا البديلين على مدى 20-25 سنة قبل القرار</button>
+                        <button class="decision-btn" data-correct="false" onclick="handleDecision(this)">لا فرق، طالما الإضاءة نفس المستوى</button>
+                    </div>
+                    <div class="decision-feedback">
+                        <strong>الإجابة الصحيحة: حساب LCC الكامل.</strong> فرق استهلاك الطاقة 40% على مدى 20-25 سنة قد يتجاوز بسهولة فرق التكلفة الأولية 20%، خصوصاً في تشغيل مستمر بممرات المستشفى على مدار الساعة — وهذا بالضبط سبب اعتماد ISO 15686-5 كمرجع إلزامي في مثل هذه المقارنات.
+                    </div>
+                </div>
+
+                <div class="box box-fact reveal">
+                    <div class="box-title"><i class='bx bx-bulb'></i> هل تعلم؟</div>
+                    <p>وفق ISO 15686-5، قد تصل تكاليف التشغيل والصيانة على مدى العمر الافتراضي لأي أصل إنشائي إلى 3-5 أضعاف تكلفته الأولية — وهو ما يفسّر لماذا يُعد إغفال حساب LCC واحداً من أكثر القرارات الهندسية تكلفةً على المدى البعيد، حتى لو بدا التصميم الأصلي "اقتصادياً" عند التوقيع على العقد.</p>
                 </div>
 
                 <div class="takeaways-box reveal">
@@ -882,6 +1148,24 @@
                         <li><i class='bx bx-check'></i> تكلفة الدورة الحياتية (LCC) هي المعيار الصحيح للمقارنة، وليس التكلفة الأولية فقط.</li>
                         <li><i class='bx bx-check'></i> كل مقترح قيمي يُختتم بنسبة التوفير المالي ونسبة تحسين القيمة معاً، وليس أحدهما فقط.</li>
                     </ul>
+                </div>
+
+                <div class="tool-cta reveal" onclick="window.open('tools-va.html', '_blank')">
+                    <div class="tool-cta-text">
+                        <h4><i class='bx bx-gift'></i> جرّب الآن: VE Pro Suite</h4>
+                        <p>ابنِ مصفوفة تقييم حقيقية واحسب LCC لمشروعك بنفسك داخل الأداة الاحترافية</p>
+                    </div>
+                    <div class="tool-cta-btn"><i class='bx bx-link-external'></i> افتح الأداة</div>
+                </div>
+
+                <div class="capability-box reveal">
+                    <div class="capability-title"><i class='bx bx-badge-check'></i> أنت الآن تستطيع:</div>
+                    <div class="capability-list">
+                        <div class="capability-item"><i class='bx bx-check-circle'></i> بناء مصفوفة تقييم موزونة لاختيار أفضل بديل</div>
+                        <div class="capability-item"><i class='bx bx-check-circle'></i> حساب تكلفة الدورة الحياتية (LCC)</div>
+                        <div class="capability-item"><i class='bx bx-check-circle'></i> حساب نسبة التوفير ونسبة تحسين القيمة</div>
+                        <div class="capability-item"><i class='bx bx-check-circle'></i> التفرقة بين الأخطاء القاتلة والأفكار القابلة للتطوير</div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -903,7 +1187,7 @@
                 <div class="app-hub-card" style="--card-accent:#1d4ed8;" onclick="switchTab('tab5')">
                     <div class="app-hub-icon"><i class='bx bx-slider-alt'></i></div>
                     <h4>محاكاة دراسة القيمة التطبيقية</h4>
-                    <p>سِر خطوة بخطوة مع فريق دراسة قيمة واجهة المستشفى من المعلومات وحتى مقترح التغيير القيمي (VECP)</p>
+                    <p>سِر خطوة بخطوة مع فريق دراسة قيمة نظام الكابلات بالمستشفى من المعلومات وحتى مقترح التغيير القيمي (VECP)</p>
                     <span class="app-hub-tag">Applied Case Simulation</span>
                     <div class="app-hub-go">ابدأ المحاكاة <i class='bx bx-left-arrow-alt'></i></div>
                 </div>
@@ -948,37 +1232,37 @@
                             <div class="carousel-slide">
                                 <div class="mega-case-card">
                                     <h4 style="font-size:19px; font-weight:900; color:var(--primary-navy); margin-bottom:12px;"><i class='bx bx-search-alt' style="color:var(--brand-blue);"></i> المرحلة المعلوماتية</h4>
-                                    <p style="color:var(--text-muted); line-height:1.8; font-weight:600;">شكّل المالك فريقاً من 6 أعضاء (معماري، إنشائي، ميكانيكا، تكاليف، ممثل تشغيل المستشفى، وميسّر CVS) لدراسة نظام الواجهة المقدَّر بـ 42 مليون ريال من إجمالي 400 مليون. جمع الفريق المخططات، تقرير الأحمال الحرارية، والمواصفات التعاقدية خلال أسبوع عمل مكثف.</p>
+                                    <p style="color:var(--text-muted); line-height:1.8; font-weight:600;">شكّل المالك فريقاً من 6 أعضاء (مهندس كهرباء قوى، مهندس ميكانيكا، إنشائي، تكاليف، ممثل تشغيل المستشفى، وميسّر CVS) لدراسة نظام الكابلات المقدَّر بـ 28 مليون ريال من إجمالي 400 مليون. جمع الفريق المخططات أحادية الخط، تقرير حصر الأحمال، ودليل اشتراطات شركة الكهرباء السعودية (SEC) خلال أسبوع عمل مكثف.</p>
                                 </div>
                             </div>
                             <div class="carousel-slide">
                                 <div class="mega-case-card function">
                                     <h4 style="font-size:19px; font-weight:900; color:var(--primary-navy); margin-bottom:12px;"><i class='bx bx-sitemap' style="color:#f59e0b;"></i> تحليل الوظائف</h4>
-                                    <p style="color:var(--text-muted); line-height:1.8; font-weight:600;">حدّد الفريق الوظيفة الأساسية "عزل المبنى"، والوظائف الثانوية "تنظيم الحرارة"، "توفير الإضاءة"، "مقاومة الحريق". بُني مخطط FAST كامل كشف أن نظام الزجاج المزدوج المقترح أصلاً هو مجرد حل واحد من عدة حلول ممكنة لتحقيق هذه الوظائف.</p>
+                                    <p style="color:var(--text-muted); line-height:1.8; font-weight:600;">حدّد الفريق الوظيفة الأساسية "توزيع الطاقة"، والوظائف الثانوية "حماية الكابلات"، "استيعاب التوسع المستقبلي"، "مقاومة الحريق". بُني مخطط FAST كامل ووُزّعت التكلفة على الوظائف، فكشف أن Cable Tray المغلق ليس سوى حل واحد من عدة حلول ممكنة، وأن "استيعاب التوسع المستقبلي" هو الأعلى مؤشر قيمة (2.80).</p>
                                 </div>
                             </div>
                             <div class="carousel-slide">
                                 <div class="mega-case-card creative">
                                     <h4 style="font-size:19px; font-weight:900; color:var(--primary-navy); margin-bottom:12px;"><i class='bx bx-bulb' style="color:#8b5cf6;"></i> المرحلة الإبداعية</h4>
-                                    <p style="color:var(--text-muted); line-height:1.8; font-weight:600;">في جلسة عصف ذهني استمرت 3 ساعات بقيادة الميسّر، ولّد الفريق 27 فكرة بديلة دون أي تقييم، شملت خيارات زجاج مختلفة، كاسرات شمس، تقليل نسبة الفتحات، وأنظمة واجهات بديلة بالكامل.</p>
+                                    <p style="color:var(--text-muted); line-height:1.8; font-weight:600;">في جلسة عصف ذهني استمرت 3 ساعات بقيادة الميسّر، ولّد الفريق 24 فكرة بديلة دون أي تقييم، شملت أنواع مختلفة من أنظمة المسارات (Tray/Ladder/Conduit)، دمج المسارات المتوازية، وإعادة حساب معاملات الطلب والتنوع والاستخدام طبقاً لدليل SEC.</p>
                                 </div>
                             </div>
                             <div class="carousel-slide">
                                 <div class="mega-case-card">
                                     <h4 style="font-size:19px; font-weight:900; color:var(--primary-navy); margin-bottom:12px;"><i class='bx bx-line-chart' style="color:var(--brand-blue);"></i> التقييم</h4>
-                                    <p style="color:var(--text-muted); line-height:1.8; font-weight:600;">فُرزت الأفكار الـ27 إلى 6 بدائل قابلة للتطبيق، ثم قُيّمت عبر مصفوفة موزونة بخمسة معايير. تصدّر بديل "تقليل نسبة الفتحات الزجاجية + كاسرات شمس" بمجموع مرجّح 7.75 من 10.</p>
+                                    <p style="color:var(--text-muted); line-height:1.8; font-weight:600;">فُرزت الأفكار الـ24 إلى 5 بدائل قابلة للتطبيق، ثم قُيّمت عبر مصفوفة موزونة بخمسة معايير. تصدّر بديل "Open Ladder Tray + دمج المسارات + إعادة حساب معاملات SEC" بمجموع مرجّح 8.70 من 10.</p>
                                 </div>
                             </div>
                             <div class="carousel-slide">
                                 <div class="mega-case-card lcc">
                                     <h4 style="font-size:19px; font-weight:900; color:var(--primary-navy); margin-bottom:12px;"><i class='bx bx-calculator' style="color:#10b981;"></i> التطوير وتحليل LCC</h4>
-                                    <p style="color:var(--text-muted); line-height:1.8; font-weight:600;">طُوّر البديل الفائز فنياً وتم حساب تكلفة الدورة الحياتية على 25 سنة: التكلفة الأولية انخفضت من 42 إلى 33.5 مليون ريال، وتكلفة التشغيل السنوية (الطاقة) انخفضت أيضاً بنحو 8% نتيجة تحسّن الأداء الحراري.</p>
+                                    <p style="color:var(--text-muted); line-height:1.8; font-weight:600;">طُوّر البديل الفائز فنياً وتم حساب تكلفة الدورة الحياتية على 25 سنة: التكلفة الأولية لنظام الكابلات انخفضت من 28 إلى 23.4 مليون ريال، وتكلفة الصيانة المستقبلية انخفضت أيضاً بفضل سهولة الوصول والتفتيش في نظام Ladder المفتوح.</p>
                                 </div>
                             </div>
                             <div class="carousel-slide">
                                 <div class="mega-case-card implement">
                                     <h4 style="font-size:19px; font-weight:900; color:var(--primary-navy); margin-bottom:12px;"><i class='bx bx-check-shield' style="color:#ef4444;"></i> العرض والتنفيذ</h4>
-                                    <p style="color:var(--text-muted); line-height:1.8; font-weight:600;">أُعِد مقترح VECP رسمي وعُرض على لجنة المالك، وتمت الموافقة عليه خلال أسبوعين. حقق المشروع وفراً في التكلفة الأولية بلغ 8.5 مليون ريال (20% من ميزانية بند الواجهات)، مع الحفاظ الكامل على الوظائف المطلوبة وتحسين الأداء الحراري.</p>
+                                    <p style="color:var(--text-muted); line-height:1.8; font-weight:600;">أُعِد مقترح VECP رسمي وعُرض على لجنة المالك، وتمت الموافقة عليه خلال أسبوعين. حقق المشروع وفراً في التكلفة الأولية بلغ 4.6 مليون ريال (16% من ميزانية نظام الكابلات)، مع الحفاظ الكامل على الوظائف المطلوبة والامتثال الكامل لاشتراطات شركة الكهرباء السعودية.</p>
                                 </div>
                             </div>
                         </div>
