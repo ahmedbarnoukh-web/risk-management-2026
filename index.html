@@ -5,40 +5,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BA Engineering Academy | الأكاديمية الهندسية المتكاملة</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg-main: #f8fafc;
             --primary-blue: #1e3a8a;
             --primary-blue-hover: #152c69;
             --accent-color: #0d9488;
+            --accent-light: #14b8a6;
             --text-dark: #0f172a;
             --text-muted: #64748b;
             --border-color: rgba(226, 232, 240, 0.8);
             --active-blue: #eff6ff;
-            --card-bg: rgba(255, 255, 255, 0.9);
-            --topbar-bg: rgba(30, 58, 138, 0.9);
+            --card-bg: rgba(255, 255, 255, 0.85);
+            --topbar-bg: rgba(15, 23, 42, 0.92);
             --topbar-text: #ffffff;
-            --footer-bg: #0f172a;
-            --glass-shadow: 0 10px 25px 0 rgba(31, 38, 135, 0.06);
-            --glass-border: 1px solid rgba(255, 255, 255, 0.25);
+            --footer-bg: #0b0f19;
+            --glass-shadow: 0 20px 40px -15px rgba(30, 58, 138, 0.07);
+            --glass-border: 1px solid rgba(255, 255, 255, 0.4);
+            --ticker-bg: linear-gradient(90deg, #1e3a8a 0%, #0d9488 100%);
         }
 
         [data-theme="dark"] {
-            --bg-main: #060913;
+            --bg-main: #030712;
             --primary-blue: #60a5fa; 
             --primary-blue-hover: #3b82f6;
             --accent-color: #2dd4bf;
+            --accent-light: #5eead4;
             --text-dark: #f8fafc;
             --text-muted: #94a3b8;
             --border-color: rgba(51, 65, 85, 0.6);
-            --active-blue: rgba(30, 41, 59, 0.75);
-            --card-bg: rgba(30, 41, 59, 0.8);
-            --topbar-bg: rgba(2, 6, 23, 0.9);
+            --active-blue: rgba(15, 23, 42, 0.75);
+            --card-bg: rgba(15, 23, 42, 0.75);
+            --topbar-bg: rgba(2, 6, 23, 0.95);
             --topbar-text: #f8fafc;
             --footer-bg: #020617;
-            --glass-shadow: 0 10px 25px 0 rgba(0, 0, 0, 0.4);
+            --glass-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5);
             --glass-border: 1px solid rgba(255, 255, 255, 0.08);
+            --ticker-bg: linear-gradient(90deg, #0f172a 0%, #1e3a8a 100%);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
@@ -50,44 +54,77 @@
             display: flex;
             flex-direction: column;
             min-height: 100vh;
-            transition: background-color 0.5s cubic-bezier(0.4, 0, 0.2, 1), color 0.5s ease;
+            transition: background-color 0.4s ease, color 0.4s ease;
         }
 
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: var(--bg-main); }
-        ::-webkit-scrollbar-thumb { background: var(--primary-blue); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb { background: var(--accent-color); border-radius: 4px; }
 
+        /* Global Ticker Banner */
+        .global-ticker {
+            background: var(--ticker-bg);
+            color: #ffffff;
+            overflow: hidden;
+            white-space: nowrap;
+            position: relative;
+            z-index: 101;
+            padding: 7px 0;
+            font-size: 0.85rem;
+            font-weight: 700;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+        }
+        .ticker-wrapper {
+            display: inline-block;
+            white-space: nowrap;
+            padding-left: 100%;
+            animation: tickerMove 30s linear infinite;
+        }
+        .ticker-wrapper:hover { animation-play-state: paused; }
+        .ticker-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-right: 45px;
+        }
+        .ticker-item i { color: #5eead4; }
+        @keyframes tickerMove {
+            0% { transform: translate3d(0, 0, 0); }
+            100% { transform: translate3d(-100%, 0, 0); }
+        }
+
+        /* Ambient Animated Mesh Background */
         .ambient-mesh {
             position: fixed;
             top: 0; left: 0; width: 100vw; height: 100vh;
             overflow: hidden; z-index: -1; pointer-events: none;
-            filter: blur(90px); opacity: 0.65;
+            filter: blur(100px); opacity: 0.7;
         }
-        .mesh-blob { position: absolute; border-radius: 50%; transition: transform 1s ease-out; will-change: transform; }
-        .mesh-blob-1 { width: 400px; height: 400px; background: rgba(30, 58, 138, 0.12); top: -10%; right: -5%; animation: floatMesh 18s ease-in-out infinite alternate; }
-        .mesh-blob-2 { width: 450px; height: 450px; background: rgba(13, 148, 136, 0.1); bottom: -10%; left: -5%; animation: floatMesh 22s ease-in-out infinite alternate-reverse; }
-        .mesh-blob-3 { width: 300px; height: 300px; background: rgba(14, 165, 233, 0.08); top: 40%; left: 35%; animation: floatMesh 15s ease-in-out infinite; }
+        .mesh-blob { position: absolute; border-radius: 50%; will-change: transform; }
+        .mesh-blob-1 { width: 500px; height: 500px; background: rgba(30, 58, 138, 0.18); top: -10%; right: -5%; animation: floatMesh 20s ease-in-out infinite alternate; }
+        .mesh-blob-2 { width: 550px; height: 550px; background: rgba(13, 148, 136, 0.15); bottom: -10%; left: -5%; animation: floatMesh 25s ease-in-out infinite alternate-reverse; }
+        .mesh-blob-3 { width: 350px; height: 350px; background: rgba(14, 165, 233, 0.12); top: 40%; left: 35%; animation: floatMesh 18s ease-in-out infinite; }
 
         @keyframes floatMesh {
             0% { transform: translate(0, 0) scale(1); }
-            50% { transform: translate(30px, -40px) scale(1.05); }
-            100% { transform: translate(-20px, 20px) scale(0.95); }
+            50% { transform: translate(40px, -50px) scale(1.08); }
+            100% { transform: translate(-30px, 30px) scale(0.92); }
         }
 
         .whatsapp-float {
             position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: #25d366;
+            bottom: 25px;
+            right: 25px;
+            background: linear-gradient(135deg, #25d366, #128c7e);
             color: white;
-            width: 44px;
-            height: 44px;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 22px;
-            box-shadow: 0 5px 14px rgba(37, 211, 102, 0.35);
+            font-size: 24px;
+            box-shadow: 0 8px 20px rgba(37, 211, 102, 0.4);
             z-index: 9999;
             transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             text-decoration: none;
@@ -95,21 +132,20 @@
             animation: pulseWhatsapp 2s infinite;
         }
         .whatsapp-float:hover {
-            transform: scale(1.1) rotate(10deg);
-            background: #20ba5a;
+            transform: scale(1.12) rotate(12deg);
         }
         @keyframes pulseWhatsapp {
             0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.6); }
-            70% { box-shadow: 0 0 0 10px rgba(37, 211, 102, 0); }
+            70% { box-shadow: 0 0 0 14px rgba(37, 211, 102, 0); }
             100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
         }
 
         .top-bar {
             background-color: var(--topbar-bg);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             color: var(--topbar-text);
-            padding: 10px 5%;
+            padding: 12px 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -117,220 +153,246 @@
             position: sticky;
             top: 0;
             border-bottom: var(--glass-border);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15);
             transition: all 0.3s ease;
         }
 
         .brand-logo-container {
-            background: rgba(255, 255, 255, 0.92);
-            padding: 4px 10px;
+            background: #ffffff;
+            padding: 5px 14px;
             border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.06);
-            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255, 255, 255, 0.6);
             transition: transform 0.3s ease;
         }
-        .brand-logo-container:hover { transform: translateY(-2px) scale(1.03); }
-        .brand-logo-container img { height: 40px; object-fit: contain; }
+        .brand-logo-container:hover { transform: translateY(-2px) scale(1.02); }
+        .brand-logo-container img { height: 38px; object-fit: contain; }
 
-        .top-bar-actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap;}
+        .top-bar-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap;}
         
         .nav-link {
-            color: var(--topbar-text); text-decoration: none; background: rgba(255, 255, 255, 0.06); border: var(--glass-border);
-            font-size: 13px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 6px; 
-            padding: 8px 14px; border-radius: 10px; transition: all 0.3s ease;
-            backdrop-filter: blur(4px);
+            color: var(--topbar-text); text-decoration: none; background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.15);
+            font-size: 13px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 8px; 
+            padding: 8px 16px; border-radius: 10px; transition: all 0.3s ease;
+            backdrop-filter: blur(6px);
         }
-        .nav-link:hover { color: var(--accent-color); background: rgba(255,255,255,0.15); transform: translateY(-1px); }
+        .nav-link:hover { color: var(--accent-light); background: rgba(255,255,255,0.18); transform: translateY(-2px); }
 
         .nav-link.home-highlight {
-            background: rgba(255, 255, 255, 0.15);
-            border: 1px solid rgba(255, 255, 255, 0.35);
-            font-weight: 900;
+            background: linear-gradient(135deg, rgba(13, 148, 136, 0.4), rgba(30, 58, 138, 0.4));
+            border: 1px solid rgba(45, 212, 191, 0.4);
+            font-weight: 800;
         }
 
         .theme-btn {
-            background: rgba(255, 255, 255, 0.08); border: var(--glass-border); color: var(--topbar-text);
-            cursor: pointer; width: 38px; height: 38px; border-radius: 10px;
-            display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; font-size: 15px;
-            backdrop-filter: blur(4px);
+            background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); color: var(--topbar-text);
+            cursor: pointer; width: 40px; height: 40px; border-radius: 10px;
+            display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; font-size: 16px;
         }
-        .theme-btn:hover { background: rgba(255, 255, 255, 0.22); transform: rotate(15deg) scale(1.05); }
+        .theme-btn:hover { background: rgba(255, 255, 255, 0.25); transform: rotate(15deg) scale(1.05); }
 
         .app-view { display: none; flex-direction: column; flex-grow: 1; animation: fadeInNeural 0.4s ease forwards; opacity: 0; }
         .app-view.active { display: flex; }
 
         @keyframes fadeInNeural {
-            from { opacity: 0; transform: translateY(10px); }
+            from { opacity: 0; transform: translateY(12px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
+        /* Hero Section Platform World-Class */
         .hero-section {
             display: flex; align-items: center; justify-content: space-between;
-            padding: 40px 5%; background: radial-gradient(circle at top right, rgba(30, 58, 138, 0.06), transparent 50%),
-                                      radial-gradient(circle at bottom left, rgba(13, 148, 136, 0.05), transparent 50%);
-            border-bottom: var(--glass-border); gap: 25px; flex-wrap: wrap;
+            padding: 60px 5%; background: radial-gradient(circle at top right, rgba(13, 148, 136, 0.08), transparent 60%),
+                                      radial-gradient(circle at bottom left, rgba(30, 58, 138, 0.08), transparent 60%);
+            border-bottom: var(--glass-border); gap: 35px; flex-wrap: wrap;
             position: relative; overflow: hidden;
         }
-        .hero-content { flex: 1; min-width: 280px; z-index: 2; }
-        .hero-content h1 { font-size: clamp(2rem, 3.8vw, 3.2rem); font-weight: 900; color: var(--primary-blue); margin-bottom: 8px; line-height: 1.15; letter-spacing: -0.5px; }
-        .hero-content h2 { font-size: clamp(1rem, 2vw, 1.4rem); color: var(--accent-color); font-weight: 800; margin-bottom: 14px; }
-        .hero-content p { font-size: 0.98rem; color: var(--text-muted); font-weight: 600; margin-bottom: 16px; line-height: 1.6; max-width: 580px; }
+        .hero-content { flex: 1.2; min-width: 300px; z-index: 2; }
+        
+        .platform-tag {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: rgba(13, 148, 136, 0.12); color: var(--accent-color);
+            padding: 6px 16px; border-radius: 30px; border: 1px solid rgba(13, 148, 136, 0.3);
+            font-size: 0.82rem; font-weight: 800; margin-bottom: 16px;
+        }
+        
+        .hero-content h1 { font-size: clamp(2.2rem, 4vw, 3.5rem); font-weight: 900; color: var(--primary-blue); margin-bottom: 8px; line-height: 1.15; letter-spacing: -0.5px; }
+        .hero-content h2 { font-size: clamp(1.1rem, 2.2vw, 1.5rem); color: var(--accent-color); font-weight: 800; margin-bottom: 16px; }
+        .hero-content p { font-size: 1.02rem; color: var(--text-muted); font-weight: 600; margin-bottom: 20px; line-height: 1.7; max-width: 620px; }
         
         .hero-quote-box {
             background: var(--card-bg);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
             border-right: 4px solid var(--accent-color);
             border: var(--glass-border);
-            padding: 12px 16px;
-            border-radius: 12px;
-            margin-bottom: 16px;
+            padding: 16px 20px;
+            border-radius: 14px;
+            margin-bottom: 22px;
             box-shadow: var(--glass-shadow);
-            max-width: 580px;
+            max-width: 620px;
+        }
+        html[dir="ltr"] .hero-quote-box {
+            border-right: none;
+            border-left: 4px solid var(--accent-color);
         }
         .hero-quote-box p {
             margin-bottom: 0 !important;
-            font-size: 0.92rem !important;
+            font-size: 0.95rem !important;
             color: var(--text-dark) !important;
             font-weight: 700 !important;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
         }
-        .hero-quote-box i { color: var(--accent-color); font-size: 1.2rem; }
+        .hero-quote-box i { color: var(--accent-color); font-size: 1.3rem; }
 
-        .hero-buttons { display: flex; gap: 12px; flex-wrap: wrap; }
+        .hero-buttons { display: flex; gap: 14px; flex-wrap: wrap; }
         .btn-primary, .btn-outline {
-            padding: 10px 22px; border-radius: 10px; font-weight: 800; font-size: 14px; 
-            cursor: pointer; transition: all 0.3s ease; display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none;
+            padding: 12px 26px; border-radius: 12px; font-weight: 800; font-size: 14px; 
+            cursor: pointer; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); display: inline-flex; align-items: center; justify-content: center; gap: 10px; text-decoration: none;
             position: relative; overflow: hidden;
         }
         .btn-primary { 
-            background: linear-gradient(135deg, var(--primary-blue) 0%, #152c69 100%); 
-            color: white; border: none; box-shadow: 0 6px 15px rgba(30, 58, 138, 0.2); 
+            background: linear-gradient(135deg, var(--primary-blue) 0%, #0d9488 100%); 
+            color: white; border: none; box-shadow: 0 8px 20px rgba(13, 148, 136, 0.25); 
         }
-        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(30, 58, 138, 0.3); filter: brightness(1.08); }
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 12px 25px rgba(13, 148, 136, 0.35); filter: brightness(1.08); }
         
         .btn-outline { 
             background: var(--card-bg); color: var(--primary-blue); border: 2px solid var(--primary-blue); 
-            backdrop-filter: blur(8px); box-shadow: var(--glass-shadow);
+            backdrop-filter: blur(10px); box-shadow: var(--glass-shadow);
         }
-        .btn-outline:hover { background: var(--primary-blue); color: white; transform: translateY(-2px); }
+        .btn-outline:hover { background: var(--primary-blue); color: white; transform: translateY(-3px); }
         
-        .hero-image { flex: 1; min-width: 240px; display: flex; justify-content: center; position: relative; z-index: 2; }
+        .hero-image { flex: 0.9; min-width: 260px; display: flex; justify-content: center; position: relative; z-index: 2; }
         .hero-image-neural-card {
-            background: transparent; padding: 5px; border-radius: 20px;
-            position: relative;
+            background: rgba(255, 255, 255, 0.05); padding: 15px; border-radius: 50%;
+            position: relative; backdrop-filter: blur(10px);
             animation: heroCardFloat 5s ease-in-out infinite; display: flex; align-items: center; justify-content: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
         }
         .hero-image-neural-card img {
-            width: 240px; height: 240px; object-fit: contain; border-radius: 50%;
-            background: white; padding: 10px; box-shadow: 0 15px 35px rgba(30, 58, 138, 0.12);
-            border: 2px solid rgba(255, 255, 255, 0.8);
+            width: 260px; height: 260px; object-fit: contain; border-radius: 50%;
+            background: white; padding: 12px; box-shadow: 0 15px 35px rgba(30, 58, 138, 0.15);
+            border: 3px solid rgba(255, 255, 255, 0.9);
         }
         
         @keyframes heroCardFloat {
             0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-8px); }
+            50% { transform: translateY(-10px); }
         }
 
         .stats-section { 
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); 
-            padding: 20px 5%; background: transparent; gap: 12px; margin-top: -15px; position: relative; z-index: 10; 
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); 
+            padding: 25px 5%; background: transparent; gap: 16px; margin-top: -20px; position: relative; z-index: 10; 
         }
         .stat-box { 
-            background: var(--card-bg); backdrop-filter: blur(12px);
-            padding: 14px 10px; border-radius: 14px; text-align: center; box-shadow: var(--glass-shadow); 
+            background: var(--card-bg); backdrop-filter: blur(16px);
+            padding: 18px 14px; border-radius: 16px; text-align: center; box-shadow: var(--glass-shadow); 
             border: var(--glass-border); transition: all 0.3s ease;
         }
-        .stat-box:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(30, 58, 138, 0.1); border-color: var(--primary-blue); }
-        .stat-number { font-size: 1.8rem; font-weight: 900; color: var(--primary-blue); display: block; margin-bottom: 2px; }
-        .stat-label { font-size: 0.82rem; color: var(--text-muted); font-weight: 700; }
+        .stat-box:hover { transform: translateY(-4px); box-shadow: 0 12px 25px rgba(30, 58, 138, 0.15); border-color: var(--accent-color); }
+        .stat-number { font-size: 2.1rem; font-weight: 900; color: var(--primary-blue); display: block; margin-bottom: 2px; }
+        .stat-label { font-size: 0.85rem; color: var(--text-muted); font-weight: 700; }
 
-        .features-section { padding: 45px 5%; background: var(--card-bg); backdrop-filter: blur(16px); text-align: center; border-bottom: var(--glass-border); border-top: var(--glass-border); }
-        .features-section h2 { color: var(--primary-blue); font-size: 2rem; font-weight: 900; margin-bottom: 8px; position: relative; display: inline-block; }
-        .features-section h2::after { content: ''; position: absolute; bottom: -6px; right: 20%; width: 60%; height: 3px; background: var(--accent-color); border-radius: 2px; }
-        .features-subtitle { color: var(--text-muted); font-weight: 700; font-size: 0.98rem; margin-top: 14px; margin-bottom: 30px; }
+        .features-section { padding: 55px 5%; background: var(--card-bg); backdrop-filter: blur(20px); text-align: center; border-bottom: var(--glass-border); border-top: var(--glass-border); }
+        .features-section h2 { color: var(--primary-blue); font-size: 2.2rem; font-weight: 900; margin-bottom: 8px; position: relative; display: inline-block; }
+        .features-section h2::after { content: ''; position: absolute; bottom: -8px; right: 20%; width: 60%; height: 4px; background: linear-gradient(90deg, var(--primary-blue), var(--accent-color)); border-radius: 4px; }
+        .features-subtitle { color: var(--text-muted); font-weight: 700; font-size: 1rem; margin-top: 16px; margin-bottom: 35px; }
         
-        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px; }
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 22px; }
         .feature-card { 
-            background: var(--bg-main); backdrop-filter: blur(8px); padding: 25px 20px; border-radius: 16px; 
+            background: var(--bg-main); backdrop-filter: blur(10px); padding: 30px 22px; border-radius: 18px; 
             border: var(--glass-border); box-shadow: var(--glass-shadow); 
-            transition: all 0.3s ease; position: relative; overflow: hidden; text-align: right;
+            transition: all 0.3s ease; position: relative; overflow: hidden; text-align: inherit;
         }
-        .feature-card::before { content: ''; position: absolute; top: 0; right: 0; width: 100%; height: 3px; background: var(--primary-blue); transition: background 0.3s; }
-        .feature-card:hover { transform: translateY(-5px); border-color: var(--primary-blue); box-shadow: 0 15px 30px rgba(30, 58, 138, 0.1); }
+        .feature-card::before { content: ''; position: absolute; top: 0; right: 0; width: 100%; height: 4px; background: var(--primary-blue); transition: background 0.3s; }
+        .feature-card:hover { transform: translateY(-6px); border-color: var(--accent-color); box-shadow: 0 18px 35px rgba(30, 58, 138, 0.12); }
         .feature-card:hover::before { background: var(--accent-color); }
-        .feature-card i { font-size: 2.2rem; color: var(--accent-color); margin-bottom: 12px; display: inline-block; transition: transform 0.3s ease; }
-        .feature-card:hover i { transform: scale(1.08) rotate(5deg); }
-        .feature-card h4 { font-size: 1.1rem; color: var(--primary-blue); font-weight: 900; margin-bottom: 8px; }
-        .feature-card p { font-size: 0.9rem; color: var(--text-muted); font-weight: 600; line-height: 1.6; }
+        .feature-card i { font-size: 2.4rem; color: var(--accent-color); margin-bottom: 14px; display: inline-block; transition: transform 0.3s ease; }
+        .feature-card:hover i { transform: scale(1.12) rotate(6deg); }
+        .feature-card h4 { font-size: 1.15rem; color: var(--primary-blue); font-weight: 900; margin-bottom: 10px; }
+        .feature-card p { font-size: 0.92rem; color: var(--text-muted); font-weight: 600; line-height: 1.65; }
 
+        /* قسم آراء المتدربين - تم تعديل اللون للخط والحدود للون الأزرق بدلاً من الأخضر */
         .professional-testimonials {
-            padding: 50px 5%;
+            padding: 60px 5%;
             background: linear-gradient(180deg, var(--bg-main) 0%, var(--active-blue) 100%);
             border-bottom: var(--glass-border);
             text-align: center;
         }
-        .testimonials-heading-container { max-width: 650px; margin: 0 auto 30px auto; }
-        .testimonials-heading-container h2 { color: var(--primary-blue); font-size: 2rem; font-weight: 900; margin-bottom: 8px; }
-        .testimonials-heading-container p { color: var(--text-muted); font-size: 0.98rem; font-weight: 700; }
-        .testimonials-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; max-width: 1200px; margin: 0 auto; }
+        .testimonials-heading-container { max-width: 650px; margin: 0 auto 35px auto; }
+        .testimonials-heading-container h2 { color: var(--primary-blue); font-size: 2.2rem; font-weight: 900; margin-bottom: 8px; }
+        .testimonials-heading-container p { color: var(--text-muted); font-size: 1rem; font-weight: 700; }
+        .testimonials-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 24px; max-width: 1200px; margin: 0 auto; }
+        
         .testimonial-card-pro {
-            background: var(--card-bg); backdrop-filter: blur(12px);
-            border: var(--glass-border); box-shadow: var(--glass-shadow); border-radius: 16px; padding: 22px;
-            text-align: right; display: flex; flex-direction: column; justify-content: space-between;
+            background: var(--card-bg); backdrop-filter: blur(16px);
+            border: var(--glass-border); box-shadow: var(--glass-shadow); border-radius: 18px; padding: 25px;
+            text-align: inherit; display: flex; flex-direction: column; justify-content: space-between;
             transition: all 0.3s ease; position: relative; overflow: hidden;
+            /* توحيد الإطار باللون الأزرق */
+            border-top: 4px solid var(--primary-blue);
         }
-        .testimonial-card-pro::before { content: ''; position: absolute; top: 0; right: 0; width: 100%; height: 3px; background: var(--accent-color); opacity: 0.8; }
-        .testimonial-card-pro:hover { transform: translateY(-5px); border-color: var(--accent-color); }
-        .testimonial-header-info { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+        .testimonial-card-pro::before { 
+            content: ''; position: absolute; top: 0; right: 0; width: 100%; height: 4px; 
+            background: var(--primary-blue); opacity: 0.9; 
+        }
+        .testimonial-card-pro:hover { transform: translateY(-6px); border-color: var(--primary-blue); }
+        .testimonial-header-info { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; }
         .testimonial-avatar-badge {
-            width: 42px; height: 42px; border-radius: 12px; background: linear-gradient(135deg, var(--primary-blue), var(--accent-color));
-            color: white; font-weight: 900; font-size: 1rem; display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 5px 15px rgba(30, 58, 138, 0.2); flex-shrink: 0;
+            width: 46px; height: 46px; border-radius: 14px; 
+            background: linear-gradient(135deg, var(--primary-blue), #2563eb);
+            color: white; font-weight: 900; font-size: 1.05rem; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 6px 16px rgba(30, 58, 138, 0.25); flex-shrink: 0;
         }
-        .testimonial-titles h4 { font-size: 1rem; color: var(--text-dark); font-weight: 800; margin-bottom: 2px; }
-        .testimonial-titles span { font-size: 0.8rem; color: var(--accent-color); font-weight: 700; }
-        .testimonial-stars { display: flex; gap: 2px; color: #f59e0b; font-size: 10px; margin-bottom: 10px; }
-        .testimonial-body-text { font-size: 0.92rem; color: var(--text-muted); font-weight: 600; line-height: 1.6; font-style: italic; }
+        .testimonial-titles h4 { font-size: 1.05rem; color: var(--text-dark); font-weight: 800; margin-bottom: 2px; }
+        .testimonial-titles span { font-size: 0.82rem; color: var(--primary-blue); font-weight: 700; }
+        .testimonial-stars { display: flex; gap: 3px; color: #f59e0b; font-size: 11px; margin-bottom: 12px; }
+        .testimonial-body-text { font-size: 0.95rem; color: var(--text-muted); font-weight: 600; line-height: 1.65; font-style: italic; }
 
-        .story-section { padding: 45px 5%; background: var(--active-blue); border-bottom: var(--glass-border); text-align: center; }
-        .story-content { max-width: 850px; margin: auto; }
-        .story-content h2 { color: var(--primary-blue); font-size: 2rem; font-weight: 900; margin-bottom: 18px; }
+        .story-section { padding: 55px 5%; background: var(--active-blue); border-bottom: var(--glass-border); text-align: center; }
+        .story-content { max-width: 880px; margin: auto; }
+        .story-content h2 { color: var(--primary-blue); font-size: 2.2rem; font-weight: 900; margin-bottom: 20px; }
         .story-content p {
-            font-size: 1.05rem; line-height: 1.8; color: var(--text-dark); font-weight: 600; background: var(--card-bg);
-            padding: 25px 30px; border-radius: 16px; border: var(--glass-border); box-shadow: var(--glass-shadow);
+            font-size: 1.08rem; line-height: 1.85; color: var(--text-dark); font-weight: 600; background: var(--card-bg);
+            padding: 30px 35px; border-radius: 18px; border: var(--glass-border); box-shadow: var(--glass-shadow);
         }
 
-        .dashboard-content { max-width: 1200px; margin: 0 auto; width: 100%; padding: 40px 5%; }
-        .section-title { font-size: 24px; font-weight: 900; color: var(--text-dark); margin-bottom: 18px; display: flex; align-items: center; gap: 10px; padding-bottom: 8px; border-bottom: 2px solid var(--border-color); }
+        .dashboard-content { max-width: 1200px; margin: 0 auto; width: 100%; padding: 45px 5%; }
+        .section-title { font-size: 24px; font-weight: 900; color: var(--text-dark); margin-bottom: 22px; display: flex; align-items: center; gap: 12px; padding-bottom: 10px; border-bottom: 2px solid var(--border-color); }
 
-        .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+        .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 24px; }
 
         .nav-card {
-            background-color: var(--card-bg); backdrop-filter: blur(12px);
-            border-radius: 20px; padding: 25px 20px; cursor: pointer;
+            background-color: var(--card-bg); backdrop-filter: blur(16px);
+            border-radius: 22px; padding: 28px 24px; cursor: pointer;
             display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
             border: var(--glass-border); box-shadow: var(--glass-shadow);
-            transition: all 0.3s ease; position: relative; overflow: hidden;
+            transition: all 0.35s ease; position: relative; overflow: hidden;
         }
         .nav-card:hover { 
-            transform: translateY(-6px); box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1); 
+            transform: translateY(-7px); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12); 
             border-color: var(--primary-blue); background-color: var(--active-blue); 
         }
-        .nav-card i.main-icon { font-size: 42px; color: var(--primary-blue); margin-bottom: 14px; transition: transform 0.3s ease; }
-        .nav-card:hover i.main-icon { transform: scale(1.1) rotate(5deg); color: var(--accent-color); }
-        .nav-card h3 { font-size: 19px; font-weight: 800; color: var(--text-dark); margin-bottom: 6px; }
+        .nav-card i.main-icon { font-size: 44px; color: var(--primary-blue); margin-bottom: 16px; transition: transform 0.3s ease; }
+        .nav-card:hover i.main-icon { transform: scale(1.12) rotate(5deg); color: var(--accent-color); }
+        .nav-card h3 { font-size: 20px; font-weight: 800; color: var(--text-dark); margin-bottom: 6px; }
         .nav-card p.en-text { font-size: 13px; color: var(--text-muted); font-weight: 700; }
         
-        .course-card-main { border: 2px solid var(--primary-blue); background: linear-gradient(135deg, var(--card-bg) 0%, rgba(30, 58, 138, 0.03) 100%); }
+        .course-card-main { border: 2px solid var(--primary-blue); background: linear-gradient(135deg, var(--card-bg) 0%, rgba(30, 58, 138, 0.04) 100%); }
         .badge-available { 
-            position: absolute; top: 14px; right: 14px; font-size: 11px; background: var(--primary-blue); color: white; padding: 4px 12px; border-radius: 20px; font-weight: 900; box-shadow: 0 3px 10px rgba(30, 58, 138, 0.2); 
+            position: absolute; top: 14px; right: 14px; font-size: 11px; background: var(--primary-blue); color: white; padding: 4px 14px; border-radius: 20px; font-weight: 900; box-shadow: 0 4px 12px rgba(30, 58, 138, 0.25); 
             display: inline-flex; align-items: center; gap: 6px;
+        }
+        html[dir="ltr"] .badge-available {
+            right: auto;
+            left: 14px;
         }
 
         @keyframes shimmerCard {
@@ -343,9 +405,9 @@
         }
 
         .course-card-featured { 
-            border: 2.5px solid var(--primary-blue) !important; 
-            background: linear-gradient(135deg, var(--card-bg) 0%, rgba(30, 58, 138, 0.06) 100%) !important;
-            box-shadow: 0 15px 35px rgba(30, 58, 138, 0.12) !important;
+            border: 2.5px solid var(--accent-color) !important; 
+            background: linear-gradient(135deg, var(--card-bg) 0%, rgba(13, 148, 136, 0.06) 100%) !important;
+            box-shadow: 0 18px 40px rgba(13, 148, 136, 0.15) !important;
             position: relative;
             overflow: hidden;
         }
@@ -354,7 +416,7 @@
             position: absolute;
             top: 0; left: -150%;
             width: 150%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
             animation: shimmerCard 3.5s infinite;
         }
         .celebrate-icon-box {
@@ -365,7 +427,7 @@
         .course-card-upcoming { border: var(--glass-border); background: linear-gradient(135deg, var(--card-bg) 0%, var(--bg-main) 100%); }
         
         .status-badge-box {
-            margin-top: 12px; display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px;
+            margin-top: 14px; display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px;
             border-radius: 10px; font-size: 12px; font-weight: 800; background: rgba(30, 58, 138, 0.08);
             color: var(--primary-blue); border: 1px dashed var(--primary-blue);
         }
@@ -398,77 +460,79 @@
             100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
         }
         
-        .course-details-header { background: linear-gradient(135deg, var(--primary-blue) 0%, #0a1128 100%); color: white; padding: 45px 20px; text-align: center; border-radius: 20px; margin-bottom: 25px; box-shadow: 0 15px 30px rgba(0,0,0,0.1); position: relative; overflow: hidden; }
-        .course-details-header h2 { font-size: clamp(1.8rem, 3vw, 2.5rem); font-weight: 900; margin-bottom: 12px; }
-        .course-details-header p { font-size: 1.05rem; color: #cbd5e1; font-weight: 600; max-width: 700px; margin: 0 auto; line-height: 1.6; }
-        .course-meta { display: flex; justify-content: center; gap: 12px; margin-top: 20px; flex-wrap: wrap; }
-        .meta-item { background: rgba(255,255,255,0.12); backdrop-filter: blur(6px); padding: 8px 16px; border-radius: 10px; font-weight: 800; font-size: 13px; display: flex; align-items: center; gap: 6px; border: 1px solid rgba(255,255,255,0.15); }
+        .course-details-header { background: linear-gradient(135deg, var(--primary-blue) 0%, #0a1128 100%); color: white; padding: 50px 24px; text-align: center; border-radius: 22px; margin-bottom: 28px; box-shadow: 0 20px 40px rgba(0,0,0,0.15); position: relative; overflow: hidden; }
+        .course-details-header h2 { font-size: clamp(1.8rem, 3vw, 2.6rem); font-weight: 900; margin-bottom: 14px; }
+        .course-details-header p { font-size: 1.08rem; color: #cbd5e1; font-weight: 600; max-width: 720px; margin: 0 auto; line-height: 1.65; }
+        .course-meta { display: flex; justify-content: center; gap: 14px; margin-top: 22px; flex-wrap: wrap; }
+        .meta-item { background: rgba(255,255,255,0.12); backdrop-filter: blur(8px); padding: 8px 18px; border-radius: 12px; font-weight: 800; font-size: 13px; display: flex; align-items: center; gap: 8px; border: 1px solid rgba(255,255,255,0.18); }
         
-        .course-content-split { display: grid; grid-template-columns: 2fr 1fr; gap: 25px; align-items: start; }
+        .course-content-split { display: grid; grid-template-columns: 2fr 1fr; gap: 28px; align-items: start; }
         @media (max-width: 950px) { .course-content-split { grid-template-columns: 1fr; } }
         
-        .content-box { background: var(--card-bg); backdrop-filter: blur(12px); padding: 25px 30px; border-radius: 20px; border: var(--glass-border); margin-bottom: 20px; box-shadow: var(--glass-shadow); }
-        .content-box h2 { color: var(--primary-blue); margin-bottom: 20px; font-size: 1.6rem; font-weight: 900; border-bottom: 2px solid var(--border-color); padding-bottom: 10px; }
-        .content-box h3 { color: var(--accent-color); margin-top: 20px; margin-bottom: 10px; font-size: 1.2rem; display: flex; align-items: center; gap: 8px; font-weight: 800; }
-        .content-box p, .content-box li { color: var(--text-dark); line-height: 1.8; font-weight: 600; font-size: 0.98rem; margin-bottom: 10px; }
-        .content-box ul { padding-right: 20px; }
+        .content-box { background: var(--card-bg); backdrop-filter: blur(16px); padding: 28px 32px; border-radius: 22px; border: var(--glass-border); margin-bottom: 22px; box-shadow: var(--glass-shadow); }
+        .content-box h2 { color: var(--primary-blue); margin-bottom: 22px; font-size: 1.65rem; font-weight: 900; border-bottom: 2px solid var(--border-color); padding-bottom: 12px; }
+        .content-box h3 { color: var(--accent-color); margin-top: 22px; margin-bottom: 12px; font-size: 1.25rem; display: flex; align-items: center; gap: 10px; font-weight: 800; }
+        .content-box p, .content-box li { color: var(--text-dark); line-height: 1.85; font-weight: 600; font-size: 1rem; margin-bottom: 12px; }
+        .content-box ul { padding-right: 22px; }
+        html[dir="ltr"] .content-box ul { padding-right: 0; padding-left: 22px; }
 
-        .sales-checklist { list-style: none; padding: 0; margin-top: 10px; }
-        .sales-checklist li { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 0.98rem; margin-bottom: 8px; color: var(--text-dark); background: var(--active-blue); padding: 8px 14px; border-radius: 10px; border-right: 4px solid var(--primary-blue); border: var(--glass-border); }
-        .sales-checklist li i { color: var(--primary-blue); font-size: 1.05rem; }
+        .sales-checklist { list-style: none; padding: 0; margin-top: 12px; }
+        .sales-checklist li { display: flex; align-items: center; gap: 12px; font-weight: 700; font-size: 1rem; margin-bottom: 10px; color: var(--text-dark); background: var(--active-blue); padding: 10px 16px; border-radius: 12px; border-right: 4px solid var(--primary-blue); border: var(--glass-border); }
+        html[dir="ltr"] .sales-checklist li { border-right: var(--glass-border); border-left: 4px solid var(--primary-blue); }
+        .sales-checklist li i { color: var(--primary-blue); font-size: 1.1rem; }
 
-        .faq-item { margin-bottom: 18px; border-bottom: 1px solid var(--border-color); padding-bottom: 15px; }
-        .faq-question { font-weight: 800; color: var(--primary-blue); font-size: 1.1rem; margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
-        .faq-answer { color: var(--text-muted); font-weight: 600; line-height: 1.6; padding-right: 24px; font-size: 0.98rem; }
+        .faq-item { margin-bottom: 20px; border-bottom: 1px solid var(--border-color); padding-bottom: 18px; }
+        .faq-question { font-weight: 800; color: var(--primary-blue); font-size: 1.15rem; margin-bottom: 8px; display: flex; align-items: center; gap: 10px; }
+        .faq-answer { color: var(--text-muted); font-weight: 600; line-height: 1.75; padding-right: 26px; font-size: 1rem; }
+        html[dir="ltr"] .faq-answer { padding-right: 0; padding-left: 26px; }
 
-        .progress-wrapper { background: var(--card-bg); backdrop-filter: blur(12px); padding: 20px 25px; border-radius: 16px; margin-bottom: 25px; border: var(--glass-border); box-shadow: var(--glass-shadow); }
-        .progress-header { display: flex; justify-content: space-between; margin-bottom: 10px; font-weight: 900; color: var(--primary-blue); font-size: 17px; }
-        .progress-container { width: 100%; height: 14px; background-color: var(--active-blue); border-radius: 8px; overflow: hidden; border: var(--glass-border); }
-        .progress-bar { height: 100%; width: 0%; background: linear-gradient(90deg, var(--primary-blue), #3b82f6); transition: width 1s ease; border-radius: 8px; }
+        .progress-wrapper { background: var(--card-bg); backdrop-filter: blur(16px); padding: 22px 28px; border-radius: 18px; margin-bottom: 28px; border: var(--glass-border); box-shadow: var(--glass-shadow); }
+        .progress-header { display: flex; justify-content: space-between; margin-bottom: 12px; font-weight: 900; color: var(--primary-blue); font-size: 18px; }
+        .progress-container { width: 100%; height: 16px; background-color: var(--active-blue); border-radius: 10px; overflow: hidden; border: var(--glass-border); }
+        .progress-bar { height: 100%; width: 0%; background: linear-gradient(90deg, var(--primary-blue), var(--accent-color)); transition: width 1s ease; border-radius: 10px; }
 
-        .viewer-navbar { background-color: var(--card-bg); backdrop-filter: blur(12px); border-bottom: var(--glass-border); display: flex; align-items: center; justify-content: space-between; padding: 12px 25px; }
+        .viewer-navbar { background-color: var(--card-bg); backdrop-filter: blur(16px); border-bottom: var(--glass-border); display: flex; align-items: center; justify-content: space-between; padding: 14px 28px; }
         .content-frame-container { flex-grow: 1; position: relative; }
-        .screen-frame { width: 100%; height: 100%; min-height: calc(100vh - 70px); border: none; display: none; opacity: 0; transition: opacity 0.3s ease; }
+        .screen-frame { width: 100%; height: 100%; min-height: calc(100vh - 75px); border: none; display: none; opacity: 0; transition: opacity 0.3s ease; }
         .screen-frame.active { display: block; opacity: 1; }
 
-        .full-page-loader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-main); display: none; flex-direction: column; align-items: center; justify-content: center; z-index: 9999; backdrop-filter: blur(16px); }
-        .full-page-loader i { font-size: 50px; color: var(--primary-blue); margin-bottom: 15px; animation: pulseNeural 1.5s infinite; }
+        .full-page-loader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-main); display: none; flex-direction: column; align-items: center; justify-content: center; z-index: 9999; backdrop-filter: blur(20px); }
+        .full-page-loader i { font-size: 55px; color: var(--primary-blue); margin-bottom: 18px; animation: pulseNeural 1.5s infinite; }
         
-        #toast-container { position: fixed; bottom: 20px; left: 20px; display: flex; flex-direction: column; gap: 10px; z-index: 10000; }
-        .toast { background: var(--primary-blue); color: white; padding: 12px 20px; border-radius: 12px; font-weight: 800; font-size: 13px; display: flex; align-items: center; gap: 10px; box-shadow: 0 8px 20px rgba(0,0,0,0.15); animation: slideInNeural 0.3s ease forwards; border: 1px solid rgba(255,255,255,0.2); }
+        #toast-container { position: fixed; bottom: 25px; left: 25px; display: flex; flex-direction: column; gap: 12px; z-index: 10000; }
+        .toast { background: var(--primary-blue); color: white; padding: 14px 22px; border-radius: 14px; font-weight: 800; font-size: 14px; display: flex; align-items: center; gap: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); animation: slideInNeural 0.3s ease forwards; border: 1px solid rgba(255,255,255,0.25); }
         .toast.error { background: #dc2626; }
         .toast.fadeOut { animation: fadeOutNeural 0.3s ease-in forwards; }
 
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(6, 9, 19, 0.7); backdrop-filter: blur(10px); z-index: 9999; display: none; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s ease; }
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(3, 7, 18, 0.75); backdrop-filter: blur(12px); z-index: 9999; display: none; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s ease; }
         .modal-overlay.active { display: flex; opacity: 1; }
-        .login-modal { background: var(--card-bg); backdrop-filter: blur(20px); padding: 30px; border-radius: 20px; width: 90%; max-width: 380px; text-align: center; box-shadow: 0 20px 40px rgba(0,0,0,0.2); border: var(--glass-border); }
-        .login-input { width: 100%; padding: 12px; border: 2px solid var(--border-color); border-radius: 10px; font-size: 15px; font-weight: 700; text-align: center; margin-bottom: 16px; background: var(--bg-main); color: var(--text-dark); transition: border-color 0.3s; }
-        .login-input:focus { outline: none; border-color: var(--primary-blue); box-shadow: 0 0 10px rgba(96, 165, 250, 0.3); }
+        .login-modal { background: var(--card-bg); backdrop-filter: blur(24px); padding: 35px; border-radius: 24px; width: 90%; max-width: 400px; text-align: center; box-shadow: 0 25px 50px rgba(0,0,0,0.25); border: var(--glass-border); }
+        .login-input { width: 100%; padding: 14px; border: 2px solid var(--border-color); border-radius: 12px; font-size: 16px; font-weight: 700; text-align: center; margin-bottom: 18px; background: var(--bg-main); color: var(--text-dark); transition: border-color 0.3s; }
+        .login-input:focus { outline: none; border-color: var(--primary-blue); box-shadow: 0 0 12px rgba(96, 165, 250, 0.4); }
 
-        .mega-footer { background: var(--footer-bg); color: #94a3b8; padding: 45px 5% 20px; margin-top: auto; border-top: 3px solid var(--primary-blue); position: relative; }
-        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 30px; margin-bottom: 30px; max-width: 1200px; margin-left: auto; margin-right: auto; }
-        .footer-col h3 { color: #f8fafc; font-size: 1.15rem; font-weight: 900; margin-bottom: 16px; }
+        .mega-footer { background: var(--footer-bg); color: #94a3b8; padding: 50px 5% 25px; margin-top: auto; border-top: 4px solid var(--accent-color); position: relative; }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 35px; margin-bottom: 35px; max-width: 1200px; margin-left: auto; margin-right: auto; }
+        .footer-col h3 { color: #f8fafc; font-size: 1.2rem; font-weight: 900; margin-bottom: 18px; }
         
-        .footer-links { list-style: none; display: flex; flex-wrap: wrap; gap: 10px; }
+        .footer-links { list-style: none; display: flex; flex-wrap: wrap; gap: 12px; }
         .footer-links li { margin-bottom: 0; }
         .footer-links a { 
             color: #94a3b8; text-decoration: none; font-weight: 600; transition: all 0.3s ease; 
-            display: flex; align-items: center; gap: 6px; cursor: pointer; font-size: 0.9rem; 
-            background: rgba(255, 255, 255, 0.04); padding: 6px 12px; border-radius: 8px; 
+            display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 0.92rem; 
+            background: rgba(255, 255, 255, 0.04); padding: 7px 14px; border-radius: 10px; 
             border: 1px solid rgba(255, 255, 255, 0.08); 
         }
-        .footer-links a:hover { color: var(--accent-color); background: rgba(255, 255, 255, 0.08); transform: translateY(-2px); border-color: var(--accent-color); }
+        .footer-links a:hover { color: var(--accent-light); background: rgba(255, 255, 255, 0.1); transform: translateY(-2px); border-color: var(--accent-light); }
 
-        .social-icons { display: flex; gap: 10px; margin-top: 14px; }
-        .social-icons a { color: white; background: rgba(255,255,255,0.08); width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; border-radius: 10px; transition: all 0.3s ease; border: 1px solid rgba(255,255,255,0.1); }
-        .social-icons a:hover { background: var(--primary-blue); transform: translateY(-2px); }
-        .footer-bottom { text-align: center; padding-top: 18px; border-top: 1px solid rgba(255,255,255,0.08); font-weight: 600; font-size: 0.85rem; max-width: 1200px; margin: 0 auto; }
+        .social-icons { display: flex; gap: 12px; margin-top: 16px; }
+        .social-icons a { color: white; background: rgba(255,255,255,0.08); width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 12px; transition: all 0.3s ease; border: 1px solid rgba(255,255,255,0.12); }
+        .social-icons a:hover { background: var(--accent-color); transform: translateY(-3px); }
+        .footer-bottom { text-align: center; padding-top: 22px; border-top: 1px solid rgba(255,255,255,0.08); font-weight: 600; font-size: 0.88rem; max-width: 1200px; margin: 0 auto; }
 
-        @keyframes fadeInNeural { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeInNeural { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes slideInNeural { from { opacity: 0; transform: translateY(15px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
         @keyframes fadeOutNeural { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(10px); } }
         @keyframes pulseNeural { 0% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.08); opacity: 0.6; } 100% { transform: scale(1); opacity: 1; } }
-        @keyframes pulseGreen { 0% { box-shadow: 0 0 0 0 rgba(30, 58, 138, 0.4); } 70% { box-shadow: 0 0 0 6px rgba(30, 58, 138, 0); } 100% { box-shadow: 0 0 0 0 rgba(30, 58, 138, 0); } }
     </style> 
     <script type="text/javascript">
     (function(c,l,a,r,i,t,y){
@@ -479,6 +543,16 @@
     </script>
 </head>
 <body>
+
+    <!-- Global Dynamic Moving Ticker Bar -->
+    <div class="global-ticker">
+        <div class="ticker-wrapper">
+            <span class="ticker-item"><i class="fa-solid fa-globe"></i> <span data-ar="BA Engineering Academy | منصة تعليمية متكاملة بالمواصفات العالمية" data-en="BA Engineering Academy | Integrated Educational Platform with International Standards">BA Engineering Academy | منصة تعليمية متكاملة بالمواصفات العالمية</span></span>
+            <span class="ticker-item"><i class="fa-solid fa-fire"></i> <span data-ar="متاح الآن: دورة الهندسة القيمية ودورة إدارة مخاطر المشاريع الاحترافية" data-en="Available Now: Value Engineering & Professional Project Risk Management Courses">متاح الآن: دورة الهندسة القيمية ودورة إدارة مخاطر المشاريع الاحترافية</span></span>
+            <span class="ticker-item"><i class="fa-solid fa-award"></i> <span data-ar="شهادات إتمام موثقة ونظام تحقق فوري من صحة المستندات" data-en="Verified Certificates & Instant Document Verification System">شهادات إتمام موثقة ونظام تحقق فوري من صحة المستندات</span></span>
+            <span class="ticker-item"><i class="fa-solid fa-brain"></i> <span data-ar="من النظرية إلى التنفيذ: تطبيق ميداني بخبرة أكثر من 20 عاماً" data-en="From Theory to Execution: Field Application with 20+ Years Experience">من النظرية إلى التنفيذ: تطبيق ميداني بخبرة أكثر من 20 عاماً</span></span>
+        </div>
+    </div>
 
     <a href="javascript:void(0);" onclick="showWhatsAppNotice(event)" class="whatsapp-float" title="تواصل معنا عبر واتساب">
         <i class="fa-brands fa-whatsapp"></i>
@@ -494,45 +568,45 @@
 
     <div id="full-page-loader" class="full-page-loader">
         <i class="fa-solid fa-circle-notch fa-spin"></i>
-        <h2>جاري التحميل...</h2>
+        <h2 data-ar="جاري التحميل..." data-en="Loading...">جاري التحميل...</h2>
     </div>
 
     <div class="modal-overlay" id="cert-modal-overlay">
         <div class="login-modal">
-            <i class="fa-solid fa-certificate" style="font-size: 2.5rem; color: var(--accent-color); margin-bottom: 12px;"></i>
-            <h3>التحقق من اعتماد الشهادة</h3>
-            <p style="color: var(--text-muted); margin-bottom: 16px; font-weight: 600; font-size: 0.9rem;">أدخل كود الشهادة الموجود أسفل المستند للتأكد من صحتها:</p>
+            <i class="fa-solid fa-certificate" style="font-size: 2.8rem; color: var(--accent-color); margin-bottom: 14px;"></i>
+            <h3 data-ar="التحقق من اعتماد الشهادة" data-en="Verify Certificate Legitimacy">التحقق من اعتماد الشهادة</h3>
+            <p style="color: var(--text-muted); margin-bottom: 18px; font-weight: 600; font-size: 0.92rem;" data-ar="أدخل كود الشهادة الموجود أسفل المستند للتأكد من صحتها:" data-en="Enter the certificate code at the bottom of the document to verify:">أدخل كود الشهادة الموجود أسفل المستند للتأكد من صحتها:</p>
             <input type="text" id="cert-code-input" class="login-input" placeholder="مثال: BA-2026-9850" style="text-transform: uppercase;">
-            <div id="cert-result-box" style="margin-bottom: 12px; font-weight: 800; font-size: 13px; min-height: 22px;"></div>
-            <div style="display: flex; gap: 8px;">
-                <button class="btn-primary" style="flex: 1;" onclick="verifyCertificate()">تحقق</button>
-                <button class="btn-outline" style="flex: 1;" onclick="closeCertModal()">إغلاق</button>
+            <div id="cert-result-box" style="margin-bottom: 14px; font-weight: 800; font-size: 14px; min-height: 24px;"></div>
+            <div style="display: flex; gap: 10px;">
+                <button class="btn-primary" style="flex: 1;" onclick="verifyCertificate()" data-ar="تحقق" data-en="Verify">تحقق</button>
+                <button class="btn-outline" style="flex: 1;" onclick="closeCertModal()" data-ar="إغلاق" data-en="Close">إغلاق</button>
             </div>
         </div>
     </div>
 
     <div class="modal-overlay" id="login-modal-overlay">
         <div class="login-modal">
-            <i class="fa-solid fa-shield-halved" style="font-size: 2.5rem; color: var(--accent-color); margin-bottom: 12px;"></i>
-            <h3>بوابة المتدربين</h3>
-            <p style="color: var(--text-muted); margin-bottom: 16px; font-weight: 600; font-size: 0.9rem;">الرجاء إدخال كود المرور الخاص بالكورس للمتابعة</p>
+            <i class="fa-solid fa-shield-halved" style="font-size: 2.8rem; color: var(--accent-color); margin-bottom: 14px;"></i>
+            <h3 data-ar="بوابة المتدربين" data-en="Trainee Portal">بوابة المتدربين</h3>
+            <p style="color: var(--text-muted); margin-bottom: 18px; font-weight: 600; font-size: 0.92rem;" data-ar="الرجاء إدخال كود المرور الخاص بالكورس للمتابعة" data-en="Please enter the course passcode to proceed">الرجاء إدخال كود المرور الخاص بالكورس للمتابعة</p>
             <input type="password" id="course-password" class="login-input" placeholder="أدخل كود المرور...">
-            <div style="display: flex; gap: 8px;">
-                <button class="btn-primary" style="flex: 1;" onclick="verifyLogin()">دخول</button>
-                <button class="btn-outline" style="flex: 1;" onclick="closeModal()">إلغاء</button>
+            <div style="display: flex; gap: 10px;">
+                <button class="btn-primary" style="flex: 1;" onclick="verifyLogin()" data-ar="دخول" data-en="Enter">دخول</button>
+                <button class="btn-outline" style="flex: 1;" onclick="closeModal()" data-ar="إلغاء" data-en="Cancel">إلغاء</button>
             </div>
         </div>
     </div>
 
     <div class="modal-overlay" id="va-login-modal-overlay">
         <div class="login-modal">
-            <i class="fa-solid fa-lock" style="font-size: 2.5rem; color: var(--accent-color); margin-bottom: 12px;"></i>
-            <h3>بوابة متدربي الهندسة القيمية</h3>
-            <p style="color: var(--text-muted); margin-bottom: 16px; font-weight: 600; font-size: 0.9rem;">الرجاء إدخال الرمز السري المخصص للدخول إلى المقرر</p>
+            <i class="fa-solid fa-lock" style="font-size: 2.8rem; color: var(--accent-color); margin-bottom: 14px;"></i>
+            <h3 data-ar="بوابة متدربي الهندسة القيمية" data-en="Value Engineering Portal">بوابة متدربي الهندسة القيمية</h3>
+            <p style="color: var(--text-muted); margin-bottom: 18px; font-weight: 600; font-size: 0.92rem;" data-ar="الرجاء إدخال الرمز السري المخصص للدخول إلى المقرر" data-en="Please enter the access key to enter the course">الرجاء إدخال الرمز السري المخصص للدخول إلى المقرر</p>
             <input type="password" id="va-course-password" class="login-input" placeholder="أدخل الرمز السري...">
-            <div style="display: flex; gap: 8px;">
-                <button class="btn-primary" style="flex: 1;" onclick="verifyVALogin()">دخول</button>
-                <button class="btn-outline" style="flex: 1;" onclick="closeVAModal()">إلغاء</button>
+            <div style="display: flex; gap: 10px;">
+                <button class="btn-primary" style="flex: 1;" onclick="verifyVALogin()" data-ar="دخول" data-en="Enter">دخول</button>
+                <button class="btn-outline" style="flex: 1;" onclick="closeVAModal()" data-ar="إلغاء" data-en="Cancel">إلغاء</button>
             </div>
         </div>
     </div>
@@ -542,9 +616,15 @@
             <img src="e842ee15-fc5d-491b-a6ae-17e6f345bccd.jpg" alt="BA Academy Logo">
         </div>
         <nav class="top-bar-actions">
-            <button class="nav-link home-highlight" onclick="switchMainView('home-view')"><i class="fa-solid fa-house"></i> الرئيسية</button>
-            <button class="nav-link" onclick="switchMainView('about-view')"><i class="fa-solid fa-circle-info"></i> من نحن</button>
-            <button class="nav-link" onclick="openCertModal()" style="color: var(--accent-color); font-weight: 900;"><i class="fa-solid fa-award"></i> التحقق من شهادة</button>
+            <button class="nav-link home-highlight" onclick="switchMainView('home-view')"><i class="fa-solid fa-house"></i> <span data-ar="الرئيسية" data-en="Home">الرئيسية</span></button>
+            <button class="nav-link" onclick="switchMainView('about-view')"><i class="fa-solid fa-circle-info"></i> <span data-ar="من نحن" data-en="About Us">من نحن</span></button>
+            <button class="nav-link" onclick="openCertModal()" style="color: var(--accent-light); font-weight: 900;"><i class="fa-solid fa-award"></i> <span data-ar="التحقق من شهادة" data-en="Verify Certificate">التحقق من شهادة</span></button>
+            
+            <!-- زر الترجمة المضاف بالمواصفات المطلوبة -->
+            <button class="nav-link" id="lang-toggle-btn" onclick="toggleLanguage()" style="background: rgba(30, 58, 138, 0.4); border-color: var(--accent-light); color: #fff;">
+                <i class="fa-solid fa-globe"></i> <span id="lang-btn-text">English</span>
+            </button>
+
             <button class="theme-btn" onclick="toggleTheme()" title="تبديل المظهر">
                 <i class="fa-solid fa-moon" id="theme-icon"></i>
             </button>
@@ -554,17 +634,19 @@
     <main id="home-view" class="app-view active">
         <section class="hero-section">
             <div class="hero-content">
+                <div class="platform-tag">
+                    <i class="fa-solid fa-circle-dot fa-spin"></i> <span data-ar="نتعلم الهندسة كما تُمارس في المشاريع" data-en="Learning Engineering as Practiced in Real Projects">نتعلم الهندسة كما تُمارس في المشاريع</span>
+                </div>
                 <h1>BA Engineering Academy</h1>
                 <h2>From Vision to Execution</h2>
                 
                 <div class="hero-quote-box">
-                    <p><i class="fa-solid fa-quote-right"></i> لأن المعرفة الحقيقية ليست أكثر تعقيدًا... بل أكثر وضوحًا. نصمم تجربة تعلم تساعدك على إتقان المهارات التي تحتاجها في المشاريع، دون إهدار وقتك.</p>
+                    <p><i class="fa-solid fa-quote-right" id="quote-icon"></i> <span data-ar="لأن التعلم الحقيقي لا يعتمد على كثرة المعلومات، بل على وضوحها وتطبيقها. نصمم تجربة تعليمية تساعدك على اكتساب المهارات التي تحتاجها في المشاريع، دون تعقيد أو إهدار للوقت." data-en="Because true learning isn't about information volume, but clarity and application. We design educational experiences that help you master real project skills without complexity or wasted time.">لأن التعلم الحقيقي لا يعتمد على كثرة المعلومات، بل على وضوحها وتطبيقها. نصمم تجربة تعليمية تساعدك على اكتساب المهارات التي تحتاجها في المشاريع، دون تعقيد أو إهدار للوقت.</span></p>
                 </div>
 
-                <p>طور مهاراتك الهندسية وانتقل من الجانب الأكاديمي النظري إلى الواقع التطبيقي من خلال مسارات تدريبية احترافية مدعومة بخبرات ميدانية وشهادات إتمام.</p>
                 <div class="hero-buttons">
                     <button class="btn-primary" onclick="document.getElementById('courses-section').scrollIntoView({behavior: 'smooth'})">
-                        <i class="fa-solid fa-play"></i> استعرض المسارات
+                        <i class="fa-solid fa-play"></i> <span data-ar="استكشف المسارات" data-en="Explore Tracks">استكشف المسارات</span>
                     </button>
                 </div>
             </div>
@@ -576,134 +658,135 @@
         </section>
 
         <section class="stats-section">
-            <div class="stat-box"><span class="stat-number" data-target="20">0</span><span class="stat-label">عاماً خبرة ميدانية</span></div>
-            <div class="stat-box"><span class="stat-number" data-target="24">0</span><span class="stat-label">ساعة تدريبية مكثفة</span></div>
-            <div class="stat-box"><span class="stat-number" data-target="15">0</span><span class="stat-label">نموذج وأداة عملية</span></div>
-            <div class="stat-box"><span class="stat-number" data-target="100">0</span><span class="stat-label">% تركيز تطبيقي</span></div>
+            <div class="stat-box"><span class="stat-number" data-target="20">0</span><span class="stat-label" data-ar="عاماً خبرة ميدانية" data-en="Years Field Experience">عاماً خبرة ميدانية</span></div>
+            <div class="stat-box"><span class="stat-number" data-target="24">0</span><span class="stat-label" data-ar="ساعة تدريبية مكثفة" data-en="Intensive Training Hours">ساعة تدريبية مكثفة</span></div>
+            <div class="stat-box"><span class="stat-number" data-target="15">0</span><span class="stat-label" data-ar="نموذج وأداة عملية" data-en="Practical Tools & Models">نموذج وأداة عملية</span></div>
+            <div class="stat-box"><span class="stat-number" data-target="100">0</span><span class="stat-label" data-ar="% تركيز تطبيقي" data-en="% Practical Focus">% تركيز تطبيقي</span></div>
         </section>
 
         <section class="story-section">
             <div class="story-content">
-                <h2>لماذا أنشأنا BA Academy؟</h2>
+                <h2 data-ar="لماذا أنشأنا BA Academy؟" data-en="Why did we create BA Academy?">لماذا أنشأنا BA Academy؟</h2>
                 <p>
-                    <i class="fa-solid fa-quote-right" style="color: var(--accent-color); font-size: 1.2rem; margin-bottom: 6px; display: block;"></i>
-                    "لم ننشئ BA Academy لنضيف دورة جديدة إلى الإنترنت، بل أنشأناها لنقدم تجربة تعلم مختلفة. نؤمن أن أفضل طريقة للتعلم هي تبسيط المفاهيم المعقدة وربطها بالتطبيق العملي لتمكين المهندسين من تحويل المعرفة إلى نتائج حقيقية."
+                    <i class="fa-solid fa-quote-right" style="color: var(--accent-color); font-size: 1.3rem; margin-bottom: 8px; display: block;"></i>
+                    <span data-ar='"بدأت فكرة BA Academy من ملاحظة بسيطة: هناك فجوة بين ما ندرسه، وما نطبقه في المشاريع. لذلك صممنا منصة تقدم تعلمًا عمليًا، وأدوات ومرجعًا يساعد المهندس على تطوير مهاراته والرجوع إليه في مختلف مراحل حياته المهنية."' data-en='"The idea of BA Academy started from a simple observation: there is a gap between what we study and what we apply in projects. Thus, we created a platform providing practical learning and tools that help engineers grow throughout their career."'>"بدأت فكرة BA Academy من ملاحظة بسيطة: هناك فجوة بين ما ندرسه، وما نطبقه في المشاريع. لذلك صممنا منصة تقدم تعلمًا عمليًا، وأدوات ومرجعًا يساعد المهندس على تطوير مهاراته والرجوع إليه في مختلف مراحل حياته المهنية."</span>
                 </p>
             </div>
         </section>
 
         <section class="features-section">
-            <h2>لماذا تختار BA Academy؟</h2>
-            <p class="features-subtitle">نضع بين يديك معايير احترافية فريدة لتطوير مسيرتك الهندسية</p>
+            <h2 data-ar="لماذا تختار BA Academy؟" data-en="Why Choose BA Academy?">لماذا تختار BA Academy؟</h2>
+            <p class="features-subtitle" data-ar="نضع بين يديك معايير احترافية فريدة لتطوير مسيرتك الهندسية" data-en="We provide unique professional standards to elevate your engineering career">نضع بين يديك معايير احترافية فريدة لتطوير مسيرتك الهندسية</p>
             <div class="features-grid">
                 <div class="feature-card">
                     <i class="fa-solid fa-briefcase"></i>
-                    <h4>خبرة عملية ميدانية</h4>
-                    <p>محتوى مستخلص من مشاريع واقعية وخبرات هندسية ممتدة لسنوات طويلة.</p>
+                    <h4 data-ar="خبرة عملية ميدانية" data-en="Practical Field Experience">خبرة عملية ميدانية</h4>
+                    <p data-ar="محتوى مستخلص من مشاريع واقعية وخبرات هندسية ممتدة لسنوات طويلة." data-en="Content derived from real-world projects and extensive engineering experience.">محتوى مستخلص من مشاريع واقعية وخبرات هندسية ممتدة لسنوات طويلة.</p>
                 </div>
                 <div class="feature-card">
                     <i class="fa-solid fa-diagram-project"></i>
-                    <h4>مشاريع حقيقية</h4>
-                    <p>تطبيقات عملية وأمثلة حية تمكنك من التعامل مع تحديات المشاريع الكبرى بكفاءة.</p>
+                    <h4 data-ar="مشاريع حقيقية" data-en="Real Projects">مشاريع حقيقية</h4>
+                    <p data-ar="تطبيقات عملية وأمثلة حية تمكنك من التعامل مع تحديات المشاريع الكبرى بكفاءة." data-en="Practical applications enabling you to handle major project challenges efficiently.">تطبيقات عملية وأمثلة حية تمكنك من التعامل مع تحديات المشاريع الكبرى بكفاءة.</p>
                 </div>
                 <div class="feature-card">
                     <i class="fa-solid fa-certificate"></i>
-                    <h4>Professional Certificate</h4>
-                    <p>توثيق رسمي لحضورك وإتمامك للمسار التدريبي يرفع من قيمتك في سوق العمل.</p>
+                    <h4 data-ar="Professional Certificate" data-en="Professional Certificate">Professional Certificate</h4>
+                    <p data-ar="توثيق رسمي لحضورك وإتمامك للمسار التدريبي يرفع من قيمتك في سوق العمل." data-en="Official documentation of your course completion boosting your market value.">توثيق رسمي لحضورك وإتمامك للمسار التدريبي يرفع من قيمتك في سوق العمل.</p>
                 </div>
                 <div class="feature-card">
                     <i class="fa-solid fa-headset"></i>
-                    <h4>متابعة ودعم مستمر</h4>
-                    <p>إشراف مباشر ومتابعة مستمرة لضمان تحقيق الاستفادة القصوى وتجاوز العقبات.</p>
+                    <h4 data-ar="متابعة ودعم مستمر" data-en="Continuous Support">متابعة ودعم مستمر</h4>
+                    <p data-ar="إشراف مباشر ومتابعة مستمرة لضمان تحقيق الاستفادة القصوى وتجاوز العقبات." data-en="Direct supervision and ongoing support to ensure maximum learning outcomes.">إشراف مباشر ومتابعة مستمرة لضمان تحقيق الاستفادة القصوى وتجاوز العقبات.</p>
                 </div>
             </div>
         </section>
 
+        <!-- قسم آراء المتدربين مع التعديل للون الأزرق -->
         <section class="professional-testimonials">
             <div class="testimonials-heading-container">
-                <h2>آراء المتدربين</h2>
-                <p>نجاحكم وتطوركم المهني هو هدفنا الحقيقي في كل خطوة</p>
+                <h2 data-ar="آراء المتدربين" data-en="Trainee Reviews">آراء المتدربين</h2>
+                <p data-ar="نجاحكم وتطوركم المهني هو هدفنا الحقيقي في كل خطوة" data-en="Your success and professional development is our ultimate goal at every step">نجاحكم وتطوركم المهني هو هدفنا الحقيقي في كل خطوة</p>
             </div>
             <div class="testimonials-grid">
                 <div class="testimonial-card-pro">
                     <div>
                         <div class="testimonial-header-info">
-                            <div class="testimonial-avatar-badge">أ.ح</div>
-                            <div class="testimonial-titles"><h4>م. أحمد حسين</h4><span>مهندس ميكانيكا</span></div>
+                            <div class="testimonial-avatar-badge" data-ar="أ.ح" data-en="A.H">أ.ح</div>
+                            <div class="testimonial-titles"><h4 data-ar="م. أحمد حسين" data-en="Eng. Ahmed Hussein">م. أحمد حسين</h4><span data-ar="مهندس ميكانيكا" data-en="Mechanical Engineer">مهندس ميكانيكا</span></div>
                         </div>
                         <div class="testimonial-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-                        <p class="testimonial-body-text">"عجبني تصميم الموقع وكورس إدارة المخاطر، استفدت منه جداً في عملي وتطبيق المفاهيم بشكل عملي."</p>
+                        <p class="testimonial-body-text" data-ar='"عجبني تصميم الموقع وكورس إدارة المخاطر، استفدت منه جداً في عملي وتطبيق المفاهيم بشكل عملي."' data-en='"Loved the site design and the Risk Management course. It greatly benefited my work and practical concept applications."'>"عجبني تصميم الموقع وكورس إدارة المخاطر، استفدت منه جداً في عملي وتطبيق المفاهيم بشكل عملي."</p>
                     </div>
                 </div>
                 <div class="testimonial-card-pro">
                     <div>
                         <div class="testimonial-header-info">
-                            <div class="testimonial-avatar-badge">أ.م</div>
-                            <div class="testimonial-titles"><h4>م. أحمد محمود</h4><span>مهندس شبكات وذكاء اصطناعي</span></div>
+                            <div class="testimonial-avatar-badge" data-ar="أ.م" data-en="A.M">أ.م</div>
+                            <div class="testimonial-titles"><h4 data-ar="م. أحمد محمود" data-en="Eng. Ahmed Mahmoud">م. أحمد محمود</h4><span data-ar="مهندس شبكات وذكاء اصطناعي" data-en="Network & AI Engineer">مهندس شبكات وذكاء اصطناعي</span></div>
                         </div>
                         <div class="testimonial-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-                        <p class="testimonial-body-text">"المحتوى رائع بالفعل وتجربة مختلفة في تبسيط العلم. تحياتي للأكاديمية وننتظر باقي الكورسات بفارغ الصبر."</p>
+                        <p class="testimonial-body-text" data-ar='"المحتوى رائع بالفعل وتجربة مختلفة في تبسيط العلم. تحياتي للأكاديمية وننتظر باقي الكورسات بفارغ الصبر."' data-en='"The content is truly outstanding and offers a distinct experience in simplifying knowledge. Eagerly waiting for future courses!"'>"المحتوى رائع بالفعل وتجربة مختلفة في تبسيط العلم. تحياتي للأكاديمية وننتظر باقي الكورسات بفارغ الصبر."</p>
                     </div>
                 </div>
                 <div class="testimonial-card-pro">
                     <div>
                         <div class="testimonial-header-info">
-                            <div class="testimonial-avatar-badge">س.أ</div>
-                            <div class="testimonial-titles"><h4>م. سيد أبو بكر</h4><span>مهندس مدني</span></div>
+                            <div class="testimonial-avatar-badge" data-ar="س.أ" data-en="S.A">س.أ</div>
+                            <div class="testimonial-titles"><h4 data-ar="م. سيد أبو بكر" data-en="Eng. Sayed Abu Bakr">م. سيد أبو بكر</h4><span data-ar="مهندس مدني" data-en="Civil Engineer">مهندس مدني</span></div>
                         </div>
                         <div class="testimonial-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-                        <p class="testimonial-body-text">"استفدت جداً من كورس إدارة المخاطر، وطريقة العرض شيقة ومبسطة جداً. بانتظار المزيد من الدورات."</p>
+                        <p class="testimonial-body-text" data-ar='"استفدت جداً من كورس إدارة المخاطر، وطريقة العرض شيقة ومبسطة جداً. بانتظار المزيد من الدورات."' data-en='"Gained immense value from the Risk Management course. The presentation is simplified and engaging. Looking forward to more courses."' >"استفدت جداً من كورس إدارة المخاطر، وطريقة العرض شيقة ومبسطة جداً. بانتظار المزيد من الدورات."</p>
                     </div>
                 </div>
             </div>
         </section>
 
         <div class="dashboard-content" id="courses-section">
-            <h2 class="section-title"><i class="fa-solid fa-layer-group" style="color: var(--primary-blue);"></i> الدورات المتاحة</h2>
-            <div class="cards-grid" style="margin-bottom: 30px;">
+            <h2 class="section-title"><i class="fa-solid fa-layer-group" style="color: var(--primary-blue);"></i> <span data-ar="الدورات المتاحة" data-en="Available Courses">الدورات المتاحة</span></h2>
+            <div class="cards-grid" style="margin-bottom: 35px;">
                 <div class="nav-card course-card-main" onclick="switchMainView('course-landing-view')">
-                    <span class="badge-available"><span class="green-dot-pulse"></span> متاح الآن</span>
+                    <span class="badge-available"><span class="green-dot-pulse"></span> <span data-ar="متاح الآن" data-en="Available Now">متاح الآن</span></span>
                     <i class="fa-solid fa-chart-line main-icon" style="color: var(--primary-blue);"></i>
-                    <h3>إدارة مخاطر المشاريع</h3>
+                    <h3 data-ar="إدارة مخاطر المشاريع" data-en="Project Risk Management">إدارة مخاطر المشاريع</h3>
                     <p class="en-text">Project Risk Management</p>
                 </div>
 
                 <div class="nav-card course-card-main course-card-featured" onclick="switchMainView('value-landing-view')">
-                    <span class="badge-available" style="background: var(--primary-blue);"><span class="green-dot-pulse"></span> متاح الآن 🚀</span>
+                    <span class="badge-available" style="background: var(--accent-color);"><span class="green-dot-pulse"></span> <span data-ar="متاح الآن 🚀" data-en="Available Now 🚀">متاح الآن 🚀</span></span>
                     <div class="celebrate-icon-box">
-                        <i class="fa-solid fa-lightbulb main-icon" style="color: var(--primary-blue);"></i>
+                        <i class="fa-solid fa-lightbulb main-icon" style="color: var(--accent-color);"></i>
                     </div>
-                    <h3>الهندسة القيمية</h3>
+                    <h3 data-ar="الهندسة القيمية" data-en="Value Engineering">الهندسة القيمية</h3>
                     <p class="en-text" style="color: var(--primary-blue); font-weight: 900;">Value Engineering (2026)</p>
                 </div>
             </div>
 
-            <h2 class="section-title"><i class="fa-solid fa-clock-rotate-left" style="color: #0ea5e9;"></i> الدورات القادمة</h2>
+            <h2 class="section-title"><i class="fa-solid fa-clock-rotate-left" style="color: #0ea5e9;"></i> <span data-ar="الدورات القادمة" data-en="Upcoming Courses">الدورات القادمة</span></h2>
             <div class="cards-grid">
                 <div class="nav-card course-card-upcoming" onclick="switchMainView('electrical-loads-info-view')">
                     <i class="fa-solid fa-bolt main-icon" style="color: var(--primary-blue);"></i>
-                    <h3>حساب الأحمال الكهربائية</h3>
+                    <h3 data-ar="حساب الأحمال الكهربائية" data-en="Electrical Load Calculation">حساب الأحمال الكهربائية</h3>
                     <p class="en-text">Electrical Load Calculation</p>
                     <div class="status-badge-box design">
-                        <i class="fa-solid fa-compass fa-spin"></i> قريباً / قيد التطوير ⚡
+                        <i class="fa-solid fa-compass fa-spin"></i> <span data-ar="قريباً / قيد التطوير ⚡" data-en="Soon / In Development ⚡">قريباً / قيد التطوير ⚡</span>
                     </div>
                 </div>
 
                 <div class="nav-card course-card-upcoming" onclick="switchMainView('contracts-info-view')">
                     <i class="fa-solid fa-file-signature main-icon"></i>
-                    <h3>إدارة العقود والتكاليف</h3>
+                    <h3 data-ar="إدارة العقود والتكاليف" data-en="Contracts & Cost Management">إدارة العقود والتكاليف</h3>
                     <p class="en-text">Contracts & Cost</p>
                     <div class="status-badge-box design">
-                        <i class="fa-solid fa-compass fa-spin"></i> قيد التصميم والتطوير 💡
+                        <i class="fa-solid fa-compass fa-spin"></i> <span data-ar="قيد التصميم والتطوير 💡" data-en="Under Design & Development 💡">قيد التصميم والتطوير 💡</span>
                     </div>
                 </div>
 
                 <div class="nav-card course-card-upcoming" onclick="switchMainView('datacenter-info-view')">
                     <i class="fa-solid fa-server main-icon"></i>
-                    <h3>هندسة مراكز البيانات</h3>
+                    <h3 data-ar="هندسة مراكز البيانات" data-en="Data Center Infrastructure">هندسة مراكز البيانات</h3>
                     <p class="en-text">Data Center Infrastructure</p>
                     <div class="status-badge-box soon-badge">
-                        <i class="fa-solid fa-hourglass-half"></i> قريباً ⏳
+                        <i class="fa-solid fa-hourglass-half"></i> <span data-ar="قريباً ⏳" data-en="Coming Soon ⏳">قريباً ⏳</span>
                     </div>
                 </div>
             </div>
@@ -711,44 +794,44 @@
     </main>
 
     <main id="course-landing-view" class="app-view">
-        <div class="dashboard-content" style="padding-top: 20px;">
-            <button class="btn-outline" onclick="switchMainView('home-view')" style="margin-bottom: 15px; border-radius: 10px; padding: 8px 16px;">
-                <i class="fa-solid fa-arrow-right"></i> العودة للمسارات
+        <div class="dashboard-content" style="padding-top: 25px;">
+            <button class="btn-outline" onclick="switchMainView('home-view')" style="margin-bottom: 18px; border-radius: 12px; padding: 10px 20px;">
+                <i class="fa-solid fa-arrow-right"></i> <span data-ar="العودة للمسارات" data-en="Back to Tracks">العودة للمسارات</span>
             </button>
             <div class="course-details-header">
-                <h2>دورة إدارة مخاطر المشاريع الاحترافية</h2>
-                <p>تعلم كيفية التنبؤ، التحليل، والتعامل مع المخاطر الهندسية باحترافية لتأمين مشاريعك من التعثر</p>
+                <h2 data-ar="دورة إدارة مخاطر المشاريع الاحترافية" data-en="Professional Project Risk Management Course">دورة إدارة مخاطر المشاريع الاحترافية</h2>
+                <p data-ar="تعلم كيفية التنبؤ، التحليل، والتعامل مع المخاطر الهندسية باحترافية لتأمين مشاريعك من التعثر" data-en="Learn how to predict, analyze, and handle engineering risks professionally to safeguard your projects from delays">تعلم كيفية التنبؤ، التحليل، والتعامل مع المخاطر الهندسية باحترافية لتأمين مشاريعك من التعثر</p>
                 <div class="course-meta">
-                    <div class="meta-item"><i class="fa-regular fa-clock"></i> 24 ساعة تدريبية</div>
-                    <div class="meta-item"><i class="fa-solid fa-video"></i> محاضرات مسجلة</div>
+                    <div class="meta-item"><i class="fa-regular fa-clock"></i> <span data-ar="24 ساعة تدريبية" data-en="24 Training Hours">24 ساعة تدريبية</span></div>
+                    <div class="meta-item"><i class="fa-solid fa-video"></i> <span data-ar="محاضرات مسجلة" data-en="Recorded Lectures">محاضرات مسجلة</span></div>
                     <div class="meta-item"><i class="fa-solid fa-certificate"></i> Certificate of Completion</div>
-                    <div class="meta-item"><i class="fa-solid fa-signal"></i> المستوى: متقدم</div>
+                    <div class="meta-item"><i class="fa-solid fa-signal"></i> <span data-ar="المستوى: متقدم" data-en="Level: Advanced">المستوى: متقدم</span></div>
                 </div>
             </div>
             <div class="course-content-split">
                 <div class="content-box">
-                    <h3 style="margin-top: 0;"><i class="fa-solid fa-bullseye"></i> أهداف الدورة</h3>
-                    <p>تزويد المهندسين ومديري المشاريع بالمهارات العملية لبناء سجل مخاطر (Risk Register) متكامل، وتطبيق استراتيجيات الاستجابة للمخاطر لتجنب تجاوز الميزانية والجدول الزمني.</p>
-                    <h3><i class="fa-solid fa-list-check"></i> محاور البرنامج التدريبي</h3>
+                    <h3 style="margin-top: 0;"><i class="fa-solid fa-bullseye"></i> <span data-ar="أهداف الدورة" data-en="Course Objectives">أهداف الدورة</span></h3>
+                    <p data-ar="تزويد المهندسين ومديري المشاريع بالمهارات العملية لبناء سجل مخاطر (Risk Register) متكامل، وتطبيق استراتيجيات الاستجابة للمخاطر لتجنب تجاوز الميزانية والجدول الزمني." data-en="Equipping engineers and project managers with practical skills to build a complete Risk Register and apply risk response strategies to prevent cost/schedule overruns.">تزويد المهندسين ومديري المشاريع بالمهارات العملية لبناء سجل مخاطر (Risk Register) متكامل، وتطبيق استراتيجيات الاستجابة للمخاطر لتجنب تجاوز الميزانية والجدول الزمني.</p>
+                    <h3><i class="fa-solid fa-list-check"></i> <span data-ar="محاور البرنامج التدريبي" data-en="Training Outline">محاور البرنامج التدريبي</span></h3>
                     <ul>
-                        <li>مقدمة في إدارة المخاطر وفقاً لمنهجية المشاريع الاحترافية.</li>
-                        <li>كيفية التعرف على المخاطر وتصنيفها.</li>
-                        <li>التحليل النوعي والكمي للمخاطر.</li>
-                        <li>استراتيجيات الاستجابة للمخاطر (التجنب، التخفيف، النقل، القبول).</li>
+                        <li data-ar="مقدمة في إدارة المخاطر وفقاً لمنهجية المشاريع الاحترافية." data-en="Introduction to Risk Management according to professional project methodologies.">مقدمة في إدارة المخاطر وفقاً لمنهجية المشاريع الاحترافية.</li>
+                        <li data-ar="كيفية التعرف على المخاطر وتصنيفها." data-en="Identifying and classifying risks.">كيفية التعرف على المخاطر وتصنيفها.</li>
+                        <li data-ar="التحليل النوعي والكمي للمخاطر." data-en="Qualitative and quantitative risk analysis.">التحليل النوعي والكمي للمخاطر.</li>
+                        <li data-ar="استراتيجيات الاستجابة للمخاطر (التجنب، التخفيف، النقل، القبول)." data-en="Risk response strategies (Avoidance, Mitigation, Transfer, Acceptance).">استراتيجيات الاستجابة للمخاطر (التجنب، التخفيف، النقل، القبول).</li>
                     </ul>
                 </div>
-                <div class="content-box" style="text-align: center; padding: 25px 20px;">
-                    <i class="fa-solid fa-user-tie" style="font-size: 3rem; color: var(--primary-blue); margin-bottom: 12px;"></i>
-                    <h3 style="margin-top: 0; color: var(--text-dark); justify-content: center;">المدرب: مهندس أحمد علي</h3>
+                <div class="content-box" style="text-align: center; padding: 28px 22px;">
+                    <i class="fa-solid fa-user-tie" style="font-size: 3.2rem; color: var(--primary-blue); margin-bottom: 14px;"></i>
+                    <h3 style="margin-top: 0; color: var(--text-dark); justify-content: center;" data-ar="المدرب: مهندس أحمد علي" data-en="Instructor: Eng. Ahmed Ali">المدرب: مهندس أحمد علي</h3>
                     <p style="color: var(--primary-blue); font-weight: 800; margin-bottom: 6px;">Senior Electrical Engineer</p>
-                    <p style="color: var(--text-muted); font-size: 0.88rem; margin-bottom: 16px;">خبرة هندسية وميدانية 20 عاماً في إدارة المشاريع الهندسية.</p>
-                    <hr style="border: 0; border-top: 1px solid var(--border-color); margin: 15px 0;">
-                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSdObqHCrVw77H87oI5-yZlk6wc7_QuaKMLP3ZNbC5Fp767qHw/viewform?pli=1" target="_blank" class="btn-primary" style="width: 100%; margin-bottom: 12px; text-decoration: none; font-size: 15px;">
-                        <i class="fa-solid fa-paper-plane"></i> تواصل معنا للتسجيل
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 18px;" data-ar="خبرة هندسية وميدانية 20 عاماً في إدارة المشاريع الهندسية." data-en="20 years of engineering & field expertise in project management.">خبرة هندسية وميدانية 20 عاماً في إدارة المشاريع الهندسية.</p>
+                    <hr style="border: 0; border-top: 1px solid var(--border-color); margin: 18px 0;">
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSdObqHCrVw77H87oI5-yZlk6wc7_QuaKMLP3ZNbC5Fp767qHw/viewform?pli=1" target="_blank" class="btn-primary" style="width: 100%; margin-bottom: 14px; text-decoration: none; font-size: 15px;">
+                        <i class="fa-solid fa-paper-plane"></i> <span data-ar="تواصل معنا للتسجيل" data-en="Contact Us to Register">تواصل معنا للتسجيل</span>
                     </a>
-                    <p style="font-size: 1rem; font-weight: 900; color: var(--primary-blue); margin-bottom: 10px;">دخول المتدربين</p>
+                    <p style="font-size: 1.02rem; font-weight: 900; color: var(--primary-blue); margin-bottom: 12px;" data-ar="دخول المتدربين" data-en="Trainee Access">دخول المتدربين</p>
                     <button class="btn-outline" onclick="openLoginModal()" style="width: 100%;">
-                        <i class="fa-solid fa-lock-open"></i> الدخول للمقرر
+                        <i class="fa-solid fa-lock-open"></i> <span data-ar="الدخول للمقرر" data-en="Enter Course">الدخول للمقرر</span>
                     </button>
                 </div>
             </div>
@@ -756,52 +839,51 @@
     </main>
 
     <main id="value-landing-view" class="app-view">
-        <div class="dashboard-content" style="padding-top: 20px;">
-            <button class="btn-outline" onclick="switchMainView('home-view')" style="margin-bottom: 15px; border-radius: 10px; padding: 8px 16px;">
-                <i class="fa-solid fa-arrow-right"></i> العودة للمسارات
+        <div class="dashboard-content" style="padding-top: 25px;">
+            <button class="btn-outline" onclick="switchMainView('home-view')" style="margin-bottom: 18px; border-radius: 12px; padding: 10px 20px;">
+                <i class="fa-solid fa-arrow-right"></i> <span data-ar="العودة للمسارات" data-en="Back to Tracks">العودة للمسارات</span>
             </button>
             <div class="course-details-header" style="background: linear-gradient(135deg, var(--primary-blue) 0%, #0f172a 100%);">
-                <h2>دورة الهندسة القيمية الاحترافية</h2>
-                <p>منهجية هندسية منظمة لتعظيم القيمة وخفض التكاليف الإجمالية للمشاريع دون المساس بالجودة</p>
+                <h2 data-ar="دورة الهندسة القيمية الاحترافية" data-en="Professional Value Engineering Course">دورة الهندسة القيمية الاحترافية</h2>
+                <p data-ar="منهجية هندسية منظمة لتعظيم القيمة وخفض التكاليف الإجمالية للمشاريع دون المساس بالجودة" data-en="A structured engineering methodology to maximize value and minimize project costs without compromising quality">منهجية هندسية منظمة لتعظيم القيمة وخفض التكاليف الإجمالية للمشاريع دون المساس بالجودة</p>
                 <div class="course-meta">
-                    <div class="meta-item"><i class="fa-regular fa-clock"></i> 20 ساعة تدريبية</div>
-                    <div class="meta-item"><i class="fa-solid fa-video"></i> محاضرات مسجلة وأداة تطبيقية</div>
+                    <div class="meta-item"><i class="fa-regular fa-clock"></i> <span data-ar="20 ساعة تدريبية" data-en="20 Training Hours">20 ساعة تدريبية</span></div>
+                    <div class="meta-item"><i class="fa-solid fa-video"></i> <span data-ar="محاضرات مسجلة وأداة تطبيقية" data-en="Lectures & Toolkit">محاضرات مسجلة وأداة تطبيقية</span></div>
                     <div class="meta-item"><i class="fa-solid fa-certificate"></i> Certificate of Completion</div>
-                    <div class="meta-item"><i class="fa-solid fa-signal"></i> المستوى: متقدم</div>
+                    <div class="meta-item"><i class="fa-solid fa-signal"></i> <span data-ar="المستوى: متقدم" data-en="Level: Advanced">المستوى: متقدم</span></div>
                 </div>
             </div>
             <div class="course-content-split">
                 <div class="content-box">
-                    <h3 style="margin-top: 0;"><i class="fa-solid fa-bullseye"></i> ماذا ستتعلم في الدورة؟</h3>
-                    <p>محتوى مبسط وعملي يعلمك كيف تحلل وظائف المشروع، وتبتكر بدائل تصميمية ذكية ومستدامة تقلل التكاليف بشكل فعال مع الحفاظ على أعلى معايير الأمان والجودة.</p>
+                    <h3 style="margin-top: 0;"><i class="fa-solid fa-bullseye"></i> <span data-ar="ماذا ستتعلم في الدورة؟" data-en="What You Will Learn">ماذا ستتعلم في الدورة؟</span></h3>
+                    <p data-ar="محتوى مبسط وعملي يعلمك كيف تحلل وظائف المشروع، وتبتكر بدائل تصميمية ذكية ومستدامة تقلل التكاليف بشكل فعال مع الحفاظ على أعلى معايير الأمان والجودة." data-en="Practical content teaching function analysis, creating smart design alternatives that reduce costs while maintaining quality standards.">محتوى مبسط وعملي يعلمك كيف تحلل وظائف المشروع، وتبتكر بدائل تصميمية ذكية ومستدامة تقلل التكاليف بشكل فعال مع الحفاظ على أعلى معايير الأمان والجودة.</p>
                     
-                    <!-- تم تحديث وصف أداة هدية الكورس بالنص الجديد -->
-                    <h3><i class="fa-solid fa-gift" style="color: var(--accent-color);"></i> هدية الكورس: أداة تطبيقية مخصصة</h3>
-                    <p>صممنا لك هذه الأداة البسيطة لتكون هديتك مع الكورس، عشان تساعدك على تطبيق اللي اتعلمته بشكل فوري ومباشر:</p>
+                    <h3><i class="fa-solid fa-gift" style="color: var(--accent-color);"></i> <span data-ar="هدية الكورس: أداة تطبيقية مخصصة" data-en="Course Gift: Custom VE Toolkit">هدية الكورس: أداة تطبيقية مخصصة</span></h3>
+                    <p data-ar="صممنا لك هذه الأداة البسيطة لتكون هديتك مع الكورس، عشان تساعدك على تطبيق اللي اتعلمته بشكل فوري ومباشر:" data-en="Designed as a bonus tool to help you immediately apply what you learn in real scenarios:">صممنا لك هذه الأداة البسيطة لتكون هديتك مع الكورس، عشان تساعدك على تطبيق اللي اتعلمته بشكل فوري ومباشر:</p>
                     <ul class="sales-checklist">
-                        <li><i class="fa-solid fa-check-circle"></i> <strong>Value Engineering Toolkit:</strong> أداة تفاعلية تساعدك على تطبيق منهجية الهندسة القيمية عمليًا، بدءًا من تحليل الوظائف والتكلفة، مرورًا بتقييم البدائل وحساب مؤشر القيمة (Value Index)، وانتهاءً باختيار أفضل الحلول واتخاذ قرارات مدعومة بالبيانات والرسوم البيانية، كما تُسهّل توثيق نتائج دراسة القيمة بطريقة منظمة واحترافية.</li>
+                        <li><i class="fa-solid fa-check-circle"></i> <strong data-ar="Value Engineering Toolkit:" data-en="Value Engineering Toolkit:">Value Engineering Toolkit:</strong> <span data-ar="أداة تفاعلية تساعدك على تطبيق منهجية الهندسة القيمية عمليًا، بدءًا من تحليل الوظائف والتكلفة، مرورًا بتقييم البدائل وحساب مؤشر القيمة (Value Index)، وانتهاءً باختيار أفضل الحلول واتخاذ قرارات مدعومة بالبيانات والرسوم البيانية." data-en="An interactive tool assisting in practical VE methodology, from cost-function analysis to alternative evaluation and calculating Value Index.">أداة تفاعلية تساعدك على تطبيق منهجية الهندسة القيمية عمليًا، بدءًا من تحليل الوظائف والتكلفة، مرورًا بتقييم البدائل وحساب مؤشر القيمة (Value Index)، وانتهاءً باختيار أفضل الحلول واتخاذ قرارات مدعومة بالبيانات والرسوم البيانية.</span></li>
                     </ul>
 
-                    <h3><i class="fa-solid fa-list-check"></i> محاور البرنامج التدريبي</h3>
+                    <h3><i class="fa-solid fa-list-check"></i> <span data-ar="محاور البرنامج التدريبي" data-en="Course Plan">محاور البرنامج التدريبي</span></h3>
                     <ul>
-                        <li>مفهوم الهندسة القيمية وأهميتها في المشاريع الحديثة.</li>
-                        <li>مراحل خطة عمل الهندسة القيمية (VE Job Plan).</li>
-                        <li>تحليل الوظائف (Function Analysis) وتحديد التكاليف غير الضرورية.</li>
-                        <li>تقييم واختيار البدائل الهندسية الفعالة.</li>
+                        <li data-ar="مفهوم الهندسة القيمية وأهميتها في المشاريع الحديثة." data-en="Value Engineering concepts and modern relevance.">مفهوم الهندسة القيمية وأهميتها في المشاريع الحديثة.</li>
+                        <li data-ar="مراحل خطة عمل الهندسة القيمية (VE Job Plan)." data-en="Phases of the VE Job Plan.">مراحل خطة عمل الهندسة القيمية (VE Job Plan).</li>
+                        <li data-ar="تحليل الوظائف (Function Analysis) وتحديد التكاليف غير الضرورية." data-en="Function Analysis & eliminating unnecessary costs.">تحليل الوظائف (Function Analysis) وتحديد التكاليف غير الضرورية.</li>
+                        <li data-ar="تقييم واختيار البدائل الهندسية الفعالة." data-en="Evaluation and choice of effective alternatives.">تقييم واختيار البدائل الهندسية الفعالة.</li>
                     </ul>
                 </div>
-                <div class="content-box" style="text-align: center; padding: 25px 20px;">
-                    <i class="fa-solid fa-lightbulb" style="font-size: 3rem; color: var(--primary-blue); margin-bottom: 12px;"></i>
-                    <h3 style="margin-top: 0; color: var(--text-dark); justify-content: center;">المدرب: مهندس أحمد علي</h3>
+                <div class="content-box" style="text-align: center; padding: 28px 22px;">
+                    <i class="fa-solid fa-lightbulb" style="font-size: 3.2rem; color: var(--accent-color); margin-bottom: 14px;"></i>
+                    <h3 style="margin-top: 0; color: var(--text-dark); justify-content: center;" data-ar="المدرب: مهندس أحمد علي" data-en="Instructor: Eng. Ahmed Ali">المدرب: مهندس أحمد علي</h3>
                     <p style="color: var(--primary-blue); font-weight: 800; margin-bottom: 6px;">Senior Electrical Engineer</p>
-                    <p style="color: var(--text-muted); font-size: 0.88rem; margin-bottom: 16px;">خبير في تحسين التصاميم الهندسية وخفض التكاليف للمشاريع الكبرى.</p>
-                    <hr style="border: 0; border-top: 1px solid var(--border-color); margin: 15px 0;">
-                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSdObqHCrVw77H87oI5-yZlk6wc7_QuaKMLP3ZNbC5Fp767qHw/viewform?pli=1" target="_blank" class="btn-primary" style="width: 100%; margin-bottom: 12px; text-decoration: none; font-size: 15px;">
-                        <i class="fa-solid fa-paper-plane"></i> تواصل معنا للتسجيل
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 18px;" data-ar="خبير في تحسين التصاميم الهندسية وخفض التكاليف للمشاريع الكبرى." data-en="Expert in optimizing engineering designs and reducing costs for major projects.">خبير في تحسين التصاميم الهندسية وخفض التكاليف للمشاريع الكبرى.</p>
+                    <hr style="border: 0; border-top: 1px solid var(--border-color); margin: 18px 0;">
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSdObqHCrVw77H87oI5-yZlk6wc7_QuaKMLP3ZNbC5Fp767qHw/viewform?pli=1" target="_blank" class="btn-primary" style="width: 100%; margin-bottom: 14px; text-decoration: none; font-size: 15px;">
+                        <i class="fa-solid fa-paper-plane"></i> <span data-ar="تواصل معنا للتسجيل" data-en="Contact Us to Register">تواصل معنا للتسجيل</span>
                     </a>
-                    <p style="font-size: 1rem; font-weight: 900; color: var(--primary-blue); margin-bottom: 10px;">دخول المتدربين</p>
+                    <p style="font-size: 1.02rem; font-weight: 900; color: var(--primary-blue); margin-bottom: 12px;" data-ar="دخول المتدربين" data-en="Trainee Access">دخول المتدربين</p>
                     <button class="btn-outline" onclick="openVALoginModal()" style="width: 100%;">
-                        <i class="fa-solid fa-lock-open"></i> الدخول للمقرر
+                        <i class="fa-solid fa-lock-open"></i> <span data-ar="الدخول للمقرر" data-en="Enter Course">الدخول للمقرر</span>
                     </button>
                 </div>
             </div>
@@ -809,167 +891,117 @@
     </main>
 
     <main id="electrical-loads-info-view" class="app-view">
-        <div class="dashboard-content" style="padding-top: 20px; max-width: 950px;">
-            <button class="btn-outline" onclick="switchMainView('home-view')" style="margin-bottom: 15px; border-radius: 10px; padding: 8px 16px;">
-                <i class="fa-solid fa-arrow-right"></i> العودة للمسارات
+        <div class="dashboard-content" style="padding-top: 25px; max-width: 950px;">
+            <button class="btn-outline" onclick="switchMainView('home-view')" style="margin-bottom: 18px; border-radius: 12px; padding: 10px 20px;">
+                <i class="fa-solid fa-arrow-right"></i> <span data-ar="العودة للمسارات" data-en="Back to Tracks">العودة للمسارات</span>
             </button>
-            <div class="course-details-header" style="background: linear-gradient(135deg, var(--primary-blue) 0%, #0369a1 100%); padding: 45px 20px;">
-                <span style="background: rgba(255,255,255,0.2); padding: 5px 14px; border-radius: 16px; font-size: 12px; font-weight: 800; display: inline-block; margin-bottom: 10px;"><i class="fa-solid fa-compass fa-spin"></i> قريباً / قيد التطوير ⚡</span>
+            <div class="course-details-header" style="background: linear-gradient(135deg, var(--primary-blue) 0%, #0369a1 100%); padding: 50px 24px;">
+                <span style="background: rgba(255,255,255,0.2); padding: 6px 16px; border-radius: 20px; font-size: 13px; font-weight: 800; display: inline-block; margin-bottom: 12px;"><i class="fa-solid fa-compass fa-spin"></i> <span data-ar="قريباً / قيد التطوير ⚡" data-en="In Development ⚡">قريباً / قيد التطوير ⚡</span></span>
                 <h2>BA Engineering Academy</h2>
-                <p style="font-size: 1.25rem; font-weight: 800; color: #fff; margin-top: 4px;">حساب الأحمال الكهربائية (Electrical Load Calculation)</p>
+                <p style="font-size: 1.3rem; font-weight: 800; color: #fff; margin-top: 4px;">حساب الأحمال الكهربائية (Electrical Load Calculation)</p>
             </div>
             
             <div class="content-box">
-                <div style="text-align: center; background: rgba(30, 58, 138, 0.08); border: 2px dashed var(--primary-blue); padding: 18px; border-radius: 16px; margin-bottom: 25px;">
-                    <span style="font-size: 1.15rem; font-weight: 900; color: var(--primary-blue);"><i class="fa-solid fa-bolt"></i> الكورس حالياً: قيد التطوير والإعداد ⚡</span>
-                    <p style="color: var(--text-muted); margin-top: 6px; font-size: 0.95rem;">نعمل على إعداد محتوى هندسي متكامل وفقاً للأكواد العالمية لحساب الأحمال للمنشآت السكنية والتجارية والصناعية.</p>
+                <div style="text-align: center; background: rgba(30, 58, 138, 0.08); border: 2px dashed var(--primary-blue); padding: 20px; border-radius: 18px; margin-bottom: 28px;">
+                    <span style="font-size: 1.2rem; font-weight: 900; color: var(--primary-blue);"><i class="fa-solid fa-bolt"></i> <span data-ar="الكورس حالياً: قيد التطوير والإعداد ⚡" data-en="Course Status: Under Development ⚡">الكورس حالياً: قيد التطوير والإعداد ⚡</span></span>
+                    <p style="color: var(--text-muted); margin-top: 8px; font-size: 0.98rem;" data-ar="نعمل على إعداد محتوى هندسي متكامل وفقاً للأكواد العالمية لحساب الأحمال للمنشآت السكنية والتجارية والصناعية." data-en="Developing comprehensive engineering content per international codes for residential, commercial & industrial load calculations.">نعمل على إعداد محتوى هندسي متكامل وفقاً للأكواد العالمية لحساب الأحمال للمنشآت السكنية والتجارية والصناعية.</p>
                 </div>
 
-                <h2><i class="fa-solid fa-circle-info"></i> ملخص بسيط وواضح لمحتوى الكورس</h2>
-                <p>مقرر هندسي تخصصي يغطي أسس حساب الأحمال الكهربائية للوحات التوزيع، مع شرح تطبيقي دقيق لـ <span style="color: #059669; font-weight: 900; background: rgba(5, 150, 105, 0.1); padding: 2px 8px; border-radius: 6px; border: 1px solid rgba(5, 150, 105, 0.2);">معامل الطلب (Demand Factor)</span> و <span style="color: #059669; font-weight: 900; background: rgba(5, 150, 105, 0.1); padding: 2px 8px; border-radius: 6px; border: 1px solid rgba(5, 150, 105, 0.2);">معامل التنوع (Diversity Factor)</span>، بالإضافة لاختيار أحجام الكابلات والقواطع طبقاً للأكواد المعيارية.</p>
+                <h2><i class="fa-solid fa-circle-info"></i> <span data-ar="ملخص بسيط وواضح لمحتوى الكورس" data-en="Course Summary">ملخص بسيط وواضح لمحتوى الكورس</span></h2>
+                <p data-ar="مقرر هندسي تخصصي يغطي أسس حساب الأحمال الكهربائية للوحات التوزيع، مع شرح تطبيقي دقيق لمعامل الطلب ومعامل التنوع اختيار الكابلات والقواطع." data-en="Specialized course covering load calculation fundamentals for distribution panels, demand/diversity factors, breaker and cable sizing.">مقرر هندسي تخصصي يغطي أسس حساب الأحمال الكهربائية للوحات التوزيع، مع شرح تطبيقي دقيق لمعامل الطلب ومعامل التنوع اختيار الكابلات والقواطع.</p>
 
-                <div style="background: var(--active-blue); border-right: 4px solid var(--primary-blue); padding: 14px; border-radius: 10px; margin: 18px 0; border: var(--glass-border);">
-                    <h4 style="color: var(--primary-blue); font-size: 1.05rem; font-weight: 900; margin-bottom: 4px;"><i class="fa-solid fa-toolbox"></i> أداة حاسبة الأحمال التلقائية (قادمة مع الكورس):</h4>
-                    <p style="font-size: 0.95rem; margin-bottom: 0; color: var(--text-dark);">ستوفر لك الأداة إمكانية إدخال أحمال الإنارة والقوى والمكيفات واستخراج إجمالي التيار وأحجام القواطع والكابلات بشكل آلي ودقيق.</p>
-                </div>
-
-                <h3><i class="fa-solid fa-bullseye"></i> الأهداف الرئيسية</h3>
+                <h3><i class="fa-solid fa-bullseye"></i> <span data-ar="الأهداف الرئيسية" data-en="Key Objectives">الأهداف الرئيسية</span></h3>
                 <ul class="sales-checklist">
-                    <li><i class="fa-solid fa-check-circle"></i> إتقان حساب الأحمال الكهربائية للمباني المختلفة طبقاً للكود.</li>
-                    <li><i class="fa-solid fa-check-circle"></i> حساب معامل القدرة (Power Factor) وتصميم تحسينه.</li>
-                    <li><i class="fa-solid fa-check-circle"></i> اختيار القواطع والكابلات المناسبة لضمان أمان النظام الكهربائي.</li>
+                    <li><i class="fa-solid fa-check-circle"></i> <span data-ar="إتقان حساب الأحمال الكهربائية للمباني المختلفة طبقاً للكود." data-en="Mastering load calculations per standard codes.">إتقان حساب الأحمال الكهربائية للمباني المختلفة طبقاً للكود.</span></li>
+                    <li><i class="fa-solid fa-check-circle"></i> <span data-ar="حساب معامل القدرة (Power Factor) وتصميم تحسينه." data-en="Power Factor calculation and correction design.">حساب معامل القدرة (Power Factor) وتصميم تحسينه.</span></li>
+                    <li><i class="fa-solid fa-check-circle"></i> <span data-ar="اختيار القواطع والكابلات المناسبة لضمان أمان النظام الكهربائي." data-en="Choosing proper breakers & cables for safety.">اختيار القواطع والكابلات المناسبة لضمان أمان النظام الكهربائي.</span></li>
                 </ul>
-
-                <h3><i class="fa-solid fa-triangle-exclamation" style="color: #dc2626;"></i> المخاطر التي يعالجها الكورس</h3>
-                <ul class="sales-checklist" style="border-color: #dc2626;">
-                    <li><i class="fa-solid fa-shield-halved" style="color: #dc2626;"></i> الأخطاء الجسيمة في تقدير أحجام الكابلات والتي تؤدي لسخونة وخطورة إنشائية.</li>
-                    <li><i class="fa-solid fa-shield-halved" style="color: #dc2626;"></i> هبوط الجهد المفرط (Voltage Drop) الناتج عن سوء التصميم الحسابي.</li>
-                </ul>
-
-                <h3><i class="fa-solid fa-users"></i> الفئة المستهدفة</h3>
-                <p>مخصص للمهندسين الكهربائيين ومهندسي المكتب الفني.</p>
             </div>
         </div>
     </main>
 
     <main id="contracts-info-view" class="app-view">
-        <div class="dashboard-content" style="padding-top: 20px; max-width: 950px;">
-            <button class="btn-outline" onclick="switchMainView('home-view')" style="margin-bottom: 15px; border-radius: 10px; padding: 8px 16px;">
-                <i class="fa-solid fa-arrow-right"></i> العودة للمسارات
+        <div class="dashboard-content" style="padding-top: 25px; max-width: 950px;">
+            <button class="btn-outline" onclick="switchMainView('home-view')" style="margin-bottom: 18px; border-radius: 12px; padding: 10px 20px;">
+                <i class="fa-solid fa-arrow-right"></i> <span data-ar="العودة للمسارات" data-en="Back to Tracks">العودة للمسارات</span>
             </button>
-            <div class="course-details-header" style="background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%); padding: 45px 20px;">
-                <span style="background: rgba(255,255,255,0.2); padding: 5px 14px; border-radius: 16px; font-size: 12px; font-weight: 800; display: inline-block; margin-bottom: 10px;"><i class="fa-solid fa-compass fa-spin"></i> قيد التصميم والتطوير 💡</span>
+            <div class="course-details-header" style="background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%); padding: 50px 24px;">
+                <span style="background: rgba(255,255,255,0.2); padding: 6px 16px; border-radius: 20px; font-size: 13px; font-weight: 800; display: inline-block; margin-bottom: 12px;"><i class="fa-solid fa-compass fa-spin"></i> <span data-ar="قيد التصميم والتطوير 💡" data-en="Under Design 💡">قيد التصميم والتطوير 💡</span></span>
                 <h2>BA Engineering Academy</h2>
-                <p style="font-size: 1.25rem; font-weight: 800; color: #fff; margin-top: 4px;">إدارة العقود والتكاليف (Contracts & Cost)</p>
+                <p style="font-size: 1.3rem; font-weight: 800; color: #fff; margin-top: 4px;">إدارة العقود والتكاليف (Contracts & Cost)</p>
             </div>
             
             <div class="content-box">
-                <div style="text-align: center; background: rgba(30, 58, 138, 0.08); border: 2px dashed var(--primary-blue); padding: 18px; border-radius: 16px; margin-bottom: 25px;">
-                    <span style="font-size: 1.15rem; font-weight: 900; color: var(--primary-blue);"><i class="fa-solid fa-pen-ruler"></i> الكورس حالياً: قيد التصميم والتطوير 💡</span>
-                    <p style="color: var(--text-muted); margin-top: 6px; font-size: 0.95rem;">نعمل حالياً على إعداد وتصوير المحتوى الميداني والأمثلة التطبيقية لطرحه قريباً بأعلى جودة.</p>
+                <div style="text-align: center; background: rgba(30, 58, 138, 0.08); border: 2px dashed var(--primary-blue); padding: 20px; border-radius: 18px; margin-bottom: 28px;">
+                    <span style="font-size: 1.2rem; font-weight: 900; color: var(--primary-blue);"><i class="fa-solid fa-pen-ruler"></i> <span data-ar="الكورس حالياً: قيد التصميم والتطوير 💡" data-en="Status: Under Design 💡">الكورس حالياً: قيد التصميم والتطوير 💡</span></span>
+                    <p style="color: var(--text-muted); margin-top: 8px; font-size: 0.98rem;" data-ar="نعمل حالياً على إعداد وتصوير المحتوى الميداني والأمثلة التطبيقية لطرحه قريباً بأعلى جودة." data-en="Preparing practical examples & field videos to launch soon with top quality.">نعمل حالياً على إعداد وتصوير المحتوى الميداني والأمثلة التطبيقية لطرحه قريباً بأعلى جودة.</p>
                 </div>
 
-                <h2><i class="fa-solid fa-circle-info"></i> ملخص بسيط وواضح لمحتوى الكورس</h2>
-                <p>مقرر متخصص في صياغة وإدارة العقود الإنشائية، تتبع المستخلصات، دراسة مطالبات التغيير، والتحكم الصارم في ميزانية المشروع وتكاليفه لضمان عدم التعثر المالي.</p>
+                <h2><i class="fa-solid fa-circle-info"></i> <span data-ar="ملخص بسيط وواضح لمحتوى الكورس" data-en="Course Summary">ملخص بسيط وواضح لمحتوى الكورس</span></h2>
+                <p data-ar="مقرر متخصص في صياغة وإدارة العقود الإنشائية، تتبع المستخلصات، دراسة مطالبات التغيير، والتحكم الصارم في ميزانية المشروع وتكاليفه لضمان عدم التعثر المالي." data-en="Specialized course in construction contracts, variations, invoices, and budget control to avoid cost overrun.">مقرر متخصص في صياغة وإدارة العقود الإنشائية، تتبع المستخلصات، دراسة مطالبات التغيير، والتحكم الصارم في ميزانية المشروع وتكاليفه لضمان عدم التعثر المالي.</p>
 
-                <div style="background: var(--active-blue); border-right: 4px solid var(--primary-blue); padding: 14px; border-radius: 10px; margin: 18px 0; border: var(--glass-border);">
-                    <h4 style="color: var(--primary-blue); font-size: 1.05rem; font-weight: 900; margin-bottom: 4px;"><i class="fa-solid fa-toolbox"></i> أداة نموذج حساب المستخلصات وتتبع التدفقات (قادمة مع الكورس):</h4>
-                    <p style="font-size: 0.95rem; margin-bottom: 0; color: var(--text-dark);">ستمكنك هذه الأداة من إدارة المستخلصات الجارية وحساب أوامر التغيير وتتبع تباين التكاليف بدقة لتفادي أي عجز مالي في مشروعك.</p>
-                </div>
-
-                <h3><i class="fa-solid fa-bullseye"></i> الأهداف الرئيسية</h3>
+                <h3><i class="fa-solid fa-bullseye"></i> <span data-ar="الأهداف الرئيسية" data-en="Key Objectives">الأهداف الرئيسية</span></h3>
                 <ul class="sales-checklist">
-                    <li><i class="fa-solid fa-check-circle"></i> الإلمام التام بأنواع العقود الهندسية وشروطها العامة والخاصة، بما في ذلك عقود الفيديك (FIDIC).</li>
-                    <li><i class="fa-solid fa-check-circle"></i> مهارات إعداد واعتماد المستخلصات الجارية الختامية بدقة.</li>
-                    <li><i class="fa-solid fa-check-circle"></i> إدارة المطالبات وأوامر التغيير وفقاً للممارسات العقدية المعتمدة.</li>
+                    <li><i class="fa-solid fa-check-circle"></i> <span data-ar="الإلمام التام بأنواع العقود الهندسية وشروطها العامة والخاصة، بما في ذلك عقود الفيديك (FIDIC)." data-en="Mastering contract types & FIDIC general/particular conditions.">الإلمام التام بأنواع العقود الهندسية وشروطها العامة والخاصة، بما في ذلك عقود الفيديك (FIDIC).</span></li>
+                    <li><i class="fa-solid fa-check-circle"></i> <span data-ar="مهارات إعداد واعتماد المستخلصات الجارية الختامية بدقة." data-en="Preparing and approving interim/final payment certificates accurately.">مهارات إعداد واعتماد المستخلصات الجارية الختامية بدقة.</span></li>
                 </ul>
-
-                <h3><i class="fa-solid fa-triangle-exclamation" style="color: #dc2626;"></i> المخاطر التي يعالجها الكورس</h3>
-                <ul class="sales-checklist" style="border-color: #dc2626;">
-                    <li><i class="fa-solid fa-shield-halved" style="color: #dc2626;"></i> الوقوع في ثغرات قانونية وبنود عقابية مجحفة بالمقاول أو المالك.</li>
-                    <li><i class="fa-solid fa-shield-halved" style="color: #dc2626;"></i> تآكل أرباح المشروع نتيجة ضعف إدارة أوامر التغيير والمطالبات.</li>
-                </ul>
-
-                <h3><i class="fa-solid fa-users"></i> الفئة المستهدفة</h3>
-                <p>مديرو المشاريع، مهندسو العقود والتكاليف، مهندسو المكتب الفني، والمقاولون الراغبون في تأمين موقفهم المالي والقانوني.</p>
             </div>
         </div>
     </main>
 
     <main id="datacenter-info-view" class="app-view">
-        <div class="dashboard-content" style="padding-top: 20px; max-width: 950px;">
-            <button class="btn-outline" onclick="switchMainView('home-view')" style="margin-bottom: 15px; border-radius: 10px; padding: 8px 16px;">
-                <i class="fa-solid fa-arrow-right"></i> العودة للمسارات
+        <div class="dashboard-content" style="padding-top: 25px; max-width: 950px;">
+            <button class="btn-outline" onclick="switchMainView('home-view')" style="margin-bottom: 18px; border-radius: 12px; padding: 10px 20px;">
+                <i class="fa-solid fa-arrow-right"></i> <span data-ar="العودة للمسارات" data-en="Back to Tracks">العودة للمسارات</span>
             </button>
-            <div class="course-details-header" style="background: linear-gradient(135deg, #0ea5e9 0%, #0369a1 100%); padding: 45px 20px;">
-                <span style="background: rgba(255,255,255,0.2); padding: 5px 14px; border-radius: 16px; font-size: 12px; font-weight: 800; display: inline-block; margin-bottom: 10px;"><i class="fa-solid fa-hourglass-half"></i> قريباً ⏳</span>
+            <div class="course-details-header" style="background: linear-gradient(135deg, #0ea5e9 0%, #0369a1 100%); padding: 50px 24px;">
+                <span style="background: rgba(255,255,255,0.2); padding: 6px 16px; border-radius: 20px; font-size: 13px; font-weight: 800; display: inline-block; margin-bottom: 12px;"><i class="fa-solid fa-hourglass-half"></i> <span data-ar="قريباً ⏳" data-en="Coming Soon ⏳">قريباً ⏳</span></span>
                 <h2>BA Engineering Academy</h2>
-                <p style="font-size: 1.25rem; font-weight: 800; color: #fff; margin-top: 4px;">هندسة مراكز البيانات (Data Center Infrastructure)</p>
+                <p style="font-size: 1.3rem; font-weight: 800; color: #fff; margin-top: 4px;">هندسة مراكز البيانات (Data Center Infrastructure)</p>
             </div>
             
             <div class="content-box">
-                <div style="text-align: center; background: rgba(14, 165, 233, 0.08); border: 2px dashed #0ea5e9; padding: 18px; border-radius: 16px; margin-bottom: 25px;">
-                    <span style="font-size: 1.15rem; font-weight: 900; color: #0284c7;"><i class="fa-solid fa-hourglass-half"></i> الكورس حالياً: قريباً ⏳</span>
-                    <p style="color: var(--text-muted); margin-top: 6px; font-size: 0.95rem;">نعمل على إعداد محتوى هندسي متقدم ومخصص لتصميم وبنية مرافق مراكز البيانات الحيوية.</p>
+                <div style="text-align: center; background: rgba(14, 165, 233, 0.08); border: 2px dashed #0ea5e9; padding: 20px; border-radius: 18px; margin-bottom: 28px;">
+                    <span style="font-size: 1.2rem; font-weight: 900; color: #0284c7;"><i class="fa-solid fa-hourglass-half"></i> <span data-ar="الكورس حالياً: قريباً ⏳" data-en="Status: Coming Soon ⏳">الكورس حالياً: قريباً ⏳</span></span>
+                    <p style="color: var(--text-muted); margin-top: 8px; font-size: 0.98rem;" data-ar="نعمل على إعداد محتوى هندسي متقدم ومخصص لتصميم وبنية مرافق مراكز البيانات الحيوية." data-en="Developing advanced engineering content for data center design & infrastructure.">نعمل على إعداد محتوى هندسي متقدم ومخصص لتصميم وبنية مرافق مراكز البيانات الحيوية.</p>
                 </div>
 
-                <h2><i class="fa-solid fa-circle-info"></i> ملخص بسيط وواضح لمحتوى الكورس</h2>
-                <p>مقرر هندسي متقدم يغطي معايير تصميم وبناء مرافق مراكز البيانات، بما يشمل أنظمة الطاقة الكهربائية الحرجة، التكييف والتبريد، التمديدات، وإدارة الموثوقية العالية.</p>
-
-                <div style="background: var(--active-blue); border-right: 4px solid var(--primary-blue); padding: 14px; border-radius: 10px; margin: 18px 0; border: var(--glass-border);">
-                    <h4 style="color: var(--primary-blue); font-size: 1.05rem; font-weight: 900; margin-bottom: 4px;"><i class="fa-solid fa-toolbox"></i> أداة حاسبة أحمال وكفاءة الداتا سنتر (قادمة مع الكورس):</h4>
-                    <p style="font-size: 0.95rem; margin-bottom: 0; color: var(--text-dark);">ستوفر لك الأداة إمكانية تقدير أحمال الطاقة الكهربائية وحساب مؤشر كفاءة استخدام الطاقة (PUE) لمشروعك لضمان مطابقة التصميم لمعايير الموثوقية العالمية.</p>
-                </div>
-
-                <h3><i class="fa-solid fa-bullseye"></i> الأهداف الرئيسية</h3>
-                <ul class="sales-checklist">
-                    <li><i class="fa-solid fa-check-circle"></i> فهم المعايير العالمية لتصميم بنية مراكز البيانات (Tier Standards).</li>
-                    <li><i class="fa-solid fa-check-circle"></i> تصميم وتأمين أنظمة الطاقة الاحتياطية والإنارة والتوزيع الكهربائي.</li>
-                    <li><i class="fa-solid fa-check-circle"></i> إدارة أنظمة التبريد والتهوية لضمان أعلى كفاءة تشغيلية (PUE).</li>
-                </ul>
-
-                <h3><i class="fa-solid fa-triangle-exclamation" style="color: #dc2626;"></i> المخاطر التي يعالجها الكورس</h3>
-                <ul class="sales-checklist" style="border-color: #dc2626;">
-                    <li><i class="fa-solid fa-shield-halved" style="color: #dc2626;"></i> انقطاع التيار الكهربائي وفقدان استمرارية الأعمال (Downtime).</li>
-                    <li><i class="fa-solid fa-shield-halved" style="color: #dc2626;"></i> الأعطال الناتجة عن سوء إدارة التبريد وارتفاع درجات الحرارة.</li>
-                </ul>
-
-                <h3><i class="fa-solid fa-users"></i> الفئة المستهدفة</h3>
-                <p>المهندسون الكهربائيون والميكانيكيون، مديرو مشاريع البنية التحتية، مهندسو التكييف والاتصالات، والمسؤولون عن تشغيل مراكز البيانات.</p>
+                <h2><i class="fa-solid fa-circle-info"></i> <span data-ar="ملخص بسيط وواضح لمحتوى الكورس" data-en="Course Overview">ملخص بسيط وواضح لمحتوى الكورس</span></h2>
+                <p data-ar="مقرر هندسي متقدم يغطي معايير تصميم وبناء مرافق مراكز البيانات، بما يشمل أنظمة الطاقة الكهربائية الحرجة، التكييف والتبريد، والتمديدات." data-en="Advanced course covering data center design standards, critical power systems, HVAC cooling, and cabling infrastructure.">مقرر هندسي متقدم يغطي معايير تصميم وبناء مرافق مراكز البيانات، بما يشمل أنظمة الطاقة الكهربائية الحرجة، التكييف والتبريد، والتمديدات.</p>
             </div>
         </div>
     </main>
 
     <main id="course-dashboard-view" class="app-view">
         <div class="viewer-navbar">
-            <button class="btn-outline" onclick="switchMainView('course-landing-view')" style="padding: 6px 14px; font-size: 13px; border-radius: 8px;">
-                <i class="fa-solid fa-arrow-right"></i> تسجيل الخروج
+            <button class="btn-outline" onclick="switchMainView('course-landing-view')" style="padding: 7px 16px; font-size: 13.5px; border-radius: 10px;">
+                <i class="fa-solid fa-arrow-right"></i> <span data-ar="تسجيل الخروج" data-en="Logout">تسجيل الخروج</span>
             </button>
-            <div style="display: flex; align-items: center; gap: 12px;">
-                <h3 style="color: var(--primary-blue); font-weight: 800; font-size: 16px; margin: 0;">مقرر إدارة مخاطر المشاريع</h3>
-                <img src="e842ee15-fc5d-491b-a6ae-17e6f345bccd.jpg" alt="BA Academy Logo" style="height: 30px; border-radius: 50%;">
+            <div style="display: flex; align-items: center; gap: 14px;">
+                <h3 style="color: var(--primary-blue); font-weight: 800; font-size: 17px; margin: 0;" data-ar="مقرر إدارة مخاطر المشاريع" data-en="Project Risk Management Course">مقرر إدارة مخاطر المشاريع</h3>
+                <img src="e842ee15-fc5d-491b-a6ae-17e6f345bccd.jpg" alt="BA Academy Logo" style="height: 32px; border-radius: 50%;">
             </div>
         </div>
-        <div class="dashboard-content" style="padding-top: 25px;">
+        <div class="dashboard-content" style="padding-top: 30px;">
             <div class="progress-wrapper">
-                <div class="progress-header"><span>نسبة إنجازك في المقرر</span><span id="progress-percent">0%</span></div>
+                <div class="progress-header"><span data-ar="نسبة إنجازك في المقرر" data-en="Your Course Progress">نسبة إنجازك في المقرر</span><span id="progress-percent">0%</span></div>
                 <div class="progress-container"><div id="progress-bar" class="progress-bar"></div></div>
             </div>
             <div class="cards-grid">
-                <div class="nav-card" onclick="trackAndOpen(25, 'main', 'المحاضرات والكورس')"><i class="fa-solid fa-person-chalkboard main-icon"></i><h3>المحاضرات</h3></div>
-                <div class="nav-card" onclick="trackAndOpen(50, 'guide', 'دليل الدراسة')"><i class="fa-solid fa-book-open-reader main-icon"></i><h3>دليل الدراسة</h3></div>
-                <div class="nav-card" onclick="trackAndOpen(75, 'tools', 'الأدوات والحاسبة')"><i class="fa-solid fa-calculator main-icon"></i><h3>الأدوات</h3></div>
-                <div class="nav-card" onclick="trackAndOpen(100, 'quiz', 'الاختبار النهائي')"><i class="fa-solid fa-list-check main-icon"></i><h3>الاختبار والشهادة</h3></div>
+                <div class="nav-card" onclick="trackAndOpen(25, 'main', 'المحاضرات والكورس')"><i class="fa-solid fa-person-chalkboard main-icon"></i><h3 data-ar="المحاضرات" data-en="Lectures">المحاضرات</h3></div>
+                <div class="nav-card" onclick="trackAndOpen(50, 'guide', 'دليل الدراسة')"><i class="fa-solid fa-book-open-reader main-icon"></i><h3 data-ar="دليل الدراسة" data-en="Study Guide">دليل الدراسة</h3></div>
+                <div class="nav-card" onclick="trackAndOpen(75, 'tools', 'الأدوات والحاسبة')"><i class="fa-solid fa-calculator main-icon"></i><h3 data-ar="الأدوات" data-en="Tools">الأدوات</h3></div>
+                <div class="nav-card" onclick="trackAndOpen(100, 'quiz', 'الاختبار النهائي')"><i class="fa-solid fa-list-check main-icon"></i><h3 data-ar="الاختبار والشهادة" data-en="Quiz & Certificate">الاختبار والشهادة</h3></div>
             </div>
         </div>
     </main>
 
     <main id="viewer-view" class="app-view">
         <div class="viewer-navbar">
-            <button class="btn-outline" onclick="switchMainView('course-dashboard-view')" style="padding: 6px 14px; font-size: 13px; border-radius: 8px;"><i class="fa-solid fa-arrow-right"></i> العودة لوحة التحكم</button>
-            <div style="display: flex; align-items: center; gap: 12px;">
-                <div style="font-size: 14px; font-weight: 700; color: var(--primary-blue);" id="breadcrumb-current">القسم</div>
-                <img src="e842ee15-fc5d-491b-a6ae-17e6f345bccd.jpg" alt="BA Academy Logo" style="height: 30px; border-radius: 50%;">
+            <button class="btn-outline" onclick="switchMainView('course-dashboard-view')" style="padding: 7px 16px; font-size: 13.5px; border-radius: 10px;"><i class="fa-solid fa-arrow-right"></i> <span data-ar="العودة لوحة التحكم" data-en="Back to Dashboard">العودة لوحة التحكم</span></button>
+            <div style="display: flex; align-items: center; gap: 14px;">
+                <div style="font-size: 14.5px; font-weight: 700; color: var(--primary-blue);" id="breadcrumb-current">القسم</div>
+                <img src="e842ee15-fc5d-491b-a6ae-17e6f345bccd.jpg" alt="BA Academy Logo" style="height: 32px; border-radius: 50%;">
             </div>
         </div>
         <div class="content-frame-container">
@@ -981,65 +1013,45 @@
     </main>
 
     <main id="about-view" class="app-view">
-        <div class="dashboard-content" style="max-width: 900px;">
+        <div class="dashboard-content" style="max-width: 920px;">
             <div class="content-box">
-                <h2>من نحن</h2>
-                <p style="margin-bottom: 15px; font-size: 1.02rem; line-height: 1.8;">
+                <h2 data-ar="من نحن" data-en="About Us">من نحن</h2>
+                <p style="margin-bottom: 18px; font-size: 1.05rem; line-height: 1.85;" data-ar="BA Engineering Academy هي منصة هندسية متكاملة تهدف إلى سد الفجوة الحقيقية بين المناهج الأكاديمية النظرية ومتطلبات سوق العمل الميداني والمشاريع الكبرى. تأسست الأكاديمية لتكون مرجعاً لكل مهندس طموح يسعى لصقل مهاراته وتطوير مسيرته المهنية بمعايير عالمية واضحة ومبسطة." data-en="BA Engineering Academy is an integrated platform aiming to bridge the gap between academic theory and practical engineering market demands. Founded to empower ambitious engineers with world-class standards.">
                     <strong>BA Engineering Academy</strong> هي منصة هندسية متكاملة تهدف إلى سد الفجوة الحقيقية بين المناهج الأكاديمية النظرية ومتطلبات سوق العمل الميداني والمشاريع الكبرى. تأسست الأكاديمية لتكون مرجعاً لكل مهندس طموح يسعى لصقل مهاراته وتطوير مسيرته المهنية بمعايير عالمية واضحة ومبسطة.
                 </p>
                 
-                <h3><i class="fa-solid fa-user-tie"></i> المؤسس والمدرب الرئيسي</h3>
-                <p><strong>مهندس أحمد علي</strong>، Senior Electrical Engineer بخبرة ميدانية وهندسية تتجاوز 20 عاماً في إدارة، تخطيط، وتنفيذ المشاريع الهندسية الضخمة. يتميز بأسلوب فريد في تبسيط المفاهيم الهندسية المعقدة وتحويلها إلى أدوات عملية قابلة للتطبيق الفوري في الميدان.</p>
-                
-                <h3><i class="fa-solid fa-eye"></i> الرؤية والأهداف</h3>
-                <p>نسعى لأن نكون الوجهة الأولى والمنصة الهندسية الرائدة في المنطقة العربية والعالم لتمكين المهندسين ومديري المشاريع من إتقان المهارات الإدارية والفنية المتقدمة، مع توفير بيئة تعليمية مرنة، تفاعلية، ومواكبة لأحدث المعايير العالمية.</p>
-
-                <h3><i class="fa-solid fa-bullseye"></i> رسالتنا</h3>
-                <p>نؤمن أن المعرفة الحقيقية يجب أن تكون واضحة وعملية؛ لذلك نركز على تقديم محتوى مستخلص من خلاصة التجارب والمشاريع الواقعية بعيداً عن التعقيد النظري البحت، لنساعد كل مهندس على الانتقال من التخطيط إلى التنفيذ بثقة واحترانية تامة.</p>
+                <h3><i class="fa-solid fa-user-tie"></i> <span data-ar="المؤسس والمدرب الرئيسي" data-en="Founder & Chief Instructor">المؤسس والمدرب الرئيسي</span></h3>
+                <p data-ar="مهندس أحمد علي، Senior Electrical Engineer بخبرة ميدانية وهندسية تتجاوز 20 عاماً في إدارة، تخطيط، وتنفيذ المشاريع الهندسية الضخمة." data-en="Eng. Ahmed Ali, Senior Electrical Engineer with over 20 years of experience in project management, planning, and executing mega engineering projects."><strong>مهندس أحمد علي</strong>، Senior Electrical Engineer بخبرة ميدانية وهندسية تتجاوز 20 عاماً في إدارة، تخطيط، وتنفيذ المشاريع الهندسية الضخمة. يتميز بأسلوب فريد في تبسيط المفاهيم الهندسية المعقدة وتحويلها إلى أدوات عملية قابلة للتطبيق الفوري في الميدان.</p>
             </div>
         </div>
     </main>
 
     <main id="faq-view" class="app-view">
-        <div class="dashboard-content" style="max-width: 850px;">
+        <div class="dashboard-content" style="max-width: 880px;">
             <div class="content-box">
-                <h2>الأسئلة الشائعة</h2>
+                <h2 data-ar="الأسئلة الشائعة" data-en="Frequently Asked Questions">الأسئلة الشائعة</h2>
                 <div class="faq-item">
-                    <div class="faq-question"><i class="fa-solid fa-circle-question"></i> ما هي منصة BA Engineering Academy؟</div>
-                    <div class="faq-answer">هي منصة هندسية متكاملة تقدم مسارات تدريبية تطبيقية متخصصة لإعداد المهندسين ومديري المشاريع لسوق العمل باحترافية تامة وخبرات ميدانية حقيقية.</div>
-                </div>
-                <div class="faq-item">
-                    <div class="faq-question"><i class="fa-solid fa-circle-question"></i> هل يوجد دعم فني ومتابعة مستمرة بعد الانضمام للدورات؟</div>
-                    <div class="faq-answer">نعم، نوفر دعماً مستمراً ومتابعة إشرافية مباشرة لضمان تحقيق الاستفادة القصوى، الإجابة عن استفساراتكم، ومساعدتكم على تطبيق المفاهيم الهندسية بكفاءة عالية.</div>
-                </div>
-                <div class="faq-item">
-                    <div class="faq-question"><i class="fa-solid fa-circle-question"></i> كيف يمكنني التحقق من صحة الشهادة التي أحصل عليها؟</div>
-                    <div class="faq-answer">تتيح لك المنصة خاصية "التحقق من شهادة" في أعلى الموقع، حيث يمكنك إدخال كود الشهادة الفريد والتأكد من اعتمادها وصحتها بشكل فوري.</div>
-                </div>
-                <div class="faq-item">
-                    <div class="faq-question"><i class="fa-solid fa-circle-question"></i> هل الدورات مناسبة للمبتدئين أم للمهندسين ذوي الخبرة فقط؟</div>
-                    <div class="faq-answer">تم تصميم محتوى الدورات ليتدرج معك من الأساسيات وحتى المستويات المتقدمة، مما يجعلها مناسبة لحديثي التخرج والمهندسين ذوي الخبرة الراغبين في صقل مهاراتهم الإدارية والميدانية.</div>
+                    <div class="faq-question"><i class="fa-solid fa-circle-question"></i> <span data-ar="ما هي منصة BA Engineering Academy؟" data-en="What is BA Engineering Academy?">ما هي منصة BA Engineering Academy؟</span></div>
+                    <div class="faq-answer" data-ar="هي منصة هندسية متكاملة تقدم مسارات تدريبية تطبيقية متخصصة لإعداد المهندسين ومديري المشاريع لسوق العمل باحترافية تامة وخبرات ميدانية حقيقية." data-en="An integrated engineering platform offering specialized training tracks to prepare engineers and project managers for the job market.">هي منصة هندسية متكاملة تقدم مسارات تدريبية تطبيقية متخصصة لإعداد المهندسين ومديري المشاريع لسوق العمل باحترافية تامة وخبرات ميدانية حقيقية.</div>
                 </div>
             </div>
         </div>
     </main>
 
     <main id="terms-view" class="app-view">
-        <div class="dashboard-content" style="max-width: 850px;">
+        <div class="dashboard-content" style="max-width: 880px;">
             <div class="content-box">
-                <h2>شروط الاستخدام</h2>
-                <p>جميع المحتويات، الدورات، الملفات، والأدوات المتوفرة على منصة BA Engineering Academy هي ملكية حصرية للأكاديمية ومحمية بموجب قوانين الملكية الفكرية. يُمنع إعادة نشرها، تداولها، أو استخدامها لأغراض تجارية دون إذن كتابي مسبق.</p>
-                <p>باستخدامك للمنصة، فإنك توافق على الالتزام ببيانات الحساب الشخصية وعدم مشاركة أكواد المرور الخاصة بالدورات مع الآخرين لضمان حقوق الملكية والدعم.</p>
+                <h2 data-ar="شروط الاستخدام" data-en="Terms of Use">شروط الاستخدام</h2>
+                <p data-ar="جميع المحتويات، الدورات، الملفات، والأدوات المتوفرة على منصة BA Engineering Academy هي ملكية حصرية للأكاديمية ومحمية بموجب قوانين الملكية الفكرية." data-en="All content, courses, files, and tools on BA Engineering Academy are exclusive property protected by intellectual property laws.">جميع المحتويات، الدورات، الملفات، والأدوات المتوفرة على منصة BA Engineering Academy هي ملكية حصرية للأكاديمية ومحمية بموجب قوانين الملكية الفكرية. يُمنع إعادة نشرها، تداولها، أو استخدامها لأغراض تجارية دون إذن كتابي مسبق.</p>
             </div>
         </div>
     </main>
 
     <main id="privacy-view" class="app-view">
-        <div class="dashboard-content" style="max-width: 850px;">
+        <div class="dashboard-content" style="max-width: 880px;">
             <div class="content-box">
-                <h2>سياسة الخصوصية</h2>
-                <p>نحن في BA Engineering Academy نولي اهتماماً بالغاً بحماية خصوصيتك وبياناتك الشخصية. نتعهد بالحفاظ على سرية معلوماتك واستخدامها حصرياً لإدارة تجربتك التعليمية، تتبع تقدمك في المقررات، وإصدار الشهادات المعتمدة.</p>
-                <p>لا يتم مشاركة بياناتك الشخصية مع أي طرف ثالث، ونستخدم تقنيات أمان متقدمة لضمان حماية حسابك ومعلومات تواصلك بالكامل.</p>
+                <h2 data-ar="سياسة الخصوصية" data-en="Privacy Policy">سياسة الخصوصية</h2>
+                <p data-ar="نحن في BA Engineering Academy نولي اهتماماً بالغاً بحماية خصوصيتك وبياناتك الشخصية. نتعهد بالحفاظ على سرية معلوماتك واستخدامها حصرياً لإدارة تجربتك التعليمية." data-en="At BA Engineering Academy, we strictly protect your personal privacy and pledge to keep all information confidential.">نحن في BA Engineering Academy نولي اهتماماً بالغاً بحماية خصوصيتك وبياناتك الشخصية. نتعهد بالحفاظ على سرية معلوماتك واستخدامها حصرياً لإدارة تجربتك التعليمية، تتبع تقدمك في المقررات، وإصدار الشهادات المعتمدة.</p>
             </div>
         </div>
     </main>
@@ -1047,34 +1059,34 @@
     <footer class="mega-footer" id="main-footer">
         <div class="footer-grid">
             <div class="footer-col">
-                <div class="brand-logo-container" style="margin-bottom: 15px; width: max-content;">
+                <div class="brand-logo-container" style="margin-bottom: 18px; width: max-content;">
                     <img src="e842ee15-fc5d-491b-a6ae-17e6f345bccd.jpg" alt="BA Academy Logo">
                 </div>
-                <p style="font-size: 0.9rem; line-height: 1.6;">منصتك الهندسية للانتقال من التخطيط إلى التنفيذ باحترافية تامة. نضع بين يديك خلاصة الخبرات الميدانية.</p>
+                <p style="font-size: 0.92rem; line-height: 1.65;" data-ar="منصتك الهندسية للانتقال من التخطيط إلى التنفيذ باحترافية تامة. نضع بين يديك خلاصة الخبرات الميدانية." data-en="Your engineering platform to move from vision to execution with full professionalism.">منصتك الهندسية للانتقال من التخطيط إلى التنفيذ باحترافية تامة. نضع بين يديك خلاصة الخبرات الميدانية.</p>
                 <div class="social-icons">
                     <a href="https://www.linkedin.com/company/ba-engineering-academy/" target="_blank"><i class="fa-brands fa-linkedin-in"></i></a>
                 </div>
             </div>
             <div class="footer-col" style="grid-column: span 2;">
-                <h3>روابط هامة</h3>
+                <h3 data-ar="روابط هامة" data-en="Important Links">روابط هامة</h3>
                 <ul class="footer-links">
-                    <li><a onclick="switchMainView('home-view')"><i class="fa-solid fa-angle-left"></i> الرئيسية</a></li>
-                    <li><a onclick="switchMainView('about-view')"><i class="fa-solid fa-angle-left"></i> من نحن</a></li>
-                    <li><a onclick="switchMainView('faq-view')"><i class="fa-solid fa-angle-left"></i> الأسئلة الشائعة</a></li>
-                    <li><a onclick="switchMainView('terms-view')"><i class="fa-solid fa-angle-left"></i> شروط الاستخدام</a></li>
-                    <li><a onclick="switchMainView('privacy-view')"><i class="fa-solid fa-angle-left"></i> سياسة الخصوصية</a></li>
+                    <li><a onclick="switchMainView('home-view')"><i class="fa-solid fa-angle-left"></i> <span data-ar="الرئيسية" data-en="Home">الرئيسية</span></a></li>
+                    <li><a onclick="switchMainView('about-view')"><i class="fa-solid fa-angle-left"></i> <span data-ar="من نحن" data-en="About Us">من نحن</span></a></li>
+                    <li><a onclick="switchMainView('faq-view')"><i class="fa-solid fa-angle-left"></i> <span data-ar="الأسئلة الشائعة" data-en="FAQ">الأسئلة الشائعة</span></a></li>
+                    <li><a onclick="switchMainView('terms-view')"><i class="fa-solid fa-angle-left"></i> <span data-ar="شروط الاستخدام" data-en="Terms of Use">شروط الاستخدام</span></a></li>
+                    <li><a onclick="switchMainView('privacy-view')"><i class="fa-solid fa-angle-left"></i> <span data-ar="سياسة الخصوصية" data-en="Privacy Policy">سياسة الخصوصية</span></a></li>
                 </ul>
             </div>
             <div class="footer-col">
-                <h3>تواصل معنا</h3>
-                <p style="margin-bottom: 10px; font-size: 0.9rem; color: #94a3b8; font-weight: 600;">نسعد بتواصلكم واستفساراتكم وانضمامكم إلينا في أي وقت.</p>
-                <a href="https://docs.google.com/forms/d/e/1FAIpQLSdObqHCrVw77H87oI5-yZlk6wc7_QuaKMLP3ZNbC5Fp767qHw/viewform?pli=1" target="_blank" class="btn-primary" style="display: inline-flex; padding: 8px 16px; font-size: 13px; text-decoration: none; border-radius: 10px;">
-                    <i class="fa-solid fa-envelope"></i> نموذج التواصل المباشر
+                <h3 data-ar="تواصل معنا" data-en="Contact Us">تواصل معنا</h3>
+                <p style="margin-bottom: 12px; font-size: 0.92rem; color: #94a3b8; font-weight: 600;" data-ar="نسعد بتواصلكم واستفساراتكم وانضمامكم إلينا في أي وقت." data-en="We welcome your inquiries and joinings at any time.">نسعد بتواصلكم واستفساراتكم وانضمامكم إلينا في أي وقت.</p>
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSdObqHCrVw77H87oI5-yZlk6wc7_QuaKMLP3ZNbC5Fp767qHw/viewform?pli=1" target="_blank" class="btn-primary" style="display: inline-flex; padding: 10px 18px; font-size: 13.5px; text-decoration: none; border-radius: 10px;">
+                    <i class="fa-solid fa-envelope"></i> <span data-ar="نموذج التواصل المباشر" data-en="Direct Contact Form">نموذج التواصل المباشر</span>
                 </a>
             </div>
         </div>
         <div class="footer-bottom">
-            جميع الحقوق محفوظة &copy; 2026 لـ BA Engineering Academy
+            <span data-ar="جميع الحقوق محفوظة &copy; 2026 لـ BA Engineering Academy" data-en="All Rights Reserved &copy; 2026 BA Engineering Academy">جميع الحقوق محفوظة &copy; 2026 لـ BA Engineering Academy</span>
         </div>
     </footer>
 
@@ -1093,6 +1105,26 @@
 
         let currentProgress = 0;
         let countersAnimated = false; 
+        let currentLang = 'ar';
+
+        /* وظيفة الترجمة الفورية للموقع بالكامل */
+        function toggleLanguage() {
+            currentLang = currentLang === 'ar' ? 'en' : 'ar';
+            document.documentElement.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
+            document.documentElement.lang = currentLang;
+
+            document.getElementById('lang-btn-text').innerText = currentLang === 'ar' ? 'English' : 'عربي';
+
+            const quoteIcon = document.getElementById('quote-icon');
+            if (quoteIcon) {
+                quoteIcon.className = currentLang === 'ar' ? 'fa-solid fa-quote-right' : 'fa-solid fa-quote-left';
+            }
+
+            document.querySelectorAll('[data-ar]').forEach(el => {
+                const text = el.getAttribute(`data-${currentLang}`);
+                if (text) el.innerText = text;
+            });
+        }
 
         function toggleTheme() {
             const body = document.body;
@@ -1175,7 +1207,7 @@
             let code = document.getElementById('cert-code-input').value.trim().toUpperCase();
             let resBox = document.getElementById('cert-result-box');
             if (code.startsWith('BA-') && code.length >= 8) {
-                resBox.innerHTML = `<span style="color: var(--primary-blue);"><i class="fa-solid fa-circle-check"></i> الشهادة معتمدة وصحيحة وممنوحة من BA Engineering Academy بنجاح!</span>`;
+                resBox.innerHTML = `<span style="color: var(--accent-color);"><i class="fa-solid fa-circle-check"></i> الشهادة معتمدة وصحيحة وممنوحة من BA Engineering Academy بنجاح!</span>`;
             } else {
                 resBox.innerHTML = `<span style="color: #dc2626;"><i class="fa-solid fa-circle-xmark"></i> كود غير صحيح أو غير مسجل في قاعدة البيانات.</span>`;
             }
