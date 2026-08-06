@@ -143,7 +143,7 @@
         .capability-box { background: linear-gradient(135deg, #f0fdf4, #ecfdf5); border: 1px solid #bbf7d0; border-radius: 16px; padding: 24px 28px; margin: 25px 0; }
         .capability-title { font-size: 17px; font-weight: 900; color: #047857; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
         .capability-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; }
-        .capability-item { display: flex; align-items: flex-start; gap: 8px; font-size: 14.5px; font-weight: 700; color: var(--text-dark); line-height: 1.6; }
+        .capability-item { display: flex; align-items: flex-start; gap: 8px; font-size: 16px; font-weight: 700; color: var(--text-dark); line-height: 1.7; }
         .capability-item i { color: #16a34a; font-size: 18px; flex-shrink: 0; margin-top: 1px; }
 
         .tool-cta { display: flex; align-items: center; justify-content: space-between; gap: 20px; background: linear-gradient(135deg, #1e3a8a, #1d4ed8); border-radius: 16px; padding: 20px 26px; margin: 28px 0; cursor: pointer; transition: 0.3s; box-shadow: 0 10px 25px rgba(29,78,216,0.25); flex-wrap: wrap; }
@@ -163,8 +163,9 @@
 
         .box { padding: 14px 18px; border-radius: 10px; margin: 15px 0; font-weight: 600; line-height: 1.6; transition: 0.3s; position: relative; font-size: 15px; }
         .box:hover { transform: translateY(-2px); box-shadow: 0 6px 15px rgba(0,0,0,0.04); }
-        .box-title { font-size: 16px; font-weight: 900; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
-        .box p, .box li { font-size: 14.5px; line-height: 1.6; margin-bottom: 6px; }
+        .box-title { font-size: 17px; font-weight: 900; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+        .box p, .box li { font-size: 16px; line-height: 1.8; margin-bottom: 8px; }
+        .exam-star { display: inline-flex; align-items: center; gap: 4px; background: #f59e0b; color: #fff; font-size: 11px; font-weight: 900; padding: 3px 10px; border-radius: 20px; margin-right: 8px; white-space: nowrap; }
         .box ul { margin-bottom: 0; margin-right: 20px; }
 
         .box-info { background: #eff6ff; border: 1px solid #bfdbfe; border-right: 5px solid #3b82f6; }
@@ -197,12 +198,12 @@
         .box-decision { background: #eef2ff; border: 1px solid #c7d2fe; border-right: 5px solid #6366f1; }
         .box-decision .box-title { color: #4338ca; }
         .decision-options { display: flex; flex-direction: column; gap: 10px; margin-top: 14px; }
-        .decision-btn { text-align: right; padding: 13px 16px; border-radius: 10px; border: 2px solid #c7d2fe; background: #fff; font-weight: 700; font-size: 14.5px; color: var(--text-dark); cursor: pointer; transition: 0.25s; font-family: 'Cairo', sans-serif; }
+        .decision-btn { text-align: right; padding: 13px 16px; border-radius: 10px; border: 2px solid #c7d2fe; background: #fff; font-weight: 700; font-size: 16px; color: var(--text-dark); cursor: pointer; transition: 0.25s; font-family: 'Cairo', sans-serif; }
         .decision-btn:hover:not(:disabled) { border-color: #6366f1; background: #f5f3ff; transform: translateX(-2px); }
         .decision-btn:disabled { cursor: not-allowed; opacity: 0.8; }
         .decision-btn.correct { background: #dcfce7; border-color: #16a34a; color: #15803d; }
         .decision-btn.incorrect { background: #fee2e2; border-color: #dc2626; color: #b91c1c; }
-        .decision-feedback { display: none; margin-top: 14px; padding: 15px 18px; border-radius: 10px; background: #fff; border: 1px solid #c7d2fe; font-size: 14.5px; line-height: 1.85; color: var(--text-dark); }
+        .decision-feedback { display: none; margin-top: 14px; padding: 15px 18px; border-radius: 10px; background: #fff; border: 1px solid #c7d2fe; font-size: 16px; line-height: 1.85; color: var(--text-dark); }
         .decision-feedback.show { display: block; animation: fadeInTab 0.4s ease; }
 
         .takeaways-box { background: linear-gradient(135deg, #ecfdf5, #f0fdf4); border: 1px solid #bbf7d0; border-radius: 16px; padding: 28px; margin: 30px 0; }
@@ -212,7 +213,7 @@
         .takeaways-box li i { color: #10b981; font-size: 20px; flex-shrink: 0; margin-top: 2px; }
 
         .table-wrapper { overflow-x: auto; margin: 25px 0; border-radius: 14px; border: 1px solid var(--border-color); }
-        .data-table { width: 100%; border-collapse: collapse; font-size: 14.5px; background: var(--white); }
+        .data-table { width: 100%; border-collapse: collapse; font-size: 16px; background: var(--white); }
         .data-table th { background: var(--primary-navy); color: #fff; padding: 14px 16px; font-weight: 800; text-align: right; white-space: nowrap; }
         .data-table td { padding: 14px 16px; border-bottom: 1px solid #e2e8f0; line-height: 1.7; }
         .data-table tr:last-child td { border-bottom: none; }
@@ -446,14 +447,19 @@
                 </p>
 
                 <div class="box box-exam reveal">
-                    <div class="box-title"><i class='bx bx-check-double'></i> موضع سؤال اختبار (CVS/AVS Tip)</div>
+                    <div class="box-title"><span class="exam-star"><i class='bx bx-star'></i> مهم للاختبار</span><i class='bx bx-check-double'></i> موضع سؤال اختبار (CVS/AVS Tip)</div>
                     <p>فرّق دائماً بين المصطلحات الثلاثة: <strong>Value Engineering (VE)</strong> هي التطبيق العملي للمنهجية على مشروع أو منتج قائم غالباً بعد التصميم المبدئي، <strong>Value Analysis (VA)</strong> هو نفس الأسلوب لكنه استُخدم تاريخياً على المنتجات الصناعية القائمة فعلياً في الإنتاج، أما <strong>Value Management (VM)</strong> فهو المظلة الأشمل التي تدمج VE ضمن نظام إدارة المشروع من مراحله الأولى وحتى التسليم.</p>
                 </div>
 
                 <div class="card-heading reveal">ثانياً: معادلة القيمة (The Value Equation)</div>
                 <p class="reveal">
-                    ترتكز الهندسة القيمية على معادلة بسيطة لكنها عميقة الأثر: القيمة هي حاصل قسمة الوظيفة (أو الأداء) على التكلفة. وهذا يعني أن رفع القيمة لا يتم فقط بخفض التكلفة، بل يمكن رفعها أيضاً برفع مستوى الأداء الوظيفي عند نفس التكلفة، أو بتحقيق نفس الأداء بتكلفة أقل، أو بالجمع بين الاثنين معاً.
+                    ترتكز الهندسة القيمية على معادلة بسيطة لكنها عميقة الأثر: <strong>القيمة ليست رقماً ناتجاً عن قسمة مباشرة، بل مقياس يعبّر عن مقدار الوظيفة أو الأداء الذي تحصل عليه مقابل كل ريال يتم إنفاقه</strong> — وتُكتب اختصاراً "الوظيفة ÷ التكلفة". وهذا يعني أن رفع القيمة لا يتم فقط بخفض التكلفة، بل يمكن رفعها أيضاً برفع مستوى الأداء الوظيفي عند نفس التكلفة، أو بتحقيق نفس الأداء بتكلفة أقل، أو بالجمع بين الاثنين معاً.
                 </p>
+
+                <div class="box box-info reveal">
+                    <div class="box-title"><i class='bx bx-question-mark'></i> سؤال شائع: إزاي "القيمة = وظيفة ÷ تكلفة" والوظيفة مش رقم أصلاً؟</div>
+                    <p>الوظيفة فعلاً مش رقماً بذاتها — لكن في مرحلة تحليل الوظائف (الوحدة القادمة) هنتعلم إزاي نحوّلها لدرجة قابلة للقياس (مثلاً: درجة أداء من 1-10، أو "الجدارة/Worth" بالريال — أرخص تكلفة ممكنة لتحقيق نفس الوظيفة). فلما تسمع في تقرير VE عبارة "Value = Function/Cost"، المقصود هو: <strong>كلما حافظت على الوظيفة المطلوبة أو حسّنتها، وخفضت التكلفة، زادت القيمة</strong> — مش إننا فعلياً بنقسم كلمة "تبريد" أو "حماية" على مبلغ مالي.</p>
+                </div>
 
                 <div class="diagram-box reveal">
                     <div class="diagram-box-title"><i class='bx bx-git-branch'></i> معادلة القيمة ومساراتها الأربعة لتحسين القيمة</div>
@@ -689,7 +695,7 @@
                 </div>
 
                 <div class="box box-exam reveal">
-                    <div class="box-title"><i class='bx bx-check-double'></i> موضع سؤال اختبار (FAST Diagram Tip)</div>
+                    <div class="box-title"><span class="exam-star"><i class='bx bx-star'></i> مهم للاختبار</span><i class='bx bx-check-double'></i> موضع سؤال اختبار (FAST Diagram Tip)</div>
                     <p>الوظيفة التي تقع مباشرة على يسار "خط النطاق الأيسر" (Left Scope Line) تُسمى <strong>وظيفة الترتيب الأعلى (Highest Order Function)</strong> — وهي الغرض الأسمى الذي يبرر وجود المشروع بأكمله (هنا: "توزيع الطاقة"). الوظائف على نفس الخط الرأسي (مثل حماية الكابلات واستيعاب التوسع) تُعد وظائف متزامنة (All-the-time Functions) تحدث في نفس الوقت.</p>
                 </div>
 
@@ -713,7 +719,7 @@
                 </div>
 
                 <div class="box box-exam reveal">
-                    <div class="box-title"><i class='bx bx-check-double'></i> موضع سؤال اختبار (Function Analysis Tip)</div>
+                    <div class="box-title"><span class="exam-star"><i class='bx bx-star'></i> مهم للاختبار</span><i class='bx bx-check-double'></i> موضع سؤال اختبار (Function Analysis Tip)</div>
                     <p>إذا جاء في السؤال وصف وظيفة بأكثر من كلمتين أو باسم تصميمي محدد مثل "تركيب Cable Tray مجلفن"، فهذا خطأ منهجي شائع — لأنه يصف <strong>حلاً (Solution)</strong> وليس <strong>وظيفة (Function)</strong>. الصياغة الصحيحة المعيارية هي "حماية الكابلات" أو "توزيع الطاقة"، تاركة الباب مفتوحاً لأي حل ممكن.</p>
                 </div>
 
@@ -744,7 +750,7 @@
                     </table>
                 </div>
                 <div class="box box-exam reveal">
-                    <div class="box-title"><i class='bx bx-check-double'></i> مثال سريع على مؤشر القيمة</div>
+                    <div class="box-title"><span class="exam-star"><i class='bx bx-star'></i> مهم للاختبار</span><i class='bx bx-check-double'></i> مثال سريع على مؤشر القيمة</div>
                     <p>إذا كانت تكلفة تنفيذ وظيفة "عزل الصوت" الحالية 40 ريال/م²، وأقل تكلفة ممكنة لتحقيق نفس الوظيفة (الجدارة) هي 10 ريال/م²، فإن مؤشر القيمة = 40 ÷ 10 = <strong>4</strong>. هذا الرقم المرتفع بعيداً عن 1 يشير لفرصة ذهبية لتحسين القيمة في هذا البند تحديداً.</p>
                 </div>
 
@@ -930,7 +936,7 @@
                 </div>
 
                 <div class="box box-exam reveal">
-                    <div class="box-title"><i class='bx bx-check-double'></i> موضع سؤال اختبار</div>
+                    <div class="box-title"><span class="exam-star"><i class='bx bx-star'></i> مهم للاختبار</span><i class='bx bx-check-double'></i> موضع سؤال اختبار</div>
                     <p>يخطئ كثير من المتدربين بالاعتقاد أن "الفكرة الأرخص" هي الأفضل في هذه المرحلة. تذكّر: المرحلة الإبداعية لا تُقيّم التكلفة أو الجدوى إطلاقاً — كل ذلك يُؤجَّل بالكامل إلى <strong>مرحلة التقييم</strong> التالية.</p>
                 </div>
 
@@ -1083,11 +1089,11 @@
                             </tbody>
                         </table>
                     </div>
-                    <p style="font-size:14.5px; color:var(--text-muted); font-weight:700; margin-top:14px;">رغم أن البديل B أعلى بـ200,000 ريال في التكلفة الأولية، إلا أن LCC الإجمالي على مدى 20 سنة أقل بـ<strong>547,600 ريال</strong> — وهذا بالضبط الفرق بين قرار مبني على "أرخص سعر شراء" وقرار مبني على تكلفة الدورة الحياتية الكاملة.</p>
+                    <p style="font-size:16px; color:var(--text-muted); font-weight:700; margin-top:14px; line-height:1.8;">رغم أن البديل B أعلى بـ200,000 ريال في التكلفة الأولية، إلا أن LCC الإجمالي على مدى 20 سنة أقل بـ<strong>547,600 ريال</strong> — وهذا بالضبط الفرق بين قرار مبني على "أرخص سعر شراء" وقرار مبني على تكلفة الدورة الحياتية الكاملة.</p>
                 </div>
 
                 <div class="box box-exam reveal">
-                    <div class="box-title"><i class='bx bx-check-double'></i> موضع سؤال اختبار (LCC Tip)</div>
+                    <div class="box-title"><span class="exam-star"><i class='bx bx-star'></i> مهم للاختبار</span><i class='bx bx-check-double'></i> موضع سؤال اختبار (LCC Tip)</div>
                     <p>سؤال كلاسيكي: "بديلان لنظام تكييف، الأول تكلفته الأولية أقل لكن استهلاكه للطاقة أعلى بكثير — أيهما تختار؟" الإجابة المعيارية دائماً: يجب حساب تكلفة الدورة الحياتية الكاملة لكليهما قبل اتخاذ القرار، فقد يكون البديل الأعلى سعراً أولياً هو الأقل تكلفة إجمالية على مدى 20-25 سنة.</p>
                 </div>
 
@@ -1218,7 +1224,7 @@
                 </p>
 
                 <div class="box box-exam reveal">
-                    <div class="box-title"><i class='bx bx-check-double'></i> موضع سؤال اختبار (Presentation Tip)</div>
+                    <div class="box-title"><span class="exam-star"><i class='bx bx-star'></i> مهم للاختبار</span><i class='bx bx-check-double'></i> موضع سؤال اختبار (Presentation Tip)</div>
                     <p>إذا اعترض المصمم الأصلي (A/E) على مقترح بدعوى أنه يقلل الجودة، فالرد الصحيح دائماً هو <strong>استعراض التحليل الوظيفي والمقارنات الفنية</strong> التي أثبتت تحقيق نفس الوظيفة المطلوبة بنفس الجودة أو أفضل مع توفير مالي — وليس الجدال الشخصي أو التنازل الفوري.</p>
                 </div>
 
@@ -1313,7 +1319,25 @@
                     </div>
                 </div>
 
-                <div class="card-heading reveal">ثانياً: أسئلة شائعة (FAQ)</div>
+                <div class="card-heading reveal">ثانياً: الهندسة القيمية في قطاعات أخرى</div>
+                <p class="sub-title-context reveal" style="margin-bottom:15px;">مثال المستشفى والكابلات الكهربائية كان محورنا طوال الكورس، لكن نفس خطة العمل السداسية تنطبق حرفياً على أي تخصص هندسي. 3 أمثلة خاطفة:</p>
+
+                <div class="mega-case-card reveal">
+                    <h4 style="font-size:18px; font-weight:900; color:var(--primary-navy); margin-bottom:10px;"><i class='bx bx-cube-alt' style="color:#78716c;"></i> الخرسانة — جسر صغير ضمن مشروع طريق</h4>
+                    <p style="color:var(--text-muted); line-height:1.8; font-weight:600; margin:0;"><strong>الوظيفة:</strong> "حمل الأحمال" · <strong>البديل:</strong> تحسين نسبة الخلطة الخرسانية بإضافات معدنية (Fly Ash) بدل زيادة سُمك القواعد للوصول لنفس مقاومة الضغط · <strong>النتيجة:</strong> توفير ≈12% من تكلفة الخرسانة دون المساس بمعامل الأمان الإنشائي.</p>
+                </div>
+
+                <div class="mega-case-card function reveal">
+                    <h4 style="font-size:18px; font-weight:900; color:var(--primary-navy); margin-bottom:10px;"><i class='bx bx-wind' style="color:#0ea5e9;"></i> HVAC — مبنى إداري</h4>
+                    <p style="color:var(--text-muted); line-height:1.8; font-weight:600; margin:0;"><strong>الوظيفة:</strong> "تبريد الهواء" · <strong>البديل:</strong> استبدال نظام تكييف بحجم هواء ثابت (Constant Volume) بنظام VAV يتكيف مع الحمل الفعلي لحظياً · <strong>النتيجة:</strong> توفير ≈18% من فاتورة الطاقة السنوية، وهو ما يظهر بوضوح في تحليل LCC على 20-25 سنة.</p>
+                </div>
+
+                <div class="mega-case-card creative reveal">
+                    <h4 style="font-size:18px; font-weight:900; color:var(--primary-navy); margin-bottom:10px;"><i class='bx bx-layer' style="color:#a855f7;"></i> التشطيبات — ردهات فندق</h4>
+                    <p style="color:var(--text-muted); line-height:1.8; font-weight:600; margin:0;"><strong>الوظيفة:</strong> "تحمّل الاستخدام المكثف + الانطباع الأول" · <strong>البديل:</strong> بورسلين عالي المقاومة في مناطق الحركة الكثيفة، مع الإبقاء على الرخام الطبيعي عند نقطة الاستقبال فقط · <strong>النتيجة:</strong> توفير ≈30% من تكلفة الأرضيات دون التضحية بالهوية الفندقية الفاخرة.</p>
+                </div>
+
+                <div class="card-heading reveal">ثالثاً: أسئلة شائعة (FAQ)</div>
                 <div class="faq-container reveal">
                     <div class="faq-item">
                         <div class="faq-question" onclick="toggleFaq(this)"><span><i class='bx bx-question-mark icon-main'></i> ما الفرق بين Value Engineering و Value Management؟</span><i class='bx bx-chevron-down faq-icon-arrow'></i></div>
@@ -1333,7 +1357,7 @@
                     </div>
                 </div>
 
-                <div class="card-heading reveal"><i class='bx bx-list-check'></i> ثالثاً: المراجعة السريعة النهائية — كل مصطلحات الاختبار في صفحة واحدة</div>
+                <div class="card-heading reveal"><i class='bx bx-list-check'></i> رابعاً: المراجعة السريعة النهائية — كل مصطلحات الاختبار في صفحة واحدة</div>
                 <p class="sub-title-context reveal" style="margin-bottom:15px;">هذا الجدول يلخّص كل مصطلح تحتاجه لاجتياز الاختبار النهائي المكوّن من 50 سؤالاً، مرتباً حسب مراحل خطة العمل.</p>
                 <div class="table-wrapper reveal">
                     <table class="data-table">
