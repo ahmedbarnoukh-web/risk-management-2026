@@ -92,7 +92,7 @@
         @keyframes fadeInTab { from { opacity: 0; transform: translateY(18px) scale(0.99); } to { opacity: 1; transform: translateY(0) scale(1); } }
         @keyframes fadeOutTab { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(-10px); } }
 
-        .content-header { display: flex; align-items: center; gap: 12px; max-width: 1150px; margin: 0 auto 22px; padding: 14px 22px; background: var(--white); border: 1px solid var(--border-color); border-radius: 14px; box-shadow: 0 6px 20px rgba(0,0,0,0.03); z-index: 50; }
+        .content-header { display: flex; align-items: center; gap: 12px; max-width: 1150px; margin: 0 auto 22px; padding: 14px 22px; background: var(--white); border: 1px solid var(--border-color); border-radius: 14px; box-shadow: 0 6px 20px rgba(0,0,0,0.03); z-index: 80; position: sticky; top: 0; }
         .content-header i { font-size: 22px; color: var(--brand-blue); background: var(--light-blue); padding: 8px; border-radius: 8px; }
         .content-header span { font-size: 16px; font-weight: 900; color: var(--primary-navy); }
         .content-header .ch-crumb { margin-right: auto; font-size: 12.5px; font-weight: 800; color: var(--text-muted); background: #f1f5f9; padding: 5px 12px; border-radius: 20px; }
@@ -130,8 +130,12 @@
         .snapshot-card .snap-num { font-size: 26px; font-weight: 900; color: #38bdf8; line-height: 1.2; }
         .snapshot-card .snap-label { font-size: 12px; font-weight: 800; color: #cbd5e1; margin-top: 4px; }
 
-        .box-fact { background: linear-gradient(135deg, #fdf4ff, #fae8ff); border: 1px solid #f0abfc; border-right: 5px solid #c026d3; }
-        .box-fact .box-title { color: #a21caf; }
+        .box-fact { background: #f0fdfa; border: 1px solid #99f6e4; border-right: 5px solid #14b8a6; }
+        .box-fact .box-title { color: #0f766e; }
+
+        .break-box { display: flex; align-items: center; gap: 16px; background: #fff7ed; border: 1px dashed #fdba74; border-radius: 14px; padding: 16px 22px; margin: 30px 0; }
+        .break-box i { font-size: 30px; color: #ea580c; flex-shrink: 0; }
+        .break-box p { margin: 0; font-size: 15.5px; font-weight: 700; color: #9a3412; line-height: 1.6; }
 
         .hook-box { background: linear-gradient(135deg, #0f172a, #1e3a8a); border-radius: 18px; padding: 30px 32px; margin-bottom: 28px; box-shadow: 0 15px 40px rgba(15,23,42,0.25); position: relative; overflow: hidden; }
         .hook-box::before { content: "\ec3f"; font-family: 'boxicons'; position: absolute; left: -15px; bottom: -25px; font-size: 110px; color: rgba(255,255,255,0.05); }
@@ -140,11 +144,11 @@
         .hook-box p { color: #cbd5e1; font-size: 15px; font-weight: 600; line-height: 1.85; position: relative; z-index: 1; margin: 0; }
         .hook-box strong { color: #7dd3fc; }
 
-        .capability-box { background: linear-gradient(135deg, #f0fdf4, #ecfdf5); border: 1px solid #bbf7d0; border-radius: 16px; padding: 24px 28px; margin: 25px 0; }
-        .capability-title { font-size: 17px; font-weight: 900; color: #047857; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+        .capability-box { background: #f0fdfa; border: 1px solid #99f6e4; border-radius: 16px; padding: 24px 28px; margin: 25px 0; }
+        .capability-title { font-size: 17px; font-weight: 900; color: #0f766e; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
         .capability-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; }
         .capability-item { display: flex; align-items: flex-start; gap: 8px; font-size: 16px; font-weight: 700; color: var(--text-dark); line-height: 1.7; }
-        .capability-item i { color: #16a34a; font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+        .capability-item i { color: #14b8a6; font-size: 18px; flex-shrink: 0; margin-top: 1px; }
 
         .tool-cta { display: flex; align-items: center; justify-content: space-between; gap: 20px; background: linear-gradient(135deg, #1e3a8a, #1d4ed8); border-radius: 16px; padding: 20px 26px; margin: 28px 0; cursor: pointer; transition: 0.3s; box-shadow: 0 10px 25px rgba(29,78,216,0.25); flex-wrap: wrap; }
         .tool-cta:hover { transform: translateY(-3px); box-shadow: 0 15px 35px rgba(29,78,216,0.4); }
@@ -159,7 +163,8 @@
         .obj-tag { font-weight: 900; color: var(--brand-blue); white-space: nowrap; font-size: 16.5px; }
         .obj-text { margin: 0; font-size: 16px; color: var(--text-dark); font-weight: 700; line-height: 1.6; }
 
-        .card-heading { font-size: 21px; font-weight: 800; color: var(--primary-navy); margin-top: 35px; margin-bottom: 20px; border-right: 5px solid var(--brand-blue); padding-right: 15px; background: linear-gradient(90deg, var(--light-blue), rgba(239, 246, 255, 0.2)); padding: 12px 20px; border-radius: 8px; display: flex; align-items: center; gap: 10px; }
+        .card-heading { font-size: 23px; font-weight: 900; color: var(--primary-navy); margin-top: 35px; margin-bottom: 20px; border-right: 5px solid var(--brand-blue); padding-right: 15px; background: linear-gradient(90deg, var(--light-blue), rgba(239, 246, 255, 0.2)); padding: 14px 20px; border-radius: 8px; display: flex; align-items: center; gap: 10px; }
+        .highlight-line { display: block; font-size: 18.5px; font-weight: 800; color: var(--primary-navy); background: var(--light-blue); border-right: 4px solid var(--brand-blue); padding: 12px 18px; border-radius: 8px; margin: 16px 0; line-height: 1.7; }
 
         .box { padding: 14px 18px; border-radius: 10px; margin: 15px 0; font-weight: 600; line-height: 1.6; transition: 0.3s; position: relative; font-size: 15px; }
         .box:hover { transform: translateY(-2px); box-shadow: 0 6px 15px rgba(0,0,0,0.04); }
@@ -178,8 +183,6 @@
         .box-exam > * { position: relative; z-index: 1; }
         .box-mistake { background: #fef2f2; border: 1px solid #fecaca; border-right: 5px solid #ef4444; }
         .box-mistake .box-title { color: #b91c1c; }
-        .box-nextstep { background: #f5f3ff; border: 1px solid #ddd6fe; border-right: 5px solid #8b5cf6; }
-        .box-nextstep .box-title { color: #6d28d9; }
 
         .diagram-box { background: var(--white); border: 1px solid var(--border-color); border-radius: 16px; padding: 28px 24px; margin: 28px 0; box-shadow: 0 6px 20px rgba(0,0,0,0.03); }
         .diagram-box-title { font-size: 17px; font-weight: 900; color: var(--primary-navy); margin-bottom: 18px; display: flex; align-items: center; gap: 8px; }
@@ -331,7 +334,7 @@
             <h2>الدورة الشاملة في الهندسة القيمية</h2>
             <p>Value Engineering Course</p>
             <div class="progress-container">
-                <div class="progress-header"><span>نسبة الإنجاز</span><span id="progress-text">14%</span></div>
+                <div class="progress-header"><span>نسبة الإنجاز</span><span id="progress-text">13%</span></div>
                 <div class="progress-track"><div class="progress-fill" id="progress-bar"></div></div>
             </div>
         </div>
@@ -359,9 +362,14 @@
                 <div class="tab-text"><span class="ar-title">5. التطبيقات والمراجع</span><span class="en-title">Applications & References</span></div>
             </li>
 
+            <li id="btn_tab9" class="menu-item" onclick="switchTab('tab9')">
+                <i class='bx bx-trophy tab-icon'></i>
+                <div class="tab-text"><span class="ar-title">6. مواضيع متقدمة (ما بعد الأساسيات)</span><span class="en-title">Advanced Topics</span></div>
+            </li>
+
             <li id="btn_tab7" class="menu-item" onclick="window.open('50_va_Question.html', '_blank')">
                 <i class='bx bx-edit-alt tab-icon'></i>
-                <div class="tab-text"><span class="ar-title">6. الاختبار النهائي المحاكي (50 سؤال)</span><span class="en-title">Final Exam Simulator</span></div>
+                <div class="tab-text"><span class="ar-title">7. الاختبار النهائي المحاكي (50 سؤال)</span><span class="en-title">Final Exam Simulator</span></div>
             </li>
             <li id="value_tab_trigger_new" class="menu-item" onclick="window.open('tools-va.html', '_blank')" style="background: linear-gradient(135deg, #1e3a8a, #1d4ed8); border: 2px solid #3b82f6;">
                 <i class='bx bx-gift tab-icon' style="background: rgba(255,255,255,0.2); color: white; font-size: 24px;"></i>
@@ -372,7 +380,7 @@
             </li>
             <li id="btn_tab8" class="menu-item" onclick="switchTab('tab8')">
                 <i class='bx bx-check-shield tab-icon'></i>
-                <div class="tab-text"><span class="ar-title">7. الخاتمة وإتمام الدورة</span><span class="en-title">Conclusion</span></div>
+                <div class="tab-text"><span class="ar-title">8. الخاتمة وإتمام الدورة</span><span class="en-title">Conclusion</span></div>
             </li>
         </ul>
     </div>
@@ -382,7 +390,7 @@
         <div class="content-header" id="contentHeader">
             <i class='bx bx-play-circle' id="chIcon"></i>
             <span id="chTitle">مدخل ومفاهيم الهندسة القيمية</span>
-            <span class="ch-crumb" id="chCrumb">القسم 1 من 7</span>
+            <span class="ch-crumb" id="chCrumb">القسم 1 من 8</span>
         </div>
 
         <!-- ======================= TAB 1: INTRO ======================= -->
@@ -416,14 +424,14 @@
                 </div>
 
                 <div class="module-progress-bar reveal">
-                    <div class="mp-text">أنت الآن في المرحلة 1 من 7 ضمن رحلة الهندسة القيمية</div>
+                    <div class="mp-text">أنت الآن في القسم 1 من 8 ضمن رحلة الهندسة القيمية</div>
                     <div class="mp-track"><div class="mp-fill" style="width: 14%;"></div></div>
                     <div class="mp-time"><i class='bx bx-time-five'></i> 7 دقائق</div>
                 </div>
 
                 <div class="module-objective reveal">
                     <span class="obj-tag"><i class='bx bx-target-lock'></i> هدف الوحدة:</span>
-                    <p class="obj-text">أن يكون المتدرب قادراً على تعريف الهندسة القيمية، وفهم معادلة القيمة، والتفريق بينها وبين تخفيض التكلفة، والتعرف على المعايير الدولية المعتمدة (SAVE / ISO 12973).</p>
+                    <p class="obj-text">أن يكون المتدرب قادراً على تعريف الهندسة القيمية، وفهم معادلة القيمة، والتفريق بينها وبين تخفيض التكلفة، والتعرف على المعايير الدولية المعتمدة (SAVE / EN 12973).</p>
                 </div>
 
                 <div class="snapshot-row reveal">
@@ -437,28 +445,34 @@
                     <div class="case-thread-badge"><i class='bx bx-briefcase-alt-2'></i> دراسة الحالة المرافقة للكورس</div>
                     <h4>مشروع مستشفى الرياض التخصصي (500 سرير)</h4>
                     <p>
-                        سنرافق طوال هذا الكورس مشروع "إنشاء وتجهيز مستشفى متكامل بسعة 500 سرير بمدينة الرياض، بميزانية تقديرية 400 مليون ريال ومدة تنفيذ 24 شهراً". فريق الهندسة القيمية مُكلَّف بدراسة <strong>نظام مسارات وتوزيع الكابلات الكهربائية</strong> (Cable Routing & Distribution System) للمبنى، بميزانية 28 مليون ريال، في نهاية مرحلة التصميم التخطيطي وقبل الطرح للمقاولين، بهدف تعظيم القيمة والتأكد من مطابقة التصميم لاشتراطات شركة الكهرباء السعودية (SEC) قبل بدء التنفيذ.
+                        وحتى تبقى الفكرة تطبيقية لا نظرية فقط، سنرافق <strong>سيناريو تدريبياً واقعياً</strong> مُصمَّماً لأغراض التطبيق طوال هذا الكورس: مشروع "إنشاء وتجهيز مستشفى متكامل بسعة 500 سرير بمدينة الرياض، بميزانية تقديرية 400 مليون ريال ومدة تنفيذ 24 شهراً". فريق الهندسة القيمية مكلَّف بدراسة <strong>نظام مسارات وتوزيع الكابلات الكهربائية</strong> (Cable Routing & Distribution System) للمبنى، بميزانية 28 مليون ريال، في نهاية مرحلة التصميم التخطيطي وقبل الطرح للمقاولين — بهدف تعظيم القيمة والتأكد من مطابقة التصميم لاشتراطات شركة الكهرباء السعودية (SEC) قبل بدء التنفيذ.
                     </p>
+                    <p style="font-size: 13px; color: #94a3b8; font-weight: 700; margin-top: 10px;">جميع أرقام هذا السيناريو (الميزانيات، النسب، قيم التوفير) افتراضات تدريبية لأغراض التوضيح، وليست نتائج مشروع فعلي منشور.</p>
                 </div>
 
-                <div class="card-heading reveal">أولاً: تعريف الهندسة القيمية ونشأتها التاريخية</div>
+                <div class="card-heading reveal">أولاً: الهندسة القيمية... من أين بدأت؟</div>
                 <p class="reveal">
-                    الهندسة القيمية (Value Engineering - VE) هي منهجية منظمة ومتعددة التخصصات تُستخدم لتحليل الوظائف المطلوبة من منتج أو نظام أو مشروع، بهدف تحقيق تلك الوظائف بأقل تكلفة إجمالية ممكنة دون المساس بالأداء أو الجودة أو السلامة أو الموثوقية المطلوبة. نشأت المنهجية في شركة جنرال إلكتريك (General Electric) الأمريكية عام 1947 على يد المهندس لورانس مايلز (Lawrence D. Miles)، حيث اضطر فريقه أثناء نقص المواد الخام بعد الحرب العالمية الثانية إلى إيجاد بدائل لمكونات غير متوفرة، فاكتشفوا أن كثيراً من هذه البدائل كانت أقل تكلفة وأحياناً أفضل أداءً من الأصل. من هنا وُلد سؤال مايلز الشهير: "ما الوظيفة المطلوبة فعلاً، وبأي طريقة أخرى يمكن تحقيقها؟".
+                    الهندسة القيمية (Value Engineering - VE) منهجية منظمة ومتعددة التخصصات، تُستخدم لتحليل الوظائف المطلوبة من منتج أو نظام أو مشروع، بهدف تحقيق هذه الوظائف بأقل تكلفة إجمالية ممكنة، دون المساس بالأداء أو الجودة أو السلامة.
                 </p>
+                <p class="reveal">
+                    نشأت الفكرة في شركة جنرال إلكتريك الأمريكية عام 1947، على يد المهندس لورانس مايلز. بعد الحرب العالمية الثانية، كانت المواد الخام شحيحة، فاضطر فريقه للبحث عن بدائل لمكونات غير متوفرة. والمفاجأة أن كثيراً من هذه البدائل كانت أقل تكلفة، وأحياناً أفضل أداءً من الأصل. من هنا وُلد سؤال مايلز الذي بُنيت عليه المنهجية بالكامل:
+                </p>
+                <span class="highlight-line reveal">"ما الوظيفة المطلوبة فعلاً؟ وهل هناك طريقة أخرى أرخص تحقق هذه الوظيفة بنفس الكفاءة؟"</span>
 
                 <div class="box box-exam reveal">
                     <div class="box-title"><span class="exam-star"><i class='bx bx-star'></i> مهم للاختبار</span><i class='bx bx-check-double'></i> موضع سؤال اختبار (CVS/AVS Tip)</div>
-                    <p>فرّق دائماً بين المصطلحات الثلاثة: <strong>Value Engineering (VE)</strong> هي التطبيق العملي للمنهجية على مشروع أو منتج قائم غالباً بعد التصميم المبدئي، <strong>Value Analysis (VA)</strong> هو نفس الأسلوب لكنه استُخدم تاريخياً على المنتجات الصناعية القائمة فعلياً في الإنتاج، أما <strong>Value Management (VM)</strong> فهو المظلة الأشمل التي تدمج VE ضمن نظام إدارة المشروع من مراحله الأولى وحتى التسليم.</p>
+                    <p>انتبه للفرق بين 3 مصطلحات متقاربة: <strong>Value Engineering (VE)</strong> هي تطبيق منهجية القيمة على مشروع لا يزال في مرحلة التخطيط أو التصميم أو التطوير، بهدف تحسين قيمته قبل التنفيذ. <strong>Value Analysis (VA)</strong> نفس المنهجية، لكنها تُطبَّق على منتج أو نظام أو عملية قائمة بالفعل. أما <strong>Value Management (VM)</strong> فهي الإطار الأشمل الذي يدير القيمة على المستوى الاستراتيجي عبر كامل دورة حياة المشروع.</p>
                 </div>
 
-                <div class="card-heading reveal">ثانياً: معادلة القيمة (The Value Equation)</div>
+                <div class="card-heading reveal">ثانياً: طيب، إزاي تُقاس "القيمة" بالتحديد؟</div>
                 <p class="reveal">
-                    ترتكز الهندسة القيمية على معادلة بسيطة لكنها عميقة الأثر: <strong>القيمة ليست رقماً ناتجاً عن قسمة مباشرة، بل مقياس يعبّر عن مقدار الوظيفة أو الأداء الذي تحصل عليه مقابل كل ريال يتم إنفاقه</strong> — وتُكتب اختصاراً "الوظيفة ÷ التكلفة". وهذا يعني أن رفع القيمة لا يتم فقط بخفض التكلفة، بل يمكن رفعها أيضاً برفع مستوى الأداء الوظيفي عند نفس التكلفة، أو بتحقيق نفس الأداء بتكلفة أقل، أو بالجمع بين الاثنين معاً.
+                    نقطة مهمة قبل ما نكمل: القيمة ليست رقماً ناتجاً عن قسمة مباشرة، بل مقياس يعبّر عن مقدار الوظيفة أو الأداء الذي تحصل عليه مقابل كل ريال يتم إنفاقه. وتُكتب اختصاراً "الوظيفة ÷ التكلفة".
                 </p>
+                <span class="highlight-line reveal">رفع القيمة لا يعني دائماً خفض التكلفة فقط — بل يمكن أيضاً رفع الأداء بنفس التكلفة، أو الجمع بين الاثنين معاً.</span>
 
                 <div class="box box-info reveal">
-                    <div class="box-title"><i class='bx bx-question-mark'></i> سؤال شائع: إزاي "القيمة = وظيفة ÷ تكلفة" والوظيفة مش رقم أصلاً؟</div>
-                    <p>الوظيفة فعلاً مش رقماً بذاتها — لكن في مرحلة تحليل الوظائف (الوحدة القادمة) هنتعلم إزاي نحوّلها لدرجة قابلة للقياس (مثلاً: درجة أداء من 1-10، أو "الجدارة/Worth" بالريال — أرخص تكلفة ممكنة لتحقيق نفس الوظيفة). فلما تسمع في تقرير VE عبارة "Value = Function/Cost"، المقصود هو: <strong>كلما حافظت على الوظيفة المطلوبة أو حسّنتها، وخفضت التكلفة، زادت القيمة</strong> — مش إننا فعلياً بنقسم كلمة "تبريد" أو "حماية" على مبلغ مالي.</p>
+                    <div class="box-title"><i class='bx bx-question-mark'></i> سؤال منطقي: إزاي نقسم "وظيفة" على "تكلفة" والوظيفة أصلاً مش رقم؟</div>
+                    <p>سؤال وجيه فعلاً — الوظيفة ليست رقماً بذاتها. لكن في مرحلة تحليل الوظائف (الوحدة القادمة) سنتعلم كيف نحوّلها إلى قيمة قابلة للقياس، مثل درجة أداء من 1-10، أو "الجدارة/Worth" بالريال. فحين تقرأ في تقرير VE جملة "Value = Function/Cost"، فالمقصود ببساطة: <strong>كلما حافظت على الوظيفة أو حسّنتها، وانخفضت التكلفة، ارتفعت القيمة</strong> — وليس قسمة فعلية لكلمة "تبريد" على مبلغ مالي.</p>
                 </div>
 
                 <div class="diagram-box reveal">
@@ -492,12 +506,12 @@
                         <text x="702" y="179" text-anchor="middle" font-size="10.5" font-weight="700" fill="#9d174d">بزيادة تكلفة طفيفة</text>
 
                         <text x="410" y="230" text-anchor="middle" font-size="13" font-weight="800" fill="var(--text-muted)">ملاحظة: الهندسة القيمية ليست بالضرورة "خفض تكلفة" — بل هي "تعظيم للقيمة" بأي من المسارات الأربعة</text>
-                        <text x="410" y="255" text-anchor="middle" font-size="12" font-weight="700" fill="#94a3b8">وفق التعريف المعياري في ISO 12973 و SAVE International Value Methodology Standard</text>
+                        <text x="410" y="255" text-anchor="middle" font-size="12" font-weight="700" fill="#94a3b8">وفق التعريف المعياري في EN 12973 و SAVE International Value Methodology Standard</text>
                     </svg>
                 </div>
 
-                <div class="card-heading reveal">ثالثاً: خطة العمل السداسية (VE Job Plan)</div>
-                <p class="reveal">تعتمد دراسات الهندسة القيمية على منهجية منظمة من ست مراحل متسلسلة تُعرف بـ "خطة العمل" (Job Plan)، وهي المرجعية المعتمدة من SAVE International وموضحة في هذا الكورس بالترتيب:</p>
+                <div class="card-heading reveal">ثالثاً: طيب، كيف تُطبَّق الفكرة على مشروع حقيقي؟</div>
+                <p class="reveal">ليست بالعشوائية بالطبع. هناك خطوات ثابتة، معتمدة عالمياً من SAVE International، تُعرف بـ"خطة العمل" (Job Plan)، وسنسير عليها بالترتيب طوال هذا الكورس:</p>
 
                 <div class="diagram-box reveal" style="text-align:center;">
                     <svg viewBox="0 0 400 400" style="max-width:380px; margin:0 auto; display:block;" xmlns="http://www.w3.org/2000/svg">
@@ -535,28 +549,27 @@
                     </table>
                 </div>
 
-                <div class="card-heading reveal">رابعاً: المعايير والمرجعيات الدولية المعتمدة</div>
+                <div class="card-heading reveal">رابعاً: من الجهات التي وضعت هذه القواعد؟</div>
                 <div class="reveal">
                     <ul>
                         <li><strong>SAVE International Value Methodology Standard and Body of Knowledge:</strong> المرجع الأمريكي الأشهر عالمياً، ويمنح شهادة (CVS) أخصائي قيمة معتمد.</li>
-                        <li><strong>ISO 12973:2018 – Value Methodology:</strong> المعيار الدولي الذي يوحّد المصطلحات والمبادئ وأنظمة التطبيق لمنهجية القيمة.</li>
-                        <li><strong>EN 12973 – Value Management:</strong> المعيار الأوروبي المكافئ، معتمد على نطاق واسع في المملكة المتحدة ودول الاتحاد الأوروبي.</li>
+                        <li><strong>EN 12973:2020 – Value Management:</strong> المعيار الأوروبي المرجعي لإدارة القيمة، معتمد على نطاق واسع في المملكة المتحدة ودول الاتحاد الأوروبي، ويوحّد المصطلحات والمبادئ وأنظمة التطبيق لمنهجية القيمة.</li>
                         <li><strong>ISO 15686-5 – Life Cycle Costing:</strong> المرجع الدولي لحساب تكلفة دورة الحياة للمباني والأصول الإنشائية، ويُستخدم بكثافة في مرحلة التطوير.</li>
                         <li><strong>برامج VE الإلزامية الحكومية:</strong> في الولايات المتحدة يُلزم القانون الفيدرالي (Public Law 104-106) الجهات الحكومية الكبرى بإجراء دراسات VE على المشاريع التي تتجاوز حداً معيناً من التكلفة، وهو نمط تتبناه اليوم جهات حكومية وشبه حكومية في عدة دول بما فيها مشاريع البنية التحتية الكبرى بالمنطقة.</li>
                     </ul>
                 </div>
 
                 <div class="box box-tip reveal">
-                    <div class="box-title"><i class='bx bx-bulb'></i> نصيحة الممارس المحترف</div>
-                    <p>أفضل توقيت لإجراء دراسة الهندسة القيمية هو نهاية مرحلة التصميم التخطيطي (Schematic Design) وبداية التصميم التفصيلي، حيث تكون فرصة التأثير على التكلفة والوظيفة في أعلى مستوياتها بينما تكلفة إجراء التغيير ما زالت منخفضة نسبياً. كلما تأخرت الدراسة، انخفضت القدرة على التأثير وارتفعت تكلفة أي تعديل.</p>
+                    <div class="box-title"><i class='bx bx-bulb'></i> نصيحة عملية عند التطبيق</div>
+                    <p>اختر توقيت الدراسة بعناية: أفضل توقيت هو نهاية التصميم التخطيطي وبداية التفصيلي — أي بعد أن تتحدد الفكرة العامة، وقبل أن تُقفل التفاصيل. في هذا التوقيت، قدرتك على التأثير في التكلفة والوظيفة لا تزال عالية، وتكلفة أي تعديل لا تزال منخفضة. كلما تأخرت الدراسة، قلّت قدرتك على التأثير وارتفعت تكلفة أي تغيير.</p>
                 </div>
 
                 <div class="box box-mistake reveal">
-                    <div class="box-title"><i class='bx bx-error'></i> أخطاء شائعة في الواقع العملي</div>
+                    <div class="box-title"><i class='bx bx-error'></i> أخطاء متكررة في الواقع العملي</div>
                     <ul>
-                        <li><strong>الخلط بين VE وخفض التكلفة (Cost Cutting):</strong> خفض التكلفة العشوائي يُضحي غالباً بالوظيفة أو الجودة، بينما الهندسة القيمية تحافظ على الوظيفة المطلوبة أو تحسّنها.</li>
-                        <li><strong>إجراء الدراسة متأخراً جداً:</strong> بعد اعتماد التصاميم التنفيذية بالكامل، مما يجعل أي تعديل مكلفاً ومربكاً للجدول الزمني.</li>
-                        <li><strong>غياب فريق متعدد التخصصات:</strong> إجراء الدراسة بواسطة تخصص هندسي واحد فقط يُفقدها منظورها الشمولي.</li>
+                        <li><strong>الخلط بينها وبين خفض التكلفة العشوائي:</strong> خفض التكلفة العشوائي يضحّي غالباً بالوظيفة أو الجودة، أما الهندسة القيمية فتحافظ عليها أو تحسّنها.</li>
+                        <li><strong>إجراء الدراسة متأخراً جداً:</strong> بعد أن تُقفل التصاميم التنفيذية بالكامل، فيصبح أي تعديل مكلفاً ومربكاً للجدول الزمني.</li>
+                        <li><strong>الاعتماد على تخصص واحد فقط:</strong> إجراء الدراسة بمهندس واحد من تخصص واحد يُفقدها نظرتها الشاملة.</li>
                     </ul>
                 </div>
 
@@ -573,21 +586,21 @@
                 </div>
 
                 <div class="box box-decision reveal">
-                    <div class="box-title"><i class='bx bx-help-circle'></i> تمرين تفاعلي: VE أم Cost Cutting؟</div>
-                    <p>طلب مدير المشروع تخفيض تكلفة نظام إنارة الطوارئ بحذف نصف عدد الوحدات في ممرات المستشفى توفيراً للميزانية. هل هذا القرار "هندسة قيمية"؟</p>
+                    <div class="box-title"><i class='bx bx-help-circle'></i> جرّب تحكم بنفسك: هل هذا VE أم مجرد خفض تكلفة؟</div>
+                    <p>طلب مدير المشروع تخفيض تكلفة نظام إنارة الطوارئ بحذف نصف عدد الوحدات في ممرات المستشفى، توفيراً للميزانية. في رأيك، هل هذا "هندسة قيمية"؟</p>
                     <div class="decision-options">
                         <button class="decision-btn" data-correct="false" onclick="handleDecision(this)">نعم، لأنه وفّر جزءاً من الميزانية</button>
                         <button class="decision-btn" data-correct="true" onclick="handleDecision(this)">لا، لأنه ضحّى بوظيفة أساسية (السلامة) دون دراسة بديل يحافظ عليها</button>
                         <button class="decision-btn" data-correct="false" onclick="handleDecision(this)">لا فرق، كلاهما يخفّض التكلفة</button>
                     </div>
                     <div class="decision-feedback">
-                        <strong>الإجابة الصحيحة: لا.</strong> هذا القرار خفض تكلفة عشوائي وليس هندسة قيمية، لأنه ضحّى بوظيفة "توفير مسار إخلاء آمن" دون بحث عن بديل يحافظ عليها بتكلفة أقل (مثل إنارة LED أعلى كفاءة بنفس عدد الوحدات). الهندسة القيمية كانت لتبدأ بسؤال: ما الحد الأدنى من الإضاءة المطلوب قانونياً للإخلاء الآمن؟ ثم تبحث عن أرخص وسيلة لتحقيقه.
+                        <strong>الإجابة الصحيحة: لا.</strong> هذا خفض تكلفة عشوائي وليس هندسة قيمية، لأنه ضحّى بوظيفة "توفير مسار إخلاء آمن" دون البحث عن بديل يحافظ عليها بتكلفة أقل — مثل إنارة LED أعلى كفاءة بنفس عدد الوحدات. الهندسة القيمية كانت لتبدأ بسؤال: ما الحد الأدنى من الإضاءة المطلوب قانونياً للإخلاء الآمن؟ ثم تبحث عن أرخص وسيلة تحقّقه.
                     </div>
                 </div>
 
                 <div class="box box-fact reveal">
-                    <div class="box-title"><i class='bx bx-bulb'></i> هل تعلم؟</div>
-                    <p>الدراسات المرجعية في مجال الهندسة القيمية تشير إلى أن دراسة قيمة واحدة جيدة التنفيذ يمكن أن تحقق توفيراً يتراوح بين 5% و15% من تكلفة المشروع الإجمالية، دون أي مساس بالوظيفة أو الجودة أو السلامة — وهو ما يجعلها من أعلى أنشطة إدارة المشاريع عائداً على الوقت المستثمر فيها.</p>
+                    <div class="box-title"><i class='bx bx-bulb'></i> رقم يستحق أن تتذكره</div>
+                    <p>دراسات القيمة، حين تُنفَّذ بمنهجية صحيحة، قد تحقق وفورات ملموسة في تكلفة المشروع — لكن النسبة الفعلية تختلف بشدة حسب طبيعة المشروع، توقيت إجراء الدراسة، ونطاقها وجودة البيانات المتاحة. لا يوجد رقم ثابت ينطبق على كل الحالات، وهذا ما يجعل توقيت الدراسة (كما ذكرنا سابقاً) بهذه الأهمية.</p>
                 </div>
 
                 <div class="capability-box reveal">
@@ -596,8 +609,13 @@
                         <div class="capability-item"><i class='bx bx-check-circle'></i> تعريف الهندسة القيمية ومعادلة القيمة بدقة</div>
                         <div class="capability-item"><i class='bx bx-check-circle'></i> التفرقة بينها وبين خفض التكلفة العشوائي</div>
                         <div class="capability-item"><i class='bx bx-check-circle'></i> تحديد التوقيت الأمثل لإجراء دراسة القيمة</div>
-                        <div class="capability-item"><i class='bx bx-check-circle'></i> ذكر أهم 3 معايير دولية معتمدة (SAVE / ISO 12973 / EN 12973)</div>
+                        <div class="capability-item"><i class='bx bx-check-circle'></i> ذكر أهم 3 معايير دولية معتمدة (SAVE / EN 12973 / ISO 15686-5)</div>
                     </div>
+                </div>
+
+                <div class="break-box reveal">
+                    <i class='bx bx-cup-hot'></i>
+                    <p>استراحة خفيفة ☕ اشربلك حاجة سخنة وريّح دماغك شوية، وتعالى نكمل.</p>
                 </div>
             </div>
         </div>
@@ -608,7 +626,7 @@
                 <h2 class="main-title"><i class='bx bx-search-alt'></i> 2. المرحلة المعلوماتية وتحليل الوظائف</h2>
 
                 <div class="module-progress-bar reveal">
-                    <div class="mp-text">أنت الآن في المرحلة 2 من 7 ضمن رحلة الهندسة القيمية</div>
+                    <div class="mp-text">أنت الآن في القسم 2 من 8 ضمن رحلة الهندسة القيمية</div>
                     <div class="mp-track"><div class="mp-fill" style="width: 28%;"></div></div>
                     <div class="mp-time"><i class='bx bx-time-five'></i> 11 دقيقة</div>
                 </div>
@@ -620,20 +638,21 @@
                     <p class="obj-text">أن يكون المتدرب قادراً على تجهيز فريق ومعلومات دراسة القيمة، وتعريف الوظائف بقاعدة (فعل + اسم)، وبناء مخطط FAST، وتوزيع تكلفة المشروع على الوظائف لاكتشاف فرص التحسين، وترتيب أولويات الدراسة عبر مصفوفة تقييم الوظائف.</p>
                 </div>
 
-                <div class="card-heading reveal">أولاً: المرحلة المعلوماتية (Information Phase)</div>
+                <div class="card-heading reveal">أولاً: من أين تبدأ أي دراسة قيمة؟</div>
                 <p class="reveal">
                     تبدأ أي دراسة قيمة بجمع شامل للمعلومات: المخططات والمواصفات، تقديرات التكلفة التفصيلية، متطلبات المالك والمستخدم النهائي، الأنظمة واللوائح المحلية، وأي قيود زمنية أو تعاقدية. في مشروع المستشفى، جمع الفريق مخططات المسارات الكهربائية أحادي الخط (Single Line Diagrams)، تقرير حصر الأحمال (Load Schedule)، ميزانية بند الكابلات والمسارات (كانت مقدرة بـ 28 مليون ريال)، ودليل اشتراطات شركة الكهرباء السعودية (SEC) الخاص بحساب معاملات الطلب والتنوع والاستخدام لمرافق الرعاية الصحية.
                 </p>
 
                 <div class="box box-info reveal">
                     <div class="box-title"><i class='bx bx-group'></i> تشكيل فريق دراسة القيمة</div>
-                    <p>يُشترط أن يكون الفريق متعدد التخصصات (5-8 أعضاء عادة): مهندس كهرباء (قوى)، مهندس ميكانيكا، مهندس إنشائي، مهندس تكاليف (Quantity Surveyor)، ممثل عن المالك أو الجهة التشغيلية للمستشفى، ويقود الفريق ميسّر معتمد (Value Study Team Leader / CVS) يضمن الالتزام بخطة العمل السداسية دون قفز مباشر إلى الحلول.</p>
+                    <p>غالباً ما يتكون الفريق من عدة تخصصات هندسية وإدارية، ويُحدَّد حجمه الفعلي وفق نطاق الدراسة وتعقيد المشروع — لكن الثابت دائماً هو مبدأ التعدد التخصصي نفسه، مثل: مهندس كهرباء (قوى)، مهندس ميكانيكا، مهندس إنشائي، مهندس تكاليف (Quantity Surveyor)، ممثل عن المالك أو الجهة التشغيلية للمستشفى، ويقود الفريق ميسّر معتمد (Value Study Team Leader / CVS) يضمن الالتزام بخطة العمل السداسية دون قفز مباشر إلى الحلول.</p>
                 </div>
 
-                <div class="card-heading reveal">ثانياً: تحليل الوظائف (Function Analysis) — جوهر المنهجية</div>
+                <div class="card-heading reveal">ثانياً: كيف نُعرِّف "الوظيفة" بدقة؟</div>
                 <p class="reveal">
                     يُعد تحليل الوظائف الركيزة التي تُميّز الهندسة القيمية عن أي أسلوب آخر لضبط التكلفة. القاعدة الذهبية هنا هي تعريف كل وظيفة بكلمتين فقط: <strong>فعل نشط (Active Verb) + اسم قابل للقياس (Measurable Noun)</strong>، مثل "توزيع الطاقة" أو "حماية الكابلات" أو "حمل الأحمال". هذا الأسلوب يُجرّد الوظيفة عن أي حل تصميمي محدد مسبقاً، ويفتح الباب أمام بدائل لم تكن لتظهر لو صيغت المشكلة كـ "كيف نصمم مسار كابلات أرخص؟".
                 </p>
+                <span class="highlight-line reveal">القاعدة الذهبية: فعل نشط + اسم قابل للقياس — كلمتان لا أكثر، بلا أي إشارة للحل التصميمي.</span>
 
                 <div class="table-wrapper reveal">
                     <table class="data-table">
@@ -674,8 +693,11 @@
                         <text x="380" y="202" text-anchor="middle" font-size="10" font-weight="700" fill="#92400e">Resist Fire (مطلوبة)</text>
 
                         <line x1="300" y1="47" x2="180" y2="75" stroke="#94a3b8" stroke-width="1.5"/>
+                        <polygon points="180.0,75.0 188.6,67.9 190.9,77.6" fill="#94a3b8"/>
                         <line x1="300" y1="117" x2="180" y2="85" stroke="#94a3b8" stroke-width="1.5"/>
+                        <polygon points="180.0,85.0 191.0,82.7 188.4,92.4" fill="#94a3b8"/>
                         <line x1="300" y1="187" x2="180" y2="95" stroke="#94a3b8" stroke-width="1.5"/>
+                        <polygon points="180.0,95.0 191.0,97.1 184.9,105.1" fill="#94a3b8"/>
 
                         <rect x="520" y="10" width="150" height="50" rx="10" fill="#fff" stroke="#94a3b8" stroke-width="1.5"/>
                         <text x="595" y="32" text-anchor="middle" font-size="11.5" font-weight="800" fill="var(--text-dark)">Cable Tray مغلق</text>
@@ -754,7 +776,7 @@
                     <p>إذا كانت تكلفة تنفيذ وظيفة "عزل الصوت" الحالية 40 ريال/م²، وأقل تكلفة ممكنة لتحقيق نفس الوظيفة (الجدارة) هي 10 ريال/م²، فإن مؤشر القيمة = 40 ÷ 10 = <strong>4</strong>. هذا الرقم المرتفع بعيداً عن 1 يشير لفرصة ذهبية لتحسين القيمة في هذا البند تحديداً.</p>
                 </div>
 
-                <div class="card-heading reveal">خامساً: توزيع التكلفة على الوظائف (Function-Cost Allocation)</div>
+                <div class="card-heading reveal">خامساً: أين تضيع القيمة فعلياً؟ (Function-Cost Allocation)</div>
                 <p class="reveal">
                     مجرد تعريف الوظائف لا يكفي — جوهر منهجية SAVE هو معرفة <strong>كم تكلّف كل وظيفة فعلياً</strong> من ميزانية المشروع، ثم مقارنتها بجدارتها (Worth) لاكتشاف أين "تضيع" القيمة. في مشروع المستشفى، وزّع الفريق ميزانية نظام الكابلات (28 مليون ريال) على الوظائف الأربع التي حدّدها مخطط FAST:
                 </p>
@@ -781,7 +803,7 @@
                     <p>وظيفة "استيعاب التوسع المستقبلي" هي أوضح حالة <strong>High Cost / Low Worth</strong> في الجدول: تستهلك 15% من الميزانية (4.2 مليون ريال) كسعة احتياطية بينما جدارتها الفعلية لا تتجاوز 1.5 مليون — مؤشر قيمة 2.80، وهو الأعلى بين كل الوظائف. السبب الشائع لهذا الانتفاخ هو تطبيق معاملات طلب وتنوع متحفظة جداً دون مراجعة دليل اشتراطات شركة الكهرباء السعودية (SEC) بدقة. أما وظيفة "حماية الكابلات" فتأتي ثانياً بمؤشر 1.96. هذا التوزيع الرقمي — وليس الانطباع الشخصي — هو ما يوجّه الفريق لتركيز المرحلة الإبداعية على هاتين الوظيفتين تحديداً.</p>
                 </div>
 
-                <div class="card-heading reveal">سادساً: مصفوفة تقييم الوظائف وترتيب الأولويات (Function Evaluation Matrix)</div>
+                <div class="card-heading reveal">سادساً: أي وظيفة تستحق وقتك أكثر؟ (Function Evaluation Matrix)</div>
                 <p class="reveal">
                     بخلاف مصفوفة تقييم <strong>البدائل</strong> التي سنستخدمها لاحقاً في مرحلة التقييم، هذه مصفوفة لتقييم <strong>الوظائف نفسها</strong> — بإضافة معيار "الأهمية" من منظور المستخدم/المالك إلى جانب التكلفة والجدارة، لتحديد أي الوظائف تستحق أولوية الدراسة العميقة.
                 </p>
@@ -803,7 +825,7 @@
 
                 <div class="box box-fact reveal">
                     <div class="box-title"><i class='bx bx-bulb'></i> هل تعلم؟</div>
-                    <p>قاعدة تعريف الوظيفة بكلمتين فقط (فعل + اسم) وضعها لورانس مايلز بنفسه في الأربعينيات، وما زالت حتى اليوم دون أي تعديل جوهري ضمن معايير SAVE International وISO 12973 — وهو ما يجعلها أحد أطول المفاهيم الهندسية عمراً واستقراراً في القرن الماضي.</p>
+                    <p>قاعدة تعريف الوظيفة بكلمتين فقط (فعل + اسم) وضعها لورانس مايلز بنفسه في الأربعينيات، وما زالت حتى اليوم دون أي تعديل جوهري ضمن معايير SAVE International وEN 12973 — وهو ما يجعلها أحد أطول المفاهيم الهندسية عمراً واستقراراً في القرن الماضي.</p>
                 </div>
 
                 <div class="takeaways-box reveal">
@@ -835,6 +857,11 @@
                         <div class="capability-item"><i class='bx bx-check-circle'></i> حساب مؤشر القيمة (Cost ÷ Worth)</div>
                     </div>
                 </div>
+
+                <div class="break-box reveal">
+                    <i class='bx bx-cup-hot'></i>
+                    <p>استراحة خفيفة ☕ اشربلك حاجة سخنة وريّح دماغك شوية، وتعالى نكمل.</p>
+                </div>
             </div>
         </div>
 
@@ -844,7 +871,7 @@
                 <h2 class="main-title"><i class='bx bx-bulb'></i> 3. المرحلة الإبداعية (Creative Phase)</h2>
 
                 <div class="module-progress-bar reveal">
-                    <div class="mp-text">أنت الآن في المرحلة 3 من 7 ضمن رحلة الهندسة القيمية</div>
+                    <div class="mp-text">أنت الآن في القسم 3 من 8 ضمن رحلة الهندسة القيمية</div>
                     <div class="mp-track"><div class="mp-fill" style="width: 42%;"></div></div>
                     <div class="mp-time"><i class='bx bx-time-five'></i> 8 دقائق</div>
                 </div>
@@ -856,10 +883,11 @@
                     <p class="obj-text">أن يكون المتدرب قادراً على تطبيق قواعد العصف الذهني الأربع، واستخدام تقنيات التوليد الإبداعي المختلفة، وتوليد بدائل حقيقية لكل وظيفة محددة.</p>
                 </div>
 
-                <div class="card-heading reveal">أولاً: مبادئ التفكير الإبداعي في الهندسة القيمية</div>
+                <div class="card-heading reveal">أولاً: كيف تُدار العصف الذهني بذكاء؟</div>
                 <p class="reveal">
                     بعد أن حدّد الفريق الوظائف بدقة في المرحلة السابقة، تبدأ المرحلة الإبداعية بهدف واحد: توليد أكبر عدد ممكن من الأفكار والبدائل لتحقيق كل وظيفة، دون أي حكم أو نقد أو تقييم فوري. يعتمد هذا على "قواعد أوسبورن الأربع" للعصف الذهني (Osborn's Rules)، وهي الأساس النظري الذي بُني عليه هذا الجزء من خطة العمل.
                 </p>
+                <span class="highlight-line reveal">في هذه المرحلة، ممنوع نقد أي فكرة مهما بدت غريبة — التقييم له مرحلة منفصلة تماماً لاحقاً.</span>
 
                 <div class="table-wrapper reveal">
                     <table class="data-table">
@@ -873,7 +901,7 @@
                     </table>
                 </div>
 
-                <div class="card-heading reveal">ثانياً: تقنيات التوليد الإبداعي المستخدمة في دراسات القيمة</div>
+                <div class="card-heading reveal">ثانياً: ما الأدوات المتاحة لتوليد الأفكار؟</div>
                 <div class="table-wrapper reveal">
                     <table class="data-table">
                         <thead><tr><th>التقنية</th><th>آلية العمل</th></tr></thead>
@@ -908,17 +936,18 @@
                 </div>
 
                 <div class="card-heading reveal">رابعاً: تطبيق عملي لتقنية SCAMPER على وظيفة "حماية الكابلات"</div>
+                <p class="reveal" style="font-size:14px; color:var(--text-muted); font-weight:700;">SCAMPER اختصار لسبع كلمات إنجليزية: Substitute – Combine – Adapt – Modify – Put to another use – Eliminate – Reverse.</p>
                 <div class="table-wrapper reveal">
                     <table class="data-table">
                         <thead><tr><th>الحرف</th><th>السؤال</th><th>الفكرة الناتجة</th></tr></thead>
                         <tbody>
-                            <tr><td><strong>S</strong> استبدل</td><td>هل نستبدل المادة أو النظام؟</td><td>استبدال Cable Tray المعدني بـ Ladder Tray مفتوح</td></tr>
-                            <tr><td><strong>C</strong> ادمج</td><td>هل ندمج عناصر منفصلة؟</td><td>دمج مسار الإنارة مع كابلات القوى المنخفضة في تراي واحد</td></tr>
-                            <tr><td><strong>A</strong> كيّف</td><td>هل نكيّف حلاً من مجال آخر؟</td><td>تبني تصميم مسارات مصانع الطاقة (تهوية أعلى) للممرات الحرجة</td></tr>
-                            <tr><td><strong>M</strong> عدّل</td><td>هل نعدّل الحجم أو الشكل؟</td><td>تقليل عرض التراي في المسارات ذات الحمل المنخفض</td></tr>
-                            <tr><td><strong>P</strong> استخدم لغرض آخر</td><td>هل يخدم غرضاً إضافياً؟</td><td>استخدام مسار الكابلات كخط توزيع لكاميرات المراقبة أيضاً</td></tr>
-                            <tr><td><strong>E</strong> احذف</td><td>هل نحذف عنصراً غير ضروري؟</td><td>حذف الغطاء العلوي في المسارات غير المكشوفة للعامة</td></tr>
-                            <tr><td><strong>R</strong> اعكس</td><td>هل نعكس الترتيب أو الاتجاه؟</td><td>تمرير المسار الرئيسي من السقف بدل الأرضية لتسهيل الصيانة</td></tr>
+                            <tr><td><strong>S</strong> استبدل<br><span style="font-size:11px; color:var(--text-muted); font-weight:700;">Substitute</span></td><td>هل نستبدل المادة أو النظام؟</td><td>استبدال Cable Tray المعدني بـ Ladder Tray مفتوح</td></tr>
+                            <tr><td><strong>C</strong> ادمج<br><span style="font-size:11px; color:var(--text-muted); font-weight:700;">Combine</span></td><td>هل ندمج عناصر منفصلة؟</td><td>دمج مسار الإنارة مع كابلات القوى المنخفضة في تراي واحد</td></tr>
+                            <tr><td><strong>A</strong> كيّف<br><span style="font-size:11px; color:var(--text-muted); font-weight:700;">Adapt</span></td><td>هل نكيّف حلاً من مجال آخر؟</td><td>تبني تصميم مسارات مصانع الطاقة (تهوية أعلى) للممرات الحرجة</td></tr>
+                            <tr><td><strong>M</strong> عدّل<br><span style="font-size:11px; color:var(--text-muted); font-weight:700;">Modify</span></td><td>هل نعدّل الحجم أو الشكل؟</td><td>تقليل عرض التراي في المسارات ذات الحمل المنخفض</td></tr>
+                            <tr><td><strong>P</strong> استخدم لغرض آخر<br><span style="font-size:11px; color:var(--text-muted); font-weight:700;">Put to another use</span></td><td>هل يخدم غرضاً إضافياً؟</td><td>استخدام مسار الكابلات كخط توزيع لكاميرات المراقبة أيضاً</td></tr>
+                            <tr><td><strong>E</strong> احذف<br><span style="font-size:11px; color:var(--text-muted); font-weight:700;">Eliminate</span></td><td>هل نحذف عنصراً غير ضروري؟</td><td>حذف الغطاء العلوي في المسارات غير المكشوفة للعامة</td></tr>
+                            <tr><td><strong>R</strong> اعكس<br><span style="font-size:11px; color:var(--text-muted); font-weight:700;">Reverse</span></td><td>هل نعكس الترتيب أو الاتجاه؟</td><td>تمرير المسار الرئيسي من السقف بدل الأرضية لتسهيل الصيانة</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -933,6 +962,11 @@
                         <li>إعادة حساب معامل الطلب (Demand Factor) ومعامل التنوع (Diversity Factor) ومعامل الاستخدام (Utilization Factor) طبقاً لدليل اشتراطات شركة الكهرباء السعودية (SEC)، بدل افتراض تشغيل كل الأحمال بأقصى طاقتها في نفس اللحظة.</li>
                         <li>تقليل السعة الاحتياطية المفرطة للتوسع المستقبلي من افتراض تحفظي عام إلى نسبة محددة بناءً على خطة التوسع الفعلية للمستشفى.</li>
                     </ul>
+                </div>
+
+                <div class="box box-mistake reveal">
+                    <div class="box-title"><i class='bx bx-shield-quarter'></i> ملاحظة مهمة</div>
+                    <p>الأمثلة والبدائل الواردة أعلاه (في جدول SCAMPER وقائمة البدائل) هي أفكار توليدية لأغراض التدريب فقط، وليست حلولاً تنفيذية معتمدة. يجب دائماً التحقق من الفصل بين الأنظمة، والالتزام بالأكواد والمواصفات، ومتطلبات الحماية الميكانيكية والسلامة، قبل اعتماد أي بديل على أرض الواقع.</p>
                 </div>
 
                 <div class="box box-exam reveal">
@@ -960,7 +994,7 @@
 
                 <div class="box box-fact reveal">
                     <div class="box-title"><i class='bx bx-bulb'></i> هل تعلم؟</div>
-                    <p>في تجارب العصف الذهني الموثقة، غالباً ما تظهر أعلى نسبة من الأفكار "عالية القيمة" بعد الدقيقة الـ20 من بداية الجلسة — أي بعد أن تُستنفد الأفكار الواضحة والمكرورة، ويبدأ الفريق فعلاً في التفكير خارج الصندوق. هذا سبب رئيسي وراء توصية SAVE بعدم إنهاء الجلسة الإبداعية مبكراً.</p>
+                    <p>لا تُوقف جلسة العصف الذهني عند انتهاء الأفكار التقليدية والمتوقعة؛ فالأفكار الأكثر اختلافاً وقيمة غالباً ما تظهر بعد أن تُستنفد الحلول المألوفة الأولى، حين يبدأ الفريق فعلاً في التفكير خارج الصندوق. هذا سبب رئيسي وراء توصية SAVE بعدم إنهاء الجلسة الإبداعية مبكراً.</p>
                 </div>
 
                 <div class="capability-box reveal">
@@ -981,7 +1015,7 @@
                 <h2 class="main-title"><i class='bx bx-line-chart'></i> 4. التقييم والتطوير وتكلفة الدورة الحياتية</h2>
 
                 <div class="module-progress-bar reveal">
-                    <div class="mp-text">أنت الآن في المرحلة 4 من 7 ضمن رحلة الهندسة القيمية</div>
+                    <div class="mp-text">أنت الآن في القسم 4 من 8 ضمن رحلة الهندسة القيمية</div>
                     <div class="mp-track"><div class="mp-fill" style="width: 57%;"></div></div>
                     <div class="mp-time"><i class='bx bx-time-five'></i> 12 دقيقة</div>
                 </div>
@@ -993,7 +1027,7 @@
                     <p class="obj-text">أن يكون المتدرب قادراً على بناء مصفوفة تقييم موزونة، وفهم مراحل التطوير الفني والاقتصادي للبدائل، وحساب تكلفة الدورة الحياتية (LCC) للمقارنة بين البدائل.</p>
                 </div>
 
-                <div class="card-heading reveal">أولاً: مرحلة التقييم (Evaluation Phase)</div>
+                <div class="card-heading reveal">أولاً: كيف تختار الأفضل من بين كل البدائل؟</div>
                 <p class="reveal">
                     بعد توليد قائمة طويلة من البدائل، يبدأ الفريق بفرزها على مرحلتين: فرز أولي سريع (Screening) لاستبعاد الأفكار غير القابلة للتطبيق فنياً أو قانونياً، ثم تقييم تفصيلي للبدائل المتبقية باستخدام <strong>مصفوفة التقييم الموزونة (Weighted Evaluation Matrix)</strong>.
                 </p>
@@ -1044,7 +1078,7 @@
                     <p>من قائمة أفكار المرحلة الإبداعية: فكرة "إلغاء غطاء الحماية عن الكابلات في غرفة العمليات" هي <strong>خطأ قاتل (Fatal Flaw)</strong> — تُستبعد فوراً لمخالفتها اشتراطات السلامة الإلزامية، ولا داعي لتقييمها بالمصفوفة الموزونة أصلاً. أما فكرة "استخدام Cable Ladder مفتوح بدل Tray مغلق" فهي <strong>فكرة قابلة للتطوير</strong> — قانونية ومقبولة فنياً، فتدخل مباشرة في مصفوفة التقييم الموزونة للمفاضلة الرقمية.</p>
                 </div>
 
-                <div class="card-heading reveal">ثانياً: مرحلة التطوير (Development Phase)</div>
+                <div class="card-heading reveal">ثانياً: البديل الفائز... كيف يتحول لمقترح جاهز؟</div>
                 <p class="reveal">
                     بعد اختيار أفضل البدائل، يبدأ تطويرها فنياً (رسومات تفصيلية أولية، تنسيق مع بقية الأنظمة، التحقق من الامتثال للأكواد) واقتصادياً (تسعير دقيق، مقارنة تكلفة أولية مقابل تكلفة أولية، وحساب الأثر على الجدول الزمني والمخاطر). الناتج هنا هو "مقترح مطوَّر جاهز للعرض" وليس مجرد فكرة أولية.
                 </p>
@@ -1102,30 +1136,33 @@
                     <p>اعتماد لجان الترسية على "أقل سعر تقديم أولي" دون طلب بيانات تشغيل وصيانة من المورّدين يؤدي غالباً إلى اختيار أنظمة تبدو اقتصادية في البداية لكنها الأعلى تكلفة إجمالية على المدى الطويل.</p>
                 </div>
 
-                <div class="card-heading reveal">رابعاً: قياس الأثر — نسبة التوفير ونسبة تحسين القيمة</div>
+                <div class="card-heading reveal">رابعاً: قياس الأثر — نسبة التوفير وتحسّن مؤشر القيمة</div>
                 <p class="reveal">
-                    كل مقترح تغيير قيمي (VECP) يُختتم برقمين لا غنى عنهما لإقناع المالك: <strong>نسبة التوفير المالي المباشر</strong>، و<strong>نسبة تحسين القيمة</strong> المبنية على مؤشر القيمة الذي تعلمناه سابقاً (Cost ÷ Worth).
+                    كل مقترح تغيير قيمي (VECP) يُختتم برقمين لا غنى عنهما لإقناع المالك: <strong>نسبة التوفير المالي المباشر (Savings %)</strong>، و<strong>نسبة تحسّن مؤشر القيمة (Value Index Improvement %)</strong> المبنية على مؤشر القيمة الذي تعلمناه سابقاً (Cost ÷ Worth).
                 </p>
+                <p style="font-size: 13px; color: #94a3b8; font-weight: 700;">ملاحظة: "نسبة تحسّن مؤشر القيمة" مقياس داخلي يُستخدم في هذا الكورس لتوضيح مدى اقتراب البديل من الحالة المثلى (Cost ≈ Worth)، وليست تعريفاً معيارياً رسمياً موحّداً لدى SAVE International.</p>
                 <div class="diagram-box reveal">
-                    <div class="diagram-box-title"><i class='bx bx-calculator'></i> معادلتا القياس النهائي</div>
-                    <svg viewBox="0 0 820 165" xmlns="http://www.w3.org/2000/svg">
-                        <rect x="30" y="15" width="360" height="80" rx="12" fill="#ecfdf5" stroke="#16a34a" stroke-width="2"/>
-                        <text x="210" y="42" text-anchor="middle" font-size="13.5" font-weight="900" fill="#15803d">نسبة التوفير (Savings %)</text>
-                        <text x="210" y="65" text-anchor="middle" font-size="11.5" font-weight="700" fill="#166534">= (التكلفة الأصلية − التكلفة المقترحة)</text>
-                        <text x="210" y="83" text-anchor="middle" font-size="11.5" font-weight="700" fill="#166534">÷ التكلفة الأصلية × 100</text>
+                    <div class="diagram-box-title"><i class='bx bx-calculator'></i> معادلتا القياس النهائي — Final Measurement Formulas</div>
+                    <svg viewBox="0 0 820 195" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="30" y="15" width="360" height="105" rx="12" fill="#ecfdf5" stroke="#16a34a" stroke-width="2"/>
+                        <text x="210" y="38" text-anchor="middle" font-size="13.5" font-weight="900" fill="#15803d">نسبة التوفير — Savings %</text>
+                        <text x="210" y="62" text-anchor="middle" font-size="12" font-weight="800" fill="#166534">= (Original Cost − Proposed Cost)</text>
+                        <text x="210" y="80" text-anchor="middle" font-size="12" font-weight="800" fill="#166534">÷ Original Cost × 100</text>
+                        <text x="210" y="105" text-anchor="middle" font-size="10.5" font-weight="700" fill="#4b5563">= (التكلفة الأصلية − المقترحة) ÷ الأصلية × 100</text>
 
-                        <rect x="430" y="15" width="360" height="80" rx="12" fill="#eff6ff" stroke="#1d4ed8" stroke-width="2"/>
-                        <text x="610" y="42" text-anchor="middle" font-size="13.5" font-weight="900" fill="#1d4ed8">نسبة تحسين القيمة (Value Improvement %)</text>
-                        <text x="610" y="65" text-anchor="middle" font-size="11.5" font-weight="700" fill="#1e40af">= (مؤشر القيمة قبل − مؤشر القيمة بعد)</text>
-                        <text x="610" y="83" text-anchor="middle" font-size="11.5" font-weight="700" fill="#1e40af">÷ مؤشر القيمة قبل × 100</text>
+                        <rect x="430" y="15" width="360" height="105" rx="12" fill="#eff6ff" stroke="#1d4ed8" stroke-width="2"/>
+                        <text x="610" y="38" text-anchor="middle" font-size="13.5" font-weight="900" fill="#1d4ed8">تحسّن مؤشر القيمة — VI Improvement %</text>
+                        <text x="610" y="62" text-anchor="middle" font-size="12" font-weight="800" fill="#1e40af">= (Value Index Before − After)</text>
+                        <text x="610" y="80" text-anchor="middle" font-size="12" font-weight="800" fill="#1e40af">÷ Value Index Before × 100</text>
+                        <text x="610" y="105" text-anchor="middle" font-size="10.5" font-weight="700" fill="#4b5563">= (مؤشر القيمة قبل − بعد) ÷ قبل × 100</text>
 
-                        <text x="410" y="125" text-anchor="middle" font-size="12" font-weight="800" fill="var(--text-muted)">الأولى تقيس الأثر المالي المباشر، والثانية تقيس مدى اقتراب الحل من "التكلفة = الجدارة" (القيمة المثلى)</text>
-                        <text x="410" y="148" text-anchor="middle" font-size="11.5" font-weight="700" fill="#94a3b8">Value Index الأقرب إلى 1 = قيمة أفضل</text>
+                        <text x="410" y="150" text-anchor="middle" font-size="12" font-weight="800" fill="var(--text-muted)">الأولى تقيس الأثر المالي المباشر، والثانية تقيس مدى اقتراب الحل من "Cost = Worth" (القيمة المثلى)</text>
+                        <text x="410" y="173" text-anchor="middle" font-size="11.5" font-weight="700" fill="#94a3b8">Value Index الأقرب إلى 1 = قيمة أفضل — the closer VI is to 1, the better the value</text>
                     </svg>
                 </div>
                 <div class="box box-tip reveal">
                     <div class="box-title"><i class='bx bx-bulb'></i> تطبيق على وظيفة "استيعاب التوسع المستقبلي" من مثالنا السابق</div>
-                    <p>كانت تكلفتها 4.2 مليون ريال بمؤشر قيمة 2.80. بعد إعادة حساب معاملات الطلب والتنوع والاستخدام طبقاً لدليل شركة الكهرباء السعودية (SEC) وتحديد سعة احتياطية واقعية، انخفضت تكلفتها إلى نحو 2.1 مليون ريال (مؤشر قيمة جديد = 2.1 ÷ 1.5 = 1.4). النتيجة: <strong>نسبة التوفير</strong> = (4.2−2.1)÷4.2×100 = <strong>50%</strong>، و<strong>نسبة تحسين القيمة</strong> = (2.80−1.40)÷2.80×100 = <strong>50%</strong> — رقمان قويان يُدرجان مباشرة في مقترح VECP المُقدَّم للمالك.</p>
+                    <p>كانت تكلفتها 4.2 مليون ريال بمؤشر قيمة 2.80. بعد إعادة حساب معاملات الطلب والتنوع والاستخدام طبقاً لدليل شركة الكهرباء السعودية (SEC) وتحديد سعة احتياطية واقعية، انخفضت تكلفتها إلى نحو 2.1 مليون ريال (مؤشر قيمة جديد = 2.1 ÷ 1.5 = 1.4). النتيجة: <strong>نسبة التوفير</strong> = (4.2−2.1)÷4.2×100 = <strong>50%</strong>، و<strong>نسبة تحسّن مؤشر القيمة</strong> = (2.80−1.40)÷2.80×100 = <strong>50%</strong> — رقمان قويان يُدرجان مباشرة في مقترح VECP المُقدَّم للمالك.</p>
                 </div>
 
                 <div class="box box-decision reveal">
@@ -1152,7 +1189,7 @@
                         <li><i class='bx bx-check'></i> مصفوفة التقييم الموزونة تحوّل القرار من انطباعي إلى موضوعي رقمي.</li>
                         <li><i class='bx bx-check'></i> مرحلة التطوير تنتج مقترحاً جاهزاً للعرض، فنياً واقتصادياً.</li>
                         <li><i class='bx bx-check'></i> تكلفة الدورة الحياتية (LCC) هي المعيار الصحيح للمقارنة، وليس التكلفة الأولية فقط.</li>
-                        <li><i class='bx bx-check'></i> كل مقترح قيمي يُختتم بنسبة التوفير المالي ونسبة تحسين القيمة معاً، وليس أحدهما فقط.</li>
+                        <li><i class='bx bx-check'></i> كل مقترح قيمي يُختتم بنسبة التوفير المالي ونسبة تحسّن مؤشر القيمة معاً، وليس أحدهما فقط.</li>
                     </ul>
                 </div>
 
@@ -1169,9 +1206,14 @@
                     <div class="capability-list">
                         <div class="capability-item"><i class='bx bx-check-circle'></i> بناء مصفوفة تقييم موزونة لاختيار أفضل بديل</div>
                         <div class="capability-item"><i class='bx bx-check-circle'></i> حساب تكلفة الدورة الحياتية (LCC)</div>
-                        <div class="capability-item"><i class='bx bx-check-circle'></i> حساب نسبة التوفير ونسبة تحسين القيمة</div>
+                        <div class="capability-item"><i class='bx bx-check-circle'></i> حساب نسبة التوفير ونسبة تحسّن مؤشر القيمة</div>
                         <div class="capability-item"><i class='bx bx-check-circle'></i> التفرقة بين الأخطاء القاتلة والأفكار القابلة للتطوير</div>
                     </div>
+                </div>
+
+                <div class="break-box reveal">
+                    <i class='bx bx-cup-hot'></i>
+                    <p>استراحة خفيفة ☕ اشربلك حاجة سخنة وريّح دماغك شوية، وتعالى نكمل.</p>
                 </div>
             </div>
         </div>
@@ -1303,11 +1345,7 @@
                     </div>
                     <div class="reference-card">
                         <div class="ref-icon"><i class='bx bx-world'></i></div>
-                        <div class="ref-details"><h4>ISO 12973:2018</h4><p>المعيار الدولي "Value methodology — Vocabulary, principles and implementation systems"، يوحّد المصطلحات والمبادئ ونماذج تطبيق منهجية القيمة عالمياً.</p></div>
-                    </div>
-                    <div class="reference-card">
-                        <div class="ref-icon"><i class='bx bx-buildings'></i></div>
-                        <div class="ref-details"><h4>EN 12973 – Value Management</h4><p>المعيار الأوروبي المكافئ، معتمد على نطاق واسع في المملكة المتحدة والاتحاد الأوروبي ضمن مشاريع البنية التحتية والمباني.</p></div>
+                        <div class="ref-details"><h4>EN 12973:2020 – Value Management</h4><p>المعيار الأوروبي المرجعي لإدارة القيمة، معتمد على نطاق واسع في المملكة المتحدة والاتحاد الأوروبي ضمن مشاريع البنية التحتية والمباني، ويوحّد المصطلحات والمبادئ ونماذج تطبيق منهجية القيمة.</p></div>
                     </div>
                     <div class="reference-card">
                         <div class="ref-icon"><i class='bx bx-time-five'></i></div>
@@ -1392,12 +1430,114 @@
                             <tr><td><strong>بطل الفكرة (Idea Champion)</strong></td><td>يتبنى فكرة واعدة وغير تقليدية ويدافع عنها بالبيانات</td></tr>
                             <tr><td><strong>مقترح الهندسة القيمية (VE Proposal)</strong></td><td>Before/After + LCC + الأثر على الجدول الزمني والجودة</td></tr>
                             <tr><td><strong>نسبة التوفير (Savings %)</strong></td><td>= (التكلفة الأصلية − المقترحة) ÷ الأصلية × 100</td></tr>
-                            <tr><td><strong>نسبة تحسين القيمة (Value Improvement %)</strong></td><td>= (مؤشر القيمة قبل − بعد) ÷ قبل × 100</td></tr>
+                            <tr><td><strong>نسبة تحسّن مؤشر القيمة</strong></td><td>= (مؤشر القيمة قبل − بعد) ÷ قبل × 100</td></tr>
                             <tr><td><strong>الرد على اعتراض المصمم الأصلي</strong></td><td>بالتحليل الوظيفي والمقارنات الفنية الموضوعية، لا بالجدال</td></tr>
                             <tr><td><strong>خطة التنفيذ (Implementation Plan)</strong></td><td>من سيفعل ماذا ومتى لتحويل المقترح المعتمد لواقع</td></tr>
                             <tr><td><strong>المتابعة اللاحقة (Post-Implementation Audit)</strong></td><td>التحقق من تحقق الوفورات والأداء فعلياً بعد التنفيذ</td></tr>
                         </tbody>
                     </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- ======================= TAB 9: ADVANCED TOPICS ======================= -->
+        <div id="tab9" class="tab-content">
+            <div class="section-card">
+                <h2 class="main-title"><i class='bx bx-trophy'></i> 6. مواضيع متقدمة (ما بعد الأساسيات)</h2>
+
+                <div class="module-progress-bar reveal">
+                    <div class="mp-text">أنت الآن في القسم 7 من 8 ضمن رحلة الهندسة القيمية</div>
+                    <div class="mp-track"><div class="mp-fill" style="width: 88%;"></div></div>
+                    <div class="mp-time"><i class='bx bx-time-five'></i> 9 دقائق</div>
+                </div>
+
+                <div class="module-objective reveal">
+                    <span class="obj-tag"><i class='bx bx-target-lock'></i> هدف الوحدة:</span>
+                    <p class="obj-text">أن يتعرّف المتدرب على 5 جوانب لا تغطيها الدورات التمهيدية عادة: التأسيس المؤسسي والتعاقدي، أدوات القرار المتقدمة، تكامل الاستدامة، أخلاقيات المهنة، ومهارات القيادة المتقدمة.</p>
+                </div>
+
+                <div class="box box-info reveal">
+                    <div class="box-title"><i class='bx bx-info-circle'></i> قبل ما نبدأ — توضيح مهم</div>
+                    <p>هذه الوحدة توسّع وعيك المهني بجوانب متقدمة، لكنها <strong>لا تُغني عن اعتماد SAVE International الرسمي (CVS)</strong>، الذي يتطلب ساعات ورش عمل فعلية وتطبيقاً عملياً موثّقاً لا يمكن لأي دورة ذاتية أونلاين تعويضه. اعتبر هذه الوحدة خريطة توجّهك لما بعد الأساسيات، لا بديلاً عن الاعتماد المهني.</p>
+                </div>
+
+                <div class="card-heading reveal">أولاً: كيف تُنشئ برنامج VE داخل مؤسسة؟</div>
+                <p class="reveal">
+                    تطبيق دراسة قيمة واحدة شيء، وتأسيس "برنامج VE" مؤسسي دائم شيء آخر تماماً. البرنامج المؤسسي يحتاج سياسة معتمدة من الإدارة العليا تحدد متى تكون الدراسة إلزامية، ميزانية مخصصة، وفريقاً داخلياً أو مستشارين معتمدين.
+                </p>
+                <div class="table-wrapper reveal">
+                    <table class="data-table">
+                        <thead><tr><th>عنصر السياسة المؤسسية</th><th>مثال تطبيقي</th></tr></thead>
+                        <tbody>
+                            <tr><td><strong>حد التفعيل الإلزامي (Trigger Threshold)</strong></td><td>كل مشروع تتجاوز قيمته حداً معيناً (مثلاً 20 مليون ريال) يلزمه دراسة VE رسمية</td></tr>
+                            <tr><td><strong>توقيت الإلزام</strong></td><td>نهاية التصميم التخطيطي كحد أقصى، قبل الطرح للمقاولين</td></tr>
+                            <tr><td><strong>بند VECP التعاقدي (Contractor VECP Clause)</strong></td><td>شرط يسمح للمقاول نفسه باقتراح تغييرات قيمية بعد الترسية، مقابل تقاسم نسبة من الوفر مع المالك — شائع في عقود FIDIC والعقود الحكومية</td></tr>
+                            <tr><td><strong>الإجراء القانوني للاعتماد</strong></td><td>مراجعة فنية، موافقة الاستشاري الأصلي، ثم توثيق التعديل كملحق تعاقدي (Variation Order)</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="box box-mistake reveal">
+                    <div class="box-title"><i class='bx bx-error'></i> خطأ مؤسسي شائع</div>
+                    <p>جعل دراسة القيمة "اختيارية" بالكامل دون معيار تفعيل واضح مكتوب. النتيجة الغالبة: تُنسى أول ما يزيد ضغط الجدول الزمني على الفريق.</p>
+                </div>
+
+                <div class="card-heading reveal">ثانياً: لما تكون المصفوفة الموزونة العادية مش كفاية</div>
+                <p class="reveal">
+                    المصفوفة الموزونة التي تعلمناها بسيطة وفعالة، لكن حين تختلف آراء أعضاء الفريق حول الأوزان نفسها، أو يكبر عدد المعايير، تحتاج أداة أدق.
+                </p>
+                <div class="box box-info reveal">
+                    <div class="box-title"><i class='bx bx-git-compare'></i> AHP (Analytic Hierarchy Process)</div>
+                    <p>بدل تخمين الأوزان مباشرة، تُقارَن كل معيارين ببعضهما "وجهاً لوجه" على مقياس من 1 إلى 9 (مثلاً: "التكلفة أهم من الصيانة بمقدار 3 مرات")، ثم تُحسب الأوزان رياضياً من هذه المقارنات (Eigenvector Method). النتيجة: أوزان أكثر دقة وأقل تأثراً بانطباع فردي واحد داخل الفريق.</p>
+                </div>
+                <div class="box box-tip reveal">
+                    <div class="box-title"><i class='bx bx-bulb'></i> تحليل الحساسية (Sensitivity Analysis)</div>
+                    <p>بعد اختيار البديل الفائز، اسأل: لو غيّرت وزن معيار واحد بنسبة 10% فقط، هل يتغير البديل الفائز؟ لو الإجابة نعم بسهولة، فالقرار "حساس" وهش، ويستحق مراجعة أعمق قبل اعتماده أمام المالك — بدل الاكتفاء برقم نهائي واحد.</p>
+                </div>
+
+                <div class="card-heading reveal">ثالثاً: هل الهندسة القيمية بتتعارض مع الاستدامة؟</div>
+                <p class="reveal">
+                    سؤال يتكرر كثيراً: هل خفض التكلفة قد يضحّي بنقاط شهادات الاستدامة مثل LEED؟ لا ينبغي لأي دراسة VE احترافية أن تتجاهل هذا الأثر.
+                </p>
+                <span class="highlight-line reveal">القاعدة: أضف "الأثر على نقاط LEED" كمعيار في مصفوفة التقييم من البداية — لا تراجعه بعد اعتماد القرار.</span>
+                <div class="table-wrapper reveal">
+                    <table class="data-table">
+                        <thead><tr><th>البديل</th><th>التوفير المالي</th><th>الأثر على LEED</th></tr></thead>
+                        <tbody>
+                            <tr><td>عزل حراري أرخص بمواد تقليدية</td><td>مرتفع</td><td><span class="status-pill pill-critical">فقدان نقطة Energy & Atmosphere</span></td></tr>
+                            <tr><td>عزل بمواد معاد تدويرها بسعر مقارب</td><td>متوسط</td><td><span class="status-pill pill-low">الحفاظ على نقطة Materials & Resources</span></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="card-heading reveal">رابعاً: ميثاق أخلاقيات أخصائي القيمة</div>
+                <div class="box box-tip reveal">
+                    <div class="box-title"><i class='bx bx-shield-quarter'></i> المبادئ الأساسية</div>
+                    <ul>
+                        <li><strong>الموضوعية والاستقلالية:</strong> عدم قبول دراسة يوجد فيها تضارب مصالح مع طرف مستفيد من قرار معين.</li>
+                        <li><strong>السرية:</strong> عدم مشاركة بيانات تكلفة المشروع مع أي طرف خارج نطاق الدراسة.</li>
+                        <li><strong>الأمانة الفنية:</strong> عدم المبالغة في تقدير نسب التوفير لإقناع المالك بمقترح معيّن.</li>
+                        <li><strong>الاعتراف بحدود الخبرة:</strong> طلب رأي متخصص إضافي إذا خرج الموضوع عن نطاق خبرة الفريق.</li>
+                    </ul>
+                </div>
+
+                <div class="card-heading reveal">خامساً: لما الفريق يختلف، أو الإدارة العليا تسأل سؤالاً صعباً</div>
+                <div class="box box-tip reveal">
+                    <div class="box-title"><i class='bx bx-group'></i> إدارة خلاف داخل الفريق</div>
+                    <p>لو اختلف عضوان على وزن معيار معين، فدور الميسّر ليس حسم الرأي بنفسه، بل الرجوع لأصحاب المصلحة (المالك أو الجهة المستفيدة) ليحسموا الأولوية الحقيقية بينهم.</p>
+                </div>
+                <div class="box box-fact reveal">
+                    <div class="box-title"><i class='bx bx-bulb'></i> قاعدة الدقيقتين للعرض التنفيذي</div>
+                    <p>عند العرض أمام الإدارة العليا، ابدأ دائماً بالنتيجة المالية (كم تم توفيره) قبل الدخول في أي تفاصيل فنية — وقت الإدارة العليا محدود، والرقم النهائي هو أول ما يريدون سماعه.</p>
+                </div>
+
+                <div class="capability-box reveal">
+                    <div class="capability-title"><i class='bx bx-badge-check'></i> أنت الآن تعلمت الآتي:</div>
+                    <div class="capability-list">
+                        <div class="capability-item"><i class='bx bx-check-circle'></i> عناصر السياسة المؤسسية اللازمة لبرنامج VE دائم</div>
+                        <div class="capability-item"><i class='bx bx-check-circle'></i> الفرق بين المصفوفة الموزونة البسيطة وAHP، ومتى تحتاج كل منهما</div>
+                        <div class="capability-item"><i class='bx bx-check-circle'></i> كيف تدمج معايير الاستدامة (LEED) داخل مصفوفة التقييم من البداية</div>
+                        <div class="capability-item"><i class='bx bx-check-circle'></i> المبادئ الأربعة لميثاق أخلاقيات أخصائي القيمة</div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1413,7 +1553,7 @@
                     BA Engineering Academy - منصة الهندسة القيمية الاحترافية
                 </p>
                 <div style="max-width: 800px; margin: 0 auto 35px; background: var(--light-blue); padding: 30px; border-radius: 16px; border: 1px solid #bfdbfe; text-align: right;">
-                    <p style="font-size: 17px; color: var(--text-dark); line-height: 1.9; font-weight: 700; margin: 0 0 14px;">لقد أتممت الآن رحلة متكاملة عبر خطة عمل الهندسة القيمية بمراحلها الست: المعلومات، تحليل الوظائف، الإبداع، التقييم، التطوير، والعرض والتنفيذ — مدعومة بمعايير SAVE International وISO 12973 وISO 15686-5.</p>
+                    <p style="font-size: 17px; color: var(--text-dark); line-height: 1.9; font-weight: 700; margin: 0 0 14px;">لقد أتممت الآن رحلة متكاملة عبر خطة عمل الهندسة القيمية بمراحلها الست: المعلومات، تحليل الوظائف، الإبداع، التقييم، التطوير، والعرض والتنفيذ — مدعومة بمعايير SAVE International وEN 12973 وISO 15686-5.</p>
                     <p style="font-size: 16px; color: var(--text-muted); line-height: 1.9; font-weight: 700; margin: 0;">للاستمرار في التخصص: تابع مسار الاعتماد المهني (Associate Value Specialist ثم Certified Value Specialist) الصادر من SAVE International، وطبّق ما تعلمته على أول مشروع حقيقي بين يديك.</p>
                 </div>
                 <div style="font-size: 15px; color: var(--text-muted); font-weight: 800; text-transform: uppercase; letter-spacing: 1px;">
@@ -1428,7 +1568,7 @@
 
     <script>
         let visitedTabs = new Set(['tab1']);
-        const totalContentTabs = 7;
+        const totalContentTabs = 8;
 
         const tabMeta = {
             tab1: { icon: 'bx-play-circle', title: 'مدخل ومفاهيم الهندسة القيمية', order: 1 },
@@ -1438,7 +1578,8 @@
             tab5hub: { icon: 'bx-folder-open', title: 'التطبيقات والمراجع' },
             tab5: { icon: 'bx-slider-alt', title: 'محاكاة دراسة القيمة التطبيقية', order: 5 },
             tab6: { icon: 'bx-layer', title: 'المصطلحات والمراجع', order: 6 },
-            tab8: { icon: 'bx-check-shield', title: 'الخاتمة وإتمام الدورة', order: 7 }
+            tab9: { icon: 'bx-trophy', title: 'مواضيع متقدمة (ما بعد الأساسيات)', order: 7 },
+            tab8: { icon: 'bx-check-shield', title: 'الخاتمة وإتمام الدورة', order: 8 }
         };
 
         function updateProgress() {
