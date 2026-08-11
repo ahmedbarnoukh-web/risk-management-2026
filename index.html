@@ -367,11 +367,11 @@
         .dashboard-content { max-width: 1200px; margin: 0 auto; width: 100%; padding: 45px 5%; }
         .section-title { font-size: 24px; font-weight: 900; color: var(--text-dark); margin-bottom: 22px; display: flex; align-items: center; gap: 12px; padding-bottom: 10px; border-bottom: 2px solid var(--border-color); }
 
-        .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 24px; }
+        .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); gap: 26px; }
 
         .nav-card {
             background-color: var(--card-bg); backdrop-filter: blur(16px);
-            border-radius: 22px; padding: 28px 24px; cursor: pointer;
+            border-radius: 22px; padding: 30px 26px; cursor: pointer;
             display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
             border: var(--glass-border); box-shadow: var(--glass-shadow);
             transition: all 0.35s ease; position: relative; overflow: hidden;
@@ -382,7 +382,7 @@
         }
         .nav-card i.main-icon { font-size: 44px; color: var(--primary-blue); margin-bottom: 16px; transition: transform 0.3s ease; }
         .nav-card:hover i.main-icon { transform: scale(1.12) rotate(5deg); color: var(--accent-color); }
-        .nav-card h3 { font-size: 20px; font-weight: 800; color: var(--text-dark); margin-bottom: 6px; }
+        .nav-card h3 { font-size: 21px; font-weight: 800; color: var(--text-dark); margin-bottom: 6px; }
         .nav-card p.en-text { font-size: 13px; color: var(--text-muted); font-weight: 700; }
         
         .course-card-main { border: 2px solid var(--primary-blue); background: linear-gradient(135deg, var(--card-bg) 0%, rgba(30, 58, 138, 0.04) 100%); }
@@ -425,6 +425,73 @@
         }
 
         .course-card-upcoming { border: var(--glass-border); background: linear-gradient(135deg, var(--card-bg) 0%, var(--bg-main) 100%); }
+
+        /* فصل واضح بين قسم الدورات المتاحة والدورات القادمة */
+        .courses-available-wrap {
+            background: linear-gradient(135deg, rgba(30, 58, 138, 0.06) 0%, rgba(13, 148, 136, 0.07) 100%);
+            border: 1.5px solid rgba(13, 148, 136, 0.22);
+            border-radius: 28px; padding: 32px 28px 12px; margin-bottom: 42px;
+            box-shadow: 0 14px 32px rgba(13, 148, 136, 0.08);
+        }
+        .courses-available-wrap .section-title { border-bottom: 2px solid rgba(13, 148, 136, 0.3); }
+        .courses-section-subtitle { color: var(--text-muted); font-weight: 700; font-size: 0.92rem; margin: -14px 0 22px; }
+        .cards-grid-available { display: grid; grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); gap: 30px; }
+        .course-preview-block { display: flex; flex-direction: column; gap: 16px; }
+        .course-mini-video { padding: 0 2px; }
+        .course-mini-video-label { font-size: 0.88rem; font-weight: 800; color: var(--text-muted); margin-bottom: 10px; display: flex; align-items: center; justify-content: center; gap: 7px; }
+        .course-mini-video-label i { color: var(--accent-color); font-size: 1rem; }
+        .course-mini-video .promo-video-wrap { border-radius: 18px; }
+        .course-mini-video .promo-video-wrap video { max-height: 230px; }
+
+        .courses-upcoming-wrap {
+            background: var(--bg-main); border: 2px dashed var(--border-color);
+            border-radius: 28px; padding: 28px 26px 30px; opacity: 0.97;
+        }
+        .cards-grid-upcoming { display: grid; grid-template-columns: repeat(auto-fill, minmax(255px, 1fr)); gap: 20px; }
+        .course-card-upcoming { padding: 22px 18px; }
+        .course-card-upcoming h3 { font-size: 17px; }
+        .course-card-upcoming .course-thumb { height: 145px; filter: grayscale(60%) brightness(0.88); margin-bottom: 14px; }
+        .lock-overlay-badge {
+            position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+            background: rgba(15, 23, 42, 0.22);
+        }
+        .lock-overlay-badge i { font-size: 26px; color: rgba(255,255,255,0.95); filter: drop-shadow(0 3px 6px rgba(0,0,0,0.4)); }
+
+        /* بطاقات الكورسات بتصميم الصورة المصغّرة (Thumbnail) بدون تقييم نجوم */
+        .course-thumb {
+            width: calc(100% + 52px); margin: -30px -26px 18px; height: 240px;
+            border-radius: 20px 20px 0 0; position: relative; overflow: hidden;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .course-thumb.thumb-risk { background: linear-gradient(180deg, rgba(15, 23, 42, 0.08) 0%, rgba(15, 23, 42, 0.38) 100%), url('risk.jpg') center/cover no-repeat; }
+        .course-thumb.thumb-value { background: linear-gradient(180deg, rgba(15, 23, 42, 0.08) 0%, rgba(15, 23, 42, 0.38) 100%), url('va.jpg') center/cover no-repeat; }
+        .course-thumb.thumb-electrical { background: linear-gradient(180deg, rgba(15, 23, 42, 0.08) 0%, rgba(15, 23, 42, 0.38) 100%), url('ele.jpg') center/cover no-repeat; }
+        .course-thumb.thumb-cost { background: linear-gradient(180deg, rgba(15, 23, 42, 0.08) 0%, rgba(15, 23, 42, 0.38) 100%), url('cost.jpg') center/cover no-repeat; }
+        .course-thumb.thumb-data { background: linear-gradient(180deg, rgba(15, 23, 42, 0.08) 0%, rgba(15, 23, 42, 0.38) 100%), url('data.jpg') center/cover no-repeat; }
+        .course-thumb i { font-size: 58px; color: rgba(255,255,255,0.92); filter: drop-shadow(0 4px 10px rgba(0,0,0,0.25)); }
+        .thumb-brand-logo {
+            position: absolute; top: 12px; right: 12px; background: rgba(255,255,255,0.95);
+            border-radius: 8px; padding: 3px 8px; display: flex; align-items: center; box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+        html[dir="ltr"] .thumb-brand-logo { right: auto; left: 12px; }
+        .thumb-brand-logo img { height: 18px; object-fit: contain; }
+        .course-ribbon {
+            position: absolute; bottom: 14px; left: -6px; z-index: 2;
+            background: #16a34a; color: #fff; font-size: 11.5px; font-weight: 900;
+            padding: 5px 16px 5px 12px; display: inline-flex; align-items: center; gap: 5px;
+            clip-path: polygon(0 0, 100% 0, 90% 100%, 0 100%);
+            box-shadow: 0 4px 10px rgba(22, 163, 74, 0.35);
+        }
+        html[dir="ltr"] .course-ribbon { left: auto; right: -6px; clip-path: polygon(10% 0, 100% 0, 100% 100%, 0 100%); }
+        .nav-card.course-card-main { padding-top: 28px; }
+
+        /* أقسام الفيديو التعريفي */
+        .promo-video-wrap { border-radius: 18px; overflow: hidden; box-shadow: 0 15px 40px rgba(0,0,0,0.15); border: var(--glass-border); background: #000; }
+        .promo-video-wrap video { width: 100%; display: block; max-height: 460px; }
+        .course-video-section { margin: 24px 0 30px; }
+        .course-video-section h3 { font-size: 1.05rem; font-weight: 800; color: var(--text-dark); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+        .course-video-section h3 i { color: var(--accent-color); }
+
         
         .status-badge-box {
             margin-top: 14px; display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px;
@@ -657,6 +724,15 @@
             </div>
         </section>
 
+        <section class="course-video-section" style="max-width: 900px; margin: 0 auto 30px;">
+            <h3 style="justify-content: center; text-align: center;"><i class="fa-solid fa-circle-play"></i> <span data-ar="شاهد نبذة سريعة عن الأكاديمية" data-en="Watch a Quick Academy Overview">شاهد نبذة سريعة عن الأكاديمية</span></h3>
+            <div class="promo-video-wrap">
+                <video controls preload="none" onerror="this.closest('.course-video-section')?.style.setProperty('display','none')">
+                    <source src="ba.mp4" type="video/mp4">
+                </video>
+            </div>
+        </section>
+
         <section class="stats-section">
             <div class="stat-box"><span class="stat-number" data-target="20">0</span><span class="stat-label" data-ar="عاماً خبرة ميدانية" data-en="Years Field Experience">عاماً خبرة ميدانية</span></div>
             <div class="stat-box"><span class="stat-number" data-target="24">0</span><span class="stat-label" data-ar="ساعة تدريبية مكثفة" data-en="Intensive Training Hours">ساعة تدريبية مكثفة</span></div>
@@ -701,7 +777,95 @@
             </div>
         </section>
 
-        <!-- قسم آراء المتدربين مع التعديل للون الأزرق -->
+        <div class="dashboard-content" id="courses-section">
+            <div class="courses-available-wrap">
+                <h2 class="section-title"><i class="fa-solid fa-layer-group" style="color: var(--accent-color);"></i> <span data-ar="الدورات المتاحة" data-en="Available Courses">الدورات المتاحة</span></h2>
+                <p class="courses-section-subtitle"><i class="fa-solid fa-bolt" style="color: var(--accent-color);"></i> <span data-ar="جاهزة الآن، ابدأ التعلم فورًا" data-en="Ready now — start learning immediately">جاهزة الآن، ابدأ التعلم فورًا</span></p>
+                <div class="cards-grid-available">
+                    <div class="course-preview-block">
+                        <div class="nav-card course-card-main" onclick="switchMainView('course-landing-view')">
+                            <div class="course-thumb thumb-risk">
+                                <div class="thumb-brand-logo"><img src="e842ee15-fc5d-491b-a6ae-17e6f345bccd.jpg" alt="BA"></div>
+                                <span class="course-ribbon"><span class="green-dot-pulse"></span> <span data-ar="متاحة الآن" data-en="Available Now">متاحة الآن</span></span>
+                            </div>
+                            <h3 data-ar="إدارة مخاطر المشاريع" data-en="Project Risk Management">إدارة مخاطر المشاريع</h3>
+                            <p class="en-text">Project Risk Management</p>
+                        </div>
+                        <div class="course-mini-video">
+                            <p class="course-mini-video-label"><i class="fa-solid fa-circle-play"></i> <span data-ar="فيديو تعريفي عن الكورس" data-en="Course Intro Video">فيديو تعريفي عن الكورس</span></p>
+                            <div class="promo-video-wrap">
+                                <video controls preload="none" onerror="this.closest('.course-mini-video')?.style.setProperty('display','none')">
+                                    <source src="risk.mp4" type="video/mp4">
+                                </video>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="course-preview-block">
+                        <div class="nav-card course-card-main course-card-featured" onclick="switchMainView('value-landing-view')">
+                            <div class="course-thumb thumb-value">
+                                <div class="thumb-brand-logo"><img src="e842ee15-fc5d-491b-a6ae-17e6f345bccd.jpg" alt="BA"></div>
+                                <span class="course-ribbon" style="background: var(--accent-color);"><span class="green-dot-pulse"></span> <span data-ar="متاحة الآن 🚀" data-en="Available Now 🚀">متاحة الآن 🚀</span></span>
+                            </div>
+                            <h3 data-ar="الهندسة القيمية" data-en="Value Engineering">الهندسة القيمية</h3>
+                            <p class="en-text" style="color: var(--primary-blue); font-weight: 900;">Value Engineering (2026)</p>
+                        </div>
+                        <div class="course-mini-video">
+                            <p class="course-mini-video-label"><i class="fa-solid fa-circle-play"></i> <span data-ar="فيديو تعريفي عن الكورس" data-en="Course Intro Video">فيديو تعريفي عن الكورس</span></p>
+                            <div class="promo-video-wrap">
+                                <video controls preload="none" onerror="this.closest('.course-mini-video')?.style.setProperty('display','none')">
+                                    <source src="va.mp4" type="video/mp4">
+                                </video>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="courses-upcoming-wrap">
+                <h2 class="section-title"><i class="fa-solid fa-clock-rotate-left" style="color: #0ea5e9;"></i> <span data-ar="الدورات القادمة" data-en="Upcoming Courses">الدورات القادمة</span></h2>
+                <p class="courses-section-subtitle"><i class="fa-solid fa-hourglass-half" style="color: #0ea5e9;"></i> <span data-ar="قيد التحضير حاليًا، تابعنا لمعرفة موعد الإطلاق" data-en="Currently in preparation — stay tuned for the launch date">قيد التحضير حاليًا، تابعنا لمعرفة موعد الإطلاق</span></p>
+                <div class="cards-grid-upcoming">
+                    <div class="nav-card course-card-upcoming" onclick="switchMainView('electrical-loads-info-view')">
+                        <div class="course-thumb thumb-electrical">
+                            <div class="thumb-brand-logo"><img src="e842ee15-fc5d-491b-a6ae-17e6f345bccd.jpg" alt="BA"></div>
+                            <div class="lock-overlay-badge"><i class="fa-solid fa-lock"></i></div>
+                        </div>
+                        <h3 data-ar="حساب الأحمال الكهربائية" data-en="Electrical Load Calculation">حساب الأحمال الكهربائية</h3>
+                        <p class="en-text">Electrical Load Calculation</p>
+                        <div class="status-badge-box design">
+                            <i class="fa-solid fa-compass fa-spin"></i> <span data-ar="قريباً / قيد التطوير ⚡" data-en="Soon / In Development ⚡">قريباً / قيد التطوير ⚡</span>
+                        </div>
+                    </div>
+
+                    <div class="nav-card course-card-upcoming" onclick="switchMainView('contracts-info-view')">
+                        <div class="course-thumb thumb-cost">
+                            <div class="thumb-brand-logo"><img src="e842ee15-fc5d-491b-a6ae-17e6f345bccd.jpg" alt="BA"></div>
+                            <div class="lock-overlay-badge"><i class="fa-solid fa-lock"></i></div>
+                        </div>
+                        <h3 data-ar="إدارة العقود والتكاليف" data-en="Contracts & Cost Management">إدارة العقود والتكاليف</h3>
+                        <p class="en-text">Contracts & Cost</p>
+                        <div class="status-badge-box design">
+                            <i class="fa-solid fa-compass fa-spin"></i> <span data-ar="قيد التصميم والتطوير 💡" data-en="Under Design & Development 💡">قيد التصميم والتطوير 💡</span>
+                        </div>
+                    </div>
+
+                    <div class="nav-card course-card-upcoming" onclick="switchMainView('datacenter-info-view')">
+                        <div class="course-thumb thumb-data">
+                            <div class="thumb-brand-logo"><img src="e842ee15-fc5d-491b-a6ae-17e6f345bccd.jpg" alt="BA"></div>
+                            <div class="lock-overlay-badge"><i class="fa-solid fa-lock"></i></div>
+                        </div>
+                        <h3 data-ar="هندسة مراكز البيانات" data-en="Data Center Infrastructure">هندسة مراكز البيانات</h3>
+                        <p class="en-text">Data Center Infrastructure</p>
+                        <div class="status-badge-box soon-badge">
+                            <i class="fa-solid fa-hourglass-half"></i> <span data-ar="قريباً ⏳" data-en="Coming Soon ⏳">قريباً ⏳</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- قسم آراء المتدربين — تحت الكورسات -->
         <section class="professional-testimonials">
             <div class="testimonials-heading-container">
                 <h2 data-ar="آراء المتدربين" data-en="Trainee Reviews">آراء المتدربين</h2>
@@ -740,57 +904,6 @@
                 </div>
             </div>
         </section>
-
-        <div class="dashboard-content" id="courses-section">
-            <h2 class="section-title"><i class="fa-solid fa-layer-group" style="color: var(--primary-blue);"></i> <span data-ar="الدورات المتاحة" data-en="Available Courses">الدورات المتاحة</span></h2>
-            <div class="cards-grid" style="margin-bottom: 35px;">
-                <div class="nav-card course-card-main" onclick="switchMainView('course-landing-view')">
-                    <span class="badge-available"><span class="green-dot-pulse"></span> <span data-ar="متاح الآن" data-en="Available Now">متاح الآن</span></span>
-                    <i class="fa-solid fa-chart-line main-icon" style="color: var(--primary-blue);"></i>
-                    <h3 data-ar="إدارة مخاطر المشاريع" data-en="Project Risk Management">إدارة مخاطر المشاريع</h3>
-                    <p class="en-text">Project Risk Management</p>
-                </div>
-
-                <div class="nav-card course-card-main course-card-featured" onclick="switchMainView('value-landing-view')">
-                    <span class="badge-available" style="background: var(--accent-color);"><span class="green-dot-pulse"></span> <span data-ar="متاح الآن 🚀" data-en="Available Now 🚀">متاح الآن 🚀</span></span>
-                    <div class="celebrate-icon-box">
-                        <i class="fa-solid fa-lightbulb main-icon" style="color: var(--accent-color);"></i>
-                    </div>
-                    <h3 data-ar="الهندسة القيمية" data-en="Value Engineering">الهندسة القيمية</h3>
-                    <p class="en-text" style="color: var(--primary-blue); font-weight: 900;">Value Engineering (2026)</p>
-                </div>
-            </div>
-
-            <h2 class="section-title"><i class="fa-solid fa-clock-rotate-left" style="color: #0ea5e9;"></i> <span data-ar="الدورات القادمة" data-en="Upcoming Courses">الدورات القادمة</span></h2>
-            <div class="cards-grid">
-                <div class="nav-card course-card-upcoming" onclick="switchMainView('electrical-loads-info-view')">
-                    <i class="fa-solid fa-bolt main-icon" style="color: var(--primary-blue);"></i>
-                    <h3 data-ar="حساب الأحمال الكهربائية" data-en="Electrical Load Calculation">حساب الأحمال الكهربائية</h3>
-                    <p class="en-text">Electrical Load Calculation</p>
-                    <div class="status-badge-box design">
-                        <i class="fa-solid fa-compass fa-spin"></i> <span data-ar="قريباً / قيد التطوير ⚡" data-en="Soon / In Development ⚡">قريباً / قيد التطوير ⚡</span>
-                    </div>
-                </div>
-
-                <div class="nav-card course-card-upcoming" onclick="switchMainView('contracts-info-view')">
-                    <i class="fa-solid fa-file-signature main-icon"></i>
-                    <h3 data-ar="إدارة العقود والتكاليف" data-en="Contracts & Cost Management">إدارة العقود والتكاليف</h3>
-                    <p class="en-text">Contracts & Cost</p>
-                    <div class="status-badge-box design">
-                        <i class="fa-solid fa-compass fa-spin"></i> <span data-ar="قيد التصميم والتطوير 💡" data-en="Under Design & Development 💡">قيد التصميم والتطوير 💡</span>
-                    </div>
-                </div>
-
-                <div class="nav-card course-card-upcoming" onclick="switchMainView('datacenter-info-view')">
-                    <i class="fa-solid fa-server main-icon"></i>
-                    <h3 data-ar="هندسة مراكز البيانات" data-en="Data Center Infrastructure">هندسة مراكز البيانات</h3>
-                    <p class="en-text">Data Center Infrastructure</p>
-                    <div class="status-badge-box soon-badge">
-                        <i class="fa-solid fa-hourglass-half"></i> <span data-ar="قريباً ⏳" data-en="Coming Soon ⏳">قريباً ⏳</span>
-                    </div>
-                </div>
-            </div>
-        </div>
     </main>
 
     <main id="course-landing-view" class="app-view">
@@ -808,6 +921,7 @@
                     <div class="meta-item"><i class="fa-solid fa-signal"></i> <span data-ar="المستوى: متقدم" data-en="Level: Advanced">المستوى: متقدم</span></div>
                 </div>
             </div>
+
             <div class="course-content-split">
                 <div class="content-box">
                     <h3 style="margin-top: 0;"><i class="fa-solid fa-bullseye"></i> <span data-ar="أهداف الدورة" data-en="Course Objectives">أهداف الدورة</span></h3>
@@ -853,6 +967,7 @@
                     <div class="meta-item"><i class="fa-solid fa-signal"></i> <span data-ar="المستوى: متقدم" data-en="Level: Advanced">المستوى: متقدم</span></div>
                 </div>
             </div>
+
             <div class="course-content-split">
                 <div class="content-box">
                     <h3 style="margin-top: 0;"><i class="fa-solid fa-bullseye"></i> <span data-ar="ماذا ستتعلم في الدورة؟" data-en="What You Will Learn">ماذا ستتعلم في الدورة؟</span></h3>
@@ -1139,18 +1254,20 @@
         }
 
         function switchMainView(viewId) {
+            const target = document.getElementById(viewId);
+            if (!target) { console.warn('View not found:', viewId); return; }
             document.querySelectorAll('.app-view').forEach(v => v.classList.remove('active'));
-            document.getElementById(viewId).classList.add('active');
+            target.classList.add('active');
 
             const topbar = document.getElementById('main-topbar');
             const footer = document.getElementById('main-footer');
             
             if (viewId === 'viewer-view' || viewId === 'course-dashboard-view') {
-                topbar.style.display = 'none';
-                footer.style.display = 'none';
+                if (topbar) topbar.style.display = 'none';
+                if (footer) footer.style.display = 'none';
             } else {
-                topbar.style.display = 'flex';
-                footer.style.display = 'block';
+                if (topbar) topbar.style.display = 'flex';
+                if (footer) footer.style.display = 'block';
             }
             window.scrollTo({ top: 0, behavior: 'smooth' });
 
@@ -1179,9 +1296,9 @@
             countersAnimated = true;
         }
 
-        window.onload = function() {
+        document.addEventListener('DOMContentLoaded', function() {
             animateCounters();
-        };
+        });
 
         function showWhatsAppNotice(e) {
             e.preventDefault();
