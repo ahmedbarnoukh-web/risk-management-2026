@@ -140,12 +140,13 @@
             100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
         }
 
+        /* Top Bar Layout */
         .top-bar {
             background-color: var(--topbar-bg);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             color: var(--topbar-text);
-            padding: 12px 5%;
+            padding: 10px 4%;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -171,7 +172,13 @@
         .brand-logo-container:hover { transform: translateY(-2px) scale(1.02); }
         .brand-logo-container img { height: 38px; object-fit: contain; }
 
-        .top-bar-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap;}
+        .nav-center-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .top-bar-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
         
         .nav-link {
             color: var(--topbar-text); text-decoration: none; background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.15);
@@ -202,15 +209,24 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Hero Section Platform World-Class */
+        /* Hero Section */
         .hero-section {
-            display: flex; align-items: center; justify-content: space-between;
-            padding: 60px 5%; background: radial-gradient(circle at top right, rgba(13, 148, 136, 0.08), transparent 60%),
-                                      radial-gradient(circle at bottom left, rgba(30, 58, 138, 0.08), transparent 60%);
-            border-bottom: var(--glass-border); gap: 35px; flex-wrap: wrap;
-            position: relative; overflow: hidden;
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            gap: 50px;
+            max-width: 1380px;
+            margin: 0 auto;
+            width: 100%;
+            padding: 50px 4%; 
+            background: radial-gradient(circle at top right, rgba(13, 148, 136, 0.08), transparent 60%),
+                        radial-gradient(circle at bottom left, rgba(30, 58, 138, 0.08), transparent 60%);
+            border-bottom: var(--glass-border); 
+            flex-wrap: wrap;
+            position: relative; 
+            overflow: hidden;
         }
-        .hero-content { flex: 1.2; min-width: 300px; z-index: 2; }
+        .hero-content { flex: 1.2; min-width: 320px; z-index: 2; }
         
         .platform-tag {
             display: inline-flex; align-items: center; gap: 8px;
@@ -233,7 +249,7 @@
             border-radius: 14px;
             margin-bottom: 22px;
             box-shadow: var(--glass-shadow);
-            max-width: 620px;
+            max-width: 680px;
         }
         html[dir="ltr"] .hero-quote-box {
             border-right: none;
@@ -268,7 +284,7 @@
         }
         .btn-outline:hover { background: var(--primary-blue); color: white; transform: translateY(-3px); }
         
-        .hero-image { flex: 0.9; min-width: 260px; display: flex; justify-content: center; position: relative; z-index: 2; }
+        .hero-image { flex: 0.8; min-width: 260px; display: flex; justify-content: center; position: relative; z-index: 2; }
         .hero-image-neural-card {
             background: rgba(255, 255, 255, 0.05); padding: 15px; border-radius: 50%;
             position: relative; backdrop-filter: blur(10px);
@@ -288,8 +304,9 @@
         }
 
         .stats-section { 
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); 
-            padding: 25px 5%; background: transparent; gap: 16px; margin-top: -20px; position: relative; z-index: 10; 
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); 
+            padding: 25px 4%; background: transparent; gap: 16px; margin: -20px auto 0; 
+            max-width: 1380px; width: 100%; position: relative; z-index: 10; 
         }
         .stat-box { 
             background: var(--card-bg); backdrop-filter: blur(16px);
@@ -305,7 +322,7 @@
         .features-section h2::after { content: ''; position: absolute; bottom: -8px; right: 20%; width: 60%; height: 4px; background: linear-gradient(90deg, var(--primary-blue), var(--accent-color)); border-radius: 4px; }
         .features-subtitle { color: var(--text-muted); font-weight: 700; font-size: 1rem; margin-top: 16px; margin-bottom: 35px; }
         
-        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 22px; }
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 22px; max-width: 1380px; margin: 0 auto; }
         .feature-card { 
             background: var(--bg-main); backdrop-filter: blur(10px); padding: 30px 22px; border-radius: 18px; 
             border: var(--glass-border); box-shadow: var(--glass-shadow); 
@@ -319,7 +336,7 @@
         .feature-card h4 { font-size: 1.15rem; color: var(--primary-blue); font-weight: 900; margin-bottom: 10px; }
         .feature-card p { font-size: 0.92rem; color: var(--text-muted); font-weight: 600; line-height: 1.65; }
 
-        /* قسم آراء المتدربين - تم تعديل اللون للخط والحدود للون الأزرق بدلاً من الأخضر */
+        /* Testimonials Section */
         .professional-testimonials {
             padding: 60px 5%;
             background: linear-gradient(180deg, var(--bg-main) 0%, var(--active-blue) 100%);
@@ -329,14 +346,13 @@
         .testimonials-heading-container { max-width: 650px; margin: 0 auto 35px auto; }
         .testimonials-heading-container h2 { color: var(--primary-blue); font-size: 2.2rem; font-weight: 900; margin-bottom: 8px; }
         .testimonials-heading-container p { color: var(--text-muted); font-size: 1rem; font-weight: 700; }
-        .testimonials-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 24px; max-width: 1200px; margin: 0 auto; }
+        .testimonials-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 24px; max-width: 1380px; margin: 0 auto; }
         
         .testimonial-card-pro {
             background: var(--card-bg); backdrop-filter: blur(16px);
             border: var(--glass-border); box-shadow: var(--glass-shadow); border-radius: 18px; padding: 25px;
             text-align: inherit; display: flex; flex-direction: column; justify-content: space-between;
             transition: all 0.3s ease; position: relative; overflow: hidden;
-            /* توحيد الإطار باللون الأزرق */
             border-top: 4px solid var(--primary-blue);
         }
         .testimonial-card-pro::before { 
@@ -357,15 +373,30 @@
         .testimonial-body-text { font-size: 0.95rem; color: var(--text-muted); font-weight: 600; line-height: 1.65; font-style: italic; }
 
         .story-section { padding: 55px 5%; background: var(--active-blue); border-bottom: var(--glass-border); text-align: center; }
-        .story-content { max-width: 880px; margin: auto; }
+        .story-content { max-width: 980px; margin: auto; }
         .story-content h2 { color: var(--primary-blue); font-size: 2.2rem; font-weight: 900; margin-bottom: 20px; }
         .story-content p {
             font-size: 1.08rem; line-height: 1.85; color: var(--text-dark); font-weight: 600; background: var(--card-bg);
             padding: 30px 35px; border-radius: 18px; border: var(--glass-border); box-shadow: var(--glass-shadow);
         }
 
-        .dashboard-content { max-width: 1200px; margin: 0 auto; width: 100%; padding: 45px 5%; }
-        .section-title { font-size: 24px; font-weight: 900; color: var(--text-dark); margin-bottom: 22px; display: flex; align-items: center; gap: 12px; padding-bottom: 10px; border-bottom: 2px solid var(--border-color); }
+        .dashboard-content { max-width: 1380px; margin: 0 auto; width: 100%; padding: 35px 4%; }
+        
+        /* Right Aligned Section Titles */
+        .section-title { 
+            font-size: 24px; 
+            font-weight: 900; 
+            color: var(--text-dark); 
+            margin-bottom: 22px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: flex-start;
+            flex-wrap: wrap; 
+            gap: 16px; 
+            padding-bottom: 10px; 
+            border-bottom: 2px solid var(--border-color); 
+        }
+        .section-title-right { display: flex; align-items: center; gap: 12px; }
 
         .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); gap: 26px; }
 
@@ -386,22 +417,29 @@
         .nav-card p.en-text { font-size: 13px; color: var(--text-muted); font-weight: 700; }
         
         .course-card-main { border: 2px solid var(--primary-blue); background: linear-gradient(135deg, var(--card-bg) 0%, rgba(30, 58, 138, 0.04) 100%); }
-        .badge-available { 
-            position: absolute; top: 14px; right: 14px; font-size: 11px; background: var(--primary-blue); color: white; padding: 4px 14px; border-radius: 20px; font-weight: 900; box-shadow: 0 4px 12px rgba(30, 58, 138, 0.25); 
-            display: inline-flex; align-items: center; gap: 6px;
+
+        /* Animated Live Indicator Badge */
+        .live-badge-animated {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            background: rgba(34, 197, 94, 0.12);
+            color: #16a34a;
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            padding: 5px 14px;
+            border-radius: 20px;
+            font-size: 0.82rem;
+            font-weight: 800;
+            animation: pulseGlow 2s infinite;
         }
-        html[dir="ltr"] .badge-available {
-            right: auto;
-            left: 14px;
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 4px rgba(34, 197, 94, 0.2); }
+            50% { box-shadow: 0 0 14px rgba(34, 197, 94, 0.5); }
         }
 
         @keyframes shimmerCard {
             0% { background-position: -200% 0; }
             100% { background-position: 200% 0; }
-        }
-        @keyframes bounceCelebration {
-            0%, 100% { transform: translateY(0) scale(1); filter: drop-shadow(0 0 4px rgba(30, 58, 138, 0.4)); }
-            50% { transform: translateY(-6px) scale(1.08); filter: drop-shadow(0 0 10px rgba(30, 58, 138, 0.7)); }
         }
 
         .course-card-featured { 
@@ -419,92 +457,115 @@
             background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
             animation: shimmerCard 3.5s infinite;
         }
-        .celebrate-icon-box {
-            animation: bounceCelebration 2s ease-in-out infinite;
-            display: inline-block;
-        }
 
         .course-card-upcoming { border: var(--glass-border); background: linear-gradient(135deg, var(--card-bg) 0%, var(--bg-main) 100%); }
 
-        /* فصل واضح بين قسم الدورات المتاحة والدورات القادمة */
         .courses-available-wrap {
             background: linear-gradient(135deg, rgba(30, 58, 138, 0.06) 0%, rgba(13, 148, 136, 0.07) 100%);
             border: 1.5px solid rgba(13, 148, 136, 0.22);
-            border-radius: 28px; padding: 32px 28px 12px; margin-bottom: 42px;
+            border-radius: 28px; padding: 35px 35px 25px; margin-bottom: 42px;
             box-shadow: 0 14px 32px rgba(13, 148, 136, 0.08);
         }
         .courses-available-wrap .section-title { border-bottom: 2px solid rgba(13, 148, 136, 0.3); }
-        .courses-section-subtitle { color: var(--text-muted); font-weight: 700; font-size: 0.92rem; margin: -14px 0 22px; }
-        .cards-grid-available { display: grid; grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); gap: 30px; }
+        .courses-section-subtitle { color: var(--text-muted); font-weight: 700; font-size: 0.92rem; margin: -14px 0 22px; text-align: right; }
+        .cards-grid-available { display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 30px; }
         .course-preview-block { display: flex; flex-direction: column; gap: 16px; }
         .course-mini-video { padding: 0 2px; }
         .course-mini-video-label { font-size: 0.88rem; font-weight: 800; color: var(--text-muted); margin-bottom: 10px; display: flex; align-items: center; justify-content: center; gap: 7px; }
         .course-mini-video-label i { color: var(--accent-color); font-size: 1rem; }
         .course-mini-video .promo-video-wrap { border-radius: 18px; }
-        .course-mini-video .promo-video-wrap video { max-height: 230px; }
+        .course-mini-video .promo-video-wrap video { max-height: 260px; }
 
         .courses-upcoming-wrap {
             background: var(--bg-main); border: 2px dashed var(--border-color);
             border-radius: 28px; padding: 28px 26px 30px; opacity: 0.97;
         }
-        .cards-grid-upcoming { display: grid; grid-template-columns: repeat(auto-fill, minmax(255px, 1fr)); gap: 20px; }
+        .cards-grid-upcoming { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 24px; }
         .course-card-upcoming { padding: 22px 18px; }
         .course-card-upcoming h3 { font-size: 17px; }
-        .course-card-upcoming .course-thumb { height: 145px; filter: grayscale(60%) brightness(0.88); margin-bottom: 14px; }
-        .lock-overlay-badge {
-            position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
-            background: rgba(15, 23, 42, 0.22);
-        }
-        .lock-overlay-badge i { font-size: 26px; color: rgba(255,255,255,0.95); filter: drop-shadow(0 3px 6px rgba(0,0,0,0.4)); }
 
-        /* بطاقات الكورسات بتصميم الصورة المصغّرة (Thumbnail) بدون تقييم نجوم */
+        /* Course Thumbnail Container & Explicit Image Handling */
         .course-thumb {
-            width: calc(100% + 52px); margin: -30px -26px 18px; height: 240px;
-            border-radius: 20px 20px 0 0; position: relative; overflow: hidden;
-            display: flex; align-items: center; justify-content: center;
+            width: calc(100% + 52px); 
+            margin: -30px -26px 18px; 
+            height: 220px;
+            border-radius: 20px 20px 0 0; 
+            position: relative; 
+            overflow: hidden;
+            background: #1e293b;
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
         }
-        .course-thumb.thumb-risk { background: linear-gradient(180deg, rgba(15, 23, 42, 0.08) 0%, rgba(15, 23, 42, 0.38) 100%), url('risk.jpg') center/cover no-repeat; }
-        .course-thumb.thumb-value { background: linear-gradient(180deg, rgba(15, 23, 42, 0.08) 0%, rgba(15, 23, 42, 0.38) 100%), url('va.jpg') center/cover no-repeat; }
-        .course-thumb.thumb-electrical { background: linear-gradient(180deg, rgba(15, 23, 42, 0.08) 0%, rgba(15, 23, 42, 0.38) 100%), url('ele.jpg') center/cover no-repeat; }
-        .course-thumb.thumb-cost { background: linear-gradient(180deg, rgba(15, 23, 42, 0.08) 0%, rgba(15, 23, 42, 0.38) 100%), url('cost.jpg') center/cover no-repeat; }
-        .course-thumb.thumb-data { background: linear-gradient(180deg, rgba(15, 23, 42, 0.08) 0%, rgba(15, 23, 42, 0.38) 100%), url('data.jpg') center/cover no-repeat; }
-        .course-thumb i { font-size: 58px; color: rgba(255,255,255,0.92); filter: drop-shadow(0 4px 10px rgba(0,0,0,0.25)); }
+
+        .course-thumb-img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            z-index: 1;
+            transition: transform 0.5s ease;
+        }
+
+        .nav-card:hover .course-thumb-img {
+            transform: scale(1.06);
+        }
+
         .thumb-brand-logo {
-            position: absolute; top: 12px; right: 12px; background: rgba(255,255,255,0.95);
-            border-radius: 8px; padding: 3px 8px; display: flex; align-items: center; box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            position: absolute; 
+            top: 12px; 
+            right: 12px; 
+            background: rgba(255,255,255,0.95);
+            border-radius: 8px; 
+            padding: 4px 10px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+            z-index: 3;
+        }
+        .thumb-brand-logo img {
+            height: 28px;
+            width: auto;
+            max-width: 90px;
+            object-fit: contain;
+            display: block;
         }
         html[dir="ltr"] .thumb-brand-logo { right: auto; left: 12px; }
-        .thumb-brand-logo img { height: 18px; object-fit: contain; }
+
+        /* Unified Course Ribbon Badge */
         .course-ribbon {
-            position: absolute; bottom: 14px; left: -6px; z-index: 2;
+            position: absolute; bottom: 14px; right: -6px; z-index: 3;
             background: #16a34a; color: #fff; font-size: 11.5px; font-weight: 900;
-            padding: 5px 16px 5px 12px; display: inline-flex; align-items: center; gap: 5px;
-            clip-path: polygon(0 0, 100% 0, 90% 100%, 0 100%);
+            padding: 5px 16px 5px 12px; display: inline-flex; align-items: center; gap: 6px;
+            clip-path: polygon(10% 0, 100% 0, 100% 100%, 0 100%);
             box-shadow: 0 4px 10px rgba(22, 163, 74, 0.35);
         }
-        html[dir="ltr"] .course-ribbon { left: auto; right: -6px; clip-path: polygon(10% 0, 100% 0, 100% 100%, 0 100%); }
+        html[dir="rtl"] .course-ribbon { right: auto; left: -6px; clip-path: polygon(0 0, 100% 0, 90% 100%, 0 100%); }
+
+        .lock-overlay-badge {
+            position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+            background: rgba(15, 23, 42, 0.45); backdrop-filter: blur(2px); z-index: 2;
+        }
+        .lock-overlay-badge i { font-size: 28px; color: rgba(255,255,255,0.95); filter: drop-shadow(0 3px 6px rgba(0,0,0,0.4)); }
+
         .nav-card.course-card-main { padding-top: 28px; }
 
-        /* أقسام الفيديو التعريفي */
         .promo-video-wrap { border-radius: 18px; overflow: hidden; box-shadow: 0 15px 40px rgba(0,0,0,0.15); border: var(--glass-border); background: #000; }
-        .promo-video-wrap video { width: 100%; display: block; max-height: 460px; }
-        .course-video-section { margin: 24px 0 30px; }
+        .promo-video-wrap video { width: 100%; display: block; max-height: 520px; }
+        .course-video-section { margin: 24px auto 30px; }
         .course-video-section h3 { font-size: 1.05rem; font-weight: 800; color: var(--text-dark); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
         .course-video-section h3 i { color: var(--accent-color); }
 
-        
         .status-badge-box {
             margin-top: 14px; display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px;
             border-radius: 10px; font-size: 12px; font-weight: 800; background: rgba(30, 58, 138, 0.08);
             color: var(--primary-blue); border: 1px dashed var(--primary-blue);
         }
         .status-badge-box.design { background: rgba(30, 58, 138, 0.08); color: var(--primary-blue); border-color: var(--primary-blue); }
-        .status-badge-box.launching {
-            background: rgba(30, 58, 138, 0.1);
-            color: var(--primary-blue);
-            border: 1.5px solid var(--primary-blue);
-            font-weight: 900;
-        }
         .status-badge-box.soon-badge {
             background: rgba(14, 165, 233, 0.1);
             color: #0284c7;
@@ -512,21 +573,6 @@
             font-weight: 900;
         }
 
-        .green-dot-pulse {
-            width: 8px;
-            height: 8px;
-            background-color: #22c55e;
-            border-radius: 50%;
-            display: inline-block;
-            box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
-            animation: pulseGreenDot 1.5s infinite;
-        }
-        @keyframes pulseGreenDot {
-            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); }
-            70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(34, 197, 94, 0); }
-            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
-        }
-        
         .course-details-header { background: linear-gradient(135deg, var(--primary-blue) 0%, #0a1128 100%); color: white; padding: 50px 24px; text-align: center; border-radius: 22px; margin-bottom: 28px; box-shadow: 0 20px 40px rgba(0,0,0,0.15); position: relative; overflow: hidden; }
         .course-details-header h2 { font-size: clamp(1.8rem, 3vw, 2.6rem); font-weight: 900; margin-bottom: 14px; }
         .course-details-header p { font-size: 1.08rem; color: #cbd5e1; font-weight: 600; max-width: 720px; margin: 0 auto; line-height: 1.65; }
@@ -534,7 +580,10 @@
         .meta-item { background: rgba(255,255,255,0.12); backdrop-filter: blur(8px); padding: 8px 18px; border-radius: 12px; font-weight: 800; font-size: 13px; display: flex; align-items: center; gap: 8px; border: 1px solid rgba(255,255,255,0.18); }
         
         .course-content-split { display: grid; grid-template-columns: 2fr 1fr; gap: 28px; align-items: start; }
-        @media (max-width: 950px) { .course-content-split { grid-template-columns: 1fr; } }
+        @media (max-width: 950px) { 
+            .course-content-split { grid-template-columns: 1fr; } 
+            .nav-center-group { display: none; }
+        }
         
         .content-box { background: var(--card-bg); backdrop-filter: blur(16px); padding: 28px 32px; border-radius: 22px; border: var(--glass-border); margin-bottom: 22px; box-shadow: var(--glass-shadow); }
         .content-box h2 { color: var(--primary-blue); margin-bottom: 22px; font-size: 1.65rem; font-weight: 900; border-bottom: 2px solid var(--border-color); padding-bottom: 12px; }
@@ -578,7 +627,7 @@
         .login-input:focus { outline: none; border-color: var(--primary-blue); box-shadow: 0 0 12px rgba(96, 165, 250, 0.4); }
 
         .mega-footer { background: var(--footer-bg); color: #94a3b8; padding: 50px 5% 25px; margin-top: auto; border-top: 4px solid var(--accent-color); position: relative; }
-        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 35px; margin-bottom: 35px; max-width: 1200px; margin-left: auto; margin-right: auto; }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 35px; margin-bottom: 35px; max-width: 1380px; margin-left: auto; margin-right: auto; }
         .footer-col h3 { color: #f8fafc; font-size: 1.2rem; font-weight: 900; margin-bottom: 18px; }
         
         .footer-links { list-style: none; display: flex; flex-wrap: wrap; gap: 12px; }
@@ -594,7 +643,7 @@
         .social-icons { display: flex; gap: 12px; margin-top: 16px; }
         .social-icons a { color: white; background: rgba(255,255,255,0.08); width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 12px; transition: all 0.3s ease; border: 1px solid rgba(255,255,255,0.12); }
         .social-icons a:hover { background: var(--accent-color); transform: translateY(-3px); }
-        .footer-bottom { text-align: center; padding-top: 22px; border-top: 1px solid rgba(255,255,255,0.08); font-weight: 600; font-size: 0.88rem; max-width: 1200px; margin: 0 auto; }
+        .footer-bottom { text-align: center; padding-top: 22px; border-top: 1px solid rgba(255,255,255,0.08); font-weight: 600; font-size: 0.88rem; max-width: 1380px; margin: 0 auto; }
 
         @keyframes fadeInNeural { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes slideInNeural { from { opacity: 0; transform: translateY(15px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
@@ -603,7 +652,7 @@
     </style> 
     <script type="text/javascript">
     (function(c,l,a,r,i,t,y){
-        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        c[a]=c[a]||function(){(c[a].q=c[a].q|=[]).push(arguments)};
         t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
         y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
     })(window, document, "clarity", "script", "xls75wc9ij");
@@ -678,16 +727,21 @@
         </div>
     </div>
 
+    <!-- Header Section with Central Navigation -->
     <header class="top-bar" id="main-topbar">
         <div class="brand-logo-container">
             <img src="e842ee15-fc5d-491b-a6ae-17e6f345bccd.jpg" alt="BA Academy Logo">
         </div>
-        <nav class="top-bar-actions">
+
+        <nav class="nav-center-group">
             <button class="nav-link home-highlight" onclick="switchMainView('home-view')"><i class="fa-solid fa-house"></i> <span data-ar="الرئيسية" data-en="Home">الرئيسية</span></button>
+            <button class="nav-link" onclick="document.getElementById('courses-section').scrollIntoView({behavior: 'smooth'})"><i class="fa-solid fa-graduation-cap"></i> <span data-ar="الدورات المتاحة" data-en="Available Courses">الدورات المتاحة</span></button>
             <button class="nav-link" onclick="switchMainView('about-view')"><i class="fa-solid fa-circle-info"></i> <span data-ar="من نحن" data-en="About Us">من نحن</span></button>
+        </nav>
+
+        <nav class="top-bar-actions">
             <button class="nav-link" onclick="openCertModal()" style="color: var(--accent-light); font-weight: 900;"><i class="fa-solid fa-award"></i> <span data-ar="التحقق من شهادة" data-en="Verify Certificate">التحقق من شهادة</span></button>
             
-            <!-- زر الترجمة المضاف بالمواصفات المطلوبة -->
             <button class="nav-link" id="lang-toggle-btn" onclick="toggleLanguage()" style="background: rgba(30, 58, 138, 0.4); border-color: var(--accent-light); color: #fff;">
                 <i class="fa-solid fa-globe"></i> <span id="lang-btn-text">English</span>
             </button>
@@ -724,7 +778,7 @@
             </div>
         </section>
 
-        <section class="course-video-section" style="max-width: 900px; margin: 0 auto 30px;">
+        <section class="course-video-section" style="max-width: 1380px; margin: 0 auto 30px; padding: 0 4%;">
             <h3 style="justify-content: center; text-align: center;"><i class="fa-solid fa-circle-play"></i> <span data-ar="شاهد نبذة سريعة عن الأكاديمية" data-en="Watch a Quick Academy Overview">شاهد نبذة سريعة عن الأكاديمية</span></h3>
             <div class="promo-video-wrap">
                 <video controls preload="none" onerror="this.closest('.course-video-section')?.style.setProperty('display','none')">
@@ -779,14 +833,27 @@
 
         <div class="dashboard-content" id="courses-section">
             <div class="courses-available-wrap">
-                <h2 class="section-title"><i class="fa-solid fa-layer-group" style="color: var(--accent-color);"></i> <span data-ar="الدورات المتاحة" data-en="Available Courses">الدورات المتاحة</span></h2>
-                <p class="courses-section-subtitle"><i class="fa-solid fa-bolt" style="color: var(--accent-color);"></i> <span data-ar="جاهزة الآن، ابدأ التعلم فورًا" data-en="Ready now — start learning immediately">جاهزة الآن، ابدأ التعلم فورًا</span></p>
+                <!-- Section Header Aligned Right -->
+                <h2 class="section-title">
+                    <div class="section-title-right">
+                        <i class="fa-solid fa-layer-group" style="color: var(--accent-color);"></i> 
+                        <span data-ar="الدورات المتاحة" data-en="Available Courses">الدورات المتاحة</span>
+                    </div>
+                    <span class="live-badge-animated">
+                        <i class="fa-solid fa-circle fa-beat" style="color: #22c55e;"></i>
+                        <span data-ar="متاحة الآن" data-en="Available Now">متاحة الآن</span>
+                    </span>
+                </h2>
+                <p class="courses-section-subtitle"><i class="fa-solid fa-bolt-lightning fa-bounce" style="color: var(--accent-color);"></i> <span data-ar="جاهزة الآن، ابدأ التعلم فورًا" data-en="Ready now — start learning immediately">جاهزة الآن، ابدأ التعلم فورًا</span></p>
+                
                 <div class="cards-grid-available">
+                    <!-- Course 1: Project Risk Management -->
                     <div class="course-preview-block">
                         <div class="nav-card course-card-main" onclick="switchMainView('course-landing-view')">
-                            <div class="course-thumb thumb-risk">
+                            <div class="course-thumb">
+                                <img src="risk.jpg" class="course-thumb-img" alt="إدارة مخاطر المشاريع">
                                 <div class="thumb-brand-logo"><img src="e842ee15-fc5d-491b-a6ae-17e6f345bccd.jpg" alt="BA"></div>
-                                <span class="course-ribbon"><span class="green-dot-pulse"></span> <span data-ar="متاحة الآن" data-en="Available Now">متاحة الآن</span></span>
+                                <span class="course-ribbon"><i class="fa-solid fa-circle-check"></i> <span data-ar="متاحة الآن" data-en="Available Now">متاحة الآن</span></span>
                             </div>
                             <h3 data-ar="إدارة مخاطر المشاريع" data-en="Project Risk Management">إدارة مخاطر المشاريع</h3>
                             <p class="en-text">Project Risk Management</p>
@@ -801,11 +868,13 @@
                         </div>
                     </div>
 
+                    <!-- Course 2: Value Engineering -->
                     <div class="course-preview-block">
                         <div class="nav-card course-card-main course-card-featured" onclick="switchMainView('value-landing-view')">
-                            <div class="course-thumb thumb-value">
+                            <div class="course-thumb">
+                                <img src="va.jpg" class="course-thumb-img" alt="الهندسة القيمية">
                                 <div class="thumb-brand-logo"><img src="e842ee15-fc5d-491b-a6ae-17e6f345bccd.jpg" alt="BA"></div>
-                                <span class="course-ribbon" style="background: var(--accent-color);"><span class="green-dot-pulse"></span> <span data-ar="متاحة الآن 🚀" data-en="Available Now 🚀">متاحة الآن 🚀</span></span>
+                                <span class="course-ribbon" style="background: var(--accent-color);"><i class="fa-solid fa-circle-check"></i> <span data-ar="متاحة الآن" data-en="Available Now">متاحة الآن</span></span>
                             </div>
                             <h3 data-ar="الهندسة القيمية" data-en="Value Engineering">الهندسة القيمية</h3>
                             <p class="en-text" style="color: var(--primary-blue); font-weight: 900;">Value Engineering (2026)</p>
@@ -822,12 +891,20 @@
                 </div>
             </div>
 
+            <!-- Upcoming Courses Section Aligned Right -->
             <div class="courses-upcoming-wrap">
-                <h2 class="section-title"><i class="fa-solid fa-clock-rotate-left" style="color: #0ea5e9;"></i> <span data-ar="الدورات القادمة" data-en="Upcoming Courses">الدورات القادمة</span></h2>
+                <h2 class="section-title">
+                    <div class="section-title-right">
+                        <i class="fa-solid fa-clock-rotate-left" style="color: #0ea5e9;"></i> 
+                        <span data-ar="الدورات القادمة" data-en="Upcoming Courses">الدورات القادمة</span>
+                    </div>
+                </h2>
                 <p class="courses-section-subtitle"><i class="fa-solid fa-hourglass-half" style="color: #0ea5e9;"></i> <span data-ar="قيد التحضير حاليًا، تابعنا لمعرفة موعد الإطلاق" data-en="Currently in preparation — stay tuned for the launch date">قيد التحضير حاليًا، تابعنا لمعرفة موعد الإطلاق</span></p>
+                
                 <div class="cards-grid-upcoming">
                     <div class="nav-card course-card-upcoming" onclick="switchMainView('electrical-loads-info-view')">
-                        <div class="course-thumb thumb-electrical">
+                        <div class="course-thumb">
+                            <img src="ele.jpg" class="course-thumb-img" alt="حساب الأحمال الكهربائية">
                             <div class="thumb-brand-logo"><img src="e842ee15-fc5d-491b-a6ae-17e6f345bccd.jpg" alt="BA"></div>
                             <div class="lock-overlay-badge"><i class="fa-solid fa-lock"></i></div>
                         </div>
@@ -839,7 +916,8 @@
                     </div>
 
                     <div class="nav-card course-card-upcoming" onclick="switchMainView('contracts-info-view')">
-                        <div class="course-thumb thumb-cost">
+                        <div class="course-thumb">
+                            <img src="cost.jpg" class="course-thumb-img" alt="إدارة العقود والتكاليف">
                             <div class="thumb-brand-logo"><img src="e842ee15-fc5d-491b-a6ae-17e6f345bccd.jpg" alt="BA"></div>
                             <div class="lock-overlay-badge"><i class="fa-solid fa-lock"></i></div>
                         </div>
@@ -851,7 +929,8 @@
                     </div>
 
                     <div class="nav-card course-card-upcoming" onclick="switchMainView('datacenter-info-view')">
-                        <div class="course-thumb thumb-data">
+                        <div class="course-thumb">
+                            <img src="data.jpg" class="course-thumb-img" alt="هندسة مراكز البيانات">
                             <div class="thumb-brand-logo"><img src="e842ee15-fc5d-491b-a6ae-17e6f345bccd.jpg" alt="BA"></div>
                             <div class="lock-overlay-badge"><i class="fa-solid fa-lock"></i></div>
                         </div>
@@ -865,7 +944,6 @@
             </div>
         </div>
 
-        <!-- قسم آراء المتدربين — تحت الكورسات -->
         <section class="professional-testimonials">
             <div class="testimonials-heading-container">
                 <h2 data-ar="آراء المتدربين" data-en="Trainee Reviews">آراء المتدربين</h2>
@@ -1078,7 +1156,7 @@
             <div class="content-box">
                 <div style="text-align: center; background: rgba(14, 165, 233, 0.08); border: 2px dashed #0ea5e9; padding: 20px; border-radius: 18px; margin-bottom: 28px;">
                     <span style="font-size: 1.2rem; font-weight: 900; color: #0284c7;"><i class="fa-solid fa-hourglass-half"></i> <span data-ar="الكورس حالياً: قريباً ⏳" data-en="Status: Coming Soon ⏳">الكورس حالياً: قريباً ⏳</span></span>
-                    <p style="color: var(--text-muted); margin-top: 8px; font-size: 0.98rem;" data-ar="نعمل على إعداد محتوى هندسي متقدم ومخصص لتصميم وبنية مرافق مراكز البيانات الحيوية." data-en="Developing advanced engineering content for data center design & infrastructure.">نعمل على إعداد محتوى هندسي متقدم ومخصص لتصميم وبنية مرافق مراكز البيانات الحيوية.</p>
+                    <p style="color: var(--text-muted); margin-top: 8px; font-size: 0.98rem;" data-ar="نعمل على إعداد محتوى هندسي متتقدم ومخصص لتصميم وبنية مرافق مراكز البيانات الحيوية." data-en="Developing advanced engineering content for data center design & infrastructure.">نعمل على إعداد محتوى هندسي متقدم ومخصص لتصميم وبنية مرافق مراكز البيانات الحيوية.</p>
                 </div>
 
                 <h2><i class="fa-solid fa-circle-info"></i> <span data-ar="ملخص بسيط وواضح لمحتوى الكورس" data-en="Course Overview">ملخص بسيط وواضح لمحتوى الكورس</span></h2>
@@ -1222,7 +1300,6 @@
         let countersAnimated = false; 
         let currentLang = 'ar';
 
-        /* وظيفة الترجمة الفورية للموقع بالكامل */
         function toggleLanguage() {
             currentLang = currentLang === 'ar' ? 'en' : 'ar';
             document.documentElement.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
