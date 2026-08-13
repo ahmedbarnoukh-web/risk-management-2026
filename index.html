@@ -4,6 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BA Engineering Academy | الأكاديمية الهندسية المتكاملة</title>
+    
+    <!-- أيقونة تبويب المتصفح (Favicon) -->
+    <link rel="icon" type="image/jpeg" href="e842ee15-fc5d-491b-a6ae-17e6f345bccd.jpg">
+    <link rel="shortcut icon" type="image/jpeg" href="e842ee15-fc5d-491b-a6ae-17e6f345bccd.jpg">
+    <link rel="apple-touch-icon" href="e842ee15-fc5d-491b-a6ae-17e6f345bccd.jpg">
+
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <style>
@@ -368,6 +374,100 @@
         .feature-card h4 { font-size: 1.15rem; color: var(--primary-blue); font-weight: 900; margin-bottom: 10px; }
         .feature-card p { font-size: 0.92rem; color: var(--text-muted); font-weight: 600; line-height: 1.65; }
 
+        /* Video Lightbox Trigger Button inside cards */
+        .video-trigger-btn {
+            background: rgba(13, 148, 136, 0.12);
+            color: var(--accent-color);
+            border: 1px solid rgba(13, 148, 136, 0.3);
+            border-radius: 12px;
+            padding: 10px 16px;
+            font-size: 0.88rem;
+            font-weight: 800;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s ease;
+            margin-top: 8px;
+        }
+        .video-trigger-btn:hover {
+            background: var(--accent-color);
+            color: white;
+            box-shadow: 0 6px 18px rgba(13, 148, 136, 0.3);
+            transform: translateY(-2px);
+        }
+
+        /* Interactive Accordion Syllabus Styling */
+        .accordion-group { display: flex; flex-direction: column; gap: 12px; margin-top: 14px; }
+        .accordion-item {
+            background: var(--bg-main);
+            border: var(--glass-border);
+            border-radius: 14px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        .accordion-header {
+            padding: 16px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 800;
+            color: var(--primary-blue);
+            background: var(--card-bg);
+            user-select: none;
+        }
+        .accordion-header:hover { background: var(--active-blue); }
+        .accordion-icon { transition: transform 0.3s ease; color: var(--accent-color); }
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.3s ease;
+            padding: 0 20px;
+            color: var(--text-dark);
+            font-weight: 600;
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+        .accordion-item.active .accordion-content {
+            max-height: 300px;
+            padding: 16px 20px;
+            border-top: 1px solid var(--border-color);
+        }
+        .accordion-item.active .accordion-icon { transform: rotate(180deg); }
+
+        /* Video Lightbox Modal Styling */
+        .video-modal-box {
+            background: var(--footer-bg);
+            border-radius: 20px;
+            width: 92%;
+            max-width: 860px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.6);
+            border: 1px solid rgba(255,255,255,0.18);
+            animation: slideInNeural 0.35s ease forwards;
+        }
+        .video-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 22px;
+            background: rgba(15, 23, 42, 0.95);
+            color: #ffffff;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .video-modal-header h4 { font-weight: 800; font-size: 1.1rem; display: flex; align-items: center; gap: 10px; color: var(--accent-light); }
+        .close-video-btn {
+            background: rgba(255,255,255,0.1); border: none; color: #fff; width: 34px; height: 34px;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            cursor: pointer; transition: all 0.2s ease; font-size: 1rem;
+        }
+        .close-video-btn:hover { background: #dc2626; transform: scale(1.1); }
+        .video-modal-body video { width: 100%; display: block; max-height: 75vh; background: #000; }
+
         /* Testimonials Section */
         .professional-testimonials {
             padding: 60px 5%;
@@ -501,12 +601,7 @@
         .courses-available-wrap .section-title { border-bottom: 2px solid rgba(13, 148, 136, 0.3); }
         .courses-section-subtitle { color: var(--text-muted); font-weight: 700; font-size: 0.92rem; margin: -14px 0 22px; text-align: right; }
         .cards-grid-available { display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 30px; }
-        .course-preview-block { display: flex; flex-direction: column; gap: 16px; }
-        .course-mini-video { padding: 0 2px; }
-        .course-mini-video-label { font-size: 0.88rem; font-weight: 800; color: var(--text-muted); margin-bottom: 10px; display: flex; align-items: center; justify-content: center; gap: 7px; }
-        .course-mini-video-label i { color: var(--accent-color); font-size: 1rem; }
-        .course-mini-video .promo-video-wrap { border-radius: 18px; }
-        .course-mini-video .promo-video-wrap video { max-height: 260px; }
+        .course-preview-block { display: flex; flex-direction: column; gap: 12px; }
 
         .courses-upcoming-wrap {
             background: var(--bg-main); border: 2px dashed var(--border-color);
@@ -586,8 +681,6 @@
 
         .nav-card.course-card-main { padding-top: 28px; }
 
-        .promo-video-wrap { border-radius: 18px; overflow: hidden; box-shadow: 0 15px 40px rgba(0,0,0,0.15); border: var(--glass-border); background: #000; }
-        .promo-video-wrap video { width: 100%; display: block; max-height: 520px; }
         .course-video-section { margin: 24px auto 30px; }
         .course-video-section h3 { font-size: 1.05rem; font-weight: 800; color: var(--text-dark); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
         .course-video-section h3 i { color: var(--accent-color); }
@@ -600,6 +693,44 @@
         }
         .video-side-point i { color: var(--accent-color); font-size: 1.2rem; flex-shrink: 0; }
         .video-side-point span { font-weight: 700; font-size: 0.92rem; color: var(--text-dark); }
+
+        /* Video Showcase Lightbox Trigger Card */
+        .video-banner-card {
+            background: linear-gradient(135deg, var(--topbar-bg) 0%, #1e3a8a 100%);
+            border-radius: 20px;
+            padding: 30px;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            border: var(--glass-border);
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .video-banner-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 45px rgba(13, 148, 136, 0.25);
+        }
+        .video-play-circle {
+            width: 65px;
+            height: 65px;
+            border-radius: 50%;
+            background: var(--accent-color);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            box-shadow: 0 0 20px rgba(13, 148, 136, 0.6);
+            flex-shrink: 0;
+            transition: transform 0.3s ease;
+        }
+        .video-banner-card:hover .video-play-circle {
+            transform: scale(1.15) rotate(10deg);
+            background: var(--accent-light);
+        }
 
         .status-badge-box {
             margin-top: 14px; display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px;
@@ -661,7 +792,7 @@
         .toast.error { background: #dc2626; }
         .toast.fadeOut { animation: fadeOutNeural 0.3s ease-in forwards; }
 
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(3, 7, 18, 0.75); backdrop-filter: blur(12px); z-index: 9999; display: none; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s ease; }
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(3, 7, 18, 0.78); backdrop-filter: blur(12px); z-index: 9999; display: none; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s ease; }
         .modal-overlay.active { display: flex; opacity: 1; }
         .login-modal { background: var(--card-bg); backdrop-filter: blur(24px); padding: 35px; border-radius: 24px; width: 90%; max-width: 400px; text-align: center; box-shadow: 0 25px 50px rgba(0,0,0,0.25); border: var(--glass-border); }
         .login-input { width: 100%; padding: 14px; border: 2px solid var(--border-color); border-radius: 12px; font-size: 16px; font-weight: 700; text-align: center; margin-bottom: 18px; background: var(--bg-main); color: var(--text-dark); transition: border-color 0.3s; }
@@ -730,6 +861,22 @@
         <h2 data-ar="جاري التحميل..." data-en="Loading...">جاري التحميل...</h2>
     </div>
 
+    <!-- Video Lightbox Modal Overlay -->
+    <div class="modal-overlay" id="video-modal-overlay">
+        <div class="video-modal-box">
+            <div class="video-modal-header">
+                <h4 id="video-modal-title"><i class="fa-solid fa-circle-play"></i> <span>معاينة الفيديو</span></h4>
+                <button class="close-video-btn" onclick="closeVideoModal()"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="video-modal-body">
+                <video id="modal-video-player" controls preload="metadata">
+                    <source id="modal-video-source" src="" type="video/mp4">
+                    متصفحك لا يدعم تشغيل الفيديو.
+                </video>
+            </div>
+        </div>
+    </div>
+
     <div class="modal-overlay" id="cert-modal-overlay">
         <div class="login-modal">
             <i class="fa-solid fa-certificate" style="font-size: 2.8rem; color: var(--accent-color); margin-bottom: 14px;"></i>
@@ -768,7 +915,7 @@
                 <button class="btn-outline" style="flex: 1;" onclick="closeVAModal()" data-ar="إلغاء" data-en="Cancel">إلغاء</button>
             </div>
         </div>
-    </div>
+    </div
 
     <!-- Header Section with Central Navigation -->
     <header class="top-bar" id="main-topbar">
@@ -833,18 +980,20 @@
 
         <section class="course-video-section" style="max-width: 1380px; margin: 0 auto 30px; padding: 0 4%;">
             <h3><i class="fa-solid fa-circle-play"></i> <span data-ar="شاهد نبذة سريعة عن الأكاديمية" data-en="Watch a Quick Academy Overview">شاهد نبذة سريعة عن الأكاديمية</span></h3>
-            <div class="video-section-inner">
-                <div class="video-section-media">
-                    <div class="promo-video-wrap">
-                        <video controls preload="none" onerror="this.closest('.course-video-section')?.style.setProperty('display','none')">
-                            <source src="ba.mp4" type="video/mp4">
-                        </video>
+            
+            <!-- Video Lightbox Banner Card -->
+            <div class="video-banner-card" onclick="openVideoModal('ba.mp4', 'نبذة سريعة عن BA Engineering Academy')">
+                <div style="display: flex; align-items: center; gap: 20px;">
+                    <div class="video-play-circle">
+                        <i class="fa-solid fa-play"></i>
+                    </div>
+                    <div>
+                        <h4 style="font-size: 1.25rem; font-weight: 900; margin-bottom: 6px;" data-ar="الفيديو التعريفي للأكاديمية" data-en="Academy Intro Video">الفيديو التعريفي للأكاديمية</h4>
+                        <p style="color: #cbd5e1; font-size: 0.95rem; font-weight: 600;" data-ar="اضغط هنا لمشاهدة المنهجية والرؤية في نافذة منبثقة بدقة عالية" data-en="Click here to watch our methodology in HD lightbox popup">اضغط هنا لمشاهدة المنهجية والرؤية في نافذة منبثقة بدقة عالية</p>
                     </div>
                 </div>
-                <div class="video-section-side">
-                    <div class="video-side-point"><i class="fa-solid fa-diagram-project"></i> <span data-ar="تعرف على منهجيتنا في تحويل النظرية إلى تطبيق ميداني" data-en="See how we turn theory into field application">تعرف على منهجيتنا في تحويل النظرية إلى تطبيق ميداني</span></div>
-                    <div class="video-side-point"><i class="fa-solid fa-user-tie"></i> <span data-ar="مدربون بخبرة ميدانية حقيقية في المشاريع الهندسية" data-en="Trainers with real field experience in engineering projects">مدربون بخبرة ميدانية حقيقية في المشاريع الهندسية</span></div>
-                    <div class="video-side-point"><i class="fa-solid fa-certificate"></i> <span data-ar="شهادات إتمام معتمدة وقابلة للتحقق فور الانتهاء" data-en="Verified completion certificates upon finishing">شهادات إتمام معتمدة وقابلة للتحقق فور الانتهاء</span></div>
+                <div style="font-size: 0.88rem; background: rgba(255,255,255,0.15); padding: 8px 16px; border-radius: 12px; font-weight: 800; border: 1px solid rgba(255,255,255,0.2);" data-ar="تشغيل الفيديو 🎬" data-en="Play Video 🎬">
+                    تشغيل الفيديو 🎬
                 </div>
             </div>
         </section>
@@ -920,14 +1069,9 @@
                             <h3 data-ar="إدارة مخاطر المشاريع" data-en="Project Risk Management">إدارة مخاطر المشاريع</h3>
                             <p class="en-text">Project Risk Management</p>
                         </div>
-                        <div class="course-mini-video">
-                            <p class="course-mini-video-label"><i class="fa-solid fa-circle-play"></i> <span data-ar="فيديو تعريفي عن الكورس" data-en="Course Intro Video">فيديو تعريفي عن الكورس</span></p>
-                            <div class="promo-video-wrap">
-                                <video controls preload="none" onerror="this.closest('.course-mini-video')?.style.setProperty('display','none')">
-                                    <source src="risk.mp4" type="video/mp4">
-                                </video>
-                            </div>
-                        </div>
+                        <button class="video-trigger-btn" onclick="openVideoModal('risk.mp4', 'إدارة مخاطر المشاريع - فيديو تعريفي')">
+                            <i class="fa-solid fa-circle-play"></i> <span data-ar="شاهد الفيديو التعريفي" data-en="Watch Intro Video">شاهد الفيديو التعريفي</span>
+                        </button>
                     </div>
 
                     <!-- Course 2: Value Engineering -->
@@ -941,14 +1085,9 @@
                             <h3 data-ar="الهندسة القيمية" data-en="Value Engineering">الهندسة القيمية</h3>
                             <p class="en-text" style="color: var(--primary-blue); font-weight: 900;">Value Engineering (2026)</p>
                         </div>
-                        <div class="course-mini-video">
-                            <p class="course-mini-video-label"><i class="fa-solid fa-circle-play"></i> <span data-ar="فيديو تعريفي عن الكورس" data-en="Course Intro Video">فيديو تعريفي عن الكورس</span></p>
-                            <div class="promo-video-wrap">
-                                <video controls preload="none" onerror="this.closest('.course-mini-video')?.style.setProperty('display','none')">
-                                    <source src="va.mp4" type="video/mp4">
-                                </video>
-                            </div>
-                        </div>
+                        <button class="video-trigger-btn" onclick="openVideoModal('va.mp4', 'الهندسة القيمية - فيديو تعريفي')">
+                            <i class="fa-solid fa-circle-play"></i> <span data-ar="شاهد الفيديو التعريفي" data-en="Watch Intro Video">شاهد الفيديو التعريفي</span>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -1066,14 +1205,53 @@
                 <div class="content-box">
                     <h3 style="margin-top: 0;"><i class="fa-solid fa-bullseye"></i> <span data-ar="أهداف الدورة" data-en="Course Objectives">أهداف الدورة</span></h3>
                     <p data-ar="تزويد المهندسين ومديري المشاريع بالمهارات العملية لبناء سجل مخاطر (Risk Register) متكامل، وتطبيق استراتيجيات الاستجابة للمخاطر لتجنب تجاوز الميزانية والجدول الزمني." data-en="Equipping engineers and project managers with practical skills to build a complete Risk Register and apply risk response strategies to prevent cost/schedule overruns.">تزويد المهندسين ومديري المشاريع بالمهارات العملية لبناء سجل مخاطر (Risk Register) متكامل، وتطبيق استراتيجيات الاستجابة للمخاطر لتجنب تجاوز الميزانية والجدول الزمني.</p>
-                    <h3><i class="fa-solid fa-list-check"></i> <span data-ar="محاور البرنامج التدريبي" data-en="Training Outline">محاور البرنامج التدريبي</span></h3>
-                    <ul>
-                        <li data-ar="مقدمة في إدارة المخاطر وفقاً لمنهجية المشاريع الاحترافية." data-en="Introduction to Risk Management according to professional project methodologies.">مقدمة في إدارة المخاطر وفقاً لمنهجية المشاريع الاحترافية.</li>
-                        <li data-ar="كيفية التعرف على المخاطر وتصنيفها." data-en="Identifying and classifying risks.">كيفية التعرف على المخاطر وتصنيفها.</li>
-                        <li data-ar="التحليل النوعي والكمي للمخاطر." data-en="Qualitative and quantitative risk analysis.">التحليل النوعي والكمي للمخاطر.</li>
-                        <li data-ar="استراتيجيات الاستجابة للمخاطر (التجنب، التخفيف، النقل، القبول)." data-en="Risk response strategies (Avoidance, Mitigation, Transfer, Acceptance).">استراتيجيات الاستجابة للمخاطر (التجنب، التخفيف، النقل، القبول).</li>
-                    </ul>
+                    
+                    <h3><i class="fa-solid fa-layer-group"></i> <span data-ar="محاور البرنامج التدريبي (انقر للتفاصيل)" data-en="Syllabus Modules (Click to Expand)">محاور البرنامج التدريبي (انقر للتفاصيل)</span></h3>
+                    
+                    <!-- Interactive Accordion Outline -->
+                    <div class="accordion-group">
+                        <div class="accordion-item active">
+                            <div class="accordion-header" onclick="toggleAccordion(this)">
+                                <span><i class="fa-solid fa-shield-halved" style="margin-left: 8px;"></i> الوحدة الأولى: مقدمة في إدارة المخاطر وفقاً للمعايير العالمية</span>
+                                <i class="fa-solid fa-chevron-down accordion-icon"></i>
+                            </div>
+                            <div class="accordion-content">
+                                التعرف على مفهوم الخطر مقابل الفرصة، دور مدير المخاطر في المشاريع الهندسية، وكيفية إعداد خطة إدارة المخاطر (Risk Management Plan).
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <div class="accordion-header" onclick="toggleAccordion(this)">
+                                <span><i class="fa-solid fa-magnifying-glass" style="margin-left: 8px;"></i> الوحدة الثانية: تحديد وتصنيف المخاطر (Risk Identification)</span>
+                                <i class="fa-solid fa-chevron-down accordion-icon"></i>
+                            </div>
+                            <div class="accordion-content">
+                                استخدام تقنيات العصف الذهني، تحليل SWOT، وقوائم المراجعة، وصياغة بيان المخاطر وتوثيقه في سجل المخاطر الرسمي (Risk Register).
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <div class="accordion-header" onclick="toggleAccordion(this)">
+                                <span><i class="fa-solid fa-chart-pie" style="margin-left: 8px;"></i> الوحدة الثالثة: التحليل النوعي والكمي للمخاطر</span>
+                                <i class="fa-solid fa-chevron-down accordion-icon"></i>
+                            </div>
+                            <div class="accordion-content">
+                                تطبيق مصفوفة الاحتمالية والأثر (Probability & Impact Matrix)، وتحديد الأولويات للحالات الحرجة لحساب الاحتياطي المالي والزمني للمشروع.
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <div class="accordion-header" onclick="toggleAccordion(this)">
+                                <span><i class="fa-solid fa-sliders" style="margin-left: 8px;"></i> الوحدة الرابعة: خطط الاستجابة والمتابعة المستمرة</span>
+                                <i class="fa-solid fa-chevron-down accordion-icon"></i>
+                            </div>
+                            <div class="accordion-content">
+                                تطبيق استراتيجيات الاستجابة للمخاطر (التجنب، التخفيف، النقل، القبول)، ومراقبة إعادة التقييم الميداني عبر دورة حياة المشروع.
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
                 <div class="content-box" style="text-align: center; padding: 28px 22px;">
                     <i class="fa-solid fa-user-tie" style="font-size: 3.2rem; color: var(--primary-blue); margin-bottom: 14px;"></i>
                     <h3 style="margin-top: 0; color: var(--text-dark); justify-content: center;" data-ar="المدرب: مهندس أحمد علي" data-en="Instructor: Eng. Ahmed Ali">المدرب: مهندس أحمد علي</h3>
@@ -1119,13 +1297,39 @@
                         <li><i class="fa-solid fa-check-circle"></i> <strong data-ar="Value Engineering Toolkit:" data-en="Value Engineering Toolkit:">Value Engineering Toolkit:</strong> <span data-ar="أداة تفاعلية تساعدك على تطبيق منهجية الهندسة القيمية عمليًا، بدءًا من تحليل الوظائف والتكلفة، مرورًا بتقييم البدائل وحساب مؤشر القيمة (Value Index)، وانتهاءً باختيار أفضل الحلول واتخاذ قرارات مدعومة بالبيانات والرسوم البيانية." data-en="An interactive tool assisting in practical VE methodology, from cost-function analysis to alternative evaluation and calculating Value Index.">أداة تفاعلية تساعدك على تطبيق منهجية الهندسة القيمية عمليًا، بدءًا من تحليل الوظائف والتكلفة، مرورًا بتقييم البدائل وحساب مؤشر القيمة (Value Index)، وانتهاءً باختيار أفضل الحلول واتخاذ قرارات مدعومة بالبيانات والرسوم البيانية.</span></li>
                     </ul>
 
-                    <h3><i class="fa-solid fa-list-check"></i> <span data-ar="محاور البرنامج التدريبي" data-en="Course Plan">محاور البرنامج التدريبي</span></h3>
-                    <ul>
-                        <li data-ar="مفهوم الهندسة القيمية وأهميتها في المشاريع الحديثة." data-en="Value Engineering concepts and modern relevance.">مفهوم الهندسة القيمية وأهميتها في المشاريع الحديثة.</li>
-                        <li data-ar="مراحل خطة عمل الهندسة القيمية (VE Job Plan)." data-en="Phases of the VE Job Plan.">مراحل خطة عمل الهندسة القيمية (VE Job Plan).</li>
-                        <li data-ar="تحليل الوظائف (Function Analysis) وتحديد التكاليف غير الضرورية." data-en="Function Analysis & eliminating unnecessary costs.">تحليل الوظائف (Function Analysis) وتحديد التكاليف غير الضرورية.</li>
-                        <li data-ar="تقييم واختيار البدائل الهندسية الفعالة." data-en="Evaluation and choice of effective alternatives.">تقييم واختيار البدائل الهندسية الفعالة.</li>
-                    </ul>
+                    <h3><i class="fa-solid fa-layer-group"></i> <span data-ar="محاور البرنامج التدريبي (انقر للتفاصيل)" data-en="Course Plan (Click to Expand)">محاور البرنامج التدريبي (انقر للتفاصيل)</span></h3>
+                    
+                    <div class="accordion-group">
+                        <div class="accordion-item active">
+                            <div class="accordion-header" onclick="toggleAccordion(this)">
+                                <span><i class="fa-solid fa-lightbulb" style="margin-left: 8px;"></i> المرحلة الأولى: المفاهيم الأساسية وخطة العمل (VE Job Plan)</span>
+                                <i class="fa-solid fa-chevron-down accordion-icon"></i>
+                            </div>
+                            <div class="accordion-content">
+                                شرح مراحل خطة عمل الهندسة القيمية المعتمدة عالمياً، مع توضيح الفارق بين تخفيض التكاليف التقليدي وعملية تعظيم القيمة دون الإخلال بمتطلبات الأداء.
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <div class="accordion-header" onclick="toggleAccordion(this)">
+                                <span><i class="fa-solid fa-sitemap" style="margin-left: 8px;"></i> المرحلة الثانية: تحليل الوظائف (Function Analysis)</span>
+                                <i class="fa-solid fa-chevron-down accordion-icon"></i>
+                            </div>
+                            <div class="accordion-content">
+                                أسلوب صياغة الوظائف باستخدام (Verb + Noun)، وبناء شجرة تحليل الوظائف FAST Diagram لتحديد التكاليف غير الضرورية المضافة للمشروع.
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <div class="accordion-header" onclick="toggleAccordion(this)">
+                                <span><i class="fa-solid fa-wand-magic-sparkles" style="margin-left: 8px;"></i> المرحلة الثالثة: الابتكار وتقييم البدائل الهندسية</span>
+                                <i class="fa-solid fa-chevron-down accordion-icon"></i>
+                            </div>
+                            <div class="accordion-content">
+                                توليد حلول تصميمية وتنفيذية غير تقليدية، واستخدام مصفوفة التقييم والترجيح لاختيار أنسب البدائل من حيث الأداء، الاستدامة، والتكلفة.
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="content-box" style="text-align: center; padding: 28px 22px;">
                     <i class="fa-solid fa-lightbulb" style="font-size: 3.2rem; color: var(--accent-color); margin-bottom: 14px;"></i>
@@ -1218,7 +1422,7 @@
             <div class="content-box">
                 <div style="text-align: center; background: rgba(14, 165, 233, 0.08); border: 2px dashed #0ea5e9; padding: 20px; border-radius: 18px; margin-bottom: 28px;">
                     <span style="font-size: 1.2rem; font-weight: 900; color: #0284c7;"><i class="fa-solid fa-hourglass-half"></i> <span data-ar="الكورس حالياً: قريباً ⏳" data-en="Status: Coming Soon ⏳">الكورس حالياً: قريباً ⏳</span></span>
-                    <p style="color: var(--text-muted); margin-top: 8px; font-size: 0.98rem;" data-ar="نعمل على إعداد محتوى هندسي متتقدم ومخصص لتصميم وبنية مرافق مراكز البيانات الحيوية." data-en="Developing advanced engineering content for data center design & infrastructure.">نعمل على إعداد محتوى هندسي متقدم ومخصص لتصميم وبنية مرافق مراكز البيانات الحيوية.</p>
+                    <p style="color: var(--text-muted); margin-top: 8px; font-size: 0.98rem;" data-ar="نعمل على إعداد محتوى هندسي متتقدم ومخصص لتصميم وبنية مرافق مراكز البيانات الحيوية." data-en="Developing advanced engineering content for data center design & infrastructure.">نعمل على إعداد محتوى هندسي متتقدم ومخصص لتصميم وبنية مرافق مراكز البيانات الحيوية.</p>
                 </div>
 
                 <h2><i class="fa-solid fa-circle-info"></i> <span data-ar="ملخص بسيط وواضح لمحتوى الكورس" data-en="Course Overview">ملخص بسيط وواضح لمحتوى الكورس</span></h2>
@@ -1449,6 +1653,48 @@
         document.addEventListener('DOMContentLoaded', function() {
             animateCounters();
         });
+
+        /* Video Lightbox Functions */
+        function openVideoModal(videoSrc, title) {
+            const modal = document.getElementById('video-modal-overlay');
+            const videoPlayer = document.getElementById('modal-video-player');
+            const videoSource = document.getElementById('modal-video-source');
+            const videoTitle = document.getElementById('video-modal-title');
+
+            if (videoSource && videoPlayer) {
+                videoSource.src = videoSrc;
+                videoPlayer.load();
+                if(videoTitle && title) {
+                    videoTitle.querySelector('span').innerText = title;
+                }
+                modal.classList.add('active');
+                videoPlayer.play().catch(e => console.log('Autoplay prevented:', e));
+            }
+        }
+
+        function closeVideoModal() {
+            const modal = document.getElementById('video-modal-overlay');
+            const videoPlayer = document.getElementById('modal-video-player');
+            if (videoPlayer) {
+                videoPlayer.pause();
+            }
+            modal.classList.remove('active');
+        }
+
+        /* Interactive Accordion Functions */
+        function toggleAccordion(headerElem) {
+            const item = headerElem.parentElement;
+            const parentGroup = item.parentElement;
+            
+            // Accordions collapse behavior
+            parentGroup.querySelectorAll('.accordion-item').forEach(otherItem => {
+                if (otherItem !== item) {
+                    otherItem.classList.remove('active');
+                }
+            });
+
+            item.classList.toggle('active');
+        }
 
         function showWhatsAppNotice(e) {
             e.preventDefault();
