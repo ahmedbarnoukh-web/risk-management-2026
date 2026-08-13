@@ -104,6 +104,11 @@
         .mesh-blob-1 { width: 500px; height: 500px; background: rgba(30, 58, 138, 0.18); top: -10%; right: -5%; animation: floatMesh 20s ease-in-out infinite alternate; }
         .mesh-blob-2 { width: 550px; height: 550px; background: rgba(13, 148, 136, 0.15); bottom: -10%; left: -5%; animation: floatMesh 25s ease-in-out infinite alternate-reverse; }
         .mesh-blob-3 { width: 350px; height: 350px; background: rgba(14, 165, 233, 0.12); top: 40%; left: 35%; animation: floatMesh 18s ease-in-out infinite; }
+        .mesh-blob-4 { width: 420px; height: 420px; background: rgba(13, 148, 136, 0.14); top: 18%; left: -8%; animation: floatMesh 22s ease-in-out infinite alternate; }
+        .mesh-blob-5 { width: 460px; height: 460px; background: rgba(30, 58, 138, 0.16); bottom: 5%; right: -8%; animation: floatMesh 19s ease-in-out infinite alternate-reverse; }
+
+        body { background-image: radial-gradient(circle, rgba(148, 163, 184, 0.18) 1px, transparent 1px); background-size: 26px 26px; background-attachment: fixed; }
+        [data-theme="dark"] body { background-image: radial-gradient(circle, rgba(148, 163, 184, 0.12) 1px, transparent 1px); }
 
         @keyframes floatMesh {
             0% { transform: translate(0, 0) scale(1); }
@@ -148,7 +153,7 @@
             color: var(--topbar-text);
             padding: 10px 4%;
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
             z-index: 100;
             position: sticky;
@@ -156,6 +161,15 @@
             border-bottom: var(--glass-border);
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15);
             transition: all 0.3s ease;
+        }
+        .top-bar-inner {
+            width: 100%;
+            max-width: 1420px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 14px;
         }
 
         .brand-logo-container {
@@ -175,7 +189,9 @@
         .nav-center-group {
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 12px;
+            flex: 1;
         }
 
         .top-bar-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
@@ -210,6 +226,16 @@
         }
 
         /* Hero Section */
+        .hero-outer {
+            width: 100%;
+            background: radial-gradient(circle at top right, rgba(13, 148, 136, 0.1), transparent 55%),
+                        radial-gradient(circle at bottom left, rgba(30, 58, 138, 0.1), transparent 55%),
+                        radial-gradient(circle at left center, rgba(20, 184, 166, 0.08), transparent 45%),
+                        radial-gradient(circle at right center, rgba(30, 58, 138, 0.08), transparent 45%);
+            border-bottom: var(--glass-border);
+            position: relative;
+            overflow: hidden;
+        }
         .hero-section {
             display: flex; 
             align-items: center; 
@@ -219,20 +245,17 @@
             margin: 0 auto;
             width: 100%;
             padding: 50px 4%; 
-            background: radial-gradient(circle at top right, rgba(13, 148, 136, 0.08), transparent 60%),
-                        radial-gradient(circle at bottom left, rgba(30, 58, 138, 0.08), transparent 60%);
-            border-bottom: var(--glass-border); 
             flex-wrap: wrap;
             position: relative; 
-            overflow: hidden;
         }
         .hero-content { flex: 1.2; min-width: 320px; z-index: 2; }
         
         .platform-tag {
             display: inline-flex; align-items: center; gap: 8px;
-            background: rgba(13, 148, 136, 0.12); color: var(--accent-color);
-            padding: 6px 16px; border-radius: 30px; border: 1px solid rgba(13, 148, 136, 0.3);
-            font-size: 0.82rem; font-weight: 800; margin-bottom: 16px;
+            background: linear-gradient(135deg, var(--primary-blue) 0%, #1e40af 100%); color: #ffffff;
+            padding: 8px 20px; border-radius: 30px; border: 1px solid rgba(255, 255, 255, 0.25);
+            font-size: 0.82rem; font-weight: 800; margin-top: 18px;
+            box-shadow: 0 8px 18px rgba(30, 58, 138, 0.3);
         }
         
         .hero-content h1 { font-size: clamp(2.2rem, 4vw, 3.5rem); font-weight: 900; color: var(--primary-blue); margin-bottom: 8px; line-height: 1.15; letter-spacing: -0.5px; }
@@ -284,7 +307,16 @@
         }
         .btn-outline:hover { background: var(--primary-blue); color: white; transform: translateY(-3px); }
         
-        .hero-image { flex: 0.8; min-width: 260px; display: flex; justify-content: center; position: relative; z-index: 2; }
+        .hero-image { flex: 0.8; min-width: 260px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px; position: relative; z-index: 2; }
+
+        .hero-stats-inline { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; }
+        .hero-stat-chip {
+            background: var(--card-bg); backdrop-filter: blur(12px); border: var(--glass-border);
+            border-radius: 12px; padding: 10px 16px; text-align: center; box-shadow: var(--glass-shadow);
+            min-width: 92px;
+        }
+        .hero-stat-chip .stat-number { display: block; font-size: 1.35rem; font-weight: 900; color: var(--primary-blue); }
+        .hero-stat-chip small { color: var(--text-muted); font-weight: 700; font-size: 0.72rem; }
         .hero-image-neural-card {
             background: rgba(255, 255, 255, 0.05); padding: 15px; border-radius: 50%;
             position: relative; backdrop-filter: blur(10px);
@@ -559,6 +591,15 @@
         .course-video-section { margin: 24px auto 30px; }
         .course-video-section h3 { font-size: 1.05rem; font-weight: 800; color: var(--text-dark); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
         .course-video-section h3 i { color: var(--accent-color); }
+        .video-section-inner { display: flex; align-items: center; gap: 34px; flex-wrap: wrap; }
+        .video-section-media { flex: 1.1; min-width: 300px; }
+        .video-section-side { flex: 0.9; min-width: 280px; display: flex; flex-direction: column; gap: 12px; }
+        .video-side-point {
+            display: flex; align-items: center; gap: 12px; background: var(--card-bg); backdrop-filter: blur(12px);
+            border: var(--glass-border); border-radius: 14px; padding: 14px 18px; box-shadow: var(--glass-shadow);
+        }
+        .video-side-point i { color: var(--accent-color); font-size: 1.2rem; flex-shrink: 0; }
+        .video-side-point span { font-weight: 700; font-size: 0.92rem; color: var(--text-dark); }
 
         .status-badge-box {
             margin-top: 14px; display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px;
@@ -678,6 +719,8 @@
         <div class="mesh-blob mesh-blob-1"></div>
         <div class="mesh-blob mesh-blob-2"></div>
         <div class="mesh-blob mesh-blob-3"></div>
+        <div class="mesh-blob mesh-blob-4"></div>
+        <div class="mesh-blob mesh-blob-5"></div>
     </div>
 
     <div id="toast-container"></div>
@@ -729,6 +772,7 @@
 
     <!-- Header Section with Central Navigation -->
     <header class="top-bar" id="main-topbar">
+        <div class="top-bar-inner">
         <div class="brand-logo-container">
             <img src="e842ee15-fc5d-491b-a6ae-17e6f345bccd.jpg" alt="BA Academy Logo">
         </div>
@@ -750,19 +794,32 @@
                 <i class="fa-solid fa-moon" id="theme-icon"></i>
             </button>
         </nav>
+        </div>
     </header>
 
     <main id="home-view" class="app-view active">
+        <div class="hero-outer">
         <section class="hero-section">
-            <div class="hero-content">
+            <div class="hero-image">
+                <div class="hero-image-neural-card">
+                    <img src="e842ee15-fc5d-491b-a6ae-17e6f345bccd.jpg" alt="BA Academy Logo">
+                </div>
                 <div class="platform-tag">
                     <i class="fa-solid fa-circle-dot fa-spin"></i> <span data-ar="نتعلم الهندسة كما تُمارس في المشاريع" data-en="Learning Engineering as Practiced in Real Projects">نتعلم الهندسة كما تُمارس في المشاريع</span>
                 </div>
+            </div>
+            <div class="hero-content">
                 <h1>BA Engineering Academy</h1>
                 <h2>From Vision to Execution</h2>
                 
                 <div class="hero-quote-box">
                     <p><i class="fa-solid fa-quote-right" id="quote-icon"></i> <span data-ar="لأن التعلم الحقيقي لا يعتمد على كثرة المعلومات، بل على وضوحها وتطبيقها. نصمم تجربة تعليمية تساعدك على اكتساب المهارات التي تحتاجها في المشاريع، دون تعقيد أو إهدار للوقت." data-en="Because true learning isn't about information volume, but clarity and application. We design educational experiences that help you master real project skills without complexity or wasted time.">لأن التعلم الحقيقي لا يعتمد على كثرة المعلومات، بل على وضوحها وتطبيقها. نصمم تجربة تعليمية تساعدك على اكتساب المهارات التي تحتاجها في المشاريع، دون تعقيد أو إهدار للوقت.</span></p>
+                </div>
+
+                <div class="hero-stats-inline">
+                    <div class="hero-stat-chip"><span class="stat-number" data-target="20">0</span><small data-ar="عاماً خبرة" data-en="Years Exp.">عاماً خبرة</small></div>
+                    <div class="hero-stat-chip"><span class="stat-number" data-target="24">0</span><small data-ar="ساعة تدريب" data-en="Training Hrs">ساعة تدريب</small></div>
+                    <div class="hero-stat-chip"><span class="stat-number" data-target="100">0</span><small data-ar="% تطبيقي" data-en="% Practical">% تطبيقي</small></div>
                 </div>
 
                 <div class="hero-buttons">
@@ -771,19 +828,24 @@
                     </button>
                 </div>
             </div>
-            <div class="hero-image">
-                <div class="hero-image-neural-card">
-                    <img src="e842ee15-fc5d-491b-a6ae-17e6f345bccd.jpg" alt="BA Academy Logo">
-                </div>
-            </div>
         </section>
+        </div>
 
         <section class="course-video-section" style="max-width: 1380px; margin: 0 auto 30px; padding: 0 4%;">
-            <h3 style="justify-content: center; text-align: center;"><i class="fa-solid fa-circle-play"></i> <span data-ar="شاهد نبذة سريعة عن الأكاديمية" data-en="Watch a Quick Academy Overview">شاهد نبذة سريعة عن الأكاديمية</span></h3>
-            <div class="promo-video-wrap">
-                <video controls preload="none" onerror="this.closest('.course-video-section')?.style.setProperty('display','none')">
-                    <source src="ba.mp4" type="video/mp4">
-                </video>
+            <h3><i class="fa-solid fa-circle-play"></i> <span data-ar="شاهد نبذة سريعة عن الأكاديمية" data-en="Watch a Quick Academy Overview">شاهد نبذة سريعة عن الأكاديمية</span></h3>
+            <div class="video-section-inner">
+                <div class="video-section-media">
+                    <div class="promo-video-wrap">
+                        <video controls preload="none" onerror="this.closest('.course-video-section')?.style.setProperty('display','none')">
+                            <source src="ba.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                </div>
+                <div class="video-section-side">
+                    <div class="video-side-point"><i class="fa-solid fa-diagram-project"></i> <span data-ar="تعرف على منهجيتنا في تحويل النظرية إلى تطبيق ميداني" data-en="See how we turn theory into field application">تعرف على منهجيتنا في تحويل النظرية إلى تطبيق ميداني</span></div>
+                    <div class="video-side-point"><i class="fa-solid fa-user-tie"></i> <span data-ar="مدربون بخبرة ميدانية حقيقية في المشاريع الهندسية" data-en="Trainers with real field experience in engineering projects">مدربون بخبرة ميدانية حقيقية في المشاريع الهندسية</span></div>
+                    <div class="video-side-point"><i class="fa-solid fa-certificate"></i> <span data-ar="شهادات إتمام معتمدة وقابلة للتحقق فور الانتهاء" data-en="Verified completion certificates upon finishing">شهادات إتمام معتمدة وقابلة للتحقق فور الانتهاء</span></div>
+                </div>
             </div>
         </section>
 
@@ -902,20 +964,20 @@
                 <p class="courses-section-subtitle"><i class="fa-solid fa-hourglass-half" style="color: #0ea5e9;"></i> <span data-ar="قيد التحضير حاليًا، تابعنا لمعرفة موعد الإطلاق" data-en="Currently in preparation — stay tuned for the launch date">قيد التحضير حاليًا، تابعنا لمعرفة موعد الإطلاق</span></p>
                 
                 <div class="cards-grid-upcoming">
-                    <div class="nav-card course-card-upcoming" onclick="switchMainView('electrical-loads-info-view')">
+                    <div class="nav-card course-card-upcoming" onclick="showCourseComingSoon(event)">
                         <div class="course-thumb">
-                            <img src="ele.jpg" class="course-thumb-img" alt="حساب الأحمال الكهربائية">
+                            <img src="ele.jpg" class="course-thumb-img" alt="التصميم الكهربائي للمشاريع">
                             <div class="thumb-brand-logo"><img src="e842ee15-fc5d-491b-a6ae-17e6f345bccd.jpg" alt="BA"></div>
                             <div class="lock-overlay-badge"><i class="fa-solid fa-lock"></i></div>
                         </div>
-                        <h3 data-ar="حساب الأحمال الكهربائية" data-en="Electrical Load Calculation">حساب الأحمال الكهربائية</h3>
-                        <p class="en-text">Electrical Load Calculation</p>
+                        <h3 data-ar="التصميم الكهربائي للمشاريع" data-en="Electrical Design for Projects">التصميم الكهربائي للمشاريع</h3>
+                        <p class="en-text">Electrical Design for Projects</p>
                         <div class="status-badge-box design">
                             <i class="fa-solid fa-compass fa-spin"></i> <span data-ar="قريباً / قيد التطوير ⚡" data-en="Soon / In Development ⚡">قريباً / قيد التطوير ⚡</span>
                         </div>
                     </div>
 
-                    <div class="nav-card course-card-upcoming" onclick="switchMainView('contracts-info-view')">
+                    <div class="nav-card course-card-upcoming" onclick="showCourseComingSoon(event)">
                         <div class="course-thumb">
                             <img src="cost.jpg" class="course-thumb-img" alt="إدارة العقود والتكاليف">
                             <div class="thumb-brand-logo"><img src="e842ee15-fc5d-491b-a6ae-17e6f345bccd.jpg" alt="BA"></div>
@@ -928,7 +990,7 @@
                         </div>
                     </div>
 
-                    <div class="nav-card course-card-upcoming" onclick="switchMainView('datacenter-info-view')">
+                    <div class="nav-card course-card-upcoming" onclick="showCourseComingSoon(event)">
                         <div class="course-thumb">
                             <img src="data.jpg" class="course-thumb-img" alt="هندسة مراكز البيانات">
                             <div class="thumb-brand-logo"><img src="e842ee15-fc5d-491b-a6ae-17e6f345bccd.jpg" alt="BA"></div>
@@ -986,7 +1048,7 @@
 
     <main id="course-landing-view" class="app-view">
         <div class="dashboard-content" style="padding-top: 25px;">
-            <button class="btn-outline" onclick="switchMainView('home-view')" style="margin-bottom: 18px; border-radius: 12px; padding: 10px 20px;">
+            <button class="btn-outline" onclick="backToTracks()" style="margin-bottom: 18px; border-radius: 12px; padding: 10px 20px;">
                 <i class="fa-solid fa-arrow-right"></i> <span data-ar="العودة للمسارات" data-en="Back to Tracks">العودة للمسارات</span>
             </button>
             <div class="course-details-header">
@@ -1032,7 +1094,7 @@
 
     <main id="value-landing-view" class="app-view">
         <div class="dashboard-content" style="padding-top: 25px;">
-            <button class="btn-outline" onclick="switchMainView('home-view')" style="margin-bottom: 18px; border-radius: 12px; padding: 10px 20px;">
+            <button class="btn-outline" onclick="backToTracks()" style="margin-bottom: 18px; border-radius: 12px; padding: 10px 20px;">
                 <i class="fa-solid fa-arrow-right"></i> <span data-ar="العودة للمسارات" data-en="Back to Tracks">العودة للمسارات</span>
             </button>
             <div class="course-details-header" style="background: linear-gradient(135deg, var(--primary-blue) 0%, #0f172a 100%);">
@@ -1085,13 +1147,13 @@
 
     <main id="electrical-loads-info-view" class="app-view">
         <div class="dashboard-content" style="padding-top: 25px; max-width: 950px;">
-            <button class="btn-outline" onclick="switchMainView('home-view')" style="margin-bottom: 18px; border-radius: 12px; padding: 10px 20px;">
+            <button class="btn-outline" onclick="backToTracks()" style="margin-bottom: 18px; border-radius: 12px; padding: 10px 20px;">
                 <i class="fa-solid fa-arrow-right"></i> <span data-ar="العودة للمسارات" data-en="Back to Tracks">العودة للمسارات</span>
             </button>
             <div class="course-details-header" style="background: linear-gradient(135deg, var(--primary-blue) 0%, #0369a1 100%); padding: 50px 24px;">
                 <span style="background: rgba(255,255,255,0.2); padding: 6px 16px; border-radius: 20px; font-size: 13px; font-weight: 800; display: inline-block; margin-bottom: 12px;"><i class="fa-solid fa-compass fa-spin"></i> <span data-ar="قريباً / قيد التطوير ⚡" data-en="In Development ⚡">قريباً / قيد التطوير ⚡</span></span>
                 <h2>BA Engineering Academy</h2>
-                <p style="font-size: 1.3rem; font-weight: 800; color: #fff; margin-top: 4px;">حساب الأحمال الكهربائية (Electrical Load Calculation)</p>
+                <p style="font-size: 1.3rem; font-weight: 800; color: #fff; margin-top: 4px;">التصميم الكهربائي للمشاريع (Electrical Design for Projects)</p>
             </div>
             
             <div class="content-box">
@@ -1115,7 +1177,7 @@
 
     <main id="contracts-info-view" class="app-view">
         <div class="dashboard-content" style="padding-top: 25px; max-width: 950px;">
-            <button class="btn-outline" onclick="switchMainView('home-view')" style="margin-bottom: 18px; border-radius: 12px; padding: 10px 20px;">
+            <button class="btn-outline" onclick="backToTracks()" style="margin-bottom: 18px; border-radius: 12px; padding: 10px 20px;">
                 <i class="fa-solid fa-arrow-right"></i> <span data-ar="العودة للمسارات" data-en="Back to Tracks">العودة للمسارات</span>
             </button>
             <div class="course-details-header" style="background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%); padding: 50px 24px;">
@@ -1144,7 +1206,7 @@
 
     <main id="datacenter-info-view" class="app-view">
         <div class="dashboard-content" style="padding-top: 25px; max-width: 950px;">
-            <button class="btn-outline" onclick="switchMainView('home-view')" style="margin-bottom: 18px; border-radius: 12px; padding: 10px 20px;">
+            <button class="btn-outline" onclick="backToTracks()" style="margin-bottom: 18px; border-radius: 12px; padding: 10px 20px;">
                 <i class="fa-solid fa-arrow-right"></i> <span data-ar="العودة للمسارات" data-en="Back to Tracks">العودة للمسارات</span>
             </button>
             <div class="course-details-header" style="background: linear-gradient(135deg, #0ea5e9 0%, #0369a1 100%); padding: 50px 24px;">
@@ -1330,7 +1392,7 @@
             }
         }
 
-        function switchMainView(viewId) {
+        function switchMainView(viewId, scrollTargetId) {
             const target = document.getElementById(viewId);
             if (!target) { console.warn('View not found:', viewId); return; }
             document.querySelectorAll('.app-view').forEach(v => v.classList.remove('active'));
@@ -1346,11 +1408,22 @@
                 if (topbar) topbar.style.display = 'flex';
                 if (footer) footer.style.display = 'block';
             }
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            if (scrollTargetId) {
+                setTimeout(() => {
+                    document.getElementById(scrollTargetId)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 50);
+            } else {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
 
             if(viewId === 'home-view' && !countersAnimated) {
                 animateCounters();
             }
+        }
+
+        function backToTracks() {
+            switchMainView('home-view', 'courses-section');
         }
 
         function animateCounters() {
@@ -1382,6 +1455,11 @@
             showToast('جروبنا على الواتساب قيد التحضير والتجهيز حالياً، وسيكون متاحاً قريباً لتواصلكم!', 'success');
         }
 
+        function showCourseComingSoon(e) {
+            if (e) e.stopPropagation();
+            showToast('نعمل حالياً على تصميم وإعداد محتوى هذه الدورة باحترافية، ترقبوا الإطلاق قريباً!', 'success');
+        }
+
         function showToast(message, type = 'success') {
             const container = document.getElementById('toast-container');
             const toast = document.createElement('div');
@@ -1394,17 +1472,13 @@
             }, 3000);
         }
 
-        function openCertModal() { document.getElementById('cert-modal-overlay').classList.add('active'); document.getElementById('cert-code-input').focus(); }
-        function closeCertModal() { document.getElementById('cert-modal-overlay').classList.remove('active'); document.getElementById('cert-code-input').value = ''; document.getElementById('cert-result-box').innerHTML = ''; }
+        function openCertModal() { document.getElementById('cert-modal-overlay')?.classList.add('active'); document.getElementById('cert-code-input')?.focus(); }
+        function closeCertModal() { document.getElementById('cert-modal-overlay')?.classList.remove('active'); const i = document.getElementById('cert-code-input'); if (i) i.value = ''; const r = document.getElementById('cert-result-box'); if (r) r.innerHTML = ''; }
 
         function verifyCertificate() {
-            let code = document.getElementById('cert-code-input').value.trim().toUpperCase();
             let resBox = document.getElementById('cert-result-box');
-            if (code.startsWith('BA-') && code.length >= 8) {
-                resBox.innerHTML = `<span style="color: var(--accent-color);"><i class="fa-solid fa-circle-check"></i> الشهادة معتمدة وصحيحة وممنوحة من BA Engineering Academy بنجاح!</span>`;
-            } else {
-                resBox.innerHTML = `<span style="color: #dc2626;"><i class="fa-solid fa-circle-xmark"></i> كود غير صحيح أو غير مسجل في قاعدة البيانات.</span>`;
-            }
+            if (!resBox) return;
+            resBox.innerHTML = `<span style="color: var(--primary-blue);"><i class="fa-solid fa-clock"></i> <span data-ar="نظام التحقق من الشهادات سيتوفر قريباً" data-en="Certificate verification is coming soon">نظام التحقق من الشهادات سيتوفر قريباً</span></span>`;
         }
 
         function openLoginModal() { document.getElementById('login-modal-overlay').classList.add('active'); document.getElementById('course-password').focus(); }
