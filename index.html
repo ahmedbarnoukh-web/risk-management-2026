@@ -4,14 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BA Engineering Academy | الأكاديمية الهندسية المتكاملة</title>
-    
+    <meta name="description" content="BA Engineering Academy تقدم كورسات هندسية احترافية في إدارة المخاطر والهندسة القيمية، بالإضافة إلى مقالات في الهندسة والذكاء الاصطناعي وقصص شركات عالمية.">
+
     <!-- أيقونة تبويب المتصفح (Favicon) -->
     <link rel="icon" type="image/jpeg" href="e842ee15-fc5d-491b-a6ae-17e6f345bccd.jpg">
     <link rel="shortcut icon" type="image/jpeg" href="e842ee15-fc5d-491b-a6ae-17e6f345bccd.jpg">
     <link rel="apple-touch-icon" href="e842ee15-fc5d-491b-a6ae-17e6f345bccd.jpg">
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg-main: #f8fafc;
@@ -24,12 +25,12 @@
             --border-color: rgba(226, 232, 240, 0.8);
             --active-blue: #eff6ff;
             --card-bg: rgba(255, 255, 255, 0.85);
-            --topbar-bg: rgba(15, 23, 42, 0.92);
-            --topbar-text: #ffffff;
+            --topbar-bg: #e9dcbd;
+            --topbar-text: #0f172a;
             --footer-bg: #0b0f19;
             --glass-shadow: 0 20px 40px -15px rgba(30, 58, 138, 0.07);
             --glass-border: 1px solid rgba(255, 255, 255, 0.4);
-            --ticker-bg: linear-gradient(90deg, #1e3a8a 0%, #0d9488 100%);
+            --ticker-bg: #1e3a8a;
         }
 
         [data-theme="dark"] {
@@ -43,12 +44,12 @@
             --border-color: rgba(51, 65, 85, 0.6);
             --active-blue: rgba(15, 23, 42, 0.75);
             --card-bg: rgba(15, 23, 42, 0.75);
-            --topbar-bg: rgba(2, 6, 23, 0.95);
+            --topbar-bg: #0b1220;
             --topbar-text: #f8fafc;
             --footer-bg: #020617;
             --glass-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5);
             --glass-border: 1px solid rgba(255, 255, 255, 0.08);
-            --ticker-bg: linear-gradient(90deg, #0f172a 0%, #1e3a8a 100%);
+            --ticker-bg: #1e3a8a;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
@@ -192,6 +193,11 @@
         .brand-logo-container:hover { transform: translateY(-2px) scale(1.02); }
         .brand-logo-container img { height: 38px; object-fit: contain; }
 
+        .navbar-brand { display: flex; align-items: center; gap: 8px; cursor: pointer; transition: transform 0.3s ease; direction: ltr; }
+        .navbar-brand:hover { transform: translateY(-2px); }
+        .navbar-brand-main { font-family: 'Poppins', sans-serif; font-size: 24px; font-weight: 800; color: var(--primary-blue); letter-spacing: 0.5px; }
+        .navbar-brand-sub { font-family: 'Poppins', sans-serif; font-size: 24px; font-weight: 600; color: var(--accent-color); letter-spacing: 0.5px; }
+
         .nav-center-group {
             display: flex;
             align-items: center;
@@ -200,28 +206,29 @@
             flex: 1;
         }
 
-        .top-bar-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+        .top-bar-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-inline-start: 22px; }
         
         .nav-link {
-            color: var(--topbar-text); text-decoration: none; background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.15);
-            font-size: 13px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 8px; 
-            padding: 8px 16px; border-radius: 10px; transition: all 0.3s ease;
-            backdrop-filter: blur(6px);
+            color: var(--text-dark); text-decoration: none; background: rgba(255, 255, 255, 0.55); border: 1px solid rgba(120, 100, 70, 0.18);
+            font-size: 14px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 8px; 
+            padding: 10px 18px; border-radius: 10px; transition: all 0.3s ease;
         }
-        .nav-link:hover { color: var(--accent-light); background: rgba(255,255,255,0.18); transform: translateY(-2px); }
+        .nav-link:hover { color: var(--primary-blue); background: #ffffff; transform: translateY(-2px); }
 
         .nav-link.home-highlight {
-            background: linear-gradient(135deg, rgba(13, 148, 136, 0.4), rgba(30, 58, 138, 0.4));
-            border: 1px solid rgba(45, 212, 191, 0.4);
+            background: var(--primary-blue);
+            color: #ffffff;
+            border: 1px solid var(--primary-blue);
             font-weight: 800;
         }
+        .nav-link.home-highlight:hover { color: #ffffff; background: var(--primary-blue-hover); }
 
         .theme-btn {
-            background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); color: var(--topbar-text);
+            background: rgba(255, 255, 255, 0.55); border: 1px solid rgba(120, 100, 70, 0.18); color: var(--primary-blue);
             cursor: pointer; width: 40px; height: 40px; border-radius: 10px;
             display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; font-size: 16px;
         }
-        .theme-btn:hover { background: rgba(255, 255, 255, 0.25); transform: rotate(15deg) scale(1.05); }
+        .theme-btn:hover { background: #ffffff; transform: rotate(15deg) scale(1.05); }
 
         .app-view { display: none; flex-direction: column; flex-grow: 1; animation: fadeInNeural 0.4s ease forwards; opacity: 0; }
         .app-view.active { display: flex; }
@@ -342,18 +349,18 @@
         }
 
         .stats-section { 
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); 
-            padding: 25px 4%; background: transparent; gap: 16px; margin: -20px auto 0; 
-            max-width: 1380px; width: 100%; position: relative; z-index: 10; 
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); 
+            padding: 18px 4%; background: transparent; gap: 14px; margin: -10px auto 0; 
+            max-width: 1080px; width: 100%; position: relative; z-index: 10; 
         }
         .stat-box { 
             background: var(--card-bg); backdrop-filter: blur(16px);
-            padding: 18px 14px; border-radius: 16px; text-align: center; box-shadow: var(--glass-shadow); 
+            padding: 14px 10px; border-radius: 14px; text-align: center; box-shadow: var(--glass-shadow); 
             border: var(--glass-border); transition: all 0.3s ease;
         }
         .stat-box:hover { transform: translateY(-4px); box-shadow: 0 12px 25px rgba(30, 58, 138, 0.15); border-color: var(--accent-color); }
-        .stat-number { font-size: 2.1rem; font-weight: 900; color: var(--primary-blue); display: block; margin-bottom: 2px; }
-        .stat-label { font-size: 0.85rem; color: var(--text-muted); font-weight: 700; }
+        .stat-number { font-size: 1.6rem; font-weight: 900; color: var(--primary-blue); display: block; margin-bottom: 2px; }
+        .stat-label { font-size: 0.78rem; color: var(--text-muted); font-weight: 700; }
 
         .features-section { padding: 55px 5%; background: var(--card-bg); backdrop-filter: blur(20px); text-align: center; border-bottom: var(--glass-border); border-top: var(--glass-border); }
         .features-section h2 { color: var(--primary-blue); font-size: 2.2rem; font-weight: 900; margin-bottom: 8px; position: relative; display: inline-block; }
@@ -371,7 +378,7 @@
         .feature-card:hover::before { background: var(--accent-color); }
         .feature-card i { font-size: 2.4rem; color: var(--accent-color); margin-bottom: 14px; display: inline-block; transition: transform 0.3s ease; }
         .feature-card:hover i { transform: scale(1.12) rotate(6deg); }
-        .feature-card h4 { font-size: 1.15rem; color: var(--primary-blue); font-weight: 900; margin-bottom: 10px; }
+        .feature-card h4 { font-size: 1.15rem; color: var(--primary-blue); font-weight: 700; margin-bottom: 10px; }
         .feature-card p { font-size: 0.92rem; color: var(--text-muted); font-weight: 600; line-height: 1.65; }
 
         /* Video Lightbox Trigger Button inside cards */
@@ -504,6 +511,58 @@
         .testimonial-stars { display: flex; gap: 3px; color: #f59e0b; font-size: 11px; margin-bottom: 12px; }
         .testimonial-body-text { font-size: 0.95rem; color: var(--text-muted); font-weight: 600; line-height: 1.65; font-style: italic; }
 
+        /* ================= Articles Section ================= */
+        .articles-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
+        .article-card {
+            background: var(--card-bg); backdrop-filter: blur(16px);
+            border: var(--glass-border); border-radius: 20px; overflow: hidden;
+            box-shadow: var(--glass-shadow); cursor: pointer;
+            display: flex; flex-direction: column;
+            transition: all 0.35s ease;
+        }
+        .article-card:hover { transform: translateY(-7px); box-shadow: 0 20px 40px rgba(0,0,0,0.12); border-color: var(--primary-blue); }
+        .article-card-thumb {
+            height: 175px; position: relative; overflow: hidden;
+            background: linear-gradient(135deg, var(--primary-blue) 0%, #0a1128 100%);
+            display: flex; align-items: center; justify-content: center;
+        }
+        .article-card-thumb i { font-size: 2.4rem; color: rgba(255,255,255,0.85); }
+        .article-card-date {
+            position: absolute; top: 12px; left: 12px; background: rgba(255,255,255,0.95); color: var(--primary-blue);
+            font-size: 11px; font-weight: 800; padding: 5px 12px; border-radius: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+        }
+        html[dir="rtl"] .article-card-date { left: auto; right: 12px; }
+        .article-card-body { padding: 20px 22px 22px; display: flex; flex-direction: column; flex-grow: 1; }
+        .article-card-tag { color: var(--accent-color); font-size: 0.78rem; font-weight: 800; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+        .article-card-body h3 { font-size: 1.15rem; font-weight: 800; color: var(--text-dark); margin-bottom: 8px; line-height: 1.4; }
+        .article-card-body p { font-size: 0.9rem; color: var(--text-muted); font-weight: 600; line-height: 1.65; flex-grow: 1; margin-bottom: 14px; }
+        .article-card-readmore { color: var(--primary-blue); font-weight: 800; font-size: 0.88rem; display: flex; align-items: center; gap: 6px; }
+        .article-card:hover .article-card-readmore { color: var(--accent-color); }
+
+        .article-card-upcoming { opacity: 0.75; cursor: default; }
+        .article-card-upcoming:hover { transform: none; box-shadow: var(--glass-shadow); border-color: var(--border-color); }
+
+        .article-hero-header { background: linear-gradient(135deg, var(--primary-blue) 0%, #0a1128 100%); color: white; padding: 45px 24px; text-align: center; border-radius: 22px; margin-bottom: 28px; box-shadow: 0 20px 40px rgba(0,0,0,0.15); }
+        .article-hero-header .article-card-tag { justify-content: center; color: var(--accent-light); }
+        .article-hero-header h2 { font-size: clamp(1.6rem, 3vw, 2.3rem); font-weight: 900; margin-bottom: 12px; }
+        .article-hero-header .article-meta-row { display: flex; justify-content: center; gap: 14px; margin-top: 16px; flex-wrap: wrap; font-size: 13px; color: #cbd5e1; font-weight: 700; }
+        .article-meta-row span { display: flex; align-items: center; gap: 6px; }
+
+        .article-body-text p { margin-bottom: 16px; }
+        .article-body-text h3 { margin-top: 26px; }
+
+        .article-cta-box {
+            margin-top: 30px; padding: 24px; border-radius: 18px;
+            background: linear-gradient(135deg, rgba(30,58,138,0.08), rgba(13,148,136,0.08));
+            border: 1px dashed var(--primary-blue); text-align: center;
+        }
+        .article-cta-box p { font-weight: 800; color: var(--text-dark); margin-bottom: 14px; font-size: 1.02rem; }
+
+        @media (max-width: 640px) {
+            .articles-grid { grid-template-columns: 1fr; }
+            .article-hero-header { padding: 30px 18px; }
+        }
+
         .story-section { padding: 55px 5%; background: var(--active-blue); border-bottom: var(--glass-border); text-align: center; }
         .story-content { max-width: 980px; margin: auto; }
         .story-content h2 { color: var(--primary-blue); font-size: 2.2rem; font-weight: 900; margin-bottom: 20px; }
@@ -543,12 +602,13 @@
             transform: translateY(-7px); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12); 
             border-color: var(--primary-blue); background-color: var(--active-blue); 
         }
-        .nav-card i.main-icon { font-size: 44px; color: var(--primary-blue); margin-bottom: 16px; transition: transform 0.3s ease; }
+        .nav-card i.main-icon { font-size: 28px; color: var(--primary-blue); margin-bottom: 14px; transition: transform 0.3s ease; }
         .nav-card:hover i.main-icon { transform: scale(1.12) rotate(5deg); color: var(--accent-color); }
-        .nav-card h3 { font-size: 21px; font-weight: 800; color: var(--text-dark); margin-bottom: 6px; }
-        .nav-card p.en-text { font-size: 13px; color: var(--text-muted); font-weight: 700; }
+        .nav-card h3 { font-size: 19px; font-weight: 700; color: var(--text-dark); margin-bottom: 6px; }
+        .nav-card p.en-text { font-family: 'Poppins', sans-serif; font-size: 16px; color: var(--primary-blue); font-weight: 600; letter-spacing: 0.2px; }
+        .nav-card p.nav-card-desc { font-size: 13px; color: var(--text-muted); font-weight: 600; line-height: 1.5; margin-top: 2px; }
         
-        .course-card-main { border: 2px solid var(--primary-blue); background: linear-gradient(135deg, var(--card-bg) 0%, rgba(30, 58, 138, 0.04) 100%); }
+        .course-card-main { border: 1px solid var(--border-color); background: var(--card-bg); }
 
         /* Animated Live Indicator Badge */
         .live-badge-animated {
@@ -562,60 +622,57 @@
             border-radius: 20px;
             font-size: 0.82rem;
             font-weight: 800;
-            animation: pulseGlow 2s infinite;
-        }
-        @keyframes pulseGlow {
-            0%, 100% { box-shadow: 0 0 4px rgba(34, 197, 94, 0.2); }
-            50% { box-shadow: 0 0 14px rgba(34, 197, 94, 0.5); }
-        }
-
-        @keyframes shimmerCard {
-            0% { background-position: -200% 0; }
-            100% { background-position: 200% 0; }
         }
 
         .course-card-featured { 
-            border: 2.5px solid var(--accent-color) !important; 
-            background: linear-gradient(135deg, var(--card-bg) 0%, rgba(13, 148, 136, 0.06) 100%) !important;
-            box-shadow: 0 18px 40px rgba(13, 148, 136, 0.15) !important;
+            border: 1px solid var(--accent-color) !important; 
+            background: var(--card-bg) !important;
             position: relative;
             overflow: hidden;
         }
         .course-card-featured::before {
             content: '';
             position: absolute;
-            top: 0; left: -150%;
-            width: 150%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
-            animation: shimmerCard 3.5s infinite;
+            top: 0; right: 0; left: 0;
+            height: 3px;
+            background: var(--accent-color);
         }
 
         .course-card-upcoming { border: var(--glass-border); background: linear-gradient(135deg, var(--card-bg) 0%, var(--bg-main) 100%); }
 
         .courses-available-wrap {
-            background: linear-gradient(135deg, rgba(30, 58, 138, 0.06) 0%, rgba(13, 148, 136, 0.07) 100%);
-            border: 1.5px solid rgba(13, 148, 136, 0.22);
-            border-radius: 28px; padding: 35px 35px 25px; margin-bottom: 42px;
-            box-shadow: 0 14px 32px rgba(13, 148, 136, 0.08);
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 24px; padding: 32px 32px 24px; margin-bottom: 36px;
+            box-shadow: var(--glass-shadow);
         }
-        .courses-available-wrap .section-title { border-bottom: 2px solid rgba(13, 148, 136, 0.3); }
+        .courses-available-wrap .section-title { border-bottom: 1px solid var(--border-color); }
         .courses-section-subtitle { color: var(--text-muted); font-weight: 700; font-size: 0.92rem; margin: -14px 0 22px; text-align: right; }
-        .cards-grid-available { display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 30px; }
-        .course-preview-block { display: flex; flex-direction: column; gap: 12px; }
+        .cards-grid-available { display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 24px; }
+        .course-preview-block { display: flex; flex-direction: column; }
 
         .courses-upcoming-wrap {
-            background: var(--bg-main); border: 2px dashed var(--border-color);
-            border-radius: 28px; padding: 28px 26px 30px; opacity: 0.97;
+            background: var(--card-bg); border: 1px solid var(--border-color);
+            border-radius: 24px; padding: 28px 26px 30px;
         }
-        .cards-grid-upcoming { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 24px; }
-        .course-card-upcoming { padding: 22px 18px; }
+        .cards-grid-upcoming { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 22px; }
+        .course-card-upcoming { padding: 20px 18px; }
         .course-card-upcoming h3 { font-size: 17px; }
+
+        .course-video-link {
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            width: 100%; margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--border-color);
+            background: none; border-left: none; border-right: none; border-bottom: none;
+            color: var(--primary-blue); font-weight: 700; font-size: 13.5px; cursor: pointer;
+            font-family: 'Cairo', sans-serif; transition: color 0.2s ease;
+        }
+        .course-video-link:hover { color: var(--accent-color); }
 
         /* Course Thumbnail Container & Explicit Image Handling */
         .course-thumb {
             width: calc(100% + 52px); 
             margin: -30px -26px 18px; 
-            height: 220px;
+            height: 190px;
             border-radius: 20px 20px 0 0; 
             position: relative; 
             overflow: hidden;
@@ -665,13 +722,13 @@
 
         /* Unified Course Ribbon Badge */
         .course-ribbon {
-            position: absolute; bottom: 14px; right: -6px; z-index: 3;
-            background: #16a34a; color: #fff; font-size: 11.5px; font-weight: 900;
-            padding: 5px 16px 5px 12px; display: inline-flex; align-items: center; gap: 6px;
-            clip-path: polygon(10% 0, 100% 0, 100% 100%, 0 100%);
-            box-shadow: 0 4px 10px rgba(22, 163, 74, 0.35);
+            position: absolute; bottom: 12px; right: 12px; z-index: 3;
+            background: var(--accent-color); color: #fff; font-size: 11.5px; font-weight: 800;
+            padding: 6px 14px; display: inline-flex; align-items: center; gap: 6px;
+            border-radius: 20px;
+            box-shadow: 0 4px 10px rgba(13, 148, 136, 0.35);
         }
-        html[dir="rtl"] .course-ribbon { right: auto; left: -6px; clip-path: polygon(0 0, 100% 0, 90% 100%, 0 100%); }
+        html[dir="ltr"] .course-ribbon { right: auto; left: 12px; }
 
         .lock-overlay-badge {
             position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
@@ -682,7 +739,7 @@
         .nav-card.course-card-main { padding-top: 28px; }
 
         .course-video-section { margin: 24px auto 30px; }
-        .course-video-section h3 { font-size: 1.05rem; font-weight: 800; color: var(--text-dark); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+        .course-video-section h3 { font-size: 1.05rem; font-weight: 800; color: var(--text-dark); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; justify-content: center; }
         .course-video-section h3 i { color: var(--accent-color); }
         .video-section-inner { display: flex; align-items: center; gap: 34px; flex-wrap: wrap; }
         .video-section-media { flex: 1.1; min-width: 300px; }
@@ -696,34 +753,38 @@
 
         /* Video Showcase Lightbox Trigger Card */
         .video-banner-card {
-            background: linear-gradient(135deg, var(--topbar-bg) 0%, #1e3a8a 100%);
-            border-radius: 20px;
-            padding: 30px;
+            background: var(--primary-blue);
+            border-radius: 18px;
+            padding: 18px 22px;
             color: #ffffff;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 20px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            gap: 16px;
+            box-shadow: 0 12px 28px rgba(0,0,0,0.18);
             border: var(--glass-border);
             cursor: pointer;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            max-width: 620px;
+            margin: 0 auto;
         }
         .video-banner-card:hover {
             transform: translateY(-4px);
-            box-shadow: 0 20px 45px rgba(13, 148, 136, 0.25);
+            box-shadow: 0 16px 34px rgba(13, 148, 136, 0.22);
         }
+        .video-banner-card h4 { font-size: 1rem !important; margin-bottom: 3px !important; }
+        .video-banner-card p { font-size: 0.82rem !important; }
         .video-play-circle {
-            width: 65px;
-            height: 65px;
+            width: 46px;
+            height: 46px;
             border-radius: 50%;
             background: var(--accent-color);
             color: #fff;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.8rem;
-            box-shadow: 0 0 20px rgba(13, 148, 136, 0.6);
+            font-size: 1.2rem;
+            box-shadow: 0 0 16px rgba(13, 148, 136, 0.6);
             flex-shrink: 0;
             transition: transform 0.3s ease;
         }
@@ -816,12 +877,106 @@
         .social-icons a { color: white; background: rgba(255,255,255,0.08); width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 12px; transition: all 0.3s ease; border: 1px solid rgba(255,255,255,0.12); }
         .social-icons a:hover { background: var(--accent-color); transform: translateY(-3px); }
         .footer-bottom { text-align: center; padding-top: 22px; border-top: 1px solid rgba(255,255,255,0.08); font-weight: 600; font-size: 0.88rem; max-width: 1380px; margin: 0 auto; }
+        .visitor-counter-widget {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            justify-content: center;
+            max-width: 420px;
+            margin: 0 auto 28px;
+            padding: 16px 26px;
+            background: linear-gradient(135deg, rgba(59,130,246,0.15), rgba(16,185,129,0.12));
+            border: 1px solid rgba(59,130,246,0.35);
+            border-radius: 18px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+            animation: visitorPulse 3s ease-in-out infinite;
+        }
+        .visitor-counter-icon {
+            width: 48px;
+            height: 48px;
+            min-width: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-blue), var(--accent-color));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 1.3rem;
+            box-shadow: 0 0 0 6px rgba(59,130,246,0.12);
+        }
+        .visitor-counter-text { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; }
+        html[dir="rtl"] .visitor-counter-text { align-items: flex-start; }
+        .visitor-counter-label { font-size: 0.82rem; color: #cbd5e1; font-weight: 600; }
+        .visitor-counter-number {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #60a5fa, #34d399);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 0.5px;
+        }
+        @keyframes visitorPulse {
+            0%, 100% { box-shadow: 0 8px 24px rgba(0,0,0,0.25); }
+            50% { box-shadow: 0 8px 30px rgba(59,130,246,0.35); }
+        }
 
         @keyframes fadeInNeural { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes slideInNeural { from { opacity: 0; transform: translateY(15px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
         @keyframes fadeOutNeural { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(10px); } }
         @keyframes pulseNeural { 0% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.08); opacity: 0.6; } 100% { transform: scale(1); opacity: 1; } }
-    </style> 
+
+        /* ================= Mobile Responsiveness ================= */
+        @media (max-width: 640px) {
+            .top-bar { padding: 8px 3%; }
+            .top-bar-inner { gap: 10px; justify-content: space-between; }
+            #navbar-datetime { flex-direction: column; align-items: flex-start; gap: 0 !important; order: 2; }
+            #navbar-time, #navbar-date { font-size: 13px !important; line-height: 1.3; }
+            .top-bar-actions { gap: 6px; order: 1; }
+            .top-bar-actions .nav-link span { display: none; }
+            .top-bar-actions .nav-link { padding: 9px 11px; }
+            .theme-btn { width: 36px; height: 36px; }
+
+            .cards-grid, .cards-grid-available, .cards-grid-upcoming { grid-template-columns: 1fr; gap: 18px; }
+            .nav-card { padding: 24px 18px; }
+            .courses-available-wrap, .courses-upcoming-wrap { padding: 20px 16px 18px; }
+            .course-thumb { width: calc(100% + 36px); margin: -24px -18px 16px; height: 170px; }
+            .nav-card.course-card-main { padding-top: 22px; }
+
+            .course-video-link { font-size: 13px; gap: 6px; padding-top: 12px; margin-top: 12px; flex-wrap: wrap; text-align: center; }
+            .thumb-brand-logo { padding: 3px 8px; top: 8px; }
+            .thumb-brand-logo img { height: 20px; max-width: 70px; }
+            .course-ribbon { font-size: 10px; padding: 5px 10px; bottom: 8px; }
+
+            .video-banner-card { flex-direction: column; align-items: flex-start; padding: 18px; text-align: right; }
+            html[dir="ltr"] .video-banner-card { text-align: left; }
+            .video-banner-card > div:first-child { width: 100%; }
+            .video-banner-card .video-play-circle { width: 40px; height: 40px; font-size: 1rem; }
+            .video-banner-card h4 { font-size: 0.95rem !important; }
+            .video-banner-card p { font-size: 0.8rem !important; }
+            .video-section-inner { gap: 18px; }
+            .video-section-media, .video-section-side { min-width: 100%; }
+
+            .hero-section { padding: 20px 3% !important; }
+            .hero-content h1 { font-size: 1.9rem; }
+            .hero-buttons { justify-content: center; }
+            .hero-buttons .btn-primary { width: 100%; justify-content: center; }
+
+            .visitor-counter-widget { max-width: 92%; padding: 12px 16px; gap: 12px; }
+            .visitor-counter-icon { width: 40px; height: 40px; min-width: 40px; font-size: 1.05rem; }
+            .visitor-counter-number img { height: 24px !important; }
+
+            .whatsapp-float { width: 44px; height: 44px; font-size: 20px; bottom: 16px; right: 16px; }
+        }
+
+        @media (max-width: 400px) {
+            #navbar-datetime { display: none; }
+            .top-bar-actions .nav-link[onclick*="openCertModal"] span,
+            #lang-btn-text { display: none; }
+        }
+    </style>
+
     <script type="text/javascript">
     (function(c,l,a,r,i,t,y){
         c[a]=c[a]||function(){(c[a].q=c[a].q|=[]).push(arguments)};
@@ -920,20 +1075,22 @@
     <!-- Header Section with Central Navigation -->
     <header class="top-bar" id="main-topbar">
         <div class="top-bar-inner">
-        <div class="brand-logo-container">
-            <img src="e842ee15-fc5d-491b-a6ae-17e6f345bccd.jpg" alt="BA Academy Logo">
+        <div class="navbar-brand" id="navbar-datetime" style="gap: 8px; cursor: default;">
+            <span class="navbar-brand-main" id="navbar-time" style="font-family: 'Cairo', sans-serif; font-size: 15px; font-weight: 800; color: #16295c;"></span>
+            <span class="navbar-brand-main" id="navbar-date" style="font-family: 'Cairo', sans-serif; font-size: 15px; font-weight: 800; color: #16295c;"></span>
         </div>
 
         <nav class="nav-center-group">
             <button class="nav-link home-highlight" onclick="switchMainView('home-view')"><i class="fa-solid fa-house"></i> <span data-ar="الرئيسية" data-en="Home">الرئيسية</span></button>
             <button class="nav-link" onclick="document.getElementById('courses-section').scrollIntoView({behavior: 'smooth'})"><i class="fa-solid fa-graduation-cap"></i> <span data-ar="الدورات المتاحة" data-en="Available Courses">الدورات المتاحة</span></button>
+            <button class="nav-link" onclick="switchMainView('articles-list-view')"><i class="fa-solid fa-newspaper"></i> <span data-ar="مقالات" data-en="Articles">مقالات</span></button>
             <button class="nav-link" onclick="switchMainView('about-view')"><i class="fa-solid fa-circle-info"></i> <span data-ar="من نحن" data-en="About Us">من نحن</span></button>
         </nav>
 
         <nav class="top-bar-actions">
-            <button class="nav-link" onclick="openCertModal()" style="color: var(--accent-light); font-weight: 900;"><i class="fa-solid fa-award"></i> <span data-ar="التحقق من شهادة" data-en="Verify Certificate">التحقق من شهادة</span></button>
+            <button class="nav-link" onclick="openCertModal()"><i class="fa-solid fa-award"></i> <span data-ar="التحقق من شهادة" data-en="Verify Certificate">التحقق من شهادة</span></button>
             
-            <button class="nav-link" id="lang-toggle-btn" onclick="toggleLanguage()" style="background: rgba(30, 58, 138, 0.4); border-color: var(--accent-light); color: #fff;">
+            <button class="nav-link" id="lang-toggle-btn" onclick="toggleLanguage()">
                 <i class="fa-solid fa-globe"></i> <span id="lang-btn-text">English</span>
             </button>
 
@@ -963,14 +1120,8 @@
                     <p><i class="fa-solid fa-quote-right" id="quote-icon"></i> <span data-ar="لأن التعلم الحقيقي لا يعتمد على كثرة المعلومات، بل على وضوحها وتطبيقها. نصمم تجربة تعليمية تساعدك على اكتساب المهارات التي تحتاجها في المشاريع، دون تعقيد أو إهدار للوقت." data-en="Because true learning isn't about information volume, but clarity and application. We design educational experiences that help you master real project skills without complexity or wasted time.">لأن التعلم الحقيقي لا يعتمد على كثرة المعلومات، بل على وضوحها وتطبيقها. نصمم تجربة تعليمية تساعدك على اكتساب المهارات التي تحتاجها في المشاريع، دون تعقيد أو إهدار للوقت.</span></p>
                 </div>
 
-                <div class="hero-stats-inline">
-                    <div class="hero-stat-chip"><span class="stat-number" data-target="20">0</span><small data-ar="عاماً خبرة" data-en="Years Exp.">عاماً خبرة</small></div>
-                    <div class="hero-stat-chip"><span class="stat-number" data-target="24">0</span><small data-ar="ساعة تدريب" data-en="Training Hrs">ساعة تدريب</small></div>
-                    <div class="hero-stat-chip"><span class="stat-number" data-target="100">0</span><small data-ar="% تطبيقي" data-en="% Practical">% تطبيقي</small></div>
-                </div>
-
                 <div class="hero-buttons">
-                    <button class="btn-primary" onclick="document.getElementById('courses-section').scrollIntoView({behavior: 'smooth'})">
+                    <button class="btn-primary" style="background: var(--accent-color); box-shadow: 0 8px 20px rgba(13, 148, 136, 0.3);" onclick="document.getElementById('courses-section').scrollIntoView({behavior: 'smooth'})">
                         <i class="fa-solid fa-play"></i> <span data-ar="استكشف المسارات" data-en="Explore Tracks">استكشف المسارات</span>
                     </button>
                 </div>
@@ -992,7 +1143,7 @@
                         <p style="color: #cbd5e1; font-size: 0.95rem; font-weight: 600;" data-ar="اضغط هنا لمشاهدة المنهجية والرؤية في نافذة منبثقة بدقة عالية" data-en="Click here to watch our methodology in HD lightbox popup">اضغط هنا لمشاهدة المنهجية والرؤية في نافذة منبثقة بدقة عالية</p>
                     </div>
                 </div>
-                <div style="font-size: 0.88rem; background: rgba(255,255,255,0.15); padding: 8px 16px; border-radius: 12px; font-weight: 800; border: 1px solid rgba(255,255,255,0.2);" data-ar="تشغيل الفيديو 🎬" data-en="Play Video 🎬">
+                <div style="font-size: 0.78rem; background: rgba(255,255,255,0.15); padding: 6px 12px; border-radius: 10px; font-weight: 800; border: 1px solid rgba(255,255,255,0.2); white-space: nowrap; flex-shrink: 0;" data-ar="تشغيل الفيديو 🎬" data-en="Play Video 🎬">
                     تشغيل الفيديو 🎬
                 </div>
             </div>
@@ -1068,10 +1219,10 @@
                             </div>
                             <h3 data-ar="إدارة مخاطر المشاريع" data-en="Project Risk Management">إدارة مخاطر المشاريع</h3>
                             <p class="en-text">Project Risk Management</p>
+                            <button class="course-video-link" onclick="event.stopPropagation(); openVideoModal('risk.mp4', 'إدارة مخاطر المشاريع - فيديو تعريفي')">
+                                <i class="fa-solid fa-circle-play"></i> <span data-ar="شاهد الفيديو التعريفي" data-en="Watch Intro Video">شاهد الفيديو التعريفي</span>
+                            </button>
                         </div>
-                        <button class="video-trigger-btn" onclick="openVideoModal('risk.mp4', 'إدارة مخاطر المشاريع - فيديو تعريفي')">
-                            <i class="fa-solid fa-circle-play"></i> <span data-ar="شاهد الفيديو التعريفي" data-en="Watch Intro Video">شاهد الفيديو التعريفي</span>
-                        </button>
                     </div>
 
                     <!-- Course 2: Value Engineering -->
@@ -1080,14 +1231,14 @@
                             <div class="course-thumb">
                                 <img src="va.jpg" class="course-thumb-img" alt="الهندسة القيمية">
                                 <div class="thumb-brand-logo"><img src="e842ee15-fc5d-491b-a6ae-17e6f345bccd.jpg" alt="BA"></div>
-                                <span class="course-ribbon" style="background: var(--accent-color);"><i class="fa-solid fa-circle-check"></i> <span data-ar="متاحة الآن" data-en="Available Now">متاحة الآن</span></span>
+                                <span class="course-ribbon"><i class="fa-solid fa-circle-check"></i> <span data-ar="متاحة الآن" data-en="Available Now">متاحة الآن</span></span>
                             </div>
                             <h3 data-ar="الهندسة القيمية" data-en="Value Engineering">الهندسة القيمية</h3>
-                            <p class="en-text" style="color: var(--primary-blue); font-weight: 900;">Value Engineering (2026)</p>
+                            <p class="en-text">Value Engineering</p>
+                            <button class="course-video-link" onclick="event.stopPropagation(); openVideoModal('va.mp4', 'الهندسة القيمية - فيديو تعريفي')">
+                                <i class="fa-solid fa-circle-play"></i> <span data-ar="شاهد الفيديو التعريفي" data-en="Watch Intro Video">شاهد الفيديو التعريفي</span>
+                            </button>
                         </div>
-                        <button class="video-trigger-btn" onclick="openVideoModal('va.mp4', 'الهندسة القيمية - فيديو تعريفي')">
-                            <i class="fa-solid fa-circle-play"></i> <span data-ar="شاهد الفيديو التعريفي" data-en="Watch Intro Video">شاهد الفيديو التعريفي</span>
-                        </button>
                     </div>
                 </div>
             </div>
@@ -1447,10 +1598,10 @@
                 <div class="progress-container"><div id="progress-bar" class="progress-bar"></div></div>
             </div>
             <div class="cards-grid">
-                <div class="nav-card" onclick="trackAndOpen(25, 'main', 'المحاضرات والكورس')"><i class="fa-solid fa-person-chalkboard main-icon"></i><h3 data-ar="المحاضرات" data-en="Lectures">المحاضرات</h3></div>
-                <div class="nav-card" onclick="trackAndOpen(50, 'guide', 'دليل الدراسة')"><i class="fa-solid fa-book-open-reader main-icon"></i><h3 data-ar="دليل الدراسة" data-en="Study Guide">دليل الدراسة</h3></div>
-                <div class="nav-card" onclick="trackAndOpen(75, 'tools', 'الأدوات والحاسبة')"><i class="fa-solid fa-calculator main-icon"></i><h3 data-ar="الأدوات" data-en="Tools">الأدوات</h3></div>
-                <div class="nav-card" onclick="trackAndOpen(100, 'quiz', 'الاختبار النهائي')"><i class="fa-solid fa-list-check main-icon"></i><h3 data-ar="الاختبار والشهادة" data-en="Quiz & Certificate">الاختبار والشهادة</h3></div>
+                <div class="nav-card" onclick="trackAndOpen(25, 'main', 'المحاضرات والكورس')"><i class="fa-solid fa-person-chalkboard main-icon"></i><h3 data-ar="المحاضرات" data-en="Lectures">المحاضرات</h3><p class="nav-card-desc" data-ar="شاهد محاضرات الكورس بالترتيب" data-en="Watch the course lectures in order">شاهد محاضرات الكورس بالترتيب</p></div>
+                <div class="nav-card" onclick="trackAndOpen(50, 'guide', 'دليل الدراسة')"><i class="fa-solid fa-book-open-reader main-icon"></i><h3 data-ar="دليل الدراسة" data-en="Study Guide">دليل الدراسة</h3><p class="nav-card-desc" data-ar="ملخص ومرجع سريع لمحتوى الكورس" data-en="Quick summary and reference for the course">ملخص ومرجع سريع لمحتوى الكورس</p></div>
+                <div class="nav-card" onclick="trackAndOpen(75, 'tools', 'الأدوات والحاسبة')"><i class="fa-solid fa-calculator main-icon"></i><h3 data-ar="الأدوات" data-en="Tools">الأدوات</h3><p class="nav-card-desc" data-ar="حاسبات وأدوات عملية للتطبيق" data-en="Practical calculators and tools">حاسبات وأدوات عملية للتطبيق</p></div>
+                <div class="nav-card" onclick="trackAndOpen(100, 'quiz', 'الاختبار النهائي')"><i class="fa-solid fa-list-check main-icon"></i><h3 data-ar="الاختبار والشهادة" data-en="Quiz & Certificate">الاختبار والشهادة</h3><p class="nav-card-desc" data-ar="اختبر نفسك واحصل على الشهادة" data-en="Test yourself and get certified">اختبر نفسك واحصل على الشهادة</p></div>
             </div>
         </div>
     </main>
@@ -1481,6 +1632,54 @@
                 
                 <h3><i class="fa-solid fa-user-tie"></i> <span data-ar="المؤسس والمدرب الرئيسي" data-en="Founder & Chief Instructor">المؤسس والمدرب الرئيسي</span></h3>
                 <p data-ar="مهندس أحمد علي، Senior Electrical Engineer بخبرة ميدانية وهندسية تتجاوز 20 عاماً في إدارة، تخطيط، وتنفيذ المشاريع الهندسية الضخمة." data-en="Eng. Ahmed Ali, Senior Electrical Engineer with over 20 years of experience in project management, planning, and executing mega engineering projects."><strong>مهندس أحمد علي</strong>، Senior Electrical Engineer بخبرة ميدانية وهندسية تتجاوز 20 عاماً في إدارة، تخطيط، وتنفيذ المشاريع الهندسية الضخمة. يتميز بأسلوب فريد في تبسيط المفاهيم الهندسية المعقدة وتحويلها إلى أدوات عملية قابلة للتطبيق الفوري في الميدان.</p>
+            </div>
+        </div>
+    </main>
+
+    <main id="articles-list-view" class="app-view">
+        <div class="dashboard-content" style="max-width: 1200px;">
+            <h2 class="section-title" style="justify-content: center; border: none; margin-bottom: 6px;">
+                <span data-ar="مقالات الأكاديمية" data-en="Academy Articles">مقالات الأكاديمية</span>
+            </h2>
+            <p style="text-align: center; color: var(--text-muted); font-weight: 700; margin-bottom: 30px;" data-ar="محتوى مبسّط عن الهندسة، والثورة الصناعية الرابعة، والذكاء الاصطناعي — لكل مهندس يريد أن يقرأ قبل أن يقرر" data-en="Simplified content on engineering, the fourth industrial revolution, and AI — for every engineer who wants to read before deciding">محتوى مبسّط عن الهندسة، والثورة الصناعية الرابعة، والذكاء الاصطناعي — لكل مهندس يريد أن يقرأ قبل أن يقرر</p>
+
+            <div class="articles-grid">
+                <div class="article-card" onclick="window.location.href='articles/industrial-revolution.html'">
+                    <div class="article-card-thumb">
+                        <i class="fa-solid fa-industry"></i>
+                        <span class="article-card-date" data-ar="أغسطس 2026" data-en="August 2026">أغسطس 2026</span>
+                    </div>
+                    <div class="article-card-body">
+                        <span class="article-card-tag"><i class="fa-solid fa-tag"></i> <span data-ar="الثورة الصناعية الرابعة" data-en="Fourth Industrial Revolution">الثورة الصناعية الرابعة</span></span>
+                        <h3 data-ar="الثورة الصناعية الرابعة: كيف تُغيّر شكل الهندسة كما نعرفها؟" data-en="The Fourth Industrial Revolution: How It's Reshaping Engineering as We Know It">الثورة الصناعية الرابعة: كيف تُغيّر شكل الهندسة كما نعرفها؟</h3>
+                        <p data-ar="من الآلة البخارية إلى الذكاء الاصطناعي، جولة سريعة لفهم كيف غيّرت كل ثورة صناعية دور المهندس، وما الذي يحتاج المهندس أن يفعله اليوم ليبقى مواكبًا." data-en="From the steam engine to artificial intelligence, a quick journey through how each industrial revolution changed the engineer's role, and what engineers need to do to stay relevant now.">من الآلة البخارية إلى الذكاء الاصطناعي، جولة سريعة لفهم كيف غيّرت كل ثورة صناعية دور المهندس، وما الذي يحتاج المهندس أن يفعله اليوم ليبقى مواكبًا.</p>
+                        <span class="article-card-readmore"><span data-ar="اقرأ المقال" data-en="Read Article">اقرأ المقال</span> <i class="fa-solid fa-arrow-left"></i></span>
+                    </div>
+                </div>
+
+                <div class="article-card" onclick="window.location.href='articles/lego-story.html'">
+                    <div class="article-card-thumb" style="background: linear-gradient(135deg, #b91c1c, #7f1d1d);">
+                        <i class="fa-solid fa-chart-line"></i>
+                        <span class="article-card-date" data-ar="أغسطس 2026" data-en="August 2026">أغسطس 2026</span>
+                    </div>
+                    <div class="article-card-body">
+                        <span class="article-card-tag"><i class="fa-solid fa-tag"></i> <span data-ar="قصص شركات" data-en="Company Stories">قصص شركات</span></span>
+                        <h3 data-ar="كيف كانت شركة LEGO على بُعد أشهر من الإفلاس التام؟" data-en="How LEGO Was Just Months Away from Total Bankruptcy">كيف كانت شركة LEGO على بُعد أشهر من الإفلاس التام؟</h3>
+                        <p data-ar="في عام 2003 كانت LEGO تخسر نحو مليون دولار في اليوم. القصة الكاملة لكيف عادت شركة كانت على وشك الانهيار لتصبح أكبر شركة ألعاب في العالم — ولماذا كان القرار الذي أنقذها قرار قيمة لا قرار تسويق." data-en="In 2003, LEGO was losing nearly a million dollars a day. The full story of how a company on the brink of death came back stronger than ever — and why the decision that saved it was a value decision, not a marketing one.">في عام 2003 كانت LEGO تخسر نحو مليون دولار في اليوم. القصة الكاملة لكيف عادت شركة كانت على وشك الانهيار لتصبح أكبر شركة ألعاب في العالم — ولماذا كان القرار الذي أنقذها قرار قيمة لا قرار تسويق.</p>
+                        <span class="article-card-readmore"><span data-ar="اقرأ المقال" data-en="Read Article">اقرأ المقال</span> <i class="fa-solid fa-arrow-left"></i></span>
+                    </div>
+                </div>
+
+                <div class="article-card article-card-upcoming">
+                    <div class="article-card-thumb" style="background: linear-gradient(135deg, #475569, #1e293b);">
+                        <i class="fa-solid fa-robot"></i>
+                    </div>
+                    <div class="article-card-body">
+                        <span class="article-card-tag" style="color: var(--text-muted);"><i class="fa-solid fa-clock"></i> <span data-ar="قريباً" data-en="Coming Soon">قريباً</span></span>
+                        <h3 data-ar="الذكاء الاصطناعي كأداة يومية للمهندس" data-en="AI as a Daily Tool for Engineers">الذكاء الاصطناعي كأداة يومية للمهندس</h3>
+                        <p data-ar="نعمل حاليًا على إعداد هذا المقال، ترقّبوه قريبًا." data-en="We're currently preparing this article. Stay tuned.">نعمل حاليًا على إعداد هذا المقال، ترقّبوه قريبًا.</p>
+                    </div>
+                </div>
             </div>
         </div>
     </main>
@@ -1530,6 +1729,7 @@
                 <h3 data-ar="روابط هامة" data-en="Important Links">روابط هامة</h3>
                 <ul class="footer-links">
                     <li><a onclick="switchMainView('home-view')"><i class="fa-solid fa-angle-left"></i> <span data-ar="الرئيسية" data-en="Home">الرئيسية</span></a></li>
+                    <li><a onclick="switchMainView('articles-list-view')"><i class="fa-solid fa-angle-left"></i> <span data-ar="مقالات" data-en="Articles">مقالات</span></a></li>
                     <li><a onclick="switchMainView('about-view')"><i class="fa-solid fa-angle-left"></i> <span data-ar="من نحن" data-en="About Us">من نحن</span></a></li>
                     <li><a onclick="switchMainView('faq-view')"><i class="fa-solid fa-angle-left"></i> <span data-ar="الأسئلة الشائعة" data-en="FAQ">الأسئلة الشائعة</span></a></li>
                     <li><a onclick="switchMainView('terms-view')"><i class="fa-solid fa-angle-left"></i> <span data-ar="شروط الاستخدام" data-en="Terms of Use">شروط الاستخدام</span></a></li>
@@ -1539,9 +1739,19 @@
             <div class="footer-col">
                 <h3 data-ar="تواصل معنا" data-en="Contact Us">تواصل معنا</h3>
                 <p style="margin-bottom: 12px; font-size: 0.92rem; color: #94a3b8; font-weight: 600;" data-ar="نسعد بتواصلكم واستفساراتكم وانضمامكم إلينا في أي وقت." data-en="We welcome your inquiries and joinings at any time.">نسعد بتواصلكم واستفساراتكم وانضمامكم إلينا في أي وقت.</p>
-                <a href="https://docs.google.com/forms/d/e/1FAIpQLSdObqHCrVw77H87oI5-yZlk6wc7_QuaKMLP3ZNbC5Fp767qHw/viewform?pli=1" target="_blank" class="btn-primary" style="display: inline-flex; padding: 10px 18px; font-size: 13.5px; text-decoration: none; border-radius: 10px;">
-                    <i class="fa-solid fa-envelope"></i> <span data-ar="نموذج التواصل المباشر" data-en="Direct Contact Form">نموذج التواصل المباشر</span>
+                <a href="mailto:info@barnoukh-engineering.com" style="display: flex; align-items: center; gap: 8px; margin-bottom: 14px; font-size: 0.92rem; font-weight: 700; color: #f8fafc; text-decoration: none;">
+                    <i class="fa-solid fa-envelope" style="color: var(--accent-light);"></i> info@barnoukh-engineering.com
                 </a>
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSdObqHCrVw77H87oI5-yZlk6wc7_QuaKMLP3ZNbC5Fp767qHw/viewform?pli=1" target="_blank" class="btn-primary" style="display: inline-flex; padding: 10px 18px; font-size: 13.5px; text-decoration: none; border-radius: 10px;">
+                    <i class="fa-solid fa-paper-plane"></i> <span data-ar="نموذج التواصل المباشر" data-en="Direct Contact Form">نموذج التواصل المباشر</span>
+                </a>
+            </div>
+        </div>
+        <div class="visitor-counter-widget">
+            <div class="visitor-counter-icon"><i class="fa-solid fa-eye"></i></div>
+            <div class="visitor-counter-text">
+                <span class="visitor-counter-label" data-ar="إجمالي عدد زوار الموقع" data-en="Total Website Visitors">إجمالي عدد زوار الموقع</span>
+                <img id="visitor-badge" alt="Visitor Count" style="height: 30px; margin-top: 4px;">
             </div>
         </div>
         <div class="footer-bottom">
@@ -1562,16 +1772,49 @@
             }
         });
 
+        function updateNavbarDateTime() {
+            const now = new Date();
+            const timeEl = document.getElementById('navbar-time');
+            const dateEl = document.getElementById('navbar-date');
+            if (!timeEl || !dateEl) return;
+
+            let hours = now.getHours();
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            hours = hours % 12;
+            hours = hours ? hours : 12;
+            timeEl.textContent = `${hours}:${minutes} ${ampm}`;
+
+            const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+            dateEl.textContent = `${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()}`;
+        }
+        updateNavbarDateTime();
+        setInterval(updateNavbarDateTime, 1000);
+
+        function updateVisitorCounter() {
+            const badge = document.getElementById('visitor-badge');
+            if (!badge) return;
+            const siteKey = 'ba-engineering-academy-official-site-2026';
+            badge.src = 'https://countapi.mileshilliard.com/api/v1/hit/' + encodeURIComponent(siteKey) + '/shield?text=Visitors&bgcolor=1e3a8a&textcolor=ffffff&style=flat';
+        }
+        updateVisitorCounter();
+
         let currentProgress = 0;
         let countersAnimated = false; 
         let currentLang = 'ar';
 
         function toggleLanguage() {
             currentLang = currentLang === 'ar' ? 'en' : 'ar';
+            applyLanguage();
+        }
+
+        function applyLanguage() {
             document.documentElement.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
             document.documentElement.lang = currentLang;
+            localStorage.setItem('siteLang', currentLang);
 
-            document.getElementById('lang-btn-text').innerText = currentLang === 'ar' ? 'English' : 'عربي';
+            const langBtnText = document.getElementById('lang-btn-text');
+            if (langBtnText) langBtnText.innerText = currentLang === 'ar' ? 'English' : 'عربي';
 
             const quoteIcon = document.getElementById('quote-icon');
             if (quoteIcon) {
@@ -1652,6 +1895,20 @@
 
         document.addEventListener('DOMContentLoaded', function() {
             animateCounters();
+            const savedLang = localStorage.getItem('siteLang');
+            if (savedLang === 'en') {
+                currentLang = 'en';
+                applyLanguage();
+            }
+            if (window.location.hash) {
+                const targetId = window.location.hash.substring(1);
+                const targetEl = document.getElementById(targetId);
+                if (targetEl && targetEl.classList.contains('app-view')) {
+                    switchMainView(targetId);
+                } else if (targetId === 'articles') {
+                    switchMainView('articles-list-view');
+                }
+            }
         });
 
         /* Video Lightbox Functions */
