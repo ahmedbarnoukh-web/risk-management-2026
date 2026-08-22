@@ -523,13 +523,17 @@
         .article-card:hover { transform: translateY(-7px); box-shadow: 0 20px 40px rgba(0,0,0,0.12); border-color: var(--primary-blue); }
         .article-card-thumb {
             height: 175px; position: relative; overflow: hidden;
-            background: linear-gradient(135deg, var(--primary-blue) 0%, #0a1128 100%);
-            display: flex; align-items: center; justify-content: center;
+            background-size: cover; background-position: center;
+            display: flex; align-items: flex-end; justify-content: center;
         }
-        .article-card-thumb i { font-size: 2.4rem; color: rgba(255,255,255,0.85); }
+        .article-card-thumb::after {
+            content: ''; position: absolute; inset: 0;
+            background: linear-gradient(180deg, rgba(10,17,40,0.15) 0%, rgba(10,17,40,0.55) 100%);
+        }
+        .article-card-thumb i { display: none; }
         .article-card-date {
             position: absolute; top: 12px; left: 12px; background: rgba(255,255,255,0.95); color: var(--primary-blue);
-            font-size: 11px; font-weight: 800; padding: 5px 12px; border-radius: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+            font-size: 11px; font-weight: 800; padding: 5px 12px; border-radius: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.18); z-index: 2;
         }
         html[dir="rtl"] .article-card-date { left: auto; right: 12px; }
         .article-card-body { padding: 20px 22px 22px; display: flex; flex-direction: column; flex-grow: 1; }
@@ -806,6 +810,26 @@
             font-weight: 900;
         }
 
+        .status-badge-box.uploading {
+            display: flex; flex-direction: column; align-items: stretch; gap: 8px;
+            background: rgba(13, 148, 136, 0.08); border: 1.5px solid var(--accent-color);
+            color: var(--accent-color); padding: 10px 14px; width: 100%;
+        }
+        .uploading-row { display: flex; align-items: center; gap: 8px; }
+        .upload-icon-bounce { animation: uploadBounce 1.2s ease-in-out infinite; }
+        @keyframes uploadBounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+        .upload-progress-track { width: 100%; height: 6px; border-radius: 6px; background: rgba(13, 148, 136, 0.15); overflow: hidden; }
+        .upload-progress-fill {
+            height: 100%; width: 35%; border-radius: 6px;
+            background: linear-gradient(90deg, var(--accent-color), #34d399);
+            animation: uploadProgress 2.4s ease-in-out infinite;
+        }
+        @keyframes uploadProgress {
+            0% { width: 8%; }
+            50% { width: 78%; }
+            100% { width: 8%; }
+        }
+
         .course-details-header { background: linear-gradient(135deg, var(--primary-blue) 0%, #0a1128 100%); color: white; padding: 50px 24px; text-align: center; border-radius: 22px; margin-bottom: 28px; box-shadow: 0 20px 40px rgba(0,0,0,0.15); position: relative; overflow: hidden; }
         .course-details-header h2 { font-size: clamp(1.8rem, 3vw, 2.6rem); font-weight: 900; margin-bottom: 14px; }
         .course-details-header p { font-size: 1.08rem; color: #cbd5e1; font-weight: 600; max-width: 720px; margin: 0 auto; line-height: 1.65; }
@@ -968,6 +992,22 @@
             .visitor-counter-number img { height: 24px !important; }
 
             .whatsapp-float { width: 44px; height: 44px; font-size: 20px; bottom: 16px; right: 16px; }
+
+            .course-details-header { padding: 26px 16px; border-radius: 16px; }
+            .course-details-header h2 { font-size: 1.45rem; line-height: 1.4; }
+            .course-details-header p { font-size: 0.92rem; }
+            .course-meta { gap: 8px; margin-top: 16px; }
+            .meta-item { padding: 6px 12px; font-size: 11.5px; gap: 5px; }
+
+            .course-content-split { gap: 16px; }
+            .content-box { padding: 20px 16px; border-radius: 16px; margin-bottom: 16px; }
+            .content-box h3 { font-size: 1rem; flex-wrap: wrap; }
+
+            .accordion-header { padding: 12px 14px !important; font-size: 13px !important; }
+            .accordion-header span { font-size: 13px; line-height: 1.5; display: flex; align-items: flex-start; gap: 6px; }
+            .accordion-content { padding: 12px 14px !important; font-size: 13px !important; line-height: 1.7; }
+
+            .content-box[style*="text-align: center"] i { font-size: 2.4rem !important; }
         }
 
         @media (max-width: 400px) {
@@ -1256,27 +1296,44 @@
                 <div class="cards-grid-upcoming">
                     <div class="nav-card course-card-upcoming" onclick="showCourseComingSoon(event)">
                         <div class="course-thumb">
+                            <img src="cost.jpg" class="course-thumb-img" alt="إدارة العقود والمطالبات الهندسية">
+                            <div class="thumb-brand-logo"><img src="e842ee15-fc5d-491b-a6ae-17e6f345bccd.jpg" alt="BA"></div>
+                            <div class="lock-overlay-badge"><i class="fa-solid fa-lock"></i></div>
+                        </div>
+                        <h3 data-ar="إدارة العقود والمطالبات الهندسية" data-en="Professional Contract & Claims Management">إدارة العقود والمطالبات الهندسية</h3>
+                        <p class="en-text">Professional Contract & Claims Management</p>
+                        <div class="status-badge-box uploading">
+                            <div class="uploading-row">
+                                <i class="fa-solid fa-cloud-arrow-up upload-icon-bounce"></i>
+                                <span data-ar="جارِ الرفع على السيرفر..." data-en="Uploading to server...">جارِ الرفع على السيرفر...</span>
+                            </div>
+                            <div class="upload-progress-track"><div class="upload-progress-fill"></div></div>
+                        </div>
+                    </div>
+
+                    <div class="nav-card course-card-upcoming" onclick="showCourseComingSoon(event)">
+                        <div class="course-thumb">
+                            <img src="https://images.pexels.com/photos/5921494/pexels-photo-5921494.jpeg?auto=compress&w=800&h=500&dpr=1" class="course-thumb-img" alt="إدارة تكاليف المشاريع الهندسية">
+                            <div class="thumb-brand-logo"><img src="e842ee15-fc5d-491b-a6ae-17e6f345bccd.jpg" alt="BA"></div>
+                            <div class="lock-overlay-badge"><i class="fa-solid fa-lock"></i></div>
+                        </div>
+                        <h3 data-ar="إدارة تكاليف المشاريع الهندسية" data-en="Engineering Project Cost Management">إدارة تكاليف المشاريع الهندسية</h3>
+                        <p class="en-text">Engineering Project Cost Management</p>
+                        <div class="status-badge-box design">
+                            <i class="fa-solid fa-compass fa-spin"></i> <span data-ar="قيد التصميم" data-en="Under Design">قيد التصميم</span>
+                        </div>
+                    </div>
+
+                    <div class="nav-card course-card-upcoming" onclick="showCourseComingSoon(event)">
+                        <div class="course-thumb">
                             <img src="ele.jpg" class="course-thumb-img" alt="التصميم الكهربائي للمشاريع">
                             <div class="thumb-brand-logo"><img src="e842ee15-fc5d-491b-a6ae-17e6f345bccd.jpg" alt="BA"></div>
                             <div class="lock-overlay-badge"><i class="fa-solid fa-lock"></i></div>
                         </div>
                         <h3 data-ar="التصميم الكهربائي للمشاريع" data-en="Electrical Design for Projects">التصميم الكهربائي للمشاريع</h3>
                         <p class="en-text">Electrical Design for Projects</p>
-                        <div class="status-badge-box design">
-                            <i class="fa-solid fa-compass fa-spin"></i> <span data-ar="قريباً / قيد التطوير ⚡" data-en="Soon / In Development ⚡">قريباً / قيد التطوير ⚡</span>
-                        </div>
-                    </div>
-
-                    <div class="nav-card course-card-upcoming" onclick="showCourseComingSoon(event)">
-                        <div class="course-thumb">
-                            <img src="cost.jpg" class="course-thumb-img" alt="إدارة العقود والتكاليف">
-                            <div class="thumb-brand-logo"><img src="e842ee15-fc5d-491b-a6ae-17e6f345bccd.jpg" alt="BA"></div>
-                            <div class="lock-overlay-badge"><i class="fa-solid fa-lock"></i></div>
-                        </div>
-                        <h3 data-ar="إدارة العقود والتكاليف" data-en="Contracts & Cost Management">إدارة العقود والتكاليف</h3>
-                        <p class="en-text">Contracts & Cost</p>
-                        <div class="status-badge-box design">
-                            <i class="fa-solid fa-compass fa-spin"></i> <span data-ar="قيد التصميم والتطوير 💡" data-en="Under Design & Development 💡">قيد التصميم والتطوير 💡</span>
+                        <div class="status-badge-box soon-badge">
+                            <i class="fa-solid fa-hourglass-half"></i> <span data-ar="قريباً" data-en="Coming Soon">قريباً</span>
                         </div>
                     </div>
 
@@ -1289,7 +1346,7 @@
                         <h3 data-ar="هندسة مراكز البيانات" data-en="Data Center Infrastructure">هندسة مراكز البيانات</h3>
                         <p class="en-text">Data Center Infrastructure</p>
                         <div class="status-badge-box soon-badge">
-                            <i class="fa-solid fa-hourglass-half"></i> <span data-ar="قريباً ⏳" data-en="Coming Soon ⏳">قريباً ⏳</span>
+                            <i class="fa-solid fa-hourglass-half"></i> <span data-ar="قريباً" data-en="Coming Soon">قريباً</span>
                         </div>
                     </div>
                 </div>
@@ -1328,7 +1385,7 @@
                             <div class="testimonial-avatar-badge" data-ar="س.أ" data-en="S.A">س.أ</div>
                             <div class="testimonial-titles"><h4 data-ar="م. سيد أبو بكر" data-en="Eng. Sayed Abu Bakr">م. سيد أبو بكر</h4><span data-ar="مهندس مدني" data-en="Civil Engineer">مهندس مدني</span></div>
                         </div>
-                        <div class="testimonial-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                        <div class="testimonial-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i></div>
                         <p class="testimonial-body-text" data-ar='"استفدت جداً من كورس إدارة المخاطر، وطريقة العرض شيقة ومبسطة جداً. بانتظار المزيد من الدورات."' data-en='"Gained immense value from the Risk Management course. The presentation is simplified and engaging. Looking forward to more courses."' >"استفدت جداً من كورس إدارة المخاطر، وطريقة العرض شيقة ومبسطة جداً. بانتظار المزيد من الدورات."</p>
                     </div>
                 </div>
@@ -1538,7 +1595,7 @@
             <div class="course-details-header" style="background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%); padding: 50px 24px;">
                 <span style="background: rgba(255,255,255,0.2); padding: 6px 16px; border-radius: 20px; font-size: 13px; font-weight: 800; display: inline-block; margin-bottom: 12px;"><i class="fa-solid fa-compass fa-spin"></i> <span data-ar="قيد التصميم والتطوير 💡" data-en="Under Design 💡">قيد التصميم والتطوير 💡</span></span>
                 <h2>BA Engineering Academy</h2>
-                <p style="font-size: 1.3rem; font-weight: 800; color: #fff; margin-top: 4px;">إدارة العقود والتكاليف (Contracts & Cost)</p>
+                <p style="font-size: 1.3rem; font-weight: 800; color: #fff; margin-top: 4px;" data-ar="إدارة العقود والمطالبات الهندسية" data-en="Professional Contract & Claims Management">إدارة العقود والمطالبات الهندسية</p>
             </div>
             
             <div class="content-box">
@@ -1645,8 +1702,7 @@
 
             <div class="articles-grid">
                 <div class="article-card" onclick="window.location.href='articles/industrial-revolution.html'">
-                    <div class="article-card-thumb">
-                        <i class="fa-solid fa-industry"></i>
+                    <div class="article-card-thumb" style="background-image: url('https://images.pexels.com/photos/34207359/pexels-photo-34207359.jpeg?auto=compress&w=800&h=500&dpr=1');">
                         <span class="article-card-date" data-ar="أغسطس 2026" data-en="August 2026">أغسطس 2026</span>
                     </div>
                     <div class="article-card-body">
@@ -1658,8 +1714,7 @@
                 </div>
 
                 <div class="article-card" onclick="window.location.href='articles/lego-story.html'">
-                    <div class="article-card-thumb" style="background: linear-gradient(135deg, #b91c1c, #7f1d1d);">
-                        <i class="fa-solid fa-chart-line"></i>
+                    <div class="article-card-thumb" style="background-image: url('https://images.pexels.com/photos/4491703/pexels-photo-4491703.jpeg?auto=compress&w=800&h=500&dpr=1');">
                         <span class="article-card-date" data-ar="أغسطس 2026" data-en="August 2026">أغسطس 2026</span>
                     </div>
                     <div class="article-card-body">
@@ -1670,14 +1725,50 @@
                     </div>
                 </div>
 
+                <div class="article-card" onclick="window.location.href='articles/ai-for-engineers.html'">
+                    <div class="article-card-thumb" style="background-image: url('https://images.pexels.com/photos/17483868/pexels-photo-17483868.jpeg?auto=compress&w=800&h=500&dpr=1');">
+                        <span class="article-card-date" data-ar="أغسطس 2026" data-en="August 2026">أغسطس 2026</span>
+                    </div>
+                    <div class="article-card-body">
+                        <span class="article-card-tag"><i class="fa-solid fa-tag"></i> <span data-ar="الذكاء الاصطناعي" data-en="Artificial Intelligence">الذكاء الاصطناعي</span></span>
+                        <h3 data-ar="الذكاء الاصطناعي كأداة يومية للمهندس" data-en="AI as a Daily Tool for Engineers">الذكاء الاصطناعي كأداة يومية للمهندس</h3>
+                        <p data-ar="مش نظرية ولا خيال علمي. دليل عملي وبسيط لإزاي المهندس يستخدم أدوات الذكاء الاصطناعي فعليًا في شغله اليومي، من غير ما يبقى خبير برمجة." data-en="Not theory or sci-fi. A simple, practical guide to how engineers can actually use AI tools in their daily work, without needing to be a programming expert.">مش نظرية ولا خيال علمي. دليل عملي وبسيط لإزاي المهندس يستخدم أدوات الذكاء الاصطناعي فعليًا في شغله اليومي، من غير ما يبقى خبير برمجة.</p>
+                        <span class="article-card-readmore"><span data-ar="اقرأ المقال" data-en="Read Article">اقرأ المقال</span> <i class="fa-solid fa-arrow-left"></i></span>
+                    </div>
+                </div>
+
+                <div class="article-card" onclick="window.location.href='articles/tacoma-bridge.html'">
+                    <div class="article-card-thumb" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/4/4a/Tacoma-narrows-bridge-collapse.jpg');">
+                        <span class="article-card-date" data-ar="أغسطس 2026" data-en="August 2026">أغسطس 2026</span>
+                    </div>
+                    <div class="article-card-body">
+                        <span class="article-card-tag"><i class="fa-solid fa-tag"></i> <span data-ar="دروس من الفشل الهندسي" data-en="Lessons from Engineering Failure">دروس من الفشل الهندسي</span></span>
+                        <h3 data-ar="جسر رقص قبل ما ينهار: قصة جسر تاكوما ناروز 1940" data-en="The Bridge That Danced Before It Collapsed: The Tacoma Narrows Bridge Story">جسر رقص قبل ما ينهار: قصة جسر تاكوما ناروز 1940</h3>
+                        <p data-ar="جسر معلق ضخم انهار بعد 4 شهور بس من افتتاحه، مش بسبب عاصفة، لكن بسبب رياح عادية خلّت الجسر يتمايل ويرقص لحد ما اتهدم. القصة اللي غيّرت هندسة الجسور المعلقة للأبد." data-en="A massive suspension bridge collapsed just four months after opening — not due to a storm, but ordinary wind that made it sway and dance until it fell apart. The story that changed suspension bridge engineering forever.">جسر معلق ضخم انهار بعد 4 شهور بس من افتتاحه، مش بسبب عاصفة، لكن بسبب رياح عادية خلّت الجسر يتمايل ويرقص لحد ما اتهدم. القصة اللي غيّرت هندسة الجسور المعلقة للأبد.</p>
+                        <span class="article-card-readmore"><span data-ar="اقرأ المقال" data-en="Read Article">اقرأ المقال</span> <i class="fa-solid fa-arrow-left"></i></span>
+                    </div>
+                </div>
+
+                <div class="article-card" onclick="window.location.href='articles/sydney-opera-house.html'">
+                    <div class="article-card-thumb" style="background-image: url('https://images.pexels.com/photos/26834714/pexels-photo-26834714.jpeg?auto=compress&w=800&h=500&dpr=1');">
+                        <span class="article-card-date" data-ar="أغسطس 2026" data-en="August 2026">أغسطس 2026</span>
+                    </div>
+                    <div class="article-card-body">
+                        <span class="article-card-tag"><i class="fa-solid fa-tag"></i> <span data-ar="مشاريع هندسية عملاقة" data-en="Mega Engineering Projects">مشاريع هندسية عملاقة</span></span>
+                        <h3 data-ar="دار أوبرا سيدني: مشروع بـ7 ملايين دولار انتهى بـ102 مليون" data-en="Sydney Opera House: A $7 Million Project That Became $102 Million">دار أوبرا سيدني: مشروع بـ7 ملايين دولار انتهى بـ102 مليون</h3>
+                        <p data-ar="مشروع اتكلفته المتوقعة 7 مليون دولار ومدته 4 سنين، انتهى بتكلفة 102 مليون دولار ومدة 14 سنة. القصة الكاملة لأشهر تجاوز ميزانية هندسي في التاريخ، وإزاي تحول لأيقونة عالمية رغم كل شيء." data-en="A project expected to cost $7 million over 4 years ended up costing $102 million over 14 years. The full story of the most famous budget overrun in engineering history, and how it became a global icon despite it all.">مشروع اتكلفته المتوقعة 7 مليون دولار ومدته 4 سنين، انتهى بتكلفة 102 مليون دولار ومدة 14 سنة. القصة الكاملة لأشهر تجاوز ميزانية هندسي في التاريخ، وإزاي تحول لأيقونة عالمية رغم كل شيء.</p>
+                        <span class="article-card-readmore"><span data-ar="اقرأ المقال" data-en="Read Article">اقرأ المقال</span> <i class="fa-solid fa-arrow-left"></i></span>
+                    </div>
+                </div>
+
                 <div class="article-card article-card-upcoming">
                     <div class="article-card-thumb" style="background: linear-gradient(135deg, #475569, #1e293b);">
-                        <i class="fa-solid fa-robot"></i>
+                        <i class="fa-solid fa-clock" style="display:block; font-size: 2.2rem; color: rgba(255,255,255,0.85); margin: auto;"></i>
                     </div>
                     <div class="article-card-body">
                         <span class="article-card-tag" style="color: var(--text-muted);"><i class="fa-solid fa-clock"></i> <span data-ar="قريباً" data-en="Coming Soon">قريباً</span></span>
-                        <h3 data-ar="الذكاء الاصطناعي كأداة يومية للمهندس" data-en="AI as a Daily Tool for Engineers">الذكاء الاصطناعي كأداة يومية للمهندس</h3>
-                        <p data-ar="نعمل حاليًا على إعداد هذا المقال، ترقّبوه قريبًا." data-en="We're currently preparing this article. Stay tuned.">نعمل حاليًا على إعداد هذا المقال، ترقّبوه قريبًا.</p>
+                        <h3 data-ar="مقال جديد قريبًا" data-en="New Article Coming Soon">مقال جديد قريبًا</h3>
+                        <p data-ar="نعمل حاليًا على إعداد مقال جديد، ترقّبوه قريبًا." data-en="We're currently preparing a new article. Stay tuned.">نعمل حاليًا على إعداد مقال جديد، ترقّبوه قريبًا.</p>
                     </div>
                 </div>
             </div>
@@ -1844,6 +1935,10 @@
             if (!target) { console.warn('View not found:', viewId); return; }
             document.querySelectorAll('.app-view').forEach(v => v.classList.remove('active'));
             target.classList.add('active');
+
+            if (window.location.hash) {
+                history.replaceState(null, '', window.location.pathname + window.location.search);
+            }
 
             const topbar = document.getElementById('main-topbar');
             const footer = document.getElementById('main-footer');
