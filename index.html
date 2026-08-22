@@ -80,24 +80,32 @@
             font-size: 0.85rem;
             font-weight: 700;
             box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+            direction: ltr;
         }
-        .ticker-wrapper {
-            display: inline-block;
+        .ticker-track {
+            display: inline-flex;
+            width: max-content;
             white-space: nowrap;
-            padding-left: 100%;
-            animation: tickerMove 30s linear infinite;
+            direction: ltr;
+            animation: tickerMove 32s linear infinite;
         }
-        .ticker-wrapper:hover { animation-play-state: paused; }
+        .ticker-track:hover { animation-play-state: paused; }
+        .ticker-wrapper {
+            display: inline-flex;
+            white-space: nowrap;
+            direction: ltr;
+        }
         .ticker-item {
             display: inline-flex;
             align-items: center;
             gap: 8px;
             margin-right: 45px;
+            direction: rtl;
         }
         .ticker-item i { color: #5eead4; }
         @keyframes tickerMove {
             0% { transform: translate3d(0, 0, 0); }
-            100% { transform: translate3d(-100%, 0, 0); }
+            100% { transform: translate3d(-50%, 0, 0); }
         }
 
         /* Ambient Animated Mesh Background */
@@ -408,6 +416,16 @@
 
         /* Interactive Accordion Syllabus Styling */
         .accordion-group { display: flex; flex-direction: column; gap: 12px; margin-top: 14px; }
+
+        .before-after-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 18px 0 8px; }
+        .ba-card { border-radius: 14px; padding: 16px 18px; }
+        .ba-card.before-card { background: rgba(148, 163, 184, 0.12); border: 1.5px solid #94a3b8; }
+        .ba-card.after-card { background: rgba(13, 148, 136, 0.08); border: 1.5px solid var(--accent-color); }
+        .ba-card-label { font-weight: 900; font-size: 0.92rem; display: flex; align-items: center; gap: 6px; margin-bottom: 8px; }
+        .ba-card.before-card .ba-card-label { color: #64748b; }
+        .ba-card.after-card .ba-card-label { color: var(--accent-color); }
+        .ba-card p { font-size: 0.88rem; font-weight: 600; color: var(--text-dark); line-height: 1.7; margin: 0; }
+        @media (max-width: 640px) { .before-after-grid { grid-template-columns: 1fr; } }
         .accordion-item {
             background: var(--bg-main);
             border: var(--glass-border);
@@ -816,18 +834,47 @@
             color: var(--accent-color); padding: 10px 14px; width: 100%;
         }
         .uploading-row { display: flex; align-items: center; gap: 8px; }
-        .upload-icon-bounce { animation: uploadBounce 1.2s ease-in-out infinite; }
+        .upload-icon-bounce { animation: uploadBounce 1.2s ease-in-out infinite !important; animation-play-state: running !important; will-change: transform; }
         @keyframes uploadBounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
         .upload-progress-track { width: 100%; height: 6px; border-radius: 6px; background: rgba(13, 148, 136, 0.15); overflow: hidden; }
         .upload-progress-fill {
-            height: 100%; width: 35%; border-radius: 6px;
+            height: 100%; width: 10%; border-radius: 6px;
             background: linear-gradient(90deg, var(--accent-color), #34d399);
-            animation: uploadProgress 2.4s ease-in-out infinite;
+            animation: uploadProgress 1.8s ease-in-out infinite alternate !important;
+            animation-play-state: running !important; will-change: width;
         }
         @keyframes uploadProgress {
-            0% { width: 8%; }
-            50% { width: 78%; }
-            100% { width: 8%; }
+            0% { width: 10%; }
+            100% { width: 88%; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .upload-icon-bounce, .upload-progress-fill { animation-duration: 1.8s !important; animation-iteration-count: infinite !important; animation-play-state: running !important; animation-direction: alternate !important; }
+        }
+
+        .status-badge-box.construction-badge {
+            display: flex; align-items: center; gap: 8px;
+            background: rgba(217, 119, 6, 0.1); border: 1.5px solid #d97706; color: #b45309;
+        }
+        .construction-icon-wrap {
+            width: 22px; height: 22px; display: flex; align-items: center; justify-content: center;
+            border-radius: 50%; background: rgba(217, 119, 6, 0.15);
+        }
+        .construction-spin { animation: constructionSpin 2.5s linear infinite; font-size: 12px; }
+        @keyframes constructionSpin {
+            0% { transform: rotate(0deg); }
+            50% { transform: rotate(180deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .construction-dots { display: inline-flex; gap: 3px; margin-inline-start: 2px; }
+        .construction-dots span {
+            width: 4px; height: 4px; border-radius: 50%; background: #d97706;
+            animation: constructionDotPulse 1.4s ease-in-out infinite;
+        }
+        .construction-dots span:nth-child(2) { animation-delay: 0.2s; }
+        .construction-dots span:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes constructionDotPulse {
+            0%, 100% { opacity: 0.25; transform: translateY(0); }
+            50% { opacity: 1; transform: translateY(-2px); }
         }
 
         .course-details-header { background: linear-gradient(135deg, var(--primary-blue) 0%, #0a1128 100%); color: white; padding: 50px 24px; text-align: center; border-radius: 22px; margin-bottom: 28px; box-shadow: 0 20px 40px rgba(0,0,0,0.15); position: relative; overflow: hidden; }
@@ -850,9 +897,11 @@
         html[dir="ltr"] .content-box ul { padding-right: 0; padding-left: 22px; }
 
         .sales-checklist { list-style: none; padding: 0; margin-top: 12px; }
-        .sales-checklist li { display: flex; align-items: center; gap: 12px; font-weight: 700; font-size: 1rem; margin-bottom: 10px; color: var(--text-dark); background: var(--active-blue); padding: 10px 16px; border-radius: 12px; border-right: 4px solid var(--primary-blue); border: var(--glass-border); }
+        .sales-checklist li { display: flex; align-items: flex-start; flex-wrap: wrap; gap: 8px 12px; font-weight: 700; font-size: 1rem; margin-bottom: 10px; color: var(--text-dark); background: var(--active-blue); padding: 12px 16px; border-radius: 12px; border-right: 4px solid var(--primary-blue); border: var(--glass-border); }
         html[dir="ltr"] .sales-checklist li { border-right: var(--glass-border); border-left: 4px solid var(--primary-blue); }
-        .sales-checklist li i { color: var(--primary-blue); font-size: 1.1rem; }
+        .sales-checklist li i { color: var(--primary-blue); font-size: 1.1rem; flex-shrink: 0; margin-top: 2px; }
+        .sales-checklist li strong { flex-shrink: 0; }
+        .sales-checklist li span { flex: 1 1 220px; min-width: 0; font-weight: 600; line-height: 1.7; }
 
         .faq-item { margin-bottom: 20px; border-bottom: 1px solid var(--border-color); padding-bottom: 18px; }
         .faq-question { font-weight: 800; color: var(--primary-blue); font-size: 1.15rem; margin-bottom: 8px; display: flex; align-items: center; gap: 10px; }
@@ -1029,11 +1078,21 @@
 
     <!-- Global Dynamic Moving Ticker Bar -->
     <div class="global-ticker">
+        <div class="ticker-track">
         <div class="ticker-wrapper">
-            <span class="ticker-item"><i class="fa-solid fa-globe"></i> <span data-ar="BA Engineering Academy | منصة تعليمية متكاملة بالمواصفات العالمية" data-en="BA Engineering Academy | Integrated Educational Platform with International Standards">BA Engineering Academy | منصة تعليمية متكاملة بالمواصفات العالمية</span></span>
-            <span class="ticker-item"><i class="fa-solid fa-fire"></i> <span data-ar="متاح الآن: دورة الهندسة القيمية ودورة إدارة مخاطر المشاريع الاحترافية" data-en="Available Now: Value Engineering & Professional Project Risk Management Courses">متاح الآن: دورة الهندسة القيمية ودورة إدارة مخاطر المشاريع الاحترافية</span></span>
-            <span class="ticker-item"><i class="fa-solid fa-award"></i> <span data-ar="شهادات إتمام موثقة ونظام تحقق فوري من صحة المستندات" data-en="Verified Certificates & Instant Document Verification System">شهادات إتمام موثقة ونظام تحقق فوري من صحة المستندات</span></span>
-            <span class="ticker-item"><i class="fa-solid fa-brain"></i> <span data-ar="من النظرية إلى التنفيذ: تطبيق ميداني بخبرة أكثر من 20 عاماً" data-en="From Theory to Execution: Field Application with 20+ Years Experience">من النظرية إلى التنفيذ: تطبيق ميداني بخبرة أكثر من 20 عاماً</span></span>
+            <span class="ticker-item"><i class="fa-solid fa-globe"></i> <span data-ar="BA Engineering Academy | منصة تعليمية متكاملة" data-en="BA Engineering Academy | Integrated Platform">BA Engineering Academy | منصة تعليمية متكاملة</span></span>
+            <span class="ticker-item"><i class="fa-solid fa-hand-sparkles"></i> <span data-ar="أهلاً وسهلاً بك" data-en="Welcome">أهلاً وسهلاً بك</span></span>
+            <span class="ticker-item"><i class="fa-solid fa-fire"></i> <span data-ar="متاح الآن: كورس الهندسة القيمية" data-en="Available Now: Value Engineering Course">متاح الآن: كورس الهندسة القيمية</span></span>
+            <span class="ticker-item"><i class="fa-solid fa-fire"></i> <span data-ar="متاح الآن: كورس إدارة المخاطر" data-en="Available Now: Risk Management Course">متاح الآن: كورس إدارة المخاطر</span></span>
+            <span class="ticker-item"><i class="fa-solid fa-cloud-arrow-up"></i> <span data-ar="جارِ تحميل كورس العقود" data-en="Loading the Contracts course">جارِ تحميل كورس العقود</span></span>
+        </div>
+        <div class="ticker-wrapper" aria-hidden="true">
+            <span class="ticker-item"><i class="fa-solid fa-globe"></i> <span data-ar="BA Engineering Academy | منصة تعليمية متكاملة" data-en="BA Engineering Academy | Integrated Platform">BA Engineering Academy | منصة تعليمية متكاملة</span></span>
+            <span class="ticker-item"><i class="fa-solid fa-hand-sparkles"></i> <span data-ar="أهلاً وسهلاً بك" data-en="Welcome">أهلاً وسهلاً بك</span></span>
+            <span class="ticker-item"><i class="fa-solid fa-fire"></i> <span data-ar="متاح الآن: كورس الهندسة القيمية" data-en="Available Now: Value Engineering Course">متاح الآن: كورس الهندسة القيمية</span></span>
+            <span class="ticker-item"><i class="fa-solid fa-fire"></i> <span data-ar="متاح الآن: كورس إدارة المخاطر" data-en="Available Now: Risk Management Course">متاح الآن: كورس إدارة المخاطر</span></span>
+            <span class="ticker-item"><i class="fa-solid fa-cloud-arrow-up"></i> <span data-ar="جارِ تحميل كورس العقود" data-en="Loading the Contracts course">جارِ تحميل كورس العقود</span></span>
+        </div>
         </div>
     </div>
 
@@ -1189,6 +1248,7 @@
             </div>
         </section>
 
+
         <section class="stats-section">
             <div class="stat-box"><span class="stat-number" data-target="20">0</span><span class="stat-label" data-ar="عاماً خبرة ميدانية" data-en="Years Field Experience">عاماً خبرة ميدانية</span></div>
             <div class="stat-box"><span class="stat-number" data-target="24">0</span><span class="stat-label" data-ar="ساعة تدريبية مكثفة" data-en="Intensive Training Hours">ساعة تدريبية مكثفة</span></div>
@@ -1232,6 +1292,7 @@
                 </div>
             </div>
         </section>
+
 
         <div class="dashboard-content" id="courses-section">
             <div class="courses-available-wrap">
@@ -1319,9 +1380,6 @@
                         </div>
                         <h3 data-ar="إدارة تكاليف المشاريع الهندسية" data-en="Engineering Project Cost Management">إدارة تكاليف المشاريع الهندسية</h3>
                         <p class="en-text">Engineering Project Cost Management</p>
-                        <div class="status-badge-box design">
-                            <i class="fa-solid fa-compass fa-spin"></i> <span data-ar="قيد التصميم" data-en="Under Design">قيد التصميم</span>
-                        </div>
                     </div>
 
                     <div class="nav-card course-card-upcoming" onclick="showCourseComingSoon(event)">
@@ -1332,9 +1390,6 @@
                         </div>
                         <h3 data-ar="التصميم الكهربائي للمشاريع" data-en="Electrical Design for Projects">التصميم الكهربائي للمشاريع</h3>
                         <p class="en-text">Electrical Design for Projects</p>
-                        <div class="status-badge-box soon-badge">
-                            <i class="fa-solid fa-hourglass-half"></i> <span data-ar="قريباً" data-en="Coming Soon">قريباً</span>
-                        </div>
                     </div>
 
                     <div class="nav-card course-card-upcoming" onclick="showCourseComingSoon(event)">
@@ -1345,9 +1400,6 @@
                         </div>
                         <h3 data-ar="هندسة مراكز البيانات" data-en="Data Center Infrastructure">هندسة مراكز البيانات</h3>
                         <p class="en-text">Data Center Infrastructure</p>
-                        <div class="status-badge-box soon-badge">
-                            <i class="fa-solid fa-hourglass-half"></i> <span data-ar="قريباً" data-en="Coming Soon">قريباً</span>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -1413,9 +1465,20 @@
                 <div class="content-box">
                     <h3 style="margin-top: 0;"><i class="fa-solid fa-bullseye"></i> <span data-ar="أهداف الدورة" data-en="Course Objectives">أهداف الدورة</span></h3>
                     <p data-ar="تزويد المهندسين ومديري المشاريع بالمهارات العملية لبناء سجل مخاطر (Risk Register) متكامل، وتطبيق استراتيجيات الاستجابة للمخاطر لتجنب تجاوز الميزانية والجدول الزمني." data-en="Equipping engineers and project managers with practical skills to build a complete Risk Register and apply risk response strategies to prevent cost/schedule overruns.">تزويد المهندسين ومديري المشاريع بالمهارات العملية لبناء سجل مخاطر (Risk Register) متكامل، وتطبيق استراتيجيات الاستجابة للمخاطر لتجنب تجاوز الميزانية والجدول الزمني.</p>
-                    
-                    <h3><i class="fa-solid fa-layer-group"></i> <span data-ar="محاور البرنامج التدريبي (انقر للتفاصيل)" data-en="Syllabus Modules (Click to Expand)">محاور البرنامج التدريبي (انقر للتفاصيل)</span></h3>
-                    
+
+                    <div class="before-after-grid">
+                        <div class="ba-card before-card">
+                            <div class="ba-card-label"><i class="fa-solid fa-circle-xmark"></i> <span data-ar="قبل الكورس" data-en="Before the Course">قبل الكورس</span></div>
+                            <p data-ar="التعامل مع المخاطر يكون بعد وقوعها، دون سجل مخاطر موثق، وتُتخذ القرارات بناءً على التقدير الشخصي لا على بيانات واضحة." data-en="You deal with risks after they happen, with no documented risk register, and decisions are based on gut feeling rather than clear data.">التعامل مع المخاطر يكون بعد وقوعها، دون سجل مخاطر موثق، وتُتخذ القرارات بناءً على التقدير الشخصي لا على بيانات واضحة.</p>
+                        </div>
+                        <div class="ba-card after-card">
+                            <div class="ba-card-label"><i class="fa-solid fa-circle-check"></i> <span data-ar="بعد الكورس" data-en="After the Course">بعد الكورس</span></div>
+                            <p data-ar="تُبنى سجلات مخاطر احترافية، وتُتوقع المشكلات قبل حدوثها، وتُتخذ القرارات بناءً على تحليل كمي دقيق يحمي الميزانية والجدول الزمني." data-en="You build a professional risk register, anticipate problems before they occur, and make decisions based on precise quantitative analysis that protects budget and schedule.">تُبنى سجلات مخاطر احترافية، وتُتوقع المشكلات قبل حدوثها، وتُتخذ القرارات بناءً على تحليل كمي دقيق يحمي الميزانية والجدول الزمني.</p>
+                        </div>
+                    </div>
+
+                    <h3><i class="fa-solid fa-layer-group"></i> <span data-ar="محاور البرنامج التدريبي" data-en="Syllabus Modules">محاور البرنامج التدريبي</span></h3>
+
                     <!-- Interactive Accordion Outline -->
                     <div class="accordion-group">
                         <div class="accordion-item active">
@@ -1500,13 +1563,24 @@
                     <p data-ar="محتوى مبسط وعملي يعلمك كيف تحلل وظائف المشروع، وتبتكر بدائل تصميمية ذكية ومستدامة تقلل التكاليف بشكل فعال مع الحفاظ على أعلى معايير الأمان والجودة." data-en="Practical content teaching function analysis, creating smart design alternatives that reduce costs while maintaining quality standards.">محتوى مبسط وعملي يعلمك كيف تحلل وظائف المشروع، وتبتكر بدائل تصميمية ذكية ومستدامة تقلل التكاليف بشكل فعال مع الحفاظ على أعلى معايير الأمان والجودة.</p>
                     
                     <h3><i class="fa-solid fa-gift" style="color: var(--accent-color);"></i> <span data-ar="هدية الكورس: أداة تطبيقية مخصصة" data-en="Course Gift: Custom VE Toolkit">هدية الكورس: أداة تطبيقية مخصصة</span></h3>
-                    <p data-ar="صممنا لك هذه الأداة البسيطة لتكون هديتك مع الكورس، عشان تساعدك على تطبيق اللي اتعلمته بشكل فوري ومباشر:" data-en="Designed as a bonus tool to help you immediately apply what you learn in real scenarios:">صممنا لك هذه الأداة البسيطة لتكون هديتك مع الكورس، عشان تساعدك على تطبيق اللي اتعلمته بشكل فوري ومباشر:</p>
+                    <p data-ar="أداة بسيطة مُرفقة مع الكورس، تساعدك على تطبيق ما تتعلمه بشكل مباشر:" data-en="Designed as a bonus tool to help you immediately apply what you learn in real scenarios:">أداة بسيطة مُرفقة مع الكورس، تساعدك على تطبيق ما تتعلمه بشكل مباشر:</p>
                     <ul class="sales-checklist">
-                        <li><i class="fa-solid fa-check-circle"></i> <strong data-ar="Value Engineering Toolkit:" data-en="Value Engineering Toolkit:">Value Engineering Toolkit:</strong> <span data-ar="أداة تفاعلية تساعدك على تطبيق منهجية الهندسة القيمية عمليًا، بدءًا من تحليل الوظائف والتكلفة، مرورًا بتقييم البدائل وحساب مؤشر القيمة (Value Index)، وانتهاءً باختيار أفضل الحلول واتخاذ قرارات مدعومة بالبيانات والرسوم البيانية." data-en="An interactive tool assisting in practical VE methodology, from cost-function analysis to alternative evaluation and calculating Value Index.">أداة تفاعلية تساعدك على تطبيق منهجية الهندسة القيمية عمليًا، بدءًا من تحليل الوظائف والتكلفة، مرورًا بتقييم البدائل وحساب مؤشر القيمة (Value Index)، وانتهاءً باختيار أفضل الحلول واتخاذ قرارات مدعومة بالبيانات والرسوم البيانية.</span></li>
+                        <li><i class="fa-solid fa-check-circle"></i> <strong data-ar="Value Engineering Toolkit:" data-en="Value Engineering Toolkit:">Value Engineering Toolkit:</strong> <span data-ar="ملف بسيط يساعدك على تطبيق خطوات الهندسة القيمية بشكل مباشر، من تحليل الوظائف إلى تقييم البدائل واختيار الأنسب منها." data-en="A simple sheet that helps you apply the value engineering steps directly, from function analysis to evaluating and selecting the best alternative.">ملف بسيط يساعدك على تطبيق خطوات الهندسة القيمية بشكل مباشر، من تحليل الوظائف إلى تقييم البدائل واختيار الأنسب منها.</span></li>
                     </ul>
 
-                    <h3><i class="fa-solid fa-layer-group"></i> <span data-ar="محاور البرنامج التدريبي (انقر للتفاصيل)" data-en="Course Plan (Click to Expand)">محاور البرنامج التدريبي (انقر للتفاصيل)</span></h3>
-                    
+                    <h3><i class="fa-solid fa-layer-group"></i> <span data-ar="محاور البرنامج التدريبي" data-en="Course Plan">محاور البرنامج التدريبي</span></h3>
+
+                    <div class="before-after-grid">
+                        <div class="ba-card before-card">
+                            <div class="ba-card-label"><i class="fa-solid fa-circle-xmark"></i> <span data-ar="قبل الكورس" data-en="Before the Course">قبل الكورس</span></div>
+                            <p data-ar="غالبًا ما يكون تخفيض التكلفة قرارًا عشوائيًا يؤثر على الجودة أو الأداء دون أن يظهر ذلك إلا بعد فوات الأوان." data-en="Cost reduction is often a random decision that affects quality or performance without you realizing it until it's too late.">غالبًا ما يكون تخفيض التكلفة قرارًا عشوائيًا يؤثر على الجودة أو الأداء دون أن يظهر ذلك إلا بعد فوات الأوان.</p>
+                        </div>
+                        <div class="ba-card after-card">
+                            <div class="ba-card-label"><i class="fa-solid fa-circle-check"></i> <span data-ar="بعد الكورس" data-en="After the Course">بعد الكورس</span></div>
+                            <p data-ar="تُحلَّل وظائف المشروع بمنهجية واضحة، وتُوجد بدائل تُخفّض التكلفة فعليًا دون المساس بالجودة، باستخدام أدوات معتمدة عالميًا." data-en="You analyze project functions with a clear methodology and find alternatives that genuinely reduce cost without sacrificing quality, using globally recognized tools.">تُحلَّل وظائف المشروع بمنهجية واضحة، وتُوجد بدائل تُخفّض التكلفة فعليًا دون المساس بالجودة، باستخدام أدوات معتمدة عالميًا.</p>
+                        </div>
+                    </div>
+
                     <div class="accordion-group">
                         <div class="accordion-item active">
                             <div class="accordion-header" onclick="toggleAccordion(this)">
@@ -1563,17 +1637,11 @@
                 <i class="fa-solid fa-arrow-right"></i> <span data-ar="العودة للمسارات" data-en="Back to Tracks">العودة للمسارات</span>
             </button>
             <div class="course-details-header" style="background: linear-gradient(135deg, var(--primary-blue) 0%, #0369a1 100%); padding: 50px 24px;">
-                <span style="background: rgba(255,255,255,0.2); padding: 6px 16px; border-radius: 20px; font-size: 13px; font-weight: 800; display: inline-block; margin-bottom: 12px;"><i class="fa-solid fa-compass fa-spin"></i> <span data-ar="قريباً / قيد التطوير ⚡" data-en="In Development ⚡">قريباً / قيد التطوير ⚡</span></span>
                 <h2>BA Engineering Academy</h2>
                 <p style="font-size: 1.3rem; font-weight: 800; color: #fff; margin-top: 4px;">التصميم الكهربائي للمشاريع (Electrical Design for Projects)</p>
             </div>
             
             <div class="content-box">
-                <div style="text-align: center; background: rgba(30, 58, 138, 0.08); border: 2px dashed var(--primary-blue); padding: 20px; border-radius: 18px; margin-bottom: 28px;">
-                    <span style="font-size: 1.2rem; font-weight: 900; color: var(--primary-blue);"><i class="fa-solid fa-bolt"></i> <span data-ar="الكورس حالياً: قيد التطوير والإعداد ⚡" data-en="Course Status: Under Development ⚡">الكورس حالياً: قيد التطوير والإعداد ⚡</span></span>
-                    <p style="color: var(--text-muted); margin-top: 8px; font-size: 0.98rem;" data-ar="نعمل على إعداد محتوى هندسي متكامل وفقاً للأكواد العالمية لحساب الأحمال للمنشآت السكنية والتجارية والصناعية." data-en="Developing comprehensive engineering content per international codes for residential, commercial & industrial load calculations.">نعمل على إعداد محتوى هندسي متكامل وفقاً للأكواد العالمية لحساب الأحمال للمنشآت السكنية والتجارية والصناعية.</p>
-                </div>
-
                 <h2><i class="fa-solid fa-circle-info"></i> <span data-ar="ملخص بسيط وواضح لمحتوى الكورس" data-en="Course Summary">ملخص بسيط وواضح لمحتوى الكورس</span></h2>
                 <p data-ar="مقرر هندسي تخصصي يغطي أسس حساب الأحمال الكهربائية للوحات التوزيع، مع شرح تطبيقي دقيق لمعامل الطلب ومعامل التنوع اختيار الكابلات والقواطع." data-en="Specialized course covering load calculation fundamentals for distribution panels, demand/diversity factors, breaker and cable sizing.">مقرر هندسي تخصصي يغطي أسس حساب الأحمال الكهربائية للوحات التوزيع، مع شرح تطبيقي دقيق لمعامل الطلب ومعامل التنوع اختيار الكابلات والقواطع.</p>
 
@@ -1593,17 +1661,11 @@
                 <i class="fa-solid fa-arrow-right"></i> <span data-ar="العودة للمسارات" data-en="Back to Tracks">العودة للمسارات</span>
             </button>
             <div class="course-details-header" style="background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%); padding: 50px 24px;">
-                <span style="background: rgba(255,255,255,0.2); padding: 6px 16px; border-radius: 20px; font-size: 13px; font-weight: 800; display: inline-block; margin-bottom: 12px;"><i class="fa-solid fa-compass fa-spin"></i> <span data-ar="قيد التصميم والتطوير 💡" data-en="Under Design 💡">قيد التصميم والتطوير 💡</span></span>
                 <h2>BA Engineering Academy</h2>
                 <p style="font-size: 1.3rem; font-weight: 800; color: #fff; margin-top: 4px;" data-ar="إدارة العقود والمطالبات الهندسية" data-en="Professional Contract & Claims Management">إدارة العقود والمطالبات الهندسية</p>
             </div>
             
             <div class="content-box">
-                <div style="text-align: center; background: rgba(30, 58, 138, 0.08); border: 2px dashed var(--primary-blue); padding: 20px; border-radius: 18px; margin-bottom: 28px;">
-                    <span style="font-size: 1.2rem; font-weight: 900; color: var(--primary-blue);"><i class="fa-solid fa-pen-ruler"></i> <span data-ar="الكورس حالياً: قيد التصميم والتطوير 💡" data-en="Status: Under Design 💡">الكورس حالياً: قيد التصميم والتطوير 💡</span></span>
-                    <p style="color: var(--text-muted); margin-top: 8px; font-size: 0.98rem;" data-ar="نعمل حالياً على إعداد وتصوير المحتوى الميداني والأمثلة التطبيقية لطرحه قريباً بأعلى جودة." data-en="Preparing practical examples & field videos to launch soon with top quality.">نعمل حالياً على إعداد وتصوير المحتوى الميداني والأمثلة التطبيقية لطرحه قريباً بأعلى جودة.</p>
-                </div>
-
                 <h2><i class="fa-solid fa-circle-info"></i> <span data-ar="ملخص بسيط وواضح لمحتوى الكورس" data-en="Course Summary">ملخص بسيط وواضح لمحتوى الكورس</span></h2>
                 <p data-ar="مقرر متخصص في صياغة وإدارة العقود الإنشائية، تتبع المستخلصات، دراسة مطالبات التغيير، والتحكم الصارم في ميزانية المشروع وتكاليفه لضمان عدم التعثر المالي." data-en="Specialized course in construction contracts, variations, invoices, and budget control to avoid cost overrun.">مقرر متخصص في صياغة وإدارة العقود الإنشائية، تتبع المستخلصات، دراسة مطالبات التغيير، والتحكم الصارم في ميزانية المشروع وتكاليفه لضمان عدم التعثر المالي.</p>
 
@@ -1622,17 +1684,11 @@
                 <i class="fa-solid fa-arrow-right"></i> <span data-ar="العودة للمسارات" data-en="Back to Tracks">العودة للمسارات</span>
             </button>
             <div class="course-details-header" style="background: linear-gradient(135deg, #0ea5e9 0%, #0369a1 100%); padding: 50px 24px;">
-                <span style="background: rgba(255,255,255,0.2); padding: 6px 16px; border-radius: 20px; font-size: 13px; font-weight: 800; display: inline-block; margin-bottom: 12px;"><i class="fa-solid fa-hourglass-half"></i> <span data-ar="قريباً ⏳" data-en="Coming Soon ⏳">قريباً ⏳</span></span>
                 <h2>BA Engineering Academy</h2>
                 <p style="font-size: 1.3rem; font-weight: 800; color: #fff; margin-top: 4px;">هندسة مراكز البيانات (Data Center Infrastructure)</p>
             </div>
             
             <div class="content-box">
-                <div style="text-align: center; background: rgba(14, 165, 233, 0.08); border: 2px dashed #0ea5e9; padding: 20px; border-radius: 18px; margin-bottom: 28px;">
-                    <span style="font-size: 1.2rem; font-weight: 900; color: #0284c7;"><i class="fa-solid fa-hourglass-half"></i> <span data-ar="الكورس حالياً: قريباً ⏳" data-en="Status: Coming Soon ⏳">الكورس حالياً: قريباً ⏳</span></span>
-                    <p style="color: var(--text-muted); margin-top: 8px; font-size: 0.98rem;" data-ar="نعمل على إعداد محتوى هندسي متتقدم ومخصص لتصميم وبنية مرافق مراكز البيانات الحيوية." data-en="Developing advanced engineering content for data center design & infrastructure.">نعمل على إعداد محتوى هندسي متتقدم ومخصص لتصميم وبنية مرافق مراكز البيانات الحيوية.</p>
-                </div>
-
                 <h2><i class="fa-solid fa-circle-info"></i> <span data-ar="ملخص بسيط وواضح لمحتوى الكورس" data-en="Course Overview">ملخص بسيط وواضح لمحتوى الكورس</span></h2>
                 <p data-ar="مقرر هندسي متقدم يغطي معايير تصميم وبناء مرافق مراكز البيانات، بما يشمل أنظمة الطاقة الكهربائية الحرجة، التكييف والتبريد، والتمديدات." data-en="Advanced course covering data center design standards, critical power systems, HVAC cooling, and cabling infrastructure.">مقرر هندسي متقدم يغطي معايير تصميم وبناء مرافق مراكز البيانات، بما يشمل أنظمة الطاقة الكهربائية الحرجة، التكييف والتبريد، والتمديدات.</p>
             </div>
