@@ -1171,6 +1171,20 @@
         </div>
     </div
 
+    <!-- Contract Course Portal: prepared in code only, not yet wired to any visible button. Activate once the course is live by adding onclick="openContractLoginModal()" to the relevant button. -->
+    <div class="modal-overlay" id="contract-login-modal-overlay">
+        <div class="login-modal">
+            <i class="fa-solid fa-lock" style="font-size: 2.8rem; color: var(--accent-color); margin-bottom: 14px;"></i>
+            <h3 data-ar="بوابة متدربي إدارة العقود والمطالبات" data-en="Contract & Claims Management Portal">بوابة متدربي إدارة العقود والمطالبات</h3>
+            <p style="color: var(--text-muted); margin-bottom: 18px; font-weight: 600; font-size: 0.92rem;" data-ar="الرجاء إدخال الرمز السري المخصص للدخول إلى المقرر" data-en="Please enter the access key to enter the course">الرجاء إدخال الرمز السري المخصص للدخول إلى المقرر</p>
+            <input type="password" id="contract-course-password" class="login-input" placeholder="أدخل الرمز السري...">
+            <div style="display: flex; gap: 10px;">
+                <button class="btn-primary" style="flex: 1;" onclick="verifyContractLogin()" data-ar="دخول" data-en="Enter">دخول</button>
+                <button class="btn-outline" style="flex: 1;" onclick="closeContractModal()" data-ar="إلغاء" data-en="Cancel">إلغاء</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Header Section with Central Navigation -->
     <header class="top-bar" id="main-topbar">
         <div class="top-bar-inner">
@@ -1731,7 +1745,7 @@
             <iframe id="screen-main" class="screen-frame" src="risk/core.html"></iframe>
             <iframe id="screen-guide" class="screen-frame" src="risk/STUDY GUIDE.html"></iframe>
             <iframe id="screen-tools" class="screen-frame" src="risk/tools-4.html"></iframe>
-            <iframe id="screen-quiz" class="screen-frame" src="risk/50 PMI Question.HTML"></iframe>
+            <iframe id="screen-quiz" class="screen-frame" src="risk/50 PMI Question.html"></iframe>
         </div>
     </main>
 
@@ -2184,6 +2198,39 @@
         document.getElementById('va-course-password').addEventListener('keypress', function (e) {
             if (e.key === 'Enter') verifyVALogin();
         });
+
+        // Contract & Claims Management course portal — prepared in code only.
+        // Not yet wired to any visible button; will be activated once the course launches.
+        function openContractLoginModal() {
+            document.getElementById('contract-login-modal-overlay').classList.add('active');
+            document.getElementById('contract-course-password').focus();
+        }
+        function closeContractModal() {
+            document.getElementById('contract-login-modal-overlay').classList.remove('active');
+            document.getElementById('contract-course-password').value = '';
+        }
+
+        function verifyContractLogin() {
+            let val = document.getElementById('contract-course-password').value;
+            if (val === "2026") {
+                closeContractModal();
+                const loader = document.getElementById('full-page-loader');
+                loader.style.display = 'flex';
+                setTimeout(() => {
+                    loader.style.display = 'none';
+                    window.location.href = "contract/contracts_core.html";
+                }, 600);
+            } else {
+                showToast('الرمز السري غير صحيح!', 'error');
+            }
+        }
+
+        document.getElementById('contract-course-password').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') verifyContractLogin();
+        });
+
+        // Contract course intro video — prepared but not yet linked to a visible button.
+        // To activate: add onclick="openVideoModal('video/contract.mp4', 'نبذة تعريفية عن كورس إدارة العقود والمطالبات')" to the desired button.
 
         function trackAndOpen(percent, screenId, titleAr) {
             if (percent > currentProgress) {
