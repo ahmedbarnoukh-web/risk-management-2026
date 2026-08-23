@@ -1,0 +1,1235 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VE Pro Suite – Value Engineering Digital Workshop v2.9</title>
+    
+    <!-- مكتبات الأداة -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-main: #f8fafc;
+            --card-bg: #ffffff;
+            --border-color: #cbd5e1;
+            --text-main: #0f172a;
+            --text-muted: #475569;
+            --primary: #0284c7; 
+            --primary-hover: #0369a1;
+            --accent: #0284c7;
+            --btn-green: #16a34a;
+            --btn-orange: #ea580c;
+            --btn-red: #dc2626;
+            --input-bg: #ffffff;
+            --input-border: #cbd5e1;
+            --th-bg: #f1f5f9;
+            --row-hover: #f8fafc;
+        }
+
+        body.dark-mode {
+            --bg-main: #090d16;
+            --card-bg: #111827;
+            --border-color: #374151;
+            --text-main: #ffffff;
+            --text-muted: #9ca3af;
+            --primary: #38bdf8;
+            --accent: #38bdf8;
+            --btn-green: #22c55e;
+            --btn-orange: #f97316;
+            --btn-red: #ef4444;
+            --input-bg: #1f2937;
+            --input-border: #4b5563;
+            --th-bg: #1f2937;
+            --row-hover: #1e293b;
+        }
+
+        * { box-sizing: border-box; font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif; margin: 0; padding: 0; }
+        body { background-color: var(--bg-main); color: var(--text-main); font-size: 16px; transition: background-color 0.3s, color 0.3s; }
+
+        #login-section { display: flex; justify-content: center; align-items: center; min-height: 100vh; background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%); padding: 20px; }
+        body.dark-mode #login-section { background: linear-gradient(135deg, #090d16 0%, #111827 100%); }
+        .login-card { background: #ffffff; border: 1px solid #cbd5e1; padding: 50px 40px; border-radius: 24px; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.08); width: 100%; max-width: 440px; text-align: center; }
+        .login-brand-icon { width: 64px; height: 64px; background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%); color: #ffffff; border-radius: 18px; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 20px; font-weight: 900; font-size: 22px; }
+        .login-card .brand-title { color: #0f172a; font-size: 24px; font-weight: 900; margin-bottom: 6px; }
+        .login-card .brand-subtitle { color: #64748b; font-size: 14px; margin-bottom: 35px; font-weight: 700; }
+        .input-group-sys { margin-bottom: 22px; text-align: right; }
+        .input-group-sys label { display: block; margin-bottom: 8px; color: #334155; font-weight: 700; font-size: 14px; }
+        .input-wrapper-login { position: relative; display: flex; align-items: center; }
+        .input-wrapper-login i { position: absolute; right: 16px; color: #64748b; font-size: 16px; }
+        .input-group-sys input { width: 100%; padding: 14px 45px 14px 16px; background-color: #f8fafc; border: 1px solid #cbd5e1; color: #0f172a; border-radius: 12px; font-size: 15px; outline: none; font-weight: 600; }
+        .login-btn { background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%); color: #fff; border: none; padding: 14px; width: 100%; border-radius: 12px; font-size: 16px; font-weight: 800; cursor: pointer; margin-top: 10px; }
+        .error-message { color: #dc2626; font-size: 14px; margin-top: 15px; display: none; font-weight: 700; }
+
+        #app-section { display: none; flex-direction: column; min-height: 100vh; background-color: var(--bg-main); }
+        .app-header { background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%); padding: 18px 30px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.3); }
+        .header-left { display: flex; align-items: center; gap: 15px; }
+        
+        .header-center-title { display: flex; flex-direction: column; align-items: center; text-align: center; }
+        .brand-main-title { color: #ffffff; font-size: 24px; font-weight: 900; letter-spacing: 0.8px; font-family: 'Cairo', sans-serif; text-shadow: 0 2px 5px rgba(0,0,0,0.25); }
+        .brand-sub-title { color: #e0f2fe; font-size: 13px; font-weight: 800; margin-top: 3px; letter-spacing: 0.5px; }
+
+        .academy-logo-badge { background: #e0f2fe; color: #0369a1; padding: 8px 16px; border-radius: 10px; font-weight: 900; font-size: 14px; box-shadow: 0 3px 6px rgba(0,0,0,0.15); display: flex; align-items: center; gap: 8px; border: 1px solid #bae6fd; }
+        .user-profile-badge { display: flex; align-items: center; gap: 10px; background: rgba(255,255,255,0.15); padding: 6px 14px; border-radius: 10px; color: #fff; font-weight: 800; font-size: 14px; border: 1px solid rgba(255,255,255,0.25); }
+        
+        .print-btn { background-color: rgba(255,255,255,0.15); color: #fff; border: 1px solid rgba(255,255,255,0.3); padding: 10px 18px; border-radius: 8px; font-weight: 700; font-size: 14px; cursor: pointer; display: flex; align-items: center; gap: 8px; }
+        .logout-btn { background-color: rgba(185, 28, 28, 0.5); border-color: rgba(239, 68, 68, 0.6); }
+        .header-right { display: flex; align-items: center; gap: 15px; color: #fff; font-weight: 800; font-size: 15px; }
+
+        .ve-tool-wrapper { background-color: var(--bg-main); color: var(--text-main); direction: rtl; padding: 30px 40px; padding-bottom: 70px; }
+        
+        .top-actions-bar { display: flex; align-items: center; margin-bottom: 20px; gap: 10px; flex-wrap: wrap; justify-content: space-between; }
+        .top-actions-left { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+        
+        .btn-top { padding: 11px 16px; border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-main); background-color: var(--card-bg); font-size: 14px; font-weight: 800; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; transition: background-color 0.2s; }
+        .btn-top:hover { background-color: var(--th-bg); }
+        
+        .btn-primary-action { background-color: #0284c7; color: #ffffff; border-color: #0369a1; }
+        .btn-primary-action:hover { background-color: #0369a1; }
+
+        .btn-sample-mini { background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%) !important; color: #ffffff !important; border: none !important; font-weight: 900 !important; box-shadow: 0 4px 6px -1px rgba(245, 158, 11, 0.25); }
+        .btn-sample-mini:hover { background: linear-gradient(135deg, #d97706 0%, #b45309 100%) !important; }
+
+        .currency-selector-box { display: flex; align-items: center; gap: 8px; background: var(--card-bg); padding: 8px 14px; border-radius: 8px; border: 1px solid var(--border-color); font-weight: 800; font-size: 14px; }
+        .currency-selector-box select { border: none; background: transparent; color: var(--text-main); font-weight: 900; font-size: 14px; outline: none; cursor: pointer; }
+
+        .proj-meta-grid { background-color: var(--card-bg); border: 1px solid var(--border-color); padding: 22px; border-radius: 14px; margin-bottom: 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
+        .proj-field { display: flex; flex-direction: column; gap: 6px; }
+        .proj-field label { font-size: 13px; font-weight: 800; color: var(--text-muted); }
+        .proj-field input, .proj-field select, .proj-field textarea { padding: 11px 14px; border: 1px solid var(--input-border); background: var(--input-bg); border-radius: 8px; font-size: 14px; color: var(--text-main); font-weight: 700; outline: none; resize: vertical; }
+
+        .command-panel { background-color: var(--card-bg); color: var(--text-main); padding: 22px; border-radius: 14px; display: flex; justify-content: space-around; align-items: center; gap: 15px; margin-bottom: 25px; border: 1px solid var(--border-color); }
+        .ve-stat { text-align: center; font-size: 14px; font-weight: 800; color: var(--text-muted); }
+        .ve-stat span { display: block; font-size: 24px; margin-top: 6px; font-weight: 900; }
+        .stat-blue { color: #0284c7; } 
+        .stat-green { color: #16a34a; } 
+        .stat-orange { color: #ea580c; } 
+
+        .form-container { background-color: var(--card-bg); border: 1px solid var(--border-color); padding: 28px; border-radius: 14px; margin-bottom: 25px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.08); }
+        .inputs-row { display: flex; flex-wrap: wrap; gap: 15px; align-items: flex-end; margin-bottom: 20px; width: 100%; }
+        .input-group { display: flex; flex-direction: column; gap: 7px; flex: 1; min-width: 140px; }
+        .input-group label { font-size: 14px; font-weight: 800; color: var(--text-main); white-space: nowrap; }
+        .input-group input, .input-group select { padding: 12px 10px; border: 1px solid var(--input-border); border-radius: 8px; font-size: 15px; outline: none; background-color: var(--input-bg); color: var(--text-main); font-weight: 700; }
+
+        input.input-error { border-color: #dc2626 !important; background-color: rgba(239, 68, 68, 0.08) !important; color: #dc2626 !important; }
+        .form-error-alert { color: #dc2626; font-size: 13px; font-weight: 800; margin-top: -10px; margin-bottom: 15px; display: none; }
+        .form-warning-alert { color: #d97706; font-size: 13px; font-weight: 800; margin-top: -10px; margin-bottom: 15px; display: none; }
+        input.input-warning { border-color: #d97706 !important; background-color: rgba(217, 119, 6, 0.08) !important; color: #d97706 !important; }
+
+        .vi-digital-gauge-box { background: var(--th-bg); border: 2px solid var(--border-color); border-radius: 12px; padding: 15px; display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; gap: 15px; flex-wrap: wrap; }
+        .gauge-info h4 { font-size: 14px; font-weight: 900; color: var(--accent); margin-bottom: 3px; display: flex; align-items: center; gap: 6px; }
+        .gauge-info p { font-size: 12px; font-weight: 700; color: var(--text-muted); }
+        .gauge-display { background: var(--card-bg); border: 2px solid var(--border-color); padding: 10px 25px; border-radius: 10px; text-align: center; min-width: 140px; }
+        .gauge-value-number { font-size: 26px; font-weight: 900; transition: color 0.3s; }
+        .gauge-status-text { font-size: 12px; font-weight: 800; margin-top: 2px; }
+
+        .action-bar { display: flex; gap: 12px; padding-top: 20px; border-top: 1px solid var(--border-color); flex-wrap: wrap; align-items: center; }
+        .btn-action { padding: 12px 20px; border: none; border-radius: 8px; color: white; font-size: 15px; font-weight: 800; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; }
+        .btn-add { background-color: var(--btn-green); font-size: 16px; padding: 12px 30px; }
+        .btn-clear { background-color: #64748b; }
+        .btn-csv { background-color: #0284c7; }
+
+        .filter-toolbar { display: flex; gap: 15px; margin-bottom: 15px; align-items: center; background: var(--card-bg); padding: 18px; border-radius: 12px; border: 1px solid var(--border-color); flex-wrap: wrap; }
+        .filter-toolbar input { flex: 2; padding: 11px 16px; border: 1px solid var(--input-border); border-radius: 8px; background: var(--input-bg); color: var(--text-main); font-size: 14px; font-weight: 700; outline: none; }
+        .filter-toolbar select { flex: 1; padding: 11px; border: 1px solid var(--input-border); border-radius: 8px; background: var(--input-bg); color: var(--text-main); font-weight: 700; font-size: 14px; outline: none; }
+        .filter-title { font-weight: 900; color: var(--accent); font-size: 16px; display: flex; align-items: center; gap: 8px; }
+
+        .table-container { overflow-x: auto; border: 1px solid var(--border-color); border-radius: 14px; margin-bottom: 30px; max-height: 500px; overflow-y: auto; background: var(--card-bg); }
+        .ve-table { width: 100%; border-collapse: collapse; text-align: center; direction: rtl; font-size: 14px; }
+        .ve-table th { background-color: var(--th-bg); color: var(--accent); font-weight: 900; padding: 15px 10px; border-bottom: 2px solid var(--border-color); position: sticky; top: 0; z-index: 2; font-size: 14px; }
+        .ve-table td { padding: 14px 10px; border-bottom: 1px solid var(--border-color); color: var(--text-main); vertical-align: middle; font-weight: 700; }
+        .ve-table tr:hover td { background-color: var(--row-hover); }
+
+        .status-study { background-color: rgba(249, 115, 22, 0.15); color: #ea580c; border: 1px solid rgba(249, 115, 22, 0.3); font-weight: 800; padding: 6px 10px; border-radius: 6px; font-size: 13px; }
+        .status-accepted { background-color: rgba(34, 197, 94, 0.15); color: #16a34a; border: 1px solid rgba(34, 197, 94, 0.3); font-weight: 800; padding: 6px 10px; border-radius: 6px; font-size: 13px; }
+        .status-rejected { background-color: rgba(239, 68, 68, 0.15); color: #dc2626; border: 1px solid rgba(239, 68, 68, 0.3); font-weight: 800; padding: 6px 10px; border-radius: 6px; font-size: 13px; }
+        .money-cell { font-weight: 900; }
+
+        .analytics-row { display: grid; grid-template-columns: 1fr 1.5fr; gap: 25px; margin-bottom: 25px; }
+        .chart-box { border: 1px solid var(--border-color); border-radius: 16px; padding: 25px; background: var(--card-bg); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05); }
+        .chart-box h3 { font-size: 17px; color: var(--accent); margin-bottom: 20px; border-bottom: 1px solid var(--border-color); padding-bottom: 12px; font-weight: 900; display: flex; align-items: center; gap: 10px; }
+
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.6); z-index: 9999; overflow-y: auto; padding: 20px; backdrop-filter: blur(4px); direction: rtl; }
+        .modal-content { background: var(--card-bg); color: var(--text-main); max-width: 900px; margin: 30px auto; padding: 45px; border-radius: 18px; border: 1px solid var(--border-color); }
+        
+        @media (max-width: 1000px) { .analytics-row { grid-template-columns: 1fr; } }
+
+        @media print {
+            @page { size: A4 landscape; margin: 10mm; }
+            body { background: #fff !important; color: #000 !important; padding: 0; font-size: 12px !important; }
+            .app-header, .top-actions-bar, .form-container, .filter-toolbar, .analytics-row, .modal-overlay .no-print, .action-btns { display: none !important; }
+            #reportModal { display: block !important; position: relative; background: transparent; padding: 0; width: 100%; height: auto; }
+            .modal-content { padding: 0; margin: 0; border: none; box-shadow: none; color: #000; background: #fff !important; max-width: 100% !important; width: 100% !important; }
+            .ve-table { font-size: 11px !important; width: 100% !important; }
+            .ve-table td, .ve-table th { border: 1px solid #000; color: #000; padding: 6px 4px !important; }
+            .status-accepted, .status-study, .status-rejected { border: none; background: transparent; color: #000; padding: 0; }
+            .print-signatures { display: flex !important; justify-content: space-between; margin-top: 30px; page-break-inside: avoid; }
+        }
+        .print-signatures { display: none; }
+    </style>
+</head>
+<body>
+
+    <!-- شاشة تسجيل الدخول -->
+    <div id="login-section">
+        <div class="login-card">
+            <div class="login-brand-icon">VE</div>
+            <div class="brand-title">VE Pro Suite</div>
+            <div class="brand-subtitle">Value Engineering Digital Workshop (v2.9)</div>
+            
+            <form id="login-form">
+                <div class="input-group-sys">
+                    <label>اسم المستخدم / Username</label>
+                    <div class="input-wrapper-login">
+                        <i class="fa-solid fa-user"></i>
+                        <input type="text" id="username" placeholder="admin" required>
+                    </div>
+                </div>
+                <div class="input-group-sys">
+                    <label>كلمة المرور / Password</label>
+                    <div class="input-wrapper-login">
+                        <i class="fa-solid fa-lock"></i>
+                        <input type="password" id="password" placeholder="123" required>
+                    </div>
+                </div>
+                <button type="submit" class="login-btn">تسجيل الدخول</button>
+                <div id="error-msg" class="error-message">بيانات غير صحيحة.</div>
+            </form>
+        </div>
+    </div>
+
+    <!-- المنصة الرئيسية -->
+    <div id="app-section">
+        <header class="app-header">
+            <div class="header-left">
+                <div class="academy-logo-badge"><i class="fa-solid fa-gem"></i> VE PRO SUITE</div>
+                
+                <div class="user-profile-badge">
+                    <i class="fa-solid fa-user-tie"></i>
+                    <span id="headerUserName">مدير النظام</span>
+                </div>
+            </div>
+            
+            <div class="header-center-title">
+                <div class="brand-main-title">VE Pro Suite – Value Engineering Digital Workshop</div>
+                <div class="brand-sub-title">محطة عمل الهندسة القيمية المتكاملة</div>
+            </div>
+
+            <div class="header-right">
+                <button class="print-btn" id="levelToggleBtn" onclick="toggleAdvancedMode()" style="background-color: #0369a1; border-color: #38bdf8;">
+                    <i class="fa-solid fa-sliders"></i> المستوى: <span id="levelText">الأساسي (Standard)</span>
+                </button>
+                <button class="print-btn" onclick="openReport()">
+                    التقرير التنفيذي <i class="fa-solid fa-print"></i>
+                </button>
+                <button class="print-btn logout-btn" onclick="location.reload()">خروج <i class="fa-solid fa-power-off"></i></button>
+            </div>
+        </header>
+
+        <main class="ve-tool-wrapper">
+            <div class="top-actions-bar">
+                <div class="top-actions-left">
+                    <button class="btn-top btn-primary-action" onclick="openReport()"><i class="fa-solid fa-file-pdf"></i> تصدير التقرير التنفيذي</button>
+                    <button class="btn-top" onclick="openDecisionMatrix()"><i class="fa-solid fa-table-cells"></i> مصفوفة القرار (Decision Matrix)</button>
+                    <button class="btn-top" onclick="document.getElementById('guideModal').style.display='block'"><i class="fa-solid fa-book-open"></i> الدليل الإرشادي المبسط</button>
+                    <button class="btn-top" onclick="toggleDarkMode()"><i class="fa-solid fa-moon"></i> الوضع الليلي</button>
+                    
+                    <button class="btn-top" onclick="backupData()"><i class="fa-solid fa-download"></i> نسخة احتياطية</button>
+                    <button class="btn-top" onclick="document.getElementById('restoreFile').click()"><i class="fa-solid fa-upload"></i> استعادة</button>
+                    <input type="file" id="restoreFile" style="display:none" accept=".json" onchange="restoreData(event)">
+                </div>
+
+                <button class="btn-top btn-sample-mini" onclick="loadSampleProject()" title="تحميل مشروع تجريبي مجمع الوزارات">
+                    <i class="fa-solid fa-cloud-arrow-down"></i> مشروع تجريبي متكامل
+                </button>
+
+                <div class="currency-selector-box">
+                    <i class="fa-solid fa-coins" style="color: var(--primary);"></i>
+                    <label>العملة:</label>
+                    <select id="currencySelect" onchange="changeCurrency()">
+                        <option value="USD">دولار أمريكي ($ USD)</option>
+                        <option value="SAR">ريال سعودي (SAR)</option>
+                        <option value="EGP">جنيه مصري (EGP)</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- بيانات المشروع الشاملة (فارغة تماماً افتراضياً) -->
+            <div class="proj-meta-grid">
+                <div class="proj-field"><label>اسم المشروع</label><input type="text" id="pName" placeholder="أدخل اسم المشروع هنا..." onchange="saveMeta()"></div>
+                <div class="proj-field"><label>العميل / المالك</label><input type="text" id="pClient" placeholder="اسم العميل" onchange="saveMeta()"></div>
+                <div class="proj-field"><label>مرحلة المشروع</label>
+                    <select id="pStage" onchange="saveMeta()">
+                        <option value="Concept">Concept (التصميم الفكري)</option>
+                        <option value="Design" selected>Design (التصميم المبدئي/التفصيلي)</option>
+                        <option value="Tender">Tender (المناقصة)</option>
+                        <option value="Construction">Construction (التنفيذ)</option>
+                    </select>
+                </div>
+                <div class="proj-field"><label>قائد الورشة</label><input type="text" id="pFacilitator" placeholder="أدخل اسمك هنا..." onchange="saveMeta()"></div>
+                <div class="proj-field"><label>معد التقرير</label><input type="text" id="pAuthor" placeholder="اسم معد التقرير" onchange="saveMeta()"></div>
+                <div class="proj-field"><label>تاريخ الورشة</label><input type="date" id="pDate" onchange="saveMeta()"></div>
+                <div class="proj-field" style="grid-column: 1 / -1;"><label><i class="fa-solid fa-pen-to-square"></i> ملاحظات وتوصيات قائد الورشة (فارغة للكتابة الحرة)</label><textarea id="pNotes" rows="2" placeholder="اكتب ملاحظاتك، توصيات الورشة، أو الشروط الخاصة هنا..." onchange="saveMeta()"></textarea></div>
+            </div>
+
+            <!-- لوحة الحقول المتقدمة -->
+            <div id="advancedFieldsContainer" class="proj-meta-grid" style="display: none; border-color: #0284c7; background: rgba(2, 132, 199, 0.03);">
+                <div class="proj-field"><label><i class="fa-solid fa-sliders" style="color:#0284c7"></i> تكلفة دورة الحياة الأولية (LCC Initial)</label><input type="number" id="pLccInitial" placeholder="0" onchange="saveMeta()"></div>
+                <div class="proj-field"><label><i class="fa-solid fa-sliders" style="color:#0284c7"></i> تكلفة الصيانة والطاقة (LCC Maint/Energy)</label><input type="number" id="pLccMaint" placeholder="0" onchange="saveMeta()"></div>
+                <div class="proj-field"><label><i class="fa-solid fa-sliders" style="color:#0284c7"></i> فترة الاسترداد التقديرية (Payback Years)</label><input type="text" id="pPayback" placeholder="مثال: 2.4 سنة" onchange="saveMeta()"></div>
+            </div>
+
+            <div class="command-panel">
+                <div class="ve-stat">إجمالي التكلفة الأصلية <span id="statCurrent" class="stat-orange">$0</span></div>
+                <div class="ve-stat">إجمالي القيمة المستهدفة <span id="statWorth" class="stat-blue">$0</span></div>
+                <div class="ve-stat">إجمالي الوفورات المعتمدة <span id="statSavings" class="stat-green">$0</span></div>
+            </div>
+
+            <!-- نموذج إدخال العناصر -->
+            <div class="form-container">
+                <div class="inputs-row">
+                    <div class="input-group" style="max-width: 70px;">
+                        <label>ID</label>
+                        <input type="text" id="inId" readonly style="background-color: var(--th-bg); text-align: center;">
+                    </div>
+                    <div class="input-group" style="flex: 2;">
+                        <label>العنصر / Component</label>
+                        <input type="text" id="inItem" placeholder="مثال: الواجهات الزجاجية">
+                    </div>
+                    <div class="input-group" style="max-width: 110px;">
+                        <label>الوحدة / Unit</label>
+                        <select id="inUnit">
+                            <option value="م2">متر مربع (م²)</option>
+                            <option value="م1">متر طولي (م)</option>
+                            <option value="م3">متر مكعب (م³)</option>
+                            <option value="عدد" selected>عدد (Pcs)</option>
+                            <option value="طن">طن (Ton)</option>
+                            <option value="مقطوعة">مقطوعة (LS)</option>
+                        </select>
+                    </div>
+                    <div class="input-group" style="max-width: 100px;">
+                        <label>الكمية / Qty</label>
+                        <input type="number" id="inQty" value="1" min="1" oninput="checkLogicalValues()">
+                    </div>
+                    <div class="input-group">
+                        <label>الفعل / Verb</label>
+                        <input type="text" id="inVerb" placeholder="يمنع / يعزل">
+                    </div>
+                    <div class="input-group">
+                        <label>الاسم / Noun</label>
+                        <input type="text" id="inNoun" placeholder="حرارة / ضوضاء">
+                    </div>
+                    <div class="input-group" style="max-width: 130px;">
+                        <label>نوع الوظيفة</label>
+                        <select id="inType">
+                            <option value="Basic">أساسية</option>
+                            <option value="Secondary">ثانوية</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="inputs-row">
+                    <div class="input-group">
+                        <label>تكلفة الوحدة الأصلية (<span class="currSymbol">$</span>)</label>
+                        <input type="number" id="inCost" placeholder="0" oninput="checkLogicalValues()">
+                    </div>
+                    <div class="input-group">
+                        <label>القيمة المستهدفة للوحدة (<span class="currSymbol">$</span>)</label>
+                        <input type="number" id="inWorth" placeholder="0" oninput="checkLogicalValues()">
+                    </div>
+                    <div class="input-group" style="flex: 2;">
+                        <label>الفكرة المقترحة البديلة / Proposed Idea</label>
+                        <input type="text" id="inIdea" placeholder="اكتب البديل الهندسي لتخفيض التكلفة">
+                    </div>
+                    <div class="input-group">
+                        <label>تكلفة وحدة البديل (<span class="currSymbol">$</span>)</label>
+                        <input type="number" id="inIdeaCost" placeholder="0" oninput="checkLogicalValues()">
+                    </div>
+                    <div class="input-group" style="max-width: 140px;">
+                        <label>حالة الفكرة</label>
+                        <select id="inStatus">
+                            <option value="Study">🟡 قيد الدراسة</option>
+                            <option value="Accepted">🟢 معتمدة</option>
+                            <option value="Rejected">⚫ مرفوضة</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <!-- عداد ديجيتال تفاعلي لمؤشر القيمة VI Gauge -->
+                <div class="vi-digital-gauge-box">
+                    <div class="gauge-info">
+                        <h4><i class="fa-solid fa-gauge-high"></i> مؤشر القيمة (Value Index - VI)</h4>
+                        <p>المؤشر = القيمة المستهدفة ÷ التكلفة الأصلية (المعدل المقبول ≥ 0.8)</p>
+                    </div>
+                    <div class="gauge-display">
+                        <div id="liveViNumber" class="gauge-value-number" style="color: var(--text-muted);">0.00</div>
+                        <div id="liveViStatus" class="gauge-status-text" style="color: var(--text-muted);">في انتظار البيانات</div>
+                    </div>
+                </div>
+
+                <!-- رسائل التنبيه والخطأ -->
+                <div id="worthErrorAlert" class="form-error-alert">
+                    <i class="fa-solid fa-triangle-exclamation"></i> تنبيه هندسي: لا يمكن أن تكون القيمة المستهدفة أكبر من التكلفة الأصلية!
+                </div>
+
+                <div id="ideaCostWarningAlert" class="form-warning-alert">
+                    <i class="fa-solid fa-circle-info"></i> تنبيه استشاري: تكلفة البديل أعلى من التكلفة الحالية (تأكد من وجود دراسة تكلفة دورة حياة LCC لتوفير التشغيل والطاقة).
+                </div>
+                
+                <div class="action-bar">
+                    <button class="btn-action btn-add" id="mainAddBtn" onclick="addVeItem()"><i class="fa-solid fa-plus"></i> إضافة للسجل</button>
+                    <button class="btn-action btn-clear" id="cancelEditBtn" style="display:none;" onclick="cancelEdit()"><i class="fa-solid fa-xmark"></i> إلغاء</button>
+                    <div style="flex: 1;"></div> 
+                    <button class="btn-action" style="background-color: #0284c7;" onclick="sortBySavings()"><i class="fa-solid fa-sort-amount-down"></i> ترتيب حسب الوفر</button>
+                    <button class="btn-action btn-csv" onclick="exportToCSV()"><i class="fa-solid fa-file-csv"></i> تصدير إكسيل</button>
+                    <button class="btn-action btn-clear" onclick="clearAll()" style="background-color: var(--btn-red);"><i class="fa-solid fa-trash-can"></i> مسح السجل</button>
+                </div>
+            </div>
+
+            <!-- أدوات البحث والفلترة -->
+            <div class="filter-toolbar">
+                <div class="filter-title"><i class="fa-solid fa-filter"></i> فلاتر البحث:</div>
+                <input type="text" id="fSearch" placeholder="ابحث باسم العنصر أو الوظيفة..." onkeyup="processAndRender()">
+                <select id="fStatus" onchange="processAndRender()">
+                    <option value="All">جميع الحالات</option>
+                    <option value="Accepted">المعتمدة فقط</option>
+                    <option value="Study">قيد الدراسة فقط</option>
+                    <option value="Rejected">المرفوضة فقط</option>
+                </select>
+                <select id="fType" onchange="processAndRender()">
+                    <option value="All">جميع الوظائف</option>
+                    <option value="Basic">الأساسية فقط (Basic)</option>
+                    <option value="Secondary">الثانوية فقط (Secondary)</option>
+                </select>
+            </div>
+
+            <!-- جدول السجل مع الكميات وإجمالي التكاليف -->
+            <div class="table-container">
+                <table class="ve-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>العنصر</th>
+                            <th>الوحدة</th>
+                            <th>الكمية</th>
+                            <th>الوظيفة (فعل+اسم)</th>
+                            <th>النوع</th>
+                            <th>إجمالي التكلفة الأصلية</th>
+                            <th>إجمالي القيمة المستهدفة</th>
+                            <th>مؤشر القيمة (VI)</th>
+                            <th>البديل المقترح</th>
+                            <th>إجمالي تكلفة البديل</th>
+                            <th>إجمالي الوفر</th>
+                            <th>الحالة</th>
+                            <th class="no-print">إجراءات</th>
+                        </tr>
+                    </thead>
+                    <tbody id="veBody"></tbody>
+                </table>
+            </div>
+
+            <!-- التحليلات والرسوم البيانية المحسنة -->
+            <div class="analytics-row">
+                <div class="chart-box">
+                    <h3><i class="fa-solid fa-chart-pie" style="color: #0284c7;"></i> توزيع التكلفة حسب نوع الوظائف</h3>
+                    <div style="height: 340px; position: relative;"><canvas id="typePieChart"></canvas></div>
+                </div>
+                <div class="chart-box">
+                    <h3><i class="fa-solid fa-chart-column" style="color: #ea580c;"></i> مقارنة التكاليف الإجمالية (Cost vs. Worth vs. Idea)</h3>
+                    <div style="height: 340px; position: relative;"><canvas id="costBarChart"></canvas></div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- نافذة التقرير التنفيذي -->
+    <div id="reportModal" class="modal-overlay">
+        <div class="modal-content" style="max-width: 1050px;">
+            <div style="text-align:center; border-bottom:2px solid var(--primary); padding-bottom:15px; margin-bottom:20px;">
+                <h1 style="color:var(--primary); font-weight:900; margin:0;">التقرير التنفيذي للهندسة القيمية</h1>
+                <h3 style="color:var(--text-muted); margin-top:5px;">VE Pro Suite – Value Engineering Digital Workshop (v2.9)</h3>
+            </div>
+            
+            <div style="display:grid; grid-template-columns: repeat(2, 1fr); gap:12px; background:var(--input-bg); padding:15px; border-radius:10px; border:1px solid var(--border-color); margin-bottom:20px; font-size:14px; font-weight:700;">
+                <div><strong>اسم المشروع:</strong> <span id="repProj"></span></div>
+                <div><strong>العميل:</strong> <span id="repClient"></span></div>
+                <div><strong>مرحلة المشروع:</strong> <span id="repStage"></span></div>
+                <div><strong>قائد الورشة:</strong> <span id="repFacilitator"></span></div>
+                <div><strong>معد التقرير:</strong> <span id="repAuthor"></span></div>
+                <div><strong>التاريخ:</strong> <span id="repDate"></span></div>
+                
+                <div id="repLccContainer" style="grid-column: 1 / -1; display: none; background: rgba(2,132,199,0.05); padding: 10px; border-radius: 8px; border: 1px dashed var(--primary);">
+                    <strong>تحليل دورة الحياة (LCC & Payback):</strong>
+                    <div style="display: flex; gap: 20px; margin-top: 5px; flex-wrap: wrap; font-size: 13px;">
+                        <span>تكلفة دورة الحياة الأولية: <strong id="repLccInitVal" style="color:var(--primary)"></strong></span>
+                        <span>تكلفة الصيانة والطاقة: <strong id="repLccMaintVal" style="color:var(--primary)"></strong></span>
+                        <span>فترة الاسترداد التقديرية: <strong id="repPaybackVal" style="color:var(--primary)"></strong></span>
+                    </div>
+                </div>
+
+                <div style="grid-column: 1 / -1;"><strong>ملاحظات وتوصيات قائد الورشة:</strong> <p id="repNotesDisplay" style="margin-top: 5px; font-weight: normal; color: var(--text-muted); white-space: pre-line;"></p></div>
+            </div>
+
+            <div style="display:flex; justify-content:space-around; background:rgba(2,132,199,0.1); padding:14px; border-radius:8px; font-weight:bold; margin-bottom:20px; font-size:16px;">
+                <span>التكلفة الإجمالية: <span id="repCost" class="stat-orange"></span></span>
+                <span>إجمالي الوفورات: <span id="repSave" class="stat-green"></span></span>
+            </div>
+
+            <h3 style="margin-bottom:10px; font-weight:800;">الأفكار الهندسية المعتمدة:</h3>
+            <div class="table-container" style="box-shadow:none; border:1px solid var(--border-color);">
+                <table class="ve-table" id="reportTable"></table>
+            </div>
+
+            <!-- خانات التوقيعات والاعتماد (تظهر عند الطباعة أو التقرير) -->
+            <div class="print-signatures">
+                <div style="text-align: center; width: 45%; border-top: 2px solid #000; padding-top: 10px;">
+                    <p style="font-weight: 900; font-size: 15px; margin-bottom: 5px;">معد التقرير / فريق العمل</p>
+                    <p style="font-size: 13px; color: #475569;">الاسم والتوقيع: ........................................</p>
+                </div>
+                <div style="text-align: center; width: 45%; border-top: 2px solid #000; padding-top: 10px;">
+                    <p style="font-weight: 900; font-size: 15px; margin-bottom: 5px;">مدير المشروع / الاعتماد</p>
+                    <p style="font-size: 13px; color: #475569;">الاسم والتوقيع: ........................................</p>
+                </div>
+            </div>
+
+            <div class="no-print" style="margin-top:20px; text-align:left; display:flex; gap:10px; justify-content:flex-end;">
+                <button class="btn-top btn-primary-action" onclick="window.print()"><i class="fa-solid fa-print"></i> طباعة (PDF)</button>
+                <button class="btn-top btn-clear" onclick="document.getElementById('reportModal').style.display='none'">إغلاق</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- نافذة مصفوفة القرار (Decision Matrix) -->
+    <div id="matrixModal" class="modal-overlay">
+        <div class="modal-content" style="max-width: 850px;">
+            <h2 style="color: #0284c7; margin-bottom: 15px; font-weight: 900;"><i class="fa-solid fa-table-cells"></i> مصفوفة القرار وتقييم البدائل</h2>
+            <p style="font-size: 14px; color: var(--text-muted); font-weight: 700; margin-bottom: 20px;">تقييم البدائل المقترحة بناءً على معايير الأداء والتكلفة (أوزان نسبية):</p>
+            
+            <div class="table-container" style="box-shadow: none; margin-bottom: 20px;">
+                <table class="ve-table">
+                    <thead>
+                        <tr>
+                            <th>البديل الهندسي المقترح</th>
+                            <th>تخفيض التكلفة (وزن 40%)</th>
+                            <th>سهولة التنفيذ (وزن 20%)</th>
+                            <th>الموثوقية والجودة (وزن 40%)</th>
+                            <th>النتيجة النهائية (Score)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="matrixBody"></tbody>
+                </table>
+            </div>
+
+            <div style="text-align: left;">
+                <button class="btn-top btn-clear" onclick="document.getElementById('matrixModal').style.display='none'">إغلاق</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- الدليل الإرشادي المبسط وشرح المربعات -->
+    <div id="guideModal" class="modal-overlay">
+        <div class="modal-content" style="max-width: 850px;">
+            <h2 style="color:var(--primary); margin-bottom:15px; font-weight:900;"><i class="fa-solid fa-book-open"></i> الدليل الإرشادي المبسط وشرح الحقول (v2.9)</h2>
+            <div style="font-size:14px; line-height:1.8; color:var(--text-muted); font-weight:700; max-height: 60vh; overflow-y: auto; padding-left: 10px;">
+                
+                <h3 style="color: var(--primary); margin-bottom: 8px; font-size: 16px;">1. شرح مربعات البيانات المطلوبة منك في المنصة:</h3>
+                <ul style="list-style-type: disc; padding-right: 20px; display: flex; flex-direction: column; gap: 8px; margin-bottom: 15px;">
+                    <li><strong>العنصر (Component):</strong> اسم البند أو المكون في المشروع (مثل: الواجهات، التكييف، الأرضيات).</li>
+                    <li><strong>الوظيفة (فعل + اسم):</strong> تحديد الغرض الأساسي للعنصر بكلمتين بَدْءاً بفعل ثم اسم (مثلاً: <em>يمنع حرارة</em> أو <em>يبرد هواء</em>).</li>
+                    <li><strong>تكلفة الوحدة الأصلية (Cost):</strong> السعر الحالي المقدر لتنفيذ الوحدة من التصميم الأصلي.</li>
+                    <li><strong>القيمة المستهدفة (Worth):</strong> أقل تكلفة صافية مطلوبة حقاً لأداء الوظيفة الأساسية للعنصر بدون أي مظاهر كمالية أو مبالغات.</li>
+                    <li><strong>مؤشر القيمة (Value Index - VI):</strong> عداد تلقائي يحسب بالمعادلة <code style="background:var(--th-bg); padding:2px 6px; border-radius:4px;">القيمة المستهدفة ÷ التكلفة الأصلية</code>. إذا كان أقل من 0.8 فهذا يعني وجود فرصة ذهبية لتخفيض التكلفة.</li>
+                    <li><strong>الفكرة المقترحة البديلة (Proposed Idea):</strong> البديل الهندسي أو التقني المقترح الذي يؤدي نفس الوظيفة بتكلفة أقل أو كفاءة أعلى.</li>
+                    <li><strong>تكلفة وحدة البديل (Idea Cost):</strong> التكلفة التقديرية للوحدة بعد تطبيق البديل المقترح.</li>
+                </ul>
+
+                <h3 style="color: var(--primary); margin-bottom: 8px; font-size: 16px;">2. فهم تحليل دورة الحياة المتقدم (Advanced LCC):</h3>
+                <p style="margin-bottom: 12px;">عند تفعيل زر المستوى المتقدم، تظهر لك حقول إضافية لتوثيق دراسة دورة الحياة:</p>
+                <ul style="list-style-type: disc; padding-right: 20px; display: flex; flex-direction: column; gap: 6px; margin-bottom: 15px;">
+                    <li><strong>تكلفة دورة الحياة الأولية (LCC Initial):</strong> إجمالي التكاليف الرأسمالية والإنشائية الأولى للمشروع.</li>
+                    <li><strong>تكلفة الصيانة والطاقة (LCC Maint/Energy):</strong> تقدير تكاليف التشغيل والصيانة والطاقة على مدار العمر الافتراضي للمشروع.</li>
+                    <li><strong>فترة الاسترداد (Payback Years):</strong> المدة الزمنية اللازمة لاسترداد فرق التكلفة الإضافية للبدائل من خلال وفورات التشغيل.</li>
+                </ul>
+            </div>
+            <div style="text-align:center; margin-top:20px;">
+                <button class="btn-top btn-primary-action" onclick="document.getElementById('guideModal').style.display='none'">فهمت، إغلاق الدليل</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const DOM = {
+            username: document.getElementById('username'),
+            password: document.getElementById('password'),
+            loginSection: document.getElementById('login-section'),
+            appSection: document.getElementById('app-section'),
+            errorMsg: document.getElementById('error-msg'),
+            headerUserName: document.getElementById('headerUserName'),
+            currencySelect: document.getElementById('currencySelect'),
+            statCurrent: document.getElementById('statCurrent'),
+            statWorth: document.getElementById('statWorth'),
+            statSavings: document.getElementById('statSavings'),
+            veBody: document.getElementById('veBody'),
+            inId: document.getElementById('inId'),
+            inItem: document.getElementById('inItem'),
+            inUnit: document.getElementById('inUnit'),
+            inQty: document.getElementById('inQty'),
+            inVerb: document.getElementById('inVerb'),
+            inNoun: document.getElementById('inNoun'),
+            inType: document.getElementById('inType'),
+            inCost: document.getElementById('inCost'),
+            inWorth: document.getElementById('inWorth'),
+            inIdea: document.getElementById('inIdea'),
+            inIdeaCost: document.getElementById('inIdeaCost'),
+            inStatus: document.getElementById('inStatus'),
+            liveViNumber: document.getElementById('liveViNumber'),
+            liveViStatus: document.getElementById('liveViStatus'),
+            worthErrorAlert: document.getElementById('worthErrorAlert'),
+            ideaCostWarningAlert: document.getElementById('ideaCostWarningAlert'),
+            mainAddBtn: document.getElementById('mainAddBtn'),
+            cancelEditBtn: document.getElementById('cancelEditBtn'),
+            fSearch: document.getElementById('fSearch'),
+            fStatus: document.getElementById('fStatus'),
+            fType: document.getElementById('fType'),
+            reportModal: document.getElementById('reportModal'),
+            guideModal: document.getElementById('guideModal'),
+            matrixModal: document.getElementById('matrixModal')
+        };
+
+        // مسح الذاكرة المحلية تماماً عند الفتح الأول باستخدام المفتاح الجديد v31 لتكون الحقول فارغة تماماً
+        if(!localStorage.getItem('veData_initialized_v31')) {
+            localStorage.clear();
+            localStorage.setItem('veData_initialized_v31', 'true');
+        }
+
+        document.getElementById('login-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            if (DOM.username.value.trim() !== '' && DOM.password.value.trim() !== '') {
+                DOM.loginSection.style.display = 'none';
+                DOM.appSection.style.display = 'flex';
+                DOM.headerUserName.innerText = DOM.username.value.trim();
+                loadMeta();
+                processAndRender();
+            } else {
+                DOM.errorMsg.style.display = 'block';
+            }
+        });
+
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            localStorage.setItem('veTool_darkMode', document.body.classList.contains('dark-mode'));
+            processAndRender();
+        }
+        if (localStorage.getItem('veTool_darkMode') === 'true') document.body.classList.add('dark-mode');
+
+        let isAdvancedMode = localStorage.getItem('veTool_advanced') === 'true';
+        function toggleAdvancedMode() {
+            isAdvancedMode = !isAdvancedMode;
+            localStorage.setItem('veTool_advanced', isAdvancedMode);
+            updateAdvancedModeUI();
+        }
+        function updateAdvancedModeUI() {
+            let advContainer = document.getElementById('advancedFieldsContainer');
+            let levelText = document.getElementById('levelText');
+            if(isAdvancedMode) {
+                advContainer.style.display = 'grid';
+                levelText.innerText = 'المتقدم (Advanced LCC)';
+            } else {
+                advContainer.style.display = 'none';
+                levelText.innerText = 'الأساسي (Standard)';
+            }
+        }
+        document.addEventListener("DOMContentLoaded", updateAdvancedModeUI);
+
+        let veData = JSON.parse(localStorage.getItem('veData_v2')) || [];
+        let editModeId = null;
+        let pieChartIns = null, barChartIns = null;
+        let currentCurrency = localStorage.getItem('ve_currency') || 'SAR';
+        DOM.currencySelect.value = currentCurrency;
+
+        function changeCurrency() {
+            currentCurrency = DOM.currencySelect.value;
+            localStorage.setItem('ve_currency', currentCurrency);
+            updateCurrencySymbols();
+            processAndRender();
+        }
+
+        function updateCurrencySymbols() {
+            let symbol = ' SAR';
+            if (currentCurrency === 'USD') symbol = '$';
+            else if (currentCurrency === 'EGP') symbol = ' EGP';
+            document.querySelectorAll('.currSymbol').forEach(el => el.innerText = symbol);
+        }
+
+        const metaFields = ['pName', 'pClient', 'pStage', 'pFacilitator', 'pAuthor', 'pDate', 'pNotes', 'pLccInitial', 'pLccMaint', 'pPayback'];
+        function saveMeta() {
+            try {
+                metaFields.forEach(f => {
+                    let el = document.getElementById(f);
+                    if(el) localStorage.setItem('ve_' + f, el.value);
+                });
+            } catch (e) {
+                console.error("Localstorage error:", e);
+            }
+        }
+        
+        function loadMeta() {
+            metaFields.forEach(f => {
+                let val = localStorage.getItem('ve_' + f);
+                let el = document.getElementById(f);
+                if(val && el) el.value = val;
+            });
+            updateCurrencySymbols();
+        }
+
+        function genId() { 
+            if(!editModeId) DOM.inId.value = "VE-" + String(veData.length + 1).padStart(3, '0'); 
+        }
+        document.addEventListener("DOMContentLoaded", genId);
+
+        function calculateValueIndex(worth, cost) {
+            let c = parseFloat(cost) || 0;
+            let w = parseFloat(worth) || 0;
+            if (c <= 0) return 0;
+            return parseFloat((w / c).toFixed(2));
+        }
+
+        function calculateSavings(cost, ideaCost, qty, status) {
+            if (status !== 'Accepted') return 0;
+            let c = parseFloat(cost) || 0;
+            let ic = parseFloat(ideaCost) || 0;
+            let q = parseFloat(qty) || 1;
+            return (c - ic) * q;
+        }
+
+        function validateProjectData() {
+            let name = document.getElementById('pName').value.trim();
+            if(!name) {
+                alert("يرجى إدخال اسم المشروع قبل إصدار التقرير التنفيذي.");
+                return false;
+            }
+            return true;
+        }
+
+        function loadSampleProject() {
+            if(confirm("هل تريد تحميل المشروع التجريبي لمجمع الوزارات الإداري الذكي؟ سيتم استبدال البيانات الحالية.")) {
+                document.getElementById('pName').value = "مجمع الوزارات الإداري الذكي";
+                document.getElementById('pClient').value = "أمانة الشئون الهندسية والمشاريع الحكومية";
+                document.getElementById('pStage').value = "Design";
+                document.getElementById('pFacilitator').value = document.getElementById('username').value.trim() || "مهندس القيمة الرئيسي";
+                document.getElementById('pAuthor').value = "فريق الهندسة القيمية المعتمد";
+                document.getElementById('pDate').value = new Date().toISOString().slice(0,10);
+                document.getElementById('pNotes').value = "توصي ورشة الهندسة القيمية باعتماد البدائل الـ 10 المقترحة لترشيد التكاليف الرأسمالية والتشغيلية، مع الحفاظ على كفاءة الجودة والمواصفات القياسية للمبنى.";
+                document.getElementById('pLccInitial').value = "35000000";
+                document.getElementById('pLccMaint').value = "4200000";
+                document.getElementById('pPayback').value = "2.8 سنة";
+                saveMeta();
+
+                veData = [
+                    { id: "VE-001", item: "نظام التكييف المركزي VRF", unit: "مقطوعة", qty: 1, verb: "يبرد", noun: "فراغ", type: "Basic", cost: 12500000, worth: 10800000, idea: "استبدال النظام التقليدي بنظام متغير التدفق عالي الكفاءة", ideaCost: 10200000, status: "Accepted" },
+                    { id: "VE-002", item: "الواجهات الزجاجية الخارجية", unit: "م2", qty: 4500, verb: "يمنع", noun: "حرارة", type: "Secondary", cost: 1400, worth: 1150, idea: "استخدام زجاج مزدوج عاكس مع معالجة Low-E", ideaCost: 1050, status: "Accepted" },
+                    { id: "VE-003", item: "شبكة الإضاءة الداخلية LED", unit: "عدد", qty: 6500, verb: "ينير", noun: "مكتب", type: "Secondary", cost: 380, worth: 320, idea: "تركيب وحدات إضاءة موفرة مع حساسات حركة وضوء طبيعي", ideaCost: 290, status: "Accepted" },
+                    { id: "VE-004", item: "أرضيات البورسلين الفاخر", unit: "م2", qty: 3000, verb: "يغطي", noun: "أرضية", type: "Secondary", cost: 450, worth: 300, idea: "استخدام بورسلين محلي عالي التحمل مطابق للمواصفات", ideaCost: 320, status: "Accepted" },
+                    { id: "VE-005", item: "نظام إدارة المباني الذكي BMS", unit: "مقطوعة", qty: 1, verb: "يتحكم", noun: "منظومة", type: "Basic", cost: 2500000, worth: 2100000, idea: "تحسين الحزم البرمجية ودمج الأنظمة بوحدة تحكم مركزية موحدة", ideaCost: 1950000, status: "Accepted" },
+                    { id: "VE-006", item: "المصاعد الكهربائية السرعة العالية", unit: "عدد", qty: 6, verb: "ينقل", noun: "أفراد", type: "Basic", cost: 1800000, worth: 1500000, idea: "اختيار ماركة عالمية ذات استهلاك طاقة منخفض بنظام الجيرلس", ideaCost: 1400000, status: "Accepted" },
+                    { id: "VE-007", item: "شبكة إطفاء الحريق التلقائية", unit: "مقطوعة", qty: 1, verb: "يكافح", noun: "حريق", type: "Basic", cost: 3200000, worth: 2900000, idea: "تحسين مسارات المواسير وتقليل الوصلات بدون الإخلال باشتراطات الدفاع المدني", ideaCost: 2800000, status: "Accepted" },
+                    { id: "VE-008", item: "العزل المائي والحراري لأسطح المبنى", unit: "م2", qty: 5000, verb: "يعزل", noun: "سطح", type: "Secondary", cost: 120, worth: 95, idea: "استخدام ألواح بوليوريثان رش بضمان معتمد طويل الأمد", ideaCost: 85, status: "Accepted" },
+                    { id: "VE-009", item: "أنظمة التيار المنخفض وكاميرات المراقبة", unit: "مقطوعة", qty: 1, verb: "يؤمن", noun: "مبنى", type: "Secondary", cost: 1900000, worth: 1600000, idea: "دمج كاميرات IP عالية الدقة مع نظام التحكم المركزي لتوفير التمديدات", ideaCost: 1500000, status: "Study" },
+                    { id: "VE-010", item: "أعمال اللاندسكيب الخارجي والتشجير", unit: "م2", qty: 4000, verb: "يجمل", noun: "فراغ", type: "Secondary", cost: 250, worth: 180, idea: "استخدام نباتات محلية تتحمل الجفاف مع شبكة ري بالتنقيط ذكية", ideaCost: 160, status: "Accepted" }
+                ];
+                saveData();
+                processAndRender();
+                alert("تم تحميل المشروع التجريبي بنجاح!");
+            }
+        }
+
+        function openDecisionMatrix() {
+            let tbody = document.getElementById('matrixBody');
+            tbody.innerHTML = "";
+            
+            let acceptedItems = veData.filter(x => x.idea && x.idea.trim() !== "");
+            if(acceptedItems.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="5" style="color:var(--text-muted); padding:20px;">لا توجد بدائل هندسية مسجلة حالياً لتقييمها في المصفوفة. أضف بدائل في السجل أولاً.</td></tr>`;
+            } else {
+                acceptedItems.forEach(r => {
+                    let costScore = r.ideaCost < r.cost ? 9 : 6;
+                    let execScore = 8;
+                    let qualityScore = 8;
+                    let totalScore = (costScore * 0.4) + (execScore * 0.2) + (qualityScore * 0.4);
+
+                    let tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td><strong>${r.idea}</strong><br><span style="font-size:12px; color:var(--text-muted);">عنصر: ${r.item}</span></td>
+                        <td><input type="number" value="${costScore}" min="1" max="10" style="width:60px; text-align:center; padding:6px; border-radius:6px; border:1px solid var(--border-color); background:var(--input-bg); color:var(--text-main);"></td>
+                        <td><input type="number" value="${execScore}" min="1" max="10" style="width:60px; text-align:center; padding:6px; border-radius:6px; border:1px solid var(--border-color); background:var(--input-bg); color:var(--text-main);"></td>
+                        <td><input type="number" value="${qualityScore}" min="1" max="10" style="width:60px; text-align:center; padding:6px; border-radius:6px; border:1px solid var(--border-color); background:var(--input-bg); color:var(--text-main);"></td>
+                        <td><strong style="color:var(--primary); font-size:16px;">${totalScore.toFixed(1)} / 10</strong></td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            }
+            document.getElementById('matrixModal').style.display = 'block';
+        }
+
+        function backupData() {
+            try {
+                let dataObj = {
+                    meta: metaFields.reduce((acc, f) => ({ ...acc, [f]: document.getElementById(f) ? document.getElementById(f).value : '' }), {}),
+                    records: veData
+                };
+                let jsonStr = JSON.stringify(dataObj, null, 2);
+                let blob = new Blob([jsonStr], { type: 'application/json' });
+                let link = document.createElement('a');
+                link.href = URL.createObjectURL(blob);
+                link.download = `VE_Pro_Backup_${new Date().toISOString().slice(0,10)}.json`;
+                link.click();
+            } catch (e) {
+                alert("حدث خطأ أثناء تصدير النسخة الاحتياطية.");
+            }
+        }
+
+        function restoreData(event) {
+            let file = event.target.files[0];
+            if (!file) return;
+            let reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    let parsed = JSON.parse(e.target.result);
+                    if (parsed.records && Array.isArray(parsed.records)) {
+                        veData = parsed.records;
+                        saveData();
+                        if (parsed.meta) {
+                            Object.keys(parsed.meta).forEach(k => {
+                                let el = document.getElementById(k);
+                                if(el) el.value = parsed.meta[k];
+                            });
+                            saveMeta();
+                        }
+                        processAndRender();
+                        alert("تمت استعادة البيانات بنجاح!");
+                    } else {
+                        alert("ملف النسخة الاحتياطية غير صالح.");
+                    }
+                } catch (err) {
+                    alert("فشل قراءة الملف.");
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        function sortBySavings() {
+            veData.sort((a, b) => {
+                let saveA = calculateSavings(a.cost, a.ideaCost, a.qty, a.status);
+                let saveB = calculateSavings(b.cost, b.ideaCost, b.qty, b.status);
+                return saveB - saveA;
+            });
+            saveData();
+            processAndRender();
+        }
+
+        function checkLogicalValues() {
+            let cost = parseFloat(DOM.inCost.value) || 0;
+            let worth = parseFloat(DOM.inWorth.value) || 0;
+            let ideaCost = parseFloat(DOM.inIdeaCost.value) || 0;
+
+            let isValid = true;
+
+            if (worth > cost && cost > 0) {
+                DOM.inWorth.classList.add('input-error');
+                DOM.worthErrorAlert.style.display = 'block';
+                isValid = false;
+
+                let viVal = calculateValueIndex(worth, cost);
+                DOM.liveViNumber.innerText = viVal.toFixed(2);
+                DOM.liveViNumber.style.color = '#dc2626';
+                DOM.liveViStatus.style.color = '#dc2626';
+                DOM.liveViStatus.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> خطأ: القيمة أكبر من التكلفة!';
+            } else {
+                DOM.inWorth.classList.remove('input-error');
+                DOM.worthErrorAlert.style.display = 'none';
+
+                if (cost > 0) {
+                    let viVal = calculateValueIndex(worth, cost);
+                    DOM.liveViNumber.innerText = viVal.toFixed(2);
+                    
+                    if (viVal >= 1.0) {
+                        DOM.liveViNumber.style.color = '#16a34a';
+                        DOM.liveViStatus.style.color = '#16a34a';
+                        DOM.liveViStatus.innerHTML = '<i class="fa-solid fa-circle-check"></i> قيمة جيدة جداً (VI ≥ 1.0)';
+                    } else if (viVal >= 0.8) {
+                        DOM.liveViNumber.style.color = '#2563eb';
+                        DOM.liveViStatus.style.color = '#2563eb';
+                        DOM.liveViStatus.innerHTML = '<i class="fa-solid fa-circle-info"></i> مقبول (0.8 ≤ VI < 1.0)';
+                    } else {
+                        DOM.liveViNumber.style.color = '#ea580c';
+                        DOM.liveViStatus.style.color = '#ea580c';
+                        DOM.liveViStatus.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> فرصة تحسين عالية (VI < 0.8)';
+                    }
+                } else {
+                    DOM.liveViNumber.innerText = "0.00";
+                    DOM.liveViNumber.style.color = 'var(--text-muted)';
+                    DOM.liveViStatus.style.color = 'var(--text-muted)';
+                    DOM.liveViStatus.innerText = "أدخل التكلفة والقيمة";
+                }
+            }
+
+            if (ideaCost > cost && cost > 0) {
+                DOM.inIdeaCost.classList.add('input-warning');
+                DOM.ideaCostWarningAlert.style.display = 'block';
+            } else {
+                DOM.inIdeaCost.classList.remove('input-warning');
+                DOM.ideaCostWarningAlert.style.display = 'none';
+            }
+
+            return isValid;
+        }
+
+        function formatMoney(num) { 
+            let val = parseFloat(num || 0);
+            let symbol = ' SAR';
+            if (currentCurrency === 'USD') symbol = '$';
+            else if (currentCurrency === 'EGP') symbol = ' EGP';
+
+            if (currentCurrency === 'USD') {
+                return val < 0 ? "-$" + Math.abs(val).toLocaleString('en-US') : "$" + val.toLocaleString('en-US');
+            } else {
+                return val < 0 ? "-" + Math.abs(val).toLocaleString('en-US') + " " + symbol : val.toLocaleString('en-US') + " " + symbol;
+            }
+        }
+
+        function addVeItem() {
+            let item = DOM.inItem.value.trim();
+            let unit = DOM.inUnit.value;
+            let qty = parseFloat(DOM.inQty.value) || 1;
+            let verb = DOM.inVerb.value.trim();
+            let noun = DOM.inNoun.value.trim();
+            let type = DOM.inType.value;
+            let cost = parseFloat(DOM.inCost.value) || 0;
+            let worth = parseFloat(DOM.inWorth.value) || 0;
+            let idea = DOM.inIdea.value.trim();
+            let ideaCost = parseFloat(DOM.inIdeaCost.value) || 0;
+            let status = DOM.inStatus.value;
+
+            if(!item || !verb || !noun) return alert("يرجى إدخال اسم العنصر والفعل والاسم للوظيفة.");
+
+            if (!checkLogicalValues()) {
+                alert("خطأ هندسي: القيمة المستهدفة لا يمكن أن تتجاوز التكلفة الأصلية! يرجى تصحيحها.");
+                return;
+            }
+
+            let entry = { id: DOM.inId.value, item, unit, qty, verb, noun, type, cost, worth, idea, ideaCost, status };
+
+            if(editModeId) {
+                let idx = veData.findIndex(x => x.id === editModeId);
+                if(idx > -1) veData[idx] = entry;
+                cancelEdit();
+            } else {
+                veData.push(entry);
+                clearInputs();
+                genId();
+            }
+            saveData();
+            processAndRender();
+        }
+
+        function editItem(id) {
+            let e = veData.find(x => x.id === id);
+            if(!e) return;
+            editModeId = id;
+            DOM.inId.value = e.id;
+            DOM.inItem.value = e.item;
+            DOM.inUnit.value = e.unit || 'عدد';
+            DOM.inQty.value = e.qty || 1;
+            DOM.inVerb.value = e.verb;
+            DOM.inNoun.value = e.noun;
+            DOM.inType.value = e.type;
+            DOM.inCost.value = e.cost;
+            DOM.inWorth.value = e.worth;
+            DOM.inIdea.value = e.idea;
+            DOM.inIdeaCost.value = e.ideaCost;
+            DOM.inStatus.value = e.status;
+            
+            checkLogicalValues();
+            DOM.mainAddBtn.innerHTML = '<i class="fa-solid fa-save"></i> حفظ التعديل';
+            DOM.cancelEditBtn.style.display = 'inline-flex';
+        }
+
+        function cancelEdit() {
+            editModeId = null;
+            clearInputs();
+            checkLogicalValues();
+            genId();
+            DOM.mainAddBtn.innerHTML = '<i class="fa-solid fa-plus"></i> إضافة للسجل';
+            DOM.cancelEditBtn.style.display = 'none';
+        }
+
+        function clearInputs() {
+            ['inItem','inVerb','inNoun','inCost','inWorth','inIdea','inIdeaCost'].forEach(id => document.getElementById(id).value = "");
+            DOM.inQty.value = "1";
+            checkLogicalValues();
+        }
+
+        function deleteItem(id) {
+            if(confirm("هل أنت متأكد من الحذف؟")) { 
+                veData = veData.filter(x => x.id !== id); 
+                saveData(); 
+                processAndRender();
+            }
+        }
+
+        function clearAll() {
+            if(confirm("مسح كافة بيانات السجل؟")) { 
+                veData = []; 
+                saveData(); 
+                processAndRender();
+            }
+        }
+
+        function saveData() {
+            try {
+                localStorage.setItem('veData_v2', JSON.stringify(veData));
+            } catch (e) {
+                alert("تنبيه: مساحة التخزين المحلي (LocalStorage) ممتلئة أو غير متاحة!");
+            }
+        }
+
+        function processAndRender() {
+            let filteredRecords = filterRecords(veData);
+            let stats = calculateStatistics(veData, filteredRecords);
+            updateStatisticsCards(stats);
+            renderRows(filteredRecords);
+            updateCharts(stats);
+        }
+
+        function filterRecords(data) {
+            let term = DOM.fSearch.value.toLowerCase();
+            let fStatus = DOM.fStatus.value;
+            let fType = DOM.fType.value;
+
+            return data.filter(r => {
+                let matchSearch = r.item.toLowerCase().includes(term) || r.verb.toLowerCase().includes(term) || r.noun.toLowerCase().includes(term);
+                let matchStatus = fStatus === 'All' || r.status === fStatus;
+                let matchType = fType === 'All' || r.type === fType;
+                return matchSearch && matchStatus && matchType;
+            });
+        }
+
+        function calculateStatistics(allData, filteredData) {
+            let tCostTotal = 0, tWorthTotal = 0, tSaveTotal = 0, bCost = 0, sCost = 0;
+            let labels = [], cData = [], wData = [], iData = [];
+
+            allData.forEach(r => {
+                let qty = r.qty || 1;
+                let itemTotalCost = r.cost * qty;
+                let itemTotalWorth = r.worth * qty;
+
+                tCostTotal += itemTotalCost;
+                tWorthTotal += itemTotalWorth;
+
+                if(r.type === 'Basic') bCost += itemTotalCost; else sCost += itemTotalCost;
+                
+                let saving = calculateSavings(r.cost, r.ideaCost, r.qty, r.status);
+                if(r.status === 'Accepted') tSaveTotal += saving;
+            });
+
+            filteredData.forEach(r => {
+                let qty = r.qty || 1;
+                labels.push(r.item);
+                cData.push(r.cost * qty);
+                wData.push(r.worth * qty);
+                iData.push(r.ideaCost * qty);
+            });
+
+            return { tCostTotal, tWorthTotal, tSaveTotal, bCost, sCost, labels, cData, wData, iData };
+        }
+
+        function updateStatisticsCards(stats) {
+            DOM.statCurrent.innerText = formatMoney(stats.tCostTotal);
+            DOM.statWorth.innerText = formatMoney(stats.tWorthTotal);
+            DOM.statSavings.innerText = formatMoney(stats.tSaveTotal);
+            DOM.statSavings.style.color = stats.tSaveTotal < 0 ? '#d97706' : '#16a34a';
+        }
+
+        function renderRows(filteredData) {
+            DOM.veBody.innerHTML = "";
+            let fragment = document.createDocumentFragment();
+
+            filteredData.forEach(r => {
+                let qty = r.qty || 1;
+                let itemTotalCost = r.cost * qty;
+                let itemTotalIdeaCost = r.ideaCost * qty;
+                let saving = calculateSavings(r.cost, r.ideaCost, r.qty, r.status);
+                let vi = calculateValueIndex(r.worth, r.cost);
+
+                let statClass = r.status === 'Accepted' ? 'status-accepted' : (r.status === 'Rejected' ? 'status-rejected' : 'status-study');
+                let statText = r.status === 'Accepted' ? '🟢 معتمدة' : (r.status === 'Rejected' ? '⚫ مرفوضة' : '🟡 قيد الدراسة');
+                let viColor = vi < 0.8 ? '#ea580c' : (vi < 1.0 ? '#2563eb' : '#16a34a');
+                let saveColor = saving < 0 ? '#d97706' : '#16a34a';
+
+                let tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${r.id}</td>
+                    <td><strong>${r.item}</strong></td>
+                    <td>${r.unit || 'عدد'}</td>
+                    <td>${qty}</td>
+                    <td>${r.verb} ${r.noun}</td>
+                    <td>${r.type === 'Basic' ? 'أساسية' : 'ثانوية'}</td>
+                    <td class="money-cell">${formatMoney(itemTotalCost)}</td>
+                    <td class="money-cell" style="color:var(--accent)">${formatMoney(r.worth * qty)}</td>
+                    <td style="font-weight:900; color:${viColor};">${vi.toFixed(2)}</td>
+                    <td>${r.idea || '-'}</td>
+                    <td class="money-cell">${formatMoney(itemTotalIdeaCost)}</td>
+                    <td class="money-cell" style="color:${saveColor};">${formatMoney(saving)}</td>
+                    <td><span class="${statClass}">${statText}</span></td>
+                    <td class="no-print">
+                        <button style="border:none; background:transparent; color:var(--accent); cursor:pointer; font-size:15px;" onclick="editItem('${r.id}')"><i class="fa-solid fa-pen"></i></button>
+                        <button style="border:none; background:transparent; color:#ef4444; cursor:pointer; font-size:15px; margin-right:8px;" onclick="deleteItem('${r.id}')"><i class="fa-solid fa-trash"></i></button>
+                    </td>`;
+                fragment.appendChild(tr);
+            });
+            DOM.veBody.appendChild(fragment);
+        }
+
+        function updateCharts(stats) {
+            try {
+                let isDark = document.body.classList.contains('dark-mode');
+                let tColor = isDark ? '#e2e8f0' : '#1e293b';
+                let gridColor = isDark ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.06)';
+
+                if(pieChartIns) pieChartIns.destroy();
+                pieChartIns = new Chart(document.getElementById('typePieChart').getContext('2d'), {
+                    type: 'doughnut',
+                    data: { 
+                        labels: ['الوظائف الأساسية', 'الوظائف الثانوية'], 
+                        datasets: [{ 
+                            data: [stats.bCost, stats.sCost], 
+                            backgroundColor: ['#0284c7', '#f59e0b'],
+                            borderWidth: 3,
+                            borderColor: isDark ? '#111827' : '#ffffff'
+                        }] 
+                    },
+                    options: { 
+                        maintainAspectRatio: false, 
+                        plugins: { 
+                            legend: { 
+                                position: 'bottom',
+                                labels: { color: tColor, font: { family: 'Cairo', size: 14, weight: '800' }, padding: 22 } 
+                            } 
+                        } 
+                    }
+                });
+
+                if(barChartIns) barChartIns.destroy();
+                barChartIns = new Chart(document.getElementById('costBarChart').getContext('2d'), {
+                    type: 'bar',
+                    data: {
+                        labels: stats.labels.length ? stats.labels : ['لا توجد بيانات'],
+                        datasets: [
+                            { label: 'إجمالي التكلفة الحالية', data: stats.cData.length ? stats.cData : [0], backgroundColor: '#ea580c', borderRadius: 6 },
+                            { label: 'إجمالي القيمة المستهدفة', data: stats.wData.length ? stats.wData : [0], backgroundColor: '#0284c7', borderRadius: 6 },
+                            { label: 'إجمالي تكلفة البديل', data: stats.iData.length ? stats.iData : [0], backgroundColor: '#16a34a', borderRadius: 6 }
+                        ]
+                    },
+                    options: { 
+                        maintainAspectRatio: false, 
+                        scales: { 
+                            x: { 
+                                grid: { display: false }, 
+                                ticks: { 
+                                    color: tColor, 
+                                    font: { family: 'Cairo', size: 12, weight: '800' },
+                                    maxRotation: 25,
+                                    minRotation: 15
+                                } 
+                            }, 
+                            y: { grid: { color: gridColor }, ticks: { color: tColor, font: { family: 'Cairo', size: 13, weight: '700' } } } 
+                        }, 
+                        plugins: { 
+                            legend: { 
+                                position: 'bottom',
+                                labels: { color: tColor, font: { family: 'Cairo', size: 14, weight: '800' }, padding: 22 } 
+                            } 
+                        } 
+                    }
+                });
+            } catch (err) {
+                console.error("Chart creation error:", err);
+            }
+        }
+
+        function openReport() {
+            if(!validateProjectData()) return;
+
+            document.getElementById('repProj').innerText = document.getElementById('pName').value || 'غير محدد';
+            document.getElementById('repClient').innerText = document.getElementById('pClient').value || 'غير محدد';
+            document.getElementById('repStage').innerText = document.getElementById('pStage').value;
+            document.getElementById('repFacilitator').innerText = document.getElementById('pFacilitator').value || 'غير محدد';
+            document.getElementById('repAuthor').innerText = document.getElementById('pAuthor').value || 'غير محدد';
+            document.getElementById('repDate').innerText = document.getElementById('pDate').value || 'غير محدد';
+            
+            let lccInit = document.getElementById('pLccInitial').value;
+            let lccMaint = document.getElementById('pLccMaint').value;
+            let payback = document.getElementById('pPayback').value;
+            let lccContainer = document.getElementById('repLccContainer');
+
+            if(isAdvancedMode && (lccInit || lccMaint || payback)) {
+                lccContainer.style.display = 'block';
+                document.getElementById('repLccInitVal').innerText = lccInit ? formatMoney(lccInit) : 'غير مسجل';
+                document.getElementById('repLccMaintVal').innerText = lccMaint ? formatMoney(lccMaint) : 'غير مسجل';
+                document.getElementById('repPaybackVal').innerText = payback ? payback : 'غير مسجل';
+            } else {
+                lccContainer.style.display = 'none';
+            }
+
+            let notesVal = document.getElementById('pNotes').value.trim();
+            document.getElementById('repNotesDisplay').innerText = notesVal ? notesVal : 'لا توجد ملاحظات مسجلة.';
+
+            document.getElementById('repCost').innerText = DOM.statCurrent.innerText;
+            document.getElementById('repSave').innerText = DOM.statSavings.innerText;
+
+            let rTab = document.getElementById('reportTable');
+            let thead = document.createElement('thead');
+            thead.innerHTML = "<tr><th>العنصر</th><th>الوحدة</th><th>الكمية</th><th>الوظيفة</th><th>إجمالي التكلفة</th><th>إجمالي البديل</th><th>إجمالي الوفر</th></tr>";
+            
+            let tbody = document.createElement('tbody');
+            veData.filter(x => x.status === 'Accepted').forEach(r => {
+                let qty = r.qty || 1;
+                let totCost = r.cost * qty;
+                let totIdea = r.ideaCost * qty;
+                let saving = calculateSavings(r.cost, r.ideaCost, r.qty, r.status);
+                
+                let tr = document.createElement('tr');
+                tr.innerHTML = `<td>${r.item}</td><td>${r.unit || 'عدد'}</td><td>${qty}</td><td>${r.verb} ${r.noun}</td><td>${formatMoney(totCost)}</td><td>${formatMoney(totIdea)}</td><td style="color:${saving < 0 ? '#d97706' : '#16a34a'}; font-weight:bold;">${formatMoney(saving)}</td>`;
+                tbody.appendChild(tr);
+            });
+
+            rTab.innerHTML = "";
+            rTab.appendChild(thead);
+            rTab.appendChild(tbody);
+            DOM.reportModal.style.display = 'block';
+        }
+
+        function exportToCSV() {
+            try {
+                let csv = "ID,Item,Unit,Quantity,Verb,Noun,Type,Unit Cost,Unit Worth,Value Index,Proposed Idea,Unit Idea Cost,Total Savings,Status\n";
+                veData.forEach(r => {
+                    let qty = r.qty || 1;
+                    let totCost = r.cost * qty;
+                    let totIdea = r.ideaCost * qty;
+                    let savings = calculateSavings(r.cost, r.ideaCost, r.qty, r.status);
+                    let vi = calculateValueIndex(r.worth, r.cost);
+                    csv += `${r.id},"${r.item}","${r.unit || 'عدد'}",${qty},"${r.verb}","${r.noun}",${r.type},${r.cost},${r.worth},${vi},"${r.idea}",${r.ideaCost},${savings},${r.status}\n`;
+                });
+                let link = document.createElement("a");
+                link.href = URL.createObjectURL(new Blob(["\uFEFF" + csv], { type: 'text/csv;charset=utf-8;' }));
+                link.download = "VE_Pro_Suite_Report.csv";
+                link.click();
+            } catch (e) {
+                alert("حدث خطأ أثناء تصدير ملف الـ CSV.");
+            }
+        }
+    </script>
+</body>
+</html>

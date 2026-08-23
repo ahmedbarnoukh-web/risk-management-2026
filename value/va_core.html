@@ -1,1 +1,1803 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الهندسة القيمية وإدارة القيمة | BA Academy</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-navy: #0b1120;
+            --brand-blue: #1d4ed8;
+            --brand-blue-hover: #1e40af;
+            --light-blue: #eff6ff;
+            --bg-color: #f1f5f9;
+            --text-dark: #0f172a;
+            --text-muted: #334155;
+            --border-color: #cbd5e1;
+            --white: #ffffff;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --accent-purple: #7c3aed;
+            --ease-smooth: cubic-bezier(0.22, 1, 0.36, 1);
+            --ease-soft: cubic-bezier(0.4, 0, 0.2, 1);
+        }
 
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
+        html { scrollbar-color: #cbd5e1 transparent; }
+        body { display: flex; background-color: var(--bg-color); color: var(--text-dark); height: 100vh; overflow: hidden; font-size: 16.5px; }
+
+        ::selection { background: var(--brand-blue); color: #fff; }
+
+        a:focus-visible, button:focus-visible, .menu-item:focus-visible, .app-hub-card:focus-visible,
+        .faq-question:focus-visible, input:focus-visible, .matrix-cell:focus-visible, .indicator:focus-visible {
+            outline: 3px solid #60a5fa; outline-offset: 2px; border-radius: 8px;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+        }
+
+        .page-transition-bar { position: fixed; top: 0; right: 0; left: 0; height: 3px; background: linear-gradient(90deg, #38bdf8, var(--brand-blue)); z-index: 100000; width: 0%; opacity: 0; transition: width 0.35s var(--ease-soft), opacity 0.2s ease; }
+        .page-transition-bar.loading { opacity: 1; width: 70%; }
+        .page-transition-bar.done { opacity: 0; width: 100%; }
+
+        .sidebar-backdrop { display: none; position: fixed; inset: 0; background: rgba(11,17,32,0.55); backdrop-filter: blur(2px); z-index: 998; opacity: 0; transition: opacity 0.35s var(--ease-soft); pointer-events: none; }
+        .sidebar-backdrop.show { display: block; opacity: 1; pointer-events: auto; }
+
+        .menu-toggle { display: none; position: fixed; top: 15px; right: 15px; z-index: 1000; background: var(--brand-blue); color: var(--white); border: none; padding: 10px 12px; border-radius: 8px; cursor: pointer; font-size: 26px; box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4); transition: transform 0.25s var(--ease-soft), background 0.25s ease; }
+        .menu-toggle:hover { background: var(--brand-blue-hover); transform: scale(1.06); }
+        .menu-toggle:active { transform: scale(0.94); }
+
+        .sidebar { width: 380px; background: #ffffff; color: var(--text-dark); padding: 25px 20px; display: flex; flex-direction: column; flex-shrink: 0; height: 100vh; overflow-y: auto; box-shadow: -4px 0 25px rgba(0,0,0,0.05); z-index: 999; transition: right 0.4s var(--ease-smooth), box-shadow 0.4s ease; border-left: 1px solid var(--border-color); scrollbar-width: thin; scrollbar-color: #cbd5e1 transparent; }
+        .sidebar::-webkit-scrollbar { width: 6px; }
+        .sidebar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+
+        .sidebar-header { text-align: center; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 2px solid #f1f5f9; }
+        .sidebar-header img { max-width: 130px; border-radius: 12px; margin-bottom: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); border: 2px solid #e2e8f0; }
+        .sidebar-header h2 { font-size: 18px; font-weight: 900; color: var(--primary-navy); line-height: 1.4; }
+        .sidebar-header p { font-size: 12px; color: var(--brand-blue); margin-top: 5px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; }
+
+        .progress-container { margin-top: 15px; background: #f8fafc; border-radius: 12px; padding: 12px 15px; text-align: right; border: 1px solid #e2e8f0; }
+        .progress-header { display: flex; justify-content: space-between; font-size: 13px; font-weight: 800; margin-bottom: 8px; color: var(--text-muted); }
+        .progress-track { background: #e2e8f0; height: 8px; border-radius: 10px; overflow: hidden; }
+        .progress-fill { background: linear-gradient(90deg, #34d399, #10b981); height: 100%; width: 12%; transition: width 0.8s cubic-bezier(0.25, 1, 0.5, 1); border-radius: 10px; }
+
+        .menu-items { list-style: none; display: flex; flex-direction: column; gap: 12px; flex-grow: 1; margin-top: 10px; }
+
+        .menu-item { padding: 14px 18px; border-radius: 12px; cursor: pointer; transition: transform 0.3s var(--ease-soft), box-shadow 0.3s var(--ease-soft), background 0.3s ease, border-color 0.3s ease; display: flex; align-items: center; gap: 14px; color: #ffffff; background: linear-gradient(135deg, #1e3a8a, #2563eb); border: 1px solid #1d4ed8; position: relative; overflow: hidden; text-decoration: none; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2); }
+        .menu-item:hover { background: linear-gradient(135deg, #1d4ed8, #1e40af); border-color: #3b82f6; transform: translateX(-4px); box-shadow: 0 6px 18px rgba(37, 99, 235, 0.35); }
+        .menu-item:active { transform: translateX(-2px) scale(0.98); }
+        .menu-item .tab-icon { font-size: 22px; flex-shrink: 0; transition: 0.3s; color: #ffffff; background: rgba(255, 255, 255, 0.2); padding: 8px; border-radius: 8px; }
+        .menu-item .tab-text { display: flex; flex-direction: column; gap: 2px; flex-grow: 1; }
+        .menu-item .tab-text .ar-title { font-size: 15px; font-weight: 900; color: #ffffff; }
+        .menu-item .tab-text .en-title { font-size: 11.5px; font-weight: 800; text-transform: uppercase; color: #bfdbfe; letter-spacing: 0.5px; }
+
+        .menu-item.active { background: linear-gradient(135deg, #0f172a, #1e293b); color: var(--white); border-color: #0f172a; box-shadow: 0 8px 25px rgba(15, 23, 42, 0.4); transform: translateX(-4px); }
+        .menu-item.active .tab-icon { background: var(--brand-blue); color: #ffffff; }
+        .menu-item.active .tab-text .ar-title { color: #ffffff; }
+        .menu-item.active .tab-text .en-title { color: #93c5fd; }
+
+        .back-crumb { display: inline-flex; align-items: center; gap: 8px; font-size: 14.5px; font-weight: 800; color: var(--brand-blue); background: var(--light-blue); padding: 10px 18px; border-radius: 10px; text-decoration: none; cursor: pointer; margin-bottom: 20px; transition: 0.25s; border: 1px solid #bfdbfe; }
+        .back-crumb:hover { background: #dbeafe; transform: translateX(-3px); }
+
+        .main-content { flex-grow: 1; padding: 40px 50px; overflow-y: auto; height: 100vh; scroll-behavior: smooth; position: relative; background: #f8fafc; }
+        .main-content::-webkit-scrollbar { width: 8px; }
+        .main-content::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+
+        .tab-content { display: none; max-width: 1150px; margin: 0 auto; }
+        .tab-content.active { display: block; animation: fadeInTab 0.55s var(--ease-smooth); }
+        .tab-content.tab-out { display: block; animation: fadeOutTab 0.18s ease-in forwards; }
+        @keyframes fadeInTab { from { opacity: 0; transform: translateY(18px) scale(0.99); } to { opacity: 1; transform: translateY(0) scale(1); } }
+        @keyframes fadeOutTab { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(-10px); } }
+
+        .content-header { display: flex; align-items: center; gap: 12px; max-width: 1150px; margin: 0 auto 22px; padding: 14px 22px; background: var(--white); border: 1px solid var(--border-color); border-radius: 14px; box-shadow: 0 6px 20px rgba(0,0,0,0.03); z-index: 80; position: sticky; top: 0; }
+        .content-header i { font-size: 22px; color: var(--brand-blue); background: var(--light-blue); padding: 8px; border-radius: 8px; }
+        .content-header span { font-size: 16px; font-weight: 900; color: var(--primary-navy); }
+        .content-header .ch-crumb { margin-right: auto; font-size: 12.5px; font-weight: 800; color: var(--text-muted); background: #f1f5f9; padding: 5px 12px; border-radius: 20px; }
+
+        .back-to-top { position: fixed; bottom: 28px; left: 28px; width: 48px; height: 48px; border-radius: 50%; background: var(--brand-blue); color: #fff; border: none; display: flex; align-items: center; justify-content: center; font-size: 22px; cursor: pointer; box-shadow: 0 10px 25px rgba(37,99,235,0.35); opacity: 0; pointer-events: none; transform: translateY(15px); transition: all 0.35s var(--ease-soft); z-index: 500; }
+        .back-to-top.show { opacity: 1; pointer-events: auto; transform: translateY(0); }
+        .back-to-top:hover { background: var(--brand-blue-hover); transform: translateY(-3px); }
+
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.25, 0.8, 0.25, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        .section-card { background: var(--white); border-radius: 20px; padding: 50px; box-shadow: 0 10px 40px rgba(0,0,0,0.03); border: 1px solid #e2e8f0; margin-bottom: 30px; }
+        .main-title { font-size: 28px; font-weight: 900; color: var(--primary-navy); margin-bottom: 15px; display: flex; align-items: center; gap: 12px; border-bottom: 2px solid var(--light-blue); padding-bottom: 15px; }
+        .sub-title-context { font-size: 17px; color: var(--text-muted); margin-bottom: 30px; line-height: 1.8; font-weight: 600; }
+
+        .roadmap-container { background: var(--white); border-radius: 16px; padding: 35px; margin-bottom: 35px; border: 1px solid var(--border-color); box-shadow: 0 10px 30px rgba(0,0,0,0.04); }
+        .roadmap-title { font-size: 22px; font-weight: 900; color: var(--primary-navy); margin-bottom: 35px; text-align: center; }
+        .timeline { display: flex; align-items: flex-start; justify-content: space-between; position: relative; }
+        .timeline::before { content: ''; position: absolute; top: 22px; left: 40px; right: 40px; height: 3px; background: #e2e8f0; z-index: 1; }
+        .tl-step { display: flex; flex-direction: column; align-items: center; gap: 12px; width: 100px; text-align: center; position: relative; z-index: 2; }
+        .tl-step span { width: 45px; height: 45px; background: #f8fafc; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: 900; font-size: 18px; color: var(--text-muted); border: 3px solid #cbd5e1; transition: 0.4s; }
+        .tl-step p { font-size: 14px; font-weight: 800; margin: 0; color: var(--text-muted); line-height: 1.4; }
+        .tl-step.active span { background: var(--brand-blue); color: white; border-color: #bfdbfe; box-shadow: 0 0 20px rgba(37,99,235,0.3); transform: scale(1.1); }
+        .tl-step.active p { color: var(--brand-blue); }
+
+        .module-progress-bar { display: flex; align-items: center; gap: 15px; margin-bottom: 25px; background: #f8fafc; padding: 12px 20px; border-radius: 8px; border: 1px solid #e2e8f0; }
+        .mp-text { font-size: 15px; font-weight: 800; color: var(--primary-navy); white-space: nowrap; }
+        .mp-track { flex-grow: 1; height: 8px; background: #e2e8f0; border-radius: 10px; overflow: hidden; }
+        .mp-fill { height: 100%; background: linear-gradient(90deg, var(--brand-blue), #38bdf8); border-radius: 10px; transition: width 0.5s ease; }
+        .mp-time { display: flex; align-items: center; gap: 5px; font-size: 13px; font-weight: 800; color: var(--text-muted); white-space: nowrap; background: #fff; padding: 5px 12px; border-radius: 20px; border: 1px solid #e2e8f0; }
+        .mp-time i { color: var(--brand-blue); font-size: 15px; }
+
+        .snapshot-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 14px; margin-bottom: 28px; }
+        .snapshot-card { background: linear-gradient(135deg, #0f172a, #1e293b); border-radius: 14px; padding: 18px 16px; text-align: center; box-shadow: 0 8px 20px rgba(15,23,42,0.12); }
+        .snapshot-card .snap-num { font-size: 26px; font-weight: 900; color: #38bdf8; line-height: 1.2; }
+        .snapshot-card .snap-label { font-size: 12px; font-weight: 800; color: #cbd5e1; margin-top: 4px; }
+
+        .box-fact { background: #f0fdfa; border: 1px solid #99f6e4; border-right: 5px solid #14b8a6; }
+        .box-fact .box-title { color: #0f766e; }
+
+        .break-box { display: flex; align-items: center; gap: 16px; background: #fff7ed; border: 1px dashed #fdba74; border-radius: 14px; padding: 16px 22px; margin: 30px 0; }
+        .break-box i { font-size: 30px; color: #ea580c; flex-shrink: 0; }
+        .break-box p { margin: 0; font-size: 15.5px; font-weight: 700; color: #9a3412; line-height: 1.6; }
+
+        .hook-box { background: linear-gradient(135deg, #0f172a, #1e3a8a); border-radius: 18px; padding: 30px 32px; margin-bottom: 28px; box-shadow: 0 15px 40px rgba(15,23,42,0.25); position: relative; overflow: hidden; }
+        .hook-box::before { content: "\ec3f"; font-family: 'boxicons'; position: absolute; left: -15px; bottom: -25px; font-size: 110px; color: rgba(255,255,255,0.05); }
+        .hook-badge { display: inline-flex; align-items: center; gap: 6px; background: #38bdf8; color: #0f172a; font-weight: 900; font-size: 12.5px; padding: 5px 14px; border-radius: 20px; margin-bottom: 14px; }
+        .hook-box h3 { color: #fff; font-size: 20px; font-weight: 900; line-height: 1.6; margin-bottom: 12px; position: relative; z-index: 1; }
+        .hook-box p { color: #cbd5e1; font-size: 15px; font-weight: 600; line-height: 1.85; position: relative; z-index: 1; margin: 0; }
+        .hook-box strong { color: #7dd3fc; }
+
+        .capability-box { background: #f0fdfa; border: 1px solid #99f6e4; border-radius: 16px; padding: 24px 28px; margin: 25px 0; }
+        .capability-title { font-size: 17px; font-weight: 900; color: #0f766e; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+        .capability-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; }
+        .capability-item { display: flex; align-items: flex-start; gap: 8px; font-size: 16px; font-weight: 700; color: var(--text-dark); line-height: 1.7; }
+        .capability-item i { color: #14b8a6; font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+
+        .tool-cta { display: flex; align-items: center; justify-content: space-between; gap: 20px; background: linear-gradient(135deg, #1e3a8a, #1d4ed8); border-radius: 16px; padding: 20px 26px; margin: 28px 0; cursor: pointer; transition: 0.3s; box-shadow: 0 10px 25px rgba(29,78,216,0.25); flex-wrap: wrap; }
+        .tool-cta:hover { transform: translateY(-3px); box-shadow: 0 15px 35px rgba(29,78,216,0.4); }
+        .tool-cta-text h4 { color: #fff; font-size: 16.5px; font-weight: 900; margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
+        .tool-cta-text p { color: #bfdbfe; font-size: 13.5px; font-weight: 700; margin: 0; }
+        .tool-cta-btn { background: #fff; color: #1d4ed8; font-weight: 900; font-size: 14.5px; padding: 10px 22px; border-radius: 10px; white-space: nowrap; display: flex; align-items: center; gap: 6px; }
+
+        .case-reminder { display: flex; align-items: center; gap: 10px; background: #f1f5f9; border: 1px dashed #94a3b8; border-radius: 10px; padding: 10px 18px; margin-bottom: 22px; font-size: 13.5px; font-weight: 800; color: var(--text-muted); }
+        .case-reminder i { color: var(--brand-blue); font-size: 17px; flex-shrink: 0; }
+
+        .module-objective { display: flex; align-items: center; gap: 12px; background: #f8fafc; border-right: 4px solid var(--brand-blue); padding: 15px 20px; border-radius: 8px; margin-bottom: 25px; border: 1px solid #e2e8f0; border-right-width: 4px; }
+        .obj-tag { font-weight: 900; color: var(--brand-blue); white-space: nowrap; font-size: 16.5px; }
+        .obj-text { margin: 0; font-size: 16px; color: var(--text-dark); font-weight: 700; line-height: 1.6; }
+
+        .card-heading { font-size: 23px; font-weight: 900; color: var(--primary-navy); margin-top: 35px; margin-bottom: 20px; border-right: 5px solid var(--brand-blue); padding-right: 15px; background: linear-gradient(90deg, var(--light-blue), rgba(239, 246, 255, 0.2)); padding: 14px 20px; border-radius: 8px; display: flex; align-items: center; gap: 10px; }
+        .highlight-line { display: block; font-size: 18.5px; font-weight: 800; color: var(--primary-navy); background: var(--light-blue); border-right: 4px solid var(--brand-blue); padding: 12px 18px; border-radius: 8px; margin: 16px 0; line-height: 1.7; }
+
+        .box { padding: 14px 18px; border-radius: 10px; margin: 15px 0; font-weight: 600; line-height: 1.6; transition: 0.3s; position: relative; font-size: 15px; }
+        .box:hover { transform: translateY(-2px); box-shadow: 0 6px 15px rgba(0,0,0,0.04); }
+        .box-title { font-size: 17px; font-weight: 900; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+        .box p, .box li { font-size: 16px; line-height: 1.8; margin-bottom: 8px; }
+        .exam-star { display: inline-flex; align-items: center; gap: 4px; background: #f59e0b; color: #fff; font-size: 11px; font-weight: 900; padding: 3px 10px; border-radius: 20px; margin-right: 8px; white-space: nowrap; }
+        .box ul { margin-bottom: 0; margin-right: 20px; }
+
+        .box-info { background: #eff6ff; border: 1px solid #bfdbfe; border-right: 5px solid #3b82f6; }
+        .box-info .box-title { color: #1d4ed8; }
+        .box-tip { background: #f0fdf4; border: 1px solid #bbf7d0; border-right: 5px solid #10b981; }
+        .box-tip .box-title { color: #047857; }
+        .box-exam { background: #fffbeb; border: 1px solid #fde68a; border-right: 5px solid #f59e0b; overflow: hidden; }
+        .box-exam .box-title { color: #b45309; }
+        .box-exam::before { content: "\eba3"; font-family: 'boxicons'; position: absolute; left: -10px; bottom: -15px; font-size: 60px; color: rgba(245, 158, 11, 0.08); z-index: 0; }
+        .box-exam > * { position: relative; z-index: 1; }
+        .box-mistake { background: #fef2f2; border: 1px solid #fecaca; border-right: 5px solid #ef4444; }
+        .box-mistake .box-title { color: #b91c1c; }
+
+        .diagram-box { background: var(--white); border: 1px solid var(--border-color); border-radius: 16px; padding: 28px 24px; margin: 28px 0; box-shadow: 0 6px 20px rgba(0,0,0,0.03); }
+        .diagram-box-title { font-size: 17px; font-weight: 900; color: var(--primary-navy); margin-bottom: 18px; display: flex; align-items: center; gap: 8px; }
+        .diagram-box-title i { color: var(--brand-blue); font-size: 20px; }
+        .diagram-box svg { width: 100%; height: auto; display: block; }
+
+        .case-thread { background: linear-gradient(135deg, #0f172a, #1e293b); color: #fff; border-radius: 18px; padding: 28px; margin: 30px 0; border-right: 6px solid #38bdf8; box-shadow: 0 15px 35px rgba(15,23,42,0.15); }
+        .case-thread-badge { display: inline-flex; align-items: center; gap: 6px; background: #38bdf8; color: #0f172a; font-weight: 900; font-size: 13px; padding: 6px 14px; border-radius: 20px; margin-bottom: 14px; }
+        .case-thread h4 { font-size: 19px; font-weight: 900; margin-bottom: 10px; color: #fff; }
+        .case-thread p { color: #cbd5e1; font-size: 15px; line-height: 1.85; font-weight: 600; margin-bottom: 18px; }
+        .case-thread-steps { display: flex; gap: 10px; flex-wrap: wrap; }
+        .ct-step { flex: 1; min-width: 115px; text-align: center; padding: 10px 8px; border-radius: 10px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); font-size: 12.5px; font-weight: 800; color: #94a3b8; transition: 0.3s; }
+        .ct-step.done { background: rgba(56,189,248,0.15); border-color: #38bdf8; color: #7dd3fc; }
+        .ct-step.current { background: #38bdf8; border-color: #38bdf8; color: #0f172a; box-shadow: 0 0 20px rgba(56,189,248,0.4); }
+
+        .box-decision { background: #eef2ff; border: 1px solid #c7d2fe; border-right: 5px solid #6366f1; }
+        .box-decision .box-title { color: #4338ca; }
+        .decision-options { display: flex; flex-direction: column; gap: 10px; margin-top: 14px; }
+        .decision-btn { text-align: right; padding: 13px 16px; border-radius: 10px; border: 2px solid #c7d2fe; background: #fff; font-weight: 700; font-size: 16px; color: var(--text-dark); cursor: pointer; transition: 0.25s; font-family: 'Cairo', sans-serif; }
+        .decision-btn:hover:not(:disabled) { border-color: #6366f1; background: #f5f3ff; transform: translateX(-2px); }
+        .decision-btn:disabled { cursor: not-allowed; opacity: 0.8; }
+        .decision-btn.correct { background: #dcfce7; border-color: #16a34a; color: #15803d; }
+        .decision-btn.incorrect { background: #fee2e2; border-color: #dc2626; color: #b91c1c; }
+        .decision-feedback { display: none; margin-top: 14px; padding: 15px 18px; border-radius: 10px; background: #fff; border: 1px solid #c7d2fe; font-size: 16px; line-height: 1.85; color: var(--text-dark); }
+        .decision-feedback.show { display: block; animation: fadeInTab 0.4s ease; }
+
+        .takeaways-box { background: linear-gradient(135deg, #ecfdf5, #f0fdf4); border: 1px solid #bbf7d0; border-radius: 16px; padding: 28px; margin: 30px 0; }
+        .takeaways-title { font-size: 19px; font-weight: 900; color: #047857; margin-bottom: 16px; display: flex; align-items: center; gap: 10px; }
+        .takeaways-box ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+        .takeaways-box li { display: flex; align-items: flex-start; gap: 10px; font-size: 15px; font-weight: 700; color: var(--text-dark); line-height: 1.6; }
+        .takeaways-box li i { color: #10b981; font-size: 20px; flex-shrink: 0; margin-top: 2px; }
+
+        .table-wrapper { overflow-x: auto; margin: 25px 0; border-radius: 14px; border: 1px solid var(--border-color); }
+        .data-table { width: 100%; border-collapse: collapse; font-size: 16px; background: var(--white); }
+        .data-table th { background: var(--primary-navy); color: #fff; padding: 14px 16px; font-weight: 800; text-align: right; white-space: nowrap; }
+        .data-table td { padding: 14px 16px; border-bottom: 1px solid #e2e8f0; line-height: 1.7; }
+        .data-table tr:last-child td { border-bottom: none; }
+        .data-table tr:nth-child(even) { background: #f8fafc; }
+        .data-table tr:hover { background: var(--light-blue); }
+
+        .status-pill { font-size: 13.5px; font-weight: 900; padding: 5px 14px; border-radius: 20px; display: inline-block; }
+        .pill-critical { background: #fee2e2; color: #b91c1c; border: 1px solid #fca5a5; }
+        .pill-high { background: #ffedd5; color: #c2410c; border: 1px solid #fdba74; }
+        .pill-medium { background: #fef9c3; color: #a16207; border: 1px solid #fde047; }
+        .pill-low { background: #dcfce7; color: #15803d; border: 1px solid #86efac; }
+
+        .matrix-wrapper-compact { display: flex; gap: 20px; align-items: center; justify-content: center; flex-wrap: wrap; background: #fff; padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); border: 1px solid #e2e8f0; margin-top: 15px; }
+        .risk-matrix-grid { display: grid; grid-template-columns: repeat(5, 55px); gap: 6px; }
+        .matrix-cell { width: 55px; height: 55px; border-radius: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; font-weight: 900; color: #fff; font-size: 14px; cursor: pointer; transition: 0.25s; border: 2px solid transparent; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .matrix-cell:hover { transform: scale(1.08); filter: brightness(1.1); z-index: 2; }
+        .matrix-cell.selected { border-color: #0f172a; box-shadow: 0 0 10px rgba(15, 23, 42, 0.4); transform: scale(1.1); }
+        .matrix-cell span { font-size: 9px; opacity: 0.9; font-weight: 700; margin-top: 1px; }
+
+        .m-green { background-color: #22c55e; }
+        .m-yellow { background-color: #eab308; }
+        .m-orange { background-color: #f97316; }
+        .m-red { background-color: #ef4444; }
+
+        .carousel-container { position: relative; width: 100%; border-radius: 20px; background: var(--white); box-shadow: 0 15px 50px rgba(0,0,0,0.06); border: 1px solid var(--border-color); overflow: hidden; margin-top: 20px; }
+        .carousel-header { background: var(--light-blue); padding: 20px 30px; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; }
+        .carousel-header h3 { font-size: 22px; font-weight: 900; color: var(--primary-navy); margin: 0; }
+        .carousel-step-badge { background: var(--brand-blue); color: white; padding: 6px 15px; border-radius: 20px; font-weight: 800; font-size: 14px; }
+        .carousel-track-wrapper { overflow: hidden; position: relative; }
+        .carousel-track { display: flex; transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1); }
+        .carousel-slide { min-width: 100%; padding: 40px; box-sizing: border-box; }
+        .carousel-controls { padding: 20px 40px; border-top: 1px solid var(--border-color); background: #f8fafc; display: flex; justify-content: space-between; align-items: center; }
+        .btn-carousel { background: var(--brand-blue); color: white; border: none; padding: 12px 25px; border-radius: 10px; cursor: pointer; display: flex; align-items: center; gap: 8px; font-weight: 800; font-size: 16px; transition: 0.3s; box-shadow: 0 4px 10px rgba(37, 99, 235, 0.2); }
+        .btn-carousel:hover:not(:disabled) { background: var(--brand-blue-hover); transform: translateY(-2px); }
+        .btn-carousel:disabled { background: #94a3b8; cursor: not-allowed; box-shadow: none; opacity: 0.7; }
+        .carousel-indicators { display: flex; gap: 10px; justify-content: center; }
+        .indicator { width: 12px; height: 12px; border-radius: 50%; background: #cbd5e1; cursor: pointer; transition: 0.4s; }
+        .indicator.active { background: var(--brand-blue); width: 30px; border-radius: 6px; }
+
+        .mega-case-card { background: #fafbfd; border: 1px solid var(--border-color); border-radius: 16px; padding: 30px; margin-bottom: 25px; border-right: 8px solid var(--brand-blue); transition: 0.3s; }
+        .mega-case-card:hover { box-shadow: 0 10px 25px rgba(0,0,0,0.05); transform: translateX(-5px); }
+        .mega-case-card.function { border-right-color: #f59e0b; }
+        .mega-case-card.creative { border-right-color: #8b5cf6; }
+        .mega-case-card.lcc { border-right-color: #10b981; }
+        .mega-case-card.implement { border-right-color: #ef4444; }
+
+        .exam-link-btn { background: linear-gradient(135deg, var(--brand-blue), #1e40af); color: var(--white); border: none; padding: 20px 45px; font-size: 22px; font-weight: 900; border-radius: 15px; cursor: pointer; display: inline-flex; align-items: center; gap: 12px; margin-top: 20px; transition: 0.4s; text-decoration: none; box-shadow: 0 15px 35px rgba(37, 99, 235, 0.3); }
+        .exam-link-btn:hover { transform: translateY(-5px); box-shadow: 0 20px 45px rgba(37, 99, 235, 0.5); }
+
+        .faq-container { display: flex; flex-direction: column; gap: 15px; margin-bottom: 40px; }
+        .faq-item { background: var(--white); border: 1px solid var(--border-color); border-radius: 12px; overflow: hidden; transition: all 0.3s ease; }
+        .faq-item.active { border-color: var(--brand-blue); box-shadow: 0 10px 25px rgba(37, 99, 235, 0.1); }
+        .faq-question { padding: 20px 25px; font-weight: 900; font-size: 18px; color: var(--primary-navy); cursor: pointer; display: flex; justify-content: space-between; align-items: center; background: #f8fafc; transition: background 0.3s; }
+        .faq-question:hover { background: var(--light-blue); color: var(--brand-blue); }
+        .faq-question i.icon-main { margin-left: 12px; color: var(--brand-blue); font-size: 24px; }
+        .faq-answer { padding: 0 25px; max-height: 0; overflow: hidden; transition: max-height 0.4s ease, padding 0.4s ease; background: var(--white); }
+        .faq-item.active .faq-answer { padding: 25px 25px; max-height: 2500px; border-top: 1px solid var(--border-color); }
+        .faq-answer ul { margin-right: 25px; margin-bottom: 0; }
+        .faq-answer li { margin-bottom: 12px; font-size: 16px; }
+        .faq-icon-arrow { font-size: 26px; color: var(--text-muted); transition: transform 0.4s ease; }
+        .faq-item.active .faq-icon-arrow { transform: rotate(180deg); color: var(--brand-blue); }
+
+        .app-hub-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; max-width: 1150px; margin: 0 auto; }
+        .app-hub-card { --card-accent: #1d4ed8; background: var(--white); border: 1px solid var(--border-color); border-top: 5px solid var(--card-accent); border-radius: 18px; padding: 30px 26px; cursor: pointer; transition: all 0.35s var(--ease-soft); box-shadow: 0 8px 25px rgba(0,0,0,0.04); display: flex; flex-direction: column; gap: 12px; }
+        .app-hub-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); border-color: var(--card-accent); }
+        .app-hub-icon { width: 60px; height: 60px; border-radius: 14px; background: color-mix(in srgb, var(--card-accent) 12%, white); color: var(--card-accent); display: flex; align-items: center; justify-content: center; font-size: 30px; margin-bottom: 4px; }
+        .app-hub-card h4 { font-size: 19px; font-weight: 900; color: var(--primary-navy); }
+        .app-hub-card p { font-size: 14.5px; color: var(--text-muted); font-weight: 600; line-height: 1.7; flex-grow: 1; margin: 0; }
+        .app-hub-tag { align-self: flex-start; font-size: 11.5px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; color: var(--card-accent); background: color-mix(in srgb, var(--card-accent) 10%, white); padding: 5px 12px; border-radius: 20px; }
+        .app-hub-go { display: flex; align-items: center; gap: 8px; font-weight: 900; color: var(--card-accent); font-size: 15px; margin-top: 6px; }
+        .app-hub-card:hover .app-hub-go { gap: 12px; }
+        .app-hub-badge-external { position: absolute; top: 18px; left: 18px; font-size: 10.5px; font-weight: 900; color: #fff; background: #0f172a; padding: 4px 10px; border-radius: 20px; }
+        .app-hub-card { position: relative; }
+
+        .reference-card { background: var(--white); border: 1px solid #e2e8f0; border-radius: 16px; padding: 25px; margin-bottom: 20px; display: flex; align-items: center; gap: 20px; transition: all 0.3s; box-shadow: 0 4px 15px rgba(0,0,0,0.02); }
+        .reference-card:hover { transform: translateY(-5px); border-color: #cbd5e1; box-shadow: 0 10px 30px rgba(0,0,0,0.08); }
+        .ref-icon { font-size: 35px; color: var(--brand-blue); background: var(--light-blue); padding: 15px; border-radius: 12px; flex-shrink: 0; }
+        .ref-details h4 { font-size: 19px; color: var(--primary-navy); margin-bottom: 8px; font-weight: 900; }
+        .ref-details p { font-size: 15.5px; color: var(--text-muted); margin: 0; line-height: 1.7; }
+
+        .exam-score-bar { display: flex; align-items: center; justify-content: space-between; background: linear-gradient(135deg, #0f172a, #1e293b); color: #fff; padding: 18px 26px; border-radius: 14px; margin-bottom: 25px; position: sticky; top: 0; z-index: 10; box-shadow: 0 10px 25px rgba(15,23,42,0.15); }
+        .exam-score-bar .es-label { font-size: 15px; font-weight: 800; color: #94a3b8; }
+        .exam-score-bar .es-value { font-size: 24px; font-weight: 900; color: #38bdf8; }
+        .exam-q-card { background: #fff; border: 1px solid var(--border-color); border-radius: 14px; padding: 22px 24px; margin-bottom: 18px; }
+        .exam-q-num { display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 30px; background: var(--brand-blue); color: #fff; border-radius: 50%; font-weight: 900; font-size: 14px; margin-left: 8px; }
+        .exam-q-text { font-size: 16px; font-weight: 800; color: var(--primary-navy); display: inline; }
+
+        @media (max-width: 768px) {
+            .menu-toggle { display: block; }
+            .sidebar { position: fixed; right: -380px; height: 100vh; max-width: 85vw; }
+            .sidebar.open { right: 0; }
+            .main-content { padding: 80px 20px 40px; }
+            .content-header span { font-size: 14px; }
+            .content-header .ch-crumb { display: none; }
+            .back-to-top { bottom: 20px; left: 20px; width: 44px; height: 44px; font-size: 20px; }
+            .carousel-controls { flex-direction: column; gap: 15px; }
+            .carousel-indicators { order: -1; margin-bottom: 15px; }
+            .timeline { flex-wrap: wrap; gap: 20px; justify-content: center; }
+            .timeline::before { display: none; }
+            .tl-line { display: none; }
+            .section-card { padding: 30px 22px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="page-transition-bar" id="pageTransitionBar"></div>
+    <div class="sidebar-backdrop" id="sidebarBackdrop" onclick="toggleMobileMenu()"></div>
+
+    <button class="menu-toggle" onclick="toggleMobileMenu()" aria-label="فتح القائمة"><i class='bx bx-menu'></i></button>
+
+    <div class="sidebar" id="mainSidebar">
+        <div class="sidebar-header">
+            <img src="logo.jpg" alt="BA Academy Logo" onerror="this.src='https://via.placeholder.com/130?text=BA+Academy'">
+            <h2>الدورة الشاملة في الهندسة القيمية</h2>
+            <p>Value Engineering Course</p>
+            <div class="progress-container">
+                <div class="progress-header"><span>الأقسام التي زرتها</span><span id="progress-text">13%</span></div>
+                <div class="progress-track"><div class="progress-fill" id="progress-bar"></div></div>
+            </div>
+        </div>
+
+        <ul class="menu-items">
+            <li id="btn_tab1" class="menu-item active" onclick="switchTab('tab1')">
+                <i class='bx bx-play-circle tab-icon'></i>
+                <div class="tab-text"><span class="ar-title">1. مدخل ومفاهيم الهندسة القيمية</span><span class="en-title">Introduction & Concepts</span></div>
+            </li>
+            <li id="btn_tab2" class="menu-item" onclick="switchTab('tab2')">
+                <i class='bx bx-search-alt tab-icon'></i>
+                <div class="tab-text"><span class="ar-title">2. المرحلة المعلوماتية وتحليل الوظائف</span><span class="en-title">Information & Function Analysis</span></div>
+            </li>
+            <li id="btn_tab3" class="menu-item" onclick="switchTab('tab3')">
+                <i class='bx bx-bulb tab-icon'></i>
+                <div class="tab-text"><span class="ar-title">3. المرحلة الإبداعية</span><span class="en-title">Creative Phase</span></div>
+            </li>
+            <li id="btn_tab4" class="menu-item" onclick="switchTab('tab4')">
+                <i class='bx bx-line-chart tab-icon'></i>
+                <div class="tab-text"><span class="ar-title">4. التقييم والتطوير وتكلفة الدورة الحياتية</span><span class="en-title">Evaluation, Development & LCC</span></div>
+            </li>
+
+            <li id="btn_tab5hub" class="menu-item" onclick="switchTab('tab5hub')">
+                <i class='bx bx-folder-open tab-icon'></i>
+                <div class="tab-text"><span class="ar-title">5. التطبيقات والمراجع</span><span class="en-title">Applications & References</span></div>
+            </li>
+
+            <li id="btn_tab9" class="menu-item" onclick="switchTab('tab9')">
+                <i class='bx bx-trophy tab-icon'></i>
+                <div class="tab-text"><span class="ar-title">6. مواضيع متقدمة (ما بعد الأساسيات)</span><span class="en-title">Advanced Topics</span></div>
+            </li>
+
+            <li id="btn_tab7" class="menu-item" onclick="window.open('50_va_Question.html', '_blank')">
+                <i class='bx bx-edit-alt tab-icon'></i>
+                <div class="tab-text"><span class="ar-title">7. الاختبار النهائي المحاكي (50 سؤال)</span><span class="en-title">Final Exam Simulator</span></div>
+            </li>
+            <li id="value_tab_trigger_new" class="menu-item" onclick="window.open('tools-va.html', '_blank')" style="background: linear-gradient(135deg, #1e3a8a, #1d4ed8); border: 2px solid #3b82f6;">
+                <i class='bx bx-gift tab-icon' style="background: rgba(255,255,255,0.2); color: white; font-size: 24px;"></i>
+                <div class="tab-text">
+                    <span class="ar-title" style="color: #ffffff; font-size: 15.5px; font-weight: 900;">🎁 هدية الأكاديمية للمتدرب</span>
+                    <span class="en-title" style="color: #bfdbfe; font-weight: 800;">VE Pro Suite – Digital Workshop</span>
+                </div>
+            </li>
+            <li id="btn_tab8" class="menu-item" onclick="switchTab('tab8')">
+                <i class='bx bx-check-shield tab-icon'></i>
+                <div class="tab-text"><span class="ar-title">8. الخاتمة وإتمام الدورة</span><span class="en-title">Conclusion</span></div>
+            </li>
+        </ul>
+    </div>
+
+    <div class="main-content" id="mainContentArea" onclick="closeMobileMenuOnBodyClick()">
+
+        <div class="content-header" id="contentHeader">
+            <i class='bx bx-play-circle' id="chIcon"></i>
+            <span id="chTitle">مدخل ومفاهيم الهندسة القيمية</span>
+            <span class="ch-crumb" id="chCrumb">القسم 1 من 8</span>
+        </div>
+
+        <!-- ======================= TAB 1: INTRO ======================= -->
+        <div id="tab1" class="tab-content active">
+            <div class="roadmap-container reveal">
+                <h3 class="roadmap-title"><i class='bx bx-map-alt'></i> خريطة رحلة الكورس (Course Roadmap)</h3>
+                <div class="timeline">
+                    <div class="tl-step active"><span>1</span><p>المفاهيم</p></div>
+                    <div class="tl-line"></div>
+                    <div class="tl-step"><span>2</span><p>المعلومات والوظائف</p></div>
+                    <div class="tl-line"></div>
+                    <div class="tl-step"><span>3</span><p>الإبداع</p></div>
+                    <div class="tl-line"></div>
+                    <div class="tl-step"><span>4</span><p>التقييم والتطوير</p></div>
+                    <div class="tl-line"></div>
+                    <div class="tl-step"><span>5</span><p>التطبيق العملي</p></div>
+                    <div class="tl-line"></div>
+                    <div class="tl-step"><span>6</span><p>المصطلحات والمراجع</p></div>
+                    <div class="tl-line"></div>
+                    <div class="tl-step"><span>7</span><p>مواضيع متقدمة</p></div>
+                    <div class="tl-line"></div>
+                    <div class="tl-step"><span>8</span><p>الخاتمة</p></div>
+                </div>
+            </div>
+
+            <div class="section-card">
+                <h2 class="main-title"><i class='bx bx-bulb'></i> 1. مدخل ومفاهيم الهندسة القيمية الأساسية</h2>
+
+                <div class="hook-box reveal">
+                    <div class="hook-badge"><i class='bx bx-bulb'></i> قبل أن نبدأ</div>
+                    <h3>مستشفى بميزانية 400 مليون ريال، بتصميم هندسي سليم ومعتمد من كل الاستشاريين. ورغم ذلك، حين درس فريق الهندسة القيمية بند واحد فقط — الأبواب المقاومة للحريق — وجد فجوة حقيقية بين التكلفة الحالية وأقل تكلفة معقولة لتحقيق نفس الوظائف المطلوبة.</h3>
+                    <p>السؤال هنا ليس "هل التصميم صحيح هندسياً؟" — السؤال الحقيقي هو: <strong>"هل هذا أقل تكلفة معقولة لتحقيق الوظيفة المطلوبة بنفس المستوى؟"</strong> الفرق بين السؤالين هو جوهر ما ستتعلمه في الوحدات القادمة.</p>
+                </div>
+
+                <div class="module-progress-bar reveal">
+                    <div class="mp-text">أنت الآن في القسم 1 من 8 ضمن رحلة الهندسة القيمية</div>
+                    <div class="mp-track"><div class="mp-fill" style="width: 14%;"></div></div>
+                    <div class="mp-time"><i class='bx bx-time-five'></i> 7 دقائق</div>
+                </div>
+
+                <div class="module-objective reveal">
+                    <span class="obj-tag"><i class='bx bx-target-lock'></i> هدف الوحدة:</span>
+                    <p class="obj-text">أن يكون المتدرب قادراً على تعريف الهندسة القيمية، وفهم معادلة القيمة، والتفريق بينها وبين تخفيض التكلفة، والتعرف على المعايير الدولية المعتمدة (SAVE / EN 12973).</p>
+                </div>
+
+                <div class="snapshot-row reveal">
+                    <div class="snapshot-card"><div class="snap-num">1947</div><div class="snap-label">سنة النشأة (GE)</div></div>
+                    <div class="snapshot-card"><div class="snap-num">6</div><div class="snap-label">مراحل خطة العمل</div></div>
+                    <div class="snapshot-card"><div class="snap-num">3</div><div class="snap-label">معايير دولية معتمدة</div></div>
+                    <div class="snapshot-card"><div class="snap-num">4</div><div class="snap-label">مسارات لتحسين القيمة</div></div>
+                </div>
+
+                <div class="case-thread reveal">
+                    <div class="case-thread-badge"><i class='bx bx-briefcase-alt-2'></i> دراسة الحالة المرافقة للكورس</div>
+                    <h4>مشروع مستشفى الرياض التخصصي (500 سرير)</h4>
+                    <p>
+                        حتى تبقى الفكرة تطبيقية لا نظرية فقط، سنرافق <strong>سيناريو تدريبياً واقعياً</strong> مُصمَّماً لأغراض التطبيق طوال هذا الكورس: مشروع "إنشاء وتجهيز مستشفى متكامل بسعة 500 سرير بمدينة الرياض، بميزانية تقديرية 400 مليون ريال ومدة تنفيذ 24 شهراً". فريق الهندسة القيمية مكلَّف بدراسة <strong>الأبواب المقاومة للحريق</strong> (Fire-Rated Doors) في المبنى، عددها 200 باب بتكلفة حالية 8,000 ريال للباب الواحد (إجمالي 1,600,000 ريال)، في نهاية مرحلة التصميم التخطيطي وقبل الطرح للمقاولين — بهدف التأكد من أن التصميم الحالي يحقق أفضل قيمة ممكنة قبل بدء التنفيذ.
+                    </p>
+                    <p style="font-size: 13px; color: #94a3b8; font-weight: 700; margin-top: 10px;">جميع أرقام هذا السيناريو (الميزانيات، التكاليف، قيم التوفير) افتراضات تدريبية لأغراض التوضيح، وليست نتائج مشروع فعلي منشور.</p>
+                </div>
+
+                <div class="card-heading reveal">أولاً: الهندسة القيمية... من أين بدأت؟</div>
+                <p class="reveal">
+                    الهندسة القيمية (Value Engineering - VE) منهجية منظمة ومتعددة التخصصات، تُستخدم لتحليل الوظائف المطلوبة من منتج أو نظام أو مشروع، بهدف تحقيق هذه الوظائف بأقل تكلفة إجمالية ممكنة، دون المساس بالأداء أو الجودة أو السلامة.
+                </p>
+                <p class="reveal">
+                    نشأت الفكرة في شركة جنرال إلكتريك الأمريكية عام 1947، على يد المهندس لورانس مايلز. بعد الحرب العالمية الثانية، كانت المواد الخام شحيحة، فاضطر فريقه للبحث عن بدائل لمكونات غير متوفرة. والمفاجأة أن كثيراً من هذه البدائل كانت أقل تكلفة، وأحياناً أفضل أداءً من الأصل. من هنا وُلد سؤال مايلز الذي بُنيت عليه المنهجية بالكامل:
+                </p>
+                <span class="highlight-line reveal">"ما الوظيفة المطلوبة فعلاً؟ وهل هناك طريقة أخرى أرخص تحقق هذه الوظيفة بنفس الكفاءة؟"</span>
+
+                <div class="box box-exam reveal">
+                    <div class="box-title"><span class="exam-star"><i class='bx bx-star'></i> مهم للاختبار</span><i class='bx bx-check-double'></i> موضع سؤال اختبار (CVS/AVS Tip)</div>
+                    <p>انتبه للفرق بين 3 مصطلحات متقاربة: <strong>Value Engineering (VE)</strong> هي تطبيق منهجية القيمة على مشروع لا يزال في مرحلة التخطيط أو التصميم أو التطوير، بهدف تحسين قيمته قبل التنفيذ. <strong>Value Analysis (VA)</strong> نفس المنهجية، لكنها تُطبَّق على منتج أو نظام أو عملية قائمة بالفعل. أما <strong>Value Management (VM)</strong> فهي الإطار الأشمل الذي يدير القيمة على المستوى الاستراتيجي عبر كامل دورة حياة المشروع.</p>
+                </div>
+
+                <div class="card-heading reveal">ثانياً: كيف تُقاس "القيمة" بدقة؟</div>
+                <p class="reveal">
+                    نقطة مهمة قبل ما نكمل: القيمة ليست رقماً ناتجاً عن قسمة مباشرة، بل مقياس يعبّر عن مقدار الوظيفة أو الأداء الذي تحصل عليه مقابل كل ريال يتم إنفاقه. وتُكتب اختصاراً "الوظيفة ÷ التكلفة".
+                </p>
+                <span class="highlight-line reveal">رفع القيمة لا يعني دائماً خفض التكلفة فقط — بل يمكن أيضاً رفع الأداء بنفس التكلفة، أو الجمع بين الاثنين معاً.</span>
+
+                <div class="box box-info reveal">
+                    <div class="box-title"><i class='bx bx-question-mark'></i> سؤال منطقي: كيف نقسم "وظيفة" على "تكلفة" والوظيفة ليست رقماً أصلاً؟</div>
+                    <p>سؤال وجيه فعلاً — الوظيفة ليست رقماً بذاتها. لكن في مرحلة تحليل الوظائف (الوحدة القادمة) سنتعلم كيف نحوّلها إلى قيمة قابلة للقياس، مثل درجة أداء من 1-10، أو "الجدارة/Worth" بالريال. فحين تقرأ في تقرير VE جملة "Value = Function/Cost"، فالمقصود ببساطة: <strong>كلما حافظت على الوظيفة أو حسّنتها، وانخفضت التكلفة، ارتفعت القيمة</strong> — وليس قسمة فعلية لكلمة "تبريد" على مبلغ مالي.</p>
+                </div>
+
+                <div class="diagram-box reveal">
+                    <div class="diagram-box-title"><i class='bx bx-git-branch'></i> معادلة القيمة ومساراتها الأربعة لتحسين القيمة</div>
+                    <svg viewBox="0 0 820 300" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="280" y="15" width="260" height="70" rx="14" fill="var(--light-blue)" stroke="var(--brand-blue)" stroke-width="2"/>
+                        <text x="410" y="45" text-anchor="middle" font-size="20" font-weight="900" fill="var(--primary-navy)">القيمة = الوظيفة / التكلفة</text>
+                        <text x="410" y="65" text-anchor="middle" font-size="12" font-weight="700" fill="var(--text-muted)" style="direction:ltr; unicode-bidi:bidi-override;">Value = Function (Performance) / Cost</text>
+
+                        <line x1="410" y1="85" x2="410" y2="110" stroke="#94a3b8" stroke-width="2"/>
+                        <polygon points="410,110 404,100 416,100" fill="#94a3b8"/>
+
+                        <rect x="20" y="115" width="180" height="80" rx="12" fill="#ecfdf5" stroke="#16a34a" stroke-width="2"/>
+                        <text x="110" y="145" text-anchor="middle" font-size="13" font-weight="900" fill="#15803d">١. خفض التكلفة</text>
+                        <text x="110" y="163" text-anchor="middle" font-size="11" font-weight="700" fill="#166534">مع ثبات الأداء</text>
+                        <text x="110" y="179" text-anchor="middle" font-size="10.5" font-weight="700" fill="#166534" style="direction:ltr; unicode-bidi:bidi-override;">Cost ↓  /  Function → same</text>
+
+                        <rect x="215" y="115" width="180" height="80" rx="12" fill="#eff6ff" stroke="#1d4ed8" stroke-width="2"/>
+                        <text x="305" y="145" text-anchor="middle" font-size="13" font-weight="900" fill="#1d4ed8">٢. رفع الأداء</text>
+                        <text x="305" y="163" text-anchor="middle" font-size="11" font-weight="700" fill="#1e40af">مع ثبات التكلفة</text>
+                        <text x="305" y="179" text-anchor="middle" font-size="10.5" font-weight="700" fill="#1e40af" style="direction:ltr; unicode-bidi:bidi-override;">Cost → same  /  Function ↑</text>
+
+                        <rect x="410" y="115" width="180" height="80" rx="12" fill="#fffbeb" stroke="#f59e0b" stroke-width="2"/>
+                        <text x="500" y="145" text-anchor="middle" font-size="13" font-weight="900" fill="#b45309">٣. الحل الأمثل</text>
+                        <text x="500" y="163" text-anchor="middle" font-size="11" font-weight="700" fill="#92400e">أداء أعلى وتكلفة أقل</text>
+                        <text x="500" y="179" text-anchor="middle" font-size="10.5" font-weight="700" fill="#92400e" style="direction:ltr; unicode-bidi:bidi-override;">Cost ↓  /  Function ↑</text>
+
+                        <rect x="605" y="115" width="195" height="80" rx="12" fill="#fdf2f8" stroke="#db2777" stroke-width="2"/>
+                        <text x="702" y="145" text-anchor="middle" font-size="13" font-weight="900" fill="#be185d">٤. تحسين متناسب</text>
+                        <text x="702" y="163" text-anchor="middle" font-size="11" font-weight="700" fill="#9d174d">أداء أعلى بكثير</text>
+                        <text x="702" y="179" text-anchor="middle" font-size="10.5" font-weight="700" fill="#9d174d">بزيادة تكلفة طفيفة</text>
+
+                        <text x="410" y="230" text-anchor="middle" font-size="13" font-weight="800" fill="var(--text-muted)">ملاحظة: الهندسة القيمية ليست بالضرورة "خفض تكلفة" — بل هي "تعظيم للقيمة" بأي من المسارات الأربعة</text>
+                        <text x="410" y="255" text-anchor="middle" font-size="12" font-weight="700" fill="#94a3b8">وفق التعريف المعياري في EN 12973 و SAVE International Value Methodology Standard</text>
+                    </svg>
+                </div>
+
+                <div class="card-heading reveal">ثالثاً: كيف تُطبَّق الفكرة على مشروع حقيقي؟</div>
+                <p class="reveal">ليست بالعشوائية بالطبع. هناك خطوات ثابتة، معتمدة عالمياً من SAVE International، تُعرف بـ"خطة العمل" (Job Plan)، وسنسير عليها بالترتيب طوال هذا الكورس:</p>
+
+                <div class="diagram-box reveal" style="text-align:center;">
+                    <svg viewBox="0 0 400 400" style="max-width:380px; margin:0 auto; display:block;" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M200.0,30.0 A170,170 0 0,1 347.2,115.0 L282.3,152.5 A95,95 0 0,0 200.0,105.0 Z" fill="#3b82f6" opacity="0.92"/>
+                        <path d="M347.2,115.0 A170,170 0 0,1 347.2,285.0 L282.3,247.5 A95,95 0 0,0 282.3,152.5 Z" fill="#f59e0b" opacity="0.92"/>
+                        <path d="M347.2,285.0 A170,170 0 0,1 200.0,370.0 L200.0,295.0 A95,95 0 0,0 282.3,247.5 Z" fill="#8b5cf6" opacity="0.92"/>
+                        <path d="M200.0,370.0 A170,170 0 0,1 52.8,285.0 L117.7,247.5 A95,95 0 0,0 200.0,295.0 Z" fill="#6366f1" opacity="0.92"/>
+                        <path d="M52.8,285.0 A170,170 0 0,1 52.8,115.0 L117.7,152.5 A95,95 0 0,0 117.7,247.5 Z" fill="#10b981" opacity="0.92"/>
+                        <path d="M52.8,115.0 A170,170 0 0,1 200.0,30.0 L200.0,105.0 A95,95 0 0,0 117.7,152.5 Z" fill="#ef4444" opacity="0.92"/>
+
+                        <text x="266.5" y="90" text-anchor="middle" font-size="26" font-weight="900" fill="#fff">1</text>
+                        <text x="333.0" y="205" text-anchor="middle" font-size="26" font-weight="900" fill="#fff">2</text>
+                        <text x="266.5" y="320" text-anchor="middle" font-size="26" font-weight="900" fill="#fff">3</text>
+                        <text x="133.5" y="320" text-anchor="middle" font-size="26" font-weight="900" fill="#fff">4</text>
+                        <text x="67.0" y="205" text-anchor="middle" font-size="26" font-weight="900" fill="#fff">5</text>
+                        <text x="133.5" y="90" text-anchor="middle" font-size="26" font-weight="900" fill="#fff">6</text>
+
+                        <circle cx="200" cy="200" r="90" fill="#0f172a"/>
+                        <text x="200" y="195" text-anchor="middle" font-size="17" font-weight="900" fill="#fff">خطة العمل</text>
+                        <text x="200" y="218" text-anchor="middle" font-size="12" font-weight="700" fill="#93c5fd">VE Job Plan</text>
+                    </svg>
+                </div>
+
+                <div class="table-wrapper reveal">
+                    <table class="data-table">
+                        <thead><tr><th>#</th><th>المرحلة</th><th>الهدف الأساسي</th></tr></thead>
+                        <tbody>
+                            <tr><td><span class="status-pill" style="background:#dbeafe;color:#1d4ed8;">1</span></td><td><strong>المرحلة المعلوماتية</strong> (Information)</td><td>جمع كافة البيانات الفنية والتكلفة والمعايير المرجعية للمشروع</td></tr>
+                            <tr><td><span class="status-pill" style="background:#fef3c7;color:#b45309;">2</span></td><td><strong>مرحلة تحليل الوظائف</strong> (Function Analysis)</td><td>تعريف الوظائف بصيغة (فعل + اسم) وبناء مخطط FAST</td></tr>
+                            <tr><td><span class="status-pill" style="background:#ede9fe;color:#6d28d9;">3</span></td><td><strong>المرحلة الإبداعية</strong> (Creative)</td><td>توليد أكبر عدد من البدائل لتحقيق كل وظيفة</td></tr>
+                            <tr><td><span class="status-pill" style="background:#e0e7ff;color:#4338ca;">4</span></td><td><strong>مرحلة التقييم</strong> (Evaluation)</td><td>فرز وترتيب البدائل باستخدام مصفوفة تقييم موزونة</td></tr>
+                            <tr><td><span class="status-pill" style="background:#d1fae5;color:#047857;">5</span></td><td><strong>مرحلة التطوير</strong> (Development)</td><td>تطوير البدائل الفائزة فنياً واقتصادياً وحساب تكلفة دورة الحياة (LCC)</td></tr>
+                            <tr><td><span class="status-pill" style="background:#fee2e2;color:#b91c1c;">6</span></td><td><strong>مرحلة العرض والتنفيذ</strong> (Presentation & Implementation)</td><td>إعداد مقترح التغيير القيمي (VECP) ومتابعة تنفيذه واعتماده</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="card-heading reveal">رابعاً: من الجهات التي وضعت هذه القواعد؟</div>
+                <div class="reveal">
+                    <ul>
+                        <li><strong>SAVE International Value Methodology Standard and Body of Knowledge:</strong> المرجع الأمريكي الأشهر عالمياً، ويمنح شهادة (CVS) أخصائي قيمة معتمد.</li>
+                        <li><strong>EN 12973:2020 – Value Management:</strong> المعيار الأوروبي المرجعي لإدارة القيمة، معتمد على نطاق واسع في المملكة المتحدة ودول الاتحاد الأوروبي، ويوحّد المصطلحات والمبادئ وأنظمة التطبيق لمنهجية القيمة.</li>
+                        <li><strong>ISO 15686-5 – Life Cycle Costing:</strong> المرجع الدولي لحساب تكلفة دورة الحياة للمباني والأصول الإنشائية، ويُستخدم بكثافة في مرحلة التطوير.</li>
+                        <li><strong>برامج VE الإلزامية الحكومية:</strong> في الولايات المتحدة يُلزم القانون الفيدرالي (Public Law 104-106) الجهات الحكومية الكبرى بإجراء دراسات VE على المشاريع التي تتجاوز حداً معيناً من التكلفة، وهو نمط تتبناه اليوم جهات حكومية وشبه حكومية في عدة دول بما فيها مشاريع البنية التحتية الكبرى بالمنطقة.</li>
+                    </ul>
+                </div>
+
+                <div class="box box-tip reveal">
+                    <div class="box-title"><i class='bx bx-bulb'></i> نصيحة عملية عند التطبيق</div>
+                    <p>اختر توقيت الدراسة بعناية: أفضل توقيت هو نهاية التصميم التخطيطي وبداية التفصيلي — أي بعد أن تتحدد الفكرة العامة، وقبل أن تُقفل التفاصيل. في هذا التوقيت، قدرتك على التأثير في التكلفة والوظيفة لا تزال عالية، وتكلفة أي تعديل لا تزال منخفضة. كلما تأخرت الدراسة، قلّت قدرتك على التأثير وارتفعت تكلفة أي تغيير.</p>
+                </div>
+
+                <div class="box box-mistake reveal">
+                    <div class="box-title"><i class='bx bx-error'></i> أخطاء متكررة في الواقع العملي</div>
+                    <ul>
+                        <li><strong>الخلط بينها وبين خفض التكلفة العشوائي:</strong> خفض التكلفة العشوائي يضحّي غالباً بالوظيفة أو الجودة، أما الهندسة القيمية فتحافظ عليها أو تحسّنها.</li>
+                        <li><strong>إجراء الدراسة متأخراً جداً:</strong> بعد أن تُقفل التصاميم التنفيذية بالكامل، فيصبح أي تعديل مكلفاً ومربكاً للجدول الزمني.</li>
+                        <li><strong>الاعتماد على تخصص واحد فقط:</strong> إجراء الدراسة بمهندس واحد من تخصص واحد يُفقدها نظرتها الشاملة.</li>
+                    </ul>
+                </div>
+
+                <div class="table-wrapper reveal">
+                    <table class="data-table">
+                        <thead><tr><th>المقارنة</th><th>الهندسة القيمية (VE)</th><th>خفض التكلفة (Cost Cutting)</th></tr></thead>
+                        <tbody>
+                            <tr><td>المنهجية</td><td>منظمة، خطة عمل سداسية موثقة</td><td>غير منظمة غالباً، قرارات فردية سريعة</td></tr>
+                            <tr><td>التركيز</td><td>الوظيفة أولاً ثم التكلفة</td><td>التكلفة فقط</td></tr>
+                            <tr><td>الفريق</td><td>متعدد التخصصات إلزامياً</td><td>غالباً فرد أو جهة واحدة</td></tr>
+                            <tr><td>الأثر على الجودة</td><td>يحافظ عليها أو يحسّنها</td><td>قد يضحي بها</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="box box-decision reveal">
+                    <div class="box-title"><i class='bx bx-help-circle'></i> تمرين تفاعلي: هل هذا VE أم مجرد خفض تكلفة؟</div>
+                    <p>طلب مدير المشروع تخفيض تكلفة نظام إنارة الطوارئ بحذف نصف عدد الوحدات في ممرات المستشفى، توفيراً للميزانية. في رأيك، هل هذا "هندسة قيمية"؟</p>
+                    <div class="decision-options">
+                        <button class="decision-btn" data-correct="false" onclick="handleDecision(this)">نعم، لأنه وفّر جزءاً من الميزانية</button>
+                        <button class="decision-btn" data-correct="true" onclick="handleDecision(this)">لا، لأنه ضحّى بوظيفة أساسية (السلامة) دون دراسة بديل يحافظ عليها</button>
+                        <button class="decision-btn" data-correct="false" onclick="handleDecision(this)">لا فرق، كلاهما يخفّض التكلفة</button>
+                    </div>
+                    <div class="decision-feedback">
+                        <strong>الإجابة الصحيحة: لا.</strong> هذا خفض تكلفة عشوائي وليس هندسة قيمية، لأنه ضحّى بوظيفة "توفير مسار إخلاء آمن" دون البحث عن بديل يحافظ عليها بتكلفة أقل — مثل إنارة LED أعلى كفاءة بنفس عدد الوحدات. الهندسة القيمية كانت لتبدأ بسؤال: ما الحد الأدنى من الإضاءة المطلوب قانونياً للإخلاء الآمن؟ ثم تبحث عن أرخص وسيلة تحقّقه.
+                    </div>
+                </div>
+
+                <div class="box box-fact reveal">
+                    <div class="box-title"><i class='bx bx-bulb'></i> رقم يستحق أن تتذكره</div>
+                    <p>دراسات القيمة، حين تُنفَّذ بمنهجية صحيحة، قد تحقق وفورات ملموسة في تكلفة المشروع — لكن النسبة الفعلية تختلف بشدة حسب طبيعة المشروع، توقيت إجراء الدراسة، ونطاقها وجودة البيانات المتاحة. لا يوجد رقم ثابت ينطبق على كل الحالات، وهذا ما يجعل توقيت الدراسة (كما ذكرنا سابقاً) بهذه الأهمية.</p>
+                </div>
+
+                <div class="capability-box reveal">
+                    <div class="capability-title"><i class='bx bx-badge-check'></i> أنت الآن تستطيع:</div>
+                    <div class="capability-list">
+                        <div class="capability-item"><i class='bx bx-check-circle'></i> تعريف الهندسة القيمية ومعادلة القيمة بدقة</div>
+                        <div class="capability-item"><i class='bx bx-check-circle'></i> التفرقة بينها وبين خفض التكلفة العشوائي</div>
+                        <div class="capability-item"><i class='bx bx-check-circle'></i> تحديد التوقيت الأمثل لإجراء دراسة القيمة</div>
+                        <div class="capability-item"><i class='bx bx-check-circle'></i> ذكر أهم 3 معايير دولية معتمدة (SAVE / EN 12973 / ISO 15686-5)</div>
+                    </div>
+                </div>
+
+                <div class="break-box reveal">
+                    <i class='bx bx-cup-hot'></i>
+                    <p>استراحة خفيفة ☕ خذ لحظة راحة، ثم تابع معنا.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ======================= TAB 2: INFORMATION & FUNCTION ANALYSIS ======================= -->
+        <div id="tab2" class="tab-content">
+            <div class="section-card">
+                <h2 class="main-title"><i class='bx bx-search-alt'></i> 2. المرحلة المعلوماتية وتحليل الوظائف</h2>
+
+                <div class="module-progress-bar reveal">
+                    <div class="mp-text">أنت الآن في القسم 2 من 8 ضمن رحلة الهندسة القيمية</div>
+                    <div class="mp-track"><div class="mp-fill" style="width: 28%;"></div></div>
+                    <div class="mp-time"><i class='bx bx-time-five'></i> 11 دقيقة</div>
+                </div>
+
+                <div class="case-reminder reveal"><i class='bx bx-briefcase-alt-2'></i> لا زلنا في مشروع مستشفى الرياض التخصصي — دراسة الأبواب المقاومة للحريق (200 باب)</div>
+
+                <div class="module-objective reveal">
+                    <span class="obj-tag"><i class='bx bx-target-lock'></i> هدف الوحدة:</span>
+                    <p class="obj-text">أن يكون المتدرب قادراً على تجهيز فريق ومعلومات دراسة القيمة، وتعريف الوظائف بدقة، وبناء مخطط FAST، وفهم العلاقة بين التكلفة والجدارة، وترتيب أولويات الدراسة عبر مصفوفة تقييم الوظائف.</p>
+                </div>
+
+                <div class="card-heading reveal">أولاً: من أين تبدأ أي دراسة قيمة؟</div>
+                <p class="reveal">
+                    تبدأ أي دراسة قيمة بجمع شامل للمعلومات: المخططات والمواصفات، تقديرات التكلفة التفصيلية، متطلبات المالك والمستخدم النهائي، الأنظمة واللوائح المحلية، وأي قيود زمنية أو تعاقدية. في مشروع المستشفى، جمع الفريق المخططات المعمارية لمواقع الأبواب، جدول كميات الأبواب المقاومة للحريق (200 باب)، تقدير التكلفة الحالية (8,000 ريال للباب الواحد)، ومتطلبات كود الدفاع المدني ومتطلبات وزارة الصحة الخاصة بمقاومة الحريق في المرافق الصحية.
+                </p>
+
+                <div class="box box-info reveal">
+                    <div class="box-title"><i class='bx bx-group'></i> تشكيل فريق دراسة القيمة</div>
+                    <p>غالباً ما يتكون الفريق من عدة تخصصات هندسية وإدارية، ويُحدَّد حجمه الفعلي وفق نطاق الدراسة وتعقيد المشروع — لكن الثابت دائماً هو مبدأ التعدد التخصصي نفسه، مثل: مهندس معماري، مهندس سلامة وحريق، مهندس تكاليف (Quantity Surveyor)، ممثل عن المالك أو الجهة التشغيلية للمستشفى، ويقود الفريق ميسّر معتمد (Value Study Team Leader / CVS) يضمن الالتزام بخطة العمل السداسية دون قفز مباشر إلى الحلول.</p>
+                </div>
+
+                <div class="card-heading reveal">ثانياً: كيف نُعرِّف "الوظيفة" بدقة؟</div>
+                <p class="reveal">
+                    الوظيفة هي ما يجب أن يحققه العنصر أو النظام — وليست وصفاً للمنتج نفسه أو لطريقة تنفيذه. عند وصف وظيفة باب مقاوم للحريق، الصياغة الصحيحة هي <strong>"يمنع الحريق"</strong> أو <strong>"يمنع انتشار الحريق"</strong> — وليست "تركيب باب معدني مقاوم للحريق" أو "استخدام Fire-Rated Door"، لأن هذه الصياغات تصف <strong>حلاً تصميمياً (Design Solution)</strong> جاهزاً، لا الوظيفة المطلوبة.
+                </p>
+                <p class="reveal">
+                    يُفضَّل صياغة الوظيفة بأقصر عبارة ممكنة، وغالباً تكون فعلاً نشطاً (Active Verb) متبوعاً باسم (Noun)، مع تجنّب ذكر الحل التصميمي. لكن هذا ليس قاعدة مطلقة: إذا احتاجت الوظيفة أكثر من كلمتين للحفاظ على معناها بوضوح، فهذا ليس خطأ بحد ذاته — المعيار الحقيقي هو أن تصف "ماذا يجب أن يتحقق" لا "كيف سيتحقق".
+                </p>
+                <span class="highlight-line reveal">المعيار الحقيقي لصياغة الوظيفة: أن تصف ما يجب أن يتحقق، لا الحل الذي سيحققه.</span>
+
+                <div class="table-wrapper reveal">
+                    <table class="data-table">
+                        <thead><tr><th>نوع الوظيفة</th><th>التعريف</th><th>مثال من الباب المقاوم للحريق</th></tr></thead>
+                        <tbody>
+                            <tr><td><strong>الوظيفة الأساسية (Basic)</strong></td><td>السبب الجوهري لوجود العنصر؛ لا يمكن حذفها دون فقدان الغرض بالكامل</td><td>"يمنع الحريق" (Resist / Prevent Fire)</td></tr>
+                            <tr><td><strong>الوظيفة الثانوية المطلوبة (Required Secondary)</strong></td><td>تدعم الوظيفة الأساسية وتلزم قانونياً أو تعاقدياً</td><td>"يحد الدخان" (Limit Smoke)</td></tr>
+                            <tr><td><strong>الوظيفة الجمالية (Aesthetic)</strong></td><td>تخدم القبول البصري دون تأثير وظيفي مباشر</td><td>"يتماشى مع تصميم الممر" (Match Corridor Design)</td></tr>
+                            <tr><td><strong>الوظيفة غير المرغوبة (Unwanted)</strong></td><td>أثر جانبي سلبي ناتج عن التصميم الحالي يجب تقليله</td><td>"يبطئ حركة النقالات الطبية" (Slows Gurney Movement)</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="box box-info reveal">
+                    <div class="box-title"><i class='bx bx-list-check'></i> الوظائف المطلوبة من الباب في هذه الدراسة</div>
+                    <p>بالإضافة إلى الوظيفة الأساسية "يمنع الحريق"، حدّد الفريق ثلاث وظائف ثانوية مطلوبة يجب أن يحققها الباب في آن واحد: <strong>"يحد الدخان"</strong> (منع انتشار الدخان بين الأقسام)، <strong>"يسمح بالمرور"</strong> (حركة الأفراد والنقالات الطبية اليومية)، و<strong>"يوفر الأمان"</strong> (سهولة الفتح والإخلاء في حالات الطوارئ). أي بديل يُقترح لاحقاً يجب أن يحقق هذه الوظائف الأربع معاً، لا وظيفة واحدة فقط.</p>
+                </div>
+
+                <div class="diagram-box reveal">
+                    <div class="diagram-box-title"><i class='bx bx-sitemap'></i> مخطط FAST (Function Analysis System Technique) — الباب المقاوم للحريق بالمستشفى</div>
+                    <p style="font-size:14px; color:var(--text-muted); font-weight:700; margin-bottom:16px;">FAST هو خريطة توضح وظائف النظام والعلاقة بينها، وتساعد الفريق على فهم ماذا يجب أن يحقق النظام قبل التفكير في أي حل. <strong>FAST يحلل الوظائف، وليس المنتجات.</strong></p>
+                    <svg viewBox="0 0 900 340" xmlns="http://www.w3.org/2000/svg">
+                        <text x="70" y="24" text-anchor="middle" font-size="13" font-weight="900" fill="#1d4ed8">◄ لماذا؟ (Why)</text>
+                        <line x1="130" y1="20" x2="770" y2="20" stroke="#cbd5e1" stroke-width="1.5" stroke-dasharray="4,4"/>
+                        <text x="830" y="24" text-anchor="middle" font-size="13" font-weight="900" fill="#b45309">كيف؟ (How) ►</text>
+
+                        <rect x="30" y="55" width="150" height="60" rx="10" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+                        <text x="105" y="82" text-anchor="middle" font-size="13" font-weight="900" fill="#15803d">يمنع الحريق</text>
+                        <text x="105" y="100" text-anchor="middle" font-size="10.5" font-weight="700" fill="#166534">(الوظيفة الأساسية / الأعلى)</text>
+
+                        <line x1="180" y1="85" x2="300" y2="85" stroke="#94a3b8" stroke-width="2"/>
+                        <polygon points="180,85 190,79 190,91" fill="#94a3b8"/>
+
+                        <rect x="300" y="20" width="160" height="55" rx="10" fill="#eff6ff" stroke="#1d4ed8" stroke-width="2"/>
+                        <text x="380" y="45" text-anchor="middle" font-size="12.5" font-weight="900" fill="#1d4ed8">يحد الدخان</text>
+                        <text x="380" y="62" text-anchor="middle" font-size="10" font-weight="700" fill="#1e40af">Limit Smoke</text>
+
+                        <rect x="300" y="90" width="160" height="55" rx="10" fill="#eff6ff" stroke="#1d4ed8" stroke-width="2"/>
+                        <text x="380" y="115" text-anchor="middle" font-size="12.5" font-weight="900" fill="#1d4ed8">يسمح بالمرور</text>
+                        <text x="380" y="132" text-anchor="middle" font-size="10" font-weight="700" fill="#1e40af">Allow Passage</text>
+
+                        <rect x="300" y="160" width="160" height="55" rx="10" fill="#fffbeb" stroke="#f59e0b" stroke-width="2"/>
+                        <text x="380" y="185" text-anchor="middle" font-size="12.5" font-weight="900" fill="#b45309">يوفر الأمان</text>
+                        <text x="380" y="202" text-anchor="middle" font-size="10" font-weight="700" fill="#92400e">Provide Safety (مطلوبة)</text>
+
+                        <line x1="300" y1="47" x2="180" y2="75" stroke="#94a3b8" stroke-width="1.5"/>
+                        <polygon points="180.0,75.0 188.6,67.9 190.9,77.6" fill="#94a3b8"/>
+                        <line x1="300" y1="117" x2="180" y2="85" stroke="#94a3b8" stroke-width="1.5"/>
+                        <polygon points="180.0,85.0 191.0,82.7 188.4,92.4" fill="#94a3b8"/>
+                        <line x1="300" y1="187" x2="180" y2="95" stroke="#94a3b8" stroke-width="1.5"/>
+                        <polygon points="180.0,95.0 191.0,97.1 184.9,105.1" fill="#94a3b8"/>
+
+                        <rect x="520" y="10" width="150" height="50" rx="10" fill="#fff" stroke="#94a3b8" stroke-width="1.5"/>
+                        <text x="595" y="32" text-anchor="middle" font-size="11.5" font-weight="800" fill="var(--text-dark)">باب معدني مقاوم</text>
+                        <text x="595" y="48" text-anchor="middle" font-size="11.5" font-weight="800" fill="var(--text-dark)">للحريق (الحل الحالي)</text>
+
+                        <rect x="520" y="90" width="150" height="50" rx="10" fill="#fff" stroke="#94a3b8" stroke-width="1.5"/>
+                        <text x="595" y="112" text-anchor="middle" font-size="11.5" font-weight="800" fill="var(--text-dark)">أنظمة أبواب معتمدة</text>
+                        <text x="595" y="128" text-anchor="middle" font-size="11.5" font-weight="800" fill="var(--text-dark)">أخرى (بدائل محتملة)</text>
+
+                        <line x1="520" y1="35" x2="460" y2="47" stroke="#cbd5e1" stroke-width="1.5" stroke-dasharray="3,3"/>
+                        <line x1="520" y1="115" x2="460" y2="117" stroke="#cbd5e1" stroke-width="1.5" stroke-dasharray="3,3"/>
+
+                        <rect x="20" y="240" width="860" height="70" rx="10" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5"/>
+                        <text x="450" y="265" text-anchor="middle" font-size="12.5" font-weight="800" fill="var(--text-muted)">القراءة من اليسار لليمين (Left to Right) تجيب على "كيف؟" (How) — والقراءة من اليمين لليسار (Right to Left) تجيب على "لماذا؟" (Why)</text>
+                        <text x="450" y="288" text-anchor="middle" font-size="12" font-weight="700" fill="var(--text-muted)">الباب المعدني الحالي ليس هو "الوظيفة" بل أحد الحلول الممكنة لتحقيق "يحد الدخان" — وهذا يفتح الباب لبدائل أخرى في المرحلة الإبداعية</text>
+                    </svg>
+                </div>
+
+                <div class="box box-tip reveal">
+                    <div class="box-title"><i class='bx bx-test-tube'></i> اختبار سريع: هل هذه وظيفة أم حل؟</div>
+                    <p>إذا سألت "كيف؟" عن وظيفة معينة، وكانت الإجابة اسم منتج أو نظام محدد (مثل "باب معدني" أو "نظام تكييف مركزي")، فغالباً أنت كتبت <strong>حلاً (Solution)</strong> وليس <strong>وظيفة (Function)</strong>. الوظيفة يجب أن تبقى مستقلة عن أي منتج بعينه، لتسمح بظهور بدائل لم تكن لتُطرح لو صيغت المشكلة كحل جاهز من البداية.</p>
+                </div>
+
+                <div class="box box-exam reveal">
+                    <div class="box-title"><span class="exam-star"><i class='bx bx-star'></i> مهم للاختبار</span><i class='bx bx-check-double'></i> موضع سؤال اختبار (FAST Diagram Tip)</div>
+                    <p>الوظيفة التي تقع مباشرة على يسار "خط النطاق الأيسر" (Left Scope Line) تُسمى <strong>وظيفة الترتيب الأعلى (Highest Order Function)</strong> — وهي الغرض الأسمى الذي يبرر وجود العنصر بأكمله (هنا: "يمنع الحريق"). الوظائف على نفس الخط الرأسي (مثل "يحد الدخان" و"يسمح بالمرور") لا تعني بالضرورة تسلسلاً سببياً متتابعاً؛ فبعضها وظائف متزامنة أو مستقلة تتحقق في نفس الوقت (All-the-time Functions).</p>
+                </div>
+
+                <div class="card-heading reveal">ثالثاً: كيف تبني مخطط FAST بنفسك — خطوة بخطوة</div>
+                <div class="table-wrapper reveal">
+                    <table class="data-table">
+                        <thead><tr><th>#</th><th>الخطوة</th><th>تطبيقها على مثالنا</th></tr></thead>
+                        <tbody>
+                            <tr><td>1</td><td>اكتب الوظيفة الأساسية (Basic Function) خلف "خط النطاق الأيسر" مباشرة</td><td>"يمنع الحريق"</td></tr>
+                            <tr><td>2</td><td>اسأل <strong>"كيف؟"</strong> لتوليد الوظائف الثانوية التي تحققها، وضعها يميناً بالتتابع</td><td>يحد الدخان، يسمح بالمرور، يوفر الأمان</td></tr>
+                            <tr><td>3</td><td>تحقق بالعكس: اسأل <strong>"لماذا؟"</strong> من اليمين لليسار للتأكد أن كل وظيفة تخدم التي قبلها فعلاً</td><td>"لماذا نحد الدخان؟" ← "لنمنع انتشار الحريق"</td></tr>
+                            <tr><td>4</td><td>ضع الوظائف التي تحدث في نفس التوقيت على نفس الخط الرأسي</td><td>يحد الدخان + يسمح بالمرور + يوفر الأمان (متزامنة)</td></tr>
+                            <tr><td>5</td><td>أضف الحل التصميمي الحالي كمربع منفصل بخط متقطع أقصى اليمين — لتوضيح أنه حل واحد فقط، وليس الوظيفة نفسها</td><td>الباب المعدني المقاوم للحريق (الحل الحالي)</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="box box-decision reveal">
+                    <div class="box-title"><i class='bx bx-pencil'></i> تمرين ذاتي (على ورقة)</div>
+                    <p>قبل الانتقال للوحدة التالية، اختر عنصراً بسيطاً تعرفه جيداً — مثل "قاطع دائرة (Circuit Breaker)" أو "نافذة" — وطبّق الخطوات الخمس أعلاه: اكتب وظيفته الأساسية، اسأل "كيف؟" لتوليد وظيفتين ثانويتين على الأقل، وتحقق بالعكس بسؤال "لماذا؟". هذا التمرين لا يُقيَّم، لكنه أسرع طريقة لترسيخ الفكرة قبل التعامل مع أمثلة أكثر تعقيداً.</p>
+                </div>
+
+                <div class="box box-exam reveal">
+                    <div class="box-title"><span class="exam-star"><i class='bx bx-star'></i> مهم للاختبار</span><i class='bx bx-check-double'></i> موضع سؤال اختبار (Function Analysis Tip)</div>
+                    <p>إذا جاء في السؤال وصف وظيفة باسم تصميمي محدد مثل "تركيب باب معدني مقاوم للحريق"، فهذا خطأ منهجي شائع — لأنه يصف <strong>حلاً (Solution)</strong> وليس <strong>وظيفة (Function)</strong>. الصياغة الصحيحة هي "يمنع الحريق" أو "يحد الدخان"، تاركة الباب مفتوحاً لأي حل ممكن يحقق هذه الوظيفة.</p>
+                </div>
+
+                <div class="box box-decision reveal">
+                    <div class="box-title"><i class='bx bx-help-circle'></i> تمرين تفاعلي: صنّف هذه الوظيفة</div>
+                    <p>في دراسة الأبواب المقاومة للحريق، حُدّدت وظيفة "يتماشى لون الباب مع تصميم الممر". كيف تصنّفها؟</p>
+                    <div class="decision-options">
+                        <button class="decision-btn" data-correct="false" onclick="handleDecision(this)">وظيفة أساسية (Basic)</button>
+                        <button class="decision-btn" data-correct="true" onclick="handleDecision(this)">وظيفة ثانوية جمالية (Secondary/Aesthetic)</button>
+                        <button class="decision-btn" data-correct="false" onclick="handleDecision(this)">وظيفة غير مرغوبة (Unwanted)</button>
+                    </div>
+                    <div class="decision-feedback">
+                        <strong>الإجابة الصحيحة: وظيفة ثانوية جمالية.</strong> الوظيفة الأساسية للباب هي "يمنع الحريق"، أما تناسق اللون مع الممر فهو غرض بصري داعم — وهذا يفتح فرصة تقييم بدائل أرخص لتحقيق نفس الغرض الجمالي، دون التأثير على الوظائف الأساسية المطلوبة.
+                    </div>
+                </div>
+
+                <div class="box box-info reveal">
+                    <div class="box-title"><i class='bx bx-money-withdraw'></i> السعر مقابل التكلفة مقابل الجدارة (Price vs Cost vs Worth)</div>
+                    <p>ثلاثة مصطلحات متقاربة يخلط بينها كثيرون: <strong>السعر (Price)</strong> هو المبلغ الذي يدفعه العميل للمورّد أو المقاول. <strong>التكلفة (Cost)</strong> هي ما يتحمله المشروع فعلياً لتحقيق الحل الحالي (هنا: 8,000 ريال للباب). <strong>الجدارة (Worth)</strong> هي أقل تكلفة معقولة لتحقيق نفس الوظيفة بنفس المستوى المطلوب، مع الالتزام بالكود والجودة والاعتمادية. مثال: قد يكون سعر باب مطروح في السوق 7,500 ريال، لكن تكلفته الفعلية على المشروع (شاملة التركيب والتشطيب) 8,000 ريال، بينما جدارته المقدَّرة (أقل تكلفة معقولة لحل بديل يحقق نفس الوظائف) 5,500 ريال فقط.</p>
+                </div>
+
+                <div class="card-heading reveal">رابعاً: مصطلحات متقدمة (مراجعة سريعة)</div>
+                <div class="table-wrapper reveal">
+                    <table class="data-table">
+                        <thead><tr><th>المصطلح</th><th>المعنى المختصر</th></tr></thead>
+                        <tbody>
+                            <tr><td><strong>الجدارة (Worth)</strong></td><td>تقدير أقل تكلفة معقولة لتحقيق الوظيفة المطلوبة بنفس المستوى، مع الالتزام بالكود والجودة والاعتمادية — وليست بالضرورة أرخص سعر في السوق</td></tr>
+                            <tr><td><strong>مؤشر القيمة (Value Index)</strong></td><td>= التكلفة ÷ الجدارة (Cost ÷ Worth). أداة للمقارنة وتحديد فرص الدراسة، لا حكماً نهائياً على جودة التصميم</td></tr>
+                            <tr><td><strong>وظيفة معتمدة على التصميم (Design Dependent)</strong></td><td>تنشأ فقط بسبب الحل الحالي المُتّبع، وتختفي إذا تغيّر التصميم</td></tr>
+                            <tr><td><strong>وظائف عمل / بيع (Work / Sell Functions)</strong></td><td>وظائف العمل تُنجز المهمة فعلياً، ووظائف البيع تجذب المستخدم أو المشتري (جمالية)</td></tr>
+                            <tr><td><strong>المسار الحرج للوظائف (Critical Path)</strong></td><td>خط الوظائف الأساسية المتسلسلة في مخطط FAST التي لا يمكن الاستغناء عنها لتحقيق الغرض الأعلى</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="box box-exam reveal">
+                    <div class="box-title"><span class="exam-star"><i class='bx bx-star'></i> مهم للاختبار</span><i class='bx bx-check-double'></i> مثال سريع على مؤشر القيمة</div>
+                    <p>إذا كانت التكلفة الحالية لتحقيق مجموعة وظائف معينة 40 ريال للوحدة، وقُدِّرت الجدارة (أقل تكلفة معقولة لبديل يحقق نفس الوظائف) بـ 10 ريال للوحدة، فإن مؤشر القيمة = 40 ÷ 10 = <strong>4</strong>. هذا الرقم لا يعني تلقائياً أن التصميم الحالي خاطئ، لكنه يشير إلى فجوة كبيرة تستحق التحقيق.</p>
+                </div>
+
+                <div class="card-heading reveal">خامساً: أين تكمن فجوة القيمة؟ (Cost vs Worth)</div>
+                <p class="reveal">
+                    الوظيفة الواحدة ليست دائماً مرتبطة بعنصر مستقل بتكلفة مستقلة. الباب المقاوم للحريق في مثالنا يحقق أربع وظائف معاً (يمنع الحريق، يحد الدخان، يسمح بالمرور، يوفر الأمان) بتكلفة واحدة غير قابلة للتجزئة. لذلك لا نقسّم تكلفة الباب بشكل عشوائي على كل وظيفة على حدة؛ بل نحدد تكلفة الحل الحالي ككل، ثم نبحث عن بديل يحقق <strong>كل</strong> هذه الوظائف معاً بتكلفة أقل.
+                </p>
+                <span class="highlight-line reveal">إذا كان عنصر واحد يؤدي عدة وظائف، فلا نكرر تكلفته على كل وظيفة على حدة — بل نقارن تكلفته الإجمالية بجدارة بديل يحقق نفس مجموعة الوظائف.</span>
+
+                <div class="box box-info reveal">
+                    <div class="box-title"><i class='bx bx-search'></i> كيف تُقدَّر "الجدارة" (Worth) عملياً؟</div>
+                    <p>لا توجد معادلة جاهزة لتقدير الجدارة، لكن الفريق يعتمد عادة على مصدر منطقي واحد أو أكثر: <strong>(1)</strong> بديل فني قابل للتطبيق فعلياً ومعتمد كودياً، <strong>(2)</strong> أسعار سوقية موثّقة لحلول مماثلة، <strong>(3)</strong> تكلفة نفس الوظيفة في مشروع مشابه سبق تنفيذه، <strong>(4)</strong> تقدير الفريق الجماعي (خبرة المهندسين) عند غياب البيانات — وهو الأضعف، فيُستخدم كحل أخير فقط. الجدارة تقدير مبني على أساس منطقي، وليست رقماً مطلقاً أو "سحرياً".</p>
+                </div>
+
+                <div class="table-wrapper reveal">
+                    <table class="data-table">
+                        <thead><tr><th></th><th>الباب المقاوم للحريق (الحل الحالي)</th></tr></thead>
+                        <tbody>
+                            <tr><td>عدد الأبواب</td><td>200 باب</td></tr>
+                            <tr><td>التكلفة الحالية للباب الواحد (Current Cost)</td><td>8,000 ريال</td></tr>
+                            <tr><td>إجمالي التكلفة الحالية</td><td>1,600,000 ريال</td></tr>
+                            <tr><td>الجدارة المقدَّرة للباب الواحد (Worth) — بديل معتمد يحقق نفس الوظائف الأربع</td><td>5,500 ريال</td></tr>
+                            <tr><td><strong>مؤشر القيمة (Value Index) = 8,000 ÷ 5,500</strong></td><td><span class="status-pill pill-high"><strong>1.45</strong></span></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="box box-mistake reveal">
+                    <div class="box-title"><i class='bx bx-info-circle'></i> كيف نفسّر هذا الرقم؟</div>
+                    <p>مؤشر 1.45 لا يعني أن التصميم الحالي "خطأ" أو أن الباب الحالي رديء. هو إشارة إلى أن هناك فجوة بين التكلفة الحالية والجدارة المقدَّرة تستحق التحقيق أكثر. كلما ارتفع المؤشر فوق 1 بشكل ملحوظ، زادت الحاجة إلى دراسة سبب هذه الفجوة — وهذا بالتحديد ما يوجّه الفريق لتركيز المرحلة الإبداعية القادمة على وظيفة "يحد الدخان" و"يسمح بالمرور" تحديداً، بحثاً عن حل بديل يحقق نفس الوظائف الأربع بتكلفة أقرب إلى الجدارة المقدَّرة.</p>
+                </div>
+
+                <div class="card-heading reveal">سادساً: أي وظيفة تستحق وقتك أكثر؟ (Function Evaluation Matrix)</div>
+                <p class="reveal">
+                    بخلاف مصفوفة تقييم <strong>البدائل</strong> التي سنستخدمها لاحقاً في مرحلة التقييم، هذه مصفوفة لتقييم <strong>الوظائف نفسها</strong> — بإضافة معيار "الأهمية" من منظور المستخدم/المالك إلى جانب التكلفة والجدارة، لتحديد أي الوظائف تستحق أولوية الدراسة العميقة. هذه المصفوفة لا تختار البديل النهائي؛ هي فقط توجّه الفريق إلى أين يركّز جهد الدراسة.
+                </p>
+                <div class="table-wrapper reveal">
+                    <table class="data-table">
+                        <thead><tr><th>الوظيفة</th><th>الأهمية (1-10)</th><th>التكلفة الحالية</th><th>الجدارة</th><th>أولوية الدراسة</th></tr></thead>
+                        <tbody>
+                            <tr><td>يمنع الحريق</td><td>10</td><td>عالية</td><td>قريبة</td><td><span class="status-pill pill-medium">متوسطة</span></td></tr>
+                            <tr><td>يحد الدخان</td><td>8</td><td>متوسطة</td><td>قريبة</td><td><span class="status-pill pill-low">منخفضة</span></td></tr>
+                            <tr><td>يوفر الأمان</td><td>9</td><td>عالية</td><td>أقل</td><td><span class="status-pill pill-critical">عالية</span></td></tr>
+                            <tr><td>يسمح بالمرور (سهولة الاستخدام)</td><td>7</td><td>متوسطة</td><td>أقل</td><td><span class="status-pill pill-medium">متوسطة</span></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="box box-tip reveal">
+                    <div class="box-title"><i class='bx bx-bulb'></i> كيف تُقرأ هذه المصفوفة؟</div>
+                    <p>الأولوية للدراسة لا تُبنى على التكلفة وحدها، بل على مزيجها مع الأهمية والفجوة بين التكلفة والجدارة: وظيفة "يوفر الأمان" أهميتها عالية (9) وتكلفتها الحالية عالية بينما جدارتها المقدَّرة أقل بوضوح — فهي الأعلى أولوية للدراسة. أما "يحد الدخان" فتكلفتها متوسطة وجدارتها قريبة منها، فهي مُدارة بكفاءة نسبياً ولا تستحق وقتاً إضافياً حالياً.</p>
+                </div>
+
+                <div class="box box-fact reveal">
+                    <div class="box-title"><i class='bx bx-bulb'></i> معلومة تستحق أن تتذكرها</div>
+                    <p>يُنصَح بصياغة الوظيفة بأقصر عبارة ممكنة (غالباً فعل نشط + اسم) منذ أن وضع لورانس مايلز أساس هذه المنهجية في الأربعينيات، وهذا المبدأ لا يزال معتمداً ضمن معايير SAVE International وEN 12973 — لكنه إرشاد لتوضيح الوظيفة، لا قاعدة عددية صارمة يجب الالتزام بها حرفياً.</p>
+                </div>
+
+                <div class="takeaways-box reveal">
+                    <div class="takeaways-title"><i class='bx bx-check-circle'></i> أهم ما يجب أن تتذكره</div>
+                    <ul>
+                        <li><i class='bx bx-check'></i> الوظيفة تصف ما يجب أن يتحقق، لا الحل الذي سيحققه. غالباً فعل نشط + اسم، دون الالتزام الحرفي بعدد كلمات ثابت.</li>
+                        <li><i class='bx bx-check'></i> مخطط FAST يربط الوظائف منطقياً عبر علاقة "لماذا-كيف"، ويحلل الوظائف لا المنتجات.</li>
+                        <li><i class='bx bx-check'></i> إذا أدّى عنصر واحد عدة وظائف معاً، لا تُقسَّم تكلفته عشوائياً بينها — بل تُقارَن تكلفته الإجمالية بجدارة بديل يحقق نفس مجموعة الوظائف.</li>
+                        <li><i class='bx bx-check'></i> مؤشر القيمة = التكلفة ÷ الجدارة، وهو أداة للمقارنة وتحديد فرص الدراسة، لا حكماً نهائياً.</li>
+                        <li><i class='bx bx-check'></i> مصفوفة تقييم الوظائف (أهمية + تكلفة + جدارة) توجّه الفريق لأين يركّز جهد الدراسة، دون أن تختار الحل النهائي.</li>
+                    </ul>
+                </div>
+
+                <div class="tool-cta reveal" onclick="window.open('smart-tool_va.html', '_blank')">
+                    <div class="tool-cta-text">
+                        <h4><i class='bx bx-wand-alt'></i> جرّب الآن: الدليل الذكي لتطبيق VE</h4>
+                        <p>اختر قطاع مشروعك ومرحلة الدراسة، واحصل على استراتيجيات مخصصة فوراً</p>
+                    </div>
+                    <div class="tool-cta-btn"><i class='bx bx-link-external'></i> افتح الأداة</div>
+                </div>
+
+                <div class="capability-box reveal">
+                    <div class="capability-title"><i class='bx bx-badge-check'></i> أنت الآن تستطيع:</div>
+                    <div class="capability-list">
+                        <div class="capability-item"><i class='bx bx-check-circle'></i> صياغة أي وظيفة بدقة دون وصف الحل التصميمي</div>
+                        <div class="capability-item"><i class='bx bx-check-circle'></i> رسم مخطط FAST بسيط لأي نظام</div>
+                        <div class="capability-item"><i class='bx bx-check-circle'></i> مقارنة تكلفة الحل الحالي بجدارة بديل يحقق نفس الوظائف</div>
+                        <div class="capability-item"><i class='bx bx-check-circle'></i> حساب مؤشر القيمة (Cost ÷ Worth) وتفسيره بشكل صحيح</div>
+                    </div>
+                </div>
+
+                <div class="break-box reveal">
+                    <i class='bx bx-cup-hot'></i>
+                    <p>استراحة قصيرة ☕ خذ لحظة راحة، ثم تابع معنا.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ======================= TAB 3: CREATIVE PHASE ======================= -->
+        <div id="tab3" class="tab-content">
+            <div class="section-card">
+                <h2 class="main-title"><i class='bx bx-bulb'></i> 3. المرحلة الإبداعية (Creative Phase)</h2>
+
+                <div class="module-progress-bar reveal">
+                    <div class="mp-text">أنت الآن في القسم 3 من 8 ضمن رحلة الهندسة القيمية</div>
+                    <div class="mp-track"><div class="mp-fill" style="width: 42%;"></div></div>
+                    <div class="mp-time"><i class='bx bx-time-five'></i> 8 دقائق</div>
+                </div>
+
+                <div class="case-reminder reveal"><i class='bx bx-briefcase-alt-2'></i> حدّدنا مؤشر قيمة 1.45 لوظائف الباب المقاوم للحريق — الآن نولّد بدائل حقيقية تحقق نفس الوظائف الأربع</div>
+
+                <div class="module-objective reveal">
+                    <span class="obj-tag"><i class='bx bx-target-lock'></i> هدف الوحدة:</span>
+                    <p class="obj-text">أن يكون المتدرب قادراً على تطبيق قواعد العصف الذهني الأربع، واستخدام تقنيات التوليد الإبداعي المختلفة، وتوليد بدائل حقيقية تحقق الوظائف المحددة دون تقييم مبكر.</p>
+                </div>
+
+                <div class="card-heading reveal">أولاً: كيف تُدار جلسة العصف الذهني بفعالية؟</div>
+                <p class="reveal">
+                    بعد أن حدّد الفريق الوظائف بدقة في المرحلة السابقة، تبدأ المرحلة الإبداعية بهدف واحد: توليد أكبر عدد ممكن من الأفكار والبدائل لتحقيق الوظائف المطلوبة، دون أي حكم أو نقد أو تقييم فوري. يعتمد هذا على "قواعد أوسبورن الأربع" للعصف الذهني (Osborn's Rules)، وهي الأساس النظري الذي بُني عليه هذا الجزء من خطة العمل.
+                </p>
+                <span class="highlight-line reveal">في هذه المرحلة، لا يُسمح بنقد أي فكرة مهما بدت غريبة — التقييم له مرحلة منفصلة تماماً لاحقاً.</span>
+
+                <div class="table-wrapper reveal">
+                    <table class="data-table">
+                        <thead><tr><th>القاعدة</th><th>الوصف</th></tr></thead>
+                        <tbody>
+                            <tr><td><strong>١. تأجيل الحكم (Defer Judgment)</strong></td><td>يُمنع منعاً باتاً انتقاد أو تقييم أي فكرة أثناء التوليد؛ التقييم يأتي لاحقاً في مرحلة منفصلة تماماً</td></tr>
+                            <tr><td><strong>٢. الكمّ يولّد الجودة (Quantity Breeds Quality)</strong></td><td>كلما زاد عدد الأفكار المطروحة، زادت احتمالية وجود أفكار عالية القيمة بينها</td></tr>
+                            <tr><td><strong>٣. الأفكار الجامحة مرحّب بها (Freewheeling)</strong></td><td>الأفكار غير التقليدية أو حتى "المستبعدة ظاهرياً" تُشجَّع لأنها تفتح مسارات جديدة</td></tr>
+                            <tr><td><strong>٤. البناء على أفكار الآخرين (Combine & Improve / Piggybacking)</strong></td><td>دمج فكرتين أو تطوير فكرة سابقة (يُعرف هذا التلاقح الفكري بمصطلح Piggybacking) يُنتج غالباً أفضل الحلول</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="card-heading reveal">ثانياً: ما الأدوات المتاحة لتوليد الأفكار؟</div>
+                <div class="table-wrapper reveal">
+                    <table class="data-table">
+                        <thead><tr><th>التقنية</th><th>آلية العمل</th></tr></thead>
+                        <tbody>
+                            <tr><td><strong>العصف الذهني الكلاسيكي (Brainstorming)</strong></td><td>طرح شفهي جماعي مفتوح موجّه بقواعد أوسبورن</td></tr>
+                            <tr><td><strong>الكتابة الذهنية 6-3-5 (Brainwriting)</strong></td><td>6 مشاركين يكتبون 3 أفكار كل 5 دقائق ثم يتبادلون الأوراق للبناء عليها — مفيدة لتقليل هيمنة الأصوات الأعلى</td></tr>
+                            <tr><td><strong>سكامبر (SCAMPER)</strong></td><td>استبدل، ادمج، كيّف، عدّل، استخدم لغرض آخر، احذف، اعكس — إطار منظم لمراجعة الوظائف من زوايا متعددة</td></tr>
+                            <tr><td><strong>تقنية غوردون / السينكتكس (Synectics)</strong></td><td>تحفّز التفكير خارج الصندوق عبر تشبيهات ومقارنات من مجالات مختلفة تماماً عن المشكلة الأصلية للبحث عن حلول غير مألوفة</td></tr>
+                            <tr><td><strong>التحليل المورفولوجي (Morphological Analysis)</strong></td><td>تفكيك المشكلة إلى أبعاد مستقلة وتوليد تركيبات جديدة بين خياراتها</td></tr>
+                            <tr><td><strong>مجموعة الاسمية (Nominal Group Technique)</strong></td><td>كتابة فردية صامتة للأفكار أولاً، ثم مشاركتها جماعياً لتفادي التأثر بآراء الآخرين مبكراً</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="box box-info reveal">
+                    <div class="box-title"><i class='bx bx-block'></i> عوائق الإبداع (Creativity Blockers)</div>
+                    <p>أبرز أعداء هذه المرحلة: الخوف من الفشل، التمسك بالعادات القديمة، والانحياز الذهني لـ"الطريقة المعتادة" (Paradigms) مثل "هكذا نعمل دائماً". دور الميسّر كسر هذه الحواجز لإطلاق العصف الذهني بحرية.</p>
+                </div>
+
+                <div class="card-heading reveal">ثالثاً: كيف تُدار جلسة العصف الذهني عملياً</div>
+                <div class="table-wrapper reveal">
+                    <table class="data-table">
+                        <thead><tr><th>#</th><th>الخطوة</th><th>التفاصيل العملية</th></tr></thead>
+                        <tbody>
+                            <tr><td>1</td><td>حدّد الوظيفة المستهدفة بوضوح</td><td>اكتبها على السبورة بصياغة (فعل+اسم) — مثلاً "يمنع الحريق" — واتركها ظاهرة طوال الجلسة</td></tr>
+                            <tr><td>2</td><td>حدّد الأدوار والمدة</td><td>ميسّر (يدير ويمنع النقد) + مقرّر (يكتب كل فكرة دون فلترة) + مدة 60-90 دقيقة للجلسة الواحدة</td></tr>
+                            <tr><td>3</td><td>ابدأ بدقيقتين تفكير صامت فردي</td><td>كل عضو يكتب أفكاره بنفسه قبل الطرح الجماعي، لتقليل تأثير الأصوات الأعلى</td></tr>
+                            <tr><td>4</td><td>افتح الطرح الجماعي بالتناوب</td><td>كل عضو يطرح فكرة واحدة بالدور، والمقرّر يكتبها فوراً دون تعليق من أي أحد</td></tr>
+                            <tr><td>5</td><td>لا تُوقف الجلسة عند أول فترة صمت</td><td>أفضل الأفكار غالباً تظهر بعد أن تُستنفد الأفكار الواضحة — استمر 10 دقائق إضافية على الأقل</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="card-heading reveal">رابعاً: تطبيق عملي لتقنية SCAMPER على وظائف الباب المقاوم للحريق</div>
+                <p class="reveal" style="font-size:14px; color:var(--text-muted); font-weight:700;">SCAMPER اختصار لسبع كلمات إنجليزية: Substitute – Combine – Adapt – Modify – Put to another use – Eliminate – Reverse. السؤال هنا ليس "كيف نجعل الباب أرخص؟"، بل "ما الطرق المختلفة لتحقيق وظيفة منع الحريق والوظائف المرتبطة بها؟"</p>
+                <div class="table-wrapper reveal">
+                    <table class="data-table">
+                        <thead><tr><th>الحرف</th><th>السؤال</th><th>الفكرة الناتجة</th></tr></thead>
+                        <tbody>
+                            <tr><td><strong>S</strong> استبدل<br><span style="font-size:11px; color:var(--text-muted); font-weight:700;">Substitute</span></td><td>هل نستبدل المادة أو النظام؟</td><td>استبدال الباب المعدني الكامل بباب مركّب (Composite) معتمد بنفس تصنيف مقاومة الحريق</td></tr>
+                            <tr><td><strong>C</strong> ادمج<br><span style="font-size:11px; color:var(--text-muted); font-weight:700;">Combine</span></td><td>هل ندمج عناصر منفصلة؟</td><td>دمج آلية الإغلاق التلقائي مع نظام إنذار الحريق في نفس الوحدة</td></tr>
+                            <tr><td><strong>A</strong> كيّف<br><span style="font-size:11px; color:var(--text-muted); font-weight:700;">Adapt</span></td><td>هل نكيّف حلاً من مجال آخر؟</td><td>تبني نظام ستائر حريق دوارة (Rolling Fire Shutters) المستخدم في المرافق الصناعية للفتحات الواسعة</td></tr>
+                            <tr><td><strong>M</strong> عدّل<br><span style="font-size:11px; color:var(--text-muted); font-weight:700;">Modify</span></td><td>هل نعدّل التصميم مع الحفاظ على الأداء؟</td><td>تعديل نوع القلب الداخلي (Core) للباب مع الحفاظ على نفس تصنيف المقاومة للحريق</td></tr>
+                            <tr><td><strong>P</strong> استخدم لغرض آخر<br><span style="font-size:11px; color:var(--text-muted); font-weight:700;">Put to another use</span></td><td>هل يخدم غرضاً إضافياً؟</td><td>اختيار باب يوفر عزلاً صوتياً إضافياً في الأقسام الحساسة</td></tr>
+                            <tr><td><strong>E</strong> احذف<br><span style="font-size:11px; color:var(--text-muted); font-weight:700;">Eliminate</span></td><td>هل نحذف عنصراً غير ضروري دون المساس بالسلامة؟</td><td>حذف الإطار المزدوج غير الضروري في مواقع منخفضة الخطورة (بعد مراجعة الكود)</td></tr>
+                            <tr><td><strong>R</strong> اعكس<br><span style="font-size:11px; color:var(--text-muted); font-weight:700;">Reverse</span></td><td>هل نعكس الترتيب أو الاتجاه؟</td><td>تغيير اتجاه فتح الباب ليتوافق مع مسار الإخلاء الأقصر</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="card-heading reveal">خامساً: تطبيق عملي — بدائل تحقق وظائف الباب المقاوم للحريق</div>
+                <div class="reveal">
+                    <p>باستخدام مخطط FAST ومصفوفة تقييم الوظائف من الوحدة السابقة، أنتج فريق دراسة القيمة قائمة بدائل حقيقية تحقق الوظائف الأربع معاً (يمنع الحريق، يحد الدخان، يسمح بالمرور، يوفر الأمان) بديلاً عن التصميم الأصلي:</p>
+                    <ul>
+                        <li>استخدام أبواب مركّبة (Composite Fire-Rated Doors) معتمدة بنفس تصنيف المقاومة، بدل الأبواب المعدنية الكاملة.</li>
+                        <li>تركيب آلية إغلاق تلقائي مرتبطة بنظام الإنذار بدل الإغلاق اليدوي، لتحسين الأمان دون تكلفة إضافية كبيرة.</li>
+                        <li>استخدام ستائر حريق دوارة (Rolling Fire Shutters) في الفتحات الواسعة بدل الأبواب التقليدية.</li>
+                        <li>الاعتماد على موردين محليين معتمدين لتقليل تكلفة الاستيراد دون التأثير على شهادة المقاومة للحريق.</li>
+                        <li>مراجعة عدد الأبواب المطلوبة فعلياً في بعض المسارات، مع الحفاظ الكامل على متطلبات الإخلاء والسلامة حسب الكود.</li>
+                    </ul>
+                </div>
+
+                <div class="box box-mistake reveal">
+                    <div class="box-title"><i class='bx bx-shield-quarter'></i> ملاحظة مهمة</div>
+                    <p>الأمثلة والبدائل الواردة أعلاه (في جدول SCAMPER وقائمة البدائل) هي أفكار توليدية لأغراض التدريب فقط، وليست حلولاً تنفيذية معتمدة. يجب دائماً التحقق من شهادات الاعتماد، والالتزام بكود الدفاع المدني والمواصفات، ومتطلبات السلامة، قبل اعتماد أي بديل على أرض الواقع.</p>
+                </div>
+
+                <div class="box box-exam reveal">
+                    <div class="box-title"><span class="exam-star"><i class='bx bx-star'></i> مهم للاختبار</span><i class='bx bx-check-double'></i> موضع سؤال اختبار</div>
+                    <p>يخطئ كثير من المتدربين بالاعتقاد أن "الفكرة الأرخص" هي الأفضل في هذه المرحلة. تذكّر: المرحلة الإبداعية لا تُقيّم التكلفة أو الجدوى إطلاقاً — كل ذلك يُؤجَّل بالكامل إلى <strong>مرحلة التقييم</strong> التالية.</p>
+                </div>
+
+                <div class="box box-mistake reveal">
+                    <div class="box-title"><i class='bx bx-error'></i> أخطر خطأ في هذه المرحلة: التقييم المبكر</div>
+                    <p><strong>التقييم المبكر (Premature Evaluation)</strong> هو أكبر قاتل للإبداع في دراسات القيمة؛ فبمجرد أن يقول أحد الأعضاء "هذا لن ينجح" أثناء التوليد، تنخفض مساهمات بقية الفريق بشكل ملحوظ. دور الميسّر (Facilitator) هنا حاسم لضبط الانضباط في تطبيق قواعد أوسبورن الأربع.</p>
+                </div>
+
+                <div class="box box-decision reveal">
+                    <div class="box-title"><i class='bx bx-help-circle'></i> تمرين تفاعلي: صنّف الموقف</div>
+                    <p>أثناء جلسة العصف الذهني، اقترح أحد المهندسين "استخدام ستائر حريق دوارة بدل الأبواب"، فرد عليه زميله فوراً "هذا مستحيل، سيأخذ وقتاً أطول في التنفيذ ولن يفرق". ما اسم هذا الخطأ المنهجي؟</p>
+                    <div class="decision-options">
+                        <button class="decision-btn" data-correct="false" onclick="handleDecision(this)">تأجيل الحكم (Defer Judgment)</button>
+                        <button class="decision-btn" data-correct="true" onclick="handleDecision(this)">التقييم المبكر (Premature Evaluation)</button>
+                        <button class="decision-btn" data-correct="false" onclick="handleDecision(this)">Piggybacking</button>
+                    </div>
+                    <div class="decision-feedback">
+                        <strong>الإجابة الصحيحة: التقييم المبكر.</strong> الزميل انتقد الفكرة فوراً بدل تأجيل الحكم عليها لمرحلة التقييم اللاحقة — وهذا يخالف أول قواعد أوسبورن الأربع مباشرة، ويثبّط بقية الفريق عن طرح أفكار جديدة.
+                    </div>
+                </div>
+
+                <div class="box box-fact reveal">
+                    <div class="box-title"><i class='bx bx-bulb'></i> معلومة تستحق أن تتذكرها</div>
+                    <p>لا تُوقف جلسة العصف الذهني عند انتهاء الأفكار التقليدية والمتوقعة؛ فالأفكار الأكثر اختلافاً وقيمة غالباً ما تظهر بعد أن تُستنفد الحلول المألوفة الأولى، حين يبدأ الفريق فعلاً في التفكير خارج الصندوق. هذا سبب رئيسي وراء توصية SAVE بعدم إنهاء الجلسة الإبداعية مبكراً.</p>
+                </div>
+
+                <div class="capability-box reveal">
+                    <div class="capability-title"><i class='bx bx-badge-check'></i> أنت الآن تستطيع:</div>
+                    <div class="capability-list">
+                        <div class="capability-item"><i class='bx bx-check-circle'></i> إدارة جلسة عصف ذهني بقواعد أوسبورن الأربع</div>
+                        <div class="capability-item"><i class='bx bx-check-circle'></i> استخدام عدة تقنيات توليد إبداعي مختلفة</div>
+                        <div class="capability-item"><i class='bx bx-check-circle'></i> تجنّب أكبر خطأ منهجي (التقييم المبكر)</div>
+                        <div class="capability-item"><i class='bx bx-check-circle'></i> ربط البدائل المولّدة بالوظائف المطلوبة معاً، لا بوظيفة واحدة منعزلة</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ======================= TAB 4: EVALUATION, DEVELOPMENT & LCC ======================= -->
+        <div id="tab4" class="tab-content">
+            <div class="section-card">
+                <h2 class="main-title"><i class='bx bx-line-chart'></i> 4. التقييم والتطوير وتكلفة الدورة الحياتية</h2>
+
+                <div class="module-progress-bar reveal">
+                    <div class="mp-text">أنت الآن في القسم 4 من 8 ضمن رحلة الهندسة القيمية</div>
+                    <div class="mp-track"><div class="mp-fill" style="width: 57%;"></div></div>
+                    <div class="mp-time"><i class='bx bx-time-five'></i> 12 دقيقة</div>
+                </div>
+
+                <div class="case-reminder reveal"><i class='bx bx-briefcase-alt-2'></i> تولّدت عدة بدائل في المرحلة الإبداعية — الآن نفرزها ونقيّمها بالأرقام</div>
+
+                <div class="module-objective reveal">
+                    <span class="obj-tag"><i class='bx bx-target-lock'></i> هدف الوحدة:</span>
+                    <p class="obj-text">أن يكون المتدرب قادراً على بناء مصفوفة تقييم موزونة، وفهم مراحل التطوير الفني والاقتصادي للبدائل، وحساب تكلفة الدورة الحياتية (LCC) للمقارنة بين البدائل.</p>
+                </div>
+
+                <div class="card-heading reveal">أولاً: كيف تختار الأفضل من بين كل البدائل؟</div>
+                <p class="reveal">
+                    بعد توليد قائمة طويلة من البدائل، يبدأ الفريق بفرزها على مرحلتين: فرز أولي سريع (Screening) لاستبعاد الأفكار غير القابلة للتطبيق فنياً أو قانونياً، ثم تقييم تفصيلي للبدائل المتبقية باستخدام <strong>مصفوفة التقييم الموزونة (Weighted Evaluation Matrix)</strong>.
+                </p>
+
+                <div class="table-wrapper reveal">
+                    <table class="data-table">
+                        <thead><tr><th>#</th><th>الخطوة</th><th>التفاصيل</th></tr></thead>
+                        <tbody>
+                            <tr><td>1</td><td>حدّد معايير التقييم مع الفريق والمالك</td><td>عادة 3-6 معايير (تكلفة، صيانة، سرعة تنفيذ، امتثال...)</td></tr>
+                            <tr><td>2</td><td>وزّع 100% على المعايير حسب أهميتها النسبية</td><td>المعيار الأهم عند المالك يأخذ الوزن الأعلى</td></tr>
+                            <tr><td>3</td><td>قيّم كل بديل مقابل كل معيار بدرجة من 1 إلى 10</td><td>تقييم جماعي من الفريق، لا فرد واحد</td></tr>
+                            <tr><td>4</td><td>اضرب: الدرجة × الوزن لكل خلية</td><td>مثال: درجة 9 × وزن 30% = 2.70</td></tr>
+                            <tr><td>5</td><td>اجمع عمود كل بديل — الأعلى مجموعاً هو الأفضل</td><td>هذا هو "المجموع المرجّح" في آخر صف الجدول</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="box box-mistake reveal">
+                    <div class="box-title"><i class='bx bx-error'></i> تنبيه عند اختيار المعايير</div>
+                    <p>يجب ألا تكون معايير التقييم متكررة أو تقيس نفس العامل مرتين. مثال على الخطأ: استخدام "انخفاض التكلفة الأولية" و"التوفير المالي" كمعيارين مستقلين، رغم أنهما يقيسان الشيء نفسه تقريباً — وهذا يضخّم وزن معيار التكلفة بشكل غير مقصود على حساب المعايير الأخرى.</p>
+                </div>
+
+                <div class="table-wrapper reveal">
+                    <table class="data-table">
+                        <thead><tr><th>المعيار</th><th>الوزن النسبي</th><th>البديل أ</th><th>البديل ب</th></tr></thead>
+                        <tbody>
+                            <tr><td>خفض التكلفة الأولية</td><td>30%</td><td>9 (2.70)</td><td>5 (1.50)</td></tr>
+                            <tr><td>سهولة الصيانة والاستبدال</td><td>20%</td><td>8 (1.60)</td><td>6 (1.20)</td></tr>
+                            <tr><td>الامتثال لكود الدفاع المدني ومقاومة الحريق</td><td>20%</td><td>9 (1.80)</td><td>8 (1.60)</td></tr>
+                            <tr><td>سرعة التركيب</td><td>15%</td><td>8 (1.20)</td><td>7 (1.05)</td></tr>
+                            <tr><td>الأمان التشغيلي (سهولة الفتح والإغلاق في الطوارئ)</td><td>15%</td><td>9 (1.35)</td><td>7 (1.05)</td></tr>
+                            <tr><td><strong>المجموع المرجّح</strong></td><td>100%</td><td><strong>8.65</strong></td><td><strong>6.40</strong></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="reveal" style="font-size:14px; color:var(--text-muted); margin-top:-10px;"><strong>البديل أ:</strong> أبواب مركّبة معتمدة (Composite Fire-Rated) + آلية إغلاق تلقائي مرتبطة بالإنذار &nbsp;|&nbsp; <strong>البديل ب:</strong> الإبقاء على الأبواب المعدنية الحالية مع تحسين آلية الإغلاق فقط</p>
+                <p class="reveal">في هذا المثال، تفوّق البديل (أ) في معظم المعايير، خصوصاً التكلفة الأولية والأمان التشغيلي. البديل (ب) اقترب منه في الامتثال لكود السلامة لأن الأبواب المعدنية الحالية معتمدة أصلاً — وهذا بالضبط دور المصفوفة الموزونة في اتخاذ قرار موضوعي بدل الانطباع الشخصي.</p>
+
+                <div class="table-wrapper reveal">
+                    <table class="data-table">
+                        <thead><tr><th>أداة الفرز/التقييم</th><th>الاستخدام</th></tr></thead>
+                        <tbody>
+                            <tr><td><strong>الأخطاء القاتلة (Fatal Flaws)</strong></td><td>استبعاد فوري لأي فكرة تخالف اشتراطات السلامة أو الأنظمة أو القوانين الإلزامية</td></tr>
+                            <tr><td><strong>قائمة المزايا والعيوب (Advantages & Disadvantages / T-Chart)</strong></td><td>تصفية أولية سريعة لفكرة معينة قبل الدخول في المصفوفة الموزونة التفصيلية</td></tr>
+                            <tr><td><strong>المقارنة الزوجية (Paired Comparison)</strong></td><td>تحديد الوزن النسبي لكل معيار عبر مقارنته بكل معيار آخر وجهاً لوجه، لمعرفة الأهم بالنسبة للعميل</td></tr>
+                            <tr><td><strong>بطل الفكرة (Idea Champion)</strong></td><td>عضو في الفريق يتبنى فكرة واعدة غير تقليدية ويدافع عنها بجمع بيانات تبدد المخاوف حولها بدل استبعادها مبكراً</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="box box-tip reveal">
+                    <div class="box-title"><i class='bx bx-git-compare'></i> مثال يفرّق بين الاثنين</div>
+                    <p>من قائمة أفكار المرحلة الإبداعية: فكرة "حذف آلية الإغلاق الذاتي من أبواب مسارات الإخلاء الرئيسية" هي <strong>خطأ قاتل (Fatal Flaw)</strong> — تُستبعد فوراً لمخالفتها اشتراطات السلامة الإلزامية، ولا داعي لتقييمها بالمصفوفة الموزونة أصلاً. أما فكرة "استخدام أبواب مركّبة معتمدة بدل الأبواب المعدنية" فهي <strong>فكرة قابلة للتطوير</strong> — قانونية ومقبولة فنياً، فتدخل مباشرة في مصفوفة التقييم الموزونة للمفاضلة الرقمية.</p>
+                </div>
+
+                <div class="card-heading reveal">ثانياً: البديل الفائز... كيف يتحول لمقترح جاهز؟</div>
+                <p class="reveal">
+                    بعد اختيار أفضل البدائل، يبدأ تطويرها فنياً (رسومات تفصيلية أولية، تنسيق مع بقية الأنظمة، التحقق من الامتثال للأكواد) واقتصادياً (تسعير دقيق، مقارنة تكلفة أولية مقابل تكلفة أولية، وحساب الأثر على الجدول الزمني والمخاطر). الناتج هنا هو "مقترح مطوَّر جاهز للعرض" وليس مجرد فكرة أولية.
+                </p>
+
+                <div class="card-heading reveal">ثالثاً: تحليل تكلفة الدورة الحياتية (Life Cycle Costing - LCC)</div>
+                <p class="reveal">
+                    من أخطر الأخطاء الاستراتيجية في القرارات الهندسية الاعتماد على التكلفة الأولية (Initial Cost) فقط. توصي المنهجية القياسية بموجب <strong>ISO 15686-5</strong> بحساب التكلفة الإجمالية على كامل العمر الافتراضي للأصل، والتي تشمل: التكلفة الأولية، تكاليف التشغيل، تكاليف الصيانة والاستبدال الدوري، مخصومة إلى القيمة الحالية (Present Value)، مطروحاً منها القيمة المتبقية في نهاية العمر الافتراضي.
+                </p>
+
+                <div class="diagram-box reveal">
+                    <div class="diagram-box-title"><i class='bx bx-calculator'></i> معادلة تكلفة الدورة الحياتية (LCC)</div>
+                    <svg viewBox="0 0 820 200" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="40" y="20" width="740" height="60" rx="12" fill="var(--light-blue)" stroke="var(--brand-blue)" stroke-width="2"/>
+                        <text x="410" y="45" text-anchor="middle" font-size="15" font-weight="900" fill="var(--primary-navy)">LCC = التكلفة الأولية + القيمة الحالية (التشغيل + الصيانة + الاستبدال) − القيمة الحالية للقيمة المتبقية</text>
+                        <text x="410" y="68" text-anchor="middle" font-size="11" font-weight="700" fill="var(--text-muted)">LCC = Initial Cost + PV(Operating + Maintenance + Replacement) − PV(Residual Value)</text>
+
+                        <rect x="40" y="105" width="230" height="70" rx="10" fill="#fff" stroke="#e2e8f0" stroke-width="1.5"/>
+                        <text x="155" y="132" text-anchor="middle" font-size="12.5" font-weight="800" fill="var(--text-dark)">التكلفة الأولية</text>
+                        <text x="155" y="152" text-anchor="middle" font-size="11" font-weight="700" fill="var(--text-muted)">تصميم + توريد + تركيب</text>
+
+                        <rect x="295" y="105" width="230" height="70" rx="10" fill="#fff" stroke="#e2e8f0" stroke-width="1.5"/>
+                        <text x="410" y="132" text-anchor="middle" font-size="12.5" font-weight="800" fill="var(--text-dark)">تكاليف الدورة</text>
+                        <text x="410" y="152" text-anchor="middle" font-size="11" font-weight="700" fill="var(--text-muted)">تشغيل + صيانة + استبدال</text>
+
+                        <rect x="550" y="105" width="230" height="70" rx="10" fill="#fff" stroke="#e2e8f0" stroke-width="1.5"/>
+                        <text x="665" y="132" text-anchor="middle" font-size="12.5" font-weight="800" fill="var(--text-dark)">القيمة المتبقية</text>
+                        <text x="665" y="152" text-anchor="middle" font-size="11" font-weight="700" fill="var(--text-muted)">في نهاية العمر الافتراضي</text>
+                    </svg>
+                </div>
+
+                <div class="diagram-box reveal">
+                    <div class="diagram-box-title"><i class='bx bx-calculator'></i> مثال محسوب: الأبواب المقاومة للحريق (LCC على 20 سنة، معدل خصم 5%)</div>
+                    <p style="font-size:14px; color:var(--text-muted); font-weight:700; margin-bottom:12px;">أثناء الطرح، تقدَّم أحد الموردين بعرض سعر أرخص بشكل ملحوظ من الجدارة المقدَّرة. الفريق قارن العرضين على مدى العمر الافتراضي بدل الاكتفاء بالسعر الأولي:</p>
+                    <div class="table-wrapper reveal" style="margin-top:0;">
+                        <table class="data-table">
+                            <thead><tr><th></th><th>العرض الأرخص (مورد غير معتمد سابقاً)</th><th>البديل المدروس (أبواب مركّبة معتمدة)</th></tr></thead>
+                            <tbody>
+                                <tr><td>التكلفة الأولية (200 باب)</td><td>800,000 ريال (4,000/باب)</td><td>1,100,000 ريال (5,500/باب)</td></tr>
+                                <tr><td>تكلفة الصيانة والاستبدال السنوية</td><td>90,000 ريال/سنة (تبديل مفصلات وحشوات متكرر)</td><td>30,000 ريال/سنة</td></tr>
+                                <tr><td>معامل القيمة الحالية للأقساط (20 سنة، خصم 5%)</td><td colspan="2" style="text-align:center;">≈ 12.46 (قيمة مرجعية جاهزة)</td></tr>
+                                <tr><td>القيمة الحالية لتكلفة الصيانة</td><td>90,000 × 12.46 = 1,121,400</td><td>30,000 × 12.46 = 373,800</td></tr>
+                                <tr><td><strong>LCC الإجمالي (20 سنة)</strong></td><td><strong>800,000 + 1,121,400 = 1,921,400</strong></td><td><strong>1,100,000 + 373,800 = 1,473,800</strong></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p style="font-size:16px; color:var(--text-muted); font-weight:700; margin-top:14px; line-height:1.8;">رغم أن العرض الأرخص أقل بـ300,000 ريال في التكلفة الأولية، إلا أن LCC الإجمالي على مدى 20 سنة أعلى بـ<strong>447,600 ريال</strong> — وهذا مثال مباشر على أن البديل الأرخص شراءً ليس بالضرورة الأقل تكلفة على مدى دورة الحياة، وعلى أن الجدارة (Worth) ليست بالضرورة أرخص سعر معروض في السوق.</p>
+                </div>
+
+                <div class="box box-exam reveal">
+                    <div class="box-title"><span class="exam-star"><i class='bx bx-star'></i> مهم للاختبار</span><i class='bx bx-check-double'></i> موضع سؤال اختبار (LCC Tip)</div>
+                    <p>سؤال كلاسيكي: "بديلان، الأول تكلفته الأولية أقل لكن تكلفة صيانته أعلى بكثير — أيهما تختار؟" الإجابة المعيارية دائماً: يجب حساب تكلفة الدورة الحياتية الكاملة لكليهما قبل اتخاذ القرار، فقد يكون البديل الأعلى سعراً أولياً هو الأقل تكلفة إجمالية على مدى 20-25 سنة.</p>
+                </div>
+
+                <div class="box box-mistake reveal">
+                    <div class="box-title"><i class='bx bx-error'></i> خطأ شائع</div>
+                    <p>اعتماد لجان الترسية على "أقل سعر تقديم أولي" دون طلب بيانات صيانة واستبدال من المورّدين يؤدي غالباً إلى اختيار أنظمة تبدو اقتصادية في البداية لكنها الأعلى تكلفة إجمالية على المدى الطويل.</p>
+                </div>
+
+                <div class="box box-fact reveal">
+                    <div class="box-title"><i class='bx bx-bulb'></i> معلومة تستحق أن تتذكرها</div>
+                    <p>قد تمثل تكاليف التشغيل والصيانة جزءاً مهماً من تكلفة دورة الحياة الكلية، ولذلك لا ينبغي الاعتماد على التكلفة الأولية وحدها عند مقارنة البدائل — كما رأينا في مثال الأبواب أعلاه.</p>
+                </div>
+
+                <div class="card-heading reveal">رابعاً: قياس الأثر — نسبة التوفير وتحسّن مؤشر القيمة</div>
+                <p class="reveal">
+                    كل مقترح تغيير قيمي (VECP) يُختتم برقمين لا غنى عنهما لإقناع المالك: <strong>نسبة التوفير المالي المباشر (Savings %)</strong>، و<strong>نسبة تحسّن مؤشر القيمة (Value Index Improvement %)</strong> المبنية على مؤشر القيمة الذي تعلمناه سابقاً (Cost ÷ Worth).
+                </p>
+                <p style="font-size: 13px; color: #94a3b8; font-weight: 700;">ملاحظة: "نسبة تحسّن مؤشر القيمة" مقياس داخلي يُستخدم في هذا الكورس لتوضيح مدى اقتراب البديل من الحالة المثلى (Cost ≈ Worth)، وليست تعريفاً معيارياً رسمياً موحّداً لدى SAVE International.</p>
+                <div class="diagram-box reveal">
+                    <div class="diagram-box-title"><i class='bx bx-calculator'></i> معادلتا القياس النهائي — Final Measurement Formulas</div>
+                    <svg viewBox="0 0 820 195" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="30" y="15" width="360" height="105" rx="12" fill="#ecfdf5" stroke="#16a34a" stroke-width="2"/>
+                        <text x="210" y="38" text-anchor="middle" font-size="13.5" font-weight="900" fill="#15803d">نسبة التوفير — Savings %</text>
+                        <text x="210" y="62" text-anchor="middle" font-size="12" font-weight="800" fill="#166534">= (Original Cost − Proposed Cost)</text>
+                        <text x="210" y="80" text-anchor="middle" font-size="12" font-weight="800" fill="#166534">÷ Original Cost × 100</text>
+                        <text x="210" y="105" text-anchor="middle" font-size="10.5" font-weight="700" fill="#4b5563">= (التكلفة الأصلية − المقترحة) ÷ الأصلية × 100</text>
+
+                        <rect x="430" y="15" width="360" height="105" rx="12" fill="#eff6ff" stroke="#1d4ed8" stroke-width="2"/>
+                        <text x="610" y="38" text-anchor="middle" font-size="13.5" font-weight="900" fill="#1d4ed8">تحسّن مؤشر القيمة — VI Improvement %</text>
+                        <text x="610" y="62" text-anchor="middle" font-size="12" font-weight="800" fill="#1e40af">= (Value Index Before − After)</text>
+                        <text x="610" y="80" text-anchor="middle" font-size="12" font-weight="800" fill="#1e40af">÷ Value Index Before × 100</text>
+                        <text x="610" y="105" text-anchor="middle" font-size="10.5" font-weight="700" fill="#4b5563">= (مؤشر القيمة قبل − بعد) ÷ قبل × 100</text>
+
+                        <text x="410" y="150" text-anchor="middle" font-size="12" font-weight="800" fill="var(--text-muted)">الأولى تقيس الأثر المالي المباشر، والثانية تقيس مدى اقتراب الحل من "Cost = Worth" (القيمة المثلى)</text>
+                        <text x="410" y="173" text-anchor="middle" font-size="11.5" font-weight="700" fill="#94a3b8">كلما اقتربت التكلفة من الجدارة دون الإخلال بالأداء أو المتطلبات، قلّت الفجوة التي تستحق التحقيق</text>
+                    </svg>
+                </div>
+                <div class="box box-tip reveal">
+                    <div class="box-title"><i class='bx bx-bulb'></i> تطبيق على مثال الأبواب المقاومة للحريق</div>
+                    <p>كانت التكلفة الإجمالية الحالية 1,600,000 ريال (200 باب × 8,000) بمؤشر قيمة 1.45. بعد اعتماد البديل المدروس (أبواب مركّبة معتمدة بتكلفة 5,500 ريال للباب، أي بتكلفة إجمالية 1,100,000 ريال)، أصبح مؤشر القيمة الجديد = 5,500 ÷ 5,500 = 1.0 (التكلفة أصبحت مساوية للجدارة تقريباً). النتيجة: <strong>نسبة التوفير</strong> = (1,600,000−1,100,000)÷1,600,000×100 ≈ <strong>31%</strong>، و<strong>نسبة تحسّن مؤشر القيمة</strong> ≈ <strong>31%</strong> أيضاً — وهذا التطابق منطقي رياضياً لأن الجدارة (Worth) بقيت ثابتة بين الحالتين. رقمان قويان يُدرجان مباشرة في مقترح VECP المُقدَّم للمالك.</p>
+                </div>
+
+                <div class="box box-decision reveal">
+                    <div class="box-title"><i class='bx bx-help-circle'></i> تمرين تفاعلي: قرار قائم على LCC</div>
+                    <p>بديلان لأبواب مقاومة للحريق: الأول أرخص بـ20% في التكلفة الأولية، لكن تكلفة صيانته أعلى بـ40% على مدى العمر الافتراضي. بناءً على مبادئ تكلفة الدورة الحياتية، ما القرار الصحيح؟</p>
+                    <div class="decision-options">
+                        <button class="decision-btn" data-correct="false" onclick="handleDecision(this)">اختيار الأرخص شراءً دائماً لأنه يوفر نقداً فورياً</button>
+                        <button class="decision-btn" data-correct="true" onclick="handleDecision(this)">حساب LCC الكامل لكلا البديلين على مدى 20-25 سنة قبل القرار</button>
+                        <button class="decision-btn" data-correct="false" onclick="handleDecision(this)">لا فرق، طالما التصنيف الناري نفس المستوى</button>
+                    </div>
+                    <div class="decision-feedback">
+                        <strong>الإجابة الصحيحة: حساب LCC الكامل.</strong> فرق تكلفة الصيانة 40% على مدى 20-25 سنة قد يتجاوز بسهولة فرق التكلفة الأولية 20%، خصوصاً في منشأة صحية تعمل على مدار الساعة — وهذا بالضبط سبب أهمية مقارنة تكلفة الدورة الحياتية الكاملة قبل اعتماد أي بديل، كما يوصي به ISO 15686-5.
+                    </div>
+                </div>
+
+                <div class="box box-fact reveal">
+                    <div class="box-title"><i class='bx bx-bulb'></i> معلومة تستحق أن تتذكرها</div>
+                    <p>قد تمثل تكاليف التشغيل والصيانة جزءاً مهماً من تكلفة دورة الحياة الكلية، ولذلك لا ينبغي الاعتماد على التكلفة الأولية وحدها عند مقارنة البدائل — كما رأينا في مثال الأبواب أعلاه.</p>
+                </div>
+
+                <div class="takeaways-box reveal">
+                    <div class="takeaways-title"><i class='bx bx-check-circle'></i> أهم ما يجب أن تتذكره</div>
+                    <ul>
+                        <li><i class='bx bx-check'></i> مصفوفة التقييم الموزونة تحوّل القرار من انطباعي إلى موضوعي رقمي.</li>
+                        <li><i class='bx bx-check'></i> مرحلة التطوير تنتج مقترحاً جاهزاً للعرض، فنياً واقتصادياً.</li>
+                        <li><i class='bx bx-check'></i> تكلفة الدورة الحياتية (LCC) هي المعيار الصحيح للمقارنة، وليس التكلفة الأولية فقط.</li>
+                        <li><i class='bx bx-check'></i> كل مقترح قيمي يُختتم بنسبة التوفير المالي ونسبة تحسّن مؤشر القيمة معاً، وليس أحدهما فقط.</li>
+                    </ul>
+                </div>
+
+                <div class="tool-cta reveal" onclick="window.open('tools-va.html', '_blank')">
+                    <div class="tool-cta-text">
+                        <h4><i class='bx bx-gift'></i> جرّب الآن: VE Pro Suite</h4>
+                        <p>ابنِ مصفوفة تقييم حقيقية واحسب LCC لمشروعك بنفسك داخل الأداة الاحترافية</p>
+                    </div>
+                    <div class="tool-cta-btn"><i class='bx bx-link-external'></i> افتح الأداة</div>
+                </div>
+
+                <div class="capability-box reveal">
+                    <div class="capability-title"><i class='bx bx-badge-check'></i> أنت الآن تستطيع:</div>
+                    <div class="capability-list">
+                        <div class="capability-item"><i class='bx bx-check-circle'></i> بناء مصفوفة تقييم موزونة لاختيار أفضل بديل</div>
+                        <div class="capability-item"><i class='bx bx-check-circle'></i> حساب تكلفة الدورة الحياتية (LCC)</div>
+                        <div class="capability-item"><i class='bx bx-check-circle'></i> حساب نسبة التوفير ونسبة تحسّن مؤشر القيمة</div>
+                        <div class="capability-item"><i class='bx bx-check-circle'></i> التفرقة بين الأخطاء القاتلة والأفكار القابلة للتطوير</div>
+                    </div>
+                </div>
+
+                <div class="break-box reveal">
+                    <i class='bx bx-cup-hot'></i>
+                    <p>استراحة خفيفة ☕ خذ لحظة راحة، ثم تابع معنا.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ======================= TAB 5 HUB: APPLICATIONS & REFERENCES ======================= -->
+        <div id="tab5hub" class="tab-content">
+            <div class="back-crumb" onclick="switchTab('tab1')"><i class='bx bx-arrow-back'></i> رجوع للمقدمة</div>
+            <h2 class="main-title" style="max-width:1150px; margin:0 auto 25px;"><i class='bx bx-folder-open'></i> 5. التطبيقات والمراجع</h2>
+            <p class="sub-title-context" style="max-width:1150px; margin:0 auto 25px;">اختر أحد التطبيقات التالية لاستكمال رحلتك: الدليل الذكي التفاعلي لتوليد استراتيجيات مخصصة لمشروعك، محاكاة دراسة الحالة الكاملة، أو قاموس المصطلحات والمراجع الدولية.</p>
+            <div class="app-hub-grid">
+                <div class="app-hub-card" style="--card-accent:#059669;" onclick="window.open('smart-tool_va.html', '_blank')">
+                    <span class="app-hub-badge-external"><i class='bx bx-link-external'></i> يفتح في نافذة جديدة</span>
+                    <div class="app-hub-icon"><i class='bx bx-wand-alt'></i></div>
+                    <h4>الدليل الذكي لتطبيق الهندسة القيمية</h4>
+                    <p>اختر قطاع مشروعك ومرحلة خطة العمل وهدف التحسين، ليولّد لك الدليل استراتيجيات وفرص قيمة جاهزة للتطبيق فوراً على مشروعك</p>
+                    <span class="app-hub-tag">Smart VE Strategy Guide</span>
+                    <div class="app-hub-go">افتح الدليل الذكي <i class='bx bx-left-arrow-alt'></i></div>
+                </div>
+                <div class="app-hub-card" style="--card-accent:#1d4ed8;" onclick="switchTab('tab5')">
+                    <div class="app-hub-icon"><i class='bx bx-slider-alt'></i></div>
+                    <h4>محاكاة دراسة القيمة التطبيقية</h4>
+                    <p>سِر خطوة بخطوة مع فريق دراسة قيمة الأبواب المقاومة للحريق بالمستشفى من المعلومات وحتى مقترح التغيير القيمي (VECP)</p>
+                    <span class="app-hub-tag">Applied Case Simulation</span>
+                    <div class="app-hub-go">ابدأ المحاكاة <i class='bx bx-left-arrow-alt'></i></div>
+                </div>
+                <div class="app-hub-card" style="--card-accent:#7c3aed;" onclick="switchTab('tab6')">
+                    <div class="app-hub-icon"><i class='bx bx-layer'></i></div>
+                    <h4>قاموس المصطلحات والمراجع الدولية</h4>
+                    <p>تعريفات موثقة لأهم مصطلحات الهندسة القيمية، والمعايير والمؤسسات الدولية المرجعية، إضافة لمصطلحات مراجعة الاختبار النهائي</p>
+                    <span class="app-hub-tag">Glossary & References</span>
+                    <div class="app-hub-go">استعرض المراجع <i class='bx bx-left-arrow-alt'></i></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ======================= TAB 5: APPLIED CASE CAROUSEL (Presentation & Implementation) ======================= -->
+        <div id="tab5" class="tab-content">
+            <div class="back-crumb" onclick="switchTab('tab5hub')"><i class='bx bx-arrow-back'></i> رجوع للتطبيقات والمراجع</div>
+            <div class="section-card">
+                <h2 class="main-title"><i class='bx bx-slider-alt'></i> مرحلة العرض والتنفيذ + محاكاة دراسة الحالة الكاملة</h2>
+
+                <div class="card-heading reveal">أولاً: إعداد مقترح التغيير القيمي (VECP)</div>
+                <p class="reveal">
+                    الناتج النهائي لأي دراسة قيمة هو وثيقة رسمية تُعرف بـ <strong>مقترح التغيير القيمي (Value Engineering Change Proposal - VECP)</strong>، تُعرض على المالك ومتخذي القرار، وتتضمن عادة: وصف الوضع الحالي والوظيفة المستهدفة، البديل المقترح وأسباب اختياره، مقارنة التكلفة الأولية وتكلفة الدورة الحياتية، الأثر على الجدول الزمني والمخاطر، وخطة التنفيذ المقترحة متضمنة أي أوامر تغيير (Change Orders) مطلوبة.
+                </p>
+
+                <div class="card-heading reveal">ثانياً: التنفيذ والمتابعة (Implementation & Tracking)</div>
+                <p class="reveal">
+                    لا تنتهي مسؤولية فريق دراسة القيمة عند تقديم المقترح؛ بل يجب متابعة اعتماده رسمياً عبر <strong>خطة تنفيذ (Implementation Plan)</strong> توضح من سيفعل ماذا ومتى، وتحديث المخططات والمواصفات التعاقدية، ثم إجراء <strong>متابعة لاحقة (Post-Implementation Audit)</strong> للتحقق من تحقق التوفير والأداء المتوقعين فعلياً على أرض الواقع، وهو ما يُشكّل سجل الأداء (Track Record) الذي تعتمد عليه الجهات لتبرير استمرار برامج الهندسة القيمية.
+                </p>
+
+                <div class="box box-exam reveal">
+                    <div class="box-title"><span class="exam-star"><i class='bx bx-star'></i> مهم للاختبار</span><i class='bx bx-check-double'></i> موضع سؤال اختبار (Presentation Tip)</div>
+                    <p>إذا اعترض المصمم الأصلي (A/E) على مقترح بدعوى أنه يقلل الجودة، فالرد الصحيح دائماً هو <strong>استعراض التحليل الوظيفي والمقارنات الفنية</strong> التي أثبتت تحقيق نفس الوظيفة المطلوبة بنفس الجودة أو أفضل مع توفير مالي — وليس الجدال الشخصي أو التنازل الفوري.</p>
+                </div>
+
+                <div class="carousel-container reveal">
+                    <div class="carousel-header">
+                        <h3 id="carousel-title">1. تأسيس الفريق وجمع المعلومات</h3>
+                        <span class="carousel-step-badge" id="carousel-badge">الخطوة 1 من 6</span>
+                    </div>
+                    <div class="carousel-track-wrapper">
+                        <div class="carousel-track" id="caseTrack">
+                            <div class="carousel-slide">
+                                <div class="mega-case-card">
+                                    <h4 style="font-size:19px; font-weight:900; color:var(--primary-navy); margin-bottom:12px;"><i class='bx bx-search-alt' style="color:var(--brand-blue);"></i> المرحلة المعلوماتية</h4>
+                                    <p style="color:var(--text-muted); line-height:1.8; font-weight:600;">شكّل المالك فريقاً من 6 أعضاء (مهندس معماري، مهندس سلامة وحريق، إنشائي، تكاليف، ممثل تشغيل المستشفى، وميسّر CVS) لدراسة الأبواب المقاومة للحريق (200 باب، بتكلفة حالية 1,600,000 ريال) من إجمالي مشروع بـ400 مليون. جمع الفريق المخططات المعمارية، جدول الكميات، ومتطلبات كود الدفاع المدني خلال أسبوع عمل مكثف.</p>
+                                </div>
+                            </div>
+                            <div class="carousel-slide">
+                                <div class="mega-case-card function">
+                                    <h4 style="font-size:19px; font-weight:900; color:var(--primary-navy); margin-bottom:12px;"><i class='bx bx-sitemap' style="color:#f59e0b;"></i> تحليل الوظائف</h4>
+                                    <p style="color:var(--text-muted); line-height:1.8; font-weight:600;">حدّد الفريق الوظيفة الأساسية "يمنع الحريق"، والوظائف الثانوية "يحد الدخان"، "يسمح بالمرور"، "يوفر الأمان". بُني مخطط FAST كامل، وقُورنت التكلفة الحالية للباب (8,000 ريال) بالجدارة المقدَّرة لبديل معتمد (5,500 ريال)، فطلع مؤشر القيمة = 1.45، وهي فجوة تستحق التحقيق.</p>
+                                </div>
+                            </div>
+                            <div class="carousel-slide">
+                                <div class="mega-case-card creative">
+                                    <h4 style="font-size:19px; font-weight:900; color:var(--primary-navy); margin-bottom:12px;"><i class='bx bx-bulb' style="color:#8b5cf6;"></i> المرحلة الإبداعية</h4>
+                                    <p style="color:var(--text-muted); line-height:1.8; font-weight:600;">في جلسة عصف ذهني استمرت 3 ساعات بقيادة الميسّر، ولّد الفريق عدداً من الأفكار دون أي تقييم، تحقق الوظائف الأربع معاً (يمنع الحريق، يحد الدخان، يسمح بالمرور، يوفر الأمان)، شملت أبواباً مركّبة معتمدة، ستائر حريق دوارة، آليات إغلاق تلقائي مرتبطة بالإنذار، وموردين محليين بديلين.</p>
+                                </div>
+                            </div>
+                            <div class="carousel-slide">
+                                <div class="mega-case-card">
+                                    <h4 style="font-size:19px; font-weight:900; color:var(--primary-navy); margin-bottom:12px;"><i class='bx bx-line-chart' style="color:var(--brand-blue);"></i> التقييم</h4>
+                                    <p style="color:var(--text-muted); line-height:1.8; font-weight:600;">فُرزت الأفكار إلى بدائل قابلة للتطبيق بعد استبعاد الأفكار المخالفة للسلامة (Fatal Flaws)، ثم قُيّمت عبر مصفوفة موزونة بخمسة معايير. تصدّر بديل "أبواب مركّبة معتمدة + آلية إغلاق تلقائي" بمجموع مرجّح 8.65 من 10، مقابل 6.40 للإبقاء على التصميم الحالي مع تحسين طفيف.</p>
+                                </div>
+                            </div>
+                            <div class="carousel-slide">
+                                <div class="mega-case-card lcc">
+                                    <h4 style="font-size:19px; font-weight:900; color:var(--primary-navy); margin-bottom:12px;"><i class='bx bx-calculator' style="color:#10b981;"></i> التطوير وتحليل LCC</h4>
+                                    <p style="color:var(--text-muted); line-height:1.8; font-weight:600;">طُوّر البديل الفائز (أبواب مركّبة معتمدة) فنياً وتم حساب تكلفة الدورة الحياتية على 20 سنة: التكلفة الأولية انخفضت من 1,600,000 إلى 1,100,000 ريال، وتكلفة الصيانة المستقبلية انخفضت أيضاً بفضل جودة القلب الداخلي والمفصلات في البديل الجديد.</p>
+                                </div>
+                            </div>
+                            <div class="carousel-slide">
+                                <div class="mega-case-card implement">
+                                    <h4 style="font-size:19px; font-weight:900; color:var(--primary-navy); margin-bottom:12px;"><i class='bx bx-check-shield' style="color:#ef4444;"></i> العرض والتنفيذ</h4>
+                                    <p style="color:var(--text-muted); line-height:1.8; font-weight:600;">أُعِد مقترح VECP رسمي وعُرض على لجنة المالك، وتمت الموافقة عليه خلال أسبوعين. حقق المشروع وفراً في التكلفة الأولية بلغ 500,000 ريال (31% من ميزانية بند الأبواب)، مع الحفاظ الكامل على الوظائف الأربع المطلوبة والامتثال الكامل لكود الدفاع المدني.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-controls">
+                        <button class="btn-carousel" id="prevBtn" onclick="moveSlide(-1)"><i class='bx bx-chevron-right'></i> السابق</button>
+                        <div class="carousel-indicators">
+                            <span class="indicator active" onclick="goToSlide(0)"></span>
+                            <span class="indicator" onclick="goToSlide(1)"></span>
+                            <span class="indicator" onclick="goToSlide(2)"></span>
+                            <span class="indicator" onclick="goToSlide(3)"></span>
+                            <span class="indicator" onclick="goToSlide(4)"></span>
+                            <span class="indicator" onclick="goToSlide(5)"></span>
+                        </div>
+                        <button class="btn-carousel" id="nextBtn" onclick="moveSlide(1)">التالي <i class='bx bx-chevron-left'></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ======================= TAB 6: GLOSSARY & INTERNATIONAL REFERENCES ======================= -->
+        <div id="tab6" class="tab-content">
+            <div class="back-crumb" onclick="switchTab('tab5hub')"><i class='bx bx-arrow-back'></i> رجوع للتطبيقات والمراجع</div>
+            <div class="section-card">
+                <h2 class="main-title"><i class='bx bx-layer'></i> قاموس المصطلحات والمراجع الدولية</h2>
+
+                <div class="card-heading reveal">أولاً: أبرز المؤسسات والمعايير الدولية</div>
+                <div class="reveal">
+                    <div class="reference-card">
+                        <div class="ref-icon"><i class='bx bx-badge-check'></i></div>
+                        <div class="ref-details"><h4>SAVE International</h4><p>الجمعية الأمريكية الرائدة عالمياً في الهندسة القيمية، تصدر "Value Methodology Standard and Body of Knowledge" وتمنح شهادة أخصائي القيمة المعتمد (Certified Value Specialist - CVS).</p></div>
+                    </div>
+                    <div class="reference-card">
+                        <div class="ref-icon"><i class='bx bx-world'></i></div>
+                        <div class="ref-details"><h4>EN 12973:2020 – Value Management</h4><p>المعيار الأوروبي المرجعي لإدارة القيمة، معتمد على نطاق واسع في المملكة المتحدة والاتحاد الأوروبي ضمن مشاريع البنية التحتية والمباني، ويوحّد المصطلحات والمبادئ ونماذج تطبيق منهجية القيمة.</p></div>
+                    </div>
+                    <div class="reference-card">
+                        <div class="ref-icon"><i class='bx bx-time-five'></i></div>
+                        <div class="ref-details"><h4>ISO 15686-5 – Life Cycle Costing</h4><p>المرجع الدولي لحساب تكلفة الدورة الحياتية للمباني والأصول الإنشائية، ركيزة أساسية في مرحلة التطوير من خطة عمل الهندسة القيمية.</p></div>
+                    </div>
+                    <div class="reference-card">
+                        <div class="ref-icon"><i class='bx bx-history'></i></div>
+                        <div class="ref-details"><h4>Miles Value Foundation</h4><p>مؤسسة غير ربحية تحمل اسم مؤسس المنهجية لورانس مايلز، تُعنى بالتوثيق التاريخي ونشر المعرفة الخاصة بالهندسة القيمية عالمياً.</p></div>
+                    </div>
+                </div>
+
+                <div class="card-heading reveal">ثانياً: الهندسة القيمية في قطاعات أخرى</div>
+                <p class="sub-title-context reveal" style="margin-bottom:15px;">مثال المستشفى والأبواب المقاومة للحريق كان محورنا طوال الكورس، لكن نفس خطة العمل السداسية تنطبق حرفياً على أي تخصص هندسي. 3 أمثلة خاطفة:</p>
+
+                <div class="mega-case-card reveal">
+                    <h4 style="font-size:18px; font-weight:900; color:var(--primary-navy); margin-bottom:10px;"><i class='bx bx-cube-alt' style="color:#78716c;"></i> الخرسانة — جسر صغير ضمن مشروع طريق</h4>
+                    <p style="color:var(--text-muted); line-height:1.8; font-weight:600; margin:0;"><strong>الوظيفة:</strong> "حمل الأحمال" · <strong>البديل:</strong> تحسين نسبة الخلطة الخرسانية بإضافات معدنية (Fly Ash) بدل زيادة سُمك القواعد للوصول لنفس مقاومة الضغط · <strong>النتيجة:</strong> توفير ≈12% من تكلفة الخرسانة دون المساس بمعامل الأمان الإنشائي.</p>
+                </div>
+
+                <div class="mega-case-card function reveal">
+                    <h4 style="font-size:18px; font-weight:900; color:var(--primary-navy); margin-bottom:10px;"><i class='bx bx-wind' style="color:#0ea5e9;"></i> HVAC — مبنى إداري</h4>
+                    <p style="color:var(--text-muted); line-height:1.8; font-weight:600; margin:0;"><strong>الوظيفة:</strong> "تبريد الهواء" · <strong>البديل:</strong> استبدال نظام تكييف بحجم هواء ثابت (Constant Volume) بنظام VAV يتكيف مع الحمل الفعلي لحظياً · <strong>النتيجة:</strong> توفير ≈18% من فاتورة الطاقة السنوية، وهو ما يظهر بوضوح في تحليل LCC على 20-25 سنة.</p>
+                </div>
+
+                <div class="mega-case-card creative reveal">
+                    <h4 style="font-size:18px; font-weight:900; color:var(--primary-navy); margin-bottom:10px;"><i class='bx bx-layer' style="color:#a855f7;"></i> التشطيبات — ردهات فندق</h4>
+                    <p style="color:var(--text-muted); line-height:1.8; font-weight:600; margin:0;"><strong>الوظيفة:</strong> "تحمّل الاستخدام المكثف + الانطباع الأول" · <strong>البديل:</strong> بورسلين عالي المقاومة في مناطق الحركة الكثيفة، مع الإبقاء على الرخام الطبيعي عند نقطة الاستقبال فقط · <strong>النتيجة:</strong> توفير ≈30% من تكلفة الأرضيات دون التضحية بالهوية الفندقية الفاخرة.</p>
+                </div>
+
+                <div class="card-heading reveal">ثالثاً: أسئلة شائعة (FAQ)</div>
+                <div class="faq-container reveal">
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFaq(this)"><span><i class='bx bx-question-mark icon-main'></i> ما الفرق بين Value Engineering و Value Management؟</span><i class='bx bx-chevron-down faq-icon-arrow'></i></div>
+                        <div class="faq-answer"><p>إدارة القيمة (VM) هي المظلة الشاملة التي تُطبَّق منذ بداية المشروع لضمان توافق الأهداف مع القيمة المرجوة عبر كل مراحل المشروع، بينما الهندسة القيمية (VE) هي دراسة تحليلية محددة زمنياً تُجرى غالباً عند نهاية مرحلة تصميمية معينة باستخدام خطة العمل السداسية.</p></div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFaq(this)"><span><i class='bx bx-question-mark icon-main'></i> ما هي شهادة CVS وكيف يمكن الحصول عليها؟</span><i class='bx bx-chevron-down faq-icon-arrow'></i></div>
+                        <div class="faq-answer"><p>شهادة "Certified Value Specialist" الصادرة عن SAVE International هي الاعتماد المهني الأعلى في تخصص الهندسة القيمية، وتتطلب حضور تدريب معتمد، والمشاركة الفعلية في عدد من دراسات القيمة، واجتياز اختبار تحريري رسمي.</p></div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFaq(this)"><span><i class='bx bx-question-mark icon-main'></i> هل تُطبَّق الهندسة القيمية فقط على المشاريع الكبرى؟</span><i class='bx bx-chevron-down faq-icon-arrow'></i></div>
+                        <div class="faq-answer"><p>لا؛ رغم أن أغلب الأمثلة التوضيحية تُستخدم فيها مشاريع كبرى، إلا أن المنهجية قابلة للتطبيق على أي منتج أو نظام أو عملية مهما كان حجمها، وتُستخدم أيضاً في القطاعات الصناعية وسلاسل الإمداد وليس فقط في الإنشاءات.</p></div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFaq(this)"><span><i class='bx bx-question-mark icon-main'></i> من يقود دراسة الهندسة القيمية عادة؟</span><i class='bx bx-chevron-down faq-icon-arrow'></i></div>
+                        <div class="faq-answer"><p>يقودها ميسّر (Value Study Team Leader) مستقل قدر الإمكان عن فريق التصميم الأصلي، ويُفضَّل أن يحمل اعتماد CVS، لضمان حياد التحليل وعدم الانحياز للحلول القائمة مسبقاً.</p></div>
+                    </div>
+                </div>
+
+                <div class="card-heading reveal"><i class='bx bx-list-check'></i> رابعاً: المراجعة السريعة النهائية — كل مصطلحات الاختبار في صفحة واحدة</div>
+                <p class="sub-title-context reveal" style="margin-bottom:15px;">هذا الجدول يلخّص كل مصطلح تحتاجه لاجتياز الاختبار النهائي المكوّن من 50 سؤالاً، مرتباً حسب مراحل خطة العمل.</p>
+                <div class="table-wrapper reveal">
+                    <table class="data-table">
+                        <thead><tr><th>المصطلح</th><th>المراجعة السريعة</th></tr></thead>
+                        <tbody>
+                            <tr><td><strong>القيمة (Value)</strong></td><td>= الوظيفة ÷ التكلفة (Function / Cost)</td></tr>
+                            <tr><td><strong>المؤسس</strong></td><td>لورنس مايلز (Lawrence Miles) — شركة جنرال إلكتريك، بدأ في قطاع التصنيع</td></tr>
+                            <tr><td><strong>أفضل توقيت للتطبيق</strong></td><td>مرحلة التصميم التخطيطي المبكرة (Schematic Design)</td></tr>
+                            <tr><td><strong>تكلفة دورة الحياة (LCC)</strong></td><td>كل التكاليف من الفكرة حتى التخلص من الأصل (Salvage)</td></tr>
+                            <tr><td><strong>مبدأ باريتو (Pareto 80/20)</strong></td><td>80% من التكلفة تتركز في 20% من بنود المشروع</td></tr>
+                            <tr><td><strong>الاحتياجات مقابل الرغبات (Needs vs Wants)</strong></td><td>الاحتياجات أساسية لأداء الوظيفة، والرغبات كماليات إضافية</td></tr>
+                            <tr><td><strong>صياغة الوظيفة</strong></td><td>تصف ما يجب أن يتحقق لا الحل — غالباً فعل نشط + اسم، دون الالتزام بعدد كلمات ثابت</td></tr>
+                            <tr><td><strong>الوظيفة الأساسية (Primary/Basic)</strong></td><td>سبب وجود العنصر الجوهري (مثال القلم: "يترك أثراً")</td></tr>
+                            <tr><td><strong>FAST</strong></td><td>Function Analysis System Technique — يحلل الوظائف لا المنتجات</td></tr>
+                            <tr><td><strong>قراءة FAST يسار→يمين</strong></td><td>تجيب على "كيف؟" (How)</td></tr>
+                            <tr><td><strong>قراءة FAST يمين→يسار</strong></td><td>تجيب على "لماذا؟" (Why)</td></tr>
+                            <tr><td><strong>وظيفة الترتيب الأعلى</strong></td><td>تقع يسار خط النطاق الأيسر (Left Scope Line)</td></tr>
+                            <tr><td><strong>الوظائف على نفس الخط الرأسي</strong></td><td>وظائف متزامنة/مستمرة (All-the-time Functions)، وليست بالضرورة تسلسلاً سببياً</td></tr>
+                            <tr><td><strong>مؤشر القيمة (Value Index)</strong></td><td>= التكلفة ÷ الجدارة (Cost ÷ Worth). ارتفاعه الملحوظ فوق 1 = فجوة تستحق التحقيق، لا حكماً نهائياً</td></tr>
+                            <tr><td><strong>وظيفة معتمدة على التصميم</strong></td><td>Design Dependent Function — تختفي بتغيير الحل</td></tr>
+                            <tr><td><strong>وظائف عمل / بيع</strong></td><td>Work Functions / Sell Functions</td></tr>
+                            <tr><td><strong>عنصر بوظائف متعددة</strong></td><td>لا تُقسَّم تكلفته عشوائياً بين وظائفه؛ تُقارَن تكلفته الإجمالية بجدارة بديل يحقق نفس مجموعة الوظائف</td></tr>
+                            <tr><td><strong>مصفوفة تقييم الوظائف</strong></td><td>Function Evaluation Matrix — ترتب الوظائف بالأهمية والتكلفة والجدارة لتحديد أولوية الدراسة (تختلف عن مصفوفة تقييم البدائل)</td></tr>
+                            <tr><td><strong>قاعدة العصف الذهني الأهم</strong></td><td>تأجيل الحكم / منع النقد الفوري (Defer Judgment)</td></tr>
+                            <tr><td><strong>الكم يولّد...</strong></td><td>الكيف (الجودة) — Quantity Breeds Quality</td></tr>
+                            <tr><td><strong>Piggybacking</strong></td><td>البناء على أفكار الآخرين ودمجها</td></tr>
+                            <tr><td><strong>Synectics (تقنية غوردون)</strong></td><td>تشبيهات من مجالات مختلفة لتحفيز حلول غير مألوفة</td></tr>
+                            <tr><td><strong>عوائق الإبداع</strong></td><td>الخوف من الفشل، والتمسك بالطريقة المعتادة (Paradigms)</td></tr>
+                            <tr><td><strong>الأخطاء القاتلة (Fatal Flaws)</strong></td><td>استبعاد فوري لمخالفة السلامة أو الأنظمة</td></tr>
+                            <tr><td><strong>مصفوفة التقييم الموزونة</strong></td><td>مقارنة البدائل بمعايير وأوزان متفق عليها مسبقاً</td></tr>
+                            <tr><td><strong>المقارنة الزوجية (Paired Comparison)</strong></td><td>تحديد وزن كل معيار بمقارنته بالمعايير الأخرى وجهاً لوجه</td></tr>
+                            <tr><td><strong>بطل الفكرة (Idea Champion)</strong></td><td>يتبنى فكرة واعدة وغير تقليدية ويدافع عنها بالبيانات</td></tr>
+                            <tr><td><strong>مقترح الهندسة القيمية (VE Proposal)</strong></td><td>Before/After + LCC + الأثر على الجدول الزمني والجودة</td></tr>
+                            <tr><td><strong>نسبة التوفير (Savings %)</strong></td><td>= (التكلفة الأصلية − المقترحة) ÷ الأصلية × 100</td></tr>
+                            <tr><td><strong>نسبة تحسّن مؤشر القيمة</strong></td><td>= (مؤشر القيمة قبل − بعد) ÷ قبل × 100</td></tr>
+                            <tr><td><strong>الرد على اعتراض المصمم الأصلي</strong></td><td>بالتحليل الوظيفي والمقارنات الفنية الموضوعية، لا بالجدال</td></tr>
+                            <tr><td><strong>خطة التنفيذ (Implementation Plan)</strong></td><td>من سيفعل ماذا ومتى لتحويل المقترح المعتمد لواقع</td></tr>
+                            <tr><td><strong>المتابعة اللاحقة (Post-Implementation Audit)</strong></td><td>التحقق من تحقق الوفورات والأداء فعلياً بعد التنفيذ</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- ======================= TAB 9: ADVANCED TOPICS ======================= -->
+        <div id="tab9" class="tab-content">
+            <div class="section-card">
+                <h2 class="main-title"><i class='bx bx-trophy'></i> 6. مواضيع متقدمة (ما بعد الأساسيات)</h2>
+
+                <div class="module-progress-bar reveal">
+                    <div class="mp-text">أنت الآن في القسم 7 من 8 ضمن رحلة الهندسة القيمية</div>
+                    <div class="mp-track"><div class="mp-fill" style="width: 88%;"></div></div>
+                    <div class="mp-time"><i class='bx bx-time-five'></i> 9 دقائق</div>
+                </div>
+
+                <div class="module-objective reveal">
+                    <span class="obj-tag"><i class='bx bx-target-lock'></i> هدف الوحدة:</span>
+                    <p class="obj-text">أن يتعرّف المتدرب على 5 جوانب لا تغطيها الدورات التمهيدية عادة: التأسيس المؤسسي والتعاقدي، أدوات القرار المتقدمة، تكامل الاستدامة، أخلاقيات المهنة، ومهارات القيادة المتقدمة.</p>
+                </div>
+
+                <div class="box box-info reveal">
+                    <div class="box-title"><i class='bx bx-info-circle'></i> قبل ما نبدأ — توضيح مهم</div>
+                    <p>هذه الوحدة توسّع وعيك المهني بجوانب متقدمة، لكنها <strong>لا تُغني عن اعتماد SAVE International الرسمي (CVS)</strong>، الذي يتطلب ساعات ورش عمل فعلية وتطبيقاً عملياً موثّقاً لا يمكن لأي دورة ذاتية أونلاين تعويضه. اعتبر هذه الوحدة خريطة توجّهك لما بعد الأساسيات، لا بديلاً عن الاعتماد المهني.</p>
+                </div>
+
+                <div class="card-heading reveal">أولاً: كيف تُنشئ برنامج VE داخل مؤسسة؟</div>
+                <p class="reveal">
+                    تطبيق دراسة قيمة واحدة شيء، وتأسيس "برنامج VE" مؤسسي دائم شيء آخر تماماً. البرنامج المؤسسي يحتاج سياسة معتمدة من الإدارة العليا تحدد متى تكون الدراسة إلزامية، ميزانية مخصصة، وفريقاً داخلياً أو مستشارين معتمدين.
+                </p>
+                <div class="table-wrapper reveal">
+                    <table class="data-table">
+                        <thead><tr><th>عنصر السياسة المؤسسية</th><th>مثال تطبيقي</th></tr></thead>
+                        <tbody>
+                            <tr><td><strong>حد التفعيل الإلزامي (Trigger Threshold)</strong></td><td>كل مشروع تتجاوز قيمته حداً معيناً (مثلاً 20 مليون ريال) يلزمه دراسة VE رسمية</td></tr>
+                            <tr><td><strong>توقيت الإلزام</strong></td><td>نهاية التصميم التخطيطي كحد أقصى، قبل الطرح للمقاولين</td></tr>
+                            <tr><td><strong>بند VECP التعاقدي (Contractor VECP Clause)</strong></td><td>شرط يسمح للمقاول نفسه باقتراح تغييرات قيمية بعد الترسية، مقابل تقاسم نسبة من الوفر مع المالك — شائع في عقود FIDIC والعقود الحكومية</td></tr>
+                            <tr><td><strong>الإجراء القانوني للاعتماد</strong></td><td>مراجعة فنية، موافقة الاستشاري الأصلي، ثم توثيق التعديل كملحق تعاقدي (Variation Order)</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="box box-mistake reveal">
+                    <div class="box-title"><i class='bx bx-error'></i> خطأ مؤسسي شائع</div>
+                    <p>جعل دراسة القيمة "اختيارية" بالكامل دون معيار تفعيل واضح مكتوب. النتيجة الغالبة: تُنسى أول ما يزيد ضغط الجدول الزمني على الفريق.</p>
+                </div>
+
+                <div class="card-heading reveal">ثانياً: لما تكون المصفوفة الموزونة العادية مش كفاية</div>
+                <p class="reveal">
+                    المصفوفة الموزونة التي تعلمناها بسيطة وفعالة، لكن حين تختلف آراء أعضاء الفريق حول الأوزان نفسها، أو يكبر عدد المعايير، تحتاج أداة أدق.
+                </p>
+                <div class="box box-info reveal">
+                    <div class="box-title"><i class='bx bx-git-compare'></i> AHP (Analytic Hierarchy Process)</div>
+                    <p>بدل تخمين الأوزان مباشرة، تُقارَن كل معيارين ببعضهما "وجهاً لوجه" على مقياس من 1 إلى 9 (مثلاً: "التكلفة أهم من الصيانة بمقدار 3 مرات")، ثم تُحسب الأوزان رياضياً من هذه المقارنات (Eigenvector Method). النتيجة: أوزان أكثر دقة وأقل تأثراً بانطباع فردي واحد داخل الفريق.</p>
+                </div>
+                <div class="box box-tip reveal">
+                    <div class="box-title"><i class='bx bx-bulb'></i> تحليل الحساسية (Sensitivity Analysis)</div>
+                    <p>بعد اختيار البديل الفائز، اسأل: لو غيّرت وزن معيار واحد بنسبة 10% فقط، هل يتغير البديل الفائز؟ لو الإجابة نعم بسهولة، فالقرار "حساس" وهش، ويستحق مراجعة أعمق قبل اعتماده أمام المالك — بدل الاكتفاء برقم نهائي واحد.</p>
+                </div>
+
+                <div class="card-heading reveal">ثالثاً: هل الهندسة القيمية بتتعارض مع الاستدامة؟</div>
+                <p class="reveal">
+                    سؤال يتكرر كثيراً: هل خفض التكلفة قد يضحّي بنقاط شهادات الاستدامة مثل LEED؟ لا ينبغي لأي دراسة VE احترافية أن تتجاهل هذا الأثر.
+                </p>
+                <span class="highlight-line reveal">القاعدة: أضف "الأثر على نقاط LEED" كمعيار في مصفوفة التقييم من البداية — لا تراجعه بعد اعتماد القرار.</span>
+                <div class="table-wrapper reveal">
+                    <table class="data-table">
+                        <thead><tr><th>البديل</th><th>التوفير المالي</th><th>الأثر على LEED</th></tr></thead>
+                        <tbody>
+                            <tr><td>عزل حراري أرخص بمواد تقليدية</td><td>مرتفع</td><td><span class="status-pill pill-critical">فقدان نقطة Energy & Atmosphere</span></td></tr>
+                            <tr><td>عزل بمواد معاد تدويرها بسعر مقارب</td><td>متوسط</td><td><span class="status-pill pill-low">الحفاظ على نقطة Materials & Resources</span></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="card-heading reveal">رابعاً: ميثاق أخلاقيات أخصائي القيمة</div>
+                <div class="box box-tip reveal">
+                    <div class="box-title"><i class='bx bx-shield-quarter'></i> المبادئ الأساسية</div>
+                    <ul>
+                        <li><strong>الموضوعية والاستقلالية:</strong> عدم قبول دراسة يوجد فيها تضارب مصالح مع طرف مستفيد من قرار معين.</li>
+                        <li><strong>السرية:</strong> عدم مشاركة بيانات تكلفة المشروع مع أي طرف خارج نطاق الدراسة.</li>
+                        <li><strong>الأمانة الفنية:</strong> عدم المبالغة في تقدير نسب التوفير لإقناع المالك بمقترح معيّن.</li>
+                        <li><strong>الاعتراف بحدود الخبرة:</strong> طلب رأي متخصص إضافي إذا خرج الموضوع عن نطاق خبرة الفريق.</li>
+                    </ul>
+                </div>
+
+                <div class="card-heading reveal">خامساً: لما الفريق يختلف، أو الإدارة العليا تسأل سؤالاً صعباً</div>
+                <div class="box box-tip reveal">
+                    <div class="box-title"><i class='bx bx-group'></i> إدارة خلاف داخل الفريق</div>
+                    <p>لو اختلف عضوان على وزن معيار معين، فدور الميسّر ليس حسم الرأي بنفسه، بل الرجوع لأصحاب المصلحة (المالك أو الجهة المستفيدة) ليحسموا الأولوية الحقيقية بينهم.</p>
+                </div>
+                <div class="box box-fact reveal">
+                    <div class="box-title"><i class='bx bx-bulb'></i> قاعدة الدقيقتين للعرض التنفيذي</div>
+                    <p>عند العرض أمام الإدارة العليا، ابدأ دائماً بالنتيجة المالية (كم تم توفيره) قبل الدخول في أي تفاصيل فنية — وقت الإدارة العليا محدود، والرقم النهائي هو أول ما يريدون سماعه.</p>
+                </div>
+
+                <div class="capability-box reveal">
+                    <div class="capability-title"><i class='bx bx-badge-check'></i> أنت الآن تعلمت الآتي:</div>
+                    <div class="capability-list">
+                        <div class="capability-item"><i class='bx bx-check-circle'></i> عناصر السياسة المؤسسية اللازمة لبرنامج VE دائم</div>
+                        <div class="capability-item"><i class='bx bx-check-circle'></i> الفرق بين المصفوفة الموزونة البسيطة وAHP، ومتى تحتاج كل منهما</div>
+                        <div class="capability-item"><i class='bx bx-check-circle'></i> كيف تدمج معايير الاستدامة (LEED) داخل مصفوفة التقييم من البداية</div>
+                        <div class="capability-item"><i class='bx bx-check-circle'></i> المبادئ الأربعة لميثاق أخلاقيات أخصائي القيمة</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ======================= TAB 8: CONCLUSION ======================= -->
+        <div id="tab8" class="tab-content">
+            <div class="reveal" style="text-align: center; padding: 60px 40px; background: var(--white); border: 2px solid var(--border-color); border-radius: 25px; box-shadow: 0 15px 40px rgba(0,0,0,0.04);">
+                <div style="margin-bottom: 25px;">
+                    <img src="logo.jpg" alt="BA Academy Logo" onerror="this.src='https://via.placeholder.com/130?text=BA+Academy'" style="max-width: 140px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); border: 2px solid #e2e8f0;">
+                </div>
+                <h2 style="font-size: 34px; font-weight: 900; color: var(--primary-navy); margin-bottom: 15px;"><i class='bx bxs-award' style="color: var(--brand-blue); vertical-align: middle;"></i> ختام رحلتك التدريبية</h2>
+                <p style="font-size: 20px; color: var(--brand-blue); font-weight: 800; margin-bottom: 25px; letter-spacing: 0.5px;">
+                    BA Engineering Academy - منصة الهندسة القيمية الاحترافية
+                </p>
+                <div style="max-width: 800px; margin: 0 auto 35px; background: var(--light-blue); padding: 30px; border-radius: 16px; border: 1px solid #bfdbfe; text-align: right;">
+                    <p style="font-size: 17px; color: var(--text-dark); line-height: 1.9; font-weight: 700; margin: 0 0 14px;">لقد أتممت الآن رحلة متكاملة عبر خطة عمل الهندسة القيمية بمراحلها الست: المعلومات، تحليل الوظائف، الإبداع، التقييم، التطوير، والعرض والتنفيذ — مدعومة بمعايير SAVE International وEN 12973 وISO 15686-5.</p>
+                    <p style="font-size: 16px; color: var(--text-muted); line-height: 1.9; font-weight: 700; margin: 0;">للاستمرار في التخصص: تابع مسار الاعتماد المهني (Associate Value Specialist ثم Certified Value Specialist) الصادر من SAVE International، وطبّق ما تعلمته على أول مشروع حقيقي بين يديك.</p>
+                </div>
+                <div style="font-size: 15px; color: var(--text-muted); font-weight: 800; text-transform: uppercase; letter-spacing: 1px;">
+                    From Function To Value
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <button class="back-to-top" id="backToTopBtn" onclick="scrollContentToTop()" aria-label="الرجوع لأعلى الصفحة"><i class='bx bx-up-arrow-alt'></i></button>
+
+    <script>
+        let visitedTabs = new Set(['tab1']);
+        const totalContentTabs = 8;
+
+        const tabMeta = {
+            tab1: { icon: 'bx-play-circle', title: 'مدخل ومفاهيم الهندسة القيمية', order: 1 },
+            tab2: { icon: 'bx-search-alt', title: 'المرحلة المعلوماتية وتحليل الوظائف', order: 2 },
+            tab3: { icon: 'bx-bulb', title: 'المرحلة الإبداعية', order: 3 },
+            tab4: { icon: 'bx-line-chart', title: 'التقييم والتطوير وتكلفة الدورة الحياتية', order: 4 },
+            tab5hub: { icon: 'bx-folder-open', title: 'التطبيقات والمراجع' },
+            tab5: { icon: 'bx-slider-alt', title: 'محاكاة دراسة القيمة التطبيقية', order: 5 },
+            tab6: { icon: 'bx-layer', title: 'المصطلحات والمراجع', order: 6 },
+            tab9: { icon: 'bx-trophy', title: 'مواضيع متقدمة (ما بعد الأساسيات)', order: 7 },
+            tab8: { icon: 'bx-check-shield', title: 'الخاتمة وإتمام الدورة', order: 8 }
+        };
+
+        function updateProgress() {
+            let percentage = Math.round((visitedTabs.size / totalContentTabs) * 100);
+            if(percentage > 100) percentage = 100;
+            const progressBar = document.getElementById('progress-bar');
+            const progressText = document.getElementById('progress-text');
+            if (progressBar) progressBar.style.width = percentage + '%';
+            if (progressText) progressText.innerText = percentage + '%';
+        }
+
+        function updateContentHeader(tabId) {
+            const meta = tabMeta[tabId];
+            if (!meta) return;
+            const iconEl = document.getElementById('chIcon');
+            const titleEl = document.getElementById('chTitle');
+            const crumbEl = document.getElementById('chCrumb');
+            if (iconEl) iconEl.className = 'bx ' + meta.icon;
+            if (titleEl) titleEl.innerText = meta.title;
+            if (crumbEl) crumbEl.innerText = meta.order ? ('القسم ' + meta.order + ' من ' + totalContentTabs) : 'أدوات ومراجع';
+        }
+
+        const observerOptions = { root: document.getElementById('mainContentArea'), rootMargin: '0px', threshold: 0.1 };
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
+        }, observerOptions);
+
+        function triggerReveals() {
+            document.querySelectorAll('.reveal').forEach(el => {
+                el.classList.remove('active');
+                revealObserver.observe(el);
+            });
+            setTimeout(() => {
+                document.querySelectorAll('.tab-content.active .reveal').forEach(el => {
+                    const rect = el.getBoundingClientRect();
+                    if(rect.top < window.innerHeight) el.classList.add('active');
+                });
+            }, 50);
+        }
+
+        function switchTab(tabId) {
+            const currentActive = document.querySelector('.tab-content.active');
+
+            const doSwitch = () => {
+                if (tabMeta[tabId] && tabMeta[tabId].order) visitedTabs.add(tabId);
+                updateProgress();
+
+                document.querySelectorAll('.tab-content').forEach(tab => {
+                    tab.classList.remove('active', 'tab-out');
+                });
+                document.querySelectorAll('.menu-item').forEach(item => {
+                    item.classList.remove('active');
+                });
+
+                const targetContent = document.getElementById(tabId);
+                if (targetContent) {
+                    targetContent.classList.add('active');
+                    const mainArea = document.getElementById('mainContentArea');
+                    if (mainArea) mainArea.scrollTop = 0;
+                }
+
+                const sidebarBtnId = (tabId === 'tab5' || tabId === 'tab6') ? 'btn_tab5hub' : ('btn_' + tabId);
+                const activeBtn = document.getElementById(sidebarBtnId);
+                if (activeBtn) activeBtn.classList.add('active');
+
+                updateContentHeader(tabId);
+                triggerReveals();
+
+                const bar = document.getElementById('pageTransitionBar');
+                if (bar) {
+                    bar.classList.remove('loading');
+                    bar.classList.add('done');
+                    setTimeout(() => bar.classList.remove('done'), 300);
+                }
+            };
+
+            const bar = document.getElementById('pageTransitionBar');
+            if (bar) { bar.classList.remove('done'); bar.classList.add('loading'); }
+
+            if (currentActive && currentActive.id !== tabId) {
+                currentActive.classList.add('tab-out');
+                setTimeout(doSwitch, 160);
+            } else {
+                doSwitch();
+            }
+
+            closeMobileMenuOnBodyClick();
+        }
+
+        function toggleMobileMenu() {
+            const sidebar = document.getElementById('mainSidebar');
+            const backdrop = document.getElementById('sidebarBackdrop');
+            if (sidebar) sidebar.classList.toggle('open');
+            if (backdrop) backdrop.classList.toggle('show', sidebar && sidebar.classList.contains('open'));
+        }
+
+        function closeMobileMenuOnBodyClick() {
+            if(window.innerWidth <= 768) {
+                const sidebar = document.getElementById('mainSidebar');
+                const backdrop = document.getElementById('sidebarBackdrop');
+                if (sidebar) sidebar.classList.remove('open');
+                if (backdrop) backdrop.classList.remove('show');
+            }
+        }
+
+        function scrollContentToTop() {
+            const mainArea = document.getElementById('mainContentArea');
+            if (mainArea) mainArea.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.carousel-slide');
+        const indicators = document.querySelectorAll('.indicator');
+        const track = document.getElementById('caseTrack');
+        const badge = document.getElementById('carousel-badge');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+
+        const carouselTitles = [
+            "1. تأسيس الفريق وجمع المعلومات",
+            "2. تحليل الوظائف ومخطط FAST",
+            "3. المرحلة الإبداعية",
+            "4. التقييم",
+            "5. التطوير وتحليل LCC",
+            "6. العرض والتنفيذ"
+        ];
+
+        function updateCarousel() {
+            if(!track) return;
+            track.style.transform = `translateX(${currentSlide * 100}%)`;
+            indicators.forEach((ind, index) => { ind.classList.toggle('active', index === currentSlide); });
+            if (badge) badge.innerText = `الخطوة ${currentSlide + 1} من 6`;
+            const titleEl = document.getElementById('carousel-title');
+            if (titleEl) titleEl.innerText = carouselTitles[currentSlide];
+            if (prevBtn) prevBtn.disabled = currentSlide === 0;
+            if (nextBtn) nextBtn.disabled = currentSlide === slides.length - 1;
+        }
+
+        function moveSlide(dir) {
+            currentSlide += dir;
+            if(currentSlide < 0) currentSlide = 0;
+            if(currentSlide >= slides.length) currentSlide = slides.length - 1;
+            updateCarousel();
+        }
+
+        function goToSlide(index) { currentSlide = index; updateCarousel(); }
+
+        function toggleFaq(element) {
+            const parent = element.parentElement;
+            if (parent) parent.classList.toggle('active');
+        }
+
+        function handleDecision(btn) {
+            const container = btn.closest('.decision-options');
+            if (!container || container.classList.contains('answered')) return;
+            container.classList.add('answered');
+
+            container.querySelectorAll('.decision-btn').forEach(b => {
+                b.disabled = true;
+                if (b.dataset.correct === 'true') b.classList.add('correct');
+            });
+            if (btn.dataset.correct !== 'true') {
+                btn.classList.add('incorrect');
+            }
+
+            const feedback = container.nextElementSibling;
+            if (feedback && feedback.classList.contains('decision-feedback')) {
+                feedback.classList.add('show');
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            updateProgress();
+            triggerReveals();
+            updateCarousel();
+            updateContentHeader('tab1');
+
+            const mainArea = document.getElementById('mainContentArea');
+            const backToTopBtn = document.getElementById('backToTopBtn');
+            if (mainArea && backToTopBtn) {
+                mainArea.addEventListener('scroll', () => {
+                    backToTopBtn.classList.toggle('show', mainArea.scrollTop > 400);
+                });
+            }
+        });
+    </script>
+</body>
+</html>
