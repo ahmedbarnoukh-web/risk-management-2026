@@ -49,11 +49,30 @@
         .menu-toggle:hover { background: var(--brand-blue-hover); transform: scale(1.06); }
         .menu-toggle:active { transform: scale(0.94); }
 
+        .mobile-home-btn {
+            display: none; position: fixed; top: 15px; left: 15px; z-index: 1000;
+            background: var(--white); color: var(--brand-blue); border: 1px solid var(--border-color);
+            width: 44px; height: 44px; border-radius: 8px; align-items: center; justify-content: center;
+            font-size: 22px; text-decoration: none; box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.25s var(--ease-soft), background 0.25s ease;
+        }
+        .mobile-home-btn:hover { background: var(--light-blue); transform: scale(1.06); }
+        .mobile-home-btn:active { transform: scale(0.94); }
+
         .sidebar { width: 380px; background: #ffffff; color: var(--text-dark); padding: 25px 20px; display: flex; flex-direction: column; flex-shrink: 0; height: 100vh; overflow-y: auto; box-shadow: -4px 0 25px rgba(0,0,0,0.05); z-index: 999; transition: right 0.4s var(--ease-smooth), box-shadow 0.4s ease; border-left: 1px solid var(--border-color); scrollbar-width: thin; scrollbar-color: #cbd5e1 transparent; }
         .sidebar::-webkit-scrollbar { width: 6px; }
         .sidebar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
         
         .sidebar-header { text-align: center; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 2px solid #f1f5f9; }
+        .academy-home-link {
+            display: flex; align-items: center; justify-content: center; gap: 6px;
+            font-size: 12.5px; font-weight: 800; color: var(--text-muted);
+            text-decoration: none; margin-bottom: 14px; padding: 8px 10px;
+            border-radius: 8px; background: #f8fafc; border: 1px solid var(--border-color);
+            transition: 0.25s;
+        }
+        .academy-home-link:hover { background: var(--light-blue); color: var(--brand-blue); border-color: #bfdbfe; }
+        .academy-home-link i { font-size: 15px; }
         .sidebar-header img { max-width: 130px; border-radius: 12px; margin-bottom: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); border: 2px solid #e2e8f0; }
         .sidebar-header h2 { font-size: 18px; font-weight: 900; color: var(--primary-navy); line-height: 1.4; }
         .sidebar-header p { font-size: 12px; color: var(--brand-blue); margin-top: 5px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; }
@@ -280,9 +299,11 @@
 
         @media (max-width: 768px) {
             .menu-toggle { display: block; }
+            .mobile-home-btn { display: flex; }
             .sidebar { position: fixed; right: -380px; height: 100vh; max-width: 85vw; }
             .sidebar.open { right: 0; }
-            .main-content { padding: 80px 20px 40px; }
+            .main-content { padding: 80px 16px 40px; }
+            .content-header { padding: 12px 16px; }
             .content-header span { font-size: 14px; }
             .content-header .ch-crumb { display: none; }
             .back-to-top { bottom: 20px; left: 20px; width: 44px; height: 44px; font-size: 20px; }
@@ -291,6 +312,14 @@
             .timeline { flex-wrap: wrap; gap: 20px; justify-content: center; }
             .timeline::before { display: none; }
             .tl-line { display: none; }
+            .section-card { padding: 22px 16px; }
+            .risk-matrix-grid { grid-template-columns: repeat(5, 46px); gap: 4px; }
+            .app-hub-grid { grid-template-columns: 1fr; gap: 16px; }
+        }
+        @media (max-width: 420px) {
+            .risk-matrix-grid { grid-template-columns: repeat(5, 38px); }
+            .sidebar-header img { max-width: 100px; }
+            .menu-item { padding: 12px 14px; }
         }
     </style>
 </head>
@@ -300,10 +329,12 @@
     <div class="sidebar-backdrop" id="sidebarBackdrop" onclick="toggleMobileMenu()"></div>
 
     <button class="menu-toggle" onclick="toggleMobileMenu()" aria-label="فتح القائمة"><i class='bx bx-menu'></i></button>
+    <a href="../index.html" class="mobile-home-btn" aria-label="العودة للصفحة الرئيسية للأكاديمية"><i class='bx bx-home-alt'></i></a>
 
     <div class="sidebar" id="mainSidebar">
         <div class="sidebar-header">
-            <img src="logo.jpg" alt="BA Academy Logo" onerror="this.src='https://via.placeholder.com/130?text=BA+Academy'">
+            <a href="../index.html" class="academy-home-link"><i class='bx bx-arrow-back'></i> العودة للصفحة الرئيسية للأكاديمية</a>
+            <img src="../photo/logo.jpg" alt="BA Academy Logo" onerror="this.src='https://via.placeholder.com/130?text=BA+Academy'">
             <h2>الدورة الشاملة في إدارة المخاطر</h2>
             <p>Risk Management Course</p>
             <div class="progress-container">
@@ -1767,7 +1798,7 @@
         <div id="tab8" class="tab-content">
             <div class="reveal" style="text-align: center; padding: 60px 40px; background: var(--white); border: 2px solid var(--border-color); border-radius: 25px; box-shadow: 0 15px 40px rgba(0,0,0,0.04);">
                 <div style="margin-bottom: 25px;">
-                    <img src="logo.jpg" alt="BA Academy Logo" onerror="this.src='https://via.placeholder.com/130?text=BA+Academy'" style="max-width: 140px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); border: 2px solid #e2e8f0;">
+                    <img src="../photo/logo.jpg" alt="BA Academy Logo" onerror="this.src='https://via.placeholder.com/130?text=BA+Academy'" style="max-width: 140px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); border: 2px solid #e2e8f0;">
                 </div>
                 <h2 style="font-size: 34px; font-weight: 900; color: var(--primary-navy); margin-bottom: 15px;"><i class='bx bxs-award' style="color: var(--brand-blue); vertical-align: middle;"></i> ختام رحلتك التدريبية</h2>
                 <p style="font-size: 20px; color: var(--brand-blue); font-weight: 800; margin-bottom: 25px; letter-spacing: 0.5px;">
