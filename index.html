@@ -7,9 +7,9 @@
     <meta name="description" content="BA Engineering Academy تقدم كورسات هندسية احترافية في إدارة المخاطر والهندسة القيمية، بالإضافة إلى مقالات في الهندسة والذكاء الاصطناعي وقصص شركات عالمية.">
 
     <!-- أيقونة تبويب المتصفح (Favicon) -->
-    <link rel="icon" type="image/jpeg" href="e842ee15-fc5d-491b-a6ae-17e6f345bccd.jpg">
-    <link rel="shortcut icon" type="image/jpeg" href="e842ee15-fc5d-491b-a6ae-17e6f345bccd.jpg">
-    <link rel="apple-touch-icon" href="e842ee15-fc5d-491b-a6ae-17e6f345bccd.jpg">
+    <link rel="icon" type="image/jpeg" href="photo/logo.jpg">
+    <link rel="shortcut icon" type="image/jpeg" href="photo/logo.jpg">
+    <link rel="apple-touch-icon" href="photo/logo.jpg">
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
@@ -630,7 +630,7 @@
         .nav-card p.en-text { font-family: 'Poppins', sans-serif; font-size: 16px; color: var(--primary-blue); font-weight: 600; letter-spacing: 0.2px; }
         .nav-card p.nav-card-desc { font-size: 13px; color: var(--text-muted); font-weight: 600; line-height: 1.5; margin-top: 2px; }
         
-        .course-card-main { border: 1px solid var(--border-color); background: var(--card-bg); }
+        .course-card-main { border: 2px solid rgba(100, 116, 139, 0.75); background: var(--card-bg); }
 
         /* Animated Live Indicator Badge */
         .live-badge-animated {
@@ -677,8 +677,8 @@
             background: var(--card-bg); border: 1px solid var(--border-color);
             border-radius: 24px; padding: 28px 26px 30px;
         }
-        .cards-grid-upcoming { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 22px; }
-        .course-card-upcoming { padding: 20px 18px; }
+        .cards-grid-upcoming { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 22px; align-items: stretch; }
+        .course-card-upcoming { padding: 20px 18px; justify-content: flex-start; border: 2px solid rgba(100, 116, 139, 0.75); }
         .course-card-upcoming h3 { font-size: 17px; }
 
         .course-video-link {
@@ -1205,7 +1205,7 @@
         <section class="hero-section">
             <div class="hero-image">
                 <div class="hero-image-neural-card">
-                    <img src="e842ee15-fc5d-491b-a6ae-17e6f345bccd.jpg" alt="BA Academy Logo">
+                    <img src="photo/logo.jpg" alt="BA Academy Logo">
                 </div>
                 <div class="platform-tag">
                     <i class="fa-solid fa-circle-dot fa-spin"></i> <span data-ar="نتعلم الهندسة كما تُمارس في المشاريع" data-en="Learning Engineering as Practiced in Real Projects">نتعلم الهندسة كما تُمارس في المشاريع</span>
@@ -1232,7 +1232,7 @@
             <h3><i class="fa-solid fa-circle-play"></i> <span data-ar="شاهد نبذة سريعة عن الأكاديمية" data-en="Watch a Quick Academy Overview">شاهد نبذة سريعة عن الأكاديمية</span></h3>
             
             <!-- Video Lightbox Banner Card -->
-            <div class="video-banner-card" onclick="openVideoModal('ba.mp4', 'نبذة سريعة عن BA Engineering Academy')">
+            <div class="video-banner-card" onclick="openVideoModal('video/ba.mp4', 'نبذة سريعة عن BA Engineering Academy')">
                 <div style="display: flex; align-items: center; gap: 20px;">
                     <div class="video-play-circle">
                         <i class="fa-solid fa-play"></i>
@@ -1314,13 +1314,13 @@
                     <div class="course-preview-block">
                         <div class="nav-card course-card-main" onclick="switchMainView('course-landing-view')">
                             <div class="course-thumb">
-                                <img src="risk.jpg" class="course-thumb-img" alt="إدارة مخاطر المشاريع">
-                                <div class="thumb-brand-logo"><img src="e842ee15-fc5d-491b-a6ae-17e6f345bccd.jpg" alt="BA"></div>
+                                <img src="risk/risk.jpg" class="course-thumb-img" alt="إدارة مخاطر المشاريع">
+                                <div class="thumb-brand-logo"><img src="photo/logo.jpg" alt="BA"></div>
                                 <span class="course-ribbon"><i class="fa-solid fa-circle-check"></i> <span data-ar="متاحة الآن" data-en="Available Now">متاحة الآن</span></span>
                             </div>
                             <h3 data-ar="إدارة مخاطر المشاريع" data-en="Project Risk Management">إدارة مخاطر المشاريع</h3>
                             <p class="en-text">Project Risk Management</p>
-                            <button class="course-video-link" onclick="event.stopPropagation(); openVideoModal('risk.mp4', 'إدارة مخاطر المشاريع - فيديو تعريفي')">
+                            <button class="course-video-link" onclick="event.stopPropagation(); openVideoModal('video/risk.mp4', 'إدارة مخاطر المشاريع - فيديو تعريفي')">
                                 <i class="fa-solid fa-circle-play"></i> <span data-ar="شاهد الفيديو التعريفي" data-en="Watch Intro Video">شاهد الفيديو التعريفي</span>
                             </button>
                         </div>
@@ -1330,13 +1330,13 @@
                     <div class="course-preview-block">
                         <div class="nav-card course-card-main course-card-featured" onclick="switchMainView('value-landing-view')">
                             <div class="course-thumb">
-                                <img src="va.jpg" class="course-thumb-img" alt="الهندسة القيمية">
-                                <div class="thumb-brand-logo"><img src="e842ee15-fc5d-491b-a6ae-17e6f345bccd.jpg" alt="BA"></div>
+                                <img src="value/va.jpg" class="course-thumb-img" alt="الهندسة القيمية">
+                                <div class="thumb-brand-logo"><img src="photo/logo.jpg" alt="BA"></div>
                                 <span class="course-ribbon"><i class="fa-solid fa-circle-check"></i> <span data-ar="متاحة الآن" data-en="Available Now">متاحة الآن</span></span>
                             </div>
                             <h3 data-ar="الهندسة القيمية" data-en="Value Engineering">الهندسة القيمية</h3>
                             <p class="en-text">Value Engineering</p>
-                            <button class="course-video-link" onclick="event.stopPropagation(); openVideoModal('va.mp4', 'الهندسة القيمية - فيديو تعريفي')">
+                            <button class="course-video-link" onclick="event.stopPropagation(); openVideoModal('video/va.mp4', 'الهندسة القيمية - فيديو تعريفي')">
                                 <i class="fa-solid fa-circle-play"></i> <span data-ar="شاهد الفيديو التعريفي" data-en="Watch Intro Video">شاهد الفيديو التعريفي</span>
                             </button>
                         </div>
@@ -1357,8 +1357,8 @@
                 <div class="cards-grid-upcoming">
                     <div class="nav-card course-card-upcoming" onclick="showCourseComingSoon(event)">
                         <div class="course-thumb">
-                            <img src="cost.jpg" class="course-thumb-img" alt="إدارة العقود والمطالبات الهندسية">
-                            <div class="thumb-brand-logo"><img src="e842ee15-fc5d-491b-a6ae-17e6f345bccd.jpg" alt="BA"></div>
+                            <img src="https://images.pexels.com/photos/8470836/pexels-photo-8470836.jpeg?auto=compress&w=800&h=500&dpr=1" class="course-thumb-img" alt="إدارة العقود والمطالبات الهندسية">
+                            <div class="thumb-brand-logo"><img src="photo/logo.jpg" alt="BA"></div>
                             <div class="lock-overlay-badge"><i class="fa-solid fa-lock"></i></div>
                         </div>
                         <h3 data-ar="إدارة العقود والمطالبات الهندسية" data-en="Professional Contract & Claims Management">إدارة العقود والمطالبات الهندسية</h3>
@@ -1375,7 +1375,7 @@
                     <div class="nav-card course-card-upcoming" onclick="showCourseComingSoon(event)">
                         <div class="course-thumb">
                             <img src="https://images.pexels.com/photos/5921494/pexels-photo-5921494.jpeg?auto=compress&w=800&h=500&dpr=1" class="course-thumb-img" alt="إدارة تكاليف المشاريع الهندسية">
-                            <div class="thumb-brand-logo"><img src="e842ee15-fc5d-491b-a6ae-17e6f345bccd.jpg" alt="BA"></div>
+                            <div class="thumb-brand-logo"><img src="photo/logo.jpg" alt="BA"></div>
                             <div class="lock-overlay-badge"><i class="fa-solid fa-lock"></i></div>
                         </div>
                         <h3 data-ar="إدارة تكاليف المشاريع الهندسية" data-en="Engineering Project Cost Management">إدارة تكاليف المشاريع الهندسية</h3>
@@ -1384,8 +1384,8 @@
 
                     <div class="nav-card course-card-upcoming" onclick="showCourseComingSoon(event)">
                         <div class="course-thumb">
-                            <img src="ele.jpg" class="course-thumb-img" alt="التصميم الكهربائي للمشاريع">
-                            <div class="thumb-brand-logo"><img src="e842ee15-fc5d-491b-a6ae-17e6f345bccd.jpg" alt="BA"></div>
+                            <img src="photo/ele.jpg" class="course-thumb-img" alt="التصميم الكهربائي للمشاريع">
+                            <div class="thumb-brand-logo"><img src="photo/logo.jpg" alt="BA"></div>
                             <div class="lock-overlay-badge"><i class="fa-solid fa-lock"></i></div>
                         </div>
                         <h3 data-ar="التصميم الكهربائي للمشاريع" data-en="Electrical Design for Projects">التصميم الكهربائي للمشاريع</h3>
@@ -1394,8 +1394,8 @@
 
                     <div class="nav-card course-card-upcoming" onclick="showCourseComingSoon(event)">
                         <div class="course-thumb">
-                            <img src="data.jpg" class="course-thumb-img" alt="هندسة مراكز البيانات">
-                            <div class="thumb-brand-logo"><img src="e842ee15-fc5d-491b-a6ae-17e6f345bccd.jpg" alt="BA"></div>
+                            <img src="photo/data.jpg" class="course-thumb-img" alt="هندسة مراكز البيانات">
+                            <div class="thumb-brand-logo"><img src="photo/logo.jpg" alt="BA"></div>
                             <div class="lock-overlay-badge"><i class="fa-solid fa-lock"></i></div>
                         </div>
                         <h3 data-ar="هندسة مراكز البيانات" data-en="Data Center Infrastructure">هندسة مراكز البيانات</h3>
@@ -1702,7 +1702,7 @@
             </button>
             <div style="display: flex; align-items: center; gap: 14px;">
                 <h3 style="color: var(--primary-blue); font-weight: 800; font-size: 17px; margin: 0;" data-ar="مقرر إدارة مخاطر المشاريع" data-en="Project Risk Management Course">مقرر إدارة مخاطر المشاريع</h3>
-                <img src="e842ee15-fc5d-491b-a6ae-17e6f345bccd.jpg" alt="BA Academy Logo" style="height: 32px; border-radius: 50%;">
+                <img src="photo/logo.jpg" alt="BA Academy Logo" style="height: 32px; border-radius: 50%;">
             </div>
         </div>
         <div class="dashboard-content" style="padding-top: 30px;">
@@ -1724,14 +1724,14 @@
             <button class="btn-outline" onclick="switchMainView('course-dashboard-view')" style="padding: 7px 16px; font-size: 13.5px; border-radius: 10px;"><i class="fa-solid fa-arrow-right"></i> <span data-ar="العودة لوحة التحكم" data-en="Back to Dashboard">العودة لوحة التحكم</span></button>
             <div style="display: flex; align-items: center; gap: 14px;">
                 <div style="font-size: 14.5px; font-weight: 700; color: var(--primary-blue);" id="breadcrumb-current">القسم</div>
-                <img src="e842ee15-fc5d-491b-a6ae-17e6f345bccd.jpg" alt="BA Academy Logo" style="height: 32px; border-radius: 50%;">
+                <img src="photo/logo.jpg" alt="BA Academy Logo" style="height: 32px; border-radius: 50%;">
             </div>
         </div>
         <div class="content-frame-container">
-            <iframe id="screen-main" class="screen-frame" src="core.html"></iframe>
-            <iframe id="screen-guide" class="screen-frame" src="STUDY GUIDE.html"></iframe>
-            <iframe id="screen-tools" class="screen-frame" src="tools-4.html"></iframe>
-            <iframe id="screen-quiz" class="screen-frame" src="50 PMI Question.HTML"></iframe>
+            <iframe id="screen-main" class="screen-frame" src="risk/core.html"></iframe>
+            <iframe id="screen-guide" class="screen-frame" src="risk/STUDY GUIDE.html"></iframe>
+            <iframe id="screen-tools" class="screen-frame" src="risk/tools-4.html"></iframe>
+            <iframe id="screen-quiz" class="screen-frame" src="risk/50 PMI Question.HTML"></iframe>
         </div>
     </main>
 
@@ -1865,7 +1865,7 @@
         <div class="footer-grid">
             <div class="footer-col">
                 <div class="brand-logo-container" style="margin-bottom: 18px; width: max-content;">
-                    <img src="e842ee15-fc5d-491b-a6ae-17e6f345bccd.jpg" alt="BA Academy Logo">
+                    <img src="photo/logo.jpg" alt="BA Academy Logo">
                 </div>
                 <p style="font-size: 0.92rem; line-height: 1.65;" data-ar="منصتك الهندسية للانتقال من التخطيط إلى التنفيذ باحترافية تامة. نضع بين يديك خلاصة الخبرات الميدانية." data-en="Your engineering platform to move from vision to execution with full professionalism.">منصتك الهندسية للانتقال من التخطيط إلى التنفيذ باحترافية تامة. نضع بين يديك خلاصة الخبرات الميدانية.</p>
                 <div class="social-icons">
@@ -2174,7 +2174,7 @@
                 loader.style.display = 'flex';
                 setTimeout(() => {
                     loader.style.display = 'none';
-                    window.location.href = "va_core.html";
+                    window.location.href = "value/va_core.html";
                 }, 600);
             } else {
                 showToast('الرمز السري غير صحيح!', 'error');
