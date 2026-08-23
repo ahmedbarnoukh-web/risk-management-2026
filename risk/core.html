@@ -1,1 +1,2137 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إدارة المخاطر الهندسية | BA Academy</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-navy: #0b1120;
+            --brand-blue: #1d4ed8; 
+            --brand-blue-hover: #1e40af;
+            --light-blue: #eff6ff;
+            --bg-color: #f1f5f9; 
+            --text-dark: #0f172a; 
+            --text-muted: #334155;
+            --border-color: #cbd5e1; 
+            --white: #ffffff; 
+            --success: #10b981; 
+            --warning: #f59e0b;
+            --ease-smooth: cubic-bezier(0.22, 1, 0.36, 1);
+            --ease-soft: cubic-bezier(0.4, 0, 0.2, 1);
+        }
 
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
+        html { scrollbar-color: #cbd5e1 transparent; }
+        body { display: flex; background-color: var(--bg-color); color: var(--text-dark); height: 100vh; overflow: hidden; font-size: 16.5px; }
+
+        ::selection { background: var(--brand-blue); color: #fff; }
+
+        a:focus-visible, button:focus-visible, .menu-item:focus-visible, .app-hub-card:focus-visible,
+        .faq-question:focus-visible, input:focus-visible, .matrix-cell:focus-visible, .indicator:focus-visible {
+            outline: 3px solid #60a5fa; outline-offset: 2px; border-radius: 8px;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+        }
+
+        .page-transition-bar { position: fixed; top: 0; right: 0; left: 0; height: 3px; background: linear-gradient(90deg, #38bdf8, var(--brand-blue)); z-index: 100000; width: 0%; opacity: 0; transition: width 0.35s var(--ease-soft), opacity 0.2s ease; }
+        .page-transition-bar.loading { opacity: 1; width: 70%; }
+        .page-transition-bar.done { opacity: 0; width: 100%; }
+
+        .sidebar-backdrop { display: none; position: fixed; inset: 0; background: rgba(11,17,32,0.55); backdrop-filter: blur(2px); z-index: 998; opacity: 0; transition: opacity 0.35s var(--ease-soft); pointer-events: none; }
+        .sidebar-backdrop.show { display: block; opacity: 1; pointer-events: auto; }
+
+        .menu-toggle { display: none; position: fixed; top: 15px; right: 15px; z-index: 1000; background: var(--brand-blue); color: var(--white); border: none; padding: 10px 12px; border-radius: 8px; cursor: pointer; font-size: 26px; box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4); transition: transform 0.25s var(--ease-soft), background 0.25s ease; }
+        .menu-toggle:hover { background: var(--brand-blue-hover); transform: scale(1.06); }
+        .menu-toggle:active { transform: scale(0.94); }
+
+        .sidebar { width: 380px; background: #ffffff; color: var(--text-dark); padding: 25px 20px; display: flex; flex-direction: column; flex-shrink: 0; height: 100vh; overflow-y: auto; box-shadow: -4px 0 25px rgba(0,0,0,0.05); z-index: 999; transition: right 0.4s var(--ease-smooth), box-shadow 0.4s ease; border-left: 1px solid var(--border-color); scrollbar-width: thin; scrollbar-color: #cbd5e1 transparent; }
+        .sidebar::-webkit-scrollbar { width: 6px; }
+        .sidebar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        
+        .sidebar-header { text-align: center; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 2px solid #f1f5f9; }
+        .sidebar-header img { max-width: 130px; border-radius: 12px; margin-bottom: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); border: 2px solid #e2e8f0; }
+        .sidebar-header h2 { font-size: 18px; font-weight: 900; color: var(--primary-navy); line-height: 1.4; }
+        .sidebar-header p { font-size: 12px; color: var(--brand-blue); margin-top: 5px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; }
+        
+        .progress-container { margin-top: 15px; background: #f8fafc; border-radius: 12px; padding: 12px 15px; text-align: right; border: 1px solid #e2e8f0; }
+        .progress-header { display: flex; justify-content: space-between; font-size: 13px; font-weight: 800; margin-bottom: 8px; color: var(--text-muted); }
+        .progress-track { background: #e2e8f0; height: 8px; border-radius: 10px; overflow: hidden; }
+        .progress-fill { background: linear-gradient(90deg, #34d399, #10b981); height: 100%; width: 10%; transition: width 0.8s cubic-bezier(0.25, 1, 0.5, 1); border-radius: 10px; }
+
+        .menu-items { list-style: none; display: flex; flex-direction: column; gap: 12px; flex-grow: 1; margin-top: 10px; }
+        
+        .menu-item { padding: 14px 18px; border-radius: 12px; cursor: pointer; transition: transform 0.3s var(--ease-soft), box-shadow 0.3s var(--ease-soft), background 0.3s ease, border-color 0.3s ease; display: flex; align-items: center; gap: 14px; color: #ffffff; background: linear-gradient(135deg, #1e3a8a, #2563eb); border: 1px solid #1d4ed8; position: relative; overflow: hidden; text-decoration: none; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2); }
+        .menu-item:hover { background: linear-gradient(135deg, #1d4ed8, #1e40af); border-color: #3b82f6; transform: translateX(-4px); box-shadow: 0 6px 18px rgba(37, 99, 235, 0.35); }
+        .menu-item:active { transform: translateX(-2px) scale(0.98); }
+        .menu-item .tab-icon { font-size: 22px; flex-shrink: 0; transition: 0.3s; color: #ffffff; background: rgba(255, 255, 255, 0.2); padding: 8px; border-radius: 8px; }
+        .menu-item .tab-text { display: flex; flex-direction: column; gap: 2px; flex-grow: 1; }
+        .menu-item .tab-text .ar-title { font-size: 15px; font-weight: 900; color: #ffffff; }
+        .menu-item .tab-text .en-title { font-size: 11.5px; font-weight: 800; text-transform: uppercase; color: #bfdbfe; letter-spacing: 0.5px; }
+        
+        .menu-item.active { background: linear-gradient(135deg, #0f172a, #1e293b); color: var(--white); border-color: #0f172a; box-shadow: 0 8px 25px rgba(15, 23, 42, 0.4); transform: translateX(-4px); }
+        .menu-item.active .tab-icon { background: var(--brand-blue); color: #ffffff; }
+        .menu-item.active .tab-text .ar-title { color: #ffffff; }
+        .menu-item.active .tab-text .en-title { color: #93c5fd; }
+
+        .app-hub-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 25px; margin-top: 30px; }
+        .app-hub-card { background: var(--white); border: 1px solid var(--border-color); border-radius: 20px; padding: 35px 28px; text-align: center; text-decoration: none; color: inherit; display: flex; flex-direction: column; align-items: center; gap: 16px; cursor: pointer; transition: transform 0.35s var(--ease-smooth), box-shadow 0.35s var(--ease-smooth), border-color 0.35s ease; box-shadow: 0 10px 30px rgba(0,0,0,0.03); position: relative; overflow: hidden; }
+        .app-hub-card::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, var(--card-accent, var(--brand-blue)), transparent 60%); opacity: 0; transition: opacity 0.35s ease; }
+        .app-hub-card:hover { transform: translateY(-8px); box-shadow: 0 20px 45px rgba(0,0,0,0.09); border-color: var(--card-accent, var(--brand-blue)); }
+        .app-hub-card:hover::before { opacity: 0.05; }
+        .app-hub-icon { width: 72px; height: 72px; border-radius: 18px; display: flex; align-items: center; justify-content: center; font-size: 32px; color: #fff; background: var(--card-accent, var(--brand-blue)); box-shadow: 0 10px 20px rgba(0,0,0,0.12); position: relative; z-index: 1; }
+        .app-hub-card h4 { font-size: 19px; font-weight: 900; color: var(--primary-navy); position: relative; z-index: 1; }
+        .app-hub-card p { font-size: 14.5px; color: var(--text-muted); line-height: 1.7; margin: 0; position: relative; z-index: 1; }
+        .app-hub-tag { font-size: 12px; font-weight: 800; color: var(--card-accent, var(--brand-blue)); background: color-mix(in srgb, var(--card-accent, var(--brand-blue)) 12%, transparent); padding: 5px 14px; border-radius: 20px; position: relative; z-index: 1; }
+        .app-hub-go { margin-top: auto; font-size: 13.5px; font-weight: 800; color: var(--card-accent, var(--brand-blue)); display: flex; align-items: center; gap: 6px; position: relative; z-index: 1; }
+
+        .back-crumb { display: inline-flex; align-items: center; gap: 8px; font-size: 14.5px; font-weight: 800; color: var(--brand-blue); background: var(--light-blue); padding: 10px 18px; border-radius: 10px; text-decoration: none; cursor: pointer; margin-bottom: 20px; transition: 0.25s; border: 1px solid #bfdbfe; }
+        .back-crumb:hover { background: #dbeafe; transform: translateX(-3px); }
+        
+        .main-content { flex-grow: 1; padding: 40px 50px; overflow-y: auto; height: 100vh; scroll-behavior: smooth; position: relative; background: #f8fafc; }
+        .main-content::-webkit-scrollbar { width: 8px; }
+        .main-content::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+
+        .tab-content { display: none; max-width: 1150px; margin: 0 auto; }
+        .tab-content.active { display: block; animation: fadeInTab 0.55s var(--ease-smooth); }
+        .tab-content.tab-out { display: block; animation: fadeOutTab 0.18s ease-in forwards; }
+        @keyframes fadeInTab { from { opacity: 0; transform: translateY(18px) scale(0.99); } to { opacity: 1; transform: translateY(0) scale(1); } }
+        @keyframes fadeOutTab { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(-10px); } }
+
+        .content-header { display: flex; align-items: center; gap: 12px; max-width: 1150px; margin: 0 auto 22px; padding: 14px 22px; background: var(--white); border: 1px solid var(--border-color); border-radius: 14px; box-shadow: 0 6px 20px rgba(0,0,0,0.03); z-index: 50; }
+        .content-header i { font-size: 22px; color: var(--brand-blue); background: var(--light-blue); padding: 8px; border-radius: 8px; }
+        .content-header span { font-size: 16px; font-weight: 900; color: var(--primary-navy); }
+        .content-header .ch-crumb { margin-right: auto; font-size: 12.5px; font-weight: 800; color: var(--text-muted); background: #f1f5f9; padding: 5px 12px; border-radius: 20px; }
+
+        .back-to-top { position: fixed; bottom: 28px; left: 28px; width: 48px; height: 48px; border-radius: 50%; background: var(--brand-blue); color: #fff; border: none; display: flex; align-items: center; justify-content: center; font-size: 22px; cursor: pointer; box-shadow: 0 10px 25px rgba(37,99,235,0.35); opacity: 0; pointer-events: none; transform: translateY(15px); transition: all 0.35s var(--ease-soft); z-index: 500; }
+        .back-to-top.show { opacity: 1; pointer-events: auto; transform: translateY(0); }
+        .back-to-top:hover { background: var(--brand-blue-hover); transform: translateY(-3px); }
+
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.25, 0.8, 0.25, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        .section-card { background: var(--white); border-radius: 20px; padding: 50px; box-shadow: 0 10px 40px rgba(0,0,0,0.03); border: 1px solid #e2e8f0; margin-bottom: 30px; }
+        .main-title { font-size: 28px; font-weight: 900; color: var(--primary-navy); margin-bottom: 15px; display: flex; align-items: center; gap: 12px; border-bottom: 2px solid var(--light-blue); padding-bottom: 15px; }
+        .sub-title-context { font-size: 17px; color: var(--text-muted); margin-bottom: 30px; line-height: 1.8; font-weight: 600; }
+        
+        .roadmap-container { background: var(--white); border-radius: 16px; padding: 35px; margin-bottom: 35px; border: 1px solid var(--border-color); box-shadow: 0 10px 30px rgba(0,0,0,0.04); }
+        .roadmap-title { font-size: 22px; font-weight: 900; color: var(--primary-navy); margin-bottom: 35px; text-align: center; }
+        .timeline { display: flex; align-items: flex-start; justify-content: space-between; position: relative; }
+        .timeline::before { content: ''; position: absolute; top: 22px; left: 40px; right: 40px; height: 3px; background: #e2e8f0; z-index: 1; }
+        .tl-step { display: flex; flex-direction: column; align-items: center; gap: 12px; width: 100px; text-align: center; position: relative; z-index: 2; }
+        .tl-step span { width: 45px; height: 45px; background: #f8fafc; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: 900; font-size: 18px; color: var(--text-muted); border: 3px solid #cbd5e1; transition: 0.4s; }
+        .tl-step p { font-size: 14px; font-weight: 800; margin: 0; color: var(--text-muted); line-height: 1.4; }
+        .tl-step.active span { background: var(--brand-blue); color: white; border-color: #bfdbfe; box-shadow: 0 0 20px rgba(37,99,235,0.3); transform: scale(1.1); }
+        .tl-step.active p { color: var(--brand-blue); }
+
+        .module-progress-bar { display: flex; align-items: center; gap: 15px; margin-bottom: 25px; background: #f8fafc; padding: 12px 20px; border-radius: 8px; border: 1px solid #e2e8f0; }
+        .mp-text { font-size: 15px; font-weight: 800; color: var(--primary-navy); white-space: nowrap; }
+        .mp-track { flex-grow: 1; height: 8px; background: #e2e8f0; border-radius: 10px; overflow: hidden; }
+        .mp-fill { height: 100%; background: linear-gradient(90deg, var(--brand-blue), #38bdf8); border-radius: 10px; transition: width 0.5s ease; }
+
+        .module-objective { display: flex; align-items: center; gap: 12px; background: #f8fafc; border-right: 4px solid var(--brand-blue); padding: 15px 20px; border-radius: 8px; margin-bottom: 25px; border: 1px solid #e2e8f0; border-right-width: 4px; }
+
+        .mp-time { display: flex; align-items: center; gap: 5px; font-size: 13px; font-weight: 800; color: var(--text-muted); white-space: nowrap; background: #fff; padding: 5px 12px; border-radius: 20px; border: 1px solid #e2e8f0; }
+        .mp-time i { color: var(--brand-blue); font-size: 15px; }
+
+        .capability-box { background: linear-gradient(135deg, #f0fdf4, #ecfdf5); border: 1px solid #bbf7d0; border-radius: 16px; padding: 24px 28px; margin: 25px 0; }
+        .capability-title { font-size: 17px; font-weight: 900; color: #047857; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+        .capability-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; }
+        .capability-item { display: flex; align-items: flex-start; gap: 8px; font-size: 16px; font-weight: 700; color: var(--text-dark); line-height: 1.7; }
+        .capability-item i { color: #16a34a; font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+
+        .exam-star { display: inline-flex; align-items: center; gap: 4px; background: #f59e0b; color: #fff; font-size: 11px; font-weight: 900; padding: 3px 10px; border-radius: 20px; margin-right: 8px; white-space: nowrap; }
+        .obj-tag { font-weight: 900; color: var(--brand-blue); white-space: nowrap; font-size: 16.5px; }
+        .obj-text { margin: 0; font-size: 16px; color: var(--text-dark); font-weight: 700; line-height: 1.6; }
+
+        .card-heading { font-size: 21px; font-weight: 800; color: var(--primary-navy); margin-top: 35px; margin-bottom: 20px; border-right: 5px solid var(--brand-blue); padding-right: 15px; background: linear-gradient(90deg, var(--light-blue), rgba(239, 246, 255, 0.2)); padding: 12px 20px; border-radius: 8px; display: flex; align-items: center; gap: 10px; }
+        
+        .box { padding: 14px 18px; border-radius: 10px; margin: 15px 0; font-weight: 600; line-height: 1.6; transition: 0.3s; position: relative; font-size: 15px; }
+        .box:hover { transform: translateY(-2px); box-shadow: 0 6px 15px rgba(0,0,0,0.04); }
+        .box-title { font-size: 17px; font-weight: 900; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+        .box p, .box li { font-size: 16px; line-height: 1.8; margin-bottom: 8px; }
+        .box ul { margin-bottom: 0; margin-right: 20px; }
+        
+        .box-info { background: #eff6ff; border: 1px solid #bfdbfe; border-right: 5px solid #3b82f6; }
+        .box-info .box-title { color: #1d4ed8; }
+        .box-tip { background: #f0fdf4; border: 1px solid #bbf7d0; border-right: 5px solid #10b981; }
+        .box-tip .box-title { color: #047857; }
+        .box-exam { background: #fffbeb; border: 1px solid #fde68a; border-right: 5px solid #f59e0b; overflow: hidden; }
+        .box-exam .box-title { color: #b45309; }
+        .box-exam::before { content: "\eba3"; font-family: 'boxicons'; position: absolute; left: -10px; bottom: -15px; font-size: 60px; color: rgba(245, 158, 11, 0.08); z-index: 0; }
+        .box-exam > * { position: relative; z-index: 1; }
+        .box-mistake { background: #fef2f2; border: 1px solid #fecaca; border-right: 5px solid #ef4444; }
+        .box-mistake .box-title { color: #b91c1c; }
+        .box-nextstep { background: #f5f3ff; border: 1px solid #ddd6fe; border-right: 5px solid #8b5cf6; }
+        .box-nextstep .box-title { color: #6d28d9; }
+
+        /* === Diagrams === */
+        .diagram-box { background: var(--white); border: 1px solid var(--border-color); border-radius: 16px; padding: 28px 24px; margin: 28px 0; box-shadow: 0 6px 20px rgba(0,0,0,0.03); }
+        .diagram-box-title { font-size: 17px; font-weight: 900; color: var(--primary-navy); margin-bottom: 18px; display: flex; align-items: center; gap: 8px; }
+        .diagram-box-title i { color: var(--brand-blue); font-size: 20px; }
+        .diagram-box svg { width: 100%; height: auto; display: block; }
+
+        /* === Running Case Thread === */
+        .case-thread { background: linear-gradient(135deg, #0f172a, #1e293b); color: #fff; border-radius: 18px; padding: 28px; margin: 30px 0; border-right: 6px solid #38bdf8; box-shadow: 0 15px 35px rgba(15,23,42,0.15); }
+        .case-thread-badge { display: inline-flex; align-items: center; gap: 6px; background: #38bdf8; color: #0f172a; font-weight: 900; font-size: 13px; padding: 6px 14px; border-radius: 20px; margin-bottom: 14px; }
+        .case-thread h4 { font-size: 19px; font-weight: 900; margin-bottom: 10px; color: #fff; }
+        .case-thread p { color: #cbd5e1; font-size: 15px; line-height: 1.85; font-weight: 600; margin-bottom: 18px; }
+        .case-thread-steps { display: flex; gap: 10px; flex-wrap: wrap; }
+        .ct-step { flex: 1; min-width: 115px; text-align: center; padding: 10px 8px; border-radius: 10px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); font-size: 12.5px; font-weight: 800; color: #94a3b8; transition: 0.3s; }
+        .ct-step.done { background: rgba(56,189,248,0.15); border-color: #38bdf8; color: #7dd3fc; }
+        .ct-step.current { background: #38bdf8; border-color: #38bdf8; color: #0f172a; box-shadow: 0 0 20px rgba(56,189,248,0.4); }
+
+        /* === Decision Exercise === */
+        .box-decision { background: #eef2ff; border: 1px solid #c7d2fe; border-right: 5px solid #6366f1; }
+        .box-decision .box-title { color: #4338ca; }
+        .decision-options { display: flex; flex-direction: column; gap: 10px; margin-top: 14px; }
+        .decision-btn { text-align: right; padding: 13px 16px; border-radius: 10px; border: 2px solid #c7d2fe; background: #fff; font-weight: 700; font-size: 16px; color: var(--text-dark); cursor: pointer; transition: 0.25s; font-family: 'Cairo', sans-serif; }
+        .decision-btn:hover:not(:disabled) { border-color: #6366f1; background: #f5f3ff; transform: translateX(-2px); }
+        .decision-btn:disabled { cursor: not-allowed; opacity: 0.8; }
+        .decision-btn.correct { background: #dcfce7; border-color: #16a34a; color: #15803d; }
+        .decision-btn.incorrect { background: #fee2e2; border-color: #dc2626; color: #b91c1c; }
+        .decision-feedback { display: none; margin-top: 14px; padding: 15px 18px; border-radius: 10px; background: #fff; border: 1px solid #c7d2fe; font-size: 16px; line-height: 1.85; color: var(--text-dark); }
+        .decision-feedback.show { display: block; animation: fadeInTab 0.4s ease; }
+
+        /* === Key Takeaways === */
+        .takeaways-box { background: linear-gradient(135deg, #ecfdf5, #f0fdf4); border: 1px solid #bbf7d0; border-radius: 16px; padding: 28px; margin: 30px 0; }
+        .takeaways-box h3 { font-size: 19px; font-weight: 900; color: #047857; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+        .takeaways-list { list-style: none; display: flex; flex-direction: column; gap: 12px; margin: 0; }
+        .takeaways-list li { display: flex; align-items: flex-start; gap: 10px; font-size: 15px; font-weight: 700; color: var(--text-dark); line-height: 1.75; }
+        .takeaways-list li i { color: #10b981; font-size: 21px; flex-shrink: 0; margin-top: 2px; }
+
+        .case-study-banner { background: linear-gradient(135deg, var(--primary-navy), #1e293b); color: white; padding: 20px 30px; border-radius: 16px; margin-bottom: 25px; display: flex; align-items: center; gap: 20px; border-right: 8px solid #38bdf8; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        
+        p, li { font-size: 16.5px; line-height: 1.9; color: var(--text-muted); font-weight: 600; }
+        ul, ol { margin-right: 25px; margin-bottom: 20px; }
+        li { margin-bottom: 12px; }
+
+        .table-wrapper { overflow-x: auto; margin: 25px 0; border-radius: 12px; border: 1px solid var(--border-color); box-shadow: 0 4px 15px rgba(0,0,0,0.02); }
+        .data-table { width: 100%; border-collapse: collapse; background: var(--white); text-align: right; }
+        .data-table th, .data-table td { padding: 18px; border-bottom: 1px solid var(--border-color); }
+        .data-table th { background-color: var(--light-blue); color: var(--brand-blue); font-weight: 900; font-size: 16.5px; }
+        .data-table tr:hover { background-color: #f8fafc; }
+
+        .status-pill { padding: 6px 14px; border-radius: 8px; font-size: 14px; font-weight: 800; display: inline-block; transition: 0.3s; }
+        .pill-critical { background: #fee2e2; color: #b91c1c; border: 1px solid #fca5a5; }
+        .pill-high { background: #ffedd5; color: #c2410c; border: 1px solid #fdba74; }
+        .pill-medium { background: #fef9c3; color: #a16207; border: 1px solid #fde047; }
+        .pill-low { background: #dcfce7; color: #15803d; border: 1px solid #86efac; }
+
+        .matrix-wrapper-compact { display: flex; gap: 20px; align-items: center; justify-content: center; flex-wrap: wrap; background: #fff; padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); border: 1px solid #e2e8f0; margin-top: 15px; }
+        .risk-matrix-grid { display: grid; grid-template-columns: repeat(5, 55px); gap: 6px; }
+        .matrix-cell { width: 55px; height: 55px; border-radius: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; font-weight: 900; color: #fff; font-size: 14px; cursor: pointer; transition: 0.25s; border: 2px solid transparent; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .matrix-cell:hover { transform: scale(1.08); filter: brightness(1.1); z-index: 2; }
+        .matrix-cell.selected { border-color: #0f172a; box-shadow: 0 0 10px rgba(15, 23, 42, 0.4); transform: scale(1.1); }
+        .matrix-cell span { font-size: 9.5px; opacity: 0.9; font-weight: 700; margin-top: 1px; }
+        
+        .m-green { background-color: #22c55e; }
+        .m-yellow { background-color: #eab308; }
+        .m-orange { background-color: #f97316; }
+        .m-red { background-color: #ef4444; }
+
+        .carousel-container { position: relative; width: 100%; border-radius: 20px; background: var(--white); box-shadow: 0 15px 50px rgba(0,0,0,0.06); border: 1px solid var(--border-color); overflow: hidden; margin-top: 20px; }
+        .carousel-header { background: var(--light-blue); padding: 20px 30px; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; }
+        .carousel-header h3 { font-size: 22px; font-weight: 900; color: var(--primary-navy); margin: 0; }
+        .carousel-step-badge { background: var(--brand-blue); color: white; padding: 6px 15px; border-radius: 20px; font-weight: 800; font-size: 14px; }
+        .carousel-track-wrapper { overflow: hidden; position: relative; }
+        .carousel-track { display: flex; transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1); }
+        .carousel-slide { min-width: 100%; padding: 40px; box-sizing: border-box; }
+        .carousel-controls { padding: 20px 40px; border-top: 1px solid var(--border-color); background: #f8fafc; display: flex; justify-content: space-between; align-items: center; }
+        .btn-carousel { background: var(--brand-blue); color: white; border: none; padding: 12px 25px; border-radius: 10px; cursor: pointer; display: flex; align-items: center; gap: 8px; font-weight: 800; font-size: 16px; transition: 0.3s; box-shadow: 0 4px 10px rgba(37, 99, 235, 0.2); }
+        .btn-carousel:hover:not(:disabled) { background: var(--brand-blue-hover); transform: translateY(-2px); }
+        .btn-carousel:disabled { background: #94a3b8; cursor: not-allowed; box-shadow: none; opacity: 0.7; }
+        .carousel-indicators { display: flex; gap: 10px; justify-content: center; }
+        .indicator { width: 12px; height: 12px; border-radius: 50%; background: #cbd5e1; cursor: pointer; transition: 0.4s; }
+        .indicator.active { background: var(--brand-blue); width: 30px; border-radius: 6px; }
+
+        .mega-case-card { background: #fafbfd; border: 1px solid var(--border-color); border-radius: 16px; padding: 30px; margin-bottom: 25px; border-right: 8px solid var(--brand-blue); transition: 0.3s; }
+        .mega-case-card:hover { box-shadow: 0 10px 25px rgba(0,0,0,0.05); transform: translateX(-5px); }
+        .mega-case-card.electrical { border-right-color: #f59e0b; }
+        .mega-case-card.contracts { border-right-color: #ef4444; }
+        .mega-case-card.finance { border-right-color: #10b981; }
+        .mega-case-card.permits { border-right-color: #8b5cf6; }
+
+        .exam-link-btn { background: linear-gradient(135deg, var(--brand-blue), #1e40af); color: var(--white); border: none; padding: 20px 45px; font-size: 22px; font-weight: 900; border-radius: 15px; cursor: pointer; display: inline-flex; align-items: center; gap: 12px; margin-top: 20px; transition: 0.4s; text-decoration: none; box-shadow: 0 15px 35px rgba(37, 99, 235, 0.3); }
+        .exam-link-btn:hover { transform: translateY(-5px); box-shadow: 0 20px 45px rgba(37, 99, 235, 0.5); }
+
+        .faq-container { display: flex; flex-direction: column; gap: 15px; margin-bottom: 40px; }
+        .faq-item { background: var(--white); border: 1px solid var(--border-color); border-radius: 12px; overflow: hidden; transition: all 0.3s ease; }
+        .faq-item.active { border-color: var(--brand-blue); box-shadow: 0 10px 25px rgba(37, 99, 235, 0.1); }
+        .faq-question { padding: 20px 25px; font-weight: 900; font-size: 18px; color: var(--primary-navy); cursor: pointer; display: flex; justify-content: space-between; align-items: center; background: #f8fafc; transition: background 0.3s; }
+        .faq-question:hover { background: var(--light-blue); color: var(--brand-blue); }
+        .faq-question i.icon-main { margin-left: 12px; color: var(--brand-blue); font-size: 24px; }
+        .faq-answer { padding: 0 25px; max-height: 0; overflow: hidden; transition: max-height 0.4s ease, padding 0.4s ease; background: var(--white); }
+        .faq-item.active .faq-answer { padding: 25px 25px; max-height: 2500px; border-top: 1px solid var(--border-color); }
+        .faq-answer ul { margin-right: 25px; margin-bottom: 0; }
+        .faq-answer li { margin-bottom: 12px; font-size: 16px; }
+        .faq-icon-arrow { font-size: 26px; color: var(--text-muted); transition: transform 0.4s ease; }
+        .faq-item.active .faq-icon-arrow { transform: rotate(180deg); color: var(--brand-blue); }
+
+        .reference-card { background: var(--white); border: 1px solid #e2e8f0; border-radius: 16px; padding: 25px; margin-bottom: 20px; display: flex; align-items: center; gap: 20px; transition: all 0.3s; box-shadow: 0 4px 15px rgba(0,0,0,0.02); }
+        .reference-card:hover { transform: translateY(-5px); border-color: #cbd5e1; box-shadow: 0 10px 30px rgba(0,0,0,0.08); }
+        .ref-icon { font-size: 35px; color: var(--brand-blue); background: var(--light-blue); padding: 15px; border-radius: 12px; }
+        .ref-details h4 { font-size: 19px; color: var(--primary-navy); margin-bottom: 8px; font-weight: 900; }
+        .ref-details p { font-size: 16px; color: var(--text-muted); margin: 0; line-height: 1.7; }
+
+        @media (max-width: 768px) {
+            .menu-toggle { display: block; }
+            .sidebar { position: fixed; right: -380px; height: 100vh; max-width: 85vw; }
+            .sidebar.open { right: 0; }
+            .main-content { padding: 80px 20px 40px; }
+            .content-header span { font-size: 14px; }
+            .content-header .ch-crumb { display: none; }
+            .back-to-top { bottom: 20px; left: 20px; width: 44px; height: 44px; font-size: 20px; }
+            .carousel-controls { flex-direction: column; gap: 15px; }
+            .carousel-indicators { order: -1; margin-bottom: 15px; }
+            .timeline { flex-wrap: wrap; gap: 20px; justify-content: center; }
+            .timeline::before { display: none; }
+            .tl-line { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="page-transition-bar" id="pageTransitionBar"></div>
+    <div class="sidebar-backdrop" id="sidebarBackdrop" onclick="toggleMobileMenu()"></div>
+
+    <button class="menu-toggle" onclick="toggleMobileMenu()" aria-label="فتح القائمة"><i class='bx bx-menu'></i></button>
+
+    <div class="sidebar" id="mainSidebar">
+        <div class="sidebar-header">
+            <img src="logo.jpg" alt="BA Academy Logo" onerror="this.src='https://via.placeholder.com/130?text=BA+Academy'">
+            <h2>الدورة الشاملة في إدارة المخاطر</h2>
+            <p>Risk Management Course</p>
+            <div class="progress-container">
+                <div class="progress-header"><span>نسبة الإنجاز</span><span id="progress-text">10%</span></div>
+                <div class="progress-track"><div class="progress-fill" id="progress-bar"></div></div>
+            </div>
+        </div>
+        
+        <ul class="menu-items">
+            <!-- تم إضافة الكلاس active للتبويب الأول ليكون هو الافتراضي -->
+            <li id="btn_tab1" class="menu-item active" onclick="switchTab('tab1')">
+                <i class='bx bx-play-circle tab-icon'></i>
+                <div class="tab-text"><span class="ar-title">1. مدخل ومفاهيم المخاطر</span><span class="en-title">Introduction & Concepts</span></div>
+            </li>
+            <li id="btn_tab2" class="menu-item" onclick="switchTab('tab2')">
+                <i class='bx bx-cubes tab-icon'></i>
+                <div class="tab-text"><span class="ar-title">2. تحديد المخاطر (Identify)</span><span class="en-title">Identify Risks</span></div>
+            </li>
+            <li id="btn_tab3" class="menu-item" onclick="switchTab('tab3')">
+                <i class='bx bx-line-chart tab-icon'></i>
+                <div class="tab-text"><span class="ar-title">3. تحليل وتقييم المخاطر</span><span class="en-title">Analyze & Assess Risks</span></div>
+            </li>
+            <li id="btn_tab4" class="menu-item" onclick="switchTab('tab4')">
+                <i class='bx bx-shield-quarter tab-icon'></i>
+                <div class="tab-text"><span class="ar-title">4. تخطيط الاستجابة والحلول</span><span class="en-title">Plan Risk Responses</span></div>
+            </li>
+            
+            <li id="btn_tab5hub" class="menu-item" onclick="switchTab('tab5hub')">
+                <i class='bx bx-folder-open tab-icon'></i>
+                <div class="tab-text"><span class="ar-title">5. التطبيقات والمراجع</span><span class="en-title">Applications & References</span></div>
+            </li>
+
+            <!-- إزالة الـ active من الاختبار النهائي -->
+            <li id="btn_tab7" class="menu-item" onclick="switchTab('tab7'); window.open('50 PMI Question.html', '_blank');">
+                <i class='bx bx-edit-alt tab-icon'></i>
+                <div class="tab-text"><span class="ar-title">6. الاختبار النهائي (50 سؤال)</span><span class="en-title">Final Exam</span></div>
+            </li>
+            <li id="risk_tab_trigger_new" class="menu-item" onclick="openTool()" style="background: linear-gradient(135deg, #1e3a8a, #1d4ed8); border: 2px solid #3b82f6;">
+                <i class='bx bx-gift tab-icon' style="background: rgba(255,255,255,0.2); color: white; font-size: 24px;"></i>
+                <div class="tab-text">
+                    <span class="ar-title" style="color: #ffffff; font-size: 15.5px; font-weight: 900;">🎁 هدية الأكاديمية للمتدرب</span>
+                    <span class="en-title" style="color: #bfdbfe; font-weight: 800;">Interactive Register Portal</span>
+                </div>
+            </li>
+            <li id="btn_tab8" class="menu-item" onclick="switchTab('tab8')">
+                <i class='bx bx-check-shield tab-icon'></i>
+                <div class="tab-text"><span class="ar-title">7. الخاتمة وإتمام الدورة</span><span class="en-title">Conclusion</span></div>
+            </li>
+        </ul>
+    </div>
+
+    <div class="main-content" id="mainContentArea" onclick="closeMobileMenuOnBodyClick()">
+
+        <div class="content-header" id="contentHeader">
+            <i class='bx bx-play-circle' id="chIcon"></i>
+            <span id="chTitle">مدخل ومفاهيم المخاطر</span>
+            <span class="ch-crumb" id="chCrumb">القسم 1 من 8</span>
+        </div>
+        
+        <!-- التبويب الأول مضاف له الكلاس active ليظهر أولاً -->
+        <div id="tab1" class="tab-content active">
+            <div class="roadmap-container reveal">
+                <h3 class="roadmap-title"><i class='bx bx-map-alt'></i> خريطة رحلة الكورس (Course Roadmap)</h3>
+                <div class="timeline">
+                    <div class="tl-step active"><span>1</span><p>مفاهيم المخاطر</p></div>
+                    <div class="tl-line"></div>
+                    <div class="tl-step"><span>2</span><p>تحديد المخاطر</p></div>
+                    <div class="tl-line"></div>
+                    <div class="tl-step"><span>3</span><p>التحليل والتقييم</p></div>
+                    <div class="tl-line"></div>
+                    <div class="tl-step"><span>4</span><p>خطة الاستجابة</p></div>
+                    <div class="tl-line"></div>
+                    <div class="tl-step"><span>5</span><p>محاكاة المشروع</p></div>
+                    <div class="tl-line"></div>
+                    <div class="tl-step"><span>6</span><p>دليل المخاطر</p></div>
+                    <div class="tl-line"></div>
+                    <div class="tl-step"><span>7</span><p>الاختبار الشامل</p></div>
+                </div>
+            </div>
+
+            <div class="section-card">
+                <h2 class="main-title"><i class='bx bx-bulb'></i> 1. مدخل ومفاهيم المخاطر الأساسية</h2>
+                
+                <div class="module-progress-bar reveal">
+                    <div class="mp-text">أنت الآن في المرحلة 1 من 7 ضمن رحلة إدارة المخاطر</div>
+                    <div class="mp-track"><div class="mp-fill" style="width: 14%;"></div></div>
+                    <div class="mp-time"><i class='bx bx-time-five'></i> 10 دقائق</div>
+                </div>
+                
+                <div class="module-objective reveal">
+                    <span class="obj-tag">🎯 هدف المرحلة:</span>
+                    <p class="obj-text">بنهاية هذه الوحدة، ستفهم لماذا تفشل المشاريع، وستتمكن من التفريق بدقة بين الخطر (Risk) والمشكلة (Issue).</p>
+                </div>
+                
+                <p class="sub-title-context reveal">
+                    <strong>تخيل أنك استلمت اليوم مهام مدير مشروع لإنشاء مستشفى بـ 400 مليون ريال في الرياض... من أين ستبدأ؟</strong> هل ستبدأ بصب الخرسانة أم ستتوقع ما قد يعطل هذا الصب؟ في هذه المرحلة سنضع حجر الأساس، ونبني لغة مشتركة نفهم من خلالها كيف تتحرك المخاطر في بيئة العمل الهندسية وكيف تختلف عن مجرد المشكلات اليومية.
+                </p>
+
+                <div class="case-study-banner reveal">
+                    <i class='bx bx-building-house' style="font-size: 38px; color: #38bdf8;"></i>
+                    <div>
+                        <strong style="font-size: 18px;">المشروع التطبيقي المعتمد للدورة:</strong><br>
+                        "إنشاء وتجهيز مستشفى متكامل بسعة 500 سرير بمدينة الرياض، بميزانية تقديرية 400 مليون ريال، ومدة تنفيذ إلزامية تبلغ 24 شهراً".
+                    </div>
+                </div>
+
+                <div class="card-heading reveal">أولاً: طبيعة المخاطر الهندسية ولماذا نهتم بها؟</div>
+                <p class="reveal">
+                    المشاريع الهندسية الضخمة (Mega Projects) تمتاز بدرجة تعقيد عالية جداً؛ نظراً لتعدد التخصصات وتداخل الأنظمة (مدني، معماري، كهربائي، ميكانيكي، أنظمة تيار خفيف، وتجهيزات طبية دقيقة). أي خلل أو عدم تنسيق في أحد هذه التخصصات قد ينتج عنه سلسلة من التأخيرات والزيادات المالية الكارثية. لذلك، إدارة المخاطر هنا ليست رفاهية، بل هي صمام الأمان الفني والمالي للمشروع.
+                </p>
+
+                <div class="box box-exam reveal">
+                    <div class="box-title"><span class="exam-star"><i class='bx bx-star'></i> مهم للاختبار</span><i class='bx bx-check-double'></i> موضع سؤال اختبار (PMP/RMP Tip)</div>
+                    <p>في الاختبارات، ركز دائماً على التفريق الجوهري: <strong>الخطر (Risk)</strong> هو حدث مستقبلي "غير مؤكد" (Uncertain Event)، بينما <strong>المشكلة (Issue)</strong> هي خطر وقع بالفعل وأصبحت احتماليته 100%. إذا جاءك في السؤال أن "المورد اتصل وأخبرك بتأخر الشحنة"، فهذا <strong>Issue</strong> يوضع في الـ (Issue Log) وليس في الـ (Risk Register).</p>
+                </div>
+
+                <div class="diagram-box reveal">
+                    <div class="diagram-box-title"><i class='bx bx-git-branch'></i> مخطط قرار سريع: هل هذا Risk أم Issue؟</div>
+                    <svg viewBox="0 0 820 400" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="290" y="20" width="240" height="70" rx="14" fill="var(--light-blue)" stroke="var(--brand-blue)" stroke-width="2"/>
+                        <text x="410" y="48" text-anchor="middle" font-size="14" font-weight="900" fill="var(--primary-navy)">هل الحدث وقع بالفعل الآن؟</text>
+                        <text x="410" y="68" text-anchor="middle" font-size="12" font-weight="700" fill="var(--text-muted)">(احتماليته أصبحت 100%)</text>
+
+                        <line x1="410" y1="90" x2="620" y2="150" stroke="#94a3b8" stroke-width="2"/>
+                        <polygon points="620,150 610,142 616,158" fill="#94a3b8"/>
+                        <text x="545" y="112" font-size="13" font-weight="900" fill="#dc2626">نعم</text>
+
+                        <line x1="410" y1="90" x2="200" y2="150" stroke="#94a3b8" stroke-width="2"/>
+                        <polygon points="200,150 210,142 204,158" fill="#94a3b8"/>
+                        <text x="255" y="112" font-size="13" font-weight="900" fill="#16a34a">لا</text>
+
+                        <rect x="510" y="150" width="230" height="75" rx="14" fill="#fef2f2" stroke="#dc2626" stroke-width="2"/>
+                        <text x="625" y="180" text-anchor="middle" font-size="14" font-weight="900" fill="#b91c1c">Issue (مشكلة)</text>
+                        <text x="625" y="200" text-anchor="middle" font-size="12" font-weight="700" fill="#7f1d1d">سجّلها في Issue Log</text>
+                        <text x="625" y="216" text-anchor="middle" font-size="12" font-weight="700" fill="#7f1d1d">وعالجها فوراً</text>
+
+                        <rect x="80" y="150" width="240" height="75" rx="14" fill="var(--light-blue)" stroke="var(--brand-blue)" stroke-width="2"/>
+                        <text x="200" y="178" text-anchor="middle" font-size="13.5" font-weight="900" fill="var(--primary-navy)">هل هو حدث مستقبلي</text>
+                        <text x="200" y="196" text-anchor="middle" font-size="13.5" font-weight="900" fill="var(--primary-navy)">وغير مؤكد الحدوث؟</text>
+
+                        <line x1="140" y1="225" x2="90" y2="285" stroke="#94a3b8" stroke-width="2"/>
+                        <polygon points="90,285 96,275 102,288" fill="#94a3b8"/>
+                        <text x="70" y="255" font-size="13" font-weight="900" fill="#16a34a">نعم</text>
+
+                        <line x1="260" y1="225" x2="330" y2="285" stroke="#94a3b8" stroke-width="2"/>
+                        <polygon points="330,285 318,280 326,292" fill="#94a3b8"/>
+                        <text x="300" y="255" font-size="13" font-weight="900" fill="#d97706">لا</text>
+
+                        <rect x="20" y="285" width="220" height="80" rx="14" fill="#ecfdf5" stroke="#16a34a" stroke-width="2"/>
+                        <text x="130" y="313" text-anchor="middle" font-size="14" font-weight="900" fill="#15803d">Risk (خطر)</text>
+                        <text x="130" y="333" text-anchor="middle" font-size="12" font-weight="700" fill="#166534">سجّله في Risk Register</text>
+                        <text x="130" y="349" text-anchor="middle" font-size="12" font-weight="700" fill="#166534">وابدأ تحليله وتقييمه</text>
+
+                        <rect x="290" y="285" width="230" height="80" rx="14" fill="#fffbeb" stroke="#f59e0b" stroke-width="2"/>
+                        <text x="405" y="313" text-anchor="middle" font-size="13.5" font-weight="900" fill="#b45309">على الأرجح Assumption</text>
+                        <text x="405" y="333" text-anchor="middle" font-size="12" font-weight="700" fill="#92400e">أو Constraint</text>
+                        <text x="405" y="349" text-anchor="middle" font-size="12" font-weight="700" fill="#92400e">راجع تعريف كل مصطلح أعلاه</text>
+                    </svg>
+                </div>
+
+                <div class="box box-decision reveal">
+                    <div class="box-title"><i class='bx bx-flag'></i> تحقّق سريع قبل ما نكمل</div>
+                    <p><strong>الموقف:</strong> مهندس التربة أخبرك أن نتائج فحص التربة النهائية "متوقع" تتأخر أسبوعين عن الجدول بسبب ازدحام المعمل. هل ده Risk ولا Issue؟</p>
+                    <div class="decision-options">
+                        <button class="decision-btn" data-correct="true" onclick="handleDecision(this)">Risk — لسه ماوقعش، ده احتمال مستقبلي</button>
+                        <button class="decision-btn" data-correct="false" onclick="handleDecision(this)">Issue — لأنه مؤكد إنه هيتأخر</button>
+                    </div>
+                    <div class="decision-feedback">
+                        <p><strong>✅ الإجابة الصحيحة: Risk.</strong> كلمة "متوقع" هنا مهمة — التأخير لسه ماوقعش فعلياً، فهو حدث مستقبلي غير مؤكد 100% (المعمل ممكن يسرّع). يُسجَّل في Risk Register، ولو التأخير وقع فعلاً وأصبح واقعاً محدداً، عندها فقط ينتقل لـ Issue Log.</p>
+                    </div>
+                </div>
+
+                <div class="card-heading reveal">ثانياً: مصطلحات التأسيس (لا تخلط بينها أبداً)</div>
+                <p class="reveal">من أهم أسباب فشل التخطيط هو الخلط بين المصطلحات الأساسية. هذا الجدول يوضح الفروقات الجوهرية بأمثلة مباشرة من مشروع المستشفى:</p>
+                <div class="table-wrapper reveal">
+                    <table class="data-table">
+                        <thead>
+                            <tr><th>المصطلح</th><th>التعريف الدقيق</th><th>مثال حي من مشروع المستشفى</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><strong>Risk (مخاطرة)</strong></td><td>حدث محتمل مستقبلي، غير مؤكد الوقوع، إذا وقع يؤثر سلباً أو إيجاباً على أهداف المشروع.</td><td>احتمال تأخر وصول المولدات الاحتياطية من بلد المنشأ بسبب أزمة سلاسل الإمداد العالمية.</td></tr>
+                            <tr><td><strong>Issue (قضية/مشكلة)</strong></td><td>حدث وقع بالفعل في الوقت الحالي (احتمالية حدوثه أصبحت 100%)، يتطلب حلاً فورياً.</td><td>المولدات الاحتياطية وصلت إلى الموقع اليوم بالفعل وبها تلفيات جسيمة في لوحة التحكم.</td></tr>
+                            <tr><td><strong>Assumption (افتراض)</strong></td><td>أمر نفترض صحته أو حدوثه في مرحلة التخطيط دون دليل قاطع لنسهل عملية التصميم.</td><td>افتراض أن قوة تحمل التربة مطابقة للتقرير المبدئي ولن نحتاج لخوازيق عميقة.</td></tr>
+                            <tr><td><strong>Constraint (قيد)</strong></td><td>محدد خارجي أو داخلي مفروض على المشروع لا يمكن تجاوزه أو التلاعب به.</td><td>تاريخ افتتاح المستشفى الإلزامي المحدد من وزارة الصحة قبل نهاية الربع الأخير.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="card-heading reveal">ثالثاً: تصنيفات المخاطر في البيئة الهندسية</div>
+                <div class="reveal">
+                    <p>تنقسم المخاطر في مشاريعنا الهندسية إلى أربعة تصنيفات رئيسية يجب على كل مهندس حصرها:</p>
+                    <ul>
+                        <li><strong>المخاطر الفنية والتصميمية (Technical & Design):</strong> أخطاء التصميم، عدم مطابقة الأنظمة للمواصفات المحلية، وتداخل الخدمات (MEP Clashes).</li>
+                        <li><strong>مخاطر إدارة المشروع (Project Management):</strong> ضعف التخطيط الزمني، نقص العمالة الماهرة، أو ضعف الرقابة.</li>
+                        <li><strong>المخاطر التجارية والتعاقدية (Commercial & Contractual):</strong> تعثر الموردين، تقلبات أسعار المواد الخام، وشروط العقود المجحفة.</li>
+                        <li><strong>المخاطر الخارجية والبيئية (External & Environmental):</strong> تغيير القوانين والتشريعات المحلية، أو تأخر تراخيص الدفاع المدني.</li>
+                    </ul>
+                </div>
+
+                <div class="card-heading reveal">رابعاً: مستويات التعامل مع المخاطر (عقلية المؤسسة)</div>
+                <div class="reveal">
+                    <p>قبل أن نبدأ بتحليل أي خطر، يجب أن نفهم أولاً درجة تقبل إدارة المشروع والمالك للمخاطر:</p>
+                    <ul>
+                        <li><strong>شهية المخاطر (Risk Appetite):</strong> درجة الاستعداد والترحيب بقبول المخاطر طمعاً في تحقيق عوائد أو فرص أعلى.</li>
+                        <li><strong>القدرة على تحمل المخاطر (Risk Tolerance):</strong> المدى الأقصى من التذبذب أو الانحراف المقبول الذي يمكن للمشروع تحمله دون أن ينهار.</li>
+                        <li><strong>عتبة المخاطر (Risk Threshold):</strong> النقطة المحددة بدقة التي إذا تجاوزها الخطر، يُجبر فريق العمل على التدخل الفوري.</li>
+                    </ul>
+                </div>
+
+                <div class="box box-tip reveal">
+                    <div class="box-title"><i class='bx bx-bulb'></i> نصيحة مدير المشروع (PM Tip)</div>
+                    <p>تعاملك الفعال مع الـ Risk يتطلب عقلية "استباقية" (Proactive). المدير المتميز لا ينتظر وقوع المشكلة ليبدأ بالبحث عن الحل، بل يضع المانع لعدم حدوثها، أو يجهز الخطة البديلة لتكون جاهزة للتنفيذ الفوري.</p>
+                </div>
+
+                <div class="box box-mistake reveal">
+                    <div class="box-title"><i class='bx bx-error'></i> أخطاء شائعة في الواقع العملي</div>
+                    <ul>
+                        <li><strong>خلط المفاهيم:</strong> تسجيل المشاكل اليومية الحالية (Issues) في سجل المخاطر ومعاملتها كأخطار مستقبلية.</li>
+                        <li><strong>العشوائية في الافتراضات:</strong> وضع افتراضات غير مدروسة أثناء التصميم دون تسجيلها ومتابعتها.</li>
+                    </ul>
+                </div>
+
+                <div class="box box-nextstep reveal">
+                    <div class="box-title"><i class='bx bx-calendar-check'></i> ماذا تفعل غداً في موقعك؟</div>
+                    <p>اطلب من مهندسي التخصصات المختلفة بالموقع عقد جلسة مصغرة لمدة ربع ساعة فقط، واطلب من كل مهندس سرد "افتراضين" استند إليها في مخططات ورشته، وتأكد من مدى واقعيتها.</p>
+                </div>
+
+                <div class="box box-info reveal">
+                    <div class="box-title"><i class='bx bx-layer-plus'></i> معلومة إضافية متقدمة (Advanced Info)</div>
+                    <p>تزداد أهمية إدارة المخاطر في مشاريع التكنولوجيا الحرجة التي تندمج مع المشاريع الهندسية؛ مثل بناء <strong>مراكز البيانات (Data Centers)</strong> للمستشفيات، حيث إن الامتثال لمعايير <em>Uptime Institute</em> يفرض قيوداً صارمة جداً على تصميم الأنظمة.</p>
+                </div>
+
+                <div class="case-thread reveal">
+                    <span class="case-thread-badge"><i class='bx bx-time-five'></i> الأسبوع 1 من مشروع المستشفى</span>
+                    <h4>قصة خطر واحد ستتابعه عبر الفصول الأربعة القادمة</h4>
+                    <p>في اجتماع تأسيس المشروع، أشار مهندس الكهرباء بشكل عابر إلى "قلقه" من تأخر توريد المولدات الاحتياطية من الخارج. في هذه المرحلة المبكرة، الملاحظة لسه مجرد شعور غير موثّق — لا هي Issue (لأنها لم تقع بعد)، ولا هي مسجّلة رسمياً كـ Risk. ستشاهد في الفصل القادم كيف تتحول هذه الملاحظة العابرة إلى بند رسمي في سجل المخاطر.</p>
+                    <div class="case-thread-steps">
+                        <div class="ct-step current">1. ظهور الخطر</div>
+                        <div class="ct-step">2. التحديد الرسمي</div>
+                        <div class="ct-step">3. التحليل</div>
+                        <div class="ct-step">4. الاستجابة والنتيجة</div>
+                    </div>
+                </div>
+
+                <div class="box box-decision reveal">
+                    <div class="box-title"><i class='bx bx-flag'></i> توقف: ماذا ستفعل؟</div>
+                    <p><strong>الموقف:</strong> أحد المهندسين بالموقع أخبرك أن شاحنة توريد حديد التسليح تعطلت فعلياً في الطريق، وستتأخر يوماً كاملاً عن موعدها. أين تسجّل هذا الحدث؟</p>
+                    <div class="decision-options">
+                        <button class="decision-btn" data-correct="false" onclick="handleDecision(this)">في سجل المخاطر (Risk Register) كخطر جديد</button>
+                        <button class="decision-btn" data-correct="true" onclick="handleDecision(this)">في سجل المشكلات (Issue Log) لأنه وقع بالفعل</button>
+                        <button class="decision-btn" data-correct="false" onclick="handleDecision(this)">لا تسجّله لأنه بسيط ومؤقت</button>
+                    </div>
+                    <div class="decision-feedback">
+                        <p><strong>✅ الإجابة الصحيحة:</strong> أي حدث احتماليته أصبحت 100% (وقع بالفعل) يُسجَّل كـ Issue وليس Risk، بغض النظر عن حجم تأثيره. تسجيله في المكان الصحيح يبقي سجل المخاطر مخصصاً فقط للأحداث المستقبلية غير المؤكدة، ويمنع اختلاط الأولويات.</p>
+                    </div>
+                </div>
+
+                <div class="takeaways-box reveal">
+                    <h3><i class='bx bx-badge-check'></i> خلاصة الفصل في 5 نقاط</h3>
+                    <ul class="takeaways-list">
+                        <li><i class='bx bx-check-circle'></i> الخطر (Risk) حدث مستقبلي غير مؤكد، أما المشكلة (Issue) فاحتماليتها أصبحت 100%.</li>
+                        <li><i class='bx bx-check-circle'></i> الافتراض (Assumption) نفترض صحته دون دليل قاطع، والقيد (Constraint) محدد لا يمكن تجاوزه.</li>
+                        <li><i class='bx bx-check-circle'></i> المخاطر الهندسية تُصنَّف لأربعة أنواع: فنية، إدارة مشروع، تعاقدية، وخارجية بيئية.</li>
+                        <li><i class='bx bx-check-circle'></i> شهية المخاطر، والقدرة على التحمل، وعتبة المخاطر ثلاثة مفاهيم مختلفة تحدد عقلية المؤسسة تجاه المخاطر.</li>
+                        <li><i class='bx bx-check-circle'></i> العقلية الاستباقية (Proactive) هي جوهر إدارة المخاطر الناجحة، وليست ردة فعل بعد وقوع الضرر.</li>
+                    </ul>
+                </div>
+
+                <div class="capability-box reveal">
+                    <div class="capability-title"><i class='bx bx-badge-check'></i> أنت الآن تعلمت الآتي:</div>
+                    <div class="capability-list">
+                        <div class="capability-item"><i class='bx bx-check-circle'></i> التفريق الفوري بين Risk وIssue في أي موقف ميداني</div>
+                        <div class="capability-item"><i class='bx bx-check-circle'></i> التمييز بين Assumption وConstraint دون خلط بينهما</div>
+                        <div class="capability-item"><i class='bx bx-check-circle'></i> تصنيف أي خطر هندسي ضمن 4 فئات رئيسية</div>
+                        <div class="capability-item"><i class='bx bx-check-circle'></i> قراءة عقلية المؤسسة تجاه المخاطر عبر Appetite/Tolerance/Threshold</div>
+                    </div>
+                </div>
+
+                <div class="diagram-box reveal">
+                    <div class="diagram-box-title"><i class='bx bx-sitemap'></i> خريطة ذهنية: مفاهيم المخاطر الأساسية</div>
+                    <svg viewBox="0 0 860 380" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="350" y="150" width="160" height="60" rx="30" fill="var(--brand-blue)" stroke="var(--primary-navy)" stroke-width="2"/>
+                        <text x="430" y="186" text-anchor="middle" font-size="15" font-weight="900" fill="#fff">مفاهيم المخاطر</text>
+
+                        <line x1="350" y1="170" x2="170" y2="70" stroke="#94a3b8" stroke-width="2"/>
+                        <rect x="20" y="40" width="230" height="60" rx="14" fill="#eff6ff" stroke="var(--brand-blue)" stroke-width="2"/>
+                        <text x="135" y="65" text-anchor="middle" font-size="13" font-weight="900" fill="var(--primary-navy)">Risk vs Issue</text>
+                        <text x="135" y="83" text-anchor="middle" font-size="11" font-weight="700" fill="var(--text-muted)">مستقبلي غير مؤكد / وقع بالفعل</text>
+
+                        <line x1="350" y1="180" x2="150" y2="180" stroke="#94a3b8" stroke-width="2"/>
+                        <rect x="20" y="150" width="220" height="60" rx="14" fill="#fffbeb" stroke="#f59e0b" stroke-width="2"/>
+                        <text x="130" y="175" text-anchor="middle" font-size="13" font-weight="900" fill="#92400e">Assumption / Constraint</text>
+                        <text x="130" y="193" text-anchor="middle" font-size="11" font-weight="700" fill="#92400e">افتراض غير مؤكد / قيد ملزم</text>
+
+                        <line x1="350" y1="195" x2="170" y2="300" stroke="#94a3b8" stroke-width="2"/>
+                        <rect x="20" y="270" width="240" height="70" rx="14" fill="#f5f3ff" stroke="#8b5cf6" stroke-width="2"/>
+                        <text x="140" y="295" text-anchor="middle" font-size="13" font-weight="900" fill="#6d28d9">تصنيفات المخاطر</text>
+                        <text x="140" y="313" text-anchor="middle" font-size="10.5" font-weight="700" fill="#6d28d9">فنية · إدارية · تعاقدية · خارجية</text>
+                        <text x="140" y="329" text-anchor="middle" font-size="10.5" font-weight="700" fill="#6d28d9">(4 تصنيفات رئيسية)</text>
+
+                        <line x1="510" y1="170" x2="690" y2="70" stroke="#94a3b8" stroke-width="2"/>
+                        <rect x="610" y="40" width="230" height="60" rx="14" fill="#ecfdf5" stroke="#10b981" stroke-width="2"/>
+                        <text x="725" y="65" text-anchor="middle" font-size="13" font-weight="900" fill="#047857">شهية المخاطر</text>
+                        <text x="725" y="83" text-anchor="middle" font-size="11" font-weight="700" fill="#047857">Risk Appetite</text>
+
+                        <line x1="510" y1="180" x2="710" y2="180" stroke="#94a3b8" stroke-width="2"/>
+                        <rect x="620" y="150" width="220" height="60" rx="14" fill="#ecfdf5" stroke="#10b981" stroke-width="2"/>
+                        <text x="730" y="175" text-anchor="middle" font-size="13" font-weight="900" fill="#047857">القدرة على التحمل</text>
+                        <text x="730" y="193" text-anchor="middle" font-size="11" font-weight="700" fill="#047857">Risk Tolerance</text>
+
+                        <line x1="510" y1="195" x2="690" y2="300" stroke="#94a3b8" stroke-width="2"/>
+                        <rect x="600" y="270" width="240" height="60" rx="14" fill="#ecfdf5" stroke="#10b981" stroke-width="2"/>
+                        <text x="720" y="295" text-anchor="middle" font-size="13" font-weight="900" fill="#047857">عتبة المخاطر</text>
+                        <text x="720" y="313" text-anchor="middle" font-size="11" font-weight="700" fill="#047857">Risk Threshold</text>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <div id="tab2" class="tab-content">
+            <div class="section-card">
+                <h2 class="main-title"><i class='bx bx-refresh'></i> 2. تحديد وإعداد نظام المخاطر (Identify Risks)</h2>
+                
+                <div class="module-progress-bar reveal">
+                    <div class="mp-text">أنت الآن في المرحلة 2 من 7 ضمن رحلة إدارة المخاطر</div>
+                    <div class="mp-track"><div class="mp-fill" style="width: 28%;"></div></div>
+                    <div class="mp-time"><i class='bx bx-time-five'></i> 9 دقائق</div>
+                </div>
+
+                <div class="module-objective reveal">
+                    <span class="obj-tag">🎯 هدف المرحلة:</span>
+                    <p class="obj-text">بنهاية هذه الوحدة، ستتعرف على العمليات السبع لإدارة المخاطر (مع ترجمتها الإنجليزية المعتمدة من PMI) وكيفية تأسيس إطار العمل واكتشاف المخاطر مبكراً.</p>
+                </div>
+
+                <p class="sub-title-context reveal">
+                    <strong>تخيل أن فريقك بدأ العمل بعشوائية؛ مهندس الكهرباء يحل مشاكله بطريقته، ومهندس المدني يتجاهل تقارير التربة... كيف ستوحد جهودهم؟</strong> لكي لا يكون العمل عشوائياً، وضعت المنهجيات الاحترافية (PMBOK) 7 عمليات متسلسلة للتعامل مع المخاطر الهندسية. إليك تفصيلها مع الترجمة المعتمدة لكل عملية:
+                </p>
+
+                <div class="box box-exam reveal">
+                    <div class="box-title"><span class="exam-star"><i class='bx bx-star'></i> مهم للاختبار</span><i class='bx bx-check-double'></i> موضع سؤال اختبار (PMP/RMP Tip)</div>
+                    <p>سؤال متكرر: متى يتم تعيين "مالك الخطر" (Risk Owner)؟ الإجابة الصحيحة هي أثناء عملية <strong>"التحليل النوعي" (Perform Qualitative Risk Analysis)</strong> كترشيح مبدئي، ويتم اعتماده نهائياً في عملية <strong>"تخطيط الاستجابة" (Plan Risk Responses)</strong>.</p>
+                    <p>سؤال آخر: المخرج الرئيسي والوحيد لعملية "تحديد المخاطر" (Identify Risks) هو إنشاء <strong>(سجل المخاطر - Risk Register)</strong>.</p>
+                </div>
+
+                <div class="card-heading reveal">العمليات السبع لإدارة المخاطر (The 7 Project Risk Management Processes)</div>
+                <div class="table-wrapper reveal">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>العملية بالعربية</th>
+                                <th>الترجمة الإنجليزية المعتمدة (PMI)</th>
+                                <th>الهدف الرئيسي من العملية</th>
+                                <th>ماذا يحدث إذا تجاهلتها؟</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>1. تخطيط إدارة المخاطر</strong></td>
+                                <td><strong>Plan Risk Management</strong></td>
+                                <td>تحديد كيف ومتى وبأي ميزانية سندير المخاطر وبناء قواعد موحدة.</td>
+                                <td>جهود عشوائية وتضارب في الآراء بين الأقسام.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>2. تحديد المخاطر</strong></td>
+                                <td><strong>Identify Risks</strong></td>
+                                <td>لحصر وتسجيل كل حدث محتمل قد يؤثر على أهداف المشروع (إنتاج Risk Register).</td>
+                                <td>مفاجآت كارثية أثناء التنفيذ تلتهم الأرباح.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>3. التحليل النوعي للمخاطر</strong></td>
+                                <td><strong>Perform Qualitative Risk Analysis</strong></td>
+                                <td>لترتيب المخاطر وفق أولوياتها (الاحتمالية × الأثر).</td>
+                                <td>إضاعة وقت الفريق في مخاطر تافهة وتجاهل الحرجة.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>4. التحليل الكمي للمخاطر</strong></td>
+                                <td><strong>Perform Quantitative Risk Analysis</strong></td>
+                                <td>لتقدير التأثير المالي والزمني المتوقع للمخاطر بالأرقام وتحليل الحساسية.</td>
+                                <td>تسعير المناقصة أو الاحتياطيات بشكل عشوائي.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>5. تخطيط استجابة المخاطر</strong></td>
+                                <td><strong>Plan Risk Responses</strong></td>
+                                <td>لوضع خطط الحلول التفصيلية، وتعيين مسؤول مباشر (Risk Owner) عن كل خطر.</td>
+                                <td>تبادل الاتهامات والتهرب من المسؤولية فور وقوع الخطر.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>6. تنفيذ استجابة المخاطر</strong></td>
+                                <td><strong>Implement Risk Responses</strong></td>
+                                <td>تحويل خطط الاستجابة إلى إجراءات فعلية داخل المشروع ومتابعة تنفيذها ميدانياً.</td>
+                                <td>خطط ورقية ممتازة تظل حبيسة الأدراج بينما العمل عشوائي.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>7. مراقبة المخاطر</strong></td>
+                                <td><strong>Monitor Risks</strong></td>
+                                <td>لمتابعة فاعلية الاستجابة، ورصد مخاطر مستجدة، وإغلاق المنتهية.</td>
+                                <td>استخدام سجل مخاطر قديم لا يعبر عن واقع المشروع الحالي.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="diagram-box reveal">
+                    <div class="diagram-box-title"><i class='bx bx-git-merge'></i> مخطط تدفق: العمليات السبع لإدارة المخاطر</div>
+                    <svg viewBox="0 0 1400 200" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="1220" y="20" width="180" height="110" rx="14" fill="var(--light-blue)" stroke="var(--brand-blue)" stroke-width="2"/>
+                        <circle cx="1310" cy="42" r="14" fill="var(--brand-blue)"/><text x="1310" y="47" text-anchor="middle" font-size="13" font-weight="900" fill="#fff">1</text>
+                        <text x="1310" y="80" text-anchor="middle" font-size="13" font-weight="900" fill="var(--primary-navy)">تخطيط</text>
+                        <text x="1310" y="98" text-anchor="middle" font-size="13" font-weight="900" fill="var(--primary-navy)">الإدارة</text>
+                        <line x1="1220" y1="75" x2="1210" y2="75" stroke="#94a3b8" stroke-width="3"/><polygon points="1200,75 1214,69 1214,81" fill="#94a3b8"/>
+
+                        <rect x="1020" y="20" width="180" height="110" rx="14" fill="var(--light-blue)" stroke="var(--brand-blue)" stroke-width="2"/>
+                        <circle cx="1110" cy="42" r="14" fill="var(--brand-blue)"/><text x="1110" y="47" text-anchor="middle" font-size="13" font-weight="900" fill="#fff">2</text>
+                        <text x="1110" y="80" text-anchor="middle" font-size="13" font-weight="900" fill="var(--primary-navy)">تحديد</text>
+                        <text x="1110" y="98" text-anchor="middle" font-size="13" font-weight="900" fill="var(--primary-navy)">المخاطر</text>
+                        <line x1="1020" y1="75" x2="1010" y2="75" stroke="#94a3b8" stroke-width="3"/><polygon points="1000,75 1014,69 1014,81" fill="#94a3b8"/>
+
+                        <rect x="820" y="20" width="180" height="110" rx="14" fill="var(--light-blue)" stroke="var(--brand-blue)" stroke-width="2"/>
+                        <circle cx="910" cy="42" r="14" fill="var(--brand-blue)"/><text x="910" y="47" text-anchor="middle" font-size="13" font-weight="900" fill="#fff">3</text>
+                        <text x="910" y="80" text-anchor="middle" font-size="13" font-weight="900" fill="var(--primary-navy)">تحليل</text>
+                        <text x="910" y="98" text-anchor="middle" font-size="13" font-weight="900" fill="var(--primary-navy)">نوعي</text>
+                        <line x1="820" y1="75" x2="810" y2="75" stroke="#94a3b8" stroke-width="3"/><polygon points="800,75 814,69 814,81" fill="#94a3b8"/>
+
+                        <rect x="620" y="20" width="180" height="110" rx="14" fill="var(--light-blue)" stroke="var(--brand-blue)" stroke-width="2"/>
+                        <circle cx="710" cy="42" r="14" fill="var(--brand-blue)"/><text x="710" y="47" text-anchor="middle" font-size="13" font-weight="900" fill="#fff">4</text>
+                        <text x="710" y="80" text-anchor="middle" font-size="13" font-weight="900" fill="var(--primary-navy)">تحليل</text>
+                        <text x="710" y="98" text-anchor="middle" font-size="13" font-weight="900" fill="var(--primary-navy)">كمي</text>
+                        <line x1="620" y1="75" x2="610" y2="75" stroke="#94a3b8" stroke-width="3"/><polygon points="600,75 614,69 614,81" fill="#94a3b8"/>
+
+                        <rect x="420" y="20" width="180" height="110" rx="14" fill="#ecfdf5" stroke="#10b981" stroke-width="2"/>
+                        <circle cx="510" cy="42" r="14" fill="#10b981"/><text x="510" y="47" text-anchor="middle" font-size="13" font-weight="900" fill="#fff">5</text>
+                        <text x="510" y="80" text-anchor="middle" font-size="13" font-weight="900" fill="#047857">تخطيط</text>
+                        <text x="510" y="98" text-anchor="middle" font-size="13" font-weight="900" fill="#047857">الاستجابة</text>
+                        <line x1="420" y1="75" x2="410" y2="75" stroke="#94a3b8" stroke-width="3"/><polygon points="400,75 414,69 414,81" fill="#94a3b8"/>
+
+                        <rect x="220" y="20" width="180" height="110" rx="14" fill="#ecfdf5" stroke="#10b981" stroke-width="2"/>
+                        <circle cx="310" cy="42" r="14" fill="#10b981"/><text x="310" y="47" text-anchor="middle" font-size="13" font-weight="900" fill="#fff">6</text>
+                        <text x="310" y="80" text-anchor="middle" font-size="13" font-weight="900" fill="#047857">تنفيذ</text>
+                        <text x="310" y="98" text-anchor="middle" font-size="13" font-weight="900" fill="#047857">الاستجابة</text>
+                        <line x1="220" y1="75" x2="210" y2="75" stroke="#94a3b8" stroke-width="3"/><polygon points="200,75 214,69 214,81" fill="#94a3b8"/>
+
+                        <rect x="20" y="20" width="180" height="110" rx="14" fill="#fffbeb" stroke="#f59e0b" stroke-width="2"/>
+                        <circle cx="110" cy="42" r="14" fill="#f59e0b"/><text x="110" y="47" text-anchor="middle" font-size="13" font-weight="900" fill="#fff">7</text>
+                        <text x="110" y="80" text-anchor="middle" font-size="13" font-weight="900" fill="#92400e">مراقبة</text>
+                        <text x="110" y="98" text-anchor="middle" font-size="13" font-weight="900" fill="#92400e">المخاطر</text>
+
+                        <text x="700" y="165" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--text-muted)">دورة مستمرة: عملية "المراقبة" تغذّي "تحديد المخاطر" بمخاطر جديدة طوال حياة المشروع</text>
+                    </svg>
+                </div>
+
+                <div class="card-heading reveal">أدوات البرامج الهندسية (Software Tools) أين نستخدمها؟</div>
+                <ul class="reveal">
+                    <li><strong>MS Excel:</strong> ممتاز جداً لبناء وإدارة (Risk Register)، وإجراء التحليل النوعي.</li>
+                    <li><strong>Primavera P6 / MS Project:</strong> لربط المخاطر بالأنشطة الزمنية مباشرة ومعرفة مدى تأثير الخطر على المسار الحرج.</li>
+                    <li><strong>Primavera Risk Analysis (Pertmaster):</strong> الأداة الأقوى لإجراء التحليلات الكمية المعقدة ومحاكاة مونت كارلو.</li>
+                </ul>
+
+                <div class="box box-tip reveal">
+                    <div class="box-title"><i class='bx bx-bulb'></i> نصيحة مدير المشروع</div>
+                    <p>تحديث السجل (Risk Register) ليس نشاطاً لمرة واحدة لتمرير التدقيق (Audit). اجعله أول بند في أجندة اجتماعك الأسبوعي مع طاقم المستشفى.</p>
+                </div>
+
+                <div class="box box-mistake reveal">
+                    <div class="box-title"><i class='bx bx-error'></i> أخطاء شائعة</div>
+                    <p>تجاهل أصحاب المصلحة (Stakeholders) أثناء التحديد. المقاول الباطن قد يرى مخاطر فنية لا تراها أنت كمدير مشروع.</p>
+                </div>
+
+                <div class="box box-nextstep reveal">
+                    <div class="box-title"><i class='bx bx-calendar-check'></i> ماذا تفعل غداً في موقعك؟</div>
+                    <p>اربط سجل المخاطر الخاص بك بملف الـ Excel، وحدد (Risk Owner) لكل خطر رئيسي وأرسل لهم إيميل بمسؤولياتهم.</p>
+                </div>
+
+                <div class="box box-info reveal">
+                    <div class="box-title"><i class='bx bx-layer-plus'></i> التكامل مع المكاتب (PMO)</div>
+                    <p>عند تأسيس مكاتب إدارة المشاريع (PMO)، يُعتبر إنشاء وتوحيد <strong>(Risk Management Plan)</strong> لجميع مشاريع الشركة خطوة استراتيجية تسهل تتبع المخاطر لحظياً.</p>
+                </div>
+
+                <div class="case-thread reveal">
+                    <span class="case-thread-badge"><i class='bx bx-time-five'></i> الأسبوع 3 من مشروع المستشفى</span>
+                    <h4>خطر المولدات... من ملاحظة عابرة إلى بند رسمي</h4>
+                    <p>خلال ورشة "تحديد المخاطر" الرسمية هذا الأسبوع، أعاد مهندس الكهرباء طرح ملاحظته من الأسبوع الأول. هذه المرة تم توثيقها فوراً في سجل المخاطر تحت الرقم <strong>RISK-014</strong>: "احتمال تأخر توريد المولدات الاحتياطية من بلد المنشأ بسبب أزمة سلاسل الإمداد العالمية". لاحظ الفرق: نفس الملاحظة، لكنها الآن أصل موثّق له مالك ومتابعة، لا مجرد قلق شخصي.</p>
+                    <div class="case-thread-steps">
+                        <div class="ct-step done">1. ظهور الخطر</div>
+                        <div class="ct-step current">2. التحديد الرسمي</div>
+                        <div class="ct-step">3. التحليل</div>
+                        <div class="ct-step">4. الاستجابة والنتيجة</div>
+                    </div>
+                </div>
+
+                <div class="box box-decision reveal">
+                    <div class="box-title"><i class='bx bx-flag'></i> توقف: ماذا ستفعل؟</div>
+                    <p><strong>الموقف:</strong> خلال ورشة تحديد المخاطر، أشار مقاول الباطن المتخصص في الغازات الطبية إلى خطر فني دقيق لم يلاحظه أي من فريقك الأساسي. ماذا تفعل؟</p>
+                    <div class="decision-options">
+                        <button class="decision-btn" data-correct="false" onclick="handleDecision(this)">تتجاهل ملاحظته لأنه ليس من الفريق الأساسي</button>
+                        <button class="decision-btn" data-correct="true" onclick="handleDecision(this)">تسجّله في Risk Register وتراجعه مع الفريق الفني</button>
+                        <button class="decision-btn" data-correct="false" onclick="handleDecision(this)">تطلب منه يحل الأمر بنفسه لأنه مسؤوليته المباشرة</button>
+                    </div>
+                    <div class="decision-feedback">
+                        <p><strong>✅ الإجابة الصحيحة:</strong> تحديد المخاطر عملية تشاركية تشمل جميع أصحاب المصلحة (Stakeholders)، بمن فيهم المقاولون من الباطن. تجاهل ملاحظاتهم يعني فقدان معلومات حرجة قد يراها المتخصص في تفاصيل عمله ولا يراها مدير المشروع من موقعه العام.</p>
+                    </div>
+                </div>
+
+                <div class="takeaways-box reveal">
+                    <h3><i class='bx bx-badge-check'></i> خلاصة الفصل في 5 نقاط</h3>
+                    <ul class="takeaways-list">
+                        <li><i class='bx bx-check-circle'></i> إدارة المخاطر تمر بسبع عمليات متسلسلة معتمدة من PMI، من التخطيط وحتى المراقبة.</li>
+                        <li><i class='bx bx-check-circle'></i> المخرج الرئيسي لعملية "تحديد المخاطر" هو إنشاء سجل المخاطر (Risk Register).</li>
+                        <li><i class='bx bx-check-circle'></i> يُرشَّح مالك الخطر (Risk Owner) أثناء التحليل النوعي، ويُعتمد نهائياً أثناء تخطيط الاستجابة.</li>
+                        <li><i class='bx bx-check-circle'></i> أدوات مثل Excel وPrimavera Risk Analysis تدعم كل مرحلة من مراحل إدارة المخاطر.</li>
+                    </ul>
+                </div>
+
+                <div class="capability-box reveal">
+                    <div class="capability-title"><i class='bx bx-badge-check'></i> أنت الآن تعلمت الآتي:</div>
+                    <div class="capability-list">
+                        <div class="capability-item"><i class='bx bx-check-circle'></i> ترتيب العمليات السبع لإدارة المخاطر بالتسلسل الصحيح</div>
+                        <div class="capability-item"><i class='bx bx-check-circle'></i> تحديد المخرج الرئيسي لكل عملية (وأهمها Risk Register)</div>
+                        <div class="capability-item"><i class='bx bx-check-circle'></i> معرفة توقيت ترشيح واعتماد مالك الخطر (Risk Owner)</div>
+                        <div class="capability-item"><i class='bx bx-check-circle'></i> إشراك جميع أصحاب المصلحة أثناء تحديد المخاطر</div>
+                    </div>
+                </div>
+
+                <div class="diagram-box reveal">
+                    <div class="diagram-box-title"><i class='bx bx-sitemap'></i> خريطة ذهنية: تحديد المخاطر</div>
+                    <svg viewBox="0 0 860 340" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="340" y="130" width="180" height="65" rx="30" fill="var(--brand-blue)" stroke="var(--primary-navy)" stroke-width="2"/>
+                        <text x="430" y="168" text-anchor="middle" font-size="15" font-weight="900" fill="#fff">تحديد المخاطر</text>
+
+                        <line x1="340" y1="150" x2="170" y2="60" stroke="#94a3b8" stroke-width="2"/>
+                        <rect x="20" y="30" width="230" height="60" rx="14" fill="#eff6ff" stroke="var(--brand-blue)" stroke-width="2"/>
+                        <text x="135" y="55" text-anchor="middle" font-size="13" font-weight="900" fill="var(--primary-navy)">7 عمليات PMI</text>
+                        <text x="135" y="73" text-anchor="middle" font-size="11" font-weight="700" fill="var(--text-muted)">من التخطيط للمراقبة</text>
+
+                        <line x1="340" y1="165" x2="150" y2="165" stroke="#94a3b8" stroke-width="2"/>
+                        <rect x="20" y="135" width="220" height="60" rx="14" fill="#ecfdf5" stroke="#10b981" stroke-width="2"/>
+                        <text x="130" y="160" text-anchor="middle" font-size="13" font-weight="900" fill="#047857">Risk Register</text>
+                        <text x="130" y="178" text-anchor="middle" font-size="11" font-weight="700" fill="#047857">مخرج عملية التحديد</text>
+
+                        <line x1="340" y1="180" x2="170" y2="270" stroke="#94a3b8" stroke-width="2"/>
+                        <rect x="20" y="240" width="230" height="65" rx="14" fill="#fffbeb" stroke="#f59e0b" stroke-width="2"/>
+                        <text x="135" y="265" text-anchor="middle" font-size="13" font-weight="900" fill="#92400e">Risk Owner</text>
+                        <text x="135" y="283" text-anchor="middle" font-size="10.5" font-weight="700" fill="#92400e">ترشيح نوعي ← اعتماد استجابة</text>
+
+                        <line x1="520" y1="150" x2="690" y2="60" stroke="#94a3b8" stroke-width="2"/>
+                        <rect x="610" y="30" width="230" height="60" rx="14" fill="#f5f3ff" stroke="#8b5cf6" stroke-width="2"/>
+                        <text x="725" y="55" text-anchor="middle" font-size="13" font-weight="900" fill="#6d28d9">أدوات: Excel</text>
+                        <text x="725" y="73" text-anchor="middle" font-size="11" font-weight="700" fill="#6d28d9">Primavera P6 / Risk Analysis</text>
+
+                        <line x1="520" y1="165" x2="710" y2="165" stroke="#94a3b8" stroke-width="2"/>
+                        <rect x="620" y="135" width="220" height="60" rx="14" fill="#eff6ff" stroke="var(--brand-blue)" stroke-width="2"/>
+                        <text x="730" y="160" text-anchor="middle" font-size="13" font-weight="900" fill="var(--primary-navy)">أصحاب المصلحة</text>
+                        <text x="730" y="178" text-anchor="middle" font-size="11" font-weight="700" fill="var(--text-muted)">شمول كل الأطراف</text>
+
+                        <line x1="520" y1="180" x2="690" y2="270" stroke="#94a3b8" stroke-width="2"/>
+                        <rect x="600" y="240" width="240" height="65" rx="14" fill="#ecfdf5" stroke="#10b981" stroke-width="2"/>
+                        <text x="720" y="265" text-anchor="middle" font-size="13" font-weight="900" fill="#047857">تحديث أسبوعي</text>
+                        <text x="720" y="283" text-anchor="middle" font-size="10.5" font-weight="700" fill="#047857">أول بند في الاجتماع</text>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <div id="tab3" class="tab-content">
+            <div class="section-card">
+                <h2 class="main-title"><i class='bx bx-dollar-circle'></i> 3. تحليل وتقييم المخاطر (Analyze & Assess)</h2>
+                
+                <div class="module-progress-bar reveal">
+                    <div class="mp-text">أنت الآن في المرحلة 3 من 7 ضمن رحلة إدارة المخاطر</div>
+                    <div class="mp-track"><div class="mp-fill" style="width: 42%;"></div></div>
+                    <div class="mp-time"><i class='bx bx-time-five'></i> 10 دقائق</div>
+                </div>
+
+                <div class="module-objective reveal">
+                    <span class="obj-tag">🎯 هدف المرحلة:</span>
+                    <p class="obj-text">بنهاية هذه الوحدة، ستتمكن من تقييم المخاطر مالياً وزمنياً باستخدام أدوات التحليل النوعي والكمي وحساب احتياطيات الطوارئ.</p>
+                </div>
+
+                <p class="sub-title-context reveal">
+                    <strong>تخيل أن المالك طلب منك تحديد ميزانية الطوارئ (Contingency) للمستشفى... هل ستطلب 10% عشوائياً أم ستبني رقمك على أسس هندسية؟</strong> في هذه الوحدة ستتعلم كيف تحول المخاطر "الوصفية" إلى أرقام مالية وزمنية دقيقة لحماية المشروع.
+                </p>
+
+                <div class="card-heading reveal">1. الاحتياطيات المالية (Reserves)</div>
+                <p class="reveal">حساب التكلفة في العطاءات يجب أن يشمل تغطية للمخاطر. هناك نوعان رئيسيان:</p>
+                <div class="table-wrapper reveal">
+                    <table class="data-table">
+                        <tr><th>النوع</th><th>يغطي ماذا؟</th><th>من يتحكم به؟</th></tr>
+                        <tr><td>Contingency Reserve (طوارئ)</td><td>المخاطر المعروفة (Known-Unknowns) مثل غرامة تأخير متوقعة.</td><td>مدير المشروع (Project Manager).</td></tr>
+                        <tr><td>Management Reserve (إدارة)</td><td>المخاطر المجهولة تماماً (Unknown-Unknowns) كالأوبئة.</td><td>الإدارة العليا للشركة (Sponsor).</td></tr>
+                    </table>
+                </div>
+
+                <div class="box box-exam reveal">
+                    <div class="box-title"><span class="exam-star"><i class='bx bx-star'></i> مهم للاختبار</span><i class='bx bx-check-double'></i> أهم أفكار الاختبار المالي</div>
+                    <p>مقارنة تأتي في كل امتحان:</p>
+                    <ul>
+                        <li><strong>Contingency Reserve (طوارئ):</strong> تغطي المخاطر <strong>المعروفة</strong>، وتُحسب ضمن خط الأساس للتكلفة (Cost Baseline)، ومدير المشروع يملك صلاحية صرفها.</li>
+                        <li><strong>Management Reserve (إدارة):</strong> تغطي المخاطر <strong>المجهولة</strong>، ولا تُحسب ضمن الـ Baseline، ويجب أخذ موافقة الإدارة العليا لصرفها.</li>
+                    </ul>
+                </div>
+
+                <div class="card-heading reveal">2. حساب الـ EMV (القيمة المالية المتوقعة)</div>
+                <div class="reveal">
+                    <p>القانون: <strong>EMV = Probability (%) × Impact ($)</strong></p>
+                    <p><em>مثال للمستشفى:</em> احتمال تعطل مورد الأجهزة الطبية هو 20%، وتكلفة شراء أجهزة بديلة سريعة هي 500,000 ريال. <br>
+                    إذن مبلغ الطوارئ الذي يجب تجنيبه = 20% × 500,000 = <strong>100,000 ريال</strong>.</p>
+                </div>
+
+                <div class="diagram-box reveal">
+                    <div class="diagram-box-title"><i class='bx bx-git-compare'></i> مخطط تدفق: من الاحتمالية إلى ميزانية الطوارئ</div>
+                    <svg viewBox="0 0 900 160" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="700" y="15" width="180" height="90" rx="14" fill="var(--light-blue)" stroke="var(--brand-blue)" stroke-width="2"/>
+                        <text x="790" y="50" text-anchor="middle" font-size="13.5" font-weight="900" fill="var(--primary-navy)">الاحتمالية</text>
+                        <text x="790" y="70" text-anchor="middle" font-size="12" font-weight="700" fill="var(--text-muted)">Probability %</text>
+
+                        <text x="668" y="66" text-anchor="middle" font-size="22" font-weight="900" fill="var(--text-muted)">×</text>
+
+                        <rect x="480" y="15" width="180" height="90" rx="14" fill="var(--light-blue)" stroke="var(--brand-blue)" stroke-width="2"/>
+                        <text x="570" y="50" text-anchor="middle" font-size="13.5" font-weight="900" fill="var(--primary-navy)">الأثر المالي</text>
+                        <text x="570" y="70" text-anchor="middle" font-size="12" font-weight="700" fill="var(--text-muted)">Impact ($)</text>
+
+                        <line x1="480" y1="60" x2="420" y2="60" stroke="#94a3b8" stroke-width="2"/>
+                        <polygon points="410,60 424,53 424,67" fill="#94a3b8"/>
+
+                        <rect x="240" y="15" width="170" height="90" rx="14" fill="#fffbeb" stroke="#f59e0b" stroke-width="2"/>
+                        <text x="325" y="50" text-anchor="middle" font-size="13.5" font-weight="900" fill="#92400e">EMV</text>
+                        <text x="325" y="70" text-anchor="middle" font-size="12" font-weight="700" fill="#92400e">القيمة المتوقعة</text>
+
+                        <line x1="240" y1="60" x2="185" y2="60" stroke="#94a3b8" stroke-width="2"/>
+                        <polygon points="175,60 189,53 189,67" fill="#94a3b8"/>
+
+                        <rect x="10" y="15" width="165" height="90" rx="14" fill="#ecfdf5" stroke="#10b981" stroke-width="2"/>
+                        <text x="92" y="45" text-anchor="middle" font-size="12.5" font-weight="900" fill="#047857">ميزانية الطوارئ</text>
+                        <text x="92" y="63" text-anchor="middle" font-size="11" font-weight="700" fill="#047857">Contingency</text>
+                        <text x="92" y="80" text-anchor="middle" font-size="11" font-weight="700" fill="#047857">Reserve</text>
+
+                        <text x="450" y="140" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--text-muted)">مثال: 20% × 500,000 ريال = 100,000 ريال يُضاف لميزانية الطوارئ</text>
+                    </svg>
+                </div>
+
+                <div class="card-heading reveal">3. مصفوفة المخاطر التفاعلية المصغرة (Risk Heatmap 5x5)</div>
+                <div class="reveal" style="background: var(--light-blue); padding: 25px; border-radius: 16px; border: 1px solid #bfdbfe; margin-top: 20px;">
+                    <p style="font-weight: 800; color: var(--primary-navy); margin-bottom: 12px; text-align: center; font-size: 16px;">
+                        اختر قيم (الاحتمالية × الأثر) من القوائم أو انقر مباشرة على خلايا المصفوفة أدناه:
+                    </p>
+
+                    <div style="display: flex; gap: 15px; margin-bottom: 20px; flex-wrap: wrap; justify-content: center;">
+                        <select id="calc_p" onchange="syncSelectAndMatrix()" style="flex: 1; min-width: 180px; padding: 10px; border-radius: 8px; border: 2px solid var(--brand-blue); font-weight: 800; font-size: 14.5px; outline: none; background: white;">
+                            <option value="1">الاحتمال: 1 (نادر جداً)</option>
+                            <option value="2">الاحتمال: 2 (مستبعد)</option>
+                            <option value="3">الاحتمال: 3 (متوسط)</option>
+                            <option value="4" selected>الاحتمال: 4 (محتمل)</option>
+                            <option value="5">الاحتمال: 5 (شبه مؤكد)</option>
+                        </select>
+                        <select id="calc_i" onchange="syncSelectAndMatrix()" style="flex: 1; min-width: 180px; padding: 10px; border-radius: 8px; border: 2px solid var(--brand-blue); font-weight: 800; font-size: 14.5px; outline: none; background: white;">
+                            <option value="1">الأثر: 1 (بسيط جداً)</option>
+                            <option value="2">الأثر: 2 (محدود)</option>
+                            <option value="3">الأثر: 3 (مؤثر)</option>
+                            <option value="4">الأثر: 4 (شديد)</option>
+                            <option value="5" selected>الأثر: 5 (كارثي)</option>
+                        </select>
+                    </div>
+
+                    <div class="matrix-wrapper-compact">
+                        <div class="risk-matrix-grid" id="matrixGrid">
+                        </div>
+                    </div>
+
+                    <div style="text-align: center; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 5px 20px rgba(0,0,0,0.05); margin-top: 15px;">
+                        <div style="font-size: 18px; font-weight: 900; margin-bottom: 6px; color: var(--text-dark);">النتيجة الإجمالية (Risk Score)</div>
+                        <div style="display: flex; justify-content: center; align-items: center; gap: 12px;">
+                            <span id="score_val" style="font-size: 40px; font-weight: 900; color: var(--primary-navy); line-height: 1;">20</span>
+                            <div id="score_label" class="status-pill pill-critical" style="font-size: 15px; padding: 6px 20px;">(Unacceptable Zone) 17-25</div>
+                        </div>
+                        
+                        <div id="score_explanation" style="margin-top: 10px; padding: 10px; background: #f8fafc; border-radius: 8px; border: 1px solid #e2e8f0; font-size: 14px; color: var(--text-muted); text-align: right;">
+                            منطقة مرفوضة (Unacceptable): حالات طوارئ حرجة. يجب عليك إيقاف الأنشطة المتأثرة فوراً ونشر موارد التخفيف العاجلة وتصعيد الأمر.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="box box-info reveal">
+                    <div class="box-title"><i class='bx bx-notepad'></i> مثال عملي لحساب المخاطر (Simple Example)</div>
+                    <p>أنت تقوم بتقييم تهديدين مختلفين أثناء مرحلة صب الهيكل الخرساني الضخم للمستشفى:</p>
+                    <p><strong>التهديد (أ):</strong> وصول شاحنة التوريد متأخرة لمدة ساعة.<br>
+                    الاحتمالية 4 (مرجح Likely)، ولكن الأثر 1 (غير مؤثر Insignificant).<br>
+                    النتيجة = 4 × 1 = <strong>4 (Acceptable Zone)</strong>.</p>
+                </div>
+
+                <div class="box box-tip reveal">
+                    <div class="box-title"><i class='bx bx-bulb'></i> نصيحة مدير المشروع</div>
+                    <p>إذا كان حاصل تقييم الخطر 20 أو 25 (أحمر / حرج), هذا لا يعني إيقاف المشروع بالضرورة. بل يعني توجيه أكبر قدر من الجهد، المال، والاحتياطي المالي (Contingency) لهذا البند تحديداً، وتعيين أمهر المهندسين كـ (Risk Owners) له.</p>
+                </div>
+
+                <div class="box box-mistake reveal">
+                    <div class="box-title"><i class='bx bx-error'></i> أخطاء شائعة</div>
+                    <p>تقييم الاحتمال والأثر بناءً على "المزاج" بدون الرجوع للبيانات التاريخية لمشاريع مشابهة (Lessons Learned) أو استشارة فريق الـ (Cost Estimation).</p>
+                </div>
+
+                <div class="box box-info reveal">
+                    <div class="box-title"><i class='bx bx-layer-plus'></i> أدوات متقدمة: Tornado & Monte Carlo</div>
+                    <ul>
+                        <li><strong>تحليل الحساسية (Sensitivity Analysis):</strong> لمعرفة "أي خطر يملك التأثير الأكبر؟" ويُمثل بـ <strong>(Tornado Diagram)</strong>.</li>
+                        <li><strong>محاكاة مونت كارلو (Monte Carlo Simulation):</strong> تُدخل مئات المخاطر في برنامج رياضي لعمل آلاف المحاكاة والنتيجة نسبة مئوية.</li>
+                    </ul>
+                </div>
+
+                <div class="case-thread reveal">
+                    <span class="case-thread-badge"><i class='bx bx-time-five'></i> الأسبوع 5 من مشروع المستشفى</span>
+                    <h4>خطر المولدات... من بند مسجَّل إلى رقم مالي واضح</h4>
+                    <p>بتطبيق نفس أدوات هذا الفصل على <strong>RISK-014</strong> (تأخر المولدات)، قدّر الفريق احتمالية وقوعه بـ 40%، وأثره المالي المباشر (شراء بديل سريع + غرامات تأخير) بـ 1,500,000 ريال. إذن <strong>EMV = 40% × 1,500,000 = 600,000 ريال</strong>. على مصفوفة 5×5 صُنّف الخطر في المنطقة الحرجة (High)، ما يعني أنه سيحصل على أولوية قصوى في خطة الاستجابة القادمة.</p>
+                    <div class="case-thread-steps">
+                        <div class="ct-step done">1. ظهور الخطر</div>
+                        <div class="ct-step done">2. التحديد الرسمي</div>
+                        <div class="ct-step current">3. التحليل</div>
+                        <div class="ct-step">4. الاستجابة والنتيجة</div>
+                    </div>
+                </div>
+
+                <div class="box box-decision reveal">
+                    <div class="box-title"><i class='bx bx-flag'></i> توقف: ماذا ستفعل؟</div>
+                    <p><strong>الموقف:</strong> خطر مصنّف باحتمالية 4 وأثر 5 (نتيجة 20 على المصفوفة، منطقة حرجة). ميزانية الطوارئ المتاحة حالياً محدودة جداً. ما أول خطوة صحيحة؟</p>
+                    <div class="decision-options">
+                        <button class="decision-btn" data-correct="false" onclick="handleDecision(this)">تجاهله مؤقتاً لضيق الميزانية المتاحة</button>
+                        <button class="decision-btn" data-correct="true" onclick="handleDecision(this)">إعادة توجيه أكبر قدر ممكن من الموارد المتاحة له وتعيين مالك خطر متمرس</button>
+                        <button class="decision-btn" data-correct="false" onclick="handleDecision(this)">الانتظار حتى يقع فعلياً ثم التعامل معه كمشكلة</button>
+                    </div>
+                    <div class="decision-feedback">
+                        <p><strong>✅ الإجابة الصحيحة:</strong> الخطر الواقع في المنطقة الحرجة (17-25) يستوجب أولوية قصوى فورية بغض النظر عن ضيق الموارد؛ الحل الهندسي الصحيح هو إعادة توزيع الميزانية المتاحة نحو أخطر التهديدات أولاً، وليس تجاهلها أو الانتظار حتى تتحول إلى Issue مكلفة.</p>
+                    </div>
+                </div>
+
+                <div class="takeaways-box reveal">
+                    <h3><i class='bx bx-badge-check'></i> خلاصة الفصل في 5 نقاط</h3>
+                    <ul class="takeaways-list">
+                        <li><i class='bx bx-check-circle'></i> Contingency Reserve تغطي المخاطر المعروفة ويتحكم بها مدير المشروع، وManagement Reserve تغطي المجهولة وتتحكم بها الإدارة العليا.</li>
+                        <li><i class='bx bx-check-circle'></i> القيمة المالية المتوقعة EMV = الاحتمالية × الأثر، وتُستخدم لحساب ميزانية الطوارئ المطلوبة.</li>
+                        <li><i class='bx bx-check-circle'></i> مصفوفة 5×5 تصنّف المخاطر إلى مناطق: مقبولة، متوسطة، عالية، ومرفوضة.</li>
+                        <li><i class='bx bx-check-circle'></i> تقييم الاحتمال والأثر يجب أن يستند لبيانات تاريخية وليس للانطباع الشخصي.</li>
+                        <li><i class='bx bx-check-circle'></i> تحليل الحساسية (Tornado) ومحاكاة مونت كارلو أدوات متقدمة لتحديد أخطر المخاطر كمياً.</li>
+                    </ul>
+                </div>
+
+                <div class="capability-box reveal">
+                    <div class="capability-title"><i class='bx bx-badge-check'></i> أنت الآن تعلمت الآتي:</div>
+                    <div class="capability-list">
+                        <div class="capability-item"><i class='bx bx-check-circle'></i> التفريق بين Contingency Reserve وManagement Reserve</div>
+                        <div class="capability-item"><i class='bx bx-check-circle'></i> حساب القيمة المالية المتوقعة (EMV = احتمالية × أثر)</div>
+                        <div class="capability-item"><i class='bx bx-check-circle'></i> قراءة مصفوفة المخاطر 5×5 وتصنيف أي خطر عليها</div>
+                        <div class="capability-item"><i class='bx bx-check-circle'></i> التمييز بين التحليل النوعي والكمي للمخاطر</div>
+                    </div>
+                </div>
+
+                <div class="diagram-box reveal">
+                    <div class="diagram-box-title"><i class='bx bx-sitemap'></i> خريطة ذهنية: تحليل وتقييم المخاطر</div>
+                    <svg viewBox="0 0 860 340" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="340" y="130" width="180" height="65" rx="30" fill="var(--brand-blue)" stroke="var(--primary-navy)" stroke-width="2"/>
+                        <text x="430" y="168" text-anchor="middle" font-size="15" font-weight="900" fill="#fff">تحليل وتقييم</text>
+
+                        <line x1="340" y1="150" x2="170" y2="60" stroke="#94a3b8" stroke-width="2"/>
+                        <rect x="20" y="30" width="230" height="60" rx="14" fill="#eff6ff" stroke="var(--brand-blue)" stroke-width="2"/>
+                        <text x="135" y="55" text-anchor="middle" font-size="13" font-weight="900" fill="var(--primary-navy)">Contingency</text>
+                        <text x="135" y="73" text-anchor="middle" font-size="11" font-weight="700" fill="var(--text-muted)">مقابل Management Reserve</text>
+
+                        <line x1="340" y1="165" x2="150" y2="165" stroke="#94a3b8" stroke-width="2"/>
+                        <rect x="20" y="135" width="220" height="60" rx="14" fill="#fffbeb" stroke="#f59e0b" stroke-width="2"/>
+                        <text x="130" y="160" text-anchor="middle" font-size="13" font-weight="900" fill="#92400e">EMV</text>
+                        <text x="130" y="178" text-anchor="middle" font-size="11" font-weight="700" fill="#92400e">= احتمالية × أثر</text>
+
+                        <line x1="340" y1="180" x2="170" y2="270" stroke="#94a3b8" stroke-width="2"/>
+                        <rect x="20" y="240" width="230" height="65" rx="14" fill="#ecfdf5" stroke="#10b981" stroke-width="2"/>
+                        <text x="135" y="265" text-anchor="middle" font-size="13" font-weight="900" fill="#047857">مصفوفة 5×5</text>
+                        <text x="135" y="283" text-anchor="middle" font-size="10.5" font-weight="700" fill="#047857">مقبولة ← مرفوضة</text>
+
+                        <line x1="520" y1="150" x2="690" y2="60" stroke="#94a3b8" stroke-width="2"/>
+                        <rect x="610" y="30" width="230" height="60" rx="14" fill="#f5f3ff" stroke="#8b5cf6" stroke-width="2"/>
+                        <text x="725" y="55" text-anchor="middle" font-size="13" font-weight="900" fill="#6d28d9">بيانات تاريخية</text>
+                        <text x="725" y="73" text-anchor="middle" font-size="11" font-weight="700" fill="#6d28d9">Lessons Learned</text>
+
+                        <line x1="520" y1="165" x2="710" y2="165" stroke="#94a3b8" stroke-width="2"/>
+                        <rect x="620" y="135" width="220" height="60" rx="14" fill="#eff6ff" stroke="var(--brand-blue)" stroke-width="2"/>
+                        <text x="730" y="160" text-anchor="middle" font-size="13" font-weight="900" fill="var(--primary-navy)">Tornado Diagram</text>
+                        <text x="730" y="178" text-anchor="middle" font-size="11" font-weight="700" fill="var(--text-muted)">تحليل حساسية</text>
+
+                        <line x1="520" y1="180" x2="690" y2="270" stroke="#94a3b8" stroke-width="2"/>
+                        <rect x="600" y="240" width="240" height="65" rx="14" fill="#ecfdf5" stroke="#10b981" stroke-width="2"/>
+                        <text x="720" y="265" text-anchor="middle" font-size="13" font-weight="900" fill="#047857">Monte Carlo</text>
+                        <text x="720" y="283" text-anchor="middle" font-size="10.5" font-weight="700" fill="#047857">محاكاة رياضية</text>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <div id="tab4" class="tab-content">
+            <div class="section-card">
+                <h2 class="main-title"><i class='bx bx-shield-quarter'></i> 4. تخطيط الاستجابة والحلول الهندسيّة (Plan Responses)</h2>
+                
+                <div class="module-progress-bar reveal">
+                    <div class="mp-text">أنت الآن في المرحلة 4 من 7 ضمن رحلة إدارة المخاطر</div>
+                    <div class="mp-track"><div class="mp-fill" style="width: 56%;"></div></div>
+                    <div class="mp-time"><i class='bx bx-time-five'></i> 9 دقائق</div>
+                </div>
+
+                <div class="module-objective reveal">
+                    <span class="obj-tag">🎯 هدف المرحلة:</span>
+                    <p class="obj-text">بنهاية هذه الوحدة، ستكون قادراً على تصميم واختيار استراتيجيات الاستجابة الأكثر فاعلية للتهديدات والفرص، وتعيين مالكي المخاطر، وإدارة المخاطر المتبقية والثانوية بكفاءة عالية.</p>
+                </div>
+
+                <p class="sub-title-context reveal">
+                    <strong>تخيل أن خطر تأخر شحنة الأجهزة الطبية الخاصة بالعمليات أصبحت احتماليته 80% وتأخيره يهدد افتتاح المستشفى بالكامل... ماذا ستفعل؟</strong> التحليل والتقييم لا قيمة لهما بدون تحرك عملي! في هذا الباب سنضع الاستراتيجيات المعتمدة عالمياً للرد على التهديدات الاستباقية والفرص الإيجابية، وكيف نضع الخطط البديلة (Fallback) والحلول الالتفافية (Workarounds).
+                </p>
+
+                <div class="card-heading reveal">أولاً: استراتيجيات التعامل مع التهديدات والسلبيات (Threat Response Strategies)</div>
+                <p class="reveal">عند التعامل مع الخطر السلبي (Threat), يختار مدير المشروع والـ Risk Owner واحدة من الاستراتيجيات الخمس المعتمدة حسب طبيعة الخطر وميزانيته:</p>
+
+                <div class="table-wrapper reveal">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>الاستراتيجية</th>
+                                <th>المفهوم والهدف الرئيسي</th>
+                                <th>تطبيق عملي هندسي بمشروع المستشفى</th>
+                                <th>متى نستخدمها؟</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>1. التجنب (Avoid)</strong></td><td>تغيير خطة المشروع لإزالة التهديد كلياً وتخفيض احتمالية حدوثه أو أثره إلى 0%.</td><td>إلغاء فكرة بناء القبو (Basement) كمواقف سيارات أسفل المستشفى بسبب اكتشاف مياه جوفية كبريتية عالي الخطورة، والاستعاضة عنها بمبنى مواقف متعدد الأدوار بجوار المستشفى.</td><td>المخاطر الحرجة ذات الأثر الكارثي والاحتياطيات غير الكافية.</td></tr>
+                            <tr>
+                                <td><strong>2. النقل (Transfer)</strong></td><td>تحويل المسؤولية المالية أو الفنية والأثر المترتب على الخطر إلى طرف ثالث.</td><td>إسناد شبكة الغازات الطبية الحرجة بموجب عقد توريد وتركيب مقطوع (Lump Sum) لمقاول متخصص مع شرط جزائي، أو شراء وثيقة تأمين شاملة (CAR Policy).</td><td>المخاطر ذات الأثر المالي المرتفع والاطمئنان لخبرة الطرف الثالث.</td></tr>
+                            <tr>
+                                <td><strong>3. التخفيف (Mitigate)</strong></td><td>اتخاذ إجراءات استباقية مبكرة لتقليل احتمالية حدوث الخطر أو تقليل أثره المالي/الزمني.</td><td>طلب عينات وتصاميم نموذجية (Mock-up) مسبقة لغرف العمليات واختبارها واقتناء المولدات قبل الحاجة لها بـ 10 أشهر (Long-lead items) لضمان توريدها في الموعد.</td><td>المخاطر المتوسطة والمرتفعة التي يمكن التحكم في مسبباتها.</td></tr>
+                            <tr>
+                                <td><strong>4. القبول (Accept)</strong></td><td>عدم اتخاذ إجراء استباقي وترك الخطر يحدث (إما قبول إيجابي بحجز طوارئ أو سلبي بدون إجراء).</td><td>قبول التذبذب البسيط في أسعار أكياس الأسمنت والدهانات بحدود (2-3%) واعتماد خطة الاحتياطي المالي (Contingency Reserve) لتغطيتها فور حدوثها.</td><td>المخاطر المنخفضة ذات التكلفة القليلة التي تفوق تكلفة التحوط لها.</td></tr>
+                            <tr>
+                                <td><strong>5. التصعيد (Escalate)</strong></td><td>رفع الخطر للإدارة العليا أو المالك لأن صلاحيات أو ميزانية المشروع لا تغطيه.</td><td>تغيير شامل في كود البناء والدفاع المدني بالمملكة يفرض إضافة أنظمة إطفاء بالغاز جديدة لم تكن مسعرة بالمناقصة وتتطلب ميزانية سيادية من المالك.</td><td>المخاطر التي تقع خارج نطاق حدود سلطة مدير المشروع.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="diagram-box reveal">
+                    <div class="diagram-box-title"><i class='bx bx-git-branch'></i> شجرة قرار: كيف تختار استراتيجية الاستجابة الصحيحة؟</div>
+                    <svg viewBox="0 0 900 480" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="320" y="20" width="260" height="65" rx="14" fill="var(--light-blue)" stroke="var(--brand-blue)" stroke-width="2"/>
+                        <text x="450" y="45" text-anchor="middle" font-size="13" font-weight="900" fill="var(--primary-navy)">هل يمكن تغيير الخطة لإزالة</text>
+                        <text x="450" y="63" text-anchor="middle" font-size="13" font-weight="900" fill="var(--primary-navy)">الخطر كلياً؟</text>
+
+                        <line x1="580" y1="52" x2="650" y2="52" stroke="#94a3b8" stroke-width="2"/><polygon points="660,52 648,46 648,58" fill="#94a3b8"/>
+                        <text x="615" y="42" text-anchor="middle" font-size="12" font-weight="900" fill="#16a34a">نعم</text>
+                        <rect x="660" y="22" width="170" height="60" rx="12" fill="#ecfdf5" stroke="#16a34a" stroke-width="2"/>
+                        <text x="745" y="47" text-anchor="middle" font-size="13" font-weight="900" fill="#15803d">1. التجنب</text>
+                        <text x="745" y="65" text-anchor="middle" font-size="11" font-weight="700" fill="#166534">Avoid</text>
+
+                        <line x1="450" y1="85" x2="450" y2="120" stroke="#94a3b8" stroke-width="2"/><polygon points="450,130 444,118 456,118" fill="#94a3b8"/>
+                        <text x="470" y="108" font-size="12" font-weight="900" fill="#dc2626">لا</text>
+
+                        <rect x="320" y="130" width="260" height="65" rx="14" fill="var(--light-blue)" stroke="var(--brand-blue)" stroke-width="2"/>
+                        <text x="450" y="155" text-anchor="middle" font-size="13" font-weight="900" fill="var(--primary-navy)">هل يمكن نقل المسؤولية</text>
+                        <text x="450" y="173" text-anchor="middle" font-size="13" font-weight="900" fill="var(--primary-navy)">لطرف ثالث (تأمين/مقاول)؟</text>
+
+                        <line x1="580" y1="162" x2="650" y2="162" stroke="#94a3b8" stroke-width="2"/><polygon points="660,162 648,156 648,168" fill="#94a3b8"/>
+                        <text x="615" y="152" text-anchor="middle" font-size="12" font-weight="900" fill="#16a34a">نعم</text>
+                        <rect x="660" y="132" width="170" height="60" rx="12" fill="#ecfdf5" stroke="#16a34a" stroke-width="2"/>
+                        <text x="745" y="157" text-anchor="middle" font-size="13" font-weight="900" fill="#15803d">2. النقل</text>
+                        <text x="745" y="175" text-anchor="middle" font-size="11" font-weight="700" fill="#166534">Transfer</text>
+
+                        <line x1="450" y1="195" x2="450" y2="230" stroke="#94a3b8" stroke-width="2"/><polygon points="450,240 444,228 456,228" fill="#94a3b8"/>
+                        <text x="470" y="218" font-size="12" font-weight="900" fill="#dc2626">لا</text>
+
+                        <rect x="320" y="240" width="260" height="65" rx="14" fill="var(--light-blue)" stroke="var(--brand-blue)" stroke-width="2"/>
+                        <text x="450" y="265" text-anchor="middle" font-size="13" font-weight="900" fill="var(--primary-navy)">هل يمكن تقليل احتمالية</text>
+                        <text x="450" y="283" text-anchor="middle" font-size="13" font-weight="900" fill="var(--primary-navy)">أو أثر الخطر باستباقية؟</text>
+
+                        <line x1="580" y1="272" x2="650" y2="272" stroke="#94a3b8" stroke-width="2"/><polygon points="660,272 648,266 648,278" fill="#94a3b8"/>
+                        <text x="615" y="262" text-anchor="middle" font-size="12" font-weight="900" fill="#16a34a">نعم</text>
+                        <rect x="660" y="242" width="170" height="60" rx="12" fill="#ecfdf5" stroke="#16a34a" stroke-width="2"/>
+                        <text x="745" y="267" text-anchor="middle" font-size="13" font-weight="900" fill="#15803d">3. التخفيف</text>
+                        <text x="745" y="285" text-anchor="middle" font-size="11" font-weight="700" fill="#166534">Mitigate</text>
+
+                        <line x1="450" y1="305" x2="450" y2="340" stroke="#94a3b8" stroke-width="2"/><polygon points="450,350 444,338 456,338" fill="#94a3b8"/>
+                        <text x="470" y="328" font-size="12" font-weight="900" fill="#dc2626">لا</text>
+
+                        <rect x="320" y="350" width="260" height="65" rx="14" fill="var(--light-blue)" stroke="var(--brand-blue)" stroke-width="2"/>
+                        <text x="450" y="375" text-anchor="middle" font-size="13" font-weight="900" fill="var(--primary-navy)">هل الأثر يفوق صلاحيات</text>
+                        <text x="450" y="393" text-anchor="middle" font-size="13" font-weight="900" fill="var(--primary-navy)">وميزانية مدير المشروع؟</text>
+
+                        <line x1="580" y1="382" x2="650" y2="382" stroke="#94a3b8" stroke-width="2"/><polygon points="660,382 648,376 648,388" fill="#94a3b8"/>
+                        <text x="615" y="372" text-anchor="middle" font-size="12" font-weight="900" fill="#16a34a">نعم</text>
+                        <rect x="660" y="352" width="170" height="60" rx="12" fill="#fef2f2" stroke="#dc2626" stroke-width="2"/>
+                        <text x="745" y="377" text-anchor="middle" font-size="13" font-weight="900" fill="#b91c1c">5. التصعيد</text>
+                        <text x="745" y="395" text-anchor="middle" font-size="11" font-weight="700" fill="#7f1d1d">Escalate</text>
+
+                        <line x1="450" y1="415" x2="450" y2="440" stroke="#94a3b8" stroke-width="2"/><polygon points="450,450 444,438 456,438" fill="#94a3b8"/>
+                        <text x="470" y="438" font-size="12" font-weight="900" fill="#dc2626">لا</text>
+
+                        <rect x="335" y="450" width="230" height="28" rx="12" fill="#fffbeb" stroke="#f59e0b" stroke-width="2"/>
+                        <text x="450" y="469" text-anchor="middle" font-size="13" font-weight="900" fill="#92400e">4. القبول (Accept)</text>
+                    </svg>
+                </div>
+
+                <div class="card-heading reveal">ثانياً: استراتيجيات تعظيم الفرص الإيجابية (Opportunity Response Strategies)</div>
+                <p class="reveal">إدارة المخاطر الاحترافية لا تقتصر على الدرء والسلب؛ بل تشمل اقتناص الفرص الإيجابية التي تزيد من أرباح المشروع أو تسرّع الجدول الزمني:</p>
+                <div class="table-wrapper reveal">
+                    <table class="data-table">
+                        <thead>
+                            <tr><th>الاستراتيجية</th><th>التعريف الدقيق</th><th>مثال حي من مشروع المستشفى</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><strong>1. الاستغلال (Exploit)</strong></td><td>ضمان حدوث الفرصة بنسبة 100% وإزالة أي شكوك.</td><td>استخدام تقنية الخرسانة مسبقة الصنع (Precast) لأسوار الواجهات لضمان إنهاء الهيكل قبل الموعد بـ 3 أشهر.</td></tr>
+                            <tr><td><strong>2. المشاركة (Share)</strong></td><td>إشراك شريك استراتيجي يملك قدرات تقنية أو مالية لاقتناص الفرصة.</td><td>الدخول في ائتلاف (Joint Venture) مع شركة عالمية متخصصة في التجهيزات الطبية للفوز بعقد الصيانة المستقبلي للمستشفى.</td></tr>
+                            <tr><td><strong>3. التحسين (Enhance)</strong></td><td>زيادة احتمالية حدوث الفرصة أو زيادة أثرها الإيجابي.</td><td>تقديم مكافآت مالية تشجيعية (Incentives) لمورد التكييف لتوفير أجهزة ذات كفاءة طاقة أعلى توفر 15% من التكلفة التشغيلية.</td></tr>
+                            <tr><td><strong>4. القبول (Accept)</strong></td><td>الاستفادة من الفرصة إذا حدثت تلقائياً دون تخطيط مسبق.</td><td>الاستفادة من تخفيض مفاجئ في الجمارك على الأجهزة الطبية دون بذل جهد استباقي لذلك.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="card-heading reveal">ثالثاً: المفاهيم الفنية المتقدمة لإداريي المخاطر (Triggers, Residuals & Secondaries)</div>
+                <div class="reveal">
+                    <p>في التطبيق العملي، الاستجابة للخطر تنتج عنها متغيّرات ومفاهيم يجب ربطها بدقة في الـ Risk Register:</p>
+                    <ul>
+                        <li><strong>مؤشرات الإطلاق (Risk Triggers):</strong> علامات وأحداث تحذيرية مبكرة تدل على أن الخطر على وشك الوقوع فوراً (مثل: تأخر المورد في إرسال المخططات الاعتمادية لأكثر من أسبوعين يعطي إنذاراً بخلل سلاسل التوريد).</li>
+                        <li><strong>الخطر المتبقي (Residual Risk):</strong> هو الجزء المتبقي من الخطر الأصلي بعد تطبيق خطة الاستجابة وتخفيفها، وعادة يتم قبول هذا الجزء البسيط واستيعابه عبر الـ Contingency Reserve.</li>
+                        <li><strong>الخطر الثانوي (Secondary Risk):</strong> خطر جديد ينشأ مباشرة <strong>نتيجة تنفيذ</strong> خطة استجابة لخطر آخر (مثال: استخدام مواد كيميائية سريعة الجفاف لمعالجة تأخر الخرسانة أنتج خطراً ثانوياً وهو زيادة انبعاثات روائح سامة تتطلب معدات تهوية خاصة بالموقع).</li>
+                    </ul>
+                </div>
+
+                <div class="card-heading reveal">رابعاً: خطط الطوارئ والخطط البديلة والحلول الالتفافية</div>
+                <div class="table-wrapper reveal">
+                    <table class="data-table">
+                        <thead>
+                            <tr><th>المفهوم</th><th>متى يتم إعدادها؟</th><th>طبيعة الاستخدام</th><th>مثال من موقع العمل</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><strong>Contingency Plan (خطة الطوارئ)</strong></td><td>تُعد مسبقاً أثناء التخطيط.</td><td>تُفعل فوراً عند ظهور مؤشر الإطلاق (Trigger).</td><td>استئجار مولد كهربائي مؤقت إذا تأخر الربط بجهة الكهرباء الحكومية عن الموعد بـ 15 يوماً.</td></tr>
+                            <tr><td><strong>Fallback Plan (الخطة البديلة)</strong></td><td>تُعد مسبقاً أثناء التخطيط.</td><td>تُفعل في حال <strong>فشلت</strong> خطة الاستجابة الأولية أو الطارئة.</td><td>التعاقد مع مصنع خرسانة ثالث بديل في حال تعثر المصنعين الأول والثاني عن التوريد.</td></tr>
+                            <tr><td><strong>Workaround (الحل الالتفافي)</strong></td><td>تُنفذ وقتياً بدون تخطيط مسبق.</td><td>استجابة غير مخططة لمشكلة وقعت فجأة لم تكن مسجلة بالسجل.</td><td>انسداد مفاجئ لخط المياه الرئيسي أثناء الصب؛ قمت بنقل المياه بصهاريج مجاورة لحين الإصلاح.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="box box-exam reveal">
+                    <div class="box-title"><span class="exam-star"><i class='bx bx-star'></i> مهم للاختبار</span><i class='bx bx-check-double'></i> موضع سؤال اختبار حاسم (PMI-RMP & PMP)</div>
+                    <ul>
+                        <li>إذا طلب منك السؤال اختيار استراتيجية التعامل مع خطر <strong>لا يمكن تغييره أو التحكم به</strong> وأثره مالي بحت، فالخيارات الأفضل هي <strong>Transfer</strong> (تأمين/مقاول) أو <strong>Mitigate</strong>.</li>
+                        <li>فرق جوهري متكرر: <strong>Workaround</strong> هو الإجراء المتخذ مع مشكلة (Issue) لم تكن في الـ Risk Register، بينما <strong>Contingency Plan</strong> هي خطة مجهزة ومدرسية لخطر محدد مسبقاً.</li>
+                        <li>مالك الخطر (Risk Owner) هو المسؤول عن مراقبة الـ Triggers وتنفيذ خطة الاستجابة مع فريق العمل وليس مدير المشروع بمفرده.</li>
+                    </ul>
+                </div>
+
+                <div class="box box-tip reveal">
+                    <div class="box-title"><i class='bx bx-bulb'></i> نصيحة مدير المشروع الميدانية</div>
+                    <p>احذر من خطأ "الاستجابة المكلفة"! يجب أن تكون تكلفة خطة الاستجابة أقل بكثير من الأثر المالي للخطر نفسه. إذا كانت تكلفة التحوط للحد من التأخير هي 500,000 ريال، بينما غرامة التأخير الكلية هي 100,000 ريال، فمن الأجدى هندسياً ومالياً قبول الخطر!</p>
+                </div>
+
+                <div class="box box-mistake reveal">
+                    <div class="box-title"><i class='bx bx-error'></i> أخطاء شائعة في خطط الاستجابة</div>
+                    <ul>
+                        <li>وضع خطط استجابة نظرية رنانة دون تحديد (Risk Owner) واضح يتابع تنفيذها بالميدان.</li>
+                        <li>إهمال تحديث جدول الكميات والجدول الزمني (P6) بعد اعتماد خطط الاستجابة التي تتطلب تكاليف أو أوقات إضافية.</li>
+                    </ul>
+                </div>
+
+                <div class="box box-nextstep reveal">
+                    <div class="box-title"><i class='bx bx-calendar-check'></i> ماذا تفعل غداً في موقعك؟</div>
+                    <p>راجع أعلى 3 مخاطر تم تقييمها كـ (High / Critical) في مشروعك، وتأكد من وجود: 1) اسم مالك الخطر (Risk Owner)، 2) مؤشر إطلاق الخطر (Trigger)، 3) خطة بديلة (Fallback Plan) مكتوبة ومدعمة بميزانية مقبولة.</p>
+                </div>
+
+                <div class="box box-info reveal">
+                    <div class="box-title"><i class='bx bx-layer-plus'></i> مصفوفة RACI لخطط الاستجابة</div>
+                    <p>لضمان حوكمة تنفيذ الاستجابة بالموقع، يُفضل استخدام مصفوفة <strong>RACI</strong> لربط كل استجابة بالمهندسين المعنيين: (Responsible للمنفذ، Accountable للمعتمد والمسؤول النهائي، Consulted للمستشار الفني، Informed بالمحيطين).</p>
+                </div>
+
+                <div class="case-thread reveal">
+                    <span class="case-thread-badge"><i class='bx bx-time-five'></i> الأسبوع 8 من مشروع المستشفى — نهاية القصة</span>
+                    <h4>خطر المولدات... من رقم مالي إلى قرار وحل فعلي</h4>
+                    <p>باستخدام شجرة القرار أعلاه على <strong>RISK-014</strong> (احتمالية 40%، EMV = 600,000 ريال): تعذّر التجنب الكامل (المولدات ضرورية)، وتعذّر النقل الكامل (المورد الوحيد المعتمد محلياً)، لكن كان ممكناً التخفيف. فاختار الفريق استراتيجية <strong>Mitigate</strong>: طلب شراء مبكر (Long-lead Procurement) للمولدات قبل الحاجة الفعلية بـ 10 أشهر، مع تعيين مهندس الكهرباء كـ Risk Owner ومؤشر إطلاق (Trigger) واضح: أي تأخر في تأكيد الشحن يتجاوز أسبوعين.</p>
+                    <p><strong>النتيجة:</strong> وصلت المولدات للموقع قبل الموعد المطلوب بثلاثة أسابيع، دون الحاجة لصرف أي جزء من ميزانية الطوارئ المخصصة للخطر. القصة الكاملة — من ملاحظة عابرة في الأسبوع الأول إلى نتيجة موثقة في الأسبوع الثامن — هي بالضبط ما ستمارسه بنفسك في المحاكاة التطبيقية القادمة.</p>
+                    <div class="case-thread-steps">
+                        <div class="ct-step done">1. ظهور الخطر</div>
+                        <div class="ct-step done">2. التحديد الرسمي</div>
+                        <div class="ct-step done">3. التحليل</div>
+                        <div class="ct-step current">4. الاستجابة والنتيجة</div>
+                    </div>
+                </div>
+
+                <div class="box box-decision reveal">
+                    <div class="box-title"><i class='bx bx-flag'></i> توقف: ماذا ستفعل؟</div>
+                    <p><strong>الموقف:</strong> خطر تعثر المقاول المتخصص في الغازات الطبية مالياً؛ أثره كبير على المشروع، لكن لا يوجد بديل فوري له، وميزانية التحوط المخصصة محدودة جداً. أي استراتيجية أنسب؟</p>
+                    <div class="decision-options">
+                        <button class="decision-btn" data-correct="false" onclick="handleDecision(this)">القبول (Accept) بدون أي إجراء استباقي</button>
+                        <button class="decision-btn" data-correct="true" onclick="handleDecision(this)">التخفيف (Mitigate) عبر متابعة مالية دورية ودفعات مرحلية مشروطة بالإنجاز</button>
+                        <button class="decision-btn" data-correct="false" onclick="handleDecision(this)">التصعيد (Escalate) فوراً للمالك دون أي محاولة داخلية</button>
+                    </div>
+                    <div class="decision-feedback">
+                        <p><strong>✅ الإجابة الصحيحة:</strong> التخفيف هو الأنسب هنا لأنه يقلل احتمالية أو أثر تعثر المقاول (عبر ربط الدفعات بالإنجاز الفعلي ومتابعة وضعه المالي دورياً) دون تكلفة إضافية كبيرة، بينما التصعيد يُترك كملاذ أخير إذا فشلت هذه الإجراءات الداخلية أولاً.</p>
+                    </div>
+                </div>
+
+                <div class="takeaways-box reveal">
+                    <h3><i class='bx bx-badge-check'></i> خلاصة الفصل في 5 نقاط</h3>
+                    <ul class="takeaways-list">
+                        <li><i class='bx bx-check-circle'></i> استراتيجيات التهديدات الخمس: التجنب، النقل، التخفيف، القبول، والتصعيد.</li>
+                        <li><i class='bx bx-check-circle'></i> استراتيجيات الفرص الأربع: الاستغلال، المشاركة، التحسين، والقبول.</li>
+                        <li><i class='bx bx-check-circle'></i> الخطر المتبقي (Residual) ينتج بعد الاستجابة، والخطر الثانوي (Secondary) ينتج بسبب الاستجابة نفسها.</li>
+                        <li><i class='bx bx-check-circle'></i> خطة الطوارئ (Contingency Plan) تُفعَّل عند ظهور المؤشر (Trigger)، والخطة البديلة (Fallback) تُفعَّل عند فشل الاستجابة الأساسية.</li>
+                        <li><i class='bx bx-check-circle'></i> تكلفة خطة الاستجابة يجب أن تكون دائماً أقل من الأثر المالي للخطر نفسه.</li>
+                    </ul>
+                </div>
+
+                <div class="capability-box reveal">
+                    <div class="capability-title"><i class='bx bx-badge-check'></i> أنت الآن تعلمت الآتي:</div>
+                    <div class="capability-list">
+                        <div class="capability-item"><i class='bx bx-check-circle'></i> اختيار استراتيجية الاستجابة الصحيحة للتهديدات والفرص</div>
+                        <div class="capability-item"><i class='bx bx-check-circle'></i> التفريق بين الخطر المتبقي (Residual) والخطر الثانوي (Secondary)</div>
+                        <div class="capability-item"><i class='bx bx-check-circle'></i> التفريق بين خطة الطوارئ (Contingency) والخطة البديلة (Fallback)</div>
+                        <div class="capability-item"><i class='bx bx-check-circle'></i> تقييم جدوى خطة الاستجابة اقتصادياً مقابل أثر الخطر</div>
+                    </div>
+                </div>
+
+                <div class="diagram-box reveal">
+                    <div class="diagram-box-title"><i class='bx bx-sitemap'></i> خريطة ذهنية: تخطيط الاستجابة والحلول</div>
+                    <svg viewBox="0 0 860 340" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="340" y="130" width="180" height="65" rx="30" fill="var(--brand-blue)" stroke="var(--primary-navy)" stroke-width="2"/>
+                        <text x="430" y="168" text-anchor="middle" font-size="15" font-weight="900" fill="#fff">استجابة المخاطر</text>
+
+                        <line x1="340" y1="150" x2="170" y2="60" stroke="#94a3b8" stroke-width="2"/>
+                        <rect x="20" y="30" width="230" height="60" rx="14" fill="#fef2f2" stroke="#dc2626" stroke-width="2"/>
+                        <text x="135" y="55" text-anchor="middle" font-size="13" font-weight="900" fill="#b91c1c">استراتيجيات التهديد</text>
+                        <text x="135" y="73" text-anchor="middle" font-size="10.5" font-weight="700" fill="#7f1d1d">تجنب · نقل · تخفيف · قبول · تصعيد</text>
+
+                        <line x1="340" y1="165" x2="150" y2="165" stroke="#94a3b8" stroke-width="2"/>
+                        <rect x="20" y="135" width="220" height="60" rx="14" fill="#ecfdf5" stroke="#10b981" stroke-width="2"/>
+                        <text x="130" y="160" text-anchor="middle" font-size="13" font-weight="900" fill="#047857">استراتيجيات الفرص</text>
+                        <text x="130" y="178" text-anchor="middle" font-size="10.5" font-weight="700" fill="#047857">استغلال · مشاركة · تحسين · قبول</text>
+
+                        <line x1="340" y1="180" x2="170" y2="270" stroke="#94a3b8" stroke-width="2"/>
+                        <rect x="20" y="240" width="230" height="65" rx="14" fill="#fffbeb" stroke="#f59e0b" stroke-width="2"/>
+                        <text x="135" y="265" text-anchor="middle" font-size="13" font-weight="900" fill="#92400e">Residual / Secondary</text>
+                        <text x="135" y="283" text-anchor="middle" font-size="10.5" font-weight="700" fill="#92400e">خطر متبقٍ / خطر ناتج عن الاستجابة</text>
+
+                        <line x1="520" y1="150" x2="690" y2="60" stroke="#94a3b8" stroke-width="2"/>
+                        <rect x="610" y="30" width="230" height="60" rx="14" fill="#f5f3ff" stroke="#8b5cf6" stroke-width="2"/>
+                        <text x="725" y="55" text-anchor="middle" font-size="13" font-weight="900" fill="#6d28d9">Trigger</text>
+                        <text x="725" y="73" text-anchor="middle" font-size="11" font-weight="700" fill="#6d28d9">مؤشر إطلاق مبكر</text>
+
+                        <line x1="520" y1="165" x2="710" y2="165" stroke="#94a3b8" stroke-width="2"/>
+                        <rect x="620" y="135" width="220" height="60" rx="14" fill="#eff6ff" stroke="var(--brand-blue)" stroke-width="2"/>
+                        <text x="730" y="160" text-anchor="middle" font-size="13" font-weight="900" fill="var(--primary-navy)">Contingency / Fallback</text>
+                        <text x="730" y="178" text-anchor="middle" font-size="10.5" font-weight="700" fill="var(--text-muted)">خطة طوارئ / خطة بديلة</text>
+
+                        <line x1="520" y1="180" x2="690" y2="270" stroke="#94a3b8" stroke-width="2"/>
+                        <rect x="600" y="240" width="240" height="65" rx="14" fill="#ecfdf5" stroke="#10b981" stroke-width="2"/>
+                        <text x="720" y="265" text-anchor="middle" font-size="13" font-weight="900" fill="#047857">RACI Matrix</text>
+                        <text x="720" y="283" text-anchor="middle" font-size="10.5" font-weight="700" fill="#047857">حوكمة تنفيذ الاستجابة</text>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <div id="tab5hub" class="tab-content">
+            <div class="section-card">
+                <h2 class="main-title"><i class='bx bx-folder-open'></i> 5. التطبيقات والمراجع</h2>
+                <p class="sub-title-context">اختر من الأدوات الثلاث التالية للانتقال إلى المحتوى العملي والمراجع المكمّلة للدورة:</p>
+
+                <div class="app-hub-grid">
+                    <div class="app-hub-card" style="--card-accent:#1d4ed8;" onclick="switchTab('tab5')" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){switchTab('tab5');}">
+                        <div class="app-hub-icon"><i class='bx bx-slider-alt'></i></div>
+                        <span class="app-hub-tag">أ. تطبيق عملي</span>
+                        <h4>محاكاة المشروع التطبيقي</h4>
+                        <p>محاكاة تفاعلية كاملة لمشروع إنشاء مستشفى، تطبّق فيها دورة حياة إدارة المخاطر خطوة بخطوة.</p>
+                        <span class="app-hub-go">ابدأ المحاكاة <i class='bx bx-left-arrow-alt'></i></span>
+                    </div>
+
+                    <div class="app-hub-card" style="--card-accent:#059669;" onclick="openGuideTool()" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){openGuideTool();}">
+                        <div class="app-hub-icon"><i class='bx bx-compass'></i></div>
+                        <span class="app-hub-tag">ب. أداة مساعدة</span>
+                        <h4>الدليل لتحديد المخاطر</h4>
+                        <p>دليل تفاعلي يفتح داخل الصفحة نفسها، مع زر رجوع سريع للتطبيقات والمراجع في أي وقت.</p>
+                        <span class="app-hub-go">فتح الدليل <i class='bx bx-right-arrow-alt'></i></span>
+                    </div>
+
+                    <div class="app-hub-card" style="--card-accent:#7c3aed;" onclick="switchTab('tab6')" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){switchTab('tab6');}">
+                        <div class="app-hub-icon"><i class='bx bx-layer'></i></div>
+                        <span class="app-hub-tag">ج. مرجع سريع</span>
+                        <h4>المصطلحات والمراجع</h4>
+                        <p>قاموس مصطلحات إدارة المخاطر الأساسية مع أسئلة شائعة ومراجع إضافية للاستزادة.</p>
+                        <span class="app-hub-go">تصفح المصطلحات <i class='bx bx-left-arrow-alt'></i></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="tab5" class="tab-content">
+            <div class="section-card" style="padding: 0; background: transparent; box-shadow: none; border: none;">
+                <span class="back-crumb" onclick="switchTab('tab5hub')" role="button" tabindex="0"><i class='bx bx-right-arrow-alt'></i> العودة إلى التطبيقات والمراجع</span>
+                <h2 class="main-title" style="background: var(--white); padding: 25px; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.03);"><i class='bx bx-slider-alt'></i> 5. محاكاة المشروع التطبيقي الكامل</h2>
+                
+                <div class="module-progress-bar reveal" style="margin: 20px 25px;">
+                    <div class="mp-text">أنت الآن في قسم التطبيقات والمحاكاة</div>
+                    <div class="mp-track"><div class="mp-fill" style="width: 70%;"></div></div>
+                    <div class="mp-time"><i class='bx bx-time-five'></i> 6 دقائق</div>
+                </div>
+
+                <div class="module-objective reveal" style="margin: 20px 25px;">
+                    <span class="obj-tag">🎯 هدف المرحلة:</span>
+                    <p class="obj-text">في هذه المحاكاة التفاعلية، سنقوم بتطبيق كل ما تعلمته عملياً على نموذج واقعي لمشروع بناء مستشفى متكامل.</p>
+                </div>
+
+                <p class="sub-title-context reveal" style="margin-top: 20px; margin-left: 25px; margin-right: 25px; font-size: 18px;">
+                    أهلاً بك في المحاكي التفاعلي لمشروع <strong>"مستشفى 500 سرير بالرياض"</strong>. استخدم الأزرار بالأسفل للتنقل عبر <strong>دورة حياة إدارة المخاطر الكاملة</strong> (التمهيد ← التحديد ← التقييم ← الاستجابة ← المراقبة والمتابعة).
+                </p>
+
+                <div class="carousel-container reveal">
+                    <div class="carousel-header">
+                        <h3 id="carousel-title">1. تأسيس المشروع والبيئة</h3>
+                        <span class="carousel-step-badge" id="carousel-badge">الخطوة 1 من 5</span>
+                    </div>
+                    
+                    <div class="carousel-track-wrapper">
+                        <div class="carousel-track" id="caseTrack">
+                            
+                            <div class="carousel-slide">
+                                <div class="case-study-banner">
+                                    <i class='bx bx-building-house' style="font-size: 45px; color: #38bdf8;"></i>
+                                    <div>
+                                        <strong style="font-size: 20px;">ميثاق المشروع (Project Charter):</strong><br>
+                                        إنشاء وتجهيز مستشفى متكامل بسعة 500 سرير بمدينة الرياض، بميزانية تقديرية 400 مليون ريال، ومدة تنفيذ إلزامية تبلغ 24 شهراً.
+                                    </div>
+                                </div>
+                                <div class="card-heading" style="margin-top:0;">تمهيد وفهم البيئة (Context Setup)</div>
+                                <p>قبل البدء في صيد المخاطر، قمنا كفريق إدارة مشروع بتحديد المحددات والافتراضات:</p>
+                                <ul>
+                                    <li><strong>القيود (Constraints):</strong> الميزانية ثابتة ولا مجال لتجاوز 400 مليون، والموعد إلزامي لتجنب غرامات تأخير قاسية من وزارة الصحة.</li>
+                                    <li><strong>الافتراضات (Assumptions):</strong> افترضنا أن التربة قوية بناءً على جسات أولية، وأن الموردين الخارجيين سيلتزمون بجدول التوريد.</li>
+                                    <li><strong>شهية المخاطر للإدارة:</strong> "منخفضة جداً" (Risk Averse) تجاه أي خطر يمس جودة الأجهزة الطبية أو تأخير الافتتاح.</li>
+                                </ul>
+                            </div>
+
+                            <div class="carousel-slide">
+                                <div class="card-heading" style="margin-top:0; border-right-color:#f59e0b;">الخطوة 2: تحديد وحصر المخاطر (Identify Risks)</div>
+                                <p>قمنا بعقد ورش عمل (Brainstorming) مع مديري الأقسام لإنشاء (Risk Register). إليك أبرز ما تم حصره:</p>
+                                <div class="mega-case-card electrical" style="padding: 20px; margin-bottom: 15px;">
+                                    <h4 style="color: #d97706; margin-bottom: 10px; font-weight:800;"><i class='bx bx-bolt'></i> مخاطر الكهرباء والأنظمة (MEP):</h4>
+                                    <ul style="margin-bottom:0;">
+                                        <li><strong>خطر 1:</strong> تأخر توريد المحولات ومولدات الطوارئ الضخمة من بلد المنشأ.</li>
+                                        <li><strong>خطر 2:</strong> تعارض مسارات الكابلات مع مجاري التكييف وغازات الـ ICU في الأسقف (Clashes).</li>
+                                    </ul>
+                                </div>
+                                <div class="mega-case-card contracts" style="padding: 20px; margin-bottom: 15px;">
+                                    <h4 style="color: #dc2626; margin-bottom: 10px; font-weight:800;"><i class='bx bx-file'></i> مخاطر العقود والتكاليف:</h4>
+                                    <ul style="margin-bottom:0;">
+                                        <li><strong>خطر 3:</strong> تعثر مقاول الباطن التخصصي للغازات الطبية مالياً.</li>
+                                        <li><strong>خطر 4:</strong> تزايد طلبات التغيير من الكادر الطبي للمستشفى (Scope Creep).</li>
+                                    </ul>
+                                </div>
+                                <div class="mega-case-card permits" style="padding: 20px; margin-bottom: 15px;">
+                                    <h4 style="color: #7c3aed; margin-bottom: 10px; font-weight:800;"><i class='bx bx-badge-check'></i> مخاطر التراخيص (Permits):</h4>
+                                    <ul style="margin-bottom:0;">
+                                        <li><strong>خطر 5:</strong> تأخر رخصة الدفاع المدني واعتماد (CBAHI) لتشغيل المستشفى.</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="carousel-slide">
+                                <div class="card-heading" style="margin-top:0; border-right-color:#10b981;">الخطوة 3: التقييم النوعي والكمي (Analyze Risks)</div>
+                                <p>أخذنا المخاطر المحددة في الخطوة السابقة وقمنا بتقييمها لمعرفة الأولويات وتحديد ميزانية الطوارئ (EMV):</p>
+                                <div class="table-wrapper">
+                                    <table class="data-table" style="font-size: 15px;">
+                                        <thead>
+                                            <tr>
+                                                <th>وصف الخطر (Risk)</th>
+                                                <th>الاحتمالية (P)</th>
+                                                <th>الأثر المالي (I)</th>
+                                                <th>التقييم النوعي</th>
+                                                <th>مبلغ الطوارئ (EMV)</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>تأخر مولدات الطوارئ</td>
+                                                <td>40%</td>
+                                                <td>1,500,000 ريال</td>
+                                                <td><span class="status-pill pill-high">مرتفع</span></td>
+                                                <td><strong>600,000 ريال</strong></td>
+                                            </tr>
+                                            <tr>
+                                                <td>تعثر مقاول الغازات الطبية</td>
+                                                <td>20%</td>
+                                                <td>800,000 ريال</td>
+                                                <td><span class="status-pill pill-medium">متوسط</span></td>
+                                                <td><strong>160,000 ريال</strong></td>
+                                            </tr>
+                                            <tr>
+                                                <td>تأخر الدفاع المدني</td>
+                                                <td>60%</td>
+                                                <td>3,000,000 ريال</td>
+                                                <td><span class="status-pill pill-critical">حرج جداً</span></td>
+                                                <td><strong>1,800,000 ريال</strong></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="box box-info" style="margin-top: 15px; padding: 15px;">
+                                    <strong><i class='bx bx-line-chart'></i> نتيجة التحليل:</strong> الخطر الأكبر الذي يهدد المشروع هو (تراخيص الدفاع المدني). لذلك سيتم تعيين مدير المشروع شخصياً كـ (Risk Owner) لهذا الخطر المكتشف عبر أداة (Tornado Diagram).
+                                </div>
+                            </div>
+
+                            <div class="carousel-slide">
+                                <div class="card-heading" style="margin-top:0; border-right-color:#38bdf8;">الخطوة 4: خطط الاستجابة والحل (Plan Responses)</div>
+                                <p>لم نكتفِ بالتقييم، بل وضعنا الموانع والحلول الاستباقية لكافة المخاطر، وتم تحديث (Risk Register) بها:</p>
+                                <ul>
+                                    <li style="margin-bottom: 15px;"><strong>لخطر تأخر المولدات (استراتيجية التخفيف - Mitigate):</strong> الشراء المبكر (Long-lead items) قبل الحاجة لها بـ 12 شهراً، واشتراط إجراء اختبار (FAT) بالمصنع الأم قبل الشحن.</li>
+                                    <li style="margin-bottom: 15px;"><strong>لخطر تعارض الكابلات (استراتيجية التجنب - Avoid):</strong> فرض استخدام نمذجة معلومات البناء (BIM - LOD 400) الإلزامي لجميع التخصصات، وإدارة جلسات حل التعارضات أسبوعياً.</li>
+                                    <li style="margin-bottom: 15px;"><strong>لخطر طلبات تغيير الكادر الطبي (استراتيجية التخفيف - Mitigate):</strong> تفعيل لجنة صارمة (Change Control Board) لرفض أي تغيير يمس النطاق بدون توقيع المالك على ملحق مالي وزمني.</li>
+                                    <li style="margin-bottom: 15px;"><strong>لخطر الدفاع المدني (استراتيجية النقل/التخفيف - Mitigate/Transfer):</strong> إشراك مكتب استشاري معتمد متخصص في الكود السعودي للحريق منذ اليوم الأول للمشروع لتولي هذا الملف بالكامل.</li>
+                                </ul>
+                            </div>
+
+                            <div class="carousel-slide">
+                                <div class="card-heading" style="margin-top:0; border-right-color:#8b5cf6;">الخطوة 5: المراقبة والمتابعة (Monitor & Control)</div>
+                                <p>أثناء التنفيذ الفعلي في موقع المستشفى، تتم المتابعة بشكل دوري عبر الإجراءات التالية:</p>
+                                <div class="mega-case-card" style="border-right-color: #8b5cf6;">
+                                    <ul>
+                                        <li><strong>اجتماعات المراجعة (Risk Audits & Reviews):</strong> مراجعة أسبوعية لسجل المخاطر مع طاقم المستشفى. هل تغيرت احتمالية تأخر المولدات بعد اندلاع أزمة شحن عالمية جديدة؟ (إذا نعم، نُحدث السجل).</li>
+                                        <li><strong>إدارة الخطر الثانوي (Secondary Risk):</strong> عندما قمنا بتعيين استشاري حريق مستقل (استجابة)، تولد خطر جديد وهو (احتمال تأخره هو شخصياً في المراجعة). قمنا بإضافة هذا الخطر الثانوي للسجل ووضعنا له استجابة.</li>
+                                        <li><strong>التعامل مع المشاكل الواقعة (Issues & Workarounds):</strong> أثناء الصب، تعطلت المضخة فجأة (خطر لم يكن في الحسبان). قمنا بعمل <em>حل التفافي فوري (Workaround)</em> واستأجرنا مضخة من مشروع مجاور لإنقاذ الصبة، ثم سجلنا الحدث كدروس مستفادة.</li>
+                                    </ul>
+                                </div>
+                                <div class="box box-tip" style="margin-top: 15px;">
+                                    <div class="box-title"><i class='bx bx-check-shield'></i> الخلاصة</div>
+                                    <p>بفضل تطبيق هذه الخطوات الخمسة بشكل دائري ومستمر، استطاع الفريق تسليم مستشفى الـ 500 سرير في وقته وبميزانيته، لأن 90% من المشاكل تم القضاء عليها وهي لا تزال "مخاطر على الورق".</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="carousel-controls">
+                        <button class="btn-carousel" id="prevBtn" onclick="moveSlide(-1)" disabled><i class='bx bx-right-arrow-alt'></i> السابق</button>
+                        <div class="carousel-indicators" id="caseIndicators">
+                            <div class="indicator active" onclick="goToSlide(0)"></div>
+                            <div class="indicator" onclick="goToSlide(1)"></div>
+                            <div class="indicator" onclick="goToSlide(2)"></div>
+                            <div class="indicator" onclick="goToSlide(3)"></div>
+                            <div class="indicator" onclick="goToSlide(4)"></div>
+                        </div>
+                        <button class="btn-carousel" id="nextBtn" onclick="moveSlide(1)">الخطوة التالية <i class='bx bx-left-arrow-alt'></i></button>
+                    </div>
+                </div>
+
+                <div class="diagram-box reveal" style="margin: 25px;">
+                    <div class="diagram-box-title"><i class='bx bx-git-commit'></i> رحلة خطر واحد كاملة: من ملاحظة عابرة إلى إغلاق ناجح (RISK-014)</div>
+                    <svg viewBox="0 0 1400 220" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="20" y="60" width="240" height="100" rx="14" fill="#f1f5f9" stroke="#94a3b8" stroke-width="2"/>
+                        <text x="140" y="90" text-anchor="middle" font-size="13" font-weight="900" fill="var(--text-muted)">1. تمهيد</text>
+                        <text x="140" y="112" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--text-muted)">ملاحظة عابرة غير</text>
+                        <text x="140" y="128" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--text-muted)">موثقة من مهندس الكهرباء</text>
+                        <line x1="260" y1="110" x2="290" y2="110" stroke="#94a3b8" stroke-width="3"/><polygon points="300,110 286,104 286,116" fill="#94a3b8"/>
+
+                        <rect x="300" y="60" width="240" height="100" rx="14" fill="var(--light-blue)" stroke="var(--brand-blue)" stroke-width="2"/>
+                        <text x="420" y="90" text-anchor="middle" font-size="13" font-weight="900" fill="var(--primary-navy)">2. التحديد</text>
+                        <text x="420" y="112" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--primary-navy)">تسجيل رسمي في</text>
+                        <text x="420" y="128" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--primary-navy)">Risk Register تحت RISK-014</text>
+                        <line x1="540" y1="110" x2="570" y2="110" stroke="#94a3b8" stroke-width="3"/><polygon points="580,110 566,104 566,116" fill="#94a3b8"/>
+
+                        <rect x="580" y="60" width="240" height="100" rx="14" fill="#fffbeb" stroke="#f59e0b" stroke-width="2"/>
+                        <text x="700" y="90" text-anchor="middle" font-size="13" font-weight="900" fill="#b45309">3. التقييم</text>
+                        <text x="700" y="112" text-anchor="middle" font-size="11.5" font-weight="700" fill="#92400e">احتمالية 70% × أثر</text>
+                        <text x="700" y="128" text-anchor="middle" font-size="11.5" font-weight="700" fill="#92400e">تأخير 25 يوماً = عالي</text>
+                        <line x1="820" y1="110" x2="850" y2="110" stroke="#94a3b8" stroke-width="3"/><polygon points="860,110 846,104 846,116" fill="#94a3b8"/>
+
+                        <rect x="860" y="60" width="240" height="100" rx="14" fill="#f5f3ff" stroke="#8b5cf6" stroke-width="2"/>
+                        <text x="980" y="90" text-anchor="middle" font-size="13" font-weight="900" fill="#6d28d9">4. الاستجابة</text>
+                        <text x="980" y="112" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6d28d9">تخفيف (Mitigate): شراء</text>
+                        <text x="980" y="128" text-anchor="middle" font-size="11.5" font-weight="700" fill="#6d28d9">مبكر Long-lead + FAT</text>
+                        <line x1="1100" y1="110" x2="1130" y2="110" stroke="#94a3b8" stroke-width="3"/><polygon points="1140,110 1126,104 1126,116" fill="#94a3b8"/>
+
+                        <rect x="1140" y="60" width="240" height="100" rx="14" fill="#ecfdf5" stroke="#10b981" stroke-width="2"/>
+                        <text x="1260" y="90" text-anchor="middle" font-size="13" font-weight="900" fill="#047857">5. المتابعة</text>
+                        <text x="1260" y="112" text-anchor="middle" font-size="11.5" font-weight="700" fill="#166534">تسليم المولدات في</text>
+                        <text x="1260" y="128" text-anchor="middle" font-size="11.5" font-weight="700" fill="#166534">الموعد، الخطر أُغلق ✓</text>
+
+                        <text x="700" y="195" text-anchor="middle" font-size="12.5" font-weight="800" fill="var(--text-muted)">هذه هي دورة حياة أي خطر هندسي — نفس الخمس مراحل تنطبق على أي خطر في أي مشروع تديره</text>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <div id="tab6" class="tab-content">
+            <div class="section-card">
+                <span class="back-crumb" onclick="switchTab('tab5hub')" role="button" tabindex="0"><i class='bx bx-right-arrow-alt'></i> العودة إلى التطبيقات والمراجع</span>
+                <h2 class="main-title"><i class='bx bx-layer'></i> المصطلحات الشاملة والمراجع العلمية</h2>
+                <p class="sub-title-context reveal">
+                    تم بناء هذا القسم ليكون مرجعك الدائم لتجاوز المقابلات الشخصية، وتوحيد لغتك مع مديري المشاريع الدوليين، واجتياز امتحانات (PMP / PMI-RMP).
+                </p>
+
+                <div class="card-heading reveal"><i class='bx bx-book-open'></i> أولاً: القاموس التفاعلي الشامل (Interactive Glossary)</div>
+                <p class="reveal" style="margin-bottom: 25px;">اضغط على أي تصنيف لفتح المصطلحات التابعة له واستعراض تفاصيلها والفرق بينها:</p>
+                <div class="faq-container reveal">
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFaq(this)">
+                            <div><i class='bx bx-target-lock icon-main'></i> محددات تقبل الإدارة للمخاطر (Risk Boundaries)</div>
+                            <i class='bx bx-chevron-down faq-icon-arrow'></i>
+                        </div>
+                        <div class="faq-answer">
+                            <ul>
+                                <li><strong>Risk Appetite (شهية المخاطر):</strong> مقدار درجة المخاطر التي تكون الإدارة العليا مستعدة لقبولها طمعاً في تحقيق مكاسب أو فرص استثمارية.</li>
+                                <li><strong>Risk Tolerance (التسامح مع المخاطر):</strong> الحد الأقصى أو الهامش من التذبذب الذي يمكن للمشروع تحمله قبل أن يؤثر بشكل مباشر وخطير على أهدافه الرئيسية.</li>
+                                <li><strong>Risk Threshold (عتبة المخاطر):</strong> النقطة الرقمية المحددة التي إذا وصل إليها الخطر يجب إطلاق الإنذار وبدء تفعيل خطة الاستجابة فوراً.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFaq(this)">
+                            <div><i class='bx bx-shield-quarter icon-main'></i> أنواع المخاطر وخطط الطوارئ (Responses & Plans)</div>
+                            <i class='bx bx-chevron-down faq-icon-arrow'></i>
+                        </div>
+                        <div class="faq-answer">
+                            <ul>
+                                <li><strong>Contingency Plan (خطة الطوارئ):</strong> خططة مجهزة ومدروسة مسبقاً، تُفعل فقط إذا حدث الخطر أو تحققت مؤشراته.</li>
+                                <li><strong>Fallback Plan (الخطة البديلة):</strong> خطة احتياطية أخيرة يتم اللجوء إليها في حال فشلت "خطة الطوارئ" الأساسية ولم تحقق الهدف المرجو منها.</li>
+                                <li><strong>Workaround (الحل الالتفافي):</strong> إجراء تصحيحي فوري وغير مخطط له مسبقاً، يُتخذ للتعامل مع مشكلة (Issue) حدثت فجأة ولم تكن مسجلة بسجل المخاطر على الإطلاق.</li>
+                                <li><strong>Secondary Risk (الخطر الثانوي):</strong> خطر جديد ومختلف ينشأ نتيجة مباشرة لتنفيذك لاستراتيجية الاستجابة.</li>
+                                <li><strong>Residual Risk (الخطر المتبقي):</strong> الجزء البسيط من الخطر الذي يتبقى حتى بعد تنفيذ خطة الاستجابة ويتم قبوله لضعف تأثيره.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFaq(this)">
+                            <div><i class='bx bx-bar-chart-alt-2 icon-main'></i> التحليل والتقييم المالي (Analysis & Tools)</div>
+                            <i class='bx bx-chevron-down faq-icon-arrow'></i>
+                        </div>
+                        <div class="faq-answer">
+                            <ul>
+                                <li><strong>Qualitative Analysis (التحليل النوعي):</strong> ترتيب المخاطر بسرعة بناءً على الأولوية الذاتية (عالي، متوسط، منخفض) بدون الدخول في حسابات مالية معقدة.</li>
+                                <li><strong>Quantitative Analysis (التحليل الكمي):</strong> حساب التأثير المالي والزمني الدقيق للمخاطر على ميزانية وجدول المشروع بالأرقام (Dollars & Days).</li>
+                                <li><strong>Expected Monetary Value - EMV (القيمة المالية المتوقعة):</strong> حاصل ضرب "نسبة احتمالية الخطر" في "التأثير المالي المتوقع له". يستخدم لتحديد مبلغ الطوارئ.</li>
+                                <li><strong>Monte Carlo Simulation (محاكاة مونت كارلو):</strong> برنامج رياضي متقدم يحاكي آلاف السيناريوهات للمشروع لتوقع احتمالية الانتهاء في الموعد والميزانية المحددين بدقة.</li>
+                                <li><strong>Tornado Diagram (مخطط الإعصار):</strong> رسم بياني يستخدم في (تحليل الحساسية - Sensitivity Analysis) لمعرفة أي خطر يمتلك التأثير الأكبر والمنفرد على المشروع.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFaq(this)">
+                            <div><i class='bx bx-user-pin icon-main'></i> الهيكلة والمسؤوليات (Structure & Roles)</div>
+                            <i class='bx bx-chevron-down faq-icon-arrow'></i>
+                        </div>
+                        <div class="faq-answer">
+                            <ul>
+                                <li><strong>Risk Owner (مالك الخطر):</strong> الشخص ذو الصلاحية الاستراتيجية المسؤول عن إدارة خطر محدد، ومتابعة تنفيذ الخطة، وله سلطة اعتماد الميزانية الخاصة به.</li>
+                                <li><strong>Risk Actionee (منفذ الاستجابة):</strong> الشخص الميداني الذي يقوم بتنفيذ الإجراءات الفعلية للتعامل مع الخطر بناءً على تعليمات "مالك الخطر".</li>
+                                <li><strong>Risk Breakdown Structure - RBS (هيكل تحليل المخاطر):</strong> تدرج هرمي يعرض تصنيفات ومصادر المخاطر في المشروع (مثل: مخاطر فنية، خارجية، تجارية، إدارية) لتسهيل العصف الذهني.</li>
+                                <li><strong>Risk Register (سجل المخاطر):</strong> الوثيقة الحية الأساسية التي تحتوي على قائمة كافة المخاطر المحددة، تقييمها، أصحابها، وخطط الاستجابة لها.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- تم إضافة القسم الجديد هنا ليتضمن مصطلحات الصورة المطلوبة -->
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFaq(this)">
+                            <div><i class='bx bx-list-check icon-main'></i> مصطلحات لغة الأعمال للمخاطر (Risk Business Language)</div>
+                            <i class='bx bx-chevron-down faq-icon-arrow'></i>
+                        </div>
+                        <div class="faq-answer">
+                            <ul>
+                                <li><strong>Risk Appetite (شهية المخاطر):</strong> المستوى الذي تستعد القيادة لقبوله. (The level leadership is prepared to accept)</li>
+                                <li><strong>Risk Tolerance (التسامح مع المخاطر):</strong> الحد القابل للقياس قبل الحاجة إلى التصعيد. (The measurable limit before escalation is needed)</li>
+                                <li><strong>Risk Capacity (القدرة على تحمل المخاطر):</strong> أقصى ضغط يمكن للمؤسسة استيعابه. (The maximum stress the organization can absorb)</li>
+                                <li><strong>Inherent Risk (الخطر الكامن):</strong> المستوى الأساسي للخطر قبل تطبيق أي ضوابط. (The starting level before controls are considered)</li>
+                                <li><strong>Residual Risk (الخطر المتبقي):</strong> مستوى الخطر المتبقي بعد تطبيق الضوابط. (The remaining level after controls are applied)</li>
+                                <li><strong>Target Residual Risk (الخطر المتبقي المستهدف):</strong> المستوى المطلوب للخطر المتبقي بعد المعالجة. (The desired remaining level after treatment)</li>
+                                <li><strong>Risk Owner (مالك الخطر):</strong> الشخص المسؤول عن المراقبة والاستجابة للخطر. (The accountable person for monitoring and response)</li>
+                                <li><strong>Control Owner (مالك أداة الرقابة):</strong> الشخص المسؤول عن تشغيل الضابط أو أداة الرقابة. (The person responsible for operating the control)</li>
+                                <li><strong>Control Failure (فشل الرقابة):</strong> عدم عمل إجراءات الحماية كما هو مخطط لها. (The safeguard did not work as intended)</li>
+                                <li><strong>Control Weakness (ضعف الرقابة):</strong> وجود إجراءات حماية لكنها غير موثوقة بدرجة كافية. (The safeguard exists but is not reliable enough)</li>
+                                <li><strong>Issue (قضية/مشكلة):</strong> فجوة مؤكدة تتطلب اتخاذ إجراء وتحديد مسؤول. (A confirmed gap needs action and ownership)</li>
+                                <li><strong>Incident (حادث):</strong> تأثر العمليات أو البيانات أو الخدمات بالفعل. (Operations, data or service have already been affected)</li>
+                                <li><strong>Near Miss (حادث وشيك):</strong> فشل كاد أن يقع ولكن تم تداركه في الوقت المناسب. (A failure almost occurred but was caught in time)</li>
+                                <li><strong>Loss Event (حدث خسارة):</strong> تعرض المؤسسة لضرر يمكن قياسه. (The organization experienced measurable harm)</li>
+                                <li><strong>KRI Signal (إشارة مؤشر المخاطر الرئيسي):</strong> إنذار مبكر يوضح الاتجاه نحو القلق/الخطر. (Early warning shows movement toward concern)</li>
+                                <li><strong>Performance Indicator (مؤشر الأداء):</strong> قياس الأداء الفعلي، وليس حالة عدم اليقين بحد ذاتها. (Performance is measured, not uncertainty itself)</li>
+                                <li><strong>Control Test (اختبار الرقابة):</strong> دليل يثبت ما إذا كانت أداة الرقابة تعمل بفعالية. (Evidence shows whether the control works)</li>
+                                <li><strong>Regulatory Obligation (التزام تنظيمي):</strong> قاعدة أو تشريع يجب الوفاء به وإثباته. (A rule must be met and evidenced)</li>
+                                <li><strong>Compliance Gap (فجوة الامتثال):</strong> وجود اختلاف بين الممارسة المطلوبة والممارسة الفعلية. (Required practice and actual practice differ)</li>
+                                <li><strong>Third-Party Reliance (الاعتماد على طرف ثالث):</strong> احتمالية تأثير العلاقة مع مزود الخدمة على التسليم. (A provider relationship may affect delivery)</li>
+                                <li><strong>Resilience Risk (خطر المرونة/الصمود):</strong> احتمالية عدم تلبية التعافي لتوقعات العمل. (Recovery may not meet business expectations)</li>
+                                <li><strong>Attack Path (مسار الهجوم):</strong> وجود مسار يمكن للمهاجم من خلاله الوصول للأصول. (A route exists for an attacker to reach assets)</li>
+                                <li><strong>Data Quality Risk (خطر جودة البيانات):</strong> بيانات سيئة قد تشوه القرارات أو التقارير. (Bad data may distort decisions or reporting)</li>
+                                <li><strong>Model Risk (خطر النموذج):</strong> احتمالية خطأ النموذج أو سوء استخدامه. (A model may be wrong or misused)</li>
+                                <li><strong>AI Governance Risk (خطر حوكمة الذكاء الاصطناعي):</strong> افتقار استخدام الذكاء الاصطناعي للملكية أو الإشراف أو المراقبة. (AI use lacks ownership, oversight or monitoring)</li>
+                                <li><strong>Privacy Risk (خطر الخصوصية):</strong> التعامل مع البيانات الشخصية قد يسبب ضرراً. (Personal data handling may create harm)</li>
+                                <li><strong>Conduct Risk (خطر السلوك):</strong> سلوكيات قد تضر بالعملاء أو تفقد الثقة. (Behavior may damage customers or trust)</li>
+                                <li><strong>Transition Risk (خطر التحول):</strong> تحولات في السياسات أو السوق قد تؤثر على القيمة. (Policy or market shifts may affect value)</li>
+                                <li><strong>Geopolitical Risk (الخطر الجيوسياسي):</strong> التجارة أو عدم الاستقرار قد يعطل الخطط. (Trade or instability may disrupt plans)</li>
+                                <li><strong>Systemic Risk (الخطر النظامي):</strong> فشل قد يمتد تأثيره المتسلسل ليتجاوز وظيفة واحدة. (A failure could cascade beyond one function)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card-heading reveal" style="margin-top: 50px;"><i class='bx bx-library'></i> ثانياً: المراجع العلمية (References)</div>
+                <p class="reveal" style="margin-bottom: 25px;">لضمان أعلى معايير الجودة والاحترافية، تم بناء محتوى الدورة استناداً للإصدارات العالمية التالية:</p>
+
+                <div class="reference-card reveal">
+                    <div class="ref-icon"><i class='bx bx-book-bookmark'></i></div>
+                    <div class="ref-details">
+                        <h4>PMBOK® Guide – 7th Edition</h4>
+                        <p>الدليل المعرفي لإدارة المشاريع (الإصدار السابع) من معهد (PMI)، للتركيز على مبادئ التسليم والقيمة.</p>
+                    </div>
+                </div>
+
+                <div class="reference-card reveal">
+                    <div class="ref-icon"><i class='bx bx-book'></i></div>
+                    <div class="ref-details">
+                        <h4>PMBOK® Guide – 6th Edition</h4>
+                        <p>الإصدار السادس الذي يمثل حجر الأساس في شرح (العمليات السبعة) لإدارة المخاطر وتدفق المدخلات والمخرجات.</p>
+                    </div>
+                </div>
+
+                <div class="reference-card reveal">
+                    <div class="ref-icon"><i class='bx bx-medal'></i></div>
+                    <div class="ref-details">
+                        <h4>PMI-RMP® Standard</h4>
+                        <p>معيار إدارة المخاطر الاحترافي من معهد (PMI)، والذي نستمد منه تقنيات التحليل الكمي والنوعي واستراتيجيات الاستجابة.</p>
+                    </div>
+                </div>
+
+                <div class="reference-card reveal">
+                    <div class="ref-icon"><i class='bx bx-globe'></i></div>
+                    <div class="ref-details">
+                        <h4>ISO 31000 : Risk Management</h4>
+                        <p>المعيار الدولي لإدارة المخاطر، والذي يوفر مبادئ وإرشادات شاملة لتأسيس ثقافة المخاطر داخل المؤسسات والشركات.</p>
+                    </div>
+                </div>
+
+                <div class="reference-card reveal" style="border-right: 6px solid #f59e0b; background: #fffbeb; border-color: #fde68a;">
+                    <div class="ref-icon" style="color: #f59e0b; background: white; box-shadow: 0 4px 10px rgba(245, 158, 11, 0.1);"><i class='bx bx-hard-hat'></i></div>
+                    <div class="ref-details">
+                        <h4 style="color: #b45309;">الخبرات الميدانية لـ BA Academy</h4>
+                        <p style="color: #92400e;">حصيلة خبرات المواقع والمقاولات والاستشارات الهندسية في إدارة وتوجيه المشاريع وتنفيذ الأعمال الإنشائية بكفاءة عالية.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- التبويب لم يعد الافتراضي -->
+        <div id="tab7" class="tab-content">
+            <div class="section-card reveal" style="text-align: center; padding: 60px 40px; background: linear-gradient(135deg, #ffffff, #f8fafc);">
+                <div style="font-size: 90px; color: var(--brand-blue); margin-bottom: 20px; filter: drop-shadow(0 10px 15px rgba(37,99,235,0.2));"><i class='bx bx-laptop'></i></div>
+                <h2 class="main-title" style="justify-content: center; border: none; font-size: 38px; color: var(--primary-navy);">محاكي اختبار PMI-RMP الاحترافي</h2>
+                <p class="sub-title-context" style="margin-bottom: 30px; font-size: 20px; max-width: 800px; margin-left: auto; margin-right: auto; line-height: 1.8;">
+                    مرحباً بك في المحاكي المطور. يغطي هذا التقييم 50 سؤالاً موزعة بدقة على محاور إدارة المخاطر الخمسة (تحديد المخاطر، التحليل الكيفي، التحليل الكمي، الاستجابة، المراقبة) لقياس جاهزيتك الكاملة.
+                </p>
+                <a href="50 PMI Question.html" target="_blank" class="exam-link-btn">
+                    <i class='bx bx-link-external'></i> ابدأ الاختبار الشامل الآن
+                </a>
+            </div>
+        </div>
+
+        <div id="tab8" class="tab-content">
+            <div class="reveal" style="text-align: center; padding: 60px 40px; background: var(--white); border: 2px solid var(--border-color); border-radius: 25px; box-shadow: 0 15px 40px rgba(0,0,0,0.04);">
+                <div style="margin-bottom: 25px;">
+                    <img src="logo.jpg" alt="BA Academy Logo" onerror="this.src='https://via.placeholder.com/130?text=BA+Academy'" style="max-width: 140px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); border: 2px solid #e2e8f0;">
+                </div>
+                <h2 style="font-size: 34px; font-weight: 900; color: var(--primary-navy); margin-bottom: 15px;"><i class='bx bxs-award' style="color: var(--brand-blue); vertical-align: middle;"></i> ختام رحلتك التدريبية</h2>
+                <p style="font-size: 20px; color: var(--brand-blue); font-weight: 800; margin-bottom: 25px; letter-spacing: 0.5px;">
+                    BA Engineering Academy - منصة إدارة المخاطر الهندسية الاحترافية
+                </p>
+                <div style="max-width: 800px; margin: 0 auto 35px; background: var(--light-blue); padding: 30px; border-radius: 16px; border: 1px solid #bfdbfe;">
+                    <p style="font-size: 18px; color: var(--text-dark); line-height: 1.9; font-weight: 700; margin: 0;">
+                        نراك في دورة أخرى قريبة! استمر في تطوير نفسك، فالتميز الهندسي ليس مجرد شهادة، بل هو شغف مستمر بالمعرفة والارتقاء بأداء المشاريع نحو آفاق جديدة من النجاح والكفاءة.
+                    </p>
+                </div>
+                <div style="font-size: 15px; color: var(--text-muted); font-weight: 800; text-transform: uppercase; letter-spacing: 1px;">
+                    From Vision To Execution
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="risk_iframe_modal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(11,17,32,0.85); z-index:999999; align-items:center; justify-content:center; opacity:0; transition:0.4s; pointer-events:none; backdrop-filter: blur(5px);">
+        <div style="background:var(--bg-color); width:95%; height:94vh; border-radius:20px; display:flex; flex-direction:column; padding:25px; box-shadow: 0 25px 50px rgba(0,0,0,0.3);">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; border-bottom:1px solid var(--border-color); padding-bottom:15px;">
+                <button onclick="closeTool()" style="background:#e2e8f0; color: #0f172a; border:none; padding:12px 25px; border-radius:10px; cursor:pointer; font-weight:800; font-size:16px; transition:0.3s;"><i class='bx bx-x' style="font-size:20px; vertical-align:middle;"></i> إغلاق النظام</button>
+                <h3 style="color:var(--brand-blue); font-weight:900; font-size: 22px; margin:0;"><i class='bx bx-shield-quarter'></i> Interactive Risk Register Portal</h3>
+            </div>
+            <iframe src="tools-4.html" style="width:100%; flex-grow:1; border:none; border-radius:12px; background:var(--white); box-shadow: inset 0 0 10px rgba(0,0,0,0.05);"></iframe>
+        </div>
+    </div>
+
+    <div id="guide_iframe_modal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(11,17,32,0.85); z-index:999999; align-items:center; justify-content:center; opacity:0; transition:0.4s; pointer-events:none; backdrop-filter: blur(5px);">
+        <div style="background:var(--bg-color); width:95%; height:94vh; border-radius:20px; display:flex; flex-direction:column; padding:25px; box-shadow: 0 25px 50px rgba(0,0,0,0.3);">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; border-bottom:1px solid var(--border-color); padding-bottom:15px;">
+                <button onclick="closeGuideTool()" style="background:var(--brand-blue); color:#fff; border:none; padding:12px 25px; border-radius:10px; cursor:pointer; font-weight:800; font-size:16px; transition:0.3s; display:flex; align-items:center; gap:8px;"><i class='bx bx-right-arrow-alt' style="font-size:20px;"></i> العودة إلى التطبيقات والمراجع</button>
+                <h3 style="color:#059669; font-weight:900; font-size: 22px; margin:0;"><i class='bx bx-compass'></i> الدليل لتحديد المخاطر</h3>
+            </div>
+            <iframe src="smart-tool.html" style="width:100%; flex-grow:1; border:none; border-radius:12px; background:var(--white); box-shadow: inset 0 0 10px rgba(0,0,0,0.05);"></iframe>
+        </div>
+    </div>
+
+    <button class="back-to-top" id="backToTopBtn" onclick="scrollContentToTop()" aria-label="الرجوع لأعلى الصفحة"><i class='bx bx-up-arrow-alt'></i></button>
+
+    <script>
+        // التبويب الافتراضي هو الصفحة الأولى (tab1)
+        let visitedTabs = new Set(['tab1']);
+        const totalContentTabs = 8;
+
+        const tabMeta = {
+            tab1: { icon: 'bx-play-circle', title: 'مدخل ومفاهيم المخاطر', order: 1 },
+            tab2: { icon: 'bx-cubes', title: 'تحديد المخاطر (Identify)', order: 2 },
+            tab3: { icon: 'bx-line-chart', title: 'تحليل وتقييم المخاطر', order: 3 },
+            tab4: { icon: 'bx-shield-quarter', title: 'تخطيط الاستجابة والحلول', order: 4 },
+            tab5hub: { icon: 'bx-folder-open', title: 'التطبيقات والمراجع' },
+            tab5: { icon: 'bx-slider-alt', title: 'محاكاة المشروع التطبيقي', order: 5 },
+            tab6: { icon: 'bx-layer', title: 'المصطلحات والمراجع', order: 6 },
+            tab7: { icon: 'bx-edit-alt', title: 'الاختبار النهائي', order: 7 },
+            tab8: { icon: 'bx-check-shield', title: 'الخاتمة وإتمام الدورة', order: 8 }
+        };
+
+        function updateProgress() {
+            let percentage = Math.round((visitedTabs.size / totalContentTabs) * 100);
+            if(percentage > 100) percentage = 100;
+            const progressBar = document.getElementById('progress-bar');
+            const progressText = document.getElementById('progress-text');
+            if (progressBar) progressBar.style.width = percentage + '%';
+            if (progressText) progressText.innerText = percentage + '%';
+        }
+
+        function updateContentHeader(tabId) {
+            const meta = tabMeta[tabId];
+            if (!meta) return;
+            const iconEl = document.getElementById('chIcon');
+            const titleEl = document.getElementById('chTitle');
+            const crumbEl = document.getElementById('chCrumb');
+            if (iconEl) iconEl.className = 'bx ' + meta.icon;
+            if (titleEl) titleEl.innerText = meta.title;
+            if (crumbEl) crumbEl.innerText = meta.order ? ('القسم ' + meta.order + ' من ' + totalContentTabs) : 'أدوات ومراجع';
+        }
+
+        const observerOptions = { root: document.getElementById('mainContentArea'), rootMargin: '0px', threshold: 0.1 };
+        const revealObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
+        }, observerOptions);
+
+        function triggerReveals() {
+            document.querySelectorAll('.reveal').forEach(el => {
+                el.classList.remove('active'); 
+                revealObserver.observe(el);
+            });
+            setTimeout(() => {
+                document.querySelectorAll('.tab-content.active .reveal').forEach(el => {
+                    const rect = el.getBoundingClientRect();
+                    if(rect.top < window.innerHeight) el.classList.add('active');
+                });
+            }, 50);
+        }
+
+        function switchTab(tabId) {
+            const currentActive = document.querySelector('.tab-content.active');
+
+            const doSwitch = () => {
+                if (tabMeta[tabId] && tabMeta[tabId].order) visitedTabs.add(tabId);
+                updateProgress();
+
+                document.querySelectorAll('.tab-content').forEach(tab => {
+                    tab.classList.remove('active', 'tab-out');
+                });
+                document.querySelectorAll('.menu-item').forEach(item => {
+                    item.classList.remove('active');
+                });
+
+                const targetContent = document.getElementById(tabId);
+                if (targetContent) {
+                    targetContent.classList.add('active');
+                    const mainArea = document.getElementById('mainContentArea');
+                    if (mainArea) mainArea.scrollTop = 0;
+                }
+
+                const sidebarBtnId = (tabId === 'tab5' || tabId === 'tab6') ? 'btn_tab5hub' : ('btn_' + tabId);
+                const activeBtn = document.getElementById(sidebarBtnId);
+                if (activeBtn) activeBtn.classList.add('active');
+
+                updateContentHeader(tabId);
+                triggerReveals();
+
+                const bar = document.getElementById('pageTransitionBar');
+                if (bar) {
+                    bar.classList.remove('loading');
+                    bar.classList.add('done');
+                    setTimeout(() => bar.classList.remove('done'), 300);
+                }
+            };
+
+            const bar = document.getElementById('pageTransitionBar');
+            if (bar) { bar.classList.remove('done'); bar.classList.add('loading'); }
+
+            if (currentActive && currentActive.id !== tabId) {
+                currentActive.classList.add('tab-out');
+                setTimeout(doSwitch, 160);
+            } else {
+                doSwitch();
+            }
+
+            closeMobileMenuOnBodyClick();
+        }
+
+        function toggleMobileMenu() {
+            const sidebar = document.getElementById('mainSidebar');
+            const backdrop = document.getElementById('sidebarBackdrop');
+            if (sidebar) sidebar.classList.toggle('open');
+            if (backdrop) backdrop.classList.toggle('show', sidebar && sidebar.classList.contains('open'));
+        }
+
+        function closeMobileMenuOnBodyClick() {
+            if(window.innerWidth <= 768) {
+                const sidebar = document.getElementById('mainSidebar');
+                const backdrop = document.getElementById('sidebarBackdrop');
+                if (sidebar) sidebar.classList.remove('open');
+                if (backdrop) backdrop.classList.remove('show');
+            }
+        }
+
+        function scrollContentToTop() {
+            const mainArea = document.getElementById('mainContentArea');
+            if (mainArea) mainArea.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.carousel-slide');
+        const indicators = document.querySelectorAll('.indicator');
+        const track = document.getElementById('caseTrack');
+        const badge = document.getElementById('carousel-badge');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        
+        const carouselTitles = [
+            "1. تأسيس المشروع والبيئة",
+            "2. تحديد وحصر المخاطر",
+            "3. التقييم النوعي والكمي",
+            "4. خطط الاستجابة والحل",
+            "5. المراقبة والمتابعة"
+        ];
+
+        function updateCarousel() {
+            if(!track) return;
+            track.style.transform = `translateX(${currentSlide * 100}%)`; 
+            
+            indicators.forEach((ind, index) => {
+                ind.classList.toggle('active', index === currentSlide);
+            });
+            
+            if (badge) badge.innerText = `الخطوة ${currentSlide + 1} من 5`;
+            const titleEl = document.getElementById('carousel-title');
+            if (titleEl) titleEl.innerText = carouselTitles[currentSlide];
+            
+            if (prevBtn) prevBtn.disabled = currentSlide === 0;
+            if (nextBtn) nextBtn.disabled = currentSlide === slides.length - 1;
+        }
+
+        function moveSlide(dir) {
+            currentSlide += dir;
+            if(currentSlide < 0) currentSlide = 0;
+            if(currentSlide >= slides.length) currentSlide = slides.length - 1;
+            updateCarousel();
+        }
+
+        function goToSlide(index) {
+            currentSlide = index;
+            updateCarousel();
+        }
+
+        function toggleFaq(element) {
+            const parent = element.parentElement;
+            if (parent) parent.classList.toggle('active');
+        }
+
+        function handleDecision(btn) {
+            const container = btn.closest('.decision-options');
+            if (!container || container.classList.contains('answered')) return;
+            container.classList.add('answered');
+
+            container.querySelectorAll('.decision-btn').forEach(b => {
+                b.disabled = true;
+                if (b.dataset.correct === 'true') b.classList.add('correct');
+            });
+            if (btn.dataset.correct !== 'true') btn.classList.add('incorrect');
+
+            const feedback = container.nextElementSibling;
+            if (feedback && feedback.classList.contains('decision-feedback')) {
+                feedback.classList.add('show');
+            }
+        }
+
+        function buildRiskMatrix() {
+            const grid = document.getElementById('matrixGrid');
+            if (!grid) return;
+            grid.innerHTML = '';
+
+            const pElem = document.getElementById('calc_p');
+            const iElem = document.getElementById('calc_i');
+            const curP = pElem ? parseInt(pElem.value) : 4;
+            const curI = iElem ? parseInt(iElem.value) : 5;
+
+            for (let p = 5; p >= 1; p--) {
+                for (let i = 1; i <= 5; i++) {
+                    const score = p * i;
+                    const cell = document.createElement('div');
+                    cell.className = 'matrix-cell';
+                    
+                    if (score <= 4) cell.classList.add('m-green');
+                    else if (score <= 9) cell.classList.add('m-yellow');
+                    else if (score <= 16) cell.classList.add('m-orange');
+                    else cell.classList.add('m-red');
+
+                    if (p === curP && i === curI) {
+                        cell.classList.add('selected');
+                    }
+
+                    cell.innerHTML = `${score}<span>P:${p},I:${i}</span>`;
+                    
+                    cell.onclick = () => {
+                        if (pElem) pElem.value = p;
+                        if (iElem) iElem.value = i;
+                        updateCalc();
+                        buildRiskMatrix();
+                    };
+
+                    grid.appendChild(cell);
+                }
+            }
+        }
+
+        function updateCalc() {
+            const pElem = document.getElementById('calc_p');
+            const iElem = document.getElementById('calc_i');
+            if (!pElem || !iElem) return;
+
+            const p = parseInt(pElem.value);
+            const i = parseInt(iElem.value);
+            const score = p * i;
+            
+            const scoreVal = document.getElementById('score_val');
+            if (scoreVal) scoreVal.innerText = score;
+            
+            const label = document.getElementById('score_label');
+            const exp = document.getElementById('score_explanation');
+            
+            if (label && exp) {
+                label.className = 'status-pill'; 
+                
+                if(score <= 4) {
+                    label.innerText = '(Acceptable Zone) 1-4';
+                    label.classList.add('pill-low');
+                    exp.innerHTML = 'منطقة مقبولة (Acceptable): مخاطر ذات تأثير محدود. يتم قبولها ولا تتطلب إجراءات معقدة سوى المراقبة الروتينية.';
+                } else if(score <= 9) {
+                    label.innerText = '(Medium Zone) 5-9';
+                    label.classList.add('pill-medium');
+                    exp.innerHTML = 'منطقة متوسطة (Medium): مخاطر تتطلب الانتباه. يجب وضع استراتيجيات تخفيف وتعيين مالك لمتابعتها.';
+                } else if(score <= 16) {
+                    label.innerText = '(High Zone) 10-16';
+                    label.classList.add('pill-high');
+                    exp.innerHTML = 'منطقة عالية (High): مخاطر مؤثرة جداً. تتطلب خطط استجابة فورية وميزانية طوارئ محددة.';
+                } else {
+                    label.innerText = '(Unacceptable Zone) 17-25';
+                    label.classList.add('pill-critical');
+                    exp.innerHTML = 'منطقة مرفوضة (Unacceptable): حالات طوارئ حرجة. يجب عليك إيقاف الأنشطة المتأثرة فوراً ونشر موارد التخفيف العاجلة وتصعيد الأمر.';
+                }
+            }
+        }
+
+        function syncSelectAndMatrix() {
+            updateCalc();
+            buildRiskMatrix();
+        }
+
+        function openTool() {
+            const modal = document.getElementById('risk_iframe_modal');
+            if(modal) {
+                modal.style.display = 'flex';
+                setTimeout(() => { modal.style.opacity = '1'; modal.style.pointerEvents = 'auto'; }, 10);
+            }
+        }
+
+        function closeTool() {
+            const modal = document.getElementById('risk_iframe_modal');
+            if(modal) {
+                modal.style.opacity = '0';
+                modal.style.pointerEvents = 'none';
+                setTimeout(() => { modal.style.display = 'none'; }, 400);
+            }
+        }
+
+        function openGuideTool() {
+            const modal = document.getElementById('guide_iframe_modal');
+            if(modal) {
+                modal.style.display = 'flex';
+                setTimeout(() => { modal.style.opacity = '1'; modal.style.pointerEvents = 'auto'; }, 10);
+            }
+        }
+
+        function closeGuideTool() {
+            const modal = document.getElementById('guide_iframe_modal');
+            if(modal) {
+                modal.style.opacity = '0';
+                modal.style.pointerEvents = 'none';
+                setTimeout(() => { modal.style.display = 'none'; }, 400);
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            buildRiskMatrix();
+            updateCalc();
+            updateProgress();
+            triggerReveals();
+            updateCarousel();
+            updateContentHeader('tab1');
+
+            const mainArea = document.getElementById('mainContentArea');
+            const backToTopBtn = document.getElementById('backToTopBtn');
+            if (mainArea && backToTopBtn) {
+                mainArea.addEventListener('scroll', () => {
+                    backToTopBtn.classList.toggle('show', mainArea.scrollTop > 400);
+                });
+            }
+        });
+    </script>
+</body>
+</html>

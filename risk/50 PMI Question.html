@@ -1,0 +1,1128 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>محاكي اختبار PMI-RMP الاحترافي | BA Engineering Academy</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;600;700;800;900&family=Great+Vibes&family=Montserrat:wght@600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+        }
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #f1f5f9;
+            color: #1e293b;
+            overflow-x: hidden;
+        }
+        .clean-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+        }
+        .option-card {
+            transition: all 0.2s ease;
+        }
+        .option-card:hover:not(:disabled) {
+            transform: translateX(-4px);
+            border-color: #0284c7;
+            background-color: #f8fafc;
+        }
+        #progress-fill {
+            transition: width 0.3s ease;
+        }
+        .cert-title-font {
+            font-family: 'Amiri', serif;
+        }
+        .signature-font {
+            font-family: 'Great Vibes', cursive;
+        }
+
+        @media print {
+            .no-print-area { 
+                display: none !important; 
+            }
+            #certificate-standalone-view {
+                display: flex !important;
+                background: #fcfdfa !important; 
+                align-items: center !important;
+                justify-content: center !important;
+                height: 100vh !important;
+                padding: 0 !important;
+                margin: 0 !important;
+            }
+            #certificate-card {
+                box-shadow: none !important;
+                border: 8px solid #064e3b !important;
+                margin: auto !important;
+                width: 1120px !important;
+                height: 750px !important;
+                border-radius: 0 !important;
+                position: relative !important;
+            }
+        }
+        @page {
+            size: A4 landscape;
+            margin: 0;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between">
+
+    <div id="main-app-wrapper" class="no-print-area flex flex-col min-h-screen">
+        
+        <header class="clean-card sticky top-0 z-50 px-6 py-3.5 border-b border-slate-200 backdrop-blur-md bg-white/95">
+            <div class="max-w-5xl mx-auto flex justify-between items-center">
+                <div class="flex items-center gap-3.5">
+                    <img src="logo_4.jpg" alt="BA Engineering Academy" class="w-11 h-11 object-contain rounded-xl border border-slate-200 p-1 bg-white" onerror="this.src='logo.jpg'; this.onerror=null;">
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <h1 class="text-base md:text-lg font-black text-slate-800">BA Engineering Academy</h1>
+                            <span class="bg-sky-100 text-sky-800 text-[10px] font-black px-2 py-0.5 rounded-full">v2.5</span>
+                        </div>
+                        <span class="text-xs text-slate-500 font-bold">محاكي اختبار إدارة المخاطر PMI-RMP الاحترافي</span>
+                    </div>
+                </div>
+                
+                <div id="timer-display" class="flex items-center gap-2.5 bg-slate-100 px-4 py-2 rounded-2xl font-mono text-lg md:text-xl text-sky-700 border border-slate-200 font-bold shadow-inner">
+                    <span id="time">60:00</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-sky-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                </div>
+            </div>
+        </header>
+
+        <main class="flex-grow container mx-auto px-4 py-8 flex flex-col items-center justify-center">
+            <div class="w-full max-w-3xl">
+                
+                <div id="intro-screen" class="clean-card rounded-3xl p-8 md:p-12 text-center">
+                    <div class="w-24 h-24 bg-white border-2 border-slate-100 rounded-3xl mx-auto flex items-center justify-center p-2 mb-6 shadow-md">
+                        <img src="logo_4.jpg" alt="BA Engineering Academy" class="w-full h-full object-contain" onerror="this.src='logo.jpg'; this.onerror=null;">
+                    </div>
+                    
+                    <h2 class="text-2xl md:text-3xl font-black text-slate-800 mb-2">محاكي اختبار PMI-RMP الاحترافي</h2>
+                    <p class="text-xs font-bold text-sky-700 uppercase tracking-widest mb-6">BA Engineering Academy • مقسم حسب محاور الاختبار الدولي</p>
+                    
+                    <p class="text-slate-600 mb-8 text-sm md:text-base leading-relaxed max-w-xl mx-auto font-semibold">
+                        مرحباً بك في المحاكي المطور. يغطي هذا التقييم 50 سؤالاً موزعة بدقة على محاور إدارة المخاطر الخمسة (تحديد المخاطر، التحليل الكيفي، التحليل الكمي، الاستجابة، المراقبة) لقياس جاهزيتك الكاملة.
+                    </p>
+                    
+                    <div class="max-w-md mx-auto mb-8 text-right">
+                        <label class="block text-sm text-slate-700 font-bold mb-2">اسم المتدرب الثلاثي (كما سيظهر على شهادة الاجتياز):</label>
+                        <input type="text" id="trainee-name" class="w-full bg-slate-50 border border-slate-300 rounded-2xl px-5 py-4 text-slate-800 focus:outline-none focus:ring-2 focus:ring-sky-600 font-semibold text-base md:text-lg shadow-sm" placeholder="ادخل اسمك الكامل هنا..." autofocus>
+                    </div>
+
+                    <button onclick="initQuiz()" class="bg-sky-800 hover:bg-sky-900 text-white font-bold py-4 px-10 rounded-2xl transition-all transform hover:scale-105 shadow-xl w-full md:w-auto text-lg cursor-pointer">
+                        ابدأ الاختبار الآن (Enter)
+                    </button>
+                </div>
+
+                <div id="quiz-area" class="hidden">
+                    <div class="w-full bg-slate-200 h-2.5 rounded-full mb-6 overflow-hidden shadow-inner">
+                        <div id="progress-fill" class="bg-sky-700 h-full w-0"></div>
+                    </div>
+
+                    <div class="clean-card rounded-3xl p-6 md:p-10 mb-5">
+                        <div class="flex flex-wrap justify-between items-center gap-2 mb-6 border-b border-slate-100 pb-4">
+                            <div class="flex items-center gap-2 flex-wrap">
+                                <span class="bg-sky-800 text-white px-3.5 py-1.5 rounded-xl text-sm font-black shadow-sm" id="question-badge">سؤال 1</span>
+                                <span class="bg-amber-100 text-amber-800 px-3 py-1 rounded-xl text-xs font-bold" id="domain-badge">المحور</span>
+                                <span class="text-slate-400 font-bold text-sm" id="question-total-label">من 50 سؤال</span>
+                            </div>
+                            <button onclick="toggleFlag()" id="flag-btn" class="flex items-center gap-1.5 text-slate-400 hover:text-amber-600 font-semibold transition-colors cursor-pointer bg-slate-50 px-3 py-1.5 rounded-xl border border-slate-200 text-sm">
+                                <span id="flag-text">تمييز للمراجعة</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9" />
+                                </svg>
+                            </button>
+                        </div>
+
+                        <h3 id="question-text" class="text-lg md:text-xl font-bold mb-8 leading-loose text-slate-800 break-words py-1">جاري التحميل...</h3>
+
+                        <div id="options-container" class="grid gap-4 text-sm md:text-base font-semibold text-slate-700">
+                        </div>
+                    </div>
+
+                    <div class="flex justify-between items-center gap-4">
+                        <button onclick="prevQuestion()" id="prev-btn" class="flex-1 bg-white border border-slate-300 hover:bg-slate-100 text-slate-700 py-4 rounded-2xl font-bold disabled:opacity-40 transition-colors cursor-pointer shadow-sm text-sm md:text-base">السابق</button>
+                        <button onclick="nextQuestion()" id="next-btn" class="flex-1 bg-sky-800 hover:bg-sky-900 text-white py-4 rounded-2xl font-bold shadow-lg transition-colors cursor-pointer text-sm md:text-base">التالي (Enter)</button>
+                        <button onclick="confirmSubmit()" id="finish-btn" class="hidden flex-1 bg-emerald-700 hover:bg-emerald-800 text-white py-4 rounded-2xl font-bold shadow-lg transition-colors cursor-pointer text-sm md:text-base">تسليم الاختبار (Enter)</button>
+                    </div>
+                </div>
+
+                <div id="result-screen" class="hidden clean-card rounded-3xl p-8 md:p-12 text-center">
+                    <div class="inline-block bg-slate-100 border border-slate-200 px-4 py-1.5 rounded-full text-xs font-bold text-slate-600 mb-4">تقييم أداء رسمي • BA Engineering Academy</div>
+                    <h2 id="result-title" class="text-3xl md:text-4xl font-black mb-2"></h2>
+                    <p id="result-name" class="text-slate-600 text-xl font-bold mb-8"></p>
+                    
+                    <div class="flex justify-center gap-8 md:gap-16 mb-10 border-y border-slate-100 py-8">
+                        <div class="text-center">
+                            <div id="final-score" class="text-4xl md:text-6xl font-black text-sky-800 mb-2">0%</div>
+                            <div class="text-xs md:text-sm font-bold text-slate-400 uppercase tracking-wider">الدرجة النهائية</div>
+                        </div>
+                        <div class="w-px bg-slate-200"></div>
+                        <div class="text-center">
+                            <div id="correct-count" class="text-4xl md:text-6xl font-black text-slate-700 mb-2">0/50</div>
+                            <div class="text-xs md:text-sm font-bold text-slate-400 uppercase tracking-wider">الإجابات الصحيحة</div>
+                        </div>
+                    </div>
+
+                    <div id="certificate-action-area" class="mb-8"></div>
+
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                        <button onclick="reviewMistakes()" class="bg-slate-800 hover:bg-slate-900 text-white px-8 py-4 rounded-2xl font-bold shadow-lg transition-colors text-base cursor-pointer">مراجعة الأخطاء والإجابات والتفسيرات</button>
+                        <button onclick="location.reload()" class="bg-sky-800 hover:bg-sky-900 text-white px-8 py-4 rounded-2xl font-bold shadow-lg transition-colors text-base cursor-pointer">إعادة الاختبار</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="certificate-standalone-view" class="hidden fixed inset-0 z-[200] bg-slate-950/80 backdrop-blur-md flex-col items-center justify-center p-4 overflow-y-auto">
+        <div class="no-print flex gap-4 mb-6 z-50">
+            <button onclick="window.print()" class="bg-emerald-700 hover:bg-emerald-800 text-white px-8 py-3 rounded-xl font-bold shadow-xl transition-all flex items-center gap-2 cursor-pointer text-base">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+                </svg>
+                طباعة أو حفظ الشهادة PDF
+            </button>
+            <button onclick="closeCertificate()" class="bg-slate-700 hover:bg-slate-800 text-white px-6 py-3 rounded-xl font-bold shadow-xl transition-all cursor-pointer text-base">
+                إغلاق والعودة
+            </button>
+        </div>
+
+        <div id="certificate-card" class="bg-[#fcfdfa] w-[1120px] h-[750px] rounded-2xl shadow-2xl p-8 md:px-14 md:py-10 relative border-[8px] border-solid border-[#064e3b] text-center flex flex-col justify-between box-border overflow-hidden shrink-0">
+            <div class="absolute inset-0 flex items-center justify-center pointer-events-none opacity-[0.03] z-0">
+                <img src="logo_4.jpg" alt="Watermark" class="w-[550px] h-[550px] object-contain" onerror="this.src='logo.jpg'; this.onerror=null;">
+            </div>
+
+            <div class="absolute inset-4 border border-amber-600/60 pointer-events-none rounded-xl z-10"></div>
+
+            <div class="flex flex-col items-center justify-center relative z-20 pb-3 border-b-2 border-emerald-900/15">
+                <div class="flex items-center gap-6" style="direction: ltr;">
+                    <div class="bg-white p-3 rounded-2xl shadow-lg border-2 border-amber-500/50 flex items-center justify-center">
+                        <img src="logo_4.jpg" alt="BA Engineering Academy Logo" class="w-28 h-28 md:w-32 md:h-32 object-contain" style="image-rendering: -webkit-optimize-contrast; image-rendering: crisp-edges;" onerror="this.src='logo.jpg'; this.onerror=null;">
+                    </div>
+                    <div class="text-left">
+                        <h2 class="text-3xl md:text-4xl font-black text-[#022c22] tracking-tight font-['Montserrat']">BA Engineering Academy</h2>
+                        <div class="w-full h-[2px] bg-amber-600/70 my-1.5"></div>
+                        <p class="text-xs md:text-sm text-emerald-800 font-bold tracking-[0.35em] uppercase">FROM VISION TO EXECUTION</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="relative z-20 my-auto py-2 w-full max-w-5xl mx-auto">
+                <h1 class="cert-title-font text-3xl font-bold text-[#022c22] mb-2">شهادة إتمام تدريب احترافي</h1>
+                <p class="text-slate-700 text-base mb-3 font-semibold">تُمنح هذه الشهادة إقرارًا بإتمام التدريب الشامل إلى:</p>
+
+                <div class="my-3 w-full">
+                    <span id="cert-trainee-name" class="cert-title-font text-4xl md:text-5xl font-bold text-[#022c22] border-b-4 border-amber-600 pb-1.5 inline-block px-16 tracking-wide">اسم المتدرب الكريم</span>
+                </div>
+
+                <p class="text-slate-800 text-base md:text-lg leading-relaxed w-full mx-auto font-medium mt-3 px-4">
+                    لاجتيازه بنجاح تدريب إدارة المخاطر الاحترافية المتقدمة <br>
+                    <strong class="text-[#022c22] font-bold text-lg md:text-xl">(PMI-RMP Comprehensive Training Course)</strong> <br>
+                    بما شمله من المحاضرات النظرية وتطبيق محاور الاختبار الدولي، وتزويده بأداة احترافية لتسجيل وتحليل المخاطر.
+                </p>
+            </div>
+
+            <div class="flex justify-between items-end relative z-20 pt-4 border-t-2 border-emerald-900/10 text-base w-full">
+                <div class="flex items-center gap-3 text-right">
+                    <img id="cert-qr-code" src="" alt="QR Verification" class="w-16 h-16 border border-emerald-900/20 rounded-lg p-1 bg-white shadow-sm">
+                    <div>
+                        <p class="text-xs text-emerald-900 font-bold">رقم الشهادة:</p>
+                        <p id="cert-id" class="text-sm font-mono font-bold text-[#022c22]">BA-2026-9482</p>
+                        <p class="text-xs text-slate-500 mt-1">تاريخ الإصدار: <span id="cert-issue-date" class="font-mono text-slate-800"></span></p>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-4" style="direction: ltr;">
+                    <div class="relative w-20 h-20 rounded-full border-2 border-dashed border-amber-600 flex items-center justify-center p-1 bg-emerald-950/5 shadow-inner">
+                        <div class="absolute inset-1 rounded-full border border-emerald-800/40"></div>
+                        <div class="text-center z-10 flex flex-col items-center justify-center">
+                            <span class="text-[9px] font-black text-amber-600 font-['Montserrat'] uppercase tracking-tight">SECURE</span>
+                            <svg class="w-4 h-4 text-emerald-800 my-0.5" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                            </svg>
+                            <span class="text-[10px] font-bold text-[#022c22] font-['Cairo']">مُوثَّق</span>
+                        </div>
+                    </div>
+
+                    <div class="text-left w-64 flex flex-col items-start">
+                        <p class="text-[11px] font-extrabold text-emerald-800 font-['Montserrat'] tracking-wider">BA Engineering Academy</p>
+                        <div class="flex items-center gap-1.5 justify-start my-0.5">
+                            <span class="signature-font text-2xl md:text-3xl font-extrabold text-[#022c22] tracking-wide">Eng. Ahmed Ali</span>
+                        </div>
+                        <p class="text-[11px] font-bold text-slate-600 font-['Montserrat']">Founder & CEO</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="review-modal" class="no-print-area fixed inset-0 z-[100] bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="clean-card w-full max-w-3xl rounded-3xl max-h-[85vh] overflow-y-auto p-6 md:p-8 relative shadow-2xl">
+            <button onclick="closeReview()" class="absolute top-6 left-6 text-slate-400 hover:text-red-500 bg-slate-100 p-2.5 rounded-full transition-colors cursor-pointer">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+            <h3 class="text-2xl font-black mb-6 text-slate-800 border-b pb-4">تفاصيل مراجعة الإجابات والتفسيرات</h3>
+            <div id="review-content" class="space-y-6"></div>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = "https://script.google.com/macros/s/AKfycbyfx9qaiPzgWqfHXOdFV1TsNzeK-fEt0Lu2K1EUH3Npftweay3adOhi-9nOsSN4NvOR/exec";
+        
+        const questions = [
+            { 
+                domain: "تحديد المخاطر",
+                q: "أثناء مرحلة التخطيط لمشروع إنشائي ضخم، لاحظ مدير المشروع أن هناك اختلافات كبيرة في وجهات النظر بين أصحاب المصلحة حول درجة المخاطر المقبولة للمشروع. ما هو الإجراء الأفضل الذي يجب على مدير المشروع اتخاذه أولاً؟", 
+                options: [
+                    "تجاهل تباين وجهات النظر والاعتماد على خبرته الشخصية السابقة في تحديد المخاطر", 
+                    "عقد ورشة عمل لتحديد وتوثيق شهية وعتبات المخاطر (Risk Appetite & Thresholds) لأصحاب المصلحة", 
+                    "تخفيض ميزانية المشروع لتجنب الدخول في مخاطر إضافية", 
+                    "إحالة القرار بالكامل لراعي المشروع لفرض رأيه دون نقاش"
+                ], 
+                correct: 1,
+                explanation: "تحديد عتبات وشهية المخاطر لأصحاب المصلحة أولاً يضمن توحيد المفاهيم وتأسيس معيار واضح للتعامل مع عدم اليقين."
+            },
+            { 
+                domain: "تحديد المخاطر",
+                q: "تم تعيينك مديرًا لمشروع تقني جديد، وقبل صياغة خطة إدارة المخاطر، طلب منك راعي المشروع تقييم الموقف الإجمالي. ما هي الخطوة الأولى الصحيحة التي يجب البدء بها؟", 
+                options: [
+                    "البدء الفوري في إجراء محاكاة مونت كارلو للتكلفة", 
+                    "مراجعة ميثاق المشروع ووثائق البدء لتحديد نطاق وأهداف المشروع عالية المستوى", 
+                    "شراء بوالص تأمين شاملة لجميع الأخطار التقنية المحتملة", 
+                    "إغلاق المشروع نظراً لارتفاع احتمالية عدم اليقين"
+                ], 
+                correct: 1,
+                explanation: "مراجعة ميثاق المشروع توفر الأساس السليم لفهم الأهداف والنطاق قبل الشروع في التخطيط التفصيلي."
+            },
+            { 
+                domain: "تحديد المخاطر",
+                q: "خلال اجتماع العصف الذهني لتحديد المخاطر، أبدى أحد أعضاء الفريق مخاوف مستمرة من مخاطر غير مؤكدة وغامضة تماماً لا يمكن توقع حدوثها أو قياسها بناءً على المشاريع السابقة. كيف يصنف هذا النوع من المخاطر في ممارسات الـ PMI؟", 
+                options: [
+                    "مخاطر معروفة-معروفة (Known-Knowns)", 
+                    "مخاطر غير معروفة-المجهول (Unknown-Unknowns)", 
+                    "مخاطر متبقية لا تستحق الدراسة", 
+                    "فرص إيجابية يجب استغلالها فوراً"
+                ], 
+                correct: 1,
+                explanation: "المخاطر الغامضة كلياً وغير المتوقعة تُعرف في منهجية PMI بالمجهول-المجهول (Unknown-Unknowns)."
+            },
+            { 
+                domain: "تحديد المخاطر",
+                q: "أنت تدير مشروع لتطوير برمجيات، وأثناء جلسة تحديد المخاطر، أراد أحد الخبراء عدم الإفصاح عن هويته أو آرائه علناً أمام الإدارة العليا لتجنب الانحياز. ما هي الأداة الأنسب التي يجب عليك استخدامها؟", 
+                options: [
+                    "جلسات العصف الذهني المفتوحة وجهاً لوجه", 
+                    "تقنية دلفي (Delphi Technique)", 
+                    "تحليل شجرة القرارات المالية", 
+                    "مخطط الإعصار التراكمي"
+                ], 
+                correct: 1,
+                explanation: "تقنية دلفي تعتمد على سرية هوية الخبراء لمنع الانحياز وضمان إبداء الآراء بحرية تامة."
+            },
+            { 
+                domain: "التحليل الكيفي",
+                q: "أكمل فريق العمل عملية تحديد المخاطر وأنتجوا قائمة طويلة من المخاطر المحتملة. طلب منك الإدارة ترتيب هذه المخاطر بسرعة وبتكلفة منخفضة لتحديد الأولوية العاجلة للمعالجة. ما هي العملية والأداة المناسبة لذلك؟", 
+                options: [
+                    "التحليل الكمي باستخدام محاكاة مونت كارلو", 
+                    "التحليل الكيفي باستخدام مصفوفة الاحتمالية والأثر (Probability and Impact Matrix)", 
+                    "تفعيل احتياطي الإدارة فوراً للتعامل معها", 
+                    "تجاهل التحليل والانتقال المباشر لخطة الاستجابة العشوائية"
+                ], 
+                correct: 1,
+                explanation: "مصفوفة الاحتمالية والأثر في التحليل الكيفي هي الأداة الأسرع لترتيب وتصنيف المخاطر ذات الأولوية."
+            },
+            { 
+                domain: "التحليل الكيفي",
+                q: "أثناء مراجعة جودة البيانات المستخدمة في تقييم المخاطر، لاحظ مدير المشروع أن البيانات مقدمة من جهات غير موثوقة وقديمة. ما تأثير ذلك على نتائج التحليل الكيفي؟", 
+                options: [
+                    "سيزيد من دقة مصفوفة المخاطر بنسبة مئة بالمئة", 
+                    "سيؤدي إلى نتائج مضللة وترتيب خاطئ لأولوية المخاطر", 
+                    "لن يؤثر على المشروع طالما أن الميزانية كافية", 
+                    "سيؤدي تلقائياً إلى تفعيل احتياطي الطوارئ"
+                ], 
+                correct: 1,
+                explanation: "البيانات الضعيفة أو غير الدقيقة تؤدي حتماً إلى مخرجات وتحليلات غير موثوقة (Garbage In, Garbage Out)."
+            },
+            { 
+                domain: "التحليل الكيفي",
+                q: "في مشروع هندسي، تم تصنيف أحد المخاطر بأن له احتمالية وقوع منخفضة جداً وأثر منخفض جداً، وطلب المهندس المسؤول تخصيص وقت وميزانية كبيرة لمراقبته. ما هو التوجيه السليم لمدير المشروع؟", 
+                options: [
+                    "الموافقة الفورية وفتح بند مالي خاص به", 
+                    "وضع هذا الخطر في قائمة المراقبة (Watchlist) دون تخصيص موارد استجابة فورية", 
+                    "اعتبار الخطر تهديداً كارثياً وإيقاف المشروع", 
+                    "نقل المشروع بالكامل لمقاول باطن"
+                ], 
+                correct: 1,
+                explanation: "المخاطر ذات الأثر والاحتيالية المنخفضة جداً توضع في قائمة المراقبة (Watchlist) حفاظاً على كفاءة الموارد."
+            },
+            { 
+                domain: "التحليل الكمي",
+                q: "أنت تدير مشروع استثماري كبير، وطلب منك العميل معرفة القيمة المالية المتوقعة لمسارين بديلين للمشروع يعتمدان على ظروف السوق. أي أداة كمية يجب عليك استخدامها؟", 
+                options: [
+                    "مخطط عظمة السمكة", 
+                    "تحليل شجرة القرارات (Decision Tree Analysis) والقيمة المالية المتوقعة (EMV)", 
+                    "قوائم الفحص الميدانية", 
+                    "التحليل الكيفي السريع"
+                ], 
+                correct: 1,
+                explanation: "تحليل شجرة القرارات يستخدم حسابات القيمة المالية المتوقعة (EMV) لمقارنة المسارات والبدائل تحت عدم اليقين."
+            },
+            { 
+                domain: "التحليل الكمي",
+                q: "إذا كانت فرصة نجاح عقد تجاري تقدر بـ 40%، وعائدها المالي في حال النجاح هو 50,000 دولار، فكم تبلغ القيمة المالية المتوقعة (EMV) لهذه الفرصة؟", 
+                options: [
+                    "20,000 دولار", 
+                    "50,000 دولار", 
+                    "30,000 دولار خسارة", 
+                    "20,000 دولار خسارة محققة"
+                ], 
+                correct: 0,
+                explanation: "EMV = الاحتمال × الأثر = 0.40 × 50,000 = 20,000 دولار."
+            },
+            { 
+                domain: "التحليل الكمي",
+                q: "أراد مدير المشروع معرفة المتغير الأساسي الأكثر تأثيراً على إجمالي تكلفة المشروع من بين عدة متغيرات غير مؤكدة. ما هي الأداة الرياضية الأنسب لتوفير هذا الرسم البياني (التورنيدو)؟", 
+                options: [
+                    "تحليل الحساسية (Sensitivity Analysis)", 
+                    "تحليل القيمة المحققة المتراكمة", 
+                    "مخطط بيرت (PERT) للوقت فقط", 
+                    "التحليل الكيفي للمخاطر"
+                ], 
+                correct: 0,
+                explanation: "تحليل الحساسية يظهر في شكل مخطط تورنيدو لتحديد المتغيرات الأكثر تأثيراً على أهداف المشروع."
+            },
+            { 
+                domain: "الاستجابة للمخاطر",
+                q: "خلال اجتماع لمناقشة المخاطر السلبية، اقترح أحد المهندسين شراء بوليصة تأمين هندسية لنقل الأثر المالي لأحد التهديدات الخطيرة إلى شركة خارجية. هذه الاستراتيجية تسمى:", 
+                options: [
+                    "التجنب (Avoid)", 
+                    "النقل (Transfer)", 
+                    "القبول (Accept)", 
+                    "التقليل أو التخفيف (Mitigate)"
+                ], 
+                correct: 1,
+                explanation: "شراء التأمين أو العقود مع طرف ثالث لتحمل الأثر المالي يُعد استراتيجية نقل التهديد (Transfer)."
+            },
+            { 
+                domain: "الاستجابة للمخاطر",
+                q: "تواجه إدارة المشروع خطر تأخر توريد مواد خام رئيسية، فقرر الفريق تعديل تصميم المنتج واستخدام مواد محلية متوفرة لتلافي الخطر تماماً وعدم التعرض له. ما هي الاستراتيجية المستخدمة هنا؟", 
+                options: [
+                    "استراتيجية التجنب (Avoid)", 
+                    "استراتيجية المشاركة (Share)", 
+                    "استراتيجية القبول السلبي", 
+                    "استراتيجية النقل"
+                ], 
+                correct: 0,
+                explanation: "تعديل خطط المشروع لتلافي التهديد جذرياً هو استراتيجية التجنب (Avoid)."
+            },
+            { 
+                domain: "الاستجابة للمخاطر",
+                q: "اكتشف فريق المشروع فرصة إيجابية ممتازة لتخفيض مدة المشروع، وقررت الإدارة الدخول في شراكة استراتيجية مع شركة متخصصة تمتلك القدرات لاغتنام هذه الفرصة ومضاعفة العائد. الاستراتيجية المطبقة هي:", 
+                options: [
+                    "استغلال الفرصة (Exploit)", 
+                    "مشاركة الفرصة (Share)", 
+                    "تعزيز الفرصة (Enhance)", 
+                    "قبول الفرصة سلباً"
+                ], 
+                correct: 1,
+                explanation: "التعاون مع طرف ثالث يمتلك القدرات لتعظيم الاستفادة من الفرصة يسمى مشاركة الفرصة (Share)."
+            },
+            { 
+                domain: "مراقبة المخاطر",
+                q: "تم تطبيق استجابة معينة لخطر هبوط التربة في الموقع، ولكن بعد تنفيذها، لاحظ الفريق ظهور خطر ثانوي جديد ناجم مباشرة عن تلك الاستجابة. ماذا يجب على مدير المشروع فعله؟", 
+                options: [
+                    "تجاهل الخطر الجديد لأنه غير مدرج في الخطة الأساسية", 
+                    "تحليل الخطر الثانوي وإضافته لسجل المخاطر وتصميم خطة استجابة له", 
+                    "إيقاف المشروع فورا وتقديم استقالته", 
+                    "اعتبار الخطر الثانوي فرصة إيجابية"
+                ], 
+                correct: 1,
+                explanation: "الأخطار الثانوية الناتجة عن استجابات المخاطر يجب تحليلها وإضافتها لسجل المخاطر ومعالجتها."
+            },
+            { 
+                domain: "مراقبة المخاطر",
+                q: "أثناء تنفيذ المشروع، حدثت مشكلة غير متوقعة تماماً (Unknown-Unknown) لم تكن مسجلة في سجل المخاطر وتسببت في عجز مالي مؤقت. من أي بند يجب تغطية هذه التكلفة الطارئة؟", 
+                options: [
+                    "احتياطي الطوارئ (Contingency Reserve) المخصص للمخاطر المعروفة", 
+                    "احتياطي الإدارة (Management Reserve) المخصص للمخاطر غير المبرمجة", 
+                    "ميزانية أرباح الشركة الرئيسية مباشرة", 
+                    "رواتب أعضاء فريق المشروع"
+                ], 
+                correct: 1,
+                explanation: "المخاطر غير المتوقعة كلياً (Unknown-Unknowns) يتم تغطيتها من احتياطي الإدارة (Management Reserve)."
+            },
+            { 
+                domain: "مراقبة المخاطر",
+                q: "طلب العميل تعديلًا طارئًا على نطاق المشروع، وأكد مدير المشروع أن هذا التعديل سينشئ مخاطر جديدة على الجدول الزمني. ما هي العملية المستمرة التي يجب تفعيلها لمتابعة هذه المخاطر؟", 
+                options: [
+                    "عملية مراقبة المخاطر (Monitor Risks)", 
+                    "إغلاق المشروع وإعادة البدء", 
+                    "إلغاء التحليل الكيفي والكمي نهائياً", 
+                    "تغيير راعي المشروع"
+                ], 
+                correct: 0,
+                explanation: "مراقبة المخاطر عملية مستمرة طوال دورة حياة المشروع لرصد التغيرات والمخاطر الجديدة الناتجة عن التعديلات."
+            },
+            { 
+                domain: "مراقبة المخاطر",
+                q: "يقوم فريق المشروع بشكل دوري بتقييم فاعلية عمليات إدارة المخاطر المتبعة والتحقق من التزام الفريق بالخطط الموضوعة عبر مراجعات مستقلة. ما اسم هذه الأداة؟", 
+                options: [
+                    "تدقيق المخاطر (Risk Audits)", 
+                    "محاكاة مونت كارلو", 
+                    "تحليل القيمة المحققة", 
+                    "مخطط تدفق العمليات"
+                ], 
+                correct: 0,
+                explanation: "تدقيق المخاطر (Risk Audits) هو الفحص المستقل لمدى فاعلية عمليات إدارة المخاطر في المشروع."
+            },
+            { 
+                domain: "مراقبة المخاطر",
+                q: "تأكد لمدير المشروع أن أحد المخاطر الكبيرة التي كانت التهديد الأكبر للمشروع قد زال تماماً ولم يعد له أي احتمال للوقوع. ما هو التصرف الإداري الصحيح؟", 
+                options: [
+                    "ترك الخطر مفتوحاً في السجل للاحتياط الدائم", 
+                    "تحديث سجل المخاطر بإغلاق الخطر وتوثيق الدرس المستفاد", 
+                    "تخفيض رواتب فريق العمل", 
+                    "نقل ميزانية الخطر لحسابات المدير الشخصية"
+                ], 
+                correct: 1,
+                explanation: "المخاطر التي تزول يتم إغلاقها رسمياً في سجل المخاطر وتوثيق الدروس المستفادة."
+            },
+            { 
+                domain: "مراقبة المخاطر",
+                q: "ما هو الفارق الجوهري والأساسي بين 'احتياطي الطوارئ' و'احتياطي الإدارة' في إدارة مشاريع الـ PMI؟", 
+                options: [
+                    "احتياطي الطوارئ للمخاطر غير المعروفة، واحتياطي الإدارة للمخاطر المعروفة", 
+                    "احتياطي الطوارئ يدار بواسطة مدير المشروع للمخاطر المعروفة (Known-Unknowns)، واحتياطي الإدارة يدار بواسطة الإدارة العليا للمخاطر غير المعروفة (Unknown-Unknowns)", 
+                    "لا يوجد فرق جوهري بينهما فكلاهما تحت تصرف العميل", 
+                    "احتياطي الطوارئ زمني فقط واحتياطي الإدارة مالي فقط"
+                ], 
+                correct: 1,
+                explanation: "احتياطي الطوارئ يخص المخاطر المرصودة (Known-Unknowns) تحت إدارة المدير، واحتياطي الإدارة للمجهولة (Unknown-Unknowns) تحت إدارة الإدارة العليا."
+            },
+            { 
+                domain: "مراقبة المخاطر",
+                q: "أثناء مشروع تقني، ظهرت مؤشرات (Triggers) تنذر بقرب وقوع خطر فشل الملقم الرئيسي (Server). ما هي الخطة التي يجب تفعيلها فوراً بناءً على ظهور هذا المؤشر؟", 
+                options: [
+                    "خطة الطوارئ المعدة مسبقاً (Contingency Plan)", 
+                    "خطة إدارة الجودة الشاملة", 
+                    "خطة المشتريات والمقاولين الباطن", 
+                    "خطة التخلص من الأصول"
+                ], 
+                correct: 0,
+                explanation: "عند تحقق المؤشرات (Triggers)، يتم فوراً تفعيل خطة الطوارئ (Contingency Plan) المصممة مسبقاً لذلك الخطر."
+            },
+            { 
+                domain: "تحديد المخاطر",
+                q: "ما هو الهدف الأساسي من استخدام هيكل تجزئة المخاطر (RBS) أثناء عملية تحديد المخاطر؟", 
+                options: [
+                    "ترتيب الأنشطة حسب الأهمية الزمنية", 
+                    "عرض وتصنيف المخاطر بطريقة هرمية منظمة حسب مصادرها", 
+                    "تحديد التكلفة الفعلية للمشروع بالدولار", 
+                    "توزيع المهام الإدارية على السكرتارية"
+                ], 
+                correct: 1,
+                explanation: "هيكل تجزئة المخاطر (RBS) يصنف مصادر المخاطر هرمياً لضمان شمولية عملية التحديد."
+            },
+            { 
+                domain: "الاستجابة للمخاطر",
+                q: "عندما ترغب المنظمة في تعظيم احتمالية أو أثر فرصة إيجابية من خلال زيادة عوامل محركاتها الرئيسية، فإنها تستخدم استراتيجية:", 
+                options: [
+                    "التنصيب أو القبول", 
+                    "التعزيز (Enhance)", 
+                    "المشاركة (Share)", 
+                    "التجنب (Avoid)"
+                ], 
+                correct: 1,
+                explanation: "استراتيجية التعزيز (Enhance) تستهدف زيادة احتمالية أو أثر وقوع الفرصة الإيجابية."
+            },
+            { 
+                domain: "التحليل الكمي",
+                q: "إذا أراد مدير المشروع قياس مدى تقلبات المشروع وتأثيرها على الجدول الزمني الإجمالي عبر آلاف التكرارات الحسابية العشوائية، فالأداة الرياضية المعتمدة هي:", 
+                options: [
+                    "مخطط إيشيكاوا", 
+                    "محاكاة مونت كارلو (Monte Carlo Simulation)", 
+                    "مصفوفة الاحتمالية والأثر البسيطة", 
+                    "قوائم التحقق المرجعية الثابتة"
+                ], 
+                correct: 1,
+                explanation: "محاكاة مونت كارلو تستخدم آلاف التكرارات لتحليل التوزيع الاحتمالي لنتائج المشروع."
+            },
+            { 
+                domain: "مراقبة المخاطر",
+                q: "ماذا يقصد بمصطلح 'الخطر المتبقي' (Residual Risk) في نهاية خطط الاستجابة للمخاطر؟", 
+                options: [
+                    "الخطر الذي تم القضاء عليه بالكامل بنسبة مئة بالمئة", 
+                    "الخطر المتبقي البسيط الذي يظل قائماً حتى بعد تنفيذ استراتيجيات الاستجابة", 
+                    "الميزانية الفائضة للمشروع", 
+                    "الأخطاء الناتجة عن سوء سلوك الموظفين"
+                ], 
+                correct: 1,
+                explanation: "الخطر المتبقي هو ما تبقى من أثر الخطر الأصلي بعد تطبيق خطة الاستجابة."
+            },
+            { 
+                domain: "التحليل الكيفي",
+                q: "لماذا يُعد إشراك أعضاء الفريق الفني والميداني في عملية تقدير احتمالية وتأثير المخاطر أمراً بالغ الأهمية؟", 
+                options: [
+                    "لإلقاء المسؤولية عليهم في حال فشل المشروع", 
+                    "لأنهم يمتلكون المعرفة التفصيلية والخبرة التقنية الواقعية التي ترفع دقة التقديرات", 
+                    "لأن دليل الـ PMI يفرض ذلك كقانون إداري صارم فقط", 
+                    "لتخفيف عبء العمل عن مدير المشروع"
+                ], 
+                correct: 1,
+                explanation: "الفريق الميداني يمتلك الخبرة الحقيقية التي تكفل دقة تقدير المخاطر واقعياً."
+            },
+            { 
+                domain: "تحديد المخاطر",
+                q: "أي مما يلي يُعتبر مدخلاً أساسياً ورئيسياً لا غنى عنه لبدء عملية التخطيط لإدارة المخاطر في أي مشروع؟", 
+                options: [
+                    "ميثاق المشروع (Project Charter)", 
+                    "الفواتير الختامية للمشروع السابق", 
+                    "شهادات التخرج الخاصة بأعضاء الفريق", 
+                    "قائمة الموردين المرفوضين"
+                ], 
+                correct: 0,
+                explanation: "ميثاق المشروع هو المدخل الأساسي لتوفير النطاق والأهداف العالية اللازمة للتخطيط للمخاطر."
+            },
+            { 
+                domain: "الاستجابة للمخاطر",
+                q: "ما هو الإجراء السليم عندما يكتشف مدير المشروع خطراً إيجابياً (فرصة) لا يمكن للمنظمة الاستفادة منه بمفردها لضعف الموارد المالية؟", 
+                options: [
+                    "تجاهل الفرصة تماماً وشطبها", 
+                    "تطبيق استراتيجية مشاركة الفرصة (Share) مع طرف ثالث", 
+                    "تطبيق استراتيجية التجنب السلبي", 
+                    "تحويله إلى تهديد سلبي فوري"
+                ], 
+                correct: 1,
+                explanation: "مشاركة الفرصة مع شريك خارجي تتيح استغلالها عند نقص الموارد الذاتية للمنظمة."
+            },
+            { 
+                domain: "التحليل الكيفي",
+                q: "كيف تؤثر درجة 'الاستعجال' (Urgency) في تقييم وترتيب المخاطر أثناء التحليل الكيفي؟", 
+                options: [
+                    "تساعد في تحديد المخاطر التي تتطلب استجابة سريعة وفورية بغض النظر عن ترتيبها التقليدي في المصفوفة", 
+                    "تحدد التكلفة الدقيقة لشراء مواد البناء", 
+                    "تلغي الحاجة لعمل سجل المخاطر نهائياً", 
+                    "تزيد من ميزانية الإدارة العليا"
+                ], 
+                correct: 0,
+                explanation: "عامل الاستعجال يرفع أولوية المخاطر التي تتطلب تدخلاً زمنياً عاجلاً."
+            },
+            { 
+                domain: "مراقبة المخاطر",
+                q: "ما هو المخرج الرئيسي الذي يتم تحديثه وتعديله باستمرار بعد كل مرحلة من مراحل إدارة المخاطر طوال دورة حياة المشروع؟", 
+                options: [
+                    "سجل المخاطر (Risk Register)", 
+                    "عقد التوظيف الخاص بمدير المشروع", 
+                    "خطة استراتيجية الشركة الخمسية", 
+                    "شعار الشركة التجاري"
+                ], 
+                correct: 0,
+                explanation: "سجل المخاطر (Risk Register) وثيقة حية يتم تحديثها باستمرار طوال دورة حياة المشروع."
+            },
+            { 
+                domain: "الاستجابة للمخاطر",
+                q: "عندما تختار المنظمة 'القبول النشط' (Active Acceptance) لخطر معين، فإن التصرف العملي يتضمن:", 
+                options: [
+                    "الجلوس والانتظار دون فعل أي شيء مطلقاً", 
+                    "إنشاء خطة طوارئ وتخصيص احتياطي مالي وزمني للتعامل معه حال وقوعه", 
+                    "إيقاف المشروع فوراً لحين زوال الخطر", 
+                    "إبلاغ الشرطة والقضاء"
+                ], 
+                correct: 1,
+                explanation: "القبول النشط يتضمن تخصيص احتياطي مالي أو زمني أو وضع خطة طوارئ مسبقة."
+            },
+            { 
+                domain: "التحليل الكمي",
+                q: "أي من الأدوات التالية تستخدم لمقارنة السيناريوهات المتعددة والنتائج الاحتمالية لتكلفة المشروع باستخدام العقدة القرارية؟", 
+                options: [
+                    "تحليل شجرة القرارات (Decision Tree Analysis)", 
+                    "مخطط الإعصار", 
+                    "قوائم الفحص المراجعة", 
+                    "هيكل تجزئة العمل"
+                ], 
+                correct: 0,
+                explanation: "شجرة القرارات تستخدم العقد لاتخاذ القرارات تحت ظروف عدم اليقين والمخاطر."
+            },
+            { 
+                domain: "مراقبة المخاطر",
+                q: "ما هو الغرض من عقد اجتماعات مراجعة المخاطر الدورية (Risk Review Meetings) أثناء تنفيذ المشروع؟", 
+                options: [
+                    "متابعة حالة المخاطر القائمة، رصد المخاطر الجديدة، وتقييم فاعلية الاستجابات", 
+                    "إقامة حفلات ترفيهية لفريق العمل", 
+                    "تقييم أداء المحاسب المالي فقط", 
+                    "تعديل نطاق المشروع لزيادة أرباح المقاول دون علم العميل"
+                ], 
+                correct: 0,
+                explanation: "الاجتماعات الدورية تضمن تقييم المخاطر القائمة واستكشاف المخاطر الجديدة بانتظام."
+            },
+            { 
+                domain: "الاستجابة للمخاطر",
+                q: "إذا واجه مدير المشروع خطراً سلبياً كبيراً تتجاوز صلاحياته وسلطته المالية قدرة المعالجة، فما هي الاستراتيجية المتاحة أمامه؟", 
+                options: [
+                    "التصعيد (Escalate)", 
+                    "الاستغلال الفوري", 
+                    "التجاهل التام", 
+                    "تحويله إلى فرصة"
+                ], 
+                correct: 0,
+                explanation: "استراتيجية التصعيد (Escalate) تُستخدم عندما يكون الخطر خارج حدود صلاحيات وسلطة مدير المشروع."
+            },
+            { 
+                domain: "تحديد المخاطر",
+                q: "ما هو التعريف الدقيق لمصطلح 'عتبة المخاطر' (Risk Threshold) للمؤسسة؟", 
+                options: [
+                    "المستوى أو الحد الذي إذا تجاوزته المخاطر، فإن المنظمة لم تعد قادرة على تحمله ويجب التدخل الفوري", 
+                    "إجمالي ميزانية الشركة السنوية", 
+                    "عدد الموظفين في قسم المشتريات", 
+                    "الحد الأقصى لساعات العمل الإضافي"
+                ], 
+                correct: 0,
+                explanation: "عتبة المخاطر تمثل الحد الأقصى لتحمل المخاطر قبل التدخل الإلزامي."
+            },
+            { 
+                domain: "تحديد المخاطر",
+                q: "ما هي ميزة استخدام قوائم الفحص (Checklists) في عملية تحديد المخاطر؟", 
+                options: [
+                    "توفير جهد سريع مستند للدروس المستفادة والخبرات السابقة لمنع نسيان مخاطر متكررة", 
+                    "حساب القيمة المالية الدقيقة لمونت كارلو", 
+                    "إلغاء الحاجة لمدير المشروع نهائياً", 
+                    "ضمان نجاح المشروع بنسبة 100% دون أي عقبات"
+                ], 
+                correct: 0,
+                explanation: "قوائم الفحص تستند للخبرات السابقة لضمان عدم إغفال المخاطر المتكررة."
+            },
+            { 
+                domain: "التحليل الكمي",
+                q: "أثناء التحليل الكمي، تم استخدام التوزيع المثلثي (Triangular Distribution) لتقدير مدة النشاط. ما هي القيم الثلاث التي يتطلبها هذا التوزيع؟", 
+                options: [
+                    "القيمة المتفائلة، القيمة الأكثر احتمالاً، والقيمة التشاؤمية", 
+                    "القيمة المالية، القيمة الزمنية، وقيمة الجودة", 
+                    "تكلفة العمالة، تكلفة المواد، وتكلفة المعدات", 
+                    "الربح، الخسارة، والتكلفة الثابتة"
+                ], 
+                correct: 0,
+                explanation: "التوزيع المثلثي يعتمد على القيم الثلاث: المتفائلة، الأكثر احتمالاً، والتشاؤمية."
+            },
+            { 
+                domain: "تحديد المخاطر",
+                q: "ما هو التصرف الإداري الخاطئ الذي يجب على مدير المشروع تجنبه عند صياغة خطة إدارة المخاطر؟", 
+                options: [
+                    "نسخ خطة مخاطر مشروع سابق مختلف تماماً دون مواءمتها مع ظروف المشروع الحالي", 
+                    "إشراك أصحاب المصلحة الرئيسيين في النقاش", 
+                    "تحديد الأدوار والمسؤوليات بوضوح", 
+                    "تخصيص ميزانية زمنية ومادية لإدارة المخاطر"
+                ], 
+                correct: 0,
+                explanation: "نسخ خطة قديمة دون مواءمتها مع خصائص المشروع الحالي يعتبر خطأً إدارياً فادحاً."
+            },
+            { 
+                domain: "تحديد المخاطر",
+                q: "كيف يساهم تحليل الافتراضات وقيود المشروع (Assumptions and Constraints Analysis) في تحديد المخاطر؟", 
+                options: [
+                    "من خلال اختبار مدى صحة الافتراضات ومعرفة المخاطر الناشئة إذا تبين خطؤها أو بطلانها", 
+                    "عبر حساب الأرباح الصافية للشركة", 
+                    "من خلال زيادة عدد ساعات العمل للعمال", 
+                    "عبر إلغاء القيود الحكومية على المشروع"
+                ], 
+                correct: 0,
+                explanation: "تحليل الافتراضات يكشف المخاطر الناتجة عن عدم صحة تلك الافتراضات."
+            },
+            { 
+                domain: "مراقبة المخاطر",
+                q: "ما هو الهدف من توثيق الدروس المستفادة (Lessons Learned) المتعلقة بالمخاطر عند إغلاق المشروع؟", 
+                options: [
+                    "الاستفادة منها لتحسين عمليات إدارة المخاطر وتجنب تكرار الأخطاء في المشاريع المستقبلية للمؤسسة", 
+                    "حفظها في أرشيف مهملات الشركة دون مراجعة", 
+                    "استخدامها كدليل إرشادي لتدريس اللغات", 
+                    "تخفيض رواتب المديرين الجدد"
+                ], 
+                correct: 0,
+                explanation: "توثيق الدروس المستفادة يرفع نضج المؤسسة ويمنع تكرار الأخطاء مستقبلًا."
+            },
+            { 
+                domain: "الاستجابة للمخاطر",
+                q: "عندما يتعلق الأمر بالمخاطر الإيجابية (الفرص)، فإن استراتيجية 'القبول' تعني:", 
+                options: [
+                    "عدم اتخاذ إجراء استباقي لاستغلال الفرصة، ولكن الاستفادة منها إذا حدثت صدفة", 
+                    "إلغاء المشروع فوراً", 
+                    "نقل الفرصة لمنافس شرس", 
+                    "فرض ضرائب على الفرصة"
+                ], 
+                correct: 0,
+                explanation: "القبول للفرص يعني عدم السعي الاستباقي لاقتناصها ولكن الاستفادة منها إن حدثت."
+            },
+            { 
+                domain: "التحليل الكيفي",
+                q: "ما هي الأداة التي تربط بين احتمالية حدوث الخطر وتأثيره باستخدام قيم رقمية أو لونية (مثل أخضر، أصفر، أحمر) لترتيب الأولويات؟", 
+                options: [
+                    "مصفوفة الاحتمالية والأثر (Probability and Impact Matrix)", 
+                    "مخطط تدفق النقدية", 
+                    "جدول رواتب الموظفين", 
+                    "مخطط شجرة التنظيم الإداري"
+                ], 
+                correct: 0,
+                explanation: "مصفوفة الاحتمالية والأثر تستخدم التصنيف اللوني أو الرقمي لتحديد الأولويات."
+            },
+            { 
+                domain: "مراقبة المخاطر",
+                q: "لماذا يُعتبر تحديد 'مالك الخطر' (Risk Owner) أمراً بالغ الأهمية لكل خطر تم رصده في سجل المخاطر؟", 
+                options: [
+                    "ليكون شخصاً محدد المسؤولية عن متابعة الخطر وتنفيذ خطة الاستجابة المعتمدة له", 
+                    "لكي يتحمل الخسائر المالية الشخصية بالكامل من جيبه الخاص", 
+                    "لكي يصبح المدير التنفيذي للشركة تلقائياً", 
+                    "لإعفائه من باقي مهام العمل الميداني"
+                ], 
+                correct: 0,
+                explanation: "مالك الخطر هو الشخص المسؤول شخصياً عن متابعة وتنفيد استجابة الخطر."
+            },
+            { 
+                domain: "مراقبة المخاطر",
+                q: "أثناء تنفيذ المشروع، لاحظ مدير المشروع أن بعض المخاطر المسجلة قد تغيرت احتمالية حدوثها. ما الذي يجب عليه فعله؟", 
+                options: [
+                    "تحديث سجل المخاطر وإعادة تقييمها عبر عمليات المراقبة المستمرة", 
+                    "تجاهل التغيير لأن الخطة وُضعت مرة واحدة ولا تتبدل", 
+                    "إغلاق المشروع فوراً", 
+                    "معاقبة المسؤول عن التغيير"
+                ], 
+                correct: 0,
+                explanation: "تغير احتمالية المخاطر يستوجب التحديث الفوري لسجل المخاطر وإعادة التقييم."
+            },
+            { 
+                domain: "التحليل الكيفي",
+                q: "ما هو الفارق بين التحليل الكيفي (Qualitative) والتحليل الكمي (Quantitative) للمخاطر؟", 
+                options: [
+                    "الكيفي يعتمد على التقييم السريع والترتيب النسبي بالأولويات، بينما الكمي يعتمد على النمذجة الرياضية والأرقام المالية الدقيقة", 
+                    "الكيفي يتم باستخدام الحواسب الآلية العملاقة فقط، بينما الكمي يتم بالورقة والقلم", 
+                    "لا يوجد أي فرق بينهما فهما مصطلحان مرادفان تماماً", 
+                    "الكمي اختياري دائمًا والكيفي ممنوع في مشاريع PMI"
+                ], 
+                correct: 0,
+                explanation: "الكيفي تقييم نسبي سريع، بينما الكمي نمذجة رياضية وحسابات مالية دقيقة."
+            },
+            { 
+                domain: "مراقبة المخاطر",
+                q: "ما هو الإجراء الذي يجب اتخاذه عندما تفشل خطة الاستجابة للمخاطر وتظهر عواقب كارثية غير محسوبة على المشروع؟", 
+                options: [
+                    "تفعيل خطة الطوارئ البديلة واللجوء لاحتياطي الطوارئ أو الإدارة بحسب الصلاحيات المعتمدة", 
+                    "إخفاء المشكلة عن العميل وراعي المشروع", 
+                    "الاستقالة الفورية لكل أعضاء الفريق", 
+                    "تخفيض جودة المشروع لتعويض الخسارة"
+                ], 
+                correct: 0,
+                explanation: "عند فشل الاستجابة يتم تفعيل خطط الطوارئ البديلة واستخدام الاحتياطيات المعتمدة."
+            },
+            { 
+                domain: "تحديد المخاطر",
+                q: "أي وثيقة في المشروع تحتوي على تفاصيل ميزانية المخاطر، والمنهجية المتبعة، وتوقيت مراجعات المخاطر طوال دورة الحياة؟", 
+                options: [
+                    "خطة إدارة المخاطر (Risk Management Plan)", 
+                    "سجل المخاطر المالي", 
+                    "تقرير الإنجاز الأسبوعي", 
+                    "سجل أصحاب المصلحة"
+                ], 
+                correct: 0,
+                explanation: "خطة إدارة المخاطر تحدد المنهجية، الميزانية، وتوقيت المراجعات."
+            },
+            { 
+                domain: "الاستجابة للمخاطر",
+                q: "عندما يواجه مدير المشروع ضغطاً هائلاً في الميزانية والوقت، فقرر تقليل نطاق المشروع أو إلغاء بعض المتطلبات عالية الخطورة. هذه الاستراتيجية للتهديدات تسمى:", 
+                options: [
+                    "التجنب (Avoid)", 
+                    "النقل (Transfer)", 
+                    "المشاركة (Share)", 
+                    "القبول السلبي"
+                ], 
+                correct: 0,
+                explanation: "تقليل النطاق لتلافي الخطر تماماً يعتبر من استراتيجيات التجنب (Avoid)."
+            },
+            { 
+                domain: "التحليل الكمي",
+                q: "ما هي الأداة الرياضية المستخدمة لحساب القيمة النقدية المتوقعة للبدائل المختلفة بالاعتماد على احتمالات النجاح والفشل؟", 
+                options: [
+                    "تحليل شجرة القرارات (Decision Tree Analysis)", 
+                    "مخطط الإعصار التراكمي", 
+                    "مصفوفة التباين المالي", 
+                    "تحليل القيمة المحققة المتطورة"
+                ], 
+                correct: 0,
+                explanation: "تحليل شجرة القرارات يحسب القيمة النقدية المتوقعة للبدائل."
+            },
+            { 
+                domain: "مراقبة المخاطر",
+                q: "في ختام إدارة مخاطر المشروع، ما هو المؤشر الأبرز على نجاح مدير المشروع في إدارة المخاطر؟", 
+                options: [
+                    "تحقيق أهداف المشروع (الوقت، التكلفة، الجودة، النطاق) بنجاح وبأقل قدر ممكن من المفاجآت السلبية المؤثرة", 
+                    "عدم حدوث أي خطر صغير في الموقع طوال فترة التنفيذ بنسبة مئة بالمئة", 
+                    "إنفاق كامل ميزانية احتياطي الطوارئ قبل منتصف المشروع", 
+                    "إقالة نصف فريق العمل لتوفير الرواتب"
+                ], 
+                correct: 0,
+                explanation: "النجاح يقاس بتحقيق أهداف المشروع وتقليل المفاجآت السلبية غير المخططة."
+            },
+            {
+                domain: "الاستجابة للمخاطر",
+                q: "أثناء تنفيذ مشروع هندسي معقد، تبيّن أن هناك تهديداً محتملاً قد يؤدي إلى غرامات تأخير ضخمة، وقرر مدير المشروع بالاتفاق مع الإدارة قبول هذا الخطر مع تخصيص ميزانية طوارئ كافية لتغطية الغرامة لو حدثت. يسمى هذا النوع من الاستجابة:",
+                options: [
+                    "القبول النشط (Active Acceptance)",
+                    "القبول السلبي (Passive Acceptance)",
+                    "تجنب المخاطر (Avoidance)",
+                    "نقل المخاطر (Transfer)"
+                ],
+                correct: 0,
+                explanation: "تخصيص ميزانية طوارئ للتعامل مع الخطر عند وقوعه يُميز القبول النشط."
+            }
+        ];
+
+        let state = {
+            currentIndex: 0,
+            answers: Array(questions.length).fill(null),
+            flags: Array(questions.length).fill(false),
+            timer: 60 * 60,
+            timerId: null,
+            userName: "",
+            status: "start",
+            certGeneratedId: ""
+        };
+
+        function initQuiz() {
+            const name = document.getElementById('trainee-name').value.trim();
+            if(!name) return alert("برجاء إدخال الاسم الثلاثي بشكل صحيح لمتابعة الاختبار.");
+            
+            state.userName = name;
+            state.status = "quiz";
+            document.getElementById('intro-screen').classList.add('hidden');
+            document.getElementById('quiz-area').classList.remove('hidden');
+            
+            renderQuestion();
+            startTimer();
+        }
+
+        function renderQuestion() {
+            const q = questions[state.currentIndex];
+            
+            document.getElementById('question-badge').innerText = `سؤال ${state.currentIndex + 1}`;
+            document.getElementById('domain-badge').innerText = q.domain;
+            document.getElementById('question-total-label').innerText = `من ${questions.length} سؤال`;
+            
+            const progressPercent = ((state.currentIndex + 1) / questions.length) * 100;
+            document.getElementById('progress-fill').style.width = `${progressPercent}%`;
+
+            document.getElementById('question-text').innerText = q.q;
+            
+            const optionsCont = document.getElementById('options-container');
+            optionsCont.innerHTML = '';
+            
+            const answered = state.answers[state.currentIndex] !== null;
+            const selectedIdx = state.answers[state.currentIndex];
+
+            q.options.forEach((opt, i) => {
+                const btn = document.createElement('button');
+                let extraClass = 'bg-slate-50 border-slate-300 text-slate-700';
+                let letterBg = 'bg-slate-200 text-slate-600';
+
+                if (answered) {
+                    if (i === q.correct) {
+                        extraClass = 'bg-emerald-50 border-emerald-500 text-emerald-900 font-bold shadow-sm';
+                        letterBg = 'bg-emerald-600 text-white';
+                    } else if (i === selectedIdx && i !== q.correct) {
+                        extraClass = 'bg-red-50 border-red-500 text-red-900 font-bold shadow-sm';
+                        letterBg = 'bg-red-500 text-white';
+                    }
+                }
+
+                btn.className = `option-card w-full text-right p-4 rounded-2xl border ${extraClass} flex items-center gap-4 cursor-pointer`;
+                if (answered) btn.disabled = true;
+
+                btn.innerHTML = `
+                    <span class="letter-box w-10 h-10 rounded-xl ${letterBg} flex items-center justify-center text-base font-black shrink-0 shadow-sm">${String.fromCharCode(65 + i)}</span>
+                    <span class="flex-grow break-words font-semibold">${opt}</span>
+                `;
+                
+                if (!answered) {
+                    btn.onclick = () => selectOption(i);
+                }
+                optionsCont.appendChild(btn);
+            });
+
+            document.getElementById('prev-btn').disabled = state.currentIndex === 0;
+            document.getElementById('next-btn').classList.toggle('hidden', state.currentIndex === questions.length - 1);
+            document.getElementById('finish-btn').classList.toggle('hidden', state.currentIndex !== questions.length - 1);
+            
+            const flagBtn = document.getElementById('flag-btn');
+            const flagText = document.getElementById('flag-text');
+            if(state.flags[state.currentIndex]) {
+                flagBtn.classList.remove('text-slate-400', 'border-slate-200');
+                flagBtn.classList.add('text-amber-600', 'border-amber-300', 'bg-amber-50');
+                flagText.innerText = "محفوظ للمراجعة";
+            } else {
+                flagBtn.classList.add('text-slate-400', 'border-slate-200');
+                flagBtn.classList.remove('text-amber-600', 'border-amber-300', 'bg-amber-50');
+                flagText.innerText = "تمييز للمراجعة";
+            }
+        }
+
+        function selectOption(idx) {
+            state.answers[state.currentIndex] = idx;
+            renderQuestion();
+        }
+
+        function toggleFlag() {
+            state.flags[state.currentIndex] = !state.flags[state.currentIndex];
+            renderQuestion();
+        }
+
+        function nextQuestion() {
+            if(state.currentIndex < questions.length - 1) {
+                state.currentIndex++;
+                renderQuestion();
+            }
+        }
+
+        function prevQuestion() {
+            if(state.currentIndex > 0) {
+                state.currentIndex--;
+                renderQuestion();
+            }
+        }
+
+        function startTimer() {
+            state.timerId = setInterval(() => {
+                state.timer--;
+                const mins = Math.floor(state.timer / 60);
+                const secs = state.timer % 60;
+                const display = `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+                const el = document.getElementById('time');
+                el.innerText = display;
+
+                if(state.timer < 300) {
+                    el.parentElement.classList.add('text-red-600', 'border-red-300', 'bg-red-50');
+                }
+                if(state.timer <= 0) finishQuiz();
+            }, 1000);
+        }
+
+        function confirmSubmit() {
+            const unanswered = state.answers.filter(a => a === null).length;
+            const msg = unanswered > 0 
+                ? `لديك ${unanswered} سؤالاً بدون إجابة. هل أنت متأكد من تسليم الاختبار؟` 
+                : "هل أنت متأكد من تسليم الاختبار ورصد النتائج النهائية؟";
+            
+            if(confirm(msg)) finishQuiz();
+        }
+
+        function finishQuiz() {
+            clearInterval(state.timerId);
+            state.status = "result";
+            document.getElementById('quiz-area').classList.add('hidden');
+            document.getElementById('result-screen').classList.remove('hidden');
+
+            let score = 0;
+            state.answers.forEach((ans, i) => {
+                if(ans === questions[i].correct) score++;
+            });
+
+            const percent = (score / questions.length) * 100;
+            const passed = percent >= 70;
+
+            document.getElementById('result-title').innerText = passed ? "🎉 تهانينا! لقد اجتزت الاختبار بنجاح" : "للأسف لم تتخطى النسبة المطلوبة للاجتياز";
+            document.getElementById('result-title').className = `text-3xl md:text-4xl font-black mb-2 ${passed ? 'text-emerald-700' : 'text-red-600'}`;
+            document.getElementById('result-name').innerText = state.userName;
+            document.getElementById('final-score').innerText = `${percent.toFixed(1)}%`;
+            document.getElementById('correct-count').innerText = `${score}/${questions.length}`;
+            document.getElementById('final-score').className = `text-4xl md:text-6xl font-black mb-2 ${passed ? 'text-emerald-600' : 'text-red-600'}`;
+
+            const actionArea = document.getElementById('certificate-action-area');
+            if (passed) {
+                state.certGeneratedId = 'BA-' + new Date().getFullYear() + '-' + Math.floor(100000 + Math.random() * 900000);
+                actionArea.innerHTML = `
+                    <button onclick="openCertificate()" class="inline-flex items-center gap-2 bg-amber-600 hover:bg-amber-700 text-white font-bold py-4 px-10 rounded-2xl shadow-xl transition-all text-lg transform hover:scale-105 cursor-pointer">
+                        🏆 عرض وتنزيل شهادة الاجتياز الرسمية
+                    </button>
+                `;
+            } else {
+                actionArea.innerHTML = `<p class="text-red-700 font-bold bg-red-50 p-4 rounded-2xl border border-red-200 text-sm max-w-lg mx-auto">تتطلب شهادة الاجتياز الحصول على نسبة 70% على الأقل. يمكنك إعادة المحاولة بعد مراجعة الأخطاء.</p>`;
+            }
+
+            fetch(`${API_URL}?name=${encodeURIComponent(state.userName)}&score=${percent.toFixed(1)}%&status=${passed ? 'ناجح' : 'راسب'}`, { mode: 'no-cors' }).catch(()=>{});
+        }
+
+        function openCertificate() {
+            const formattedDate = new Date().toLocaleDateString('ar-SA', { year: 'numeric', month: 'long', day: 'numeric' });
+            
+            document.getElementById('cert-trainee-name').innerText = state.userName;
+            document.getElementById('cert-id').innerText = state.certGeneratedId;
+            document.getElementById('cert-issue-date').innerText = formattedDate;
+
+            // تحديث رابط الـ QR ليطابق صفحة التحقق الخاصة بالشهادة بدلاً من الصفحة الرئيسية
+            const verificationUrl = `https://ba-engineering-academy.netlify.app/verify?id=${state.certGeneratedId}&name=${encodeURIComponent(state.userName)}`;
+            document.getElementById('cert-qr-code').src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(verificationUrl)}`;
+
+            document.getElementById('certificate-standalone-view').classList.remove('hidden');
+            document.getElementById('certificate-standalone-view').classList.add('flex');
+        }
+
+        function closeCertificate() {
+            document.getElementById('certificate-standalone-view').classList.add('hidden');
+            document.getElementById('certificate-standalone-view').classList.remove('flex');
+        }
+
+        function reviewMistakes() {
+            const container = document.getElementById('review-content');
+            container.innerHTML = '';
+            
+            questions.forEach((q, i) => {
+                const isCorrect = state.answers[i] === q.correct;
+                const div = document.createElement('div');
+                div.className = `p-5 rounded-2xl bg-slate-50 border-r-4 ${isCorrect ? 'border-emerald-500' : 'border-red-500'} border border-slate-200 shadow-sm`;
+                div.innerHTML = `
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="font-black text-xs text-slate-400">سؤال ${i+1}</span>
+                        <span class="bg-slate-200 text-slate-700 px-2.5 py-0.5 rounded-lg text-xs font-bold">${q.domain}</span>
+                    </div>
+                    <p class="mb-4 text-base md:text-lg font-bold text-slate-800">${q.q}</p>
+                    <div class="text-sm md:text-base space-y-2 font-semibold">
+                        <p class="${isCorrect ? 'text-emerald-800 bg-emerald-50 border-emerald-100' : 'text-red-700 bg-red-50 border-red-100'} p-3 rounded-xl border">
+                            إجابتك: ${state.answers[i] !== null ? q.options[state.answers[i]] : 'لم تجب'}
+                        </p>
+                        <p class="text-emerald-800 bg-emerald-50 p-3 rounded-xl border border-emerald-100">
+                            الإجابة الصحيحة: ${q.options[q.correct]}
+                        </p>
+                        <p class="text-sky-900 bg-sky-50 p-3 rounded-xl border border-sky-100 text-xs md:text-sm font-bold mt-2">
+                            💡 التفسير: ${q.explanation}
+                        </p>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+
+            document.getElementById('review-modal').classList.remove('hidden');
+        }
+
+        function closeReview() {
+            document.getElementById('review-modal').classList.add('hidden');
+        }
+
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                if (state.status === "start") {
+                    initQuiz();
+                } else if (state.status === "quiz") {
+                    if (state.currentIndex < questions.length - 1) {
+                        nextQuestion();
+                    } else {
+                        confirmSubmit();
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
