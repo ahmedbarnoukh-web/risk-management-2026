@@ -31,6 +31,7 @@
             --glass-shadow: 0 20px 40px -15px rgba(30, 58, 138, 0.07);
             --glass-border: 1px solid rgba(255, 255, 255, 0.4);
             --ticker-bg: #1e3a8a;
+            --ease-smooth: cubic-bezier(0.22, 1, 0.36, 1);
         }
 
         [data-theme="dark"] {
@@ -62,6 +63,9 @@
             flex-direction: column;
             min-height: 100vh;
             transition: background-color 0.4s ease, color 0.4s ease;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
         }
 
         ::-webkit-scrollbar { width: 8px; }
@@ -238,12 +242,19 @@
         }
         .theme-btn:hover { background: #ffffff; transform: rotate(15deg) scale(1.05); }
 
-        .app-view { display: none; flex-direction: column; flex-grow: 1; animation: fadeInNeural 0.4s ease forwards; opacity: 0; }
+        .app-view { display: none; flex-direction: column; flex-grow: 1; animation: fadeInNeural 0.5s var(--ease-smooth) forwards; opacity: 0; }
         .app-view.active { display: flex; }
 
         @keyframes fadeInNeural {
-            from { opacity: 0; transform: translateY(12px); }
+            from { opacity: 0; transform: translateY(16px); }
             to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Scroll-reveal micro-animation for cards */
+        .reveal-up { opacity: 0; transform: translateY(22px); transition: opacity 0.6s var(--ease-smooth), transform 0.6s var(--ease-smooth); }
+        .reveal-up.revealed { opacity: 1; transform: translateY(0); }
+        @media (prefers-reduced-motion: reduce) {
+            .reveal-up { opacity: 1; transform: none; transition: none; }
         }
 
         /* Hero Section */
@@ -379,14 +390,14 @@
         .feature-card { 
             background: var(--bg-main); backdrop-filter: blur(10px); padding: 30px 22px; border-radius: 18px; 
             border: var(--glass-border); box-shadow: var(--glass-shadow); 
-            transition: all 0.3s ease; position: relative; overflow: hidden; text-align: inherit;
+            transition: transform 0.4s var(--ease-smooth), box-shadow 0.4s var(--ease-smooth), border-color 0.3s ease; position: relative; overflow: hidden; text-align: inherit;
         }
         .feature-card::before { content: ''; position: absolute; top: 0; right: 0; width: 100%; height: 4px; background: var(--primary-blue); transition: background 0.3s; }
         .feature-card:hover { transform: translateY(-6px); border-color: var(--accent-color); box-shadow: 0 18px 35px rgba(30, 58, 138, 0.12); }
         .feature-card:hover::before { background: var(--accent-color); }
-        .feature-card i { font-size: 2.4rem; color: var(--accent-color); margin-bottom: 14px; display: inline-block; transition: transform 0.3s ease; }
+        .feature-card i { font-size: 2.4rem; color: var(--accent-color); margin-bottom: 14px; display: inline-block; transition: transform 0.4s var(--ease-smooth); }
         .feature-card:hover i { transform: scale(1.12) rotate(6deg); }
-        .feature-card h4 { font-size: 1.15rem; color: var(--primary-blue); font-weight: 700; margin-bottom: 10px; }
+        .feature-card h4 { font-size: 1.15rem; color: var(--primary-blue); font-weight: 700; margin-bottom: 10px; letter-spacing: -0.1px; }
         .feature-card p { font-size: 0.92rem; color: var(--text-muted); font-weight: 600; line-height: 1.65; }
 
         /* Video Lightbox Trigger Button inside cards */
@@ -536,9 +547,9 @@
             border: var(--glass-border); border-radius: 20px; overflow: hidden;
             box-shadow: var(--glass-shadow); cursor: pointer;
             display: flex; flex-direction: column;
-            transition: all 0.35s ease;
+            transition: transform 0.4s var(--ease-smooth), box-shadow 0.4s var(--ease-smooth), border-color 0.3s ease;
         }
-        .article-card:hover { transform: translateY(-7px); box-shadow: 0 20px 40px rgba(0,0,0,0.12); border-color: var(--primary-blue); }
+        .article-card:hover { transform: translateY(-8px); box-shadow: 0 22px 42px rgba(0,0,0,0.13); border-color: var(--primary-blue); }
         .article-card-thumb {
             height: 175px; position: relative; overflow: hidden;
             background-size: cover; background-position: center;
@@ -600,7 +611,8 @@
             font-size: 24px; 
             font-weight: 900; 
             color: var(--text-dark); 
-            margin-bottom: 22px; 
+            margin-bottom: 26px; 
+            letter-spacing: -0.3px;
             display: flex; 
             align-items: center; 
             justify-content: flex-start;
@@ -618,15 +630,15 @@
             border-radius: 22px; padding: 30px 26px; cursor: pointer;
             display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
             border: var(--glass-border); box-shadow: var(--glass-shadow);
-            transition: all 0.35s ease; position: relative; overflow: hidden;
+            transition: transform 0.45s var(--ease-smooth), box-shadow 0.45s var(--ease-smooth), border-color 0.3s ease, background-color 0.3s ease; position: relative; overflow: hidden;
         }
         .nav-card:hover { 
-            transform: translateY(-7px); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12); 
+            transform: translateY(-8px); box-shadow: 0 24px 45px rgba(0, 0, 0, 0.13); 
             border-color: var(--primary-blue); background-color: var(--active-blue); 
         }
-        .nav-card i.main-icon { font-size: 28px; color: var(--primary-blue); margin-bottom: 14px; transition: transform 0.3s ease; }
+        .nav-card i.main-icon { font-size: 28px; color: var(--primary-blue); margin-bottom: 14px; transition: transform 0.4s var(--ease-smooth); }
         .nav-card:hover i.main-icon { transform: scale(1.12) rotate(5deg); color: var(--accent-color); }
-        .nav-card h3 { font-size: 19px; font-weight: 700; color: var(--text-dark); margin-bottom: 6px; }
+        .nav-card h3 { font-size: 19px; font-weight: 700; color: var(--text-dark); margin-bottom: 6px; letter-spacing: -0.1px; }
         .nav-card p.en-text { font-family: 'Poppins', sans-serif; font-size: 16px; color: var(--primary-blue); font-weight: 600; letter-spacing: 0.2px; }
         .nav-card p.nav-card-desc { font-size: 13px; color: var(--text-muted); font-weight: 600; line-height: 1.5; margin-top: 2px; }
         
@@ -995,7 +1007,7 @@
             50% { box-shadow: 0 8px 30px rgba(59,130,246,0.35); }
         }
 
-        @keyframes fadeInNeural { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeInNeural { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes slideInNeural { from { opacity: 0; transform: translateY(15px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
         @keyframes fadeOutNeural { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(10px); } }
         @keyframes pulseNeural { 0% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.08); opacity: 0.6; } 100% { transform: scale(1); opacity: 1; } }
@@ -1084,14 +1096,16 @@
             <span class="ticker-item"><i class="fa-solid fa-hand-sparkles"></i> <span data-ar="أهلاً وسهلاً بك" data-en="Welcome">أهلاً وسهلاً بك</span></span>
             <span class="ticker-item"><i class="fa-solid fa-fire"></i> <span data-ar="متاح الآن: كورس الهندسة القيمية" data-en="Available Now: Value Engineering Course">متاح الآن: كورس الهندسة القيمية</span></span>
             <span class="ticker-item"><i class="fa-solid fa-fire"></i> <span data-ar="متاح الآن: كورس إدارة المخاطر" data-en="Available Now: Risk Management Course">متاح الآن: كورس إدارة المخاطر</span></span>
-            <span class="ticker-item"><i class="fa-solid fa-cloud-arrow-up"></i> <span data-ar="جارِ تحميل كورس العقود" data-en="Loading the Contracts course">جارِ تحميل كورس العقود</span></span>
+            <span class="ticker-item"><i class="fa-solid fa-fire"></i> <span data-ar="متاح الآن: كورس إدارة العقود" data-en="Available Now: Contract Management Course">متاح الآن: كورس إدارة العقود</span></span>
+            <span class="ticker-item"><i class="fa-solid fa-pen-ruler"></i> <span data-ar="جارِ تصميم كورس إدارة التكاليف" data-en="Designing the Cost Management course">جارِ تصميم كورس إدارة التكاليف</span></span>
         </div>
         <div class="ticker-wrapper" aria-hidden="true">
             <span class="ticker-item"><i class="fa-solid fa-globe"></i> <span data-ar="BA Engineering Academy | منصة تعليمية متكاملة" data-en="BA Engineering Academy | Integrated Platform">BA Engineering Academy | منصة تعليمية متكاملة</span></span>
             <span class="ticker-item"><i class="fa-solid fa-hand-sparkles"></i> <span data-ar="أهلاً وسهلاً بك" data-en="Welcome">أهلاً وسهلاً بك</span></span>
             <span class="ticker-item"><i class="fa-solid fa-fire"></i> <span data-ar="متاح الآن: كورس الهندسة القيمية" data-en="Available Now: Value Engineering Course">متاح الآن: كورس الهندسة القيمية</span></span>
             <span class="ticker-item"><i class="fa-solid fa-fire"></i> <span data-ar="متاح الآن: كورس إدارة المخاطر" data-en="Available Now: Risk Management Course">متاح الآن: كورس إدارة المخاطر</span></span>
-            <span class="ticker-item"><i class="fa-solid fa-cloud-arrow-up"></i> <span data-ar="جارِ تحميل كورس العقود" data-en="Loading the Contracts course">جارِ تحميل كورس العقود</span></span>
+            <span class="ticker-item"><i class="fa-solid fa-fire"></i> <span data-ar="متاح الآن: كورس إدارة العقود" data-en="Available Now: Contract Management Course">متاح الآن: كورس إدارة العقود</span></span>
+            <span class="ticker-item"><i class="fa-solid fa-pen-ruler"></i> <span data-ar="جارِ تصميم كورس إدارة التكاليف" data-en="Designing the Cost Management course">جارِ تصميم كورس إدارة التكاليف</span></span>
         </div>
         </div>
     </div>
@@ -1171,7 +1185,7 @@
         </div>
     </div
 
-    <!-- Contract Course Portal: prepared in code only, not yet wired to any visible button. Activate once the course is live by adding onclick="openContractLoginModal()" to the relevant button. -->
+    <!-- Contract Course Portal: active — wired to the trainee-access button on the available-courses card and the contracts-info-view. -->
     <div class="modal-overlay" id="contract-login-modal-overlay">
         <div class="login-modal">
             <i class="fa-solid fa-lock" style="font-size: 2.8rem; color: var(--accent-color); margin-bottom: 14px;"></i>
@@ -1355,6 +1369,22 @@
                             </button>
                         </div>
                     </div>
+
+                    <!-- Course 3: Contract & Claims Management -->
+                    <div class="course-preview-block">
+                        <div class="nav-card course-card-main" onclick="switchMainView('contracts-info-view')">
+                            <div class="course-thumb">
+                                <img src="contract/contr.jpg" class="course-thumb-img" alt="إدارة العقود والمطالبات الهندسية">
+                                <div class="thumb-brand-logo"><img src="photo/logo.jpg" alt="BA"></div>
+                                <span class="course-ribbon"><i class="fa-solid fa-circle-check"></i> <span data-ar="متاحة الآن" data-en="Available Now">متاحة الآن</span></span>
+                            </div>
+                            <h3 data-ar="إدارة العقود والمطالبات الهندسية" data-en="Professional Contract & Claims Management">إدارة العقود والمطالبات الهندسية</h3>
+                            <p class="en-text">Professional Contract & Claims Management</p>
+                            <button class="course-video-link" onclick="event.stopPropagation(); openVideoModal('video/contract.mp4', 'إدارة العقود والمطالبات الهندسية - فيديو تعريفي')">
+                                <i class="fa-solid fa-circle-play"></i> <span data-ar="شاهد الفيديو التعريفي" data-en="Watch Intro Video">شاهد الفيديو التعريفي</span>
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -1371,29 +1401,19 @@
                 <div class="cards-grid-upcoming">
                     <div class="nav-card course-card-upcoming" onclick="showCourseComingSoon(event)">
                         <div class="course-thumb">
-                            <img src="https://images.pexels.com/photos/8470836/pexels-photo-8470836.jpeg?auto=compress&w=800&h=500&dpr=1" class="course-thumb-img" alt="إدارة العقود والمطالبات الهندسية">
+                            <img src="https://images.pexels.com/photos/5921494/pexels-photo-5921494.jpeg?auto=compress&w=800&h=500&dpr=1" class="course-thumb-img" alt="إدارة تكاليف المشاريع">
                             <div class="thumb-brand-logo"><img src="photo/logo.jpg" alt="BA"></div>
                             <div class="lock-overlay-badge"><i class="fa-solid fa-lock"></i></div>
                         </div>
-                        <h3 data-ar="إدارة العقود والمطالبات الهندسية" data-en="Professional Contract & Claims Management">إدارة العقود والمطالبات الهندسية</h3>
-                        <p class="en-text">Professional Contract & Claims Management</p>
+                        <h3 data-ar="إدارة تكاليف المشاريع" data-en="Project Cost Management">إدارة تكاليف المشاريع</h3>
+                        <p class="en-text">Project Cost Management</p>
                         <div class="status-badge-box uploading">
                             <div class="uploading-row">
-                                <i class="fa-solid fa-cloud-arrow-up upload-icon-bounce"></i>
-                                <span data-ar="جارِ الرفع على السيرفر..." data-en="Uploading to server...">جارِ الرفع على السيرفر...</span>
+                                <i class="fa-solid fa-pen-ruler upload-icon-bounce"></i>
+                                <span data-ar="جارِ التصميم وإعداد المحتوى..." data-en="Design & content preparation in progress...">جارِ التصميم وإعداد المحتوى...</span>
                             </div>
                             <div class="upload-progress-track"><div class="upload-progress-fill"></div></div>
                         </div>
-                    </div>
-
-                    <div class="nav-card course-card-upcoming" onclick="showCourseComingSoon(event)">
-                        <div class="course-thumb">
-                            <img src="https://images.pexels.com/photos/5921494/pexels-photo-5921494.jpeg?auto=compress&w=800&h=500&dpr=1" class="course-thumb-img" alt="إدارة تكاليف المشاريع الهندسية">
-                            <div class="thumb-brand-logo"><img src="photo/logo.jpg" alt="BA"></div>
-                            <div class="lock-overlay-badge"><i class="fa-solid fa-lock"></i></div>
-                        </div>
-                        <h3 data-ar="إدارة تكاليف المشاريع الهندسية" data-en="Engineering Project Cost Management">إدارة تكاليف المشاريع الهندسية</h3>
-                        <p class="en-text">Engineering Project Cost Management</p>
                     </div>
 
                     <div class="nav-card course-card-upcoming" onclick="showCourseComingSoon(event)">
@@ -1670,24 +1690,97 @@
     </main>
 
     <main id="contracts-info-view" class="app-view">
-        <div class="dashboard-content" style="padding-top: 25px; max-width: 950px;">
+        <div class="dashboard-content" style="padding-top: 25px;">
             <button class="btn-outline" onclick="backToTracks()" style="margin-bottom: 18px; border-radius: 12px; padding: 10px 20px;">
                 <i class="fa-solid fa-arrow-right"></i> <span data-ar="العودة للمسارات" data-en="Back to Tracks">العودة للمسارات</span>
             </button>
-            <div class="course-details-header" style="background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%); padding: 50px 24px;">
-                <h2>BA Engineering Academy</h2>
-                <p style="font-size: 1.3rem; font-weight: 800; color: #fff; margin-top: 4px;" data-ar="إدارة العقود والمطالبات الهندسية" data-en="Professional Contract & Claims Management">إدارة العقود والمطالبات الهندسية</p>
+            <div class="course-details-header" style="background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);">
+                <h2 data-ar="دورة إدارة العقود والمطالبات الهندسية الاحترافية" data-en="Professional Contract & Claims Management Course">دورة إدارة العقود والمطالبات الهندسية الاحترافية</h2>
+                <p data-ar="مقرر متخصص في صياغة وإدارة العقود الإنشائية، تتبع المستخلصات، ودراسة مطالبات التغيير لضمان عدم التعثر المالي في مشروعك" data-en="A specialized course in drafting and managing construction contracts, tracking payment certificates, and studying variation claims to avoid financial setbacks">مقرر متخصص في صياغة وإدارة العقود الإنشائية، تتبع المستخلصات، ودراسة مطالبات التغيير لضمان عدم التعثر المالي في مشروعك</p>
+                <div class="course-meta">
+                    <div class="meta-item"><i class="fa-regular fa-clock"></i> <span data-ar="22 ساعة تدريبية" data-en="22 Training Hours">22 ساعة تدريبية</span></div>
+                    <div class="meta-item"><i class="fa-solid fa-video"></i> <span data-ar="محاضرات مسجلة" data-en="Recorded Lectures">محاضرات مسجلة</span></div>
+                    <div class="meta-item"><i class="fa-solid fa-certificate"></i> Certificate of Completion</div>
+                    <div class="meta-item"><i class="fa-solid fa-signal"></i> <span data-ar="المستوى: متقدم" data-en="Level: Advanced">المستوى: متقدم</span></div>
+                </div>
             </div>
-            
-            <div class="content-box">
-                <h2><i class="fa-solid fa-circle-info"></i> <span data-ar="ملخص بسيط وواضح لمحتوى الكورس" data-en="Course Summary">ملخص بسيط وواضح لمحتوى الكورس</span></h2>
-                <p data-ar="مقرر متخصص في صياغة وإدارة العقود الإنشائية، تتبع المستخلصات، دراسة مطالبات التغيير، والتحكم الصارم في ميزانية المشروع وتكاليفه لضمان عدم التعثر المالي." data-en="Specialized course in construction contracts, variations, invoices, and budget control to avoid cost overrun.">مقرر متخصص في صياغة وإدارة العقود الإنشائية، تتبع المستخلصات، دراسة مطالبات التغيير، والتحكم الصارم في ميزانية المشروع وتكاليفه لضمان عدم التعثر المالي.</p>
 
-                <h3><i class="fa-solid fa-bullseye"></i> <span data-ar="الأهداف الرئيسية" data-en="Key Objectives">الأهداف الرئيسية</span></h3>
-                <ul class="sales-checklist">
-                    <li><i class="fa-solid fa-check-circle"></i> <span data-ar="الإلمام التام بأنواع العقود الهندسية وشروطها العامة والخاصة، بما في ذلك عقود الفيديك (FIDIC)." data-en="Mastering contract types & FIDIC general/particular conditions.">الإلمام التام بأنواع العقود الهندسية وشروطها العامة والخاصة، بما في ذلك عقود الفيديك (FIDIC).</span></li>
-                    <li><i class="fa-solid fa-check-circle"></i> <span data-ar="مهارات إعداد واعتماد المستخلصات الجارية الختامية بدقة." data-en="Preparing and approving interim/final payment certificates accurately.">مهارات إعداد واعتماد المستخلصات الجارية الختامية بدقة.</span></li>
-                </ul>
+            <div class="course-content-split">
+                <div class="content-box">
+                    <h3 style="margin-top: 0;"><i class="fa-solid fa-bullseye"></i> <span data-ar="أهداف الدورة" data-en="Course Objectives">أهداف الدورة</span></h3>
+                    <p data-ar="تزويد المهندسين ومديري المشاريع بمهارات صياغة العقود الهندسية ومراجعتها، وإعداد واعتماد المستخلصات بدقة، ودراسة مطالبات التغيير والتمديد الزمني، والتحكم الصارم في ميزانية المشروع وتكاليفه." data-en="Equipping engineers and project managers with skills in drafting/reviewing engineering contracts, accurately preparing payment certificates, studying variation & EOT claims, and strict budget/cost control.">تزويد المهندسين ومديري المشاريع بمهارات صياغة العقود الهندسية ومراجعتها، وإعداد واعتماد المستخلصات بدقة، ودراسة مطالبات التغيير والتمديد الزمني، والتحكم الصارم في ميزانية المشروع وتكاليفه.</p>
+
+                    <div class="before-after-grid">
+                        <div class="ba-card before-card">
+                            <div class="ba-card-label"><i class="fa-solid fa-circle-xmark"></i> <span data-ar="قبل الكورس" data-en="Before the Course">قبل الكورس</span></div>
+                            <p data-ar="التعامل مع بنود العقد بشكل سطحي، وضعف في توثيق المطالبات والمستخلصات، مما يعرض المشروع لنزاعات وخسائر مالية غير متوقعة." data-en="You handle contract clauses superficially, with weak documentation of claims and payment certificates, exposing the project to disputes and unexpected financial losses.">التعامل مع بنود العقد بشكل سطحي، وضعف في توثيق المطالبات والمستخلصات، مما يعرض المشروع لنزاعات وخسائر مالية غير متوقعة.</p>
+                        </div>
+                        <div class="ba-card after-card">
+                            <div class="ba-card-label"><i class="fa-solid fa-circle-check"></i> <span data-ar="بعد الكورس" data-en="After the Course">بعد الكورس</span></div>
+                            <p data-ar="تُصاغ العقود وتُراجع باحترافية، وتُوثق المستخلصات والمطالبات وفق الأصول، وتُدار الميزانية بدقة تحمي المشروع من التعثر المالي." data-en="You draft and review contracts professionally, document certificates and claims properly, and manage the budget with precision that protects the project from financial setbacks.">تُصاغ العقود وتُراجع باحترافية، وتُوثق المستخلصات والمطالبات وفق الأصول، وتُدار الميزانية بدقة تحمي المشروع من التعثر المالي.</p>
+                        </div>
+                    </div>
+
+                    <h3><i class="fa-solid fa-layer-group"></i> <span data-ar="محاور البرنامج التدريبي" data-en="Syllabus Modules">محاور البرنامج التدريبي</span></h3>
+
+                    <!-- Interactive Accordion Outline -->
+                    <div class="accordion-group">
+                        <div class="accordion-item active">
+                            <div class="accordion-header" onclick="toggleAccordion(this)">
+                                <span><i class="fa-solid fa-file-contract" style="margin-left: 8px;"></i> الوحدة الأولى: أنواع العقود الهندسية وعقود الفيديك (FIDIC)</span>
+                                <i class="fa-solid fa-chevron-down accordion-icon"></i>
+                            </div>
+                            <div class="accordion-content">
+                                الإلمام التام بأنواع العقود الهندسية وشروطها العامة والخاصة، بما في ذلك عقود الفيديك (FIDIC)، وأدوار الأطراف المختلفة في العقد.
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <div class="accordion-header" onclick="toggleAccordion(this)">
+                                <span><i class="fa-solid fa-file-invoice-dollar" style="margin-left: 8px;"></i> الوحدة الثانية: إعداد واعتماد المستخلصات</span>
+                                <i class="fa-solid fa-chevron-down accordion-icon"></i>
+                            </div>
+                            <div class="accordion-content">
+                                مهارات إعداد واعتماد المستخلصات الجارية والختامية بدقة، وربطها بنسب الإنجاز الفعلي وجداول الكميات.
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <div class="accordion-header" onclick="toggleAccordion(this)">
+                                <span><i class="fa-solid fa-scale-balanced" style="margin-left: 8px;"></i> الوحدة الثالثة: مطالبات التغيير والتمديد الزمني</span>
+                                <i class="fa-solid fa-chevron-down accordion-icon"></i>
+                            </div>
+                            <div class="accordion-content">
+                                دراسة أوامر التغيير (Variation Orders)، وإعداد مطالبات التمديد الزمني (EOT) وتعويض التأخيرات بشكل موثق ومدعوم بالأدلة.
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <div class="accordion-header" onclick="toggleAccordion(this)">
+                                <span><i class="fa-solid fa-sack-dollar" style="margin-left: 8px;"></i> الوحدة الرابعة: التحكم في ميزانية المشروع وتكاليفه</span>
+                                <i class="fa-solid fa-chevron-down accordion-icon"></i>
+                            </div>
+                            <div class="accordion-content">
+                                متابعة الميزانية بشكل دوري، ورصد الانحرافات المالية مبكراً، واتخاذ إجراءات تصحيحية لضمان عدم التعثر المالي للمشروع.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-box" style="text-align: center; padding: 28px 22px;">
+                    <i class="fa-solid fa-user-tie" style="font-size: 3.2rem; color: var(--primary-blue); margin-bottom: 14px;"></i>
+                    <h3 style="margin-top: 0; color: var(--text-dark); justify-content: center;" data-ar="المدرب: مهندس أحمد علي" data-en="Instructor: Eng. Ahmed Ali">المدرب: مهندس أحمد علي</h3>
+                    <p style="color: var(--primary-blue); font-weight: 800; margin-bottom: 6px;">Senior Electrical Engineer</p>
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 18px;" data-ar="خبرة هندسية وميدانية 20 عاماً في إدارة المشاريع الهندسية." data-en="20 years of engineering & field expertise in project management.">خبرة هندسية وميدانية 20 عاماً في إدارة المشاريع الهندسية.</p>
+                    <hr style="border: 0; border-top: 1px solid var(--border-color); margin: 18px 0;">
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSdObqHCrVw77H87oI5-yZlk6wc7_QuaKMLP3ZNbC5Fp767qHw/viewform?pli=1" target="_blank" class="btn-primary" style="width: 100%; margin-bottom: 14px; text-decoration: none; font-size: 15px;">
+                        <i class="fa-solid fa-paper-plane"></i> <span data-ar="تواصل معنا للتسجيل" data-en="Contact Us to Register">تواصل معنا للتسجيل</span>
+                    </a>
+                    <p style="font-size: 1.02rem; font-weight: 900; color: var(--primary-blue); margin-bottom: 12px;" data-ar="دخول المتدربين" data-en="Trainee Access">دخول المتدربين</p>
+                    <button class="btn-outline" onclick="openContractLoginModal()" style="width: 100%;">
+                        <i class="fa-solid fa-lock-open"></i> <span data-ar="الدخول للمقرر" data-en="Enter Course">الدخول للمقرر</span>
+                    </button>
+                </div>
             </div>
         </div>
     </main>
@@ -2032,6 +2125,35 @@
             if(viewId === 'home-view' && !countersAnimated) {
                 animateCounters();
             }
+
+            requestAnimationFrame(initScrollReveal);
+        }
+
+        function initScrollReveal() {
+            const revealTargets = document.querySelectorAll('.nav-card, .feature-card, .article-card');
+            revealTargets.forEach(el => el.classList.add('reveal-up'));
+
+            if (!('IntersectionObserver' in window)) {
+                revealTargets.forEach(el => el.classList.add('revealed'));
+                return;
+            }
+
+            if (!window.__revealObserver) {
+                window.__revealObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('revealed');
+                            window.__revealObserver.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+            }
+
+            revealTargets.forEach(el => {
+                if (!el.classList.contains('revealed')) {
+                    window.__revealObserver.observe(el);
+                }
+            });
         }
 
         function backToTracks() {
@@ -2060,6 +2182,7 @@
 
         document.addEventListener('DOMContentLoaded', function() {
             animateCounters();
+            initScrollReveal();
             const savedLang = localStorage.getItem('siteLang');
             if (savedLang === 'en') {
                 currentLang = 'en';
@@ -2199,7 +2322,7 @@
             if (e.key === 'Enter') verifyVALogin();
         });
 
-        // Contract & Claims Management course portal — prepared in code only.
+        // Contract & Claims Management course portal — active.
         // Not yet wired to any visible button; will be activated once the course launches.
         function openContractLoginModal() {
             document.getElementById('contract-login-modal-overlay').classList.add('active');
@@ -2229,8 +2352,7 @@
             if (e.key === 'Enter') verifyContractLogin();
         });
 
-        // Contract course intro video — prepared but not yet linked to a visible button.
-        // To activate: add onclick="openVideoModal('video/contract.mp4', 'نبذة تعريفية عن كورس إدارة العقود والمطالبات')" to the desired button.
+        // Contract course intro video — active, linked from the available-courses card and contracts-info-view.
 
         function trackAndOpen(percent, screenId, titleAr) {
             if (percent > currentProgress) {
