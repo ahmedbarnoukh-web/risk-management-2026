@@ -63,7 +63,7 @@
         .login-btn { background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%); color: #fff; border: none; padding: 14px; width: 100%; border-radius: 12px; font-size: 16px; font-weight: 800; cursor: pointer; margin-top: 10px; }
         .error-message { color: #dc2626; font-size: 14px; margin-top: 15px; display: none; font-weight: 700; }
 
-        #app-section { display: none; flex-direction: column; min-height: 100vh; background-color: var(--bg-main); }
+        #app-section { display: flex; flex-direction: column; min-height: 100vh; background-color: var(--bg-main); }
         .app-header { background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%); padding: 18px 30px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.3); }
         .header-left { display: flex; align-items: center; gap: 15px; }
         
@@ -171,34 +171,6 @@
     </style>
 </head>
 <body>
-
-    <!-- شاشة تسجيل الدخول -->
-    <div id="login-section">
-        <div class="login-card">
-            <div class="login-brand-icon">VE</div>
-            <div class="brand-title">VE Pro Suite</div>
-            <div class="brand-subtitle">Value Engineering Digital Workshop (v2.9)</div>
-            
-            <form id="login-form">
-                <div class="input-group-sys">
-                    <label>اسم المستخدم / Username</label>
-                    <div class="input-wrapper-login">
-                        <i class="fa-solid fa-user"></i>
-                        <input type="text" id="username" placeholder="admin" required>
-                    </div>
-                </div>
-                <div class="input-group-sys">
-                    <label>كلمة المرور / Password</label>
-                    <div class="input-wrapper-login">
-                        <i class="fa-solid fa-lock"></i>
-                        <input type="password" id="password" placeholder="123" required>
-                    </div>
-                </div>
-                <button type="submit" class="login-btn">تسجيل الدخول</button>
-                <div id="error-msg" class="error-message">بيانات غير صحيحة.</div>
-            </form>
-        </div>
-    </div>
 
     <!-- المنصة الرئيسية -->
     <div id="app-section">
@@ -561,12 +533,6 @@
 
     <script>
         const DOM = {
-            username: document.getElementById('username'),
-            password: document.getElementById('password'),
-            loginSection: document.getElementById('login-section'),
-            appSection: document.getElementById('app-section'),
-            errorMsg: document.getElementById('error-msg'),
-            headerUserName: document.getElementById('headerUserName'),
             currencySelect: document.getElementById('currencySelect'),
             statCurrent: document.getElementById('statCurrent'),
             statWorth: document.getElementById('statWorth'),
@@ -604,18 +570,8 @@
             localStorage.setItem('veData_initialized_v31', 'true');
         }
 
-        document.getElementById('login-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            if (DOM.username.value.trim() !== '' && DOM.password.value.trim() !== '') {
-                DOM.loginSection.style.display = 'none';
-                DOM.appSection.style.display = 'flex';
-                DOM.headerUserName.innerText = DOM.username.value.trim();
-                loadMeta();
-                processAndRender();
-            } else {
-                DOM.errorMsg.style.display = 'block';
-            }
-        });
+        loadMeta();
+        processAndRender();
 
         function toggleDarkMode() {
             document.body.classList.toggle('dark-mode');
