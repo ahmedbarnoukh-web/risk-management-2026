@@ -1,1 +1,270 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>حاسبة تكلفة دورة الحياة (LCC) — قارن بين خيارين مجانًا | BA Engineering Academy</title>
+<meta name="description" content="قارن بين خيارين هندسيين على أساس تكلفة دورة الحياة الكاملة (التكلفة الأولية + التشغيل + الصيانة) بدل التكلفة الأولية بس، مجانًا وفورًا.">
+<link rel="canonical" href="https://ba-engineering-academy.com/tools/lcc-calculator.html">
+<meta property="og:title" content="حاسبة تكلفة دورة الحياة (LCC) مجانًا">
+<meta property="og:description" content="أداة مجانية فورية لمقارنة خيارين هندسيين على أساس التكلفة الكاملة طوال العمر الافتراضي، من BA Engineering Academy.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=JetBrains+Mono:wght@500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+    :root {
+        --bg-main: #EDF1F6;
+        --primary-blue: #163C6E;
+        --primary-blue-hover: #0F2C52;
+        --accent-color: #E2601F;
+        --accent-light: #F0813F;
+        --text-dark: #101826;
+        --text-muted: #57677A;
+        --border-color: rgba(22, 60, 110, 0.16);
+        --card-bg: rgba(255, 255, 255, 0.92);
+        --grid-line: rgba(22, 60, 110, 0.07);
+        --good: #14532D;
+        --bad: #9A2A1E;
+        --neutral: #92650F;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+        font-family: 'Cairo', sans-serif;
+        background-color: var(--bg-main);
+        background-image:
+            linear-gradient(var(--grid-line) 1px, transparent 1px),
+            linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+        background-size: 42px 42px;
+        color: var(--text-dark);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 24px 16px 60px;
+    }
+    .top-strip {
+        width: 100%; max-width: 860px; display: flex; justify-content: space-between; align-items: center;
+        margin-bottom: 26px;
+    }
+    .back-link {
+        display: inline-flex; align-items: center; gap: 8px; color: var(--primary-blue); font-weight: 800;
+        text-decoration: none; font-size: 14.5px; background: rgba(255,255,255,0.85); padding: 9px 16px;
+        border-radius: 10px; border: 1px solid var(--border-color); transition: all 0.25s ease;
+    }
+    .back-link:hover { background: #fff; transform: translateY(-2px); }
+    .free-chip {
+        font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 800; letter-spacing: 0.6px;
+        background: var(--primary-blue); color: #fff; padding: 6px 12px; border-radius: 3px;
+        border-left: 3px solid var(--accent-color);
+    }
 
+    .tool-header { text-align: center; max-width: 680px; margin-bottom: 30px; }
+    .tool-header h1 { font-size: 1.6rem; font-weight: 900; color: var(--primary-blue); margin-bottom: 10px; line-height: 1.4; }
+    .tool-header p { color: var(--text-muted); font-size: 0.96rem; font-weight: 600; line-height: 1.8; }
+
+    .compare-grid {
+        width: 100%; max-width: 860px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+    }
+    @media (max-width: 720px) { .compare-grid { grid-template-columns: 1fr; } }
+
+    .option-card {
+        background: var(--card-bg); backdrop-filter: blur(14px); border: 1.5px solid var(--border-color);
+        border-radius: 18px; padding: 24px 22px; box-shadow: 0 16px 34px -14px rgba(22, 60, 110, 0.16);
+    }
+    .option-card h2 {
+        font-family: 'JetBrains Mono', monospace; font-size: 0.95rem; font-weight: 800; color: var(--primary-blue);
+        margin-bottom: 16px; display: flex; align-items: center; gap: 8px;
+        border-bottom: 2px solid var(--border-color); padding-bottom: 10px;
+    }
+    .option-card.b h2 { color: var(--accent-color); }
+    .field { margin-bottom: 14px; }
+    .field label { display: block; font-weight: 700; font-size: 0.85rem; color: var(--text-dark); margin-bottom: 6px; }
+    .field input {
+        width: 100%; padding: 11px 14px; border-radius: 9px; border: 1.5px solid var(--border-color);
+        font-family: 'JetBrains Mono', monospace; font-size: 0.98rem; font-weight: 700; color: var(--text-dark);
+        background: #fff; transition: border-color 0.2s ease;
+    }
+    .field input:focus { outline: none; border-color: var(--primary-blue); }
+
+    .calc-btn {
+        width: 100%; max-width: 860px; padding: 14px 20px; border-radius: 12px; border: none; cursor: pointer;
+        background: linear-gradient(135deg, var(--primary-blue) 0%, var(--accent-color) 100%);
+        color: #fff; font-family: 'Cairo', sans-serif; font-size: 1rem; font-weight: 800;
+        display: flex; align-items: center; justify-content: center; gap: 10px;
+        box-shadow: 0 8px 20px rgba(226, 96, 31, 0.25); transition: all 0.25s ease; margin: 22px 0;
+    }
+    .calc-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 25px rgba(226, 96, 31, 0.35); }
+
+    .result-box {
+        display: none; width: 100%; max-width: 860px; margin-bottom: 22px; border-radius: 16px; padding: 24px;
+        text-align: center; border: 1.5px solid var(--border-color); background: var(--card-bg);
+    }
+    .result-box.show { display: block; }
+    .result-totals { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-bottom: 16px; }
+    .result-total-chip { background: #fff; border: 1.5px solid var(--border-color); border-radius: 12px; padding: 12px 20px; min-width: 160px; }
+    .result-total-chip .lbl { font-size: 0.78rem; color: var(--text-muted); font-weight: 700; margin-bottom: 4px; }
+    .result-total-chip .val { font-family: 'JetBrains Mono', monospace; font-size: 1.3rem; font-weight: 800; }
+    .result-verdict { font-size: 1rem; font-weight: 800; margin-bottom: 6px; }
+    .result-desc { font-size: 0.86rem; color: var(--text-muted); font-weight: 600; line-height: 1.7; max-width: 560px; margin: 0 auto; }
+
+    .explain-box {
+        width: 100%; max-width: 860px; margin-top: 8px; background: rgba(255,255,255,0.6);
+        border: 1px solid var(--border-color); border-radius: 14px; padding: 20px 22px;
+    }
+    .explain-box h2 { font-size: 1rem; color: var(--primary-blue); margin-bottom: 10px; font-weight: 800; }
+    .explain-box p { font-size: 0.88rem; color: var(--text-muted); font-weight: 600; line-height: 1.85; margin-bottom: 8px; }
+    .explain-box code { font-family: 'JetBrains Mono', monospace; background: rgba(22,60,110,0.08); padding: 2px 6px; border-radius: 4px; font-size: 0.82rem; }
+
+    .cta-band {
+        width: 100%; max-width: 860px; margin-top: 22px; background: var(--primary-blue); border-radius: 16px;
+        padding: 22px 24px; text-align: center; color: #fff;
+        border-left: 4px solid var(--accent-color);
+    }
+    .cta-band p { font-size: 0.95rem; font-weight: 700; margin-bottom: 14px; line-height: 1.7; }
+    .cta-band a {
+        display: inline-flex; align-items: center; gap: 8px; background: var(--accent-color); color: #fff;
+        text-decoration: none; font-weight: 800; font-size: 0.92rem; padding: 11px 22px; border-radius: 10px;
+        transition: all 0.25s ease;
+    }
+    .cta-band a:hover { background: var(--accent-light); transform: translateY(-2px); }
+
+    @media (max-width: 480px) {
+        .tool-header h1 { font-size: 1.3rem; }
+        .option-card { padding: 20px 16px; }
+    }
+</style>
+</head>
+<body>
+
+    <div class="top-strip">
+        <a href="../index.html" class="back-link"><i class="fa-solid fa-arrow-right"></i> الرئيسية</a>
+        <span class="free-chip">TOOL-01 · FREE</span>
+    </div>
+
+    <div class="tool-header">
+        <h1>حاسبة تكلفة دورة الحياة <span style="font-family:'JetBrains Mono',monospace; font-size:1rem; color:var(--text-muted);">(Life Cycle Cost)</span></h1>
+        <p>الخيار الأرخص في البداية مش دايمًا الأوفر. قارن بين خيارين هندسيين على أساس التكلفة الكاملة طوال العمر الافتراضي — مش التكلفة الأولية بس — واعرف أيهما أوفر فعليًا.</p>
+    </div>
+
+    <div class="compare-grid">
+        <div class="option-card a">
+            <h2><i class="fa-solid fa-a"></i> الخيار A</h2>
+            <div class="field"><label>التكلفة الأولية (Initial Cost)</label><input type="number" id="a_initial" placeholder="مثال: 100000" min="0" step="any"></div>
+            <div class="field"><label>التكلفة التشغيلية السنوية</label><input type="number" id="a_operating" placeholder="مثال: 8000" min="0" step="any"></div>
+            <div class="field"><label>تكلفة الصيانة السنوية</label><input type="number" id="a_maintenance" placeholder="مثال: 3000" min="0" step="any"></div>
+            <div class="field"><label>العمر الافتراضي (سنوات)</label><input type="number" id="a_life" placeholder="مثال: 15" min="1" step="1"></div>
+            <div class="field"><label>قيمة الإحلال في نهاية العمر (اختياري)</label><input type="number" id="a_salvage" placeholder="مثال: 5000" min="0" step="any"></div>
+        </div>
+
+        <div class="option-card b">
+            <h2><i class="fa-solid fa-b"></i> الخيار B</h2>
+            <div class="field"><label>التكلفة الأولية (Initial Cost)</label><input type="number" id="b_initial" placeholder="مثال: 140000" min="0" step="any"></div>
+            <div class="field"><label>التكلفة التشغيلية السنوية</label><input type="number" id="b_operating" placeholder="مثال: 4000" min="0" step="any"></div>
+            <div class="field"><label>تكلفة الصيانة السنوية</label><input type="number" id="b_maintenance" placeholder="مثال: 1500" min="0" step="any"></div>
+            <div class="field"><label>العمر الافتراضي (سنوات)</label><input type="number" id="b_life" placeholder="مثال: 15" min="1" step="1"></div>
+            <div class="field"><label>قيمة الإحلال في نهاية العمر (اختياري)</label><input type="number" id="b_salvage" placeholder="مثال: 8000" min="0" step="any"></div>
+        </div>
+    </div>
+
+    <button class="calc-btn" onclick="calculateLCC()">
+        <i class="fa-solid fa-calculator"></i> قارن الخيارين
+    </button>
+
+    <div class="result-box" id="resultBox">
+        <div class="result-totals">
+            <div class="result-total-chip">
+                <div class="lbl">إجمالي تكلفة الخيار A</div>
+                <div class="val" id="totalA" style="color: var(--primary-blue);">--</div>
+            </div>
+            <div class="result-total-chip">
+                <div class="lbl">إجمالي تكلفة الخيار B</div>
+                <div class="val" id="totalB" style="color: var(--accent-color);">--</div>
+            </div>
+        </div>
+        <div class="result-verdict" id="resultVerdict"></div>
+        <div class="result-desc" id="resultDesc"></div>
+    </div>
+
+    <div class="explain-box">
+        <h2><i class="fa-solid fa-book-open"></i> إزاي بتتحسب؟</h2>
+        <p><code>إجمالي التكلفة = التكلفة الأولية + (التشغيل السنوي + الصيانة السنوية) × عدد السنوات − قيمة الإحلال</code></p>
+        <p>الفكرة إنك بتقارن التكلفة الكاملة "من المهد للحد" مش بس سعر الشراء أو التركيب. أحيانًا خيار بتكلفته الأولية أعلى بيوفّر عليك فلوس أكتر بكتير على مدار سنين التشغيل، وده أساس أي دراسة هندسة قيمية جادة.</p>
+    </div>
+
+    <div class="cta-band">
+        <p>عايز تتعلم إزاي تطبّق تحليل تكلفة دورة الحياة ودراسات الهندسة القيمية على مشاريعك الحقيقية باحترافية؟</p>
+        <a href="../index.html#courses-section"><i class="fa-solid fa-graduation-cap"></i> كورس الهندسة القيمية الكامل</a>
+    </div>
+
+<script>
+    function readOption(prefix) {
+        const initial = parseFloat(document.getElementById(prefix + '_initial').value) || 0;
+        const operating = parseFloat(document.getElementById(prefix + '_operating').value) || 0;
+        const maintenance = parseFloat(document.getElementById(prefix + '_maintenance').value) || 0;
+        const life = parseFloat(document.getElementById(prefix + '_life').value) || 0;
+        const salvage = parseFloat(document.getElementById(prefix + '_salvage').value) || 0;
+        return { initial, operating, maintenance, life, salvage };
+    }
+
+    function computeLCC(o) {
+        return o.initial + ((o.operating + o.maintenance) * o.life) - o.salvage;
+    }
+
+    function fmt(n) {
+        return Math.round(n).toLocaleString('en-US');
+    }
+
+    function calculateLCC() {
+        const a = readOption('a');
+        const b = readOption('b');
+        const box = document.getElementById('resultBox');
+
+        if (a.life <= 0 || b.life <= 0 || a.initial <= 0 || b.initial <= 0) {
+            box.classList.add('show');
+            document.getElementById('totalA').textContent = '--';
+            document.getElementById('totalB').textContent = '--';
+            document.getElementById('resultVerdict').textContent = 'برجاء إدخال التكلفة الأولية والعمر الافتراضي لكل خيار على الأقل';
+            document.getElementById('resultVerdict').style.color = 'var(--bad)';
+            document.getElementById('resultDesc').textContent = '';
+            return;
+        }
+
+        const lccA = computeLCC(a);
+        const lccB = computeLCC(b);
+
+        box.classList.add('show');
+        document.getElementById('totalA').textContent = fmt(lccA);
+        document.getElementById('totalB').textContent = fmt(lccB);
+
+        const verdictEl = document.getElementById('resultVerdict');
+        const descEl = document.getElementById('resultDesc');
+        const diff = Math.abs(lccA - lccB);
+
+        if (Math.abs(lccA - lccB) < 0.01) {
+            verdictEl.style.color = 'var(--neutral)';
+            verdictEl.textContent = 'الخياران متعادلان تقريبًا في التكلفة الكاملة';
+            descEl.textContent = 'الفرق ضئيل جدًا — القرار ممكن يعتمد على عوامل تانية غير التكلفة (الموثوقية، سهولة الصيانة، توفر قطع الغيار).';
+        } else if (lccA < lccB) {
+            verdictEl.style.color = 'var(--good)';
+            verdictEl.textContent = 'الخيار A أوفر على مدار العمر الافتراضي بمقدار ' + fmt(diff);
+            if (a.initial > b.initial) {
+                descEl.textContent = 'ملحوظة: رغم إن التكلفة الأولية للخيار A أعلى، إجمالي تكلفة الملكية طوال العمر الافتراضي أقل بسبب انخفاض تكاليف التشغيل والصيانة.';
+            } else {
+                descEl.textContent = 'الخيار A أوفر من كل الجوانب تقريبًا — تكلفة أولية أقل وتكلفة تشغيل/صيانة أقل أو مقاربة.';
+            }
+        } else {
+            verdictEl.style.color = 'var(--good)';
+            verdictEl.textContent = 'الخيار B أوفر على مدار العمر الافتراضي بمقدار ' + fmt(diff);
+            if (b.initial > a.initial) {
+                descEl.textContent = 'ملحوظة: رغم إن التكلفة الأولية للخيار B أعلى، إجمالي تكلفة الملكية طوال العمر الافتراضي أقل بسبب انخفاض تكاليف التشغيل والصيانة.';
+            } else {
+                descEl.textContent = 'الخيار B أوفر من كل الجوانب تقريبًا — تكلفة أولية أقل وتكلفة تشغيل/صيانة أقل أو مقاربة.';
+            }
+        }
+    }
+</script>
+
+</body>
+</html>
