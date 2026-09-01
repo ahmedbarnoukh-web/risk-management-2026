@@ -488,7 +488,7 @@
                 </div>
                 <div class="form-group">
                     <label>نوع الحمل (Load Category)</label>
-                    <select class="load-type-select" onchange="setAutoPF(this, ${currentId})">
+                    <select class="load-type-select" onchange="setAutoPF(this, ${currentId}); this.style.borderColor='var(--border-color)';">
                         <option value="" disabled selected>اختر نوع الحمل...</option>
                         <option value="subpanel">لوحة فرعية / قوائم (Sub-Panel)</option>
                         <option value="lighting">إنارة (Lighting Load)</option>
@@ -498,23 +498,23 @@
                 </div>
                 <div class="form-group">
                     <label>معامل القدرة (cos φ)</label>
-                    <input type="number" id="pf-input-${currentId}" class="pf-input" min="0.1" max="1" step="0.01" placeholder="تلقائي">
+                    <input type="number" id="pf-input-${currentId}" class="pf-input" min="0.1" max="1" step="0.01" placeholder="تلقائي" oninput="this.style.borderColor='var(--border-color)';">
                 </div>
                 <div class="form-group">
                     <label>عدد الكابلات (Runs/Phase)</label>
-                    <input type="number" class="runs-input" min="1" step="1" value="1">
+                    <input type="number" class="runs-input" min="1" step="1" value="1" oninput="this.style.borderColor='var(--border-color)';">
                 </div>
                 <div class="form-group">
                     <label>التيار Ib (Ampere)</label>
-                    <input type="number" class="current-input" step="any">
+                    <input type="number" class="current-input" step="any" oninput="this.style.borderColor='var(--border-color)';">
                 </div>
                 <div class="form-group">
                     <label>LENGTH (متر)</label>
-                    <input type="number" class="length-input" step="any">
+                    <input type="number" class="length-input" step="any" oninput="this.style.borderColor='var(--border-color)';">
                 </div>
                 <div class="form-group">
                     <label>مقطع الموصل (mm²)</label>
-                    <select class="size-select">
+                    <select class="size-select" onchange="this.style.borderColor='var(--border-color)';">
                         <option value="" disabled selected>اختر القطاع...</option>
                         <option value="2.5">2.5 mm²</option>
                         <option value="4">4 mm²</option>
@@ -538,7 +538,7 @@
                 </div>
                 <div class="form-group">
                     <label>مادة الموصل</label>
-                    <select class="mat-select">
+                    <select class="mat-select" onchange="this.style.borderColor='var(--border-color)';">
                         <option value="" disabled selected>اختر المادة...</option>
                         <option value="copper">نحاس (Cu)</option>
                         <option value="aluminum">ألمنيوم (Al)</option>
@@ -601,27 +601,62 @@
         const isThreePhase = voltageConfig[1] === '3P';
         const factor = isThreePhase ? Math.sqrt(3) : 2;
 
-        let cumulativeDropPercent = 0;
-        let cumulativeDropVolts = 0;
+        const customMax = parseFloat(document.getElementById('customMaxDrop').value);
+
+        function computeMaxAllowed(loadType) {
+            if (!isNaN(customMax) && customMax > 0) return customMax;
+            if (codeVal === 'IEC' || codeVal === 'ECP') {
+                return (loadType === 'lighting') ? 3.0 : 5.0;
+            } else if (codeVal === 'NEC') {
+                return 5.0;
+            }
+            return 5.0;
+        }
+
         let tableHtml = '';
         let diagramHtml = '';
         let hasError = false;
-        let lastLoadType = 'subpanel';
+
+        // Each independent branch (a "new" route, or the very first segment) is tracked on its own,
+        // so a session with multiple independent feeders reports the WORST branch, not just the last one.
+        const branches = [];
+        let currentBranch = null;
 
         cards.forEach((card, index) => {
             const currentCardId = card.id.split('-')[1];
             const routeType = document.getElementById(`route-type-${currentCardId}`).value;
             const from = card.querySelector('.from-input').value.trim() || `مصدر ${index+1}`;
             const to = card.querySelector('.to-input').value.trim() || `وجهة ${index+1}`;
-            const loadType = card.querySelector('.load-type-select').value;
-            const runs = parseInt(card.querySelector('.runs-input').value);
-            const I = parseFloat(card.querySelector('.current-input').value);
-            const L = parseFloat(card.querySelector('.length-input').value);
-            const S = parseFloat(card.querySelector('.size-select').value);
-            const mat = card.querySelector('.mat-select').value;
-            const pf = parseFloat(card.querySelector('.pf-input').value);
 
-            if (!loadType || !runs || !I || !L || !S || !mat || isNaN(pf) || I <= 0 || L <= 0 || runs <= 0) {
+            const loadTypeEl = card.querySelector('.load-type-select');
+            const runsEl = card.querySelector('.runs-input');
+            const currentEl = card.querySelector('.current-input');
+            const lengthEl = card.querySelector('.length-input');
+            const sizeEl = card.querySelector('.size-select');
+            const matEl = card.querySelector('.mat-select');
+            const pfEl = card.querySelector('.pf-input');
+
+            const loadType = loadTypeEl.value;
+            const runs = parseInt(runsEl.value);
+            const I = parseFloat(currentEl.value);
+            const L = parseFloat(lengthEl.value);
+            const S = parseFloat(sizeEl.value);
+            const mat = matEl.value;
+            const pf = parseFloat(pfEl.value);
+
+            let cardHasError = false;
+            const markInvalid = (el) => { el.style.borderColor = 'var(--danger)'; cardHasError = true; };
+            const markValid = (el) => { el.style.borderColor = 'var(--border-color)'; };
+
+            if (!loadType) markInvalid(loadTypeEl); else markValid(loadTypeEl);
+            if (!runs || isNaN(runs) || runs <= 0) markInvalid(runsEl); else markValid(runsEl);
+            if (!I || isNaN(I) || I <= 0) markInvalid(currentEl); else markValid(currentEl);
+            if (!L || isNaN(L) || L <= 0) markInvalid(lengthEl); else markValid(lengthEl);
+            if (!S || isNaN(S)) markInvalid(sizeEl); else markValid(sizeEl);
+            if (!mat) markInvalid(matEl); else markValid(matEl);
+            if (isNaN(pf) || pf <= 0) markInvalid(pfEl); else markValid(pfEl);
+
+            if (cardHasError) {
                 hasError = true;
                 card.style.borderColor = 'var(--danger)';
             } else {
@@ -629,7 +664,6 @@
             }
 
             if (!hasError) {
-                lastLoadType = loadType;
                 const sinPf = Math.sin(Math.acos(pf));
                 const R = (resistivity[mat] / (S * runs));
                 const X = (reactanceX / runs);
@@ -638,13 +672,19 @@
                 const dropVolts = factor * I * L * Z;
                 const dropPercent = (dropVolts / V_nom) * 100;
 
-                if (routeType === 'new' || index === 0) {
-                    cumulativeDropVolts = dropVolts;
-                    cumulativeDropPercent = dropPercent;
+                if (routeType === 'new' || index === 0 || !currentBranch) {
+                    currentBranch = { fromLabel: from, toLabel: to, cumulativeDropVolts: dropVolts, cumulativeDropPercent: dropPercent, lastLoadType: loadType };
+                    branches.push(currentBranch);
                 } else {
-                    cumulativeDropVolts += dropVolts;
-                    cumulativeDropPercent += dropPercent;
+                    currentBranch.cumulativeDropVolts += dropVolts;
+                    currentBranch.cumulativeDropPercent += dropPercent;
+                    currentBranch.toLabel = to;
+                    currentBranch.lastLoadType = loadType;
                 }
+
+                const rowCumulativePercent = currentBranch.cumulativeDropPercent;
+                const rowCumulativeVolts = currentBranch.cumulativeDropVolts;
+                const rowMaxAllowed = computeMaxAllowed(currentBranch.lastLoadType);
 
                 const loadTextMap = {
                     lighting: 'إنارة',
@@ -654,7 +694,7 @@
                 };
 
                 const routeTypeText = routeType === 'sequential' ? 'استكمال مسار' : 'مسار مستقل';
-                const dropStatusClass = dropPercent <= 2.5 ? 'pass' : 'fail';
+                const dropStatusClass = rowCumulativePercent <= rowMaxAllowed ? 'pass' : 'fail';
 
                 tableHtml += `
                     <tr>
@@ -670,7 +710,7 @@
                         <td>${I} A</td>
                         <td>${dropVolts.toFixed(2)} V</td>
                         <td>${dropPercent.toFixed(2)} %</td>
-                        <td style="color:var(--accent-color); font-weight:900;">${cumulativeDropPercent.toFixed(2)} %</td>
+                        <td style="color:var(--accent-color); font-weight:900;">${rowCumulativePercent.toFixed(2)} %</td>
                     </tr>
                 `;
 
@@ -700,18 +740,22 @@
         document.getElementById('resultsTableBody').innerHTML = tableHtml;
         document.getElementById('diagramContainer').innerHTML = diagramHtml;
 
-        let maxAllowed = 5.0;
-        const customMax = parseFloat(document.getElementById('customMaxDrop').value);
-
-        if (!isNaN(customMax) && customMax > 0) {
-            maxAllowed = customMax;
-        } else {
-            if (codeVal === 'IEC' || codeVal === 'ECP') {
-                maxAllowed = (lastLoadType === 'lighting') ? 3.0 : 5.0;
-            } else if (codeVal === 'NEC') {
-                maxAllowed = 5.0;
+        // Pick the worst branch: the one closest to, or furthest past, its own allowed limit.
+        let worstBranch = branches[0];
+        let worstRatio = -Infinity;
+        branches.forEach(b => {
+            b.maxAllowed = computeMaxAllowed(b.lastLoadType);
+            const ratio = b.cumulativeDropPercent / b.maxAllowed;
+            if (ratio > worstRatio) {
+                worstRatio = ratio;
+                worstBranch = b;
             }
-        }
+        });
+
+        const cumulativeDropPercent = worstBranch.cumulativeDropPercent;
+        const cumulativeDropVolts = worstBranch.cumulativeDropVolts;
+        const maxAllowed = worstBranch.maxAllowed;
+        const multiBranch = branches.length > 1;
 
         document.getElementById('sumTotalPercent').innerText = cumulativeDropPercent.toFixed(2) + ' %';
         document.getElementById('sumTotalVoltsSub').innerText = cumulativeDropVolts.toFixed(2) + ' V إجمالي الهبوط';
@@ -722,20 +766,22 @@
         const statusText = document.getElementById('sumStatusText');
         const statusSub = document.getElementById('sumStatusSub');
 
+        const branchNote = multiBranch ? ` (أسوأ مسار: ${worstBranch.fromLabel} → ${worstBranch.toLabel})` : '';
+
         if (cumulativeDropPercent <= maxAllowed) {
             statusText.innerText = 'Voltage Drop: PASS';
             statusText.style.color = 'var(--success)';
-            statusSub.innerText = 'ضمن حدود المعيار المعتمدة';
+            statusSub.innerText = 'ضمن حدود المعيار المعتمدة' + branchNote;
 
             badge.className = 'status-badge pass';
-            badge.innerHTML = `<i class="fa-solid fa-circle-check"></i> <strong>هبوط الجهد ضمن الحد المسموح به!</strong> إجمالي الهبوط التراكمي يقع ضمن الحدود الهندسية المعيارية (${maxAllowed.toFixed(1)}%).`;
+            badge.innerHTML = `<i class="fa-solid fa-circle-check"></i> <strong>هبوط الجهد ضمن الحد المسموح به!</strong> إجمالي الهبوط التراكمي لأسوأ مسار يقع ضمن الحدود الهندسية المعيارية (${maxAllowed.toFixed(1)}%).${multiBranch ? ' ملحوظة: النتيجة المعروضة هي لأسوأ مسار مستقل من بين ' + branches.length + ' مسارات تم إدخالها.' : ''}`;
         } else {
             statusText.innerText = 'Voltage Drop: FAIL';
             statusText.style.color = 'var(--danger)';
-            statusSub.innerText = 'يتجاوز الحدود المسموحة';
+            statusSub.innerText = 'يتجاوز الحدود المسموحة' + branchNote;
 
             badge.className = 'status-badge fail';
-            badge.innerHTML = `<i class="fa-solid fa-circle-xmark"></i> <strong>تنبيه: يتجاوز الحد المسموح!</strong> إجمالي الهبوط التراكمي يتجاوز النسبة المعتمدة (${maxAllowed.toFixed(1)}%). يُوصى بزيادة مقطع الموصل.`;
+            badge.innerHTML = `<i class="fa-solid fa-circle-xmark"></i> <strong>تنبيه: يتجاوز الحد المسموح!</strong> إجمالي الهبوط التراكمي لأسوأ مسار يتجاوز النسبة المعتمدة (${maxAllowed.toFixed(1)}%). يُوصى بزيادة مقطع الموصل.${multiBranch ? ' ملحوظة: النتيجة المعروضة هي لأسوأ مسار مستقل من بين ' + branches.length + ' مسارات تم إدخالها.' : ''}`;
         }
 
         document.getElementById('resultsCard').style.display = 'block';
