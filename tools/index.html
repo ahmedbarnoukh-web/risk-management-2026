@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>أدوات هندسية مجانية | BA Engineering Academy</title>
-<meta name="description" content="مجموعة أدوات وحاسبات هندسية مجانية وفورية بدون تسجيل — تكلفة دورة الحياة، القيمة المكتسبة، والمزيد قريبًا.">
+<meta name="description" content="مجموعة أدوات وحاسبات هندسية مجانية وفورية بدون تسجيل — تكلفة دورة الحياة، القيمة المكتسبة، والمزيد قريبًا[cite: 9].">
 <link rel="canonical" href="https://www.barnoukh-engineering.com/tools/index.html">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,12 +14,13 @@
     :root {
         --bg-main: #EDF1F6;
         --primary-blue: #163C6E;
+        --primary-dark: #0d2545;
         --accent-color: #E2601F;
         --accent-light: #F0813F;
         --text-dark: #101826;
         --text-muted: #57677A;
         --border-color: rgba(22, 60, 110, 0.16);
-        --card-bg: rgba(255, 255, 255, 0.92);
+        --card-bg: rgba(255, 255, 255, 0.96);
         --grid-line: rgba(22, 60, 110, 0.07);
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -37,53 +38,130 @@
         align-items: center;
         padding: 24px 16px 60px;
     }
-    .top-strip { width: 100%; max-width: 900px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+
+    /* Top Strip & Branding */
+    .top-strip {
+        width: 100%; max-width: 1000px; display: flex; justify-content: space-between; align-items: center;
+        margin-bottom: 25px;
+    }
+    .brand-container {
+        display: flex; align-items: center; gap: 12px; text-decoration: none; background: #fff;
+        padding: 6px 14px 6px 8px; border-radius: 14px; border: 1.5px solid var(--border-color);
+        box-shadow: 0 4px 15px rgba(22,60,110,0.08); transition: all 0.25s ease;
+    }
+    .brand-container:hover { border-color: var(--primary-blue); transform: translateY(-2px); }
+    .brand-container img { height: 50px; width: auto; max-width: 180px; object-fit: contain; border-radius: 8px; display: block; }
+    .brand-text { display: flex; flex-direction: column; }
+    .brand-name { font-family: 'JetBrains Mono', monospace; font-weight: 800; font-size: 0.95rem; color: var(--primary-blue); letter-spacing: -0.3px; }
+    .brand-sub { font-size: 0.7rem; font-weight: 700; color: var(--accent-color); }
+
     .back-link {
         display: inline-flex; align-items: center; gap: 8px; color: var(--primary-blue); font-weight: 800;
-        text-decoration: none; font-size: 14.5px; background: rgba(255,255,255,0.85); padding: 9px 16px;
-        border-radius: 10px; border: 1px solid var(--border-color); transition: all 0.25s ease;
+        text-decoration: none; font-size: 14.5px; background: rgba(255,255,255,0.9); padding: 11px 18px;
+        border-radius: 14px; border: 1.5px solid var(--border-color); transition: all 0.25s ease;
+        box-shadow: 0 4px 12px rgba(22,60,110,0.05);
     }
-    .back-link:hover { background: #fff; transform: translateY(-2px); }
+    .back-link:hover { background: #fff; transform: translateY(-2px); border-color: var(--accent-color); color: var(--accent-color); }
 
-    .hub-header { text-align: center; max-width: 640px; margin-bottom: 34px; }
-    .hub-header h1 { font-size: 1.8rem; font-weight: 900; color: var(--primary-blue); margin-bottom: 10px; }
-    .hub-header p { color: var(--text-muted); font-size: 0.98rem; font-weight: 600; line-height: 1.8; }
+    /* Hub Header */
+    .hub-header {
+        background: linear-gradient(135deg, var(--primary-blue), var(--primary-dark));
+        color: #ffffff; border-radius: 20px; padding: 40px 24px; text-align: center; max-width: 1000px;
+        width: 100%; margin-bottom: 35px; box-shadow: 0 12px 30px rgba(22, 60, 110, 0.18); position: relative; overflow: hidden;
+    }
+    .hub-header::before {
+        content: ''; position: absolute; top: -50%; right: -10%; width: 350px; height: 350px;
+        background: rgba(226, 96, 31, 0.15); border-radius: 50%; pointer-events: none; filter: blur(40px);
+    }
+    .hub-header h1 { font-size: 2rem; font-weight: 900; margin-bottom: 14px; letter-spacing: -0.5px; display: flex; align-items: center; justify-content: center; gap: 12px; }
+    .hub-header h1 i { color: var(--accent-light); font-size: 1.8rem; }
+    .hub-header p { color: rgba(255, 255, 255, 0.9); font-size: 1.05rem; font-weight: 700; line-height: 1.8; max-width: 700px; margin: 0 auto; }
 
-    .tools-grid { width: 100%; max-width: 900px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-    @media (max-width: 680px) { .tools-grid { grid-template-columns: 1fr; } }
+    /* Tools Grid */
+    .tools-grid { 
+        width: 100%; max-width: 1000px; 
+        display: grid; 
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+        gap: 24px; 
+    }
 
+    /* Tool Card */
     .tool-card {
         background: var(--card-bg); backdrop-filter: blur(14px); border: 1.5px solid var(--border-color);
-        border-radius: 18px; padding: 26px 24px; text-decoration: none; color: var(--text-dark);
-        box-shadow: 0 16px 34px -14px rgba(22, 60, 110, 0.14); transition: all 0.25s ease;
-        display: flex; flex-direction: column;
+        border-radius: 20px; padding: 28px 24px; text-decoration: none; color: var(--text-dark);
+        box-shadow: 0 16px 34px -14px rgba(22, 60, 110, 0.14); transition: all 0.3s ease;
+        display: flex; flex-direction: column; position: relative; overflow: hidden;
     }
-    .tool-card:hover { transform: translateY(-4px); box-shadow: 0 20px 38px -14px rgba(22, 60, 110, 0.22); }
+    .tool-card::after {
+        content: ''; position: absolute; bottom: 0; right: 0; width: 100%; height: 4px;
+        background: var(--primary-blue); transform: scaleX(0); transform-origin: right; transition: transform 0.3s ease;
+    }
+    .tool-card:hover { transform: translateY(-5px); border-color: var(--primary-blue); box-shadow: 0 22px 40px -12px rgba(22, 60, 110, 0.25); }
+    .tool-card:hover::after { transform: scaleX(1); }
+    .tool-card:hover .icon-badge { background: var(--accent-color); transform: scale(1.05); }
+    .tool-card:hover .open-cta { color: var(--primary-blue); gap: 10px; }
+
     .tool-card .icon-badge {
-        width: 52px; height: 52px; border-radius: 12px; background: var(--primary-blue); color: #fff;
-        display: flex; align-items: center; justify-content: center; font-size: 1.4rem; margin-bottom: 14px;
+        width: 58px; height: 58px; border-radius: 14px; 
+        background: linear-gradient(135deg, var(--primary-blue), var(--primary-dark)); color: #fff;
+        display: flex; align-items: center; justify-content: center; font-size: 1.6rem; 
+        margin-bottom: 18px; transition: all 0.3s ease; box-shadow: 0 8px 20px rgba(22,60,110,0.2);
     }
     .tool-card .tag {
-        font-family: 'JetBrains Mono', monospace; font-size: 10.5px; font-weight: 800; letter-spacing: 0.6px;
-        color: var(--accent-color); margin-bottom: 8px;
+        font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 800; letter-spacing: 0.8px;
+        color: var(--accent-color); margin-bottom: 10px; display: inline-block;
+        background: rgba(226, 96, 31, 0.08); padding: 4px 10px; border-radius: 6px;
     }
-    .tool-card h2 { font-size: 1.1rem; font-weight: 800; margin-bottom: 8px; color: var(--primary-blue); }
-    .tool-card p { font-size: 0.86rem; color: var(--text-muted); font-weight: 600; line-height: 1.75; flex-grow: 1; margin-bottom: 14px; }
-    .tool-card .open-cta { font-size: 0.85rem; font-weight: 800; color: var(--accent-color); display: flex; align-items: center; gap: 6px; }
+    .tool-card h2 { font-size: 1.2rem; font-weight: 900; margin-bottom: 10px; color: var(--primary-blue); }
+    .tool-card p { font-size: 0.92rem; color: var(--text-muted); font-weight: 700; line-height: 1.8; flex-grow: 1; margin-bottom: 20px; }
+    
+    .tool-card .open-cta { 
+        font-size: 0.95rem; font-weight: 900; color: var(--accent-color); 
+        display: flex; align-items: center; gap: 6px; transition: all 0.3s ease;
+        padding-top: 14px; border-top: 1.5px dashed var(--border-color);
+    }
+
+    /* CTA Band */
+    .cta-band {
+        width: 100%; max-width: 1000px; margin-top: 35px; background: #fff; border-radius: 20px;
+        padding: 26px 30px; text-align: center; border: 1.5px solid var(--border-color);
+        box-shadow: 0 10px 25px rgba(22, 60, 110, 0.05); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px;
+    }
+    .cta-band p { font-size: 1.05rem; font-weight: 800; color: var(--primary-blue); margin: 0; text-align: right; flex: 1; min-width: 280px; }
+    .cta-band a {
+        display: inline-flex; align-items: center; gap: 10px; background: linear-gradient(135deg, var(--primary-blue), var(--primary-dark)); color: #fff;
+        text-decoration: none; font-weight: 900; font-size: 0.95rem; padding: 14px 28px; border-radius: 12px;
+        transition: all 0.25s ease; box-shadow: 0 6px 18px rgba(22, 60, 110, 0.25); white-space: nowrap;
+    }
+    .cta-band a:hover { background: linear-gradient(135deg, var(--accent-color), var(--accent-light)); transform: translateY(-2px); box-shadow: 0 10px 22px rgba(226, 96, 31, 0.3); }
+
+    @media (max-width: 768px) {
+        .hub-header h1 { font-size: 1.6rem; }
+        .cta-band { text-align: center; justify-content: center; }
+        .cta-band p { text-align: center; }
+    }
+    @media (max-width: 480px) {
+        .brand-container img { height: 40px; }
+        .tool-card { padding: 22px 20px; }
+    }
 </style>
 </head>
 <body>
 
     <div class="top-strip">
-        <div style="display:flex; align-items:center; gap:14px;">
-            <a href="../index.html"><img src="../photo/logo.jpg" alt="BA Engineering Academy" style="height:34px; border-radius:6px; display:block;"></a>
-        </div>
+        <a href="../index.html" class="brand-container">
+            <img src="../photo/logo.jpg" alt="BA Engineering Academy">
+            <div class="brand-text">
+                <span class="brand-name">BA ENGINEERING</span>
+                <span class="brand-sub">ACADEMY</span>
+            </div>
+        </a>
         <a href="../index.html" class="back-link"><i class="fa-solid fa-arrow-right"></i> الرئيسية</a>
     </div>
 
     <div class="hub-header">
-        <h1>أدوات هندسية مجانية</h1>
-        <p>حاسبات فورية بدون تسجيل، مبنية على نفس الأسس اللي بندرّسها في كورساتنا. جرّبها على مشروعك الحقيقي.</p>
+        <h1><i class="fa-solid fa-toolbox"></i> منصة الأدوات الهندسية</h1>
+        <p>مجموعة من الحاسبات الاحترافية المجانية بدون تسجيل. مبنية على أسس هندسية دقيقة لتساعدك في اتخاذ قرارات مشاريعك الحقيقية بسرعة وموثوقية[cite: 9].</p>
     </div>
 
     <div class="tools-grid">
@@ -91,17 +169,30 @@
             <div class="icon-badge"><i class="fa-solid fa-scale-balanced"></i></div>
             <div class="tag">TOOL-01 · FREE</div>
             <h2>حاسبة تكلفة دورة الحياة (LCC)</h2>
-            <p>قارن بين خيارين هندسيين على أساس التكلفة الكاملة طوال العمر الافتراضي — مش التكلفة الأولية بس.</p>
-            <div class="open-cta">افتح الأداة <i class="fa-solid fa-arrow-left"></i></div>
+            <p>قارن بين خيارين هندسيين على أساس التكلفة الإجمالية طوال العمر الافتراضي للمشروع — بدلاً من الاعتماد على التكلفة الأولية فقط[cite: 9].</p>
+            <div class="open-cta">ابدأ الحساب والمقارنة <i class="fa-solid fa-arrow-left"></i></div>
         </a>
 
         <a href="evm-calculator.html" class="tool-card">
             <div class="icon-badge"><i class="fa-solid fa-chart-line"></i></div>
             <div class="tag">TOOL-02 · FREE</div>
             <h2>حاسبة القيمة المكتسبة (EVM)</h2>
-            <p>اعرف فورًا هل مشروعك متقدم أو متأخر عن الجدولة، وتحت أو فوق الميزانية، والتكلفة المتوقعة عند الاكتمال.</p>
-            <div class="open-cta">افتح الأداة <i class="fa-solid fa-arrow-left"></i></div>
+            <p>حلل أداء مشروعك فورًا؛ لتتعرف على موقف الجدولة الزمنية، وحالة الميزانية، والتكلفة المتوقعة عند إتمام المشروع[cite: 9].</p>
+            <div class="open-cta">حلل أداء مشروعك <i class="fa-solid fa-arrow-left"></i></div>
         </a>
+
+        <a href="voltage-drop-calculator.html" class="tool-card">
+            <div class="icon-badge"><i class="fa-solid fa-bolt"></i></div>
+            <div class="tag">TOOL-03 · FREE</div>
+            <h2>حاسبة هبوط الجهد (Voltage Drop)</h2>
+            <p>احسب نسبة هبوط الجهد في الكابلات بدقة متناهية وفق المعايير الهندسية لضمان كفاءة وسلامة شبكات القوى الكهربائية[cite: 9].</p>
+            <div class="open-cta">استخدم الأداة الآن <i class="fa-solid fa-arrow-left"></i></div>
+        </a>
+    </div>
+
+    <div class="cta-band">
+        <p>هل تريد احتراف الأسس العلمية وراء هذه الحسابات وتطبيقها في إدارة مشاريعك؟</p>
+        <a href="../index.html#courses-section"><i class="fa-solid fa-graduation-cap"></i> تصفح كورسات الأكاديمية</a>
     </div>
 
 </body>

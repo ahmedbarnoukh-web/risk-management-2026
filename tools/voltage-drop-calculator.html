@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>حاسبة الهبوط التراكمي للمسارات المتسلسلة — قارن بين خيارين مجانًا | BA Engineering Academy</title>
+<meta name="description" content="أداة هندسية لحساب الهبوط التراكمي في الجهد للمسارات المتسلسلة وفق الكود السعودي SBC 401 والكود المصري وIEC وNEC.">
+<link rel="canonical" href="https://ba-engineering-academy.com/tools/voltage-drop-calculator.html">
+<meta property="og:title" content="حاسبة الهبوط التراكمي للمسارات الكهربائية مجانًا">
+<meta property="og:description" content="أداة مجانية فورية لحساب الهبوط التراكمي في الجهد وفق الأكواد العالمية، من BA Engineering Academy.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=JetBrains+Mono:wght@500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+    :root {
+        --bg-main: #EDF1F6;
+        --primary-blue: #163C6E;
+        --primary-dark: #0d2545;
+        --accent-color: #E2601F;
+        --accent-light: #F0813F;
+        --text-dark: #101826;
+        --text-muted: #57677A;
+        --border-color: rgba(22, 60, 110, 0.16);
+        --card-bg: rgba(255, 255, 255, 0.96);
+        --grid-line: rgba(22, 60, 110, 0.07);
+        --success: #14532D;
+        --danger: #9A2A1E;
+        --neutral: #92650F;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+        font-family: 'Cairo', sans-serif;
+        background-color: var(--bg-main);
+        background-image:
+            linear-gradient(var(--grid-line) 1px, transparent 1px),
+            linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+        background-size: 42px 42px;
+        color: var(--text-dark);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 24px 16px 60px;
+    }
+    .top-strip {
+        width: 100%; max-width: 1050px; display: flex; justify-content: space-between; align-items: center;
+        margin-bottom: 25px;
+    }
+    .brand-container {
+        display: flex; align-items: center; gap: 12px; text-decoration: none; background: #fff;
+        padding: 6px 14px 6px 8px; border-radius: 14px; border: 1.5px solid var(--border-color);
+        box-shadow: 0 4px 15px rgba(22,60,110,0.08); transition: all 0.25s ease;
+    }
+    .brand-container:hover { border-color: var(--primary-blue); transform: translateY(-2px); }
+    .brand-container img { height: 50px; width: auto; max-width: 180px; object-fit: contain; border-radius: 8px; display: block; }
+    .brand-text { display: flex; flex-direction: column; }
+    .brand-name { font-family: 'JetBrains Mono', monospace; font-weight: 800; font-size: 0.95rem; color: var(--primary-blue); letter-spacing: -0.3px; }
+    .brand-sub { font-size: 0.7rem; font-weight: 700; color: var(--accent-color); }
+
+    .back-link {
+        display: inline-flex; align-items: center; gap: 8px; color: var(--primary-blue); font-weight: 800;
+        text-decoration: none; font-size: 14.5px; background: rgba(255,255,255,0.9); padding: 11px 18px;
+        border-radius: 14px; border: 1.5px solid var(--border-color); transition: all 0.25s ease;
+        box-shadow: 0 4px 12px rgba(22,60,110,0.05);
+    }
+    .back-link:hover { background: #fff; transform: translateY(-2px); border-color: var(--accent-color); color: var(--accent-color); }
+
+    .calc-container {
+        width: 100%; max-width: 1050px; background: var(--card-bg); backdrop-filter: blur(14px);
+        border: 1.5px solid var(--border-color); border-radius: 20px; padding: 28px;
+        box-shadow: 0 16px 34px -14px rgba(22, 60, 110, 0.14); overflow: hidden;
+    }
+
+    .tool-header {
+        background: linear-gradient(135deg, var(--primary-blue), var(--primary-dark));
+        color: #ffffff; border-radius: 20px; padding: 35px 24px; text-align: center;
+        margin-bottom: 25px; box-shadow: 0 12px 30px rgba(22, 60, 110, 0.18); position: relative; overflow: hidden;
+    }
+    .tool-header h1 {
+        font-size: 1.85rem; font-weight: 900; color: #ffffff; margin-bottom: 12px; letter-spacing: -0.3px;
+        display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap;
+    }
+    .tool-header h1 span { font-family: 'JetBrains Mono', monospace; font-size: 1.1rem; color: var(--accent-light); }
+    .tool-header p { color: rgba(255, 255, 255, 0.9); font-size: 1.02rem; font-weight: 700; line-height: 1.8; max-width: 750px; margin: 0 auto; }
+
+    .global-settings {
+        background: rgba(22, 60, 110, 0.04); border: 1.5px solid var(--border-color); border-radius: 16px;
+        padding: 20px; margin-bottom: 25px; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px;
+    }
+
+    .segment-card {
+        background: #fff; border: 1.5px solid var(--border-color); border-radius: 16px; padding: 22px;
+        margin-bottom: 20px; position: relative; box-shadow: 0 4px 12px rgba(0,0,0,0.03); transition: all 0.3s ease;
+    }
+    .segment-card:hover { border-color: var(--primary-blue); transform: translateY(-2px); }
+    .segment-header {
+        display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;
+        border-bottom: 2px solid var(--border-color); padding-bottom: 12px; flex-wrap: wrap; gap: 10px;
+    }
+    .segment-title { font-family: 'JetBrains Mono', monospace; font-size: 1.05rem; font-weight: 800; color: var(--primary-blue); display: flex; align-items: center; gap: 8px; }
+
+    .btn-delete {
+        background: rgba(154, 42, 30, 0.08); color: var(--danger); border: 1px solid rgba(154, 42, 30, 0.2);
+        padding: 6px 14px; border-radius: 8px; font-family: 'Cairo', sans-serif; font-size: 0.82rem;
+        font-weight: 800; cursor: pointer; transition: all 0.2s ease;
+    }
+    .btn-delete:hover { background: var(--danger); color: #fff; }
+
+    .form-grid {
+        display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 14px;
+    }
+    .form-group { display: flex; flex-direction: column; gap: 8px; }
+    .form-group label { font-size: 0.85rem; font-weight: 800; color: var(--text-dark); display: flex; align-items: center; gap: 6px; }
+    .form-group select, .form-group input {
+        width: 100%; padding: 11px 14px; border-radius: 12px; border: 1.5px solid var(--border-color);
+        background: #fff; font-family: 'Cairo', sans-serif; font-size: 0.9rem; font-weight: 700;
+        color: var(--text-dark); outline: none; transition: all 0.25s ease; box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+    }
+    .form-group select option { direction: ltr; text-align: right; }
+    .form-group select:focus, .form-group input:focus {
+        border-color: var(--accent-color); box-shadow: 0 0 0 4px rgba(226, 96, 31, 0.12);
+    }
+
+    .actions-bar { display: flex; gap: 14px; margin-bottom: 25px; flex-wrap: wrap; }
+    .btn-add {
+        flex: 1; padding: 14px; border: 1.5px dashed var(--accent-color); border-radius: 14px;
+        background: rgba(226, 96, 31, 0.05); color: var(--accent-color); font-family: 'Cairo', sans-serif;
+        font-size: 0.95rem; font-weight: 900; cursor: pointer; transition: all 0.25s ease;
+        display: flex; align-items: center; justify-content: center; gap: 8px;
+    }
+    .btn-add:hover { background: rgba(226, 96, 31, 0.12); transform: translateY(-2px); }
+
+    .btn-clear {
+        padding: 14px 20px; border: 1.5px solid var(--danger); border-radius: 14px;
+        background: rgba(154, 42, 30, 0.05); color: var(--danger); font-family: 'Cairo', sans-serif;
+        font-size: 0.95rem; font-weight: 900; cursor: pointer; transition: all 0.25s ease;
+        display: flex; align-items: center; justify-content: center; gap: 8px;
+    }
+    .btn-clear:hover { background: var(--danger); color: #fff; transform: translateY(-2px); }
+
+    .btn-calc {
+        flex: 2; padding: 16px; border: none; border-radius: 14px; 
+        background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-dark) 100%);
+        color: #fff; font-family: 'Cairo', sans-serif; font-size: 1.05rem; font-weight: 900; cursor: pointer;
+        transition: all 0.3s ease; box-shadow: 0 10px 25px rgba(22, 60, 110, 0.25);
+    }
+    .btn-calc:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(22, 60, 110, 0.35); background: linear-gradient(135deg, var(--accent-color) 0%, var(--accent-light) 100%); }
+
+    .results-card {
+        display: none; background: #fff; border-radius: 20px; border: 1.5px solid var(--border-color); padding: 24px;
+        animation: fadeIn 0.4s ease-in-out; box-shadow: 0 12px 30px rgba(22,60,110,0.08);
+    }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+    .summary-cards-grid {
+        display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 24px;
+    }
+    .summary-card {
+        background: var(--bg-main); border: 1.5px solid var(--border-color); border-radius: 14px; padding: 16px; text-align: center;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+    }
+    .summary-card .title { font-size: 0.85rem; font-weight: 800; color: var(--text-muted); margin-bottom: 6px; }
+    .summary-card .number { font-family: 'JetBrains Mono', monospace; font-size: 1.6rem; font-weight: 900; color: var(--primary-blue); }
+    .summary-card .subtext { font-size: 0.8rem; font-weight: 800; margin-top: 4px; color: var(--text-dark); }
+
+    .status-badge {
+        text-align: center; padding: 14px; border-radius: 14px; font-weight: 800; font-size: 0.98rem; margin-bottom: 24px; line-height: 1.6;
+    }
+    .status-badge.pass { background: rgba(20, 83, 45, 0.08); color: var(--success); border: 1.5px solid rgba(20, 83, 45, 0.2); }
+    .status-badge.fail { background: rgba(154, 42, 30, 0.08); color: var(--danger); border: 1.5px solid rgba(154, 42, 30, 0.2); }
+
+    .results-header-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
+    .btn-print {
+        background: var(--primary-blue); color: #fff; border: none; padding: 10px 18px; border-radius: 12px;
+        font-family: 'Cairo', sans-serif; font-size: 0.88rem; font-weight: 800; cursor: pointer;
+        display: inline-flex; align-items: center; gap: 8px; transition: all 0.25s ease;
+        box-shadow: 0 4px 12px rgba(22,60,110,0.15);
+    }
+    .btn-print:hover { background: var(--primary-dark); transform: translateY(-2px); }
+
+    .table-container { width: 100%; overflow-x: auto; margin-bottom: 25px; border-radius: 12px; border: 1.5px solid var(--border-color); }
+    .results-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; text-align: center; }
+    .results-table th, .results-table td { padding: 11px 8px; border-bottom: 1px solid var(--border-color); white-space: nowrap; }
+    .results-table th { background: rgba(22, 60, 110, 0.06); color: var(--primary-blue); font-weight: 900; font-size: 0.85rem; }
+    .results-table tr:last-child td { border-bottom: none; }
+
+    .schematic-section {
+        background: #FAFCFF; border: 1.5px solid var(--border-color); border-radius: 16px;
+        padding: 24px; margin-top: 24px; margin-bottom: 24px; box-shadow: 0 4px 16px rgba(22,60,110,0.05);
+    }
+    .schematic-title { font-size: 1.05rem; font-weight: 900; color: var(--primary-blue); margin-bottom: 20px; display: flex; align-items: center; gap: 8px; border-bottom: 2px dashed var(--border-color); padding-bottom: 12px; }
+    
+    .diagram-container { display: flex; flex-direction: column; gap: 26px; width: 100%; }
+    .diagram-row {
+        display: flex; align-items: center; justify-content: space-between; background: #fff;
+        border: 1.5px solid var(--border-color); border-radius: 16px; padding: 24px 20px; position: relative;
+    }
+    .node-box {
+        background: var(--primary-blue); color: #fff; padding: 12px 20px; border-radius: 12px;
+        font-weight: 900; font-size: 0.95rem; min-width: 130px; text-align: center;
+        box-shadow: 0 6px 16px rgba(22, 60, 110, 0.18); z-index: 2; display: flex; align-items: center; justify-content: center; gap: 8px;
+    }
+    .node-box.destination { background: var(--accent-color); box-shadow: 0 6px 16px rgba(226, 96, 31, 0.2); }
+    
+    .cable-connection {
+        flex: 1; margin: 0 20px; height: 6px; background: #E0E6ED; position: relative;
+        display: flex; flex-direction: column; justify-content: center; align-items: center; border-radius: 3px; overflow: visible;
+    }
+    .cable-flow-line {
+        position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+        background: linear-gradient(90deg, var(--primary-blue), var(--accent-color), var(--primary-blue));
+        background-size: 200% 100%; animation: electricFlow 1.8s linear infinite; border-radius: 3px;
+    }
+    @keyframes electricFlow { 0% { background-position: 100% 0; } 100% { background-position: -100% 0; } }
+
+    .drop-value-top {
+        position: absolute; bottom: 16px; background: #fff; border-radius: 20px;
+        padding: 6px 18px; font-size: 0.92rem; font-weight: 900; box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+        display: flex; align-items: center; gap: 8px; white-space: nowrap; z-index: 3; font-family: 'JetBrains Mono', 'Cairo', sans-serif;
+    }
+    .drop-value-top.pass { border: 2px solid var(--success); color: var(--success); background: #F4FBF7; }
+    .drop-value-top.fail { border: 2px solid var(--danger); color: var(--danger); background: #FDF2F3; }
+
+    .cable-info-bottom {
+        position: absolute; top: 16px; background: #fff; border: 1.5px solid var(--primary-blue); color: var(--primary-blue);
+        padding: 5px 16px; border-radius: 20px; font-size: 0.88rem; font-weight: 900; font-family: 'JetBrains Mono', sans-serif;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.06); display: flex; align-items: center; gap: 6px; white-space: nowrap; z-index: 3;
+    }
+
+    .flow-arrow { color: inherit; animation: arrowMove 1s infinite alternate; }
+    @keyframes arrowMove { 0% { transform: translateX(0); } 100% { transform: translateX(-4px); } }
+
+    .course-banner {
+        background: linear-gradient(135deg, var(--primary-blue), var(--primary-dark));
+        color: #fff; border-radius: 16px; padding: 24px; text-align: center;
+        box-shadow: 0 10px 24px rgba(22, 60, 110, 0.2); margin-top: 24px; border-left: 5px solid var(--accent-color);
+    }
+    .course-banner h3 { font-size: 1.15rem; font-weight: 900; margin-bottom: 8px; color: #fff; }
+    .course-banner p { font-size: 0.92rem; color: rgba(255, 255, 255, 0.9); line-height: 1.8; margin-bottom: 18px; font-weight: 700; }
+    .btn-course {
+        display: inline-flex; align-items: center; gap: 10px; background: var(--accent-color); color: #fff;
+        text-decoration: none; padding: 12px 26px; border-radius: 12px; font-weight: 900; font-size: 0.95rem;
+        transition: all 0.25s ease; box-shadow: 0 6px 18px rgba(226, 96, 31, 0.3);
+    }
+    .btn-course:hover { background: var(--accent-light); transform: translateY(-2px); box-shadow: 0 10px 22px rgba(226, 96, 31, 0.4); }
+
+    @media print {
+        body { background: #fff !important; padding: 0 !important; font-size: 10pt; color: #000; }
+        .top-strip, .actions-bar, .btn-delete, .btn-add, .btn-clear, .global-settings, .course-banner, .btn-print, #segmentsContainer { display: none !important; }
+        .calc-container { box-shadow: none !important; border: none !important; width: 100% !important; max-width: 100% !important; padding: 0 !important; background: transparent !important; }
+        .tool-header { background: none !important; color: #000 !important; padding: 0 !important; margin-bottom: 15px !important; text-align: right !important; }
+        .tool-header h1 { font-size: 1.3rem; color: #000; justify-content: flex-start; }
+        .tool-header p { color: #333; font-size: 0.9rem; }
+        .results-card { display: block !important; border: none !important; padding: 0 !important; background: transparent !important; }
+        .summary-cards-grid { grid-template-columns: repeat(3, 1fr); margin-bottom: 15px; gap: 10px; }
+        .summary-card { border: 1px solid #ccc; background: #f9f9f9; padding: 8px; }
+        .summary-card .number { font-size: 1.3rem; color: #000; }
+        .status-badge { border: 1px solid #000 !important; color: #000 !important; background: #fff !important; font-size: 0.85rem; padding: 6px; margin-bottom: 15px; }
+        .results-table { width: 100%; border-collapse: collapse; font-size: 8.5pt; }
+        .results-table th, .results-table td { border: 1px solid #444 !important; padding: 5px 6px !important; text-align: center; }
+        .results-table th { background: #eee !important; color: #000 !important; }
+        .schematic-section { border: 1px solid #666 !important; background: #fff !important; margin-top: 15px; padding: 10px; }
+        .diagram-row { border: 1px solid #888 !important; padding: 12px !important; margin-bottom: 8px; }
+        .node-box { background: #222 !important; color: #fff !important; border: 1px solid #000; padding: 6px 10px; font-size: 0.8rem; }
+        .node-box.destination { background: #555 !important; }
+        .cable-flow-line { animation: none !important; background: #000 !important; }
+        .cable-connection { background: #000 !important; height: 2px !important; }
+        .drop-value-top, .cable-info-bottom { border: 1px solid #000 !important; background: #fff !important; color: #000 !important; font-size: 0.75rem; padding: 3px 8px; position: static !important; margin: 4px 0; }
+    }
+</style>
+</head>
+<body>
+
+    <div class="top-strip">
+        <a href="../index.html" class="brand-container">
+            <img src="../photo/logo.jpg" alt="BA Engineering Academy">
+            <div class="brand-text">
+                <span class="brand-name">BA ENGINEERING</span>
+                <span class="brand-sub">ACADEMY</span>
+            </div>
+        </a>
+        <a href="index.html" class="back-link"><i class="fa-solid fa-arrow-right"></i> قائمة الأدوات</a>
+    </div>
+
+    <div class="calc-container">
+        <div class="tool-header">
+            <h1>حاسبة الهبوط التراكمي للمسارات الكهربائية <span>(Voltage Drop)</span></h1>
+            <p>حساب دقيق لهبوط الجهد للمسارات المتسلسلة والمستقلة وفق الكود العالمي IEC 60364 والأكواد الإقليمية.</p>
+        </div>
+
+        <div class="global-settings">
+            <div class="form-group">
+                <label><i class="fa-solid fa-book" style="color:var(--primary-blue);"></i> الكود المعياري المتبع</label>
+                <select id="codeStandard" onchange="updateDefaultLimits()">
+                    <option value="" disabled selected>اختر الكود الهندسي...</option>
+                    <option value="IEC">الكود العالمي IEC 60364 / الكود السعودي SBC 401</option>
+                    <option value="ECP">الكود المصري للتركيبات الكهربائية (ECP)</option>
+                    <option value="NEC">الكود الأمريكي NEC (NFPA 70)</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label><i class="fa-solid fa-network-wired" style="color:var(--primary-blue);"></i> جهد المنظومة Nominal Voltage</label>
+                <select id="voltageType" style="direction: ltr; text-align: right;">
+                    <option value="" disabled selected>اختر جهد المنظومة...</option>
+                    <option value="400-3P">&#8206;3-Phase (400V - IEC/SBC)</option>
+                    <option value="380-3P">&#8206;3-Phase (380V)</option>
+                    <option value="230-1P">&#8206;1-Phase (230V - IEC/SBC)</option>
+                    <option value="480-3P">&#8206;3-Phase (480V - NEC)</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label><i class="fa-solid fa-sliders" style="color:var(--primary-blue);"></i> حد الهبوط المسموح (%)</label>
+                <input type="number" id="customMaxDrop" min="0.5" max="10" step="0.5" placeholder="تلقائي حسب الكود (مثال: 5%)">
+            </div>
+        </div>
+
+        <div id="segmentsContainer"></div>
+
+        <div class="actions-bar">
+            <button type="button" class="btn-add" onclick="addSegment()"><i class="fa-solid fa-plus-circle"></i> إضافة مسار كابل جديد</button>
+            <button type="button" class="btn-clear" onclick="clearAllData()"><i class="fa-solid fa-rotate-right"></i> مسح البيانات</button>
+            <button type="button" class="btn-calc" onclick="calculateAllSegments()">احسب الهبوط في الجهد</button>
+        </div>
+
+        <div class="results-card" id="resultsCard">
+            <div class="results-header-bar">
+                <h3 style="color:var(--primary-blue); font-size:1.15rem; font-weight:900; display:flex; align-items:center; gap:8px;">
+                    <i class="fa-solid fa-chart-pie" style="color:var(--accent-color);"></i> التقرير الهندسي لهبوط الجهد
+                </h3>
+                <button type="button" class="btn-print" onclick="window.print()"><i class="fa-solid fa-print"></i> طباعة / حفظ PDF</button>
+            </div>
+
+            <div class="summary-cards-grid">
+                <div class="summary-card">
+                    <div class="title">إجمالي الهبوط التراكمي</div>
+                    <div class="number" id="sumTotalPercent" style="color:var(--accent-color);">-</div>
+                    <div class="subtext" id="sumTotalVoltsSub">0.00 V</div>
+                </div>
+                <div class="summary-card">
+                    <div class="title">الحد الأقصى المسموح (الكود)</div>
+                    <div class="number" id="sumMaxAllowed">-</div>
+                    <div class="subtext" id="codeNameSub">Standard Code</div>
+                </div>
+                <div class="summary-card">
+                    <div class="title">حالة هبوط الجهد</div>
+                    <div class="number" id="sumStatusText" style="font-size:1.4rem;">-</div>
+                    <div class="subtext" id="sumStatusSub">جاهز للمراجعة</div>
+                </div>
+            </div>
+
+            <div id="statusBadge" class="status-badge"></div>
+
+            <div class="table-container">
+                <table class="results-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>طبيعة المسار</th>
+                            <th>من</th>
+                            <th>إلى</th>
+                            <th>نوع الحمل</th>
+                            <th>معامل القدرة</th>
+                            <th>الكابلات</th>
+                            <th>مقطع الكابل</th>
+                            <th>الطول</th>
+                            <th>التيار</th>
+                            <th>هبوط المسار</th>
+                            <th>نسبة المسار</th>
+                            <th>التراكمي</th>
+                        </tr>
+                    </thead>
+                    <tbody id="resultsTableBody"></tbody>
+                </table>
+            </div>
+
+            <div class="schematic-section">
+                <div class="schematic-title"><i class="fa-solid fa-diagram-project" style="color:var(--accent-color);"></i> مخطط سريان التغذية ومؤشرات هبوط الجهد تفاعلياً</div>
+                <div class="diagram-container" id="diagramContainer"></div>
+            </div>
+
+            <div class="course-banner">
+                <h3><i class="fa-solid fa-graduation-cap" style="color:var(--accent-color);"></i> هل ترغب في إتقان التصميم الكهربائي للمشاريع الحقيقية؟</h3>
+                <p>تعلم تقدير وحساب الأحمال الكهربائية (Load Estimation & Calculation)، اختيار مقاطع الكابلات والقواطع، وإعداد المخططات أحادية الخط (SLD) وفق الأكواد العالمية بشكل احترافي.</p>
+                <a href="../index.html" class="btn-course">استكشف كورسات الأكاديمية والمشاريع العملية <i class="fa-solid fa-arrow-left"></i></a>
+            </div>
+        </div>
+    </div>
+
+<script>
+    const resistivity = { copper: 0.0225, aluminum: 0.036 };
+    const reactanceX = 0.08 / 1000;
+    
+    const pfDefaults = {
+        lighting: 0.95,
+        subpanel: 0.90,
+        power: 0.85,
+        motor: 0.80
+    };
+
+    let segmentCount = 0;
+
+    window.onload = function() {
+        addSegment();
+    };
+
+    function setAutoPF(selectElem, id) {
+        const val = selectElem.value;
+        const pfInput = document.getElementById(`pf-input-${id}`);
+        if (pfDefaults[val] && pfInput) {
+            pfInput.value = pfDefaults[val];
+        }
+    }
+
+    function updateDefaultLimits() {
+        const code = document.getElementById('codeStandard').value;
+        const customMaxInput = document.getElementById('customMaxDrop');
+        if (code === 'IEC' || code === 'ECP') {
+            customMaxInput.placeholder = 'افتراضي: 5% (عام) / 3% (إنارة)';
+        } else if (code === 'NEC') {
+            customMaxInput.placeholder = 'افتراضي: 5% إجمالي (3% فرعي + 2% رئيسي)';
+        }
+    }
+
+    function handleRouteTypeChange(selectElem, id) {
+        const type = selectElem.value;
+        const fromInput = document.getElementById(`from-input-${id}`);
+        if (type === 'sequential' && id > 1) {
+            const prevId = id - 1;
+            const prevToInput = document.getElementById(`to-input-${prevId}`);
+            if (prevToInput && prevToInput.value.trim() !== "") {
+                fromInput.value = prevToInput.value.trim();
+                fromInput.readOnly = true;
+                fromInput.style.backgroundColor = 'rgba(22,60,110,0.04)';
+            }
+        } else {
+            fromInput.readOnly = false;
+            fromInput.style.backgroundColor = '#fff';
+            fromInput.value = "";
+        }
+    }
+
+    function addSegment() {
+        segmentCount++;
+        const container = document.getElementById('segmentsContainer');
+        const card = document.createElement('div');
+        card.className = 'segment-card';
+        card.id = `segment-${segmentCount}`;
+
+        let defaultFrom = "";
+        let defaultRouteType = "new";
+        if (segmentCount > 1) {
+            const allToInputs = document.querySelectorAll('.to-input');
+            if (allToInputs.length > 0) {
+                const lastToVal = allToInputs[allToInputs.length - 1].value.trim();
+                if (lastToVal !== "") {
+                    defaultFrom = lastToVal;
+                    defaultRouteType = "sequential";
+                }
+            }
+        }
+
+        const currentId = segmentCount;
+
+        card.innerHTML = `
+            <div class="segment-header">
+                <div class="segment-title"><i class="fa-solid fa-link" style="color:var(--accent-color);"></i> المسار رقم (${currentId})</div>
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <div class="form-group" style="flex-direction: row; align-items: center; gap: 6px; margin: 0;">
+                        <label style="font-size: 0.8rem; margin:0;">طبيعة المسار:</label>
+                        <select id="route-type-${currentId}" class="route-type-select" style="padding: 6px 10px; font-size: 0.85rem;" onchange="handleRouteTypeChange(this, ${currentId})">
+                            <option value="new" ${defaultRouteType === 'new' ? 'selected' : ''}>مسار فرعي مستقل جديد</option>
+                            <option value="sequential" ${defaultRouteType === 'sequential' ? 'selected' : ''}>استكمال مسار (متسلسل)</option>
+                        </select>
+                    </div>
+                    ${currentId > 1 ? `<button type="button" class="btn-delete" onclick="removeSegment(${currentId})"><i class="fa-solid fa-trash"></i> حذف</button>` : ''}
+                </div>
+            </div>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>اسم المصدر (From)</label>
+                    <input type="text" id="from-input-${currentId}" class="from-input" value="${defaultFrom}" ${defaultRouteType === 'sequential' ? 'readonly style="background-color:rgba(22,60,110,0.04)"' : ''}>
+                </div>
+                <div class="form-group">
+                    <label>اسم النهاية / اللوحة (To)</label>
+                    <input type="text" id="to-input-${currentId}" class="to-input" oninput="updateSubsequentRoutes(${currentId})">
+                </div>
+                <div class="form-group">
+                    <label>نوع الحمل (Load Category)</label>
+                    <select class="load-type-select" onchange="setAutoPF(this, ${currentId})">
+                        <option value="" disabled selected>اختر نوع الحمل...</option>
+                        <option value="subpanel">لوحة فرعية / قوائم (Sub-Panel)</option>
+                        <option value="lighting">إنارة (Lighting Load)</option>
+                        <option value="power">قوى / مخارج عمومية (Power Outlets)</option>
+                        <option value="motor">محرك / معدة (Motor Load)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>معامل القدرة (cos φ)</label>
+                    <input type="number" id="pf-input-${currentId}" class="pf-input" min="0.1" max="1" step="0.01" placeholder="تلقائي">
+                </div>
+                <div class="form-group">
+                    <label>عدد الكابلات (Runs/Phase)</label>
+                    <input type="number" class="runs-input" min="1" step="1" value="1">
+                </div>
+                <div class="form-group">
+                    <label>التيار Ib (Ampere)</label>
+                    <input type="number" class="current-input" step="any">
+                </div>
+                <div class="form-group">
+                    <label>LENGTH (متر)</label>
+                    <input type="number" class="length-input" step="any">
+                </div>
+                <div class="form-group">
+                    <label>مقطع الموصل (mm²)</label>
+                    <select class="size-select">
+                        <option value="" disabled selected>اختر القطاع...</option>
+                        <option value="2.5">2.5 mm²</option>
+                        <option value="4">4 mm²</option>
+                        <option value="6">6 mm²</option>
+                        <option value="10">10 mm²</option>
+                        <option value="16">16 mm²</option>
+                        <option value="25">25 mm²</option>
+                        <option value="35">35 mm²</option>
+                        <option value="50">50 mm²</option>
+                        <option value="70">70 mm²</option>
+                        <option value="95">95 mm²</option>
+                        <option value="120">120 mm²</option>
+                        <option value="150">150 mm²</option>
+                        <option value="185">185 mm²</option>
+                        <option value="240">240 mm²</option>
+                        <option value="300">300 mm²</option>
+                        <option value="400">400 mm² (1-Core)</option>
+                        <option value="500">500 mm² (1-Core)</option>
+                        <option value="630">630 mm² (1-Core)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>مادة الموصل</label>
+                    <select class="mat-select">
+                        <option value="" disabled selected>اختر المادة...</option>
+                        <option value="copper">نحاس (Cu)</option>
+                        <option value="aluminum">ألمنيوم (Al)</option>
+                    </select>
+                </div>
+            </div>
+        `;
+        container.appendChild(card);
+    }
+
+    function updateSubsequentRoutes(changedId) {
+        const nextId = changedId + 1;
+        const nextCard = document.getElementById(`segment-${nextId}`);
+        if (nextCard) {
+            const routeTypeSelect = document.getElementById(`route-type-${nextId}`);
+            if (routeTypeSelect && routeTypeSelect.value === 'sequential') {
+                const currentToVal = document.getElementById(`to-input-${changedId}`).value.trim();
+                const nextFromInput = document.getElementById(`from-input-${nextId}`);
+                if (nextFromInput) {
+                    nextFromInput.value = currentToVal;
+                }
+            }
+        }
+    }
+
+    function removeSegment(id) {
+        const card = document.getElementById(`segment-${id}`);
+        if (card) card.remove();
+    }
+
+    function clearAllData() {
+        if (confirm("هل أنت تأكد من مسح كافة المسارات والبيانات المدخلة؟")) {
+            document.getElementById('segmentsContainer').innerHTML = '';
+            segmentCount = 0;
+            document.getElementById('resultsCard').style.display = 'none';
+            document.getElementById('codeStandard').value = '';
+            document.getElementById('voltageType').value = '';
+            document.getElementById('customMaxDrop').value = '';
+            addSegment();
+        }
+    }
+
+    function calculateAllSegments() {
+        const cards = document.querySelectorAll('.segment-card');
+        if (cards.length === 0) {
+            alert('يرجى إضافة مسار واحد على الأقل.');
+            return;
+        }
+
+        const codeVal = document.getElementById('codeStandard').value;
+        const voltageTypeVal = document.getElementById('voltageType').value;
+
+        if (!codeVal || !voltageTypeVal) {
+            alert('يرجى اختيار الكود المعياري وجهد المنظومة من الخانات العلوية أولاً.');
+            return;
+        }
+
+        const voltageConfig = voltageTypeVal.split('-');
+        const V_nom = parseFloat(voltageConfig[0]);
+        const isThreePhase = voltageConfig[1] === '3P';
+        const factor = isThreePhase ? Math.sqrt(3) : 2;
+
+        let cumulativeDropPercent = 0;
+        let cumulativeDropVolts = 0;
+        let tableHtml = '';
+        let diagramHtml = '';
+        let hasError = false;
+        let lastLoadType = 'subpanel';
+
+        cards.forEach((card, index) => {
+            const currentCardId = card.id.split('-')[1];
+            const routeType = document.getElementById(`route-type-${currentCardId}`).value;
+            const from = card.querySelector('.from-input').value.trim() || `مصدر ${index+1}`;
+            const to = card.querySelector('.to-input').value.trim() || `وجهة ${index+1}`;
+            const loadType = card.querySelector('.load-type-select').value;
+            const runs = parseInt(card.querySelector('.runs-input').value);
+            const I = parseFloat(card.querySelector('.current-input').value);
+            const L = parseFloat(card.querySelector('.length-input').value);
+            const S = parseFloat(card.querySelector('.size-select').value);
+            const mat = card.querySelector('.mat-select').value;
+            const pf = parseFloat(card.querySelector('.pf-input').value);
+
+            if (!loadType || !runs || !I || !L || !S || !mat || isNaN(pf) || I <= 0 || L <= 0 || runs <= 0) {
+                hasError = true;
+                card.style.borderColor = 'var(--danger)';
+            } else {
+                card.style.borderColor = 'var(--border-color)';
+            }
+
+            if (!hasError) {
+                lastLoadType = loadType;
+                const sinPf = Math.sin(Math.acos(pf));
+                const R = (resistivity[mat] / (S * runs));
+                const X = (reactanceX / runs);
+                const Z = (R * pf) + (X * sinPf);
+
+                const dropVolts = factor * I * L * Z;
+                const dropPercent = (dropVolts / V_nom) * 100;
+
+                if (routeType === 'new' || index === 0) {
+                    cumulativeDropVolts = dropVolts;
+                    cumulativeDropPercent = dropPercent;
+                } else {
+                    cumulativeDropVolts += dropVolts;
+                    cumulativeDropPercent += dropPercent;
+                }
+
+                const loadTextMap = {
+                    lighting: 'إنارة',
+                    subpanel: 'لوحة فرعية',
+                    power: 'قوى',
+                    motor: 'محرك'
+                };
+
+                const routeTypeText = routeType === 'sequential' ? 'استكمال مسار' : 'مسار مستقل';
+                const dropStatusClass = dropPercent <= 2.5 ? 'pass' : 'fail';
+
+                tableHtml += `
+                    <tr>
+                        <td><strong>${index + 1}</strong></td>
+                        <td><span style="font-size:0.78rem; color:var(--text-muted); font-weight:700;">${routeTypeText}</span></td>
+                        <td>${from}</td>
+                        <td>${to}</td>
+                        <td><span style="background:rgba(22,60,110,0.08); padding:3px 8px; border-radius:6px; font-weight:800; color:var(--primary-blue);">${loadTextMap[loadType]}</span></td>
+                        <td><strong>${pf}</strong></td>
+                        <td>${runs}</td>
+                        <td>${S} mm² (${mat === 'copper' ? 'Cu' : 'Al'})</td>
+                        <td>${L} m</td>
+                        <td>${I} A</td>
+                        <td>${dropVolts.toFixed(2)} V</td>
+                        <td>${dropPercent.toFixed(2)} %</td>
+                        <td style="color:var(--accent-color); font-weight:900;">${cumulativeDropPercent.toFixed(2)} %</td>
+                    </tr>
+                `;
+
+                diagramHtml += `
+                    <div class="diagram-row">
+                        <div class="node-box"><i class="fa-solid fa-bolt"></i> ${from}</div>
+                        <div class="cable-connection">
+                            <div class="cable-flow-line"></div>
+                            <div class="drop-value-top ${dropStatusClass}">
+                                <i class="fa-solid fa-arrow-left flow-arrow"></i> VD: ${dropPercent.toFixed(2)}%
+                            </div>
+                            <div class="cable-info-bottom">
+                                LENGTH: ${L} m
+                            </div>
+                        </div>
+                        <div class="node-box destination"><i class="fa-solid fa-cube"></i> ${to}</div>
+                    </div>
+                `;
+            }
+        });
+
+        if (hasError) {
+            alert('يرجى التأكد من ملء جميع الحقول والبيانات المدخلة بشكل صحيح.');
+            return;
+        }
+
+        document.getElementById('resultsTableBody').innerHTML = tableHtml;
+        document.getElementById('diagramContainer').innerHTML = diagramHtml;
+
+        let maxAllowed = 5.0;
+        const customMax = parseFloat(document.getElementById('customMaxDrop').value);
+
+        if (!isNaN(customMax) && customMax > 0) {
+            maxAllowed = customMax;
+        } else {
+            if (codeVal === 'IEC' || codeVal === 'ECP') {
+                maxAllowed = (lastLoadType === 'lighting') ? 3.0 : 5.0;
+            } else if (codeVal === 'NEC') {
+                maxAllowed = 5.0;
+            }
+        }
+
+        document.getElementById('sumTotalPercent').innerText = cumulativeDropPercent.toFixed(2) + ' %';
+        document.getElementById('sumTotalVoltsSub').innerText = cumulativeDropVolts.toFixed(2) + ' V إجمالي الهبوط';
+        document.getElementById('sumMaxAllowed').innerText = maxAllowed.toFixed(1) + ' %';
+        document.getElementById('codeNameSub').innerText = 'وفق معيار ' + codeVal;
+
+        const badge = document.getElementById('statusBadge');
+        const statusText = document.getElementById('sumStatusText');
+        const statusSub = document.getElementById('sumStatusSub');
+
+        if (cumulativeDropPercent <= maxAllowed) {
+            statusText.innerText = 'Voltage Drop: PASS';
+            statusText.style.color = 'var(--success)';
+            statusSub.innerText = 'ضمن حدود المعيار المعتمدة';
+
+            badge.className = 'status-badge pass';
+            badge.innerHTML = `<i class="fa-solid fa-circle-check"></i> <strong>هبوط الجهد ضمن الحد المسموح به!</strong> إجمالي الهبوط التراكمي يقع ضمن الحدود الهندسية المعيارية (${maxAllowed.toFixed(1)}%).`;
+        } else {
+            statusText.innerText = 'Voltage Drop: FAIL';
+            statusText.style.color = 'var(--danger)';
+            statusSub.innerText = 'يتجاوز الحدود المسموحة';
+
+            badge.className = 'status-badge fail';
+            badge.innerHTML = `<i class="fa-solid fa-circle-xmark"></i> <strong>تنبيه: يتجاوز الحد المسموح!</strong> إجمالي الهبوط التراكمي يتجاوز النسبة المعتمدة (${maxAllowed.toFixed(1)}%). يُوصى بزيادة مقطع الموصل.`;
+        }
+
+        document.getElementById('resultsCard').style.display = 'block';
+    }
+</script>
+</body>
+</html>

@@ -4,10 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>حاسبة تكلفة دورة الحياة (LCC) — قارن بين خيارين مجانًا | BA Engineering Academy</title>
-<meta name="description" content="قارن بين خيارين هندسيين على أساس تكلفة دورة الحياة الكاملة (التكلفة الأولية + التشغيل + الصيانة) بدل التكلفة الأولية بس، مجانًا وفورًا.">
+<meta name="description" content="قارن بين خيارين هندسيين على أساس تكلفة دورة الحياة الكاملة (التكلفة الأولية + التشغيل + الصيانة) بدل التكلفة الأولية بس، مجانًا وفورًا[cite: 4].">
 <link rel="canonical" href="https://ba-engineering-academy.com/tools/lcc-calculator.html">
 <meta property="og:title" content="حاسبة تكلفة دورة الحياة (LCC) مجانًا">
-<meta property="og:description" content="أداة مجانية فورية لمقارنة خيارين هندسيين على أساس التكلفة الكاملة طوال العمر الافتراضي، من BA Engineering Academy.">
+<meta property="og:description" content="أداة مجانية فورية لمقارنة خيارين هندسيين على أساس التكلفة الكاملة طوال العمر الافتراضي، من BA Engineering Academy[cite: 4].">
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,13 +17,13 @@
     :root {
         --bg-main: #EDF1F6;
         --primary-blue: #163C6E;
-        --primary-blue-hover: #0F2C52;
+        --primary-dark: #0d2545;
         --accent-color: #E2601F;
         --accent-light: #F0813F;
         --text-dark: #101826;
         --text-muted: #57677A;
         --border-color: rgba(22, 60, 110, 0.16);
-        --card-bg: rgba(255, 255, 255, 0.92);
+        --card-bg: rgba(255, 255, 255, 0.96);
         --grid-line: rgba(22, 60, 110, 0.07);
         --good: #14532D;
         --bad: #9A2A1E;
@@ -45,115 +45,162 @@
         padding: 24px 16px 60px;
     }
     .top-strip {
-        width: 100%; max-width: 860px; display: flex; justify-content: space-between; align-items: center;
-        margin-bottom: 26px;
+        width: 100%; max-width: 950px; display: flex; justify-content: space-between; align-items: center;
+        margin-bottom: 25px;
     }
+    .brand-container {
+        display: flex; align-items: center; gap: 12px; text-decoration: none; background: #fff;
+        padding: 6px 14px 6px 8px; border-radius: 14px; border: 1.5px solid var(--border-color);
+        box-shadow: 0 4px 15px rgba(22,60,110,0.08); transition: all 0.25s ease;
+    }
+    .brand-container:hover { border-color: var(--primary-blue); transform: translateY(-2px); }
+    .brand-container img { height: 50px; width: auto; max-width: 180px; object-fit: contain; border-radius: 8px; display: block; }
+    .brand-text { display: flex; flex-direction: column; }
+    .brand-name { font-family: 'JetBrains Mono', monospace; font-weight: 800; font-size: 0.95rem; color: var(--primary-blue); letter-spacing: -0.3px; }
+    .brand-sub { font-size: 0.7rem; font-weight: 700; color: var(--accent-color); }
+
     .back-link {
         display: inline-flex; align-items: center; gap: 8px; color: var(--primary-blue); font-weight: 800;
-        text-decoration: none; font-size: 14.5px; background: rgba(255,255,255,0.85); padding: 9px 16px;
-        border-radius: 10px; border: 1px solid var(--border-color); transition: all 0.25s ease;
+        text-decoration: none; font-size: 14.5px; background: rgba(255,255,255,0.9); padding: 11px 18px;
+        border-radius: 14px; border: 1.5px solid var(--border-color); transition: all 0.25s ease;
+        box-shadow: 0 4px 12px rgba(22,60,110,0.05);
     }
-    .back-link:hover { background: #fff; transform: translateY(-2px); }
+    .back-link:hover { background: #fff; transform: translateY(-2px); border-color: var(--accent-color); color: var(--accent-color); }
     .free-chip {
-        font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 800; letter-spacing: 0.6px;
-        background: var(--primary-blue); color: #fff; padding: 6px 12px; border-radius: 3px;
-        border-left: 3px solid var(--accent-color);
+        font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 800; letter-spacing: 0.8px;
+        background: rgba(226, 96, 31, 0.08); color: var(--accent-color); padding: 6px 14px; border-radius: 8px;
+        border: 1px solid rgba(226, 96, 31, 0.2);
     }
 
-    .tool-header { text-align: center; max-width: 680px; margin-bottom: 30px; }
-    .tool-header h1 { font-size: 1.6rem; font-weight: 900; color: var(--primary-blue); margin-bottom: 10px; line-height: 1.4; }
-    .tool-header p { color: var(--text-muted); font-size: 0.96rem; font-weight: 600; line-height: 1.8; }
-
-    .compare-grid {
-        width: 100%; max-width: 860px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+    .tool-header {
+        background: linear-gradient(135deg, var(--primary-blue), var(--primary-dark));
+        color: #ffffff; border-radius: 20px; padding: 35px 24px; text-align: center; max-width: 950px;
+        width: 100%; margin-bottom: 30px; box-shadow: 0 12px 30px rgba(22, 60, 110, 0.18); position: relative; overflow: hidden;
     }
-    @media (max-width: 720px) { .compare-grid { grid-template-columns: 1fr; } }
+    .tool-header::before {
+        content: ''; position: absolute; top: -50%; right: -20%; width: 300px; height: 300px;
+        background: rgba(226, 96, 31, 0.12); border-radius: 50%; pointer-events: none;
+    }
+    .tool-header h1 { font-size: 1.9rem; font-weight: 900; margin-bottom: 12px; letter-spacing: -0.5px; display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap; }
+    .tool-header h1 span { font-family: 'JetBrains Mono', monospace; font-size: 1.1rem; color: var(--accent-light); }
+    .tool-header p { color: rgba(255, 255, 255, 0.9); font-size: 1.02rem; font-weight: 700; line-height: 1.8; max-width: 750px; margin: 0 auto; }
+
+    .compare-grid { width: 100%; max-width: 950px; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    @media (max-width: 768px) { .compare-grid { grid-template-columns: 1fr; } }
 
     .option-card {
         background: var(--card-bg); backdrop-filter: blur(14px); border: 1.5px solid var(--border-color);
-        border-radius: 18px; padding: 24px 22px; box-shadow: 0 16px 34px -14px rgba(22, 60, 110, 0.16);
+        border-radius: 20px; padding: 28px 24px; box-shadow: 0 16px 34px -14px rgba(22, 60, 110, 0.14);
+        transition: transform 0.3s ease, border-color 0.3s ease;
     }
+    .option-card:hover { border-color: var(--primary-blue); transform: translateY(-3px); }
+    .option-card.b:hover { border-color: var(--accent-color); }
+    
     .option-card h2 {
-        font-family: 'JetBrains Mono', monospace; font-size: 0.95rem; font-weight: 800; color: var(--primary-blue);
-        margin-bottom: 16px; display: flex; align-items: center; gap: 8px;
-        border-bottom: 2px solid var(--border-color); padding-bottom: 10px;
+        font-family: 'JetBrains Mono', monospace; font-size: 1.05rem; font-weight: 800; color: var(--primary-blue);
+        margin-bottom: 20px; display: flex; align-items: center; gap: 10px;
+        border-bottom: 2px solid var(--border-color); padding-bottom: 12px;
     }
     .option-card.b h2 { color: var(--accent-color); }
-    .field { margin-bottom: 14px; }
-    .field label { display: block; font-weight: 700; font-size: 0.85rem; color: var(--text-dark); margin-bottom: 6px; }
+    
+    .field { margin-bottom: 16px; }
+    .field label { display: block; font-weight: 800; font-size: 0.88rem; color: var(--text-dark); margin-bottom: 8px; }
     .field input {
-        width: 100%; padding: 11px 14px; border-radius: 9px; border: 1.5px solid var(--border-color);
-        font-family: 'JetBrains Mono', monospace; font-size: 0.98rem; font-weight: 700; color: var(--text-dark);
-        background: #fff; transition: border-color 0.2s ease;
+        width: 100%; padding: 12px 16px; border-radius: 12px; border: 1.5px solid var(--border-color);
+        font-family: 'JetBrains Mono', monospace; font-size: 1rem; font-weight: 700; color: var(--text-dark);
+        background: #fff; transition: all 0.25s ease; box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
     }
-    .field input:focus { outline: none; border-color: var(--primary-blue); }
+    .field input:focus { outline: none; border-color: var(--accent-color); box-shadow: 0 0 0 4px rgba(226, 96, 31, 0.12); }
 
     .calc-btn {
-        width: 100%; max-width: 860px; padding: 14px 20px; border-radius: 12px; border: none; cursor: pointer;
-        background: linear-gradient(135deg, var(--primary-blue) 0%, var(--accent-color) 100%);
-        color: #fff; font-family: 'Cairo', sans-serif; font-size: 1rem; font-weight: 800;
+        width: 100%; max-width: 950px; padding: 16px 24px; border-radius: 14px; border: none; cursor: pointer;
+        background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-dark) 100%);
+        color: #fff; font-family: 'Cairo', sans-serif; font-size: 1.05rem; font-weight: 900;
         display: flex; align-items: center; justify-content: center; gap: 10px;
-        box-shadow: 0 8px 20px rgba(226, 96, 31, 0.25); transition: all 0.25s ease; margin: 22px 0;
+        box-shadow: 0 10px 25px rgba(22, 60, 110, 0.25); transition: all 0.3s ease; margin: 26px 0;
     }
-    .calc-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 25px rgba(226, 96, 31, 0.35); }
+    .calc-btn:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(22, 60, 110, 0.35); background: linear-gradient(135deg, var(--accent-color) 0%, var(--accent-light) 100%); }
 
     .result-box {
-        display: none; width: 100%; max-width: 860px; margin-bottom: 22px; border-radius: 16px; padding: 24px;
+        display: none; width: 100%; max-width: 950px; margin-bottom: 24px; border-radius: 20px; padding: 30px 24px;
         text-align: center; border: 1.5px solid var(--border-color); background: var(--card-bg);
+        box-shadow: 0 18px 40px rgba(22,60,110,0.12); animation: fadeIn 0.4s ease;
     }
     .result-box.show { display: block; }
-    .result-totals { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-bottom: 16px; }
-    .result-total-chip { background: #fff; border: 1.5px solid var(--border-color); border-radius: 12px; padding: 12px 20px; min-width: 160px; }
-    .result-total-chip .lbl { font-size: 0.78rem; color: var(--text-muted); font-weight: 700; margin-bottom: 4px; }
-    .result-total-chip .val { font-family: 'JetBrains Mono', monospace; font-size: 1.3rem; font-weight: 800; }
-    .result-verdict { font-size: 1rem; font-weight: 800; margin-bottom: 6px; }
-    .result-desc { font-size: 0.86rem; color: var(--text-muted); font-weight: 600; line-height: 1.7; max-width: 560px; margin: 0 auto; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    
+    .result-totals { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin-bottom: 20px; }
+    .result-total-chip { background: #fff; border: 1.5px solid var(--border-color); border-radius: 14px; padding: 16px 24px; min-width: 200px; box-shadow: 0 6px 15px rgba(0,0,0,0.03); }
+    .result-total-chip .lbl { font-size: 0.82rem; color: var(--text-muted); font-weight: 800; margin-bottom: 6px; }
+    .result-total-chip .val { font-family: 'JetBrains Mono', monospace; font-size: 1.45rem; font-weight: 900; }
+    
+    .result-verdict { font-size: 1.15rem; font-weight: 900; margin-bottom: 10px; }
+    .result-desc { font-size: 0.92rem; color: var(--text-muted); font-weight: 700; line-height: 1.8; max-width: 650px; margin: 0 auto; }
 
     .explain-box {
-        width: 100%; max-width: 860px; margin-top: 8px; background: rgba(255,255,255,0.6);
-        border: 1px solid var(--border-color); border-radius: 14px; padding: 20px 22px;
+        width: 100%; max-width: 950px; margin-top: 10px; background: var(--card-bg);
+        border: 1.5px solid var(--border-color); border-radius: 20px; padding: 26px 28px;
+        box-shadow: 0 10px 25px rgba(22,60,110,0.06);
     }
-    .explain-box h2 { font-size: 1rem; color: var(--primary-blue); margin-bottom: 10px; font-weight: 800; }
-    .explain-box p { font-size: 0.88rem; color: var(--text-muted); font-weight: 600; line-height: 1.85; margin-bottom: 8px; }
-    .explain-box code { font-family: 'JetBrains Mono', monospace; background: rgba(22,60,110,0.08); padding: 2px 6px; border-radius: 4px; font-size: 0.82rem; }
+    .explain-box h2 { font-size: 1.1rem; color: var(--primary-blue); margin-bottom: 12px; font-weight: 900; display: flex; align-items: center; gap: 8px; }
+    .explain-box p { font-size: 0.92rem; color: var(--text-muted); font-weight: 700; line-height: 1.9; margin-bottom: 10px; }
+    
+    /* تنسيق واضح وبارز ومريح للعين لمعادلة الحساب الهندسي بخط Cairo الأساسي */
+    .formula-box {
+        background: rgba(22, 60, 110, 0.04);
+        border: 1.5px dashed var(--border-color);
+        border-radius: 12px;
+        padding: 14px 18px;
+        margin: 12px 0;
+        font-family: 'Cairo', sans-serif;
+        font-size: 1.02rem;
+        font-weight: 800;
+        color: var(--primary-blue);
+        text-align: center;
+        line-height: 1.8;
+    }
 
     .cta-band {
-        width: 100%; max-width: 860px; margin-top: 22px; background: var(--primary-blue); border-radius: 16px;
-        padding: 22px 24px; text-align: center; color: #fff;
-        border-left: 4px solid var(--accent-color);
+        width: 100%; max-width: 950px; margin-top: 24px; background: linear-gradient(135deg, var(--primary-blue), var(--primary-dark)); border-radius: 20px;
+        padding: 26px 30px; text-align: center; color: #fff; border-left: 5px solid var(--accent-color);
+        box-shadow: 0 12px 30px rgba(22, 60, 110, 0.18);
     }
-    .cta-band p { font-size: 0.95rem; font-weight: 700; margin-bottom: 14px; line-height: 1.7; }
+    .cta-band p { font-size: 1.02rem; font-weight: 800; margin-bottom: 16px; line-height: 1.8; }
     .cta-band a {
-        display: inline-flex; align-items: center; gap: 8px; background: var(--accent-color); color: #fff;
-        text-decoration: none; font-weight: 800; font-size: 0.92rem; padding: 11px 22px; border-radius: 10px;
-        transition: all 0.25s ease;
+        display: inline-flex; align-items: center; gap: 10px; background: var(--accent-color); color: #fff;
+        text-decoration: none; font-weight: 900; font-size: 0.95rem; padding: 13px 26px; border-radius: 12px;
+        transition: all 0.25s ease; box-shadow: 0 6px 18px rgba(226, 96, 31, 0.3);
     }
-    .cta-band a:hover { background: var(--accent-light); transform: translateY(-2px); }
+    .cta-band a:hover { background: var(--accent-light); transform: translateY(-2px); box-shadow: 0 10px 22px rgba(226, 96, 31, 0.4); }
 
     @media (max-width: 480px) {
-        .tool-header h1 { font-size: 1.3rem; }
+        .tool-header h1 { font-size: 1.4rem; }
         .option-card { padding: 20px 16px; }
+        .brand-container img { height: 40px; }
     }
 </style>
 </head>
 <body>
 
     <div class="top-strip">
-        <div style="display:flex; align-items:center; gap:14px;">
-            <a href="../index.html"><img src="../photo/logo.jpg" alt="BA Engineering Academy" style="height:34px; border-radius:6px; display:block;"></a>
-            <a href="../index.html" class="back-link"><i class="fa-solid fa-arrow-right"></i> الرئيسية</a>
-        </div>
-        <span class="free-chip">TOOL-01 · FREE</span>
+        <a href="../index.html" class="brand-container">
+            <img src="../photo/logo.jpg" alt="BA Engineering Academy">
+            <div class="brand-text">
+                <span class="brand-name">BA ENGINEERING</span>
+                <span class="brand-sub">ACADEMY</span>
+            </div>
+        </a>
+        <a href="../index.html" class="back-link"><i class="fa-solid fa-arrow-right"></i> الرئيسية</a>
     </div>
 
     <div class="tool-header">
-        <h1>حاسبة تكلفة دورة الحياة <span style="font-family:'JetBrains Mono',monospace; font-size:1rem; color:var(--text-muted);">(Life Cycle Cost)</span></h1>
-        <p>الخيار الأرخص في البداية مش دايمًا الأوفر. قارن بين خيارين هندسيين على أساس التكلفة الكاملة طوال العمر الافتراضي — مش التكلفة الأولية بس — واعرف أيهما أوفر فعليًا.</p>
+        <h1>حاسبة تكلفة دورة الحياة <span>(Life Cycle Cost)</span></h1>
+        <p>الخيار الأرخص في البداية ليس بالضرورة الأوفر. قارن بين خيارين هندسيين على أساس التكلفة الإجمالية طوال العمر الافتراضي — وتجاوز التكلفة الأولية وحدها لتتخذ قراراً هندسياً مدروساً[cite: 4].</p>
     </div>
 
     <div class="compare-grid">
         <div class="option-card a">
-            <h2><i class="fa-solid fa-a"></i> الخيار A</h2>
+            <h2><i class="fa-solid fa-a"></i> الخيار الأول (Option A)</h2>
             <div class="field"><label>التكلفة الأولية (Initial Cost)</label><input type="number" id="a_initial" placeholder="مثال: 100000" min="0" step="any"></div>
             <div class="field"><label>التكلفة التشغيلية السنوية</label><input type="number" id="a_operating" placeholder="مثال: 8000" min="0" step="any"></div>
             <div class="field"><label>تكلفة الصيانة السنوية</label><input type="number" id="a_maintenance" placeholder="مثال: 3000" min="0" step="any"></div>
@@ -162,7 +209,7 @@
         </div>
 
         <div class="option-card b">
-            <h2><i class="fa-solid fa-b"></i> الخيار B</h2>
+            <h2><i class="fa-solid fa-b"></i> الخيار الثاني (Option B)</h2>
             <div class="field"><label>التكلفة الأولية (Initial Cost)</label><input type="number" id="b_initial" placeholder="مثال: 140000" min="0" step="any"></div>
             <div class="field"><label>التكلفة التشغيلية السنوية</label><input type="number" id="b_operating" placeholder="مثال: 4000" min="0" step="any"></div>
             <div class="field"><label>تكلفة الصيانة السنوية</label><input type="number" id="b_maintenance" placeholder="مثال: 1500" min="0" step="any"></div>
@@ -172,7 +219,7 @@
     </div>
 
     <button class="calc-btn" onclick="calculateLCC()">
-        <i class="fa-solid fa-calculator"></i> قارن الخيارين
+        <i class="fa-solid fa-calculator"></i> قارن الخيارين هندسياً
     </button>
 
     <div class="result-box" id="resultBox">
@@ -191,14 +238,17 @@
     </div>
 
     <div class="explain-box">
-        <h2><i class="fa-solid fa-book-open"></i> إزاي بتتحسب؟</h2>
-        <p><code>إجمالي التكلفة = التكلفة الأولية + (التشغيل السنوي + الصيانة السنوية) × عدد السنوات − قيمة الإحلال</code></p>
-        <p>الفكرة إنك بتقارن التكلفة الكاملة "من المهد للحد" مش بس سعر الشراء أو التركيب. أحيانًا خيار بتكلفته الأولية أعلى بيوفّر عليك فلوس أكتر بكتير على مدار سنين التشغيل، وده أساس أي دراسة هندسة قيمية جادة.</p>
+        <h2><i class="fa-solid fa-book-open"></i> الآلية المتبعة في الحساب الهندسي</h2>
+        <p>تتم عملية المقارنة وفق معادلة تقييم تكلفة الملكية الكاملة "من المهد للحد":</p>
+        <div class="formula-box">
+            إجمالي التكلفة = التكلفة الأولية + (التشغيل السنوي + الصيانة السنوية) × عدد السنوات − قيمة الإحلال
+        </div>
+        <p>تتيح لك هذه المنهجية اكتشاف ما إذا كان الاستثمار الأولي المرتفع في خيار معين سيعوضه توفير هائل في مصاريف التشغيل والصيانة على مدار العمر التشغيلي للمشروع.</p>
     </div>
 
     <div class="cta-band">
-        <p>عايز تتعلم إزاي تطبّق تحليل تكلفة دورة الحياة ودراسات الهندسة القيمية على مشاريعك الحقيقية باحترافية؟</p>
-        <a href="../index.html#courses-section"><i class="fa-solid fa-graduation-cap"></i> كورس الهندسة القيمية الكامل</a>
+        <p>هل ترغب في احتراف تطبيقات تحليل تكلفة دورة الحياة ودراسات الهندسة القيمية لمشاريعك الهندسية القادمة؟</p>
+        <a href="../index.html#courses-section"><i class="fa-solid fa-graduation-cap"></i> اكتشف كورسات الأكاديمية الاحترافية</a>
     </div>
 
 <script>
@@ -248,22 +298,22 @@
         if (Math.abs(lccA - lccB) < 0.01) {
             verdictEl.style.color = 'var(--neutral)';
             verdictEl.textContent = 'الخياران متعادلان تقريبًا في التكلفة الكاملة';
-            descEl.textContent = 'الفرق ضئيل جدًا — القرار ممكن يعتمد على عوامل تانية غير التكلفة (الموثوقية، سهولة الصيانة، توفر قطع الغيار).';
+            descEl.textContent = 'الفرق المالي ضئيل للغاية — يمكن ترجيح أحد الخيارين بناءً على محددات أخرى كالاعتمادية، توفر قطع الغيار، أو سهولة الصيانة.';
         } else if (lccA < lccB) {
             verdictEl.style.color = 'var(--good)';
-            verdictEl.textContent = 'الخيار A أوفر على مدار العمر الافتراضي بمقدار ' + fmt(diff);
+            verdictEl.textContent = 'الخيار الأول (A) أوفر اقتصادياً على مدار العمر الافتراضي بمقدار ' + fmt(diff);
             if (a.initial > b.initial) {
-                descEl.textContent = 'ملحوظة: رغم إن التكلفة الأولية للخيار A أعلى، إجمالي تكلفة الملكية طوال العمر الافتراضي أقل بسبب انخفاض تكاليف التشغيل والصيانة.';
+                descEl.textContent = 'ملحوظة هندسية: على الرغم من أن التكلفة الأولية للخيار A أعلى، إلا أن إجمالي تكلفة الملكية طوال العمر الافتراضي أقل بفضل الانخفاض الملحوظ في مصاريف التشغيل والصيانة.';
             } else {
-                descEl.textContent = 'الخيار A أوفر من كل الجوانب تقريبًا — تكلفة أولية أقل وتكلفة تشغيل/صيانة أقل أو مقاربة.';
+                descEl.textContent = 'الخيار الأول (A) يحقق جدوى اقتصادية أفضل في التكلفة الأولية وأكلاف التشغيل والصيانة.';
             }
         } else {
             verdictEl.style.color = 'var(--good)';
-            verdictEl.textContent = 'الخيار B أوفر على مدار العمر الافتراضي بمقدار ' + fmt(diff);
+            verdictEl.textContent = 'الخيار الثاني (B) أوفر اقتصادياً على مدار العمر الافتراضي بمقدار ' + fmt(diff);
             if (b.initial > a.initial) {
-                descEl.textContent = 'ملحوظة: رغم إن التكلفة الأولية للخيار B أعلى، إجمالي تكلفة الملكية طوال العمر الافتراضي أقل بسبب انخفاض تكاليف التشغيل والصيانة.';
+                descEl.textContent = 'ملحوظة هندسية: على الرغم من أن التكلفة الأولية للخيار B أعلى، إلا أن إجمالي تكلفة الملكية طوال العمر الافتراضي أقل بفضل الانخفاض الملحوظ في مصاريف التشغيل والصيانة.';
             } else {
-                descEl.textContent = 'الخيار B أوفر من كل الجوانب تقريبًا — تكلفة أولية أقل وتكلفة تشغيل/صيانة أقل أو مقاربة.';
+                descEl.textContent = 'الخيار الثاني (B) يحقق جدوى اقتصادية أفضل في التكلفة الأولية وأكلاف التشغيل والصيانة.';
             }
         }
     }

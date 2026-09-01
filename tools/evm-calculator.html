@@ -4,10 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>حاسبة القيمة المكتسبة (EVM) مجانًا | BA Engineering Academy</title>
-<meta name="description" content="احسب مؤشرات القيمة المكتسبة (SPI, CPI, EAC, ETC, VAC) لأي مشروع هندسي فورًا ومجانًا، واعرف هل مشروعك متقدم أو متأخر، وتحت أو فوق الميزانية.">
+<meta name="description" content="احسب مؤشرات القيمة المكتسبة (SPI, CPI, EAC, ETC, VAC) لأي مشروع هندسي فورًا ومجانًا، واعرف هل مشروعك متقدم أو متأخر، وتحت أو فوق الميزانية[cite: 8].">
 <link rel="canonical" href="https://www.barnoukh-engineering.com/tools/evm-calculator.html">
 <meta property="og:title" content="حاسبة القيمة المكتسبة (EVM) مجانًا">
-<meta property="og:description" content="أداة مجانية فورية لحساب مؤشرات أداء المشروع (SPI, CPI, EAC) من BA Engineering Academy.">
+<meta property="og:description" content="أداة مجانية فورية لحساب مؤشرات أداء المشروع (SPI, CPI, EAC) من BA Engineering Academy[cite: 8].">
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,13 +17,13 @@
     :root {
         --bg-main: #EDF1F6;
         --primary-blue: #163C6E;
-        --primary-blue-hover: #0F2C52;
+        --primary-dark: #0d2545;
         --accent-color: #E2601F;
         --accent-light: #F0813F;
         --text-dark: #101826;
         --text-muted: #57677A;
         --border-color: rgba(22, 60, 110, 0.16);
-        --card-bg: rgba(255, 255, 255, 0.92);
+        --card-bg: rgba(255, 255, 255, 0.96);
         --grid-line: rgba(22, 60, 110, 0.07);
         --good: #14532D;
         --bad: #9A2A1E;
@@ -44,134 +44,167 @@
         align-items: center;
         padding: 24px 16px 60px;
     }
+    
+    /* Top Strip (من تنسيق LCC) */
     .top-strip {
-        width: 100%; max-width: 900px; display: flex; justify-content: space-between; align-items: center;
-        margin-bottom: 26px;
+        width: 100%; max-width: 720px; display: flex; justify-content: space-between; align-items: center;
+        margin-bottom: 25px;
     }
+    .brand-container {
+        display: flex; align-items: center; gap: 12px; text-decoration: none; background: #fff;
+        padding: 6px 14px 6px 8px; border-radius: 14px; border: 1.5px solid var(--border-color);
+        box-shadow: 0 4px 15px rgba(22,60,110,0.08); transition: all 0.25s ease;
+    }
+    .brand-container:hover { border-color: var(--primary-blue); transform: translateY(-2px); }
+    .brand-container img { height: 50px; width: auto; max-width: 180px; object-fit: contain; border-radius: 8px; display: block; }
+    .brand-text { display: flex; flex-direction: column; }
+    .brand-name { font-family: 'JetBrains Mono', monospace; font-weight: 800; font-size: 0.95rem; color: var(--primary-blue); letter-spacing: -0.3px; }
+    .brand-sub { font-size: 0.7rem; font-weight: 700; color: var(--accent-color); }
+
     .back-link {
         display: inline-flex; align-items: center; gap: 8px; color: var(--primary-blue); font-weight: 800;
-        text-decoration: none; font-size: 14.5px; background: rgba(255,255,255,0.85); padding: 9px 16px;
-        border-radius: 10px; border: 1px solid var(--border-color); transition: all 0.25s ease;
+        text-decoration: none; font-size: 14.5px; background: rgba(255,255,255,0.9); padding: 11px 18px;
+        border-radius: 14px; border: 1.5px solid var(--border-color); transition: all 0.25s ease;
+        box-shadow: 0 4px 12px rgba(22,60,110,0.05);
     }
-    .back-link:hover { background: #fff; transform: translateY(-2px); }
-    .free-chip {
-        font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 800; letter-spacing: 0.6px;
-        background: var(--primary-blue); color: #fff; padding: 6px 12px; border-radius: 3px;
-        border-left: 3px solid var(--accent-color);
+    .back-link:hover { background: #fff; transform: translateY(-2px); border-color: var(--accent-color); color: var(--accent-color); }
+
+    /* Tool Header (من تنسيق LCC) */
+    .tool-header {
+        background: linear-gradient(135deg, var(--primary-blue), var(--primary-dark));
+        color: #ffffff; border-radius: 20px; padding: 35px 24px; text-align: center; max-width: 720px;
+        width: 100%; margin-bottom: 30px; box-shadow: 0 12px 30px rgba(22, 60, 110, 0.18); position: relative; overflow: hidden;
     }
+    .tool-header::before {
+        content: ''; position: absolute; top: -50%; right: -20%; width: 300px; height: 300px;
+        background: rgba(226, 96, 31, 0.12); border-radius: 50%; pointer-events: none;
+    }
+    .tool-header h1 { font-size: 1.9rem; font-weight: 900; margin-bottom: 12px; letter-spacing: -0.5px; display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap; }
+    .tool-header h1 span { font-family: 'JetBrains Mono', monospace; font-size: 1.1rem; color: var(--accent-light); }
+    .tool-header p { color: rgba(255, 255, 255, 0.9); font-size: 1.02rem; font-weight: 700; line-height: 1.8; max-width: 650px; margin: 0 auto; }
 
-    .tool-header { text-align: center; max-width: 680px; margin-bottom: 30px; }
-    .tool-header h1 { font-size: 1.6rem; font-weight: 900; color: var(--primary-blue); margin-bottom: 10px; line-height: 1.4; }
-    .tool-header p { color: var(--text-muted); font-size: 0.96rem; font-weight: 600; line-height: 1.8; }
-
+    /* Calculator Card */
     .calc-card {
-        width: 100%; max-width: 620px; background: var(--card-bg); backdrop-filter: blur(14px);
-        border: 1px solid var(--border-color); border-radius: 20px; padding: 30px 26px;
-        box-shadow: 0 20px 40px -15px rgba(22, 60, 110, 0.16);
+        width: 100%; max-width: 720px; background: var(--card-bg); backdrop-filter: blur(14px);
+        border: 1.5px solid var(--border-color); border-radius: 20px; padding: 30px 28px;
+        box-shadow: 0 16px 34px -14px rgba(22, 60, 110, 0.14); margin-bottom: 24px;
     }
-    .input-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin-bottom: 6px; }
-    @media (max-width: 560px) { .input-row { grid-template-columns: 1fr; } }
-    .field { margin-bottom: 16px; }
-    .field label { display: block; font-weight: 800; font-size: 0.85rem; color: var(--text-dark); margin-bottom: 8px; }
-    .field label span.hint { display: block; font-weight: 600; font-size: 0.74rem; color: var(--text-muted); margin-top: 3px; }
+    
+    .field { margin-bottom: 18px; }
+    .field label { display: block; font-weight: 800; font-size: 0.9rem; color: var(--text-dark); margin-bottom: 8px; }
+    .field label span.hint { display: block; font-weight: 700; font-size: 0.78rem; color: var(--text-muted); margin-top: 4px; }
     .field input {
-        width: 100%; padding: 12px 14px; border-radius: 10px; border: 1.5px solid var(--border-color);
-        font-family: 'JetBrains Mono', monospace; font-size: 1rem; font-weight: 700; color: var(--text-dark);
-        background: #fff; transition: border-color 0.2s ease;
+        width: 100%; padding: 14px 16px; border-radius: 12px; border: 1.5px solid var(--border-color);
+        font-family: 'JetBrains Mono', monospace; font-size: 1.05rem; font-weight: 800; color: var(--text-dark);
+        background: #fff; transition: all 0.25s ease; box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
     }
-    .field input:focus { outline: none; border-color: var(--primary-blue); }
+    .field input:focus { outline: none; border-color: var(--accent-color); box-shadow: 0 0 0 4px rgba(226, 96, 31, 0.12); }
 
+    /* Button (من تنسيق LCC) */
     .calc-btn {
-        width: 100%; padding: 14px 20px; border-radius: 12px; border: none; cursor: pointer;
-        background: linear-gradient(135deg, var(--primary-blue) 0%, var(--accent-color) 100%);
-        color: #fff; font-family: 'Cairo', sans-serif; font-size: 1rem; font-weight: 800;
+        width: 100%; padding: 16px 24px; border-radius: 14px; border: none; cursor: pointer;
+        background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-dark) 100%);
+        color: #fff; font-family: 'Cairo', sans-serif; font-size: 1.05rem; font-weight: 900;
         display: flex; align-items: center; justify-content: center; gap: 10px;
-        box-shadow: 0 8px 20px rgba(226, 96, 31, 0.25); transition: all 0.25s ease; margin-top: 6px;
+        box-shadow: 0 10px 25px rgba(22, 60, 110, 0.25); transition: all 0.3s ease; margin-top: 10px;
     }
-    .calc-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 25px rgba(226, 96, 31, 0.35); }
+    .calc-btn:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(22, 60, 110, 0.35); background: linear-gradient(135deg, var(--accent-color) 0%, var(--accent-light) 100%); }
 
-    .result-box { display: none; margin-top: 24px; }
+    /* Results */
+    .result-box { display: none; margin-top: 28px; animation: fadeIn 0.4s ease; }
     .result-box.show { display: block; }
-    .verdict-band {
-        border-radius: 14px; padding: 16px 18px; text-align: center; margin-bottom: 18px; border: 1.5px solid var(--border-color);
-    }
-    .verdict-band .headline { font-size: 1.05rem; font-weight: 800; margin-bottom: 4px; }
-    .verdict-band .sub { font-size: 0.86rem; color: var(--text-muted); font-weight: 600; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-    .metrics-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    .verdict-band {
+        border-radius: 16px; padding: 22px 20px; text-align: center; margin-bottom: 24px; border: 1.5px solid var(--border-color);
+        background: #fff; box-shadow: 0 6px 15px rgba(0,0,0,0.03);
+    }
+    .verdict-band .headline { font-size: 1.15rem; font-weight: 900; margin-bottom: 8px; }
+    .verdict-band .sub { font-size: 0.95rem; color: var(--text-muted); font-weight: 700; }
+
+    .metrics-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
     @media (max-width: 560px) { .metrics-grid { grid-template-columns: repeat(2, 1fr); } }
     .metric-chip {
-        background: #fff; border: 1.5px solid var(--border-color); border-radius: 12px; padding: 12px 10px; text-align: center;
+        background: #fff; border: 1.5px solid var(--border-color); border-radius: 14px; padding: 16px 12px; text-align: center;
+        box-shadow: 0 6px 15px rgba(0,0,0,0.03); transition: transform 0.2s ease;
     }
-    .metric-chip .m-lbl { font-size: 0.72rem; color: var(--text-muted); font-weight: 700; margin-bottom: 4px; }
-    .metric-chip .m-val { font-family: 'JetBrains Mono', monospace; font-size: 1.15rem; font-weight: 800; }
-    .metric-chip .m-note { font-size: 0.65rem; color: var(--text-muted); font-weight: 600; margin-top: 3px; }
+    .metric-chip:hover { transform: translateY(-2px); border-color: var(--primary-blue); }
+    .metric-chip .m-lbl { font-size: 0.8rem; color: var(--text-muted); font-weight: 800; margin-bottom: 6px; }
+    .metric-chip .m-val { font-family: 'JetBrains Mono', monospace; font-size: 1.35rem; font-weight: 900; }
+    .metric-chip .m-note { font-size: 0.75rem; color: var(--text-muted); font-weight: 700; margin-top: 5px; }
 
+    /* Explain Box */
     .explain-box {
-        width: 100%; max-width: 620px; margin-top: 22px; background: rgba(255,255,255,0.6);
-        border: 1px solid var(--border-color); border-radius: 14px; padding: 20px 22px;
+        width: 100%; max-width: 720px; background: var(--card-bg);
+        border: 1.5px solid var(--border-color); border-radius: 20px; padding: 26px 28px;
+        box-shadow: 0 10px 25px rgba(22,60,110,0.06); margin-bottom: 24px;
     }
-    .explain-box h2 { font-size: 1rem; color: var(--primary-blue); margin-bottom: 10px; font-weight: 800; }
-    .explain-box p, .explain-box li { font-size: 0.85rem; color: var(--text-muted); font-weight: 600; line-height: 1.85; }
-    .explain-box ul { padding-inline-start: 20px; margin-top: 6px; }
-    .explain-box code { font-family: 'JetBrains Mono', monospace; background: rgba(22,60,110,0.08); padding: 2px 6px; border-radius: 4px; font-size: 0.78rem; }
+    .explain-box h2 { font-size: 1.1rem; color: var(--primary-blue); margin-bottom: 14px; font-weight: 900; display: flex; align-items: center; gap: 8px; }
+    .explain-box p, .explain-box li { font-size: 0.92rem; color: var(--text-muted); font-weight: 700; line-height: 1.9; }
+    .explain-box ul { padding-inline-start: 22px; margin-top: 8px; }
+    .explain-box code { font-family: 'JetBrains Mono', monospace; background: rgba(22,60,110,0.06); padding: 3px 8px; border-radius: 6px; font-size: 0.85rem; font-weight: 800; color: var(--primary-blue); }
 
+    /* CTA Band (من تنسيق LCC) */
     .cta-band {
-        width: 100%; max-width: 620px; margin-top: 22px; background: var(--primary-blue); border-radius: 16px;
-        padding: 22px 24px; text-align: center; color: #fff;
-        border-left: 4px solid var(--accent-color);
+        width: 100%; max-width: 720px; background: linear-gradient(135deg, var(--primary-blue), var(--primary-dark)); border-radius: 20px;
+        padding: 26px 30px; text-align: center; color: #fff; border-left: 5px solid var(--accent-color);
+        box-shadow: 0 12px 30px rgba(22, 60, 110, 0.18);
     }
-    .cta-band p { font-size: 0.95rem; font-weight: 700; margin-bottom: 14px; line-height: 1.7; }
+    .cta-band p { font-size: 1.02rem; font-weight: 800; margin-bottom: 16px; line-height: 1.8; }
     .cta-band a {
-        display: inline-flex; align-items: center; gap: 8px; background: var(--accent-color); color: #fff;
-        text-decoration: none; font-weight: 800; font-size: 0.92rem; padding: 11px 22px; border-radius: 10px;
-        transition: all 0.25s ease;
+        display: inline-flex; align-items: center; gap: 10px; background: var(--accent-color); color: #fff;
+        text-decoration: none; font-weight: 900; font-size: 0.95rem; padding: 13px 26px; border-radius: 12px;
+        transition: all 0.25s ease; box-shadow: 0 6px 18px rgba(226, 96, 31, 0.3);
     }
-    .cta-band a:hover { background: var(--accent-light); transform: translateY(-2px); }
+    .cta-band a:hover { background: var(--accent-light); transform: translateY(-2px); box-shadow: 0 10px 22px rgba(226, 96, 31, 0.4); }
 
     @media (max-width: 480px) {
-        .tool-header h1 { font-size: 1.3rem; }
-        .calc-card { padding: 24px 18px; }
+        .tool-header h1 { font-size: 1.4rem; }
+        .calc-card, .explain-box, .cta-band { padding: 22px 18px; }
+        .brand-container img { height: 40px; }
     }
 </style>
 </head>
 <body>
 
     <div class="top-strip">
-        <div style="display:flex; align-items:center; gap:14px;">
-            <a href="../index.html"><img src="../photo/logo.jpg" alt="BA Engineering Academy" style="height:34px; border-radius:6px; display:block;"></a>
-            <a href="../index.html" class="back-link"><i class="fa-solid fa-arrow-right"></i> الرئيسية</a>
-        </div>
-        <span class="free-chip">TOOL-02 · FREE</span>
+        <a href="../index.html" class="brand-container">
+            <img src="../photo/logo.jpg" alt="BA Engineering Academy">
+            <div class="brand-text">
+                <span class="brand-name">BA ENGINEERING</span>
+                <span class="brand-sub">ACADEMY</span>
+            </div>
+        </a>
+        <a href="../index.html" class="back-link"><i class="fa-solid fa-arrow-right"></i> الرئيسية</a>
     </div>
 
     <div class="tool-header">
-        <h1>حاسبة القيمة المكتسبة <span style="font-family:'JetBrains Mono',monospace; font-size:1rem; color:var(--text-muted);">(EVM)</span></h1>
-        <p>أدخل 3 أرقام من تقرير مشروعك واعرف فورًا هل هو متقدم أو متأخر عن الجدولة، وتحت أو فوق الميزانية، والتكلفة المتوقعة عند الاكتمال.</p>
+        <h1>حاسبة القيمة المكتسبة <span>(Earned Value)</span></h1>
+        <p>أدخل 3 أرقام من تقرير مشروعك واعرف فورًا هل هو متقدم أو متأخر عن الجدولة، وتحت أو فوق الميزانية، والتكلفة المتوقعة عند الاكتمال[cite: 8].</p>
     </div>
 
     <div class="calc-card">
         <div class="field">
             <label for="pvInput">القيمة المخططة (PV) — Planned Value
-                <span class="hint">قيمة العمل اللي كان المفروض تتنجز لحد النهارده حسب الخطة</span>
+                <span class="hint">قيمة العمل اللي كان المفروض تتنجز لحد النهارده حسب الخطة[cite: 8]</span>
             </label>
             <input type="number" id="pvInput" placeholder="مثال: 500000" min="0" step="any">
         </div>
         <div class="field">
             <label for="evInput">القيمة المكتسبة (EV) — Earned Value
-                <span class="hint">قيمة العمل المنجز فعليًا لحد النهارده</span>
+                <span class="hint">قيمة العمل المنجز فعليًا لحد النهارده[cite: 8]</span>
             </label>
             <input type="number" id="evInput" placeholder="مثال: 420000" min="0" step="any">
         </div>
         <div class="field">
             <label for="acInput">التكلفة الفعلية (AC) — Actual Cost
-                <span class="hint">الفلوس اللي اتصرفت فعليًا لحد النهارده</span>
+                <span class="hint">الفلوس اللي اتصرفت فعليًا لحد النهارده[cite: 8]</span>
             </label>
             <input type="number" id="acInput" placeholder="مثال: 460000" min="0" step="any">
         </div>
         <div class="field">
             <label for="bacInput">إجمالي ميزانية المشروع (BAC) — Budget at Completion
-                <span class="hint">إجمالي الميزانية المعتمدة للمشروع بالكامل</span>
+                <span class="hint">إجمالي الميزانية المعتمدة للمشروع بالكامل[cite: 8]</span>
             </label>
             <input type="number" id="bacInput" placeholder="مثال: 1200000" min="0" step="any">
         </div>
@@ -186,8 +219,8 @@
                 <div class="sub" id="verdictSub"></div>
             </div>
             <div class="metrics-grid">
-                <div class="metric-chip"><div class="m-lbl">SPI (الجدولة)</div><div class="m-val" id="spiVal">--</div><div class="m-note" id="spiNote"></div></div>
-                <div class="metric-chip"><div class="m-lbl">CPI (التكلفة)</div><div class="m-val" id="cpiVal">--</div><div class="m-note" id="cpiNote"></div></div>
+                <div class="metric-chip"><div class="m-lbl">SPI (الجدولة)</div><div class="m-val" id="spiVal" style="color: var(--primary-blue);">--</div><div class="m-note" id="spiNote"></div></div>
+                <div class="metric-chip"><div class="m-lbl">CPI (التكلفة)</div><div class="m-val" id="cpiVal" style="color: var(--accent-color);">--</div><div class="m-note" id="cpiNote"></div></div>
                 <div class="metric-chip"><div class="m-lbl">SV (فرق الجدولة)</div><div class="m-val" id="svVal">--</div></div>
                 <div class="metric-chip"><div class="m-lbl">CV (فرق التكلفة)</div><div class="m-val" id="cvVal">--</div></div>
                 <div class="metric-chip"><div class="m-lbl">EAC (التكلفة المتوقعة)</div><div class="m-val" id="eacVal">--</div></div>
@@ -198,19 +231,19 @@
 
     <div class="explain-box">
         <h2><i class="fa-solid fa-book-open"></i> إزاي تفهم المؤشرات؟</h2>
-        <p><code>SPI = EV ÷ PV</code> — أكبر من 1 يعني المشروع قدّام الجدولة، أقل من 1 يعني متأخر.</p>
-        <p><code>CPI = EV ÷ AC</code> — أكبر من 1 يعني كفاءة تكلفة عالية (تحت الميزانية)، أقل من 1 يعني تجاوز في التكلفة.</p>
-        <p><code>EAC = BAC ÷ CPI</code> — التكلفة الإجمالية المتوقعة للمشروع لو استمر بنفس معدل الأداء الحالي.</p>
+        <p><code>SPI = EV ÷ PV</code> — أكبر من 1 يعني المشروع قدّام الجدولة، أقل من 1 يعني متأخر[cite: 8].</p>
+        <p><code>CPI = EV ÷ AC</code> — أكبر من 1 يعني كفاءة تكلفة عالية (تحت الميزانية)، أقل من 1 يعني تجاوز في التكلفة[cite: 8].</p>
+        <p><code>EAC = BAC ÷ CPI</code> — التكلفة الإجمالية المتوقعة للمشروع لو استمر بنفس معدل الأداء الحالي[cite: 8].</p>
         <ul>
-            <li><strong style="color:var(--good)">SPI و CPI ≥ 1</strong> — أداء ممتاز، المشروع في الطريق الصحيح.</li>
-            <li><strong style="color:var(--neutral)">قريب من 1 (0.95–1)</strong> — أداء مقبول، يستحق متابعة.</li>
-            <li><strong style="color:var(--bad)">أقل من 0.95</strong> — إشارة تحذير حقيقية تحتاج إجراء تصحيحي فورًا.</li>
+            <li><strong style="color:var(--good)">SPI و CPI ≥ 1</strong> — أداء ممتاز، المشروع في الطريق الصحيح[cite: 8].</li>
+            <li><strong style="color:var(--neutral)">قريب من 1 (0.95–1)</strong> — أداء مقبول، يستحق متابعة[cite: 8].</li>
+            <li><strong style="color:var(--bad)">أقل من 0.95</strong> — إشارة تحذير حقيقية تحتاج إجراء تصحيحي فورًا[cite: 8].</li>
         </ul>
     </div>
 
     <div class="cta-band">
-        <p>عايز تتعلم إزاي تحلل مؤشرات الأداء دي وتاخد قرارات تصحيحية صح على أرض الواقع؟</p>
-        <a href="../index.html#courses-section"><i class="fa-solid fa-graduation-cap"></i> كورس إدارة المخاطر الهندسية</a>
+        <p>هل ترغب في احتراف تطبيقات تحليل الأداء ودراسات الهندسة القيمية لمشاريعك الهندسية القادمة؟</p>
+        <a href="../index.html#courses-section"><i class="fa-solid fa-graduation-cap"></i> اكتشف كورسات الأكاديمية الاحترافية</a>
     </div>
 
 <script>
@@ -232,6 +265,8 @@
             document.getElementById('verdictHeadline').textContent = 'برجاء إدخال كل الأرقام بشكل صحيح';
             document.getElementById('verdictSub').textContent = 'PV و AC و BAC يجب أن تكون أكبر من صفر.';
             ['spiVal','cpiVal','svVal','cvVal','eacVal','vacVal'].forEach(id => document.getElementById(id).textContent = '--');
+            document.getElementById('spiNote').textContent = '';
+            document.getElementById('cpiNote').textContent = '';
             return;
         }
 
@@ -262,6 +297,7 @@
         document.getElementById('svVal').style.color = sv >= 0 ? 'var(--good)' : 'var(--bad)';
         document.getElementById('cvVal').style.color = cv >= 0 ? 'var(--good)' : 'var(--bad)';
         document.getElementById('vacVal').style.color = vac >= 0 ? 'var(--good)' : 'var(--bad)';
+        document.getElementById('eacVal').style.color = 'var(--primary-blue)';
 
         const band = document.getElementById('verdictBand');
         const headline = document.getElementById('verdictHeadline');
