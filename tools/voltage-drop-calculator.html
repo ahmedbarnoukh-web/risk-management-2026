@@ -46,7 +46,7 @@
     }
     .top-strip {
         width: 100%; max-width: 1050px; display: flex; justify-content: space-between; align-items: center;
-        margin-bottom: 25px;
+        margin-bottom: 25px; flex-wrap: wrap; gap: 12px;
     }
     .brand-container {
         display: flex; align-items: center; gap: 12px; text-decoration: none; background: #fff;
@@ -125,7 +125,7 @@
 
     .actions-bar { display: flex; gap: 14px; margin-bottom: 25px; flex-wrap: wrap; }
     .btn-add {
-        flex: 1; padding: 14px; border: 1.5px dashed var(--accent-color); border-radius: 14px;
+        flex: 1; min-width: 200px; padding: 14px; border: 1.5px dashed var(--accent-color); border-radius: 14px;
         background: rgba(226, 96, 31, 0.05); color: var(--accent-color); font-family: 'Cairo', sans-serif;
         font-size: 0.95rem; font-weight: 900; cursor: pointer; transition: all 0.25s ease;
         display: flex; align-items: center; justify-content: center; gap: 8px;
@@ -141,7 +141,7 @@
     .btn-clear:hover { background: var(--danger); color: #fff; transform: translateY(-2px); }
 
     .btn-calc {
-        flex: 2; padding: 16px; border: none; border-radius: 14px; 
+        flex: 2; min-width: 220px; padding: 16px; border: none; border-radius: 14px; 
         background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-dark) 100%);
         color: #fff; font-family: 'Cairo', sans-serif; font-size: 1.05rem; font-weight: 900; cursor: pointer;
         transition: all 0.3s ease; box-shadow: 0 10px 25px rgba(22, 60, 110, 0.25);
@@ -171,7 +171,7 @@
     .status-badge.pass { background: rgba(20, 83, 45, 0.08); color: var(--success); border: 1.5px solid rgba(20, 83, 45, 0.2); }
     .status-badge.fail { background: rgba(154, 42, 30, 0.08); color: var(--danger); border: 1.5px solid rgba(154, 42, 30, 0.2); }
 
-    .results-header-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
+    .results-header-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; flex-wrap: wrap; gap: 10px; }
     .btn-print {
         background: var(--primary-blue); color: #fff; border: none; padding: 10px 18px; border-radius: 12px;
         font-family: 'Cairo', sans-serif; font-size: 0.88rem; font-weight: 800; cursor: pointer;
@@ -180,8 +180,8 @@
     }
     .btn-print:hover { background: var(--primary-dark); transform: translateY(-2px); }
 
-    .table-container { width: 100%; overflow-x: auto; margin-bottom: 25px; border-radius: 12px; border: 1.5px solid var(--border-color); }
-    .results-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; text-align: center; }
+    .table-container { width: 100%; overflow-x: auto; margin-bottom: 25px; border-radius: 12px; border: 1.5px solid var(--border-color); -webkit-overflow-scrolling: touch; }
+    .results-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; text-align: center; min-width: 750px; }
     .results-table th, .results-table td { padding: 11px 8px; border-bottom: 1px solid var(--border-color); white-space: nowrap; }
     .results-table th { background: rgba(22, 60, 110, 0.06); color: var(--primary-blue); font-weight: 900; font-size: 0.85rem; }
     .results-table tr:last-child td { border-bottom: none; }
@@ -189,10 +189,11 @@
     .schematic-section {
         background: #FAFCFF; border: 1.5px solid var(--border-color); border-radius: 16px;
         padding: 24px; margin-top: 24px; margin-bottom: 24px; box-shadow: 0 4px 16px rgba(22,60,110,0.05);
+        overflow-x: auto;
     }
     .schematic-title { font-size: 1.05rem; font-weight: 900; color: var(--primary-blue); margin-bottom: 20px; display: flex; align-items: center; gap: 8px; border-bottom: 2px dashed var(--border-color); padding-bottom: 12px; }
     
-    .diagram-container { display: flex; flex-direction: column; gap: 26px; width: 100%; }
+    .diagram-container { display: flex; flex-direction: column; gap: 26px; width: 100%; min-width: 500px; }
     .diagram-row {
         display: flex; align-items: center; justify-content: space-between; background: #fff;
         border: 1.5px solid var(--border-color); border-radius: 16px; padding: 24px 20px; position: relative;
@@ -242,9 +243,76 @@
     .btn-course {
         display: inline-flex; align-items: center; gap: 10px; background: var(--accent-color); color: #fff;
         text-decoration: none; padding: 12px 26px; border-radius: 12px; font-weight: 900; font-size: 0.95rem;
-        transition: all 0.25s ease; box-shadow: 0 6px 18px rgba(226, 96, 31, 0.3);
+        transition: all 0.25s ease; box-shadow: 0 6px 18px rgba(226, 96, 31, 0.3); text-align: center; justify-content: center;
     }
     .btn-course:hover { background: var(--accent-light); transform: translateY(-2px); box-shadow: 0 10px 22px rgba(226, 96, 31, 0.4); }
+
+    /* تحسينات الشاشات المتوسطة والصغيرة (التايلت والموبايل) */
+    @media (max-width: 768px) {
+        body {
+            padding: 12px 8px 40px;
+        }
+        .calc-container {
+            padding: 16px 12px;
+            border-radius: 14px;
+        }
+        .tool-header {
+            padding: 24px 16px;
+            border-radius: 14px;
+        }
+        .tool-header h1 {
+            font-size: 1.4rem;
+        }
+        .tool-header p {
+            font-size: 0.9rem;
+        }
+        .global-settings {
+            grid-template-columns: 1fr;
+            padding: 14px;
+        }
+        .segment-card {
+            padding: 14px;
+        }
+        .segment-header {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        .segment-header > div:last-child {
+            width: 100%;
+            justify-content: space-between;
+        }
+        .form-grid {
+            grid-template-columns: 1fr;
+        }
+        .actions-bar {
+            flex-direction: column;
+        }
+        .btn-add, .btn-clear, .btn-calc {
+            width: 100%;
+            flex: none;
+        }
+        .diagram-row {
+            flex-direction: column;
+            gap: 20px;
+            align-items: stretch;
+            padding: 16px 12px;
+        }
+        .cable-connection {
+            height: 40px;
+            margin: 10px 0;
+        }
+        .drop-value-top, .cable-info-bottom {
+            position: relative;
+            bottom: auto;
+            top: auto;
+            margin: 2px auto;
+            font-size: 0.8rem;
+            padding: 4px 12px;
+        }
+        .node-box {
+            width: 100%;
+        }
+    }
 
     @media print {
         body { background: #fff !important; padding: 0 !important; font-size: 10pt; color: #000; }
@@ -617,8 +685,6 @@
         let diagramHtml = '';
         let hasError = false;
 
-        // Each independent branch (a "new" route, or the very first segment) is tracked on its own,
-        // so a session with multiple independent feeders reports the WORST branch, not just the last one.
         const branches = [];
         let currentBranch = null;
 
@@ -740,7 +806,6 @@
         document.getElementById('resultsTableBody').innerHTML = tableHtml;
         document.getElementById('diagramContainer').innerHTML = diagramHtml;
 
-        // Pick the worst branch: the one closest to, or furthest past, its own allowed limit.
         let worstBranch = branches[0];
         let worstRatio = -Infinity;
         branches.forEach(b => {
