@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>حاسبة القيمة المكتسبة (EVM) مجانًا | BA Engineering Academy</title>
+<meta name="description" content="احسب مؤشرات القيمة المكتسبة (SPI, CPI, EAC, ETC, VAC) لأي مشروع هندسي فورًا ومجانًا، واعرف هل مشروعك متقدم أو متأخر، وتحت أو فوق الميزانية.">
+<link rel="canonical" href="https://www.barnoukh-engineering.com/tools/evm-calculator.html">
+<meta property="og:title" content="حاسبة القيمة المكتسبة (EVM) مجانًا">
+<meta property="og:description" content="أداة مجانية فورية لحساب مؤشرات أداء المشروع (SPI, CPI, EAC) من BA Engineering Academy.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=JetBrains+Mono:wght@500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+    :root {
+        --bg-main: #EDF1F6;
+        --primary-blue: #163C6E;
+        --primary-blue-hover: #0F2C52;
+        --accent-color: #E2601F;
+        --accent-light: #F0813F;
+        --text-dark: #101826;
+        --text-muted: #57677A;
+        --border-color: rgba(22, 60, 110, 0.16);
+        --card-bg: rgba(255, 255, 255, 0.92);
+        --grid-line: rgba(22, 60, 110, 0.07);
+        --good: #14532D;
+        --bad: #9A2A1E;
+        --neutral: #92650F;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+        font-family: 'Cairo', sans-serif;
+        background-color: var(--bg-main);
+        background-image:
+            linear-gradient(var(--grid-line) 1px, transparent 1px),
+            linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+        background-size: 42px 42px;
+        color: var(--text-dark);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 24px 16px 60px;
+    }
+    .top-strip {
+        width: 100%; max-width: 900px; display: flex; justify-content: space-between; align-items: center;
+        margin-bottom: 26px;
+    }
+    .back-link {
+        display: inline-flex; align-items: center; gap: 8px; color: var(--primary-blue); font-weight: 800;
+        text-decoration: none; font-size: 14.5px; background: rgba(255,255,255,0.85); padding: 9px 16px;
+        border-radius: 10px; border: 1px solid var(--border-color); transition: all 0.25s ease;
+    }
+    .back-link:hover { background: #fff; transform: translateY(-2px); }
+    .free-chip {
+        font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 800; letter-spacing: 0.6px;
+        background: var(--primary-blue); color: #fff; padding: 6px 12px; border-radius: 3px;
+        border-left: 3px solid var(--accent-color);
+    }
+
+    .tool-header { text-align: center; max-width: 680px; margin-bottom: 30px; }
+    .tool-header h1 { font-size: 1.6rem; font-weight: 900; color: var(--primary-blue); margin-bottom: 10px; line-height: 1.4; }
+    .tool-header p { color: var(--text-muted); font-size: 0.96rem; font-weight: 600; line-height: 1.8; }
+
+    .calc-card {
+        width: 100%; max-width: 620px; background: var(--card-bg); backdrop-filter: blur(14px);
+        border: 1px solid var(--border-color); border-radius: 20px; padding: 30px 26px;
+        box-shadow: 0 20px 40px -15px rgba(22, 60, 110, 0.16);
+    }
+    .input-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin-bottom: 6px; }
+    @media (max-width: 560px) { .input-row { grid-template-columns: 1fr; } }
+    .field { margin-bottom: 16px; }
+    .field label { display: block; font-weight: 800; font-size: 0.85rem; color: var(--text-dark); margin-bottom: 8px; }
+    .field label span.hint { display: block; font-weight: 600; font-size: 0.74rem; color: var(--text-muted); margin-top: 3px; }
+    .field input {
+        width: 100%; padding: 12px 14px; border-radius: 10px; border: 1.5px solid var(--border-color);
+        font-family: 'JetBrains Mono', monospace; font-size: 1rem; font-weight: 700; color: var(--text-dark);
+        background: #fff; transition: border-color 0.2s ease;
+    }
+    .field input:focus { outline: none; border-color: var(--primary-blue); }
+
+    .calc-btn {
+        width: 100%; padding: 14px 20px; border-radius: 12px; border: none; cursor: pointer;
+        background: linear-gradient(135deg, var(--primary-blue) 0%, var(--accent-color) 100%);
+        color: #fff; font-family: 'Cairo', sans-serif; font-size: 1rem; font-weight: 800;
+        display: flex; align-items: center; justify-content: center; gap: 10px;
+        box-shadow: 0 8px 20px rgba(226, 96, 31, 0.25); transition: all 0.25s ease; margin-top: 6px;
+    }
+    .calc-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 25px rgba(226, 96, 31, 0.35); }
+
+    .result-box { display: none; margin-top: 24px; }
+    .result-box.show { display: block; }
+    .verdict-band {
+        border-radius: 14px; padding: 16px 18px; text-align: center; margin-bottom: 18px; border: 1.5px solid var(--border-color);
+    }
+    .verdict-band .headline { font-size: 1.05rem; font-weight: 800; margin-bottom: 4px; }
+    .verdict-band .sub { font-size: 0.86rem; color: var(--text-muted); font-weight: 600; }
+
+    .metrics-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    @media (max-width: 560px) { .metrics-grid { grid-template-columns: repeat(2, 1fr); } }
+    .metric-chip {
+        background: #fff; border: 1.5px solid var(--border-color); border-radius: 12px; padding: 12px 10px; text-align: center;
+    }
+    .metric-chip .m-lbl { font-size: 0.72rem; color: var(--text-muted); font-weight: 700; margin-bottom: 4px; }
+    .metric-chip .m-val { font-family: 'JetBrains Mono', monospace; font-size: 1.15rem; font-weight: 800; }
+    .metric-chip .m-note { font-size: 0.65rem; color: var(--text-muted); font-weight: 600; margin-top: 3px; }
+
+    .explain-box {
+        width: 100%; max-width: 620px; margin-top: 22px; background: rgba(255,255,255,0.6);
+        border: 1px solid var(--border-color); border-radius: 14px; padding: 20px 22px;
+    }
+    .explain-box h2 { font-size: 1rem; color: var(--primary-blue); margin-bottom: 10px; font-weight: 800; }
+    .explain-box p, .explain-box li { font-size: 0.85rem; color: var(--text-muted); font-weight: 600; line-height: 1.85; }
+    .explain-box ul { padding-inline-start: 20px; margin-top: 6px; }
+    .explain-box code { font-family: 'JetBrains Mono', monospace; background: rgba(22,60,110,0.08); padding: 2px 6px; border-radius: 4px; font-size: 0.78rem; }
+
+    .cta-band {
+        width: 100%; max-width: 620px; margin-top: 22px; background: var(--primary-blue); border-radius: 16px;
+        padding: 22px 24px; text-align: center; color: #fff;
+        border-left: 4px solid var(--accent-color);
+    }
+    .cta-band p { font-size: 0.95rem; font-weight: 700; margin-bottom: 14px; line-height: 1.7; }
+    .cta-band a {
+        display: inline-flex; align-items: center; gap: 8px; background: var(--accent-color); color: #fff;
+        text-decoration: none; font-weight: 800; font-size: 0.92rem; padding: 11px 22px; border-radius: 10px;
+        transition: all 0.25s ease;
+    }
+    .cta-band a:hover { background: var(--accent-light); transform: translateY(-2px); }
+
+    @media (max-width: 480px) {
+        .tool-header h1 { font-size: 1.3rem; }
+        .calc-card { padding: 24px 18px; }
+    }
+</style>
+</head>
+<body>
+
+    <div class="top-strip">
+        <div style="display:flex; align-items:center; gap:14px;">
+            <a href="../index.html"><img src="../photo/logo.jpg" alt="BA Engineering Academy" style="height:34px; border-radius:6px; display:block;"></a>
+            <a href="../index.html" class="back-link"><i class="fa-solid fa-arrow-right"></i> الرئيسية</a>
+        </div>
+        <span class="free-chip">TOOL-02 · FREE</span>
+    </div>
+
+    <div class="tool-header">
+        <h1>حاسبة القيمة المكتسبة <span style="font-family:'JetBrains Mono',monospace; font-size:1rem; color:var(--text-muted);">(EVM)</span></h1>
+        <p>أدخل 3 أرقام من تقرير مشروعك واعرف فورًا هل هو متقدم أو متأخر عن الجدولة، وتحت أو فوق الميزانية، والتكلفة المتوقعة عند الاكتمال.</p>
+    </div>
+
+    <div class="calc-card">
+        <div class="field">
+            <label for="pvInput">القيمة المخططة (PV) — Planned Value
+                <span class="hint">قيمة العمل اللي كان المفروض تتنجز لحد النهارده حسب الخطة</span>
+            </label>
+            <input type="number" id="pvInput" placeholder="مثال: 500000" min="0" step="any">
+        </div>
+        <div class="field">
+            <label for="evInput">القيمة المكتسبة (EV) — Earned Value
+                <span class="hint">قيمة العمل المنجز فعليًا لحد النهارده</span>
+            </label>
+            <input type="number" id="evInput" placeholder="مثال: 420000" min="0" step="any">
+        </div>
+        <div class="field">
+            <label for="acInput">التكلفة الفعلية (AC) — Actual Cost
+                <span class="hint">الفلوس اللي اتصرفت فعليًا لحد النهارده</span>
+            </label>
+            <input type="number" id="acInput" placeholder="مثال: 460000" min="0" step="any">
+        </div>
+        <div class="field">
+            <label for="bacInput">إجمالي ميزانية المشروع (BAC) — Budget at Completion
+                <span class="hint">إجمالي الميزانية المعتمدة للمشروع بالكامل</span>
+            </label>
+            <input type="number" id="bacInput" placeholder="مثال: 1200000" min="0" step="any">
+        </div>
+
+        <button class="calc-btn" onclick="calculateEVM()">
+            <i class="fa-solid fa-calculator"></i> احسب مؤشرات الأداء
+        </button>
+
+        <div class="result-box" id="resultBox">
+            <div class="verdict-band" id="verdictBand">
+                <div class="headline" id="verdictHeadline"></div>
+                <div class="sub" id="verdictSub"></div>
+            </div>
+            <div class="metrics-grid">
+                <div class="metric-chip"><div class="m-lbl">SPI (الجدولة)</div><div class="m-val" id="spiVal">--</div><div class="m-note" id="spiNote"></div></div>
+                <div class="metric-chip"><div class="m-lbl">CPI (التكلفة)</div><div class="m-val" id="cpiVal">--</div><div class="m-note" id="cpiNote"></div></div>
+                <div class="metric-chip"><div class="m-lbl">SV (فرق الجدولة)</div><div class="m-val" id="svVal">--</div></div>
+                <div class="metric-chip"><div class="m-lbl">CV (فرق التكلفة)</div><div class="m-val" id="cvVal">--</div></div>
+                <div class="metric-chip"><div class="m-lbl">EAC (التكلفة المتوقعة)</div><div class="m-val" id="eacVal">--</div></div>
+                <div class="metric-chip"><div class="m-lbl">VAC (فرق الإجمالي)</div><div class="m-val" id="vacVal">--</div></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="explain-box">
+        <h2><i class="fa-solid fa-book-open"></i> إزاي تفهم المؤشرات؟</h2>
+        <p><code>SPI = EV ÷ PV</code> — أكبر من 1 يعني المشروع قدّام الجدولة، أقل من 1 يعني متأخر.</p>
+        <p><code>CPI = EV ÷ AC</code> — أكبر من 1 يعني كفاءة تكلفة عالية (تحت الميزانية)، أقل من 1 يعني تجاوز في التكلفة.</p>
+        <p><code>EAC = BAC ÷ CPI</code> — التكلفة الإجمالية المتوقعة للمشروع لو استمر بنفس معدل الأداء الحالي.</p>
+        <ul>
+            <li><strong style="color:var(--good)">SPI و CPI ≥ 1</strong> — أداء ممتاز، المشروع في الطريق الصحيح.</li>
+            <li><strong style="color:var(--neutral)">قريب من 1 (0.95–1)</strong> — أداء مقبول، يستحق متابعة.</li>
+            <li><strong style="color:var(--bad)">أقل من 0.95</strong> — إشارة تحذير حقيقية تحتاج إجراء تصحيحي فورًا.</li>
+        </ul>
+    </div>
+
+    <div class="cta-band">
+        <p>عايز تتعلم إزاي تحلل مؤشرات الأداء دي وتاخد قرارات تصحيحية صح على أرض الواقع؟</p>
+        <a href="../index.html#courses-section"><i class="fa-solid fa-graduation-cap"></i> كورس إدارة المخاطر الهندسية</a>
+    </div>
+
+<script>
+    function fmt(n) {
+        return Math.round(n).toLocaleString('en-US');
+    }
+
+    function calculateEVM() {
+        const pv = parseFloat(document.getElementById('pvInput').value);
+        const ev = parseFloat(document.getElementById('evInput').value);
+        const ac = parseFloat(document.getElementById('acInput').value);
+        const bac = parseFloat(document.getElementById('bacInput').value);
+        const box = document.getElementById('resultBox');
+
+        if (isNaN(pv) || isNaN(ev) || isNaN(ac) || isNaN(bac) || pv <= 0 || ac <= 0 || bac <= 0 || ev < 0) {
+            box.classList.add('show');
+            document.getElementById('verdictBand').style.borderColor = 'var(--bad)';
+            document.getElementById('verdictHeadline').style.color = 'var(--bad)';
+            document.getElementById('verdictHeadline').textContent = 'برجاء إدخال كل الأرقام بشكل صحيح';
+            document.getElementById('verdictSub').textContent = 'PV و AC و BAC يجب أن تكون أكبر من صفر.';
+            ['spiVal','cpiVal','svVal','cvVal','eacVal','vacVal'].forEach(id => document.getElementById(id).textContent = '--');
+            return;
+        }
+
+        const spi = ev / pv;
+        const cpi = ev / ac;
+        const sv = ev - pv;
+        const cv = ev - ac;
+        const eac = bac / cpi;
+        const vac = bac - eac;
+
+        box.classList.add('show');
+        document.getElementById('spiVal').textContent = spi.toFixed(2);
+        document.getElementById('cpiVal').textContent = cpi.toFixed(2);
+        document.getElementById('svVal').textContent = (sv >= 0 ? '+' : '') + fmt(sv);
+        document.getElementById('cvVal').textContent = (cv >= 0 ? '+' : '') + fmt(cv);
+        document.getElementById('eacVal').textContent = fmt(eac);
+        document.getElementById('vacVal').textContent = (vac >= 0 ? '+' : '') + fmt(vac);
+
+        const spiNote = document.getElementById('spiNote');
+        const cpiNote = document.getElementById('cpiNote');
+        spiNote.textContent = spi >= 1 ? 'قدّام الجدولة' : 'متأخر عن الجدولة';
+        spiNote.style.color = spi >= 1 ? 'var(--good)' : 'var(--bad)';
+        cpiNote.textContent = cpi >= 1 ? 'تحت الميزانية' : 'فوق الميزانية';
+        cpiNote.style.color = cpi >= 1 ? 'var(--good)' : 'var(--bad)';
+
+        document.getElementById('spiVal').style.color = spi >= 1 ? 'var(--good)' : (spi >= 0.95 ? 'var(--neutral)' : 'var(--bad)');
+        document.getElementById('cpiVal').style.color = cpi >= 1 ? 'var(--good)' : (cpi >= 0.95 ? 'var(--neutral)' : 'var(--bad)');
+        document.getElementById('svVal').style.color = sv >= 0 ? 'var(--good)' : 'var(--bad)';
+        document.getElementById('cvVal').style.color = cv >= 0 ? 'var(--good)' : 'var(--bad)';
+        document.getElementById('vacVal').style.color = vac >= 0 ? 'var(--good)' : 'var(--bad)';
+
+        const band = document.getElementById('verdictBand');
+        const headline = document.getElementById('verdictHeadline');
+        const sub = document.getElementById('verdictSub');
+
+        const scheduleGood = spi >= 1;
+        const costGood = cpi >= 1;
+
+        if (scheduleGood && costGood) {
+            band.style.borderColor = 'var(--good)';
+            headline.style.color = 'var(--good)';
+            headline.textContent = 'أداء ممتاز — المشروع قدّام الجدولة وتحت الميزانية';
+            sub.textContent = 'استمر بنفس الوتيرة، والتكلفة المتوقعة عند الاكتمال أقل من أو تساوي الميزانية المعتمدة.';
+        } else if (!scheduleGood && costGood) {
+            band.style.borderColor = 'var(--neutral)';
+            headline.style.color = 'var(--neutral)';
+            headline.textContent = 'المشروع متأخر عن الجدولة، لكن التكلفة تحت السيطرة';
+            sub.textContent = 'محتاج تسريع بعض الأنشطة (Fast-tracking / Crashing) بدون ما تأثر على كفاءة التكلفة الحالية.';
+        } else if (scheduleGood && !costGood) {
+            band.style.borderColor = 'var(--neutral)';
+            headline.style.color = 'var(--neutral)';
+            headline.textContent = 'المشروع قدّام الجدولة، لكن التكلفة تجاوزت المخطط';
+            sub.textContent = 'راجع أسباب زيادة التكلفة — ممكن يكون فيه إسراع مكلف أو هدر في الموارد.';
+        } else {
+            band.style.borderColor = 'var(--bad)';
+            headline.style.color = 'var(--bad)';
+            headline.textContent = 'تحذير — المشروع متأخر عن الجدولة وفوق الميزانية';
+            sub.textContent = 'الوضع يحتاج إجراء تصحيحي فوري ومراجعة جذرية لخطة التنفيذ والتكاليف.';
+        }
+    }
+</script>
+
+</body>
+</html>

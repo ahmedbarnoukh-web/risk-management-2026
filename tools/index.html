@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>أدوات هندسية مجانية | BA Engineering Academy</title>
+<meta name="description" content="مجموعة أدوات وحاسبات هندسية مجانية وفورية بدون تسجيل — تكلفة دورة الحياة، القيمة المكتسبة، والمزيد قريبًا.">
+<link rel="canonical" href="https://www.barnoukh-engineering.com/tools/index.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=JetBrains+Mono:wght@500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+    :root {
+        --bg-main: #EDF1F6;
+        --primary-blue: #163C6E;
+        --accent-color: #E2601F;
+        --accent-light: #F0813F;
+        --text-dark: #101826;
+        --text-muted: #57677A;
+        --border-color: rgba(22, 60, 110, 0.16);
+        --card-bg: rgba(255, 255, 255, 0.92);
+        --grid-line: rgba(22, 60, 110, 0.07);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+        font-family: 'Cairo', sans-serif;
+        background-color: var(--bg-main);
+        background-image:
+            linear-gradient(var(--grid-line) 1px, transparent 1px),
+            linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+        background-size: 42px 42px;
+        color: var(--text-dark);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 24px 16px 60px;
+    }
+    .top-strip { width: 100%; max-width: 900px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+    .back-link {
+        display: inline-flex; align-items: center; gap: 8px; color: var(--primary-blue); font-weight: 800;
+        text-decoration: none; font-size: 14.5px; background: rgba(255,255,255,0.85); padding: 9px 16px;
+        border-radius: 10px; border: 1px solid var(--border-color); transition: all 0.25s ease;
+    }
+    .back-link:hover { background: #fff; transform: translateY(-2px); }
+
+    .hub-header { text-align: center; max-width: 640px; margin-bottom: 34px; }
+    .hub-header h1 { font-size: 1.8rem; font-weight: 900; color: var(--primary-blue); margin-bottom: 10px; }
+    .hub-header p { color: var(--text-muted); font-size: 0.98rem; font-weight: 600; line-height: 1.8; }
+
+    .tools-grid { width: 100%; max-width: 900px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    @media (max-width: 680px) { .tools-grid { grid-template-columns: 1fr; } }
+
+    .tool-card {
+        background: var(--card-bg); backdrop-filter: blur(14px); border: 1.5px solid var(--border-color);
+        border-radius: 18px; padding: 26px 24px; text-decoration: none; color: var(--text-dark);
+        box-shadow: 0 16px 34px -14px rgba(22, 60, 110, 0.14); transition: all 0.25s ease;
+        display: flex; flex-direction: column;
+    }
+    .tool-card:hover { transform: translateY(-4px); box-shadow: 0 20px 38px -14px rgba(22, 60, 110, 0.22); }
+    .tool-card .icon-badge {
+        width: 52px; height: 52px; border-radius: 12px; background: var(--primary-blue); color: #fff;
+        display: flex; align-items: center; justify-content: center; font-size: 1.4rem; margin-bottom: 14px;
+    }
+    .tool-card .tag {
+        font-family: 'JetBrains Mono', monospace; font-size: 10.5px; font-weight: 800; letter-spacing: 0.6px;
+        color: var(--accent-color); margin-bottom: 8px;
+    }
+    .tool-card h2 { font-size: 1.1rem; font-weight: 800; margin-bottom: 8px; color: var(--primary-blue); }
+    .tool-card p { font-size: 0.86rem; color: var(--text-muted); font-weight: 600; line-height: 1.75; flex-grow: 1; margin-bottom: 14px; }
+    .tool-card .open-cta { font-size: 0.85rem; font-weight: 800; color: var(--accent-color); display: flex; align-items: center; gap: 6px; }
+</style>
+</head>
+<body>
+
+    <div class="top-strip">
+        <div style="display:flex; align-items:center; gap:14px;">
+            <a href="../index.html"><img src="../photo/logo.jpg" alt="BA Engineering Academy" style="height:34px; border-radius:6px; display:block;"></a>
+        </div>
+        <a href="../index.html" class="back-link"><i class="fa-solid fa-arrow-right"></i> الرئيسية</a>
+    </div>
+
+    <div class="hub-header">
+        <h1>أدوات هندسية مجانية</h1>
+        <p>حاسبات فورية بدون تسجيل، مبنية على نفس الأسس اللي بندرّسها في كورساتنا. جرّبها على مشروعك الحقيقي.</p>
+    </div>
+
+    <div class="tools-grid">
+        <a href="lcc-calculator.html" class="tool-card">
+            <div class="icon-badge"><i class="fa-solid fa-scale-balanced"></i></div>
+            <div class="tag">TOOL-01 · FREE</div>
+            <h2>حاسبة تكلفة دورة الحياة (LCC)</h2>
+            <p>قارن بين خيارين هندسيين على أساس التكلفة الكاملة طوال العمر الافتراضي — مش التكلفة الأولية بس.</p>
+            <div class="open-cta">افتح الأداة <i class="fa-solid fa-arrow-left"></i></div>
+        </a>
+
+        <a href="evm-calculator.html" class="tool-card">
+            <div class="icon-badge"><i class="fa-solid fa-chart-line"></i></div>
+            <div class="tag">TOOL-02 · FREE</div>
+            <h2>حاسبة القيمة المكتسبة (EVM)</h2>
+            <p>اعرف فورًا هل مشروعك متقدم أو متأخر عن الجدولة، وتحت أو فوق الميزانية، والتكلفة المتوقعة عند الاكتمال.</p>
+            <div class="open-cta">افتح الأداة <i class="fa-solid fa-arrow-left"></i></div>
+        </a>
+    </div>
+
+</body>
+</html>
