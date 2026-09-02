@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>حاسبة الهبوط التراكمي للمسارات المتسلسلة — قارن بين خيارين مجانًا | BA Engineering Academy</title>
+<title data-ar="حاسبة الهبوط التراكمي للمسارات المتسلسلة — قارن بين خيارين مجانًا | BA Engineering Academy" data-en="Cumulative Voltage Drop Calculator — Free Comparison | BA Engineering Academy">حاسبة الهبوط التراكمي للمسارات المتسلسلة — قارن بين خيارين مجانًا | BA Engineering Academy</title>
 <meta name="description" content="أداة هندسية لحساب الهبوط التراكمي في الجهد للمسارات المتسلسلة وفق الكود السعودي SBC 401 والكود المصري وIEC وNEC.">
 <link rel="canonical" href="https://ba-engineering-academy.com/tools/voltage-drop-calculator.html">
 <meta property="og:title" content="حاسبة الهبوط التراكمي للمسارات الكهربائية مجانًا">
@@ -59,13 +59,15 @@
     .brand-name { font-family: 'JetBrains Mono', monospace; font-weight: 800; font-size: 0.95rem; color: var(--primary-blue); letter-spacing: -0.3px; }
     .brand-sub { font-size: 0.7rem; font-weight: 700; color: var(--accent-color); }
 
-    .back-link {
+    .top-actions-group { display: flex; align-items: center; gap: 10px; }
+
+    .back-link, .lang-btn {
         display: inline-flex; align-items: center; gap: 8px; color: var(--primary-blue); font-weight: 800;
         text-decoration: none; font-size: 14.5px; background: rgba(255,255,255,0.9); padding: 11px 18px;
         border-radius: 14px; border: 1.5px solid var(--border-color); transition: all 0.25s ease;
-        box-shadow: 0 4px 12px rgba(22,60,110,0.05);
+        box-shadow: 0 4px 12px rgba(22,60,110,0.05); cursor: pointer; font-family: 'Cairo', sans-serif;
     }
-    .back-link:hover { background: #fff; transform: translateY(-2px); border-color: var(--accent-color); color: var(--accent-color); }
+    .back-link:hover, .lang-btn:hover { background: #fff; transform: translateY(-2px); border-color: var(--accent-color); color: var(--accent-color); }
 
     .calc-container {
         width: 100%; max-width: 1050px; background: var(--card-bg); backdrop-filter: blur(14px);
@@ -118,7 +120,7 @@
         background: #fff; font-family: 'Cairo', sans-serif; font-size: 0.9rem; font-weight: 700;
         color: var(--text-dark); outline: none; transition: all 0.25s ease; box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
     }
-    .form-group select option { direction: ltr; text-align: right; }
+    .form-group select option { direction: inherit; text-align: inherit; }
     .form-group select:focus, .form-group input:focus {
         border-color: var(--accent-color); box-shadow: 0 0 0 4px rgba(226, 96, 31, 0.12);
     }
@@ -238,6 +240,7 @@
         color: #fff; border-radius: 16px; padding: 24px; text-align: center;
         box-shadow: 0 10px 24px rgba(22, 60, 110, 0.2); margin-top: 24px; border-left: 5px solid var(--accent-color);
     }
+    [dir="ltr"] .course-banner { border-left: none; border-right: 5px solid var(--accent-color); }
     .course-banner h3 { font-size: 1.15rem; font-weight: 900; margin-bottom: 8px; color: #fff; }
     .course-banner p { font-size: 0.92rem; color: rgba(255, 255, 255, 0.9); line-height: 1.8; margin-bottom: 18px; font-weight: 700; }
     .btn-course {
@@ -247,71 +250,23 @@
     }
     .btn-course:hover { background: var(--accent-light); transform: translateY(-2px); box-shadow: 0 10px 22px rgba(226, 96, 31, 0.4); }
 
-    /* تحسينات الشاشات المتوسطة والصغيرة (التايلت والموبايل) */
     @media (max-width: 768px) {
-        body {
-            padding: 12px 8px 40px;
-        }
-        .calc-container {
-            padding: 16px 12px;
-            border-radius: 14px;
-        }
-        .tool-header {
-            padding: 24px 16px;
-            border-radius: 14px;
-        }
-        .tool-header h1 {
-            font-size: 1.4rem;
-        }
-        .tool-header p {
-            font-size: 0.9rem;
-        }
-        .global-settings {
-            grid-template-columns: 1fr;
-            padding: 14px;
-        }
-        .segment-card {
-            padding: 14px;
-        }
-        .segment-header {
-            flex-direction: column;
-            align-items: flex-start;
-        }
-        .segment-header > div:last-child {
-            width: 100%;
-            justify-content: space-between;
-        }
-        .form-grid {
-            grid-template-columns: 1fr;
-        }
-        .actions-bar {
-            flex-direction: column;
-        }
-        .btn-add, .btn-clear, .btn-calc {
-            width: 100%;
-            flex: none;
-        }
-        .diagram-row {
-            flex-direction: column;
-            gap: 20px;
-            align-items: stretch;
-            padding: 16px 12px;
-        }
-        .cable-connection {
-            height: 40px;
-            margin: 10px 0;
-        }
-        .drop-value-top, .cable-info-bottom {
-            position: relative;
-            bottom: auto;
-            top: auto;
-            margin: 2px auto;
-            font-size: 0.8rem;
-            padding: 4px 12px;
-        }
-        .node-box {
-            width: 100%;
-        }
+        body { padding: 12px 8px 40px; }
+        .calc-container { padding: 16px 12px; border-radius: 14px; }
+        .tool-header { padding: 24px 16px; border-radius: 14px; }
+        .tool-header h1 { font-size: 1.4rem; }
+        .tool-header p { font-size: 0.9rem; }
+        .global-settings { grid-template-columns: 1fr; padding: 14px; }
+        .segment-card { padding: 14px; }
+        .segment-header { flex-direction: column; align-items: flex-start; }
+        .segment-header > div:last-child { width: 100%; justify-content: space-between; }
+        .form-grid { grid-template-columns: 1fr; }
+        .actions-bar { flex-direction: column; }
+        .btn-add, .btn-clear, .btn-calc { width: 100%; flex: none; }
+        .diagram-row { flex-direction: column; gap: 20px; align-items: stretch; padding: 16px 12px; }
+        .cable-connection { height: 40px; margin: 10px 0; }
+        .drop-value-top, .cable-info-bottom { position: relative; bottom: auto; top: auto; margin: 2px auto; font-size: 0.8rem; padding: 4px 12px; }
+        .node-box { width: 100%; }
     }
 
     @media print {
@@ -349,29 +304,37 @@
                 <span class="brand-sub">ACADEMY</span>
             </div>
         </a>
-        <a href="index.html" class="back-link"><i class="fa-solid fa-arrow-right"></i> قائمة الأدوات</a>
+        <div class="top-actions-group">
+            <button type="button" class="lang-btn" id="langToggleBtn" onclick="toggleLanguage()">
+                <i class="fa-solid fa-globe"></i> <span id="langBtnText">English</span>
+            </button>
+            <a href="index.html" class="back-link">
+                <i class="fa-solid fa-arrow-right" id="backArrowIcon"></i> 
+                <span data-ar="قائمة الأدوات" data-en="Tools List">قائمة الأدوات</span>
+            </a>
+        </div>
     </div>
 
     <div class="calc-container">
         <div class="tool-header">
-            <h1>حاسبة الهبوط التراكمي للمسارات الكهربائية <span>(Voltage Drop)</span></h1>
-            <p>حساب دقيق لهبوط الجهد للمسارات المتسلسلة والمستقلة وفق الكود العالمي IEC 60364 والأكواد الإقليمية.</p>
+            <h1 id="mainTitle">حاسبة الهبوط التراكمي للمسارات الكهربائية <span>(Voltage Drop)</span></h1>
+            <p id="mainDesc">حساب دقيق لهبوط الجهد للمسارات المتسلسلة والمستقلة وفق الكود العالمي IEC 60364 والأكواد الإقليمية.</p>
         </div>
 
         <div class="global-settings">
             <div class="form-group">
-                <label><i class="fa-solid fa-book" style="color:var(--primary-blue);"></i> الكود المعياري المتبع</label>
+                <label><i class="fa-solid fa-book" style="color:var(--primary-blue);"></i> <span data-ar="الكود المعياري المتبع" data-en="Design Standard Code">الكود المعياري المتبع</span></label>
                 <select id="codeStandard" onchange="updateDefaultLimits()">
-                    <option value="" disabled selected>اختر الكود الهندسي...</option>
-                    <option value="IEC">الكود العالمي IEC 60364 / الكود السعودي SBC 401</option>
-                    <option value="ECP">الكود المصري للتركيبات الكهربائية (ECP)</option>
-                    <option value="NEC">الكود الأمريكي NEC (NFPA 70)</option>
+                    <option value="" disabled selected data-ar="اختر الكود الهندسي..." data-en="Select engineering code...">اختر الكود الهندسي...</option>
+                    <option value="IEC" data-ar="الكود العالمي IEC 60364 / الكود السعودي SBC 401" data-en="IEC 60364 / SBC 401 Standard">الكود العالمي IEC 60364 / الكود السعودي SBC 401</option>
+                    <option value="ECP" data-ar="الكود المصري للتركيبات الكهربائية (ECP)" data-en="Egyptian Code for Electrical Installations (ECP)">الكود المصري للتركيبات الكهربائية (ECP)</option>
+                    <option value="NEC" data-ar="الكود الأمريكي NEC (NFPA 70)" data-en="NEC Standard (NFPA 70)">الكود الأمريكي NEC (NFPA 70)</option>
                 </select>
             </div>
             <div class="form-group">
-                <label><i class="fa-solid fa-network-wired" style="color:var(--primary-blue);"></i> جهد المنظومة Nominal Voltage</label>
+                <label><i class="fa-solid fa-network-wired" style="color:var(--primary-blue);"></i> <span data-ar="جهد المنظومة Nominal Voltage" data-en="Nominal Voltage">جهد المنظومة Nominal Voltage</span></label>
                 <select id="voltageType" style="direction: ltr; text-align: right;">
-                    <option value="" disabled selected>اختر جهد المنظومة...</option>
+                    <option value="" disabled selected data-ar="اختر جهد المنظومة..." data-en="Select nominal voltage...">اختر جهد المنظومة...</option>
                     <option value="400-3P">&#8206;3-Phase (400V - IEC/SBC)</option>
                     <option value="380-3P">&#8206;3-Phase (380V)</option>
                     <option value="230-1P">&#8206;1-Phase (230V - IEC/SBC)</option>
@@ -379,42 +342,42 @@
                 </select>
             </div>
             <div class="form-group">
-                <label><i class="fa-solid fa-sliders" style="color:var(--primary-blue);"></i> حد الهبوط المسموح (%)</label>
-                <input type="number" id="customMaxDrop" min="0.5" max="10" step="0.5" placeholder="تلقائي حسب الكود (مثال: 5%)">
+                <label><i class="fa-solid fa-sliders" style="color:var(--primary-blue);"></i> <span data-ar="حد الهبوط المسموح (%)" data-en="Max Allowable Drop (%)">حد الهبوط المسموح (%)</span></label>
+                <input type="number" id="customMaxDrop" min="0.5" max="10" step="0.5" data-placeholder-ar="تلقائي حسب الكود (مثال: 5%)" data-placeholder-en="Automatic by code (e.g. 5%)" placeholder="تلقائي حسب الكود (مثال: 5%)">
             </div>
         </div>
 
         <div id="segmentsContainer"></div>
 
         <div class="actions-bar">
-            <button type="button" class="btn-add" onclick="addSegment()"><i class="fa-solid fa-plus-circle"></i> إضافة مسار كابل جديد</button>
-            <button type="button" class="btn-clear" onclick="clearAllData()"><i class="fa-solid fa-rotate-right"></i> مسح البيانات</button>
-            <button type="button" class="btn-calc" onclick="calculateAllSegments()">احسب الهبوط في الجهد</button>
+            <button type="button" class="btn-add" onclick="addSegment()"><i class="fa-solid fa-plus-circle"></i> <span data-ar="إضافة مسار كابل جديد" data-en="Add New Cable Segment">إضافة مسار كابل جديد</span></button>
+            <button type="button" class="btn-clear" onclick="clearAllData()"><i class="fa-solid fa-rotate-right"></i> <span data-ar="مسح البيانات" data-en="Clear All">مسح البيانات</span></button>
+            <button type="button" class="btn-calc" onclick="calculateAllSegments()" data-ar="احسب الهبوط في الجهد" data-en="Calculate Voltage Drop">احسب الهبوط في الجهد</button>
         </div>
 
         <div class="results-card" id="resultsCard">
             <div class="results-header-bar">
                 <h3 style="color:var(--primary-blue); font-size:1.15rem; font-weight:900; display:flex; align-items:center; gap:8px;">
-                    <i class="fa-solid fa-chart-pie" style="color:var(--accent-color);"></i> التقرير الهندسي لهبوط الجهد
+                    <i class="fa-solid fa-chart-pie" style="color:var(--accent-color);"></i> <span data-ar="التقرير الهندسي لهبوط الجهد" data-en="Voltage Drop Engineering Report">التقرير الهندسي لهبوط الجهد</span>
                 </h3>
-                <button type="button" class="btn-print" onclick="window.print()"><i class="fa-solid fa-print"></i> طباعة / حفظ PDF</button>
+                <button type="button" class="btn-print" onclick="window.print()"><i class="fa-solid fa-print"></i> <span data-ar="طباعة / حفظ PDF" data-en="Print / Save PDF">طباعة / حفظ PDF</span></button>
             </div>
 
             <div class="summary-cards-grid">
                 <div class="summary-card">
-                    <div class="title">إجمالي الهبوط التراكمي</div>
+                    <div class="title" data-ar="إجمالي الهبوط التراكمي" data-en="Total Cumulative Drop">إجمالي الهبوط التراكمي</div>
                     <div class="number" id="sumTotalPercent" style="color:var(--accent-color);">-</div>
                     <div class="subtext" id="sumTotalVoltsSub">0.00 V</div>
                 </div>
                 <div class="summary-card">
-                    <div class="title">الحد الأقصى المسموح (الكود)</div>
+                    <div class="title" data-ar="الحد الأقصى المسموح (الكود)" data-en="Max Allowable Limit (Code)">الحد الأقصى المسموح (الكود)</div>
                     <div class="number" id="sumMaxAllowed">-</div>
                     <div class="subtext" id="codeNameSub">Standard Code</div>
                 </div>
                 <div class="summary-card">
-                    <div class="title">حالة هبوط الجهد</div>
+                    <div class="title" data-ar="حالة هبوط الجهد" data-en="Voltage Drop Status">حالة هبوط الجهد</div>
                     <div class="number" id="sumStatusText" style="font-size:1.4rem;">-</div>
-                    <div class="subtext" id="sumStatusSub">جاهز للمراجعة</div>
+                    <div class="subtext" id="sumStatusSub" data-ar="جاهز للمراجعة" data-en="Ready for review">جاهز للمراجعة</div>
                 </div>
             </div>
 
@@ -425,18 +388,18 @@
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>طبيعة المسار</th>
-                            <th>من</th>
-                            <th>إلى</th>
-                            <th>نوع الحمل</th>
-                            <th>معامل القدرة</th>
-                            <th>الكابلات</th>
-                            <th>مقطع الكابل</th>
-                            <th>الطول</th>
-                            <th>التيار</th>
-                            <th>هبوط المسار</th>
-                            <th>نسبة المسار</th>
-                            <th>التراكمي</th>
+                            <th data-ar="طبيعة المسار" data-en="Route Type">طبيعة المسار</th>
+                            <th data-ar="من" data-en="From">من</th>
+                            <th data-ar="إلى" data-en="To">إلى</th>
+                            <th data-ar="نوع الحمل" data-en="Load Type">نوع الحمل</th>
+                            <th data-ar="معامل القدرة" data-en="Power Factor">معامل القدرة</th>
+                            <th data-ar="الكابلات" data-en="Runs">الكابلات</th>
+                            <th data-ar="مقطع الكابل" data-en="Cable Size">مقطع الكابل</th>
+                            <th data-ar="الطول" data-en="Length">الطول</th>
+                            <th data-ar="التيار" data-en="Current">التيار</th>
+                            <th data-ar="هبوط المسار" data-en="Segment Drop">هبوط المسار</th>
+                            <th data-ar="نسبة المسار" data-en="Segment %">نسبة المسار</th>
+                            <th data-ar="التراكمي" data-en="Cumulative">التراكمي</th>
                         </tr>
                     </thead>
                     <tbody id="resultsTableBody"></tbody>
@@ -444,14 +407,14 @@
             </div>
 
             <div class="schematic-section">
-                <div class="schematic-title"><i class="fa-solid fa-diagram-project" style="color:var(--accent-color);"></i> مخطط سريان التغذية ومؤشرات هبوط الجهد تفاعلياً</div>
+                <div class="schematic-title"><i class="fa-solid fa-diagram-project" style="color:var(--accent-color);"></i> <span data-ar="مخطط سريان التغذية ومؤشرات هبوط الجهد تفاعلياً" data-en="Interactive Feed Schematic & Voltage Drop Indicators">مخطط سريان التغذية ومؤشرات هبوط الجهد تفاعلياً</span></div>
                 <div class="diagram-container" id="diagramContainer"></div>
             </div>
 
             <div class="course-banner">
-                <h3><i class="fa-solid fa-graduation-cap" style="color:var(--accent-color);"></i> هل ترغب في إتقان التصميم الكهربائي للمشاريع الحقيقية؟</h3>
-                <p>تعلم تقدير وحساب الأحمال الكهربائية (Load Estimation & Calculation)، اختيار مقاطع الكابلات والقواطع، وإعداد المخططات أحادية الخط (SLD) وفق الأكواد العالمية بشكل احترافي.</p>
-                <a href="../index.html" class="btn-course">استكشف كورسات الأكاديمية والمشاريع العملية <i class="fa-solid fa-arrow-left"></i></a>
+                <h3 data-ar="هل ترغب في إتقان التصميم الكهربائي للمشاريع الحقيقية؟" data-en="Want to Master Electrical Design for Real Projects?"><i class="fa-solid fa-graduation-cap" style="color:var(--accent-color);"></i> هل ترغب في إتقان التصميم الكهربائي للمشاريع الحقيقية؟</h3>
+                <p data-ar="تعلم تقدير وحساب الأحمال الكهربائية (Load Estimation & Calculation)، اختيار مقاطع الكابلات والقواطع، وإعداد المخططات أحادية الخط (SLD) وفق الأكواد العالمية بشكل احترافي." data-en="Learn electrical load estimation & calculation, cable and circuit breaker sizing, and preparation of single-line diagrams (SLD) professionally according to international codes.">تعلم تقدير وحساب الأحمال الكهربائية (Load Estimation & Calculation)، اختيار مقاطع الكابلات والقواطع، وإعداد المخططات أحادية الخط (SLD) وفق الأكواد العالمية بشكل احترافي.</p>
+                <a href="../index.html" class="btn-course"><span data-ar="استكشف كورسات الأكاديمية والمشاريع العملية" data-en="Explore Academy Courses & Practical Projects">استكشف كورسات الأكاديمية والمشاريع العملية</span> <i class="fa-solid fa-arrow-left" id="bannerArrowIcon"></i></a>
             </div>
         </div>
     </div>
@@ -468,10 +431,98 @@
     };
 
     let segmentCount = 0;
+    let currentLang = 'ar';
 
     window.onload = function() {
         addSegment();
     };
+
+    function toggleLanguage() {
+        currentLang = currentLang === 'ar' ? 'en' : 'ar';
+        const htmlTag = document.documentElement;
+        htmlTag.lang = currentLang;
+        htmlTag.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
+
+        document.getElementById('langBtnText').innerText = currentLang === 'ar' ? 'English' : 'عربي';
+        
+        const backArrow = document.getElementById('backArrowIcon');
+        const bannerArrow = document.getElementById('bannerArrowIcon');
+        if (currentLang === 'en') {
+            backArrow.className = 'fa-solid fa-arrow-left';
+            bannerArrow.className = 'fa-solid fa-arrow-right';
+        } else {
+            backArrow.className = 'fa-solid fa-arrow-right';
+            bannerArrow.className = 'fa-solid fa-arrow-left';
+        }
+
+        // Translate general tagged elements
+        document.querySelectorAll('[data-ar]').forEach(el => {
+            const translation = el.getAttribute(`data-${currentLang}`);
+            if (translation) {
+                if (el.tagName === 'INPUT' && el.hasAttribute('placeholder')) {
+                    el.placeholder = translation;
+                } else {
+                    el.innerHTML = translation;
+                }
+            }
+        });
+
+        // Translate inputs placeholders with specific attributes
+        document.querySelectorAll('[data-placeholder-ar]').forEach(el => {
+            const ph = el.getAttribute(`data-placeholder-${currentLang}`);
+            if (ph) el.placeholder = ph;
+        });
+
+        // Re-render dynamic segment selects labels if needed or keep user values
+        refreshSegmentsLabels();
+    }
+
+    function refreshSegmentsLabels() {
+        for (let i = 1; i <= segmentCount; i++) {
+            const card = document.getElementById(`segment-${i}`);
+            if (!card) continue;
+
+            const titleEl = card.querySelector('.segment-title');
+            if (titleEl) {
+                const routeTypeText = currentLang === 'ar' ? `المسار رقم (${i})` : `Cable Segment (${i})`;
+                titleEl.innerHTML = `<i class="fa-solid fa-link" style="color:var(--accent-color);"></i> ${routeTypeText}`;
+            }
+
+            // Translate options in load type select
+            const loadSelect = card.querySelector('.load-type-select');
+            if (loadSelect) {
+                const selectedVal = loadSelect.value;
+                loadSelect.innerHTML = `
+                    <option value="" disabled ${!selectedVal ? 'selected' : ''}>${currentLang === 'ar' ? 'اختر نوع الحمل...' : 'Select load type...'}</option>
+                    <option value="subpanel" ${selectedVal === 'subpanel' ? 'selected' : ''}>${currentLang === 'ar' ? 'لوحة فرعية / قوائم (Sub-Panel)' : 'Sub-Panel'}</option>
+                    <option value="lighting" ${selectedVal === 'lighting' ? 'selected' : ''}>${currentLang === 'ar' ? 'إنارة (Lighting Load)' : 'Lighting Load'}</option>
+                    <option value="power" ${selectedVal === 'power' ? 'selected' : ''}>${currentLang === 'ar' ? 'قوى / مخارج عمومية (Power Outlets)' : 'Power Outlets'}</option>
+                    <option value="motor" ${selectedVal === 'motor' ? 'selected' : ''}>${currentLang === 'ar' ? 'محرك / معدة (Motor Load)' : 'Motor Load'}</option>
+                `;
+            }
+
+            // Translate route type select
+            const routeTypeSelect = card.querySelector('.route-type-select');
+            if (routeTypeSelect) {
+                const rVal = routeTypeSelect.value;
+                routeTypeSelect.innerHTML = `
+                    <option value="new" ${rVal === 'new' ? 'selected' : ''}>${currentLang === 'ar' ? 'مسار فرعي مستقل جديد' : 'New Independent Route'}</option>
+                    <option value="sequential" ${rVal === 'sequential' ? 'selected' : ''}>${currentLang === 'ar' ? 'استكمال مسار (متسلسل)' : 'Sequential Route'}</option>
+                `;
+            }
+
+            // Translate material select
+            const matSelect = card.querySelector('.mat-select');
+            if (matSelect) {
+                const mVal = matSelect.value;
+                matSelect.innerHTML = `
+                    <option value="" disabled ${!mVal ? 'selected' : ''}>${currentLang === 'ar' ? 'اختر المادة...' : 'Select material...'}</option>
+                    <option value="copper" ${mVal === 'copper' ? 'selected' : ''}>${currentLang === 'ar' ? 'نحاس (Cu)' : 'Copper (Cu)'}</option>
+                    <option value="aluminum" ${mVal === 'aluminum' ? 'selected' : ''}>${currentLang === 'ar' ? 'ألمنيوم (Al)' : 'Aluminum (Al)'}</option>
+                `;
+            }
+        }
+    }
 
     function setAutoPF(selectElem, id) {
         const val = selectElem.value;
@@ -485,10 +536,13 @@
         const code = document.getElementById('codeStandard').value;
         const customMaxInput = document.getElementById('customMaxDrop');
         if (code === 'IEC' || code === 'ECP') {
-            customMaxInput.placeholder = 'افتراضي: 5% (عام) / 3% (إنارة)';
+            customMaxInput.setAttribute('data-placeholder-ar', 'افتراضي: 5% (عام) / 3% (إنارة)');
+            customMaxInput.setAttribute('data-placeholder-en', 'Default: 5% (General) / 3% (Lighting)');
         } else if (code === 'NEC') {
-            customMaxInput.placeholder = 'افتراضي: 5% إجمالي (3% فرعي + 2% رئيسي)';
+            customMaxInput.setAttribute('data-placeholder-ar', 'افتراضي: 5% إجمالي (3% فرعي + 2% رئيسي)');
+            customMaxInput.setAttribute('data-placeholder-en', 'Default: 5% Total (3% Branch + 2% Feeder)');
         }
+        customMaxInput.placeholder = customMaxInput.getAttribute(`data-placeholder-${currentLang}`);
     }
 
     function handleRouteTypeChange(selectElem, id) {
@@ -530,60 +584,72 @@
         }
 
         const currentId = segmentCount;
+        const segmentTitleText = currentLang === 'ar' ? `المسار رقم (${currentId})` : `Cable Segment (${currentId})`;
+        const deleteText = currentLang === 'ar' ? 'حذف' : 'Delete';
+        const routeTypeLabel = currentLang === 'ar' ? 'طبيعة المسار:' : 'Route Type:';
+        const fromLabelText = currentLang === 'ar' ? 'اسم المصدر (From)' : 'From Source';
+        const toLabelText = currentLang === 'ar' ? 'اسم النهاية / اللوحة (To)' : 'To Destination / Panel';
+        const loadLabelText = currentLang === 'ar' ? 'نوع الحمل (Load Category)' : 'Load Category';
+        const pfLabelText = currentLang === 'ar' ? 'معامل القدرة (cos φ)' : 'Power Factor (cos φ)';
+        const runsLabelText = currentLang === 'ar' ? 'عدد الكابلات (Runs/Phase)' : 'Runs/Phase';
+        const currentLabelText = currentLang === 'ar' ? 'التيار Ib (Ampere)' : 'Current Ib (A)';
+        const lengthLabelText = currentLang === 'ar' ? 'LENGTH (متر)' : 'Length (m)';
+        const sizeLabelText = currentLang === 'ar' ? 'مقطع الموصل (mm²)' : 'Conductor Size (mm²)';
+        const matLabelText = currentLang === 'ar' ? 'مادة الموصل' : 'Conductor Material';
 
         card.innerHTML = `
             <div class="segment-header">
-                <div class="segment-title"><i class="fa-solid fa-link" style="color:var(--accent-color);"></i> المسار رقم (${currentId})</div>
+                <div class="segment-title"><i class="fa-solid fa-link" style="color:var(--accent-color);"></i> ${segmentTitleText}</div>
                 <div style="display: flex; align-items: center; gap: 10px;">
                     <div class="form-group" style="flex-direction: row; align-items: center; gap: 6px; margin: 0;">
-                        <label style="font-size: 0.8rem; margin:0;">طبيعة المسار:</label>
+                        <label style="font-size: 0.8rem; margin:0;">${routeTypeLabel}</label>
                         <select id="route-type-${currentId}" class="route-type-select" style="padding: 6px 10px; font-size: 0.85rem;" onchange="handleRouteTypeChange(this, ${currentId})">
-                            <option value="new" ${defaultRouteType === 'new' ? 'selected' : ''}>مسار فرعي مستقل جديد</option>
-                            <option value="sequential" ${defaultRouteType === 'sequential' ? 'selected' : ''}>استكمال مسار (متسلسل)</option>
+                            <option value="new" ${defaultRouteType === 'new' ? 'selected' : ''}>${currentLang === 'ar' ? 'مسار فرعي مستقل جديد' : 'New Independent Route'}</option>
+                            <option value="sequential" ${defaultRouteType === 'sequential' ? 'selected' : ''}>${currentLang === 'ar' ? 'استكمال مسار (متسلسل)' : 'Sequential Route'}</option>
                         </select>
                     </div>
-                    ${currentId > 1 ? `<button type="button" class="btn-delete" onclick="removeSegment(${currentId})"><i class="fa-solid fa-trash"></i> حذف</button>` : ''}
+                    ${currentId > 1 ? `<button type="button" class="btn-delete" onclick="removeSegment(${currentId})"><i class="fa-solid fa-trash"></i> ${deleteText}</button>` : ''}
                 </div>
             </div>
             <div class="form-grid">
                 <div class="form-group">
-                    <label>اسم المصدر (From)</label>
+                    <label>${fromLabelText}</label>
                     <input type="text" id="from-input-${currentId}" class="from-input" value="${defaultFrom}" ${defaultRouteType === 'sequential' ? 'readonly style="background-color:rgba(22,60,110,0.04)"' : ''}>
                 </div>
                 <div class="form-group">
-                    <label>اسم النهاية / اللوحة (To)</label>
+                    <label>${toLabelText}</label>
                     <input type="text" id="to-input-${currentId}" class="to-input" oninput="updateSubsequentRoutes(${currentId})">
                 </div>
                 <div class="form-group">
-                    <label>نوع الحمل (Load Category)</label>
+                    <label>${loadLabelText}</label>
                     <select class="load-type-select" onchange="setAutoPF(this, ${currentId}); this.style.borderColor='var(--border-color)';">
-                        <option value="" disabled selected>اختر نوع الحمل...</option>
-                        <option value="subpanel">لوحة فرعية / قوائم (Sub-Panel)</option>
-                        <option value="lighting">إنارة (Lighting Load)</option>
-                        <option value="power">قوى / مخارج عمومية (Power Outlets)</option>
-                        <option value="motor">محرك / معدة (Motor Load)</option>
+                        <option value="" disabled selected>${currentLang === 'ar' ? 'اختر نوع الحمل...' : 'Select load type...'}</option>
+                        <option value="subpanel">${currentLang === 'ar' ? 'لوحة فرعية / قوائم (Sub-Panel)' : 'Sub-Panel'}</option>
+                        <option value="lighting">${currentLang === 'ar' ? 'إنارة (Lighting Load)' : 'Lighting Load'}</option>
+                        <option value="power">${currentLang === 'ar' ? 'قوى / مخارج عمومية (Power Outlets)' : 'Power Outlets'}</option>
+                        <option value="motor">${currentLang === 'ar' ? 'محرك / معدة (Motor Load)' : 'Motor Load'}</option>
                     </select>
                 </div>
                 <div class="form-group">
-                    <label>معامل القدرة (cos φ)</label>
-                    <input type="number" id="pf-input-${currentId}" class="pf-input" min="0.1" max="1" step="0.01" placeholder="تلقائي" oninput="this.style.borderColor='var(--border-color)';">
+                    <label>${pfLabelText}</label>
+                    <input type="number" id="pf-input-${currentId}" class="pf-input" min="0.1" max="1" step="0.01" placeholder="${currentLang === 'ar' ? 'تلقائي' : 'Auto'}" oninput="this.style.borderColor='var(--border-color)';">
                 </div>
                 <div class="form-group">
-                    <label>عدد الكابلات (Runs/Phase)</label>
+                    <label>${runsLabelText}</label>
                     <input type="number" class="runs-input" min="1" step="1" value="1" oninput="this.style.borderColor='var(--border-color)';">
                 </div>
                 <div class="form-group">
-                    <label>التيار Ib (Ampere)</label>
+                    <label>${currentLabelText}</label>
                     <input type="number" class="current-input" step="any" oninput="this.style.borderColor='var(--border-color)';">
                 </div>
                 <div class="form-group">
-                    <label>LENGTH (متر)</label>
+                    <label>${lengthLabelText}</label>
                     <input type="number" class="length-input" step="any" oninput="this.style.borderColor='var(--border-color)';">
                 </div>
                 <div class="form-group">
-                    <label>مقطع الموصل (mm²)</label>
+                    <label>${sizeLabelText}</label>
                     <select class="size-select" onchange="this.style.borderColor='var(--border-color)';">
-                        <option value="" disabled selected>اختر القطاع...</option>
+                        <option value="" disabled selected>${currentLang === 'ar' ? 'اختر القطاع...' : 'Select size...'}</option>
                         <option value="2.5">2.5 mm²</option>
                         <option value="4">4 mm²</option>
                         <option value="6">6 mm²</option>
@@ -605,11 +671,11 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label>مادة الموصل</label>
+                    <label>${matLabelText}</label>
                     <select class="mat-select" onchange="this.style.borderColor='var(--border-color)';">
-                        <option value="" disabled selected>اختر المادة...</option>
-                        <option value="copper">نحاس (Cu)</option>
-                        <option value="aluminum">ألمنيوم (Al)</option>
+                        <option value="" disabled selected>${currentLang === 'ar' ? 'اختر المادة...' : 'Select material...'}</option>
+                        <option value="copper">${currentLang === 'ar' ? 'نحاس (Cu)' : 'Copper (Cu)'}</option>
+                        <option value="aluminum">${currentLang === 'ar' ? 'ألمنيوم (Al)' : 'Aluminum (Al)'}</option>
                     </select>
                 </div>
             </div>
@@ -638,7 +704,8 @@
     }
 
     function clearAllData() {
-        if (confirm("هل أنت تأكد من مسح كافة المسارات والبيانات المدخلة؟")) {
+        const msg = currentLang === 'ar' ? 'هل أنت تأكد من مسح كافة المسارات والبيانات المدخلة؟' : 'Are you sure you want to clear all data and segments?';
+        if (confirm(msg)) {
             document.getElementById('segmentsContainer').innerHTML = '';
             segmentCount = 0;
             document.getElementById('resultsCard').style.display = 'none';
@@ -652,7 +719,7 @@
     function calculateAllSegments() {
         const cards = document.querySelectorAll('.segment-card');
         if (cards.length === 0) {
-            alert('يرجى إضافة مسار واحد على الأقل.');
+            alert(currentLang === 'ar' ? 'يرجى إضافة مسار واحد على الأقل.' : 'Please add at least one segment.');
             return;
         }
 
@@ -660,7 +727,7 @@
         const voltageTypeVal = document.getElementById('voltageType').value;
 
         if (!codeVal || !voltageTypeVal) {
-            alert('يرجى اختيار الكود المعياري وجهد المنظومة من الخانات العلوية أولاً.');
+            alert(currentLang === 'ar' ? 'يرجى اختيار الكود المعياري وجهد المنظومة من الخانات العلوية أولاً.' : 'Please select the standard code and voltage type from the top fields first.');
             return;
         }
 
@@ -691,8 +758,10 @@
         cards.forEach((card, index) => {
             const currentCardId = card.id.split('-')[1];
             const routeType = document.getElementById(`route-type-${currentCardId}`).value;
-            const from = card.querySelector('.from-input').value.trim() || `مصدر ${index+1}`;
-            const to = card.querySelector('.to-input').value.trim() || `وجهة ${index+1}`;
+            const defaultFromText = currentLang === 'ar' ? `مصدر ${index+1}` : `Source ${index+1}`;
+            const defaultToText = currentLang === 'ar' ? `وجهة ${index+1}` : `Destination ${index+1}`;
+            const from = card.querySelector('.from-input').value.trim() || defaultFromText;
+            const to = card.querySelector('.to-input').value.trim() || defaultToText;
 
             const loadTypeEl = card.querySelector('.load-type-select');
             const runsEl = card.querySelector('.runs-input');
@@ -749,17 +818,13 @@
                 }
 
                 const rowCumulativePercent = currentBranch.cumulativeDropPercent;
-                const rowCumulativeVolts = currentBranch.cumulativeDropVolts;
                 const rowMaxAllowed = computeMaxAllowed(currentBranch.lastLoadType);
 
-                const loadTextMap = {
-                    lighting: 'إنارة',
-                    subpanel: 'لوحة فرعية',
-                    power: 'قوى',
-                    motor: 'محرك'
-                };
+                const loadTextMapAr = { lighting: 'إنارة', subpanel: 'لوحة فرعية', power: 'قوى', motor: 'محرك' };
+                const loadTextMapEn = { lighting: 'Lighting', subpanel: 'Sub-Panel', power: 'Power', motor: 'Motor' };
+                const loadTextMap = currentLang === 'ar' ? loadTextMapAr : loadTextMapEn;
 
-                const routeTypeText = routeType === 'sequential' ? 'استكمال مسار' : 'مسار مستقل';
+                const routeTypeText = routeType === 'sequential' ? (currentLang === 'ar' ? 'استكمال مسار' : 'Sequential') : (currentLang === 'ar' ? 'مسار مستقل' : 'Independent');
                 const dropStatusClass = rowCumulativePercent <= rowMaxAllowed ? 'pass' : 'fail';
 
                 tableHtml += `
@@ -799,7 +864,7 @@
         });
 
         if (hasError) {
-            alert('يرجى التأكد من ملء جميع الحقول والبيانات المدخلة بشكل صحيح.');
+            alert(currentLang === 'ar' ? 'يرجى التأكد من ملء جميع الحقول والبيانات المدخلة بشكل صحيح.' : 'Please ensure all required fields are filled correctly.');
             return;
         }
 
@@ -823,30 +888,34 @@
         const multiBranch = branches.length > 1;
 
         document.getElementById('sumTotalPercent').innerText = cumulativeDropPercent.toFixed(2) + ' %';
-        document.getElementById('sumTotalVoltsSub').innerText = cumulativeDropVolts.toFixed(2) + ' V إجمالي الهبوط';
+        document.getElementById('sumTotalVoltsSub').innerText = cumulativeDropVolts.toFixed(2) + ' V ' + (currentLang === 'ar' ? 'إجمالي الهبوط' : 'Total Drop');
         document.getElementById('sumMaxAllowed').innerText = maxAllowed.toFixed(1) + ' %';
-        document.getElementById('codeNameSub').innerText = 'وفق معيار ' + codeVal;
+        document.getElementById('codeNameSub').innerText = (currentLang === 'ar' ? 'وفق معيار ' : 'According to ') + codeVal;
 
         const badge = document.getElementById('statusBadge');
         const statusText = document.getElementById('sumStatusText');
         const statusSub = document.getElementById('sumStatusSub');
 
-        const branchNote = multiBranch ? ` (أسوأ مسار: ${worstBranch.fromLabel} → ${worstBranch.toLabel})` : '';
+        const branchNote = multiBranch ? ` (${currentLang === 'ar' ? 'أسوأ مسار' : 'Worst Route'}: ${worstBranch.fromLabel} → ${worstBranch.toLabel})` : '';
 
         if (cumulativeDropPercent <= maxAllowed) {
             statusText.innerText = 'Voltage Drop: PASS';
             statusText.style.color = 'var(--success)';
-            statusSub.innerText = 'ضمن حدود المعيار المعتمدة' + branchNote;
+            statusSub.innerText = (currentLang === 'ar' ? 'ضمن حدود المعيار المعتمدة' : 'Within approved standard limits') + branchNote;
 
             badge.className = 'status-badge pass';
-            badge.innerHTML = `<i class="fa-solid fa-circle-check"></i> <strong>هبوط الجهد ضمن الحد المسموح به!</strong> إجمالي الهبوط التراكمي لأسوأ مسار يقع ضمن الحدود الهندسية المعيارية (${maxAllowed.toFixed(1)}%).${multiBranch ? ' ملحوظة: النتيجة المعروضة هي لأسوأ مسار مستقل من بين ' + branches.length + ' مسارات تم إدخالها.' : ''}`;
+            badge.innerHTML = currentLang === 'ar' 
+                ? `<i class="fa-solid fa-circle-check"></i> <strong>هبوط الجهد ضمن الحد المسموح به!</strong> إجمالي الهبوط التراكمي لأسوأ مسار يقع ضمن الحدود الهندسية المعيارية (${maxAllowed.toFixed(1)}%).${multiBranch ? ' ملحوظة: النتيجة المعروضة هي لأسوأ مسار مستقل من بين ' + branches.length + ' مسارات تم إدخالها.' : ''}`
+                : `<i class="fa-solid fa-circle-check"></i> <strong>Voltage Drop within Allowable Limit!</strong> The total cumulative drop for the worst route is within standard engineering limits (${maxAllowed.toFixed(1)}%).${multiBranch ? ' Note: The displayed result is for the worst independent route among ' + branches.length + ' segments entered.' : ''}`;
         } else {
             statusText.innerText = 'Voltage Drop: FAIL';
             statusText.style.color = 'var(--danger)';
-            statusSub.innerText = 'يتجاوز الحدود المسموحة' + branchNote;
+            statusSub.innerText = (currentLang === 'ar' ? 'يتجاوز الحدود المسموحة' : 'Exceeds allowable limits') + branchNote;
 
             badge.className = 'status-badge fail';
-            badge.innerHTML = `<i class="fa-solid fa-circle-xmark"></i> <strong>تنبيه: يتجاوز الحد المسموح!</strong> إجمالي الهبوط التراكمي لأسوأ مسار يتجاوز النسبة المعتمدة (${maxAllowed.toFixed(1)}%). يُوصى بزيادة مقطع الموصل.${multiBranch ? ' ملحوظة: النتيجة المعروضة هي لأسوأ مسار مستقل من بين ' + branches.length + ' مسارات تم إدخالها.' : ''}`;
+            badge.innerHTML = currentLang === 'ar'
+                ? `<i class="fa-solid fa-circle-xmark"></i> <strong>تنبيه: يتجاوز الحد المسموح!</strong> إجمالي الهبوط التراكمي لأسوأ مسار يتجاوز النسبة المعتمدة (${maxAllowed.toFixed(1)}%). يُوصى بزيادة مقطع الموصل.${multiBranch ? ' ملحوظة: النتيجة المعروضة هي لأسوأ مسار مستقل من بين ' + branches.length + ' مسارات تم إدخالها.' : ''}`
+                : `<i class="fa-solid fa-circle-xmark"></i> <strong>Warning: Exceeds Allowable Limit!</strong> The total cumulative drop for the worst route exceeds the approved percentage (${maxAllowed.toFixed(1)}%). Increasing conductor size is recommended.${multiBranch ? ' Note: The displayed result is for the worst independent route among ' + branches.length + ' segments entered.' : ''}`;
         }
 
         document.getElementById('resultsCard').style.display = 'block';
