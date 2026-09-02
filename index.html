@@ -4,7 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BA Engineering Academy | الأكاديمية الهندسية المتكاملة</title>
-    <meta name="description" content="BA Engineering Academy تقدم كورسات هندسية احترافية في إدارة المخاطر والهندسة القيمية، بالإضافة إلى مقالات في الهندسة والذكاء الاصطناعي وقصص شركات عالمية.">
+    <meta name="description" content="BA Engineering Academy تقدم تدريبًا هندسيًا تطبيقيًا في إدارة المخاطر، الهندسة القيمية، العقود والمطالبات، مع أدوات هندسية ومحتوى مهني للمهندسين.">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <meta name="theme-color" content="#0F2C52">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="BA Engineering Academy">
+    <meta property="og:title" content="BA Engineering Academy | من الرؤية إلى التنفيذ">
+    <meta property="og:description" content="كورسات هندسية تطبيقية وأدوات عملية تساعد المهندس على الانتقال من المعرفة إلى التطبيق واتخاذ القرار في المشاريع.">
+    <meta property="og:url" content="https://barnoukh-engineering.com/">
+    <meta property="og:image" content="https://barnoukh-engineering.com/photo/logo.jpg">
 
     <!-- أيقونة تبويب المتصفح (Favicon) -->
     <link rel="icon" type="image/jpeg" href="photo/logo.jpg">
@@ -236,8 +244,25 @@
             box-shadow: 0 3px 10px rgba(3, 9, 22, 0.28);
         }
         .nav-link:hover { color: var(--primary-blue); background: #ffffff; transform: translateY(-2px); box-shadow: 0 6px 16px rgba(3, 9, 22, 0.32); }
+        .tools-nav-link {
+            background: linear-gradient(135deg, var(--accent-color), var(--accent-light)) !important;
+            color: #fff !important;
+            border-color: var(--accent-color) !important;
+            font-weight: 900 !important;
+            box-shadow: 0 5px 16px rgba(226, 96, 31, 0.34) !important;
+        }
+        .tools-nav-link i { color: #fff !important; }
+        .tools-nav-link:hover {
+            background: linear-gradient(135deg, var(--accent-light), var(--accent-color)) !important;
+            color: #fff !important;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(226, 96, 31, 0.42) !important;
+        }
+@media (max-width: 700px) {
+            .tools-nav-copy small { display: none; }
+        }
 
-        .nav-link.home-highlight {
+.nav-link.home-highlight {
             background: var(--accent-color);
             color: #ffffff;
             border: 1px solid var(--accent-color);
@@ -557,6 +582,102 @@
         .testimonial-titles span { font-size: 0.82rem; color: var(--primary-blue); font-weight: 700; }
         .testimonial-stars { display: flex; gap: 3px; color: #f59e0b; font-size: 11px; margin-bottom: 12px; }
         .testimonial-body-text { font-size: 0.95rem; color: var(--text-muted); font-weight: 600; line-height: 1.65; font-style: italic; }
+
+        /* ================= Trust & Conversion Enhancements ================= */
+        .hero-proof-row {
+            display: grid; grid-template-columns: repeat(3, minmax(0,1fr));
+            gap: 10px; margin-top: 18px; max-width: 700px;
+        }
+        .hero-proof-item {
+            background: rgba(255,255,255,0.72); border: 1px solid var(--border-color);
+            border-radius: 12px; padding: 10px 12px; display: flex; align-items: center;
+            gap: 9px; box-shadow: 0 8px 18px rgba(22,60,110,0.06);
+        }
+        .hero-proof-item i { color: var(--accent-color); font-size: 1rem; flex-shrink: 0; }
+        .hero-proof-item strong { display:block; color:var(--primary-blue); font-size:0.84rem; font-weight:900; line-height:1.35; }
+        .hero-proof-item span { display:block; color:var(--text-muted); font-size:0.71rem; font-weight:700; line-height:1.35; }
+
+        .trust-panel { max-width:1380px; margin:0 auto; padding:18px 4% 34px; }
+        .trust-panel-inner {
+            background:linear-gradient(135deg, rgba(22,60,110,0.06), rgba(226,96,31,0.05));
+            border:1px solid var(--border-color); border-radius:18px; padding:18px 22px;
+            display:grid; grid-template-columns:1.2fr 2fr; gap:18px; align-items:center;
+            box-shadow:0 12px 28px rgba(22,60,110,0.06);
+        }
+        .trust-lead { display:flex; align-items:center; gap:12px; }
+        .trust-lead-icon {
+            width:48px; height:48px; border-radius:14px;
+            background:linear-gradient(135deg,var(--primary-blue),var(--accent-color)); color:#fff;
+            display:flex; align-items:center; justify-content:center; flex-shrink:0;
+            box-shadow:0 8px 18px rgba(22,60,110,0.16);
+        }
+        .trust-lead h3 { color:var(--primary-blue); font-size:1.05rem; font-weight:900; margin-bottom:2px; }
+        .trust-lead p { color:var(--text-muted); font-size:0.82rem; font-weight:700; line-height:1.55; }
+        .trust-points { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
+        .trust-point { background:var(--card-bg); border:1px solid var(--border-color); border-radius:12px; padding:11px 12px; text-align:center; }
+        .trust-point i { color:var(--accent-color); font-size:1rem; margin-bottom:5px; }
+        .trust-point strong { display:block; color:var(--text-dark); font-size:0.82rem; font-weight:900; }
+        .trust-point span { display:block; color:var(--text-muted); font-size:0.7rem; font-weight:700; }
+
+        .course-card-cta {
+            display:flex; align-items:center; justify-content:space-between; gap:10px; width:100%;
+            margin-top:14px; padding-top:14px; border-top:1px solid var(--border-color);
+        }
+        .course-card-cta-note { color:var(--text-muted); font-size:0.74rem; font-weight:800; line-height:1.5; }
+        .course-card-cta-button {
+            border:0; background:var(--primary-blue); color:#fff; border-radius:10px; padding:9px 13px;
+            font-family:'Cairo',sans-serif; font-weight:900; font-size:0.78rem; cursor:pointer;
+            transition:all 0.25s ease; white-space:nowrap;
+        }
+        .course-card-cta-button:hover { background:var(--accent-color); transform:translateY(-2px); }
+
+        .instructor-proof-box {
+            margin-top:26px; display:grid; grid-template-columns:1fr 1.6fr; gap:18px; align-items:stretch;
+        }
+        .instructor-card-pro {
+            background:linear-gradient(135deg,var(--primary-blue),var(--primary-dark)); color:#fff;
+            border-radius:20px; padding:24px; box-shadow:0 16px 32px rgba(22,60,110,0.18);
+            display:flex; flex-direction:column; justify-content:center;
+        }
+        .instructor-card-pro .eyebrow { color:var(--accent-light); font-size:0.76rem; font-weight:900; margin-bottom:8px; }
+        .instructor-card-pro h3 { color:#fff; font-size:1.35rem; margin-bottom:6px; }
+        .instructor-card-pro .role { color:#dbeafe; font-size:0.86rem; font-weight:800; margin-bottom:12px; }
+        .instructor-card-pro p { color:#e2e8f0; font-size:0.85rem; line-height:1.75; font-weight:600; }
+        .instructor-signal-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:16px; }
+        .instructor-signal { background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.14); border-radius:11px; padding:10px; text-align:center; }
+        .instructor-signal strong { display:block; font-family:'JetBrains Mono',monospace; font-size:1rem; color:#fff; }
+        .instructor-signal span { display:block; margin-top:3px; color:#cbd5e1; font-size:0.68rem; font-weight:700; }
+        .methodology-card-pro { background:var(--card-bg); border:1px solid var(--border-color); border-radius:20px; padding:24px; box-shadow:var(--glass-shadow); }
+        .methodology-card-pro h3 { color:var(--primary-blue); font-size:1.18rem; font-weight:900; margin-bottom:10px; }
+        .methodology-card-pro > p { color:var(--text-muted); font-size:0.9rem; line-height:1.75; font-weight:700; margin-bottom:14px; }
+        .methodology-steps { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; }
+        .methodology-step { border:1px solid var(--border-color); background:var(--bg-main); border-radius:12px; padding:12px 10px; text-align:center; }
+        .methodology-step b { display:inline-flex; width:28px; height:28px; border-radius:50%; background:var(--primary-blue); color:#fff; align-items:center; justify-content:center; font-size:0.76rem; margin-bottom:7px; }
+        .methodology-step strong { display:block; color:var(--text-dark); font-size:0.76rem; line-height:1.4; font-weight:900; }
+
+        .course-cta-strip {
+            margin-top:24px; padding:16px 18px; border-radius:15px;
+            background:linear-gradient(90deg,rgba(20,92,54,0.08),rgba(226,96,31,0.08));
+            border:1px solid rgba(226,96,31,0.18); display:flex; align-items:center;
+            justify-content:space-between; gap:14px; flex-wrap:wrap;
+        }
+        .course-cta-strip strong { color:var(--text-dark); font-size:0.92rem; font-weight:900; }
+        .course-cta-strip span { color:var(--text-muted); font-size:0.75rem; font-weight:700; display:block; margin-top:2px; }
+        .course-cta-strip button {
+            border:0; border-radius:10px; padding:10px 16px; color:#fff; background:#145C36;
+            font-family:'Cairo',sans-serif; font-weight:900; cursor:pointer; transition:all 0.25s ease;
+        }
+        .course-cta-strip button:hover { background:#1B7345; transform:translateY(-2px); }
+
+        @media (max-width: 950px) {
+            .trust-panel-inner, .instructor-proof-box { grid-template-columns:1fr; }
+            .hero-proof-row { grid-template-columns:1fr; }
+        }
+        @media (max-width: 700px) {
+            .trust-points, .methodology-steps, .instructor-signal-grid { grid-template-columns:1fr; }
+            .course-card-cta { flex-direction:column; align-items:stretch; }
+            .course-card-cta-button { width:100%; }
+        }
 
         /* ================= Articles Section ================= */
         .articles-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
@@ -1216,7 +1337,10 @@
                 <span class="navbar-brand-main" id="navbar-date" style="font-family: 'JetBrains Mono', monospace; font-size: 14px; font-weight: 700; color: var(--topbar-text); letter-spacing: 0.5px;"></span>
             </div>
             <button class="nav-link home-highlight" onclick="switchMainView('home-view')"><i class="fa-solid fa-house"></i> <span data-ar="الرئيسية" data-en="Home">الرئيسية</span></button>
-            <a class="nav-link" href="tools/index.html"><i class="fa-solid fa-calculator"></i> <span data-ar="أدوات مجانية" data-en="Free Tools">أدوات مجانية</span></a>
+            <a class="nav-link tools-nav-link" href="tools/index.html" aria-label="Engineering Tools">
+                    <i class="fa-solid fa-calculator"></i>
+                    <span data-ar="Engineering Tools" data-en="Engineering Tools">Engineering Tools</span>
+                </a>
             <button class="nav-link" id="login-nav-btn" onclick="handleLoginNavClick()"><i class="fa-solid fa-right-to-bracket"></i> <span data-ar="تسجيل الدخول" data-en="Login">تسجيل الدخول</span></button>
         </div>
 
@@ -1254,15 +1378,24 @@
             <div class="hero-content">
                 <h1>BA Engineering Academy</h1>
                 <h2>From Vision to Execution</h2>
-                
+                <div style="color: var(--text-muted); font-size: 0.9rem; font-weight: 800; margin-bottom: 12px;" data-ar="للمهندسين ومديري المشاريع الذين يريدون تحويل المعرفة إلى مهارة عملية" data-en="For engineers and project managers who want to turn knowledge into practical skill">للمهندسين ومديري المشاريع الذين يريدون تحويل المعرفة إلى مهارة عملية</div>
+
                 <div class="hero-quote-box">
                     <p><i class="fa-solid fa-quote-right" id="quote-icon"></i> <span data-ar="لأن التعلم الحقيقي لا يعتمد على كثرة المعلومات، بل على وضوحها وتطبيقها. نصمم تجربة تعليمية تساعدك على اكتساب المهارات التي تحتاجها في المشاريع، دون تعقيد أو إهدار للوقت." data-en="Because true learning isn't about information volume, but clarity and application. We design educational experiences that help you master real project skills without complexity or wasted time.">لأن التعلم الحقيقي لا يعتمد على كثرة المعلومات، بل على وضوحها وتطبيقها. نصمم تجربة تعليمية تساعدك على اكتساب المهارات التي تحتاجها في المشاريع، دون تعقيد أو إهدار للوقت.</span></p>
                 </div>
 
                 <div class="hero-buttons">
                     <button class="btn-primary" style="background: var(--accent-color); box-shadow: 0 8px 20px rgba(226, 96, 31, 0.3);" onclick="document.getElementById('courses-section').scrollIntoView({behavior: 'smooth'})">
-                        <i class="fa-solid fa-play"></i> <span data-ar="استكشف المسارات" data-en="Explore Tracks">استكشف المسارات</span>
+                        <i class="fa-solid fa-graduation-cap"></i> <span data-ar="استكشف الكورسات" data-en="Explore Courses">استكشف الكورسات</span>
                     </button>
+                    <a class="btn-outline" href="tools/index.html">
+                        <i class="fa-solid fa-calculator"></i> <span data-ar="Engineering Tools" data-en="Engineering Tools">Engineering Tools</span>
+                    </a>
+                </div>
+                <div class="hero-proof-row">
+                    <div class="hero-proof-item"><i class="fa-solid fa-briefcase"></i><div><strong data-ar="خبرة ميدانية طويلة" data-en="Extensive Field Experience">خبرة ميدانية طويلة</strong><span data-ar="محتوى مبني على واقع المشاريع" data-en="Built around real project practice">محتوى مبني على واقع المشاريع</span></div></div>
+                    <div class="hero-proof-item"><i class="fa-solid fa-screwdriver-wrench"></i><div><strong data-ar="تطبيق + أدوات" data-en="Application + Tools">تطبيق + أدوات</strong><span data-ar="من المعرفة إلى التنفيذ" data-en="From knowledge to execution">من المعرفة إلى التنفيذ</span></div></div>
+                    <div class="hero-proof-item"><i class="fa-solid fa-language"></i><div><strong data-ar="عربي + English" data-en="Arabic + English">عربي + English</strong><span data-ar="واجهة ثنائية اللغة" data-en="Bilingual platform experience">واجهة ثنائية اللغة</span></div></div>
                 </div>
             </div>
         </section>
@@ -1287,22 +1420,30 @@
                 </div>
             </div>
         </section>
-
-
-        <section class="stats-section">
-            <div class="stat-box"><span class="stat-number" data-target="20">0</span><span class="stat-label" data-ar="عاماً خبرة ميدانية" data-en="Years Field Experience">عاماً خبرة ميدانية</span></div>
-            <div class="stat-box"><span class="stat-number" data-target="24">0</span><span class="stat-label" data-ar="ساعة تدريبية مكثفة" data-en="Intensive Training Hours">ساعة تدريبية مكثفة</span></div>
-            <div class="stat-box"><span class="stat-number" data-target="15">0</span><span class="stat-label" data-ar="نموذج وأداة عملية" data-en="Practical Tools & Models">نموذج وأداة عملية</span></div>
-            <div class="stat-box"><span class="stat-number" data-target="100">0</span><span class="stat-label" data-ar="% تركيز تطبيقي" data-en="% Practical Focus">% تركيز تطبيقي</span></div>
-        </section>
-
-        <section class="story-section">
+<section class="story-section">
             <div class="story-content">
                 <h2 data-ar="لماذا أنشأنا BA Academy؟" data-en="Why did we create BA Academy?">لماذا أنشأنا BA Academy؟</h2>
                 <p>
                     <i class="fa-solid fa-quote-right" style="color: var(--accent-color); font-size: 1.3rem; margin-bottom: 8px; display: block;"></i>
                     <span data-ar='"بدأت فكرة BA Academy من ملاحظة بسيطة: هناك فجوة بين ما ندرسه، وما نطبقه في المشاريع. لذلك صممنا منصة تقدم تعلمًا عمليًا، وأدوات ومرجعًا يساعد المهندس على تطوير مهاراته والرجوع إليه في مختلف مراحل حياته المهنية."' data-en='"The idea of BA Academy started from a simple observation: there is a gap between what we study and what we apply in projects. Thus, we created a platform providing practical learning and tools that help engineers grow throughout their career."'>"بدأت فكرة BA Academy من ملاحظة بسيطة: هناك فجوة بين ما ندرسه، وما نطبقه في المشاريع. لذلك صممنا منصة تقدم تعلمًا عمليًا، وأدوات ومرجعًا يساعد المهندس على تطوير مهاراته والرجوع إليه في مختلف مراحل حياته المهنية."</span>
                 </p>
+            </div>
+        </section>
+
+        <section class="trust-panel">
+            <div class="trust-panel-inner">
+                <div class="trust-lead">
+                    <div class="trust-lead-icon"><i class="fa-solid fa-shield-halved"></i></div>
+                    <div>
+                        <h3 data-ar="تعلم مبني على التطبيق" data-en="Learning Built Around Application">تعلم مبني على التطبيق</h3>
+                        <p data-ar="المحتوى مصمم ليقربك من طريقة التفكير والعمل داخل المشروع، لا مجرد حفظ المعلومات." data-en="Content is designed to bring you closer to how engineers think and work inside real projects—not just memorize information.">المحتوى مصمم ليقربك من طريقة التفكير والعمل داخل المشروع، لا مجرد حفظ المعلومات.</p>
+                    </div>
+                </div>
+                <div class="trust-points">
+                    <div class="trust-point"><i class="fa-solid fa-diagram-project"></i><strong data-ar="مشاريع وتطبيقات" data-en="Projects & Applications">مشاريع وتطبيقات</strong><span data-ar="أمثلة عملية" data-en="Practical examples">أمثلة عملية</span></div>
+                    <div class="trust-point"><i class="fa-solid fa-toolbox"></i><strong data-ar="أدوات هندسية" data-en="Engineering Tools">أدوات هندسية</strong><span data-ar="تساعدك على التطبيق" data-en="Built for application">تساعدك على التطبيق</span></div>
+                    <div class="trust-point"><i class="fa-solid fa-layer-group"></i><strong data-ar="مسارات متخصصة" data-en="Specialized Tracks">مسارات متخصصة</strong><span data-ar="Risk · VE · Contracts" data-en="Risk · VE · Contracts">Risk · VE · Contracts</span></div>
+                </div>
             </div>
         </section>
 
@@ -1363,6 +1504,12 @@
                             <button class="course-video-link" onclick="event.stopPropagation(); openVideoModal('video/risk.mp4', 'إدارة مخاطر المشاريع - فيديو تعريفي')">
                                 <i class="fa-solid fa-circle-play"></i> <span data-ar="شاهد الفيديو التعريفي" data-en="Watch Intro Video">شاهد الفيديو التعريفي</span>
                             </button>
+                            <div class="course-card-cta">
+                                <span class="course-card-cta-note" data-ar="راجع المنهج وتفاصيل الدخول من صفحة الدورة" data-en="Review the syllabus and access details on the course page">راجع المنهج وتفاصيل الدخول من صفحة الدورة</span>
+                                <button class="course-card-cta-button" type="button" onclick="event.stopPropagation(); enterCourse('risk-landing');">
+                                    <span data-ar="عرض التفاصيل" data-en="View Details">عرض التفاصيل</span>
+                                </button>
+                            </div>
                         </div>
                     </div>
 
@@ -1379,6 +1526,12 @@
                             <button class="course-video-link" onclick="event.stopPropagation(); openVideoModal('video/va.mp4', 'الهندسة القيمية - فيديو تعريفي')">
                                 <i class="fa-solid fa-circle-play"></i> <span data-ar="شاهد الفيديو التعريفي" data-en="Watch Intro Video">شاهد الفيديو التعريفي</span>
                             </button>
+                            <div class="course-card-cta">
+                                <span class="course-card-cta-note" data-ar="راجع المنهج وتفاصيل الدخول من صفحة الدورة" data-en="Review the syllabus and access details on the course page">راجع المنهج وتفاصيل الدخول من صفحة الدورة</span>
+                                <button class="course-card-cta-button" type="button" onclick="event.stopPropagation(); enterCourse('value-landing');">
+                                    <span data-ar="عرض التفاصيل" data-en="View Details">عرض التفاصيل</span>
+                                </button>
+                            </div>
                         </div>
                     </div>
 
@@ -1395,6 +1548,12 @@
                             <button class="course-video-link" onclick="event.stopPropagation(); openVideoModal('video/contract.mp4', 'إدارة العقود والمطالبات الهندسية - فيديو تعريفي')">
                                 <i class="fa-solid fa-circle-play"></i> <span data-ar="شاهد الفيديو التعريفي" data-en="Watch Intro Video">شاهد الفيديو التعريفي</span>
                             </button>
+                            <div class="course-card-cta">
+                                <span class="course-card-cta-note" data-ar="راجع المنهج وتفاصيل الدخول من صفحة الدورة" data-en="Review the syllabus and access details on the course page">راجع المنهج وتفاصيل الدخول من صفحة الدورة</span>
+                                <button class="course-card-cta-button" type="button" onclick="event.stopPropagation(); enterCourse('contract-landing');">
+                                    <span data-ar="عرض التفاصيل" data-en="View Details">عرض التفاصيل</span>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1454,7 +1613,7 @@
         <section class="professional-testimonials">
             <div class="testimonials-heading-container">
                 <h2 data-ar="آراء المتدربين" data-en="Trainee Reviews">آراء المتدربين</h2>
-                <p data-ar="نجاحكم وتطوركم المهني هو هدفنا الحقيقي في كل خطوة" data-en="Your success and professional development is our ultimate goal at every step">نجاحكم وتطوركم المهني هو هدفنا الحقيقي في كل خطوة</p>
+                <p data-ar="آراء وتجارب تعكس قيمة المحتوى وسهولة تطبيقه" data-en="Feedback and experiences reflecting the value and practical use of the content">آراء وتجارب تعكس قيمة المحتوى وسهولة تطبيقه</p>
             </div>
             <div class="testimonials-grid">
                 <div class="testimonial-card-pro">
@@ -1502,7 +1661,7 @@
                 <div class="course-meta">
                     <div class="meta-item"><i class="fa-regular fa-clock"></i> <span data-ar="24 ساعة تدريبية" data-en="24 Training Hours">24 ساعة تدريبية</span></div>
                     <div class="meta-item"><i class="fa-solid fa-video"></i> <span data-ar="محاضرات مسجلة" data-en="Recorded Lectures">محاضرات مسجلة</span></div>
-                    <div class="meta-item"><i class="fa-solid fa-certificate"></i> Certificate of Completion</div>
+                    <div class="meta-item"><i class="fa-solid fa-certificate"></i> <span data-ar="شهادة إتمام من BA Engineering Academy" data-en="Certificate of Completion by BA Engineering Academy">شهادة إتمام من BA Engineering Academy</span></div>
                     <div class="meta-item"><i class="fa-solid fa-signal"></i> <span data-ar="المستوى: متقدم" data-en="Level: Advanced">المستوى: متقدم</span></div>
                 </div>
             </div>
@@ -1594,7 +1753,7 @@
                 <div class="course-meta">
                     <div class="meta-item"><i class="fa-regular fa-clock"></i> <span data-ar="20 ساعة تدريبية" data-en="20 Training Hours">20 ساعة تدريبية</span></div>
                     <div class="meta-item"><i class="fa-solid fa-video"></i> <span data-ar="محاضرات مسجلة وأداة تطبيقية" data-en="Lectures & Toolkit">محاضرات مسجلة وأداة تطبيقية</span></div>
-                    <div class="meta-item"><i class="fa-solid fa-certificate"></i> Certificate of Completion</div>
+                    <div class="meta-item"><i class="fa-solid fa-certificate"></i> <span data-ar="شهادة إتمام من BA Engineering Academy" data-en="Certificate of Completion by BA Engineering Academy">شهادة إتمام من BA Engineering Academy</span></div>
                     <div class="meta-item"><i class="fa-solid fa-signal"></i> <span data-ar="المستوى: متقدم" data-en="Level: Advanced">المستوى: متقدم</span></div>
                 </div>
             </div>
@@ -1712,7 +1871,7 @@
                 <div class="course-meta">
                     <div class="meta-item"><i class="fa-regular fa-clock"></i> <span data-ar="22 ساعة تدريبية" data-en="22 Training Hours">22 ساعة تدريبية</span></div>
                     <div class="meta-item"><i class="fa-solid fa-video"></i> <span data-ar="محاضرات مسجلة" data-en="Recorded Lectures">محاضرات مسجلة</span></div>
-                    <div class="meta-item"><i class="fa-solid fa-certificate"></i> Certificate of Completion</div>
+                    <div class="meta-item"><i class="fa-solid fa-certificate"></i> <span data-ar="شهادة إتمام من BA Engineering Academy" data-en="Certificate of Completion by BA Engineering Academy">شهادة إتمام من BA Engineering Academy</span></div>
                     <div class="meta-item"><i class="fa-solid fa-signal"></i> <span data-ar="المستوى: متقدم" data-en="Level: Advanced">المستوى: متقدم</span></div>
                 </div>
             </div>
@@ -1860,6 +2019,30 @@
                 
                 <h3><i class="fa-solid fa-user-tie"></i> <span data-ar="المؤسس والمدرب الرئيسي" data-en="Founder & Chief Instructor">المؤسس والمدرب الرئيسي</span></h3>
                 <p data-ar="مهندس أحمد علي، Senior Electrical Engineer بخبرة ميدانية وهندسية تتجاوز 20 عاماً في إدارة، تخطيط، وتنفيذ المشاريع الهندسية الضخمة." data-en="Eng. Ahmed Ali, Senior Electrical Engineer with over 20 years of experience in project management, planning, and executing mega engineering projects."><strong>مهندس أحمد علي</strong>، Senior Electrical Engineer بخبرة ميدانية وهندسية تتجاوز 20 عاماً في إدارة، تخطيط، وتنفيذ المشاريع الهندسية الضخمة. يتميز بأسلوب فريد في تبسيط المفاهيم الهندسية المعقدة وتحويلها إلى أدوات عملية قابلة للتطبيق الفوري في الميدان.</p>
+
+                <div class="instructor-proof-box">
+                    <div class="instructor-card-pro">
+                        <div class="eyebrow" data-ar="المؤسس والمدرب الرئيسي" data-en="Founder & Chief Instructor">المؤسس والمدرب الرئيسي</div>
+                        <h3>Ahmed Ali</h3>
+                        <div class="role">Senior Electrical Engineer</div>
+                        <p data-ar="نحوّل الخبرة العملية إلى خطوات وأدوات واضحة تساعد المهندس على الفهم والتطبيق واتخاذ القرار داخل المشروع." data-en="We turn practical experience into clear steps and tools that help engineers understand, apply, and make decisions on projects.">نحوّل الخبرة العملية إلى خطوات وأدوات واضحة تساعد المهندس على الفهم والتطبيق واتخاذ القرار داخل المشروع.</p>
+                        <div class="instructor-signal-grid">
+                            <div class="instructor-signal"><strong>20+</strong><span data-ar="عام خبرة" data-en="Years Experience">عام خبرة</span></div>
+                            <div class="instructor-signal"><strong>3</strong><span data-ar="كورسات متاحة" data-en="Available Courses">كورسات متاحة</span></div>
+                            <div class="instructor-signal"><strong>Tools</strong><span data-ar="تعلم + تطبيق" data-en="Learn + Apply">تعلم + تطبيق</span></div>
+                        </div>
+                    </div>
+                    <div class="methodology-card-pro">
+                        <h3 data-ar="منهجية الأكاديمية في التعلم" data-en="The Academy Learning Method">منهجية الأكاديمية في التعلم</h3>
+                        <p data-ar="نفهم المفهوم، نحلل الحالة، نطبّق على مثال عملي، ثم نستخدم الأداة أو المنهج لاتخاذ قرار أفضل." data-en="We understand the concept, analyze the case, apply it to a practical example, then use the right tool or method to make a better decision.">نفهم المفهوم، نحلل الحالة، نطبّق على مثال عملي، ثم نستخدم الأداة أو المنهج لاتخاذ قرار أفضل.</p>
+                        <div class="methodology-steps">
+                            <div class="methodology-step"><b>1</b><strong data-ar="فهم" data-en="Understand">فهم</strong></div>
+                            <div class="methodology-step"><b>2</b><strong data-ar="تحليل" data-en="Analyze">تحليل</strong></div>
+                            <div class="methodology-step"><b>3</b><strong data-ar="تطبيق" data-en="Apply">تطبيق</strong></div>
+                            <div class="methodology-step"><b>4</b><strong data-ar="قرار" data-en="Decide">قرار</strong></div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </main>
@@ -1984,7 +2167,7 @@
                 </div>
                 <p style="font-size: 0.92rem; line-height: 1.65;" data-ar="منصتك الهندسية للانتقال من التخطيط إلى التنفيذ باحترافية تامة. نضع بين يديك خلاصة الخبرات الميدانية." data-en="Your engineering platform to move from vision to execution with full professionalism.">منصتك الهندسية للانتقال من التخطيط إلى التنفيذ باحترافية تامة. نضع بين يديك خلاصة الخبرات الميدانية.</p>
                 <div class="social-icons">
-                    <a href="https://www.linkedin.com/company/ba-engineering-academy/" target="_blank"><i class="fa-brands fa-linkedin-in"></i></a>
+                    <a href="https://www.linkedin.com/company/ba-engineering-academy/" target="_blank" rel="noopener noreferrer" aria-label="BA Engineering Academy on LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
                 </div>
             </div>
             <div class="footer-col" style="grid-column: span 2;">
@@ -2167,21 +2350,11 @@
         }
 
         function animateCounters() {
-            const counters = document.querySelectorAll('.stat-number');
-            counters.forEach(counter => {
-                const target = +counter.getAttribute('data-target');
-                const increment = target / 30; 
-                let current = 0;
-                const updateCounter = () => {
-                    current += increment;
-                    if(current < target) {
-                        counter.innerText = Math.ceil(current) + (target >= 15 && target !== 100 && target !== 24 ? '+' : '');
-                        setTimeout(updateCounter, 30);
-                    } else {
-                        counter.innerText = target + (target >= 15 && target !== 100 && target !== 24 ? '+' : '');
-                    }
-                };
-                updateCounter();
+            // Verified values are shown immediately; no flash of zero during SPA initialization.
+            document.querySelectorAll('.stat-number').forEach(counter => {
+                const target = Number(counter.getAttribute('data-target') || 0);
+                const suffix = target === 100 ? '%' : (target >= 15 ? '+' : '');
+                counter.textContent = String(target) + suffix;
             });
             countersAnimated = true;
         }
@@ -2376,11 +2549,22 @@
 
         function enterCourse(target) {
             if (getLockoutRemainingMs() > 0) { showLockoutOverlay(); return; }
+
+            // Public course information pages: open freely without login.
+            const publicCourseTargets = ['risk-landing', 'value-landing', 'contract-landing'];
+            if (publicCourseTargets.includes(target)) {
+                goToCourseTarget(target);
+                return;
+            }
+
+            // Protected learning areas still require trainee login.
             if (localStorage.getItem(AUTH_STORAGE_KEY) === 'true') {
                 goToCourseTarget(target);
                 return;
             }
-            promptTopLogin();
+
+            pendingLoginTarget = target;
+            openLoginModal();
         }
 
         function promptTopLogin() {
