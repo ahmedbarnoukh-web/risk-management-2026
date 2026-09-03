@@ -2542,12 +2542,17 @@
         const CREDENTIALS_HASH = '84f828add7a57f54d85930316522cfe323fe144e00655bc55fdca2134af765a2';
         // Dedicated login for the Infra Group Engineering Consultancy partner account (username: infra / password: 2026).
         const CREDENTIALS_HASH_INFRA = 'ded3ff86b9a03dc1d947c602d52773077edf7784d34fb2b2f78ec9a4d13e0ea6';
+        // Dedicated login that unlocks ONLY the Risk Management course (username: risk / password: 2026).
+        const CREDENTIALS_HASH_RISK = 'ca3c72861cbfc7fb85f79d3b9e687e322d9b22908ed73e429ab7681a76428ff5';
 
         // "Remember me" — stores the last-used username/password on this device only when the
         // trainee explicitly opts in via the checkbox in the login modal.
         const REMEMBER_FLAG_KEY = 'ba_academy_remember_me';
         const REMEMBER_USER_KEY = 'ba_academy_remember_user';
         const REMEMBER_PASS_KEY = 'ba_academy_remember_pass';
+        // Tracks whether the Infra Group partner has already dismissed the welcome banner this
+        // login session, so it doesn't pop back up every time they return to the page.
+        const PARTNER_BANNER_DISMISSED_KEY = 'ba_academy_partner_banner_dismissed';
 
         let pendingLoginTarget = null;
         let lockoutIntervalId = null;
@@ -2638,20 +2643,29 @@
         function handleLogoutNavClick() {
             localStorage.removeItem(AUTH_STORAGE_KEY);
             localStorage.removeItem(AUTH_TYPE_KEY);
-            closePartnerWelcomeBanner();
+            localStorage.removeItem(PARTNER_BANNER_DISMISSED_KEY);
+            hidePartnerWelcomeBanner();
             updateLoginNavButton();
             showToast('تم تسجيل الخروج بنجاح', 'success');
         }
 
         // Shows the Infra Group partner welcome banner at the very top of the page (above the ticker),
-        // so it's the first thing visible. Stays open until the trainee dismisses it.
+        // so it's the first thing visible. Stays open until the trainee dismisses it; once dismissed,
+        // it won't pop back up again on return visits for the same login session.
         function showPartnerWelcomeBanner() {
+            if (localStorage.getItem(PARTNER_BANNER_DISMISSED_KEY) === 'true') return;
             const banner = document.getElementById('partner-welcome-banner');
             if (banner) banner.classList.add('active');
         }
-        function closePartnerWelcomeBanner() {
+        // Hides the banner without marking it dismissed (used on logout, where the flag is
+        // being cleared anyway so the next login starts fresh).
+        function hidePartnerWelcomeBanner() {
             const banner = document.getElementById('partner-welcome-banner');
             if (banner) banner.classList.remove('active');
+        }
+        function closePartnerWelcomeBanner() {
+            hidePartnerWelcomeBanner();
+            localStorage.setItem(PARTNER_BANNER_DISMISSED_KEY, 'true');
         }
 
         function enterCourse(target) {
@@ -2666,6 +2680,11 @@
 
             // Protected learning areas still require trainee login.
             if (localStorage.getItem(AUTH_STORAGE_KEY) === 'true') {
+                // A risk-only account may only ever enter the Risk Management course content.
+                if (localStorage.getItem(AUTH_TYPE_KEY) === 'risk-only' && target !== 'dashboard') {
+                    showToast('هذا الحساب مخصص فقط لدورة إدارة مخاطر المشاريع', 'error');
+                    return;
+                }
                 goToCourseTarget(target);
                 return;
             }
@@ -2717,10 +2736,14 @@
             const rememberChecked = document.getElementById('login-remember-me')?.checked;
             const enteredHash = await sha256Hex(user + ':' + pass);
 
-            if (enteredHash === CREDENTIALS_HASH || enteredHash === CREDENTIALS_HASH_INFRA) {
+            if (enteredHash === CREDENTIALS_HASH || enteredHash === CREDENTIALS_HASH_INFRA || enteredHash === CREDENTIALS_HASH_RISK) {
                 localStorage.setItem(AUTH_STORAGE_KEY, 'true');
-                localStorage.setItem(AUTH_TYPE_KEY, enteredHash === CREDENTIALS_HASH_INFRA ? 'infra' : 'student');
+                let authType = 'student';
+                if (enteredHash === CREDENTIALS_HASH_INFRA) authType = 'infra';
+                else if (enteredHash === CREDENTIALS_HASH_RISK) authType = 'risk-only';
+                localStorage.setItem(AUTH_TYPE_KEY, authType);
                 localStorage.removeItem(LOGIN_ATTEMPTS_KEY);
+                localStorage.removeItem(PARTNER_BANNER_DISMISSED_KEY);
 
                 // Handle "remember me": save credentials on this device only if the box is checked.
                 if (rememberChecked) {
@@ -2735,6 +2758,14 @@
 
                 closeModal();
                 updateLoginNavButton();
+
+                // A risk-only account can only ever enter the Risk Management course content —
+                // even if it was invoked while trying to unlock Value Engineering or Contracts.
+                if (authType === 'risk-only' && pendingLoginTarget !== 'dashboard') {
+                    showToast('هذا الحساب مخصص فقط لدورة إدارة مخاطر المشاريع', 'error');
+                    return;
+                }
+
                 goToCourseTarget(pendingLoginTarget);
 
                 // Show the dedicated welcome banner for the Infra Group partner account.
