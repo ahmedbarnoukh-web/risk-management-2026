@@ -13,6 +13,7 @@
     <meta property="og:description" content="كورسات هندسية تطبيقية وأدوات عملية تساعد المهندس على الانتقال من المعرفة إلى التطبيق واتخاذ القرار في المشاريع.">
     <meta property="og:url" content="https://barnoukh-engineering.com/">
     <meta property="og:image" content="https://barnoukh-engineering.com/photo/logo.jpg">
+    <link rel="canonical" href="https://barnoukh-engineering.com/">
 
     <!-- أيقونة تبويب المتصفح (Favicon) -->
     <link rel="icon" type="image/jpeg" href="photo/logo.jpg">
@@ -225,6 +226,17 @@
         .navbar-brand-main { font-family: 'Poppins', sans-serif; font-size: 24px; font-weight: 800; color: var(--primary-blue); letter-spacing: 0.5px; }
         .navbar-brand-sub { font-family: 'Poppins', sans-serif; font-size: 24px; font-weight: 600; color: var(--accent-color); letter-spacing: 0.5px; }
 
+        .navbar-datetime-tag {
+            display: flex; align-items: center; gap: 8px; height: 40px; padding: 0 4px;
+            direction: ltr; cursor: default;
+        }
+        .navbar-datetime-tag .navbar-brand-main {
+            font-family: 'JetBrains Mono', monospace; font-size: 12.5px; font-weight: 700;
+            color: var(--topbar-text); opacity: 0.75; letter-spacing: 0.3px;
+        }
+
+        .topbar-divider { width: 1px; height: 26px; background: rgba(255, 255, 255, 0.18); flex-shrink: 0; margin: 0 2px; }
+
         .nav-center-group {
             display: flex;
             align-items: center;
@@ -232,49 +244,50 @@
             gap: 12px;
         }
 
-        .topbar-group-right { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
-        .topbar-group-left { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+        .topbar-group-right { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+        .topbar-group-left { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
 
-        .top-bar-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-inline-start: 22px; }
+        .top-bar-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
         
         .nav-link {
             color: var(--text-dark); text-decoration: none; background: rgba(255, 255, 255, 0.96); border: 1px solid rgba(255, 255, 255, 0.6);
-            font-size: 14px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 8px; 
-            padding: 10px 18px; border-radius: 10px; transition: all 0.3s ease;
+            font-size: 13.5px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 8px; 
+            height: 40px; padding: 0 16px; border-radius: 10px; transition: all 0.3s ease; box-sizing: border-box;
             box-shadow: 0 3px 10px rgba(3, 9, 22, 0.28);
         }
+        .nav-link i { font-size: 13px; width: 14px; text-align: center; flex-shrink: 0; }
         .nav-link:hover { color: var(--primary-blue); background: #ffffff; transform: translateY(-2px); box-shadow: 0 6px 16px rgba(3, 9, 22, 0.32); }
         .tools-nav-link {
-            background: linear-gradient(135deg, var(--accent-color), var(--accent-light)) !important;
-            color: #fff !important;
-            border-color: var(--accent-color) !important;
-            font-weight: 900 !important;
-            box-shadow: 0 5px 16px rgba(226, 96, 31, 0.34) !important;
+            background: rgba(255, 255, 255, 0.96) !important;
+            color: var(--accent-color) !important;
+            border: 1px solid var(--accent-color) !important;
+            font-weight: 800 !important;
         }
-        .tools-nav-link i { color: #fff !important; }
+        .tools-nav-link i { color: var(--accent-color) !important; }
         .tools-nav-link:hover {
-            background: linear-gradient(135deg, var(--accent-light), var(--accent-color)) !important;
+            background: var(--accent-color) !important;
             color: #fff !important;
             transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(226, 96, 31, 0.42) !important;
+            box-shadow: 0 8px 20px rgba(226, 96, 31, 0.34) !important;
         }
+        .tools-nav-link:hover i { color: #fff !important; }
 @media (max-width: 700px) {
             .tools-nav-copy small { display: none; }
         }
 
-.nav-link.home-highlight {
+.nav-link.nav-cta {
             background: var(--accent-color);
             color: #ffffff;
             border: 1px solid var(--accent-color);
             font-weight: 800;
             box-shadow: 0 3px 10px rgba(226, 96, 31, 0.35);
         }
-        .nav-link.home-highlight:hover { color: #ffffff; background: var(--accent-light); box-shadow: 0 6px 16px rgba(226, 96, 31, 0.45); }
+        .nav-link.nav-cta:hover { color: #ffffff; background: var(--accent-light); box-shadow: 0 6px 16px rgba(226, 96, 31, 0.45); }
 
         .theme-btn {
             background: rgba(255, 255, 255, 0.96); border: 1px solid rgba(255, 255, 255, 0.6); color: var(--primary-blue);
-            cursor: pointer; width: 40px; height: 40px; border-radius: 10px;
-            display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; font-size: 16px;
+            cursor: pointer; width: 40px; height: 40px; border-radius: 10px; box-sizing: border-box;
+            display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; font-size: 15px;
             box-shadow: 0 3px 10px rgba(3, 9, 22, 0.28);
         }
         .theme-btn:hover { background: #ffffff; transform: rotate(15deg) scale(1.05); box-shadow: 0 6px 16px rgba(3, 9, 22, 0.32); }
@@ -597,28 +610,6 @@
         .hero-proof-item strong { display:block; color:var(--primary-blue); font-size:0.84rem; font-weight:900; line-height:1.35; }
         .hero-proof-item span { display:block; color:var(--text-muted); font-size:0.71rem; font-weight:700; line-height:1.35; }
 
-        .trust-panel { max-width:1380px; margin:0 auto; padding:18px 4% 34px; }
-        .trust-panel-inner {
-            background:linear-gradient(135deg, rgba(22,60,110,0.06), rgba(226,96,31,0.05));
-            border:1px solid var(--border-color); border-radius:18px; padding:18px 22px;
-            display:grid; grid-template-columns:1.2fr 2fr; gap:18px; align-items:center;
-            box-shadow:0 12px 28px rgba(22,60,110,0.06);
-        }
-        .trust-lead { display:flex; align-items:center; gap:12px; }
-        .trust-lead-icon {
-            width:48px; height:48px; border-radius:14px;
-            background:linear-gradient(135deg,var(--primary-blue),var(--accent-color)); color:#fff;
-            display:flex; align-items:center; justify-content:center; flex-shrink:0;
-            box-shadow:0 8px 18px rgba(22,60,110,0.16);
-        }
-        .trust-lead h3 { color:var(--primary-blue); font-size:1.05rem; font-weight:900; margin-bottom:2px; }
-        .trust-lead p { color:var(--text-muted); font-size:0.82rem; font-weight:700; line-height:1.55; }
-        .trust-points { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
-        .trust-point { background:var(--card-bg); border:1px solid var(--border-color); border-radius:12px; padding:11px 12px; text-align:center; }
-        .trust-point i { color:var(--accent-color); font-size:1rem; margin-bottom:5px; }
-        .trust-point strong { display:block; color:var(--text-dark); font-size:0.82rem; font-weight:900; }
-        .trust-point span { display:block; color:var(--text-muted); font-size:0.7rem; font-weight:700; }
-
         .course-card-cta {
             display:flex; align-items:center; justify-content:space-between; gap:10px; width:100%;
             margin-top:14px; padding-top:14px; border-top:1px solid var(--border-color);
@@ -670,11 +661,11 @@
         .course-cta-strip button:hover { background:#1B7345; transform:translateY(-2px); }
 
         @media (max-width: 950px) {
-            .trust-panel-inner, .instructor-proof-box { grid-template-columns:1fr; }
+            .instructor-proof-box { grid-template-columns:1fr; }
             .hero-proof-row { grid-template-columns:1fr; }
         }
         @media (max-width: 700px) {
-            .trust-points, .methodology-steps, .instructor-signal-grid { grid-template-columns:1fr; }
+            .methodology-steps, .instructor-signal-grid { grid-template-columns:1fr; }
             .course-card-cta { flex-direction:column; align-items:stretch; }
             .course-card-cta-button { width:100%; }
         }
@@ -1079,6 +1070,65 @@
         .toast.error { background: #dc2626; }
         .toast.fadeOut { animation: fadeOutNeural 0.3s ease-in forwards; }
 
+        /* Partner Welcome Banner — a slim, subtle bar shown above the ticker for the Infra Group login. */
+        #partner-welcome-banner {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 10050;
+            background: linear-gradient(90deg, #15803d, #22c55e, #15803d);
+            color: #ffffff;
+            padding: 8px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.22);
+            transform: translateY(-120%);
+            transition: transform 0.5s var(--ease-smooth);
+        }
+        #partner-welcome-banner.active { transform: translateY(0); }
+        #partner-welcome-banner .banner-icon { font-size: 0.95rem; color: #ecfdf5; flex-shrink: 0; }
+        #partner-welcome-banner .banner-text { display: flex; align-items: baseline; gap: 6px; flex-wrap: wrap; justify-content: center; }
+        #partner-welcome-banner .banner-text strong { font-size: 0.82rem; font-weight: 800; }
+        #partner-welcome-banner .banner-text span.banner-sub { font-size: 0.74rem; font-weight: 600; opacity: 0.9; }
+        #partner-welcome-banner .banner-close {
+            background: rgba(255,255,255,0.18);
+            border: none;
+            color: #ffffff;
+            width: 20px; height: 20px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.68rem;
+            transition: background 0.2s ease;
+            flex-shrink: 0;
+        }
+        #partner-welcome-banner .banner-close:hover { background: rgba(255,255,255,0.32); }
+        @media (max-width: 700px) {
+            #partner-welcome-banner { padding: 7px 12px; gap: 8px; }
+            #partner-welcome-banner .banner-text strong { font-size: 0.74rem; }
+            #partner-welcome-banner .banner-text span.banner-sub { font-size: 0.68rem; }
+        }
+
+        /* "Remember me" checkbox row inside the login modal */
+        .login-remember-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 4px 0 16px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            justify-content: center;
+            cursor: pointer;
+            user-select: none;
+        }
+        .login-remember-row input[type="checkbox"] {
+            width: 16px; height: 16px;
+            accent-color: var(--accent-color);
+            cursor: pointer;
+        }
+
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(3, 7, 18, 0.78); backdrop-filter: blur(12px); z-index: 9999; display: none; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s ease; }
         .modal-overlay.active { display: flex; opacity: 1; }
         .login-modal { background: var(--card-bg); backdrop-filter: blur(24px); padding: 35px; border-radius: 24px; width: 90%; max-width: 400px; text-align: center; box-shadow: 0 25px 50px rgba(0,0,0,0.25); border: var(--glass-border); }
@@ -1167,6 +1217,7 @@
             .topbar-group-right .nav-link,
             .top-bar-actions .nav-link { padding: 9px 11px; }
             .theme-btn { width: 36px; height: 36px; }
+            .topbar-divider { display: none; }
 
             .cards-grid, .cards-grid-available, .cards-grid-upcoming { grid-template-columns: 1fr; gap: 18px; }
             .nav-card { padding: 24px 18px; }
@@ -1231,6 +1282,20 @@
     </script>
 </head>
 <body>
+
+    <!-- Partner Welcome Banner: appears at the very top of the page, above everything else, for the Infra Group login. -->
+    <div id="partner-welcome-banner">
+        <i class="fa-solid fa-handshake-angle banner-icon"></i>
+        <div class="banner-text">
+            <strong data-ar="نرحب بمهندسي شركة إنفرا جروب للاستشارات الهندسية"
+                    data-en="Welcome, Infra Group Engineering Consultancy">نرحب بمهندسي شركة إنفرا جروب للاستشارات الهندسية</strong>
+            <span class="banner-sub" data-ar="نتمنى لكم تجربة تدريبية مفيدة على منصة BA Engineering Academy"
+                    data-en="Enjoy your training experience on BA Engineering Academy">نتمنى لكم تجربة تدريبية مفيدة على منصة BA Engineering Academy</span>
+        </div>
+        <button class="banner-close" onclick="closePartnerWelcomeBanner()" title="إغلاق" aria-label="Close">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+    </div>
 
     <!-- Global Dynamic Moving Ticker Bar -->
     <div class="global-ticker">
@@ -1313,17 +1378,22 @@
         </div>
     </div>
 
-    <!-- Unified Trainee Portal: one login (username + password) grants access to all courses, remembered on this device. -->
+    <!-- Unified Trainee Portal: one login (username + password) grants access to all courses, remembered on this device.
+         This modal is intentionally always in English, regardless of the site's language toggle. -->
     <div class="modal-overlay" id="login-modal-overlay">
         <div class="login-modal">
             <i class="fa-solid fa-shield-halved" style="font-size: 2.8rem; color: var(--accent-color); margin-bottom: 14px;"></i>
-            <h3 data-ar="بوابة المتدربين" data-en="Trainee Portal">بوابة المتدربين</h3>
-            <p style="color: var(--text-muted); margin-bottom: 18px; font-weight: 600; font-size: 0.92rem;" data-ar="سجّل الدخول مرة واحدة للوصول إلى جميع الكورسات" data-en="Sign in once to access all courses">سجّل الدخول مرة واحدة للوصول إلى جميع الكورسات</p>
-            <input type="text" id="login-username" class="login-input" placeholder="اسم المستخدم" autocomplete="username">
-            <input type="password" id="login-password" class="login-input" placeholder="كلمة المرور" autocomplete="current-password">
+            <h3>Trainee Portal</h3>
+            <p style="color: var(--text-muted); margin-bottom: 18px; font-weight: 600; font-size: 0.92rem;">Sign in once to access all courses</p>
+            <input type="text" id="login-username" class="login-input" placeholder="Username" autocomplete="username">
+            <input type="password" id="login-password" class="login-input" placeholder="Password" autocomplete="current-password">
+            <label class="login-remember-row" for="login-remember-me">
+                <input type="checkbox" id="login-remember-me">
+                <span>Remember me</span>
+            </label>
             <div style="display: flex; gap: 10px;">
-                <button class="btn-primary" style="flex: 1;" onclick="verifyLogin()" data-ar="دخول" data-en="Enter">دخول</button>
-                <button class="btn-outline" style="flex: 1;" onclick="closeModal()" data-ar="إلغاء" data-en="Cancel">إلغاء</button>
+                <button class="btn-primary" style="flex: 1;" onclick="verifyLogin()">Sign In</button>
+                <button class="btn-outline" style="flex: 1;" onclick="closeModal()">Cancel</button>
             </div>
         </div>
     </div>
@@ -1332,16 +1402,17 @@
     <header class="top-bar" id="main-topbar">
         <div class="top-bar-inner">
         <div class="topbar-group-right">
-            <div class="navbar-brand" id="navbar-datetime" style="gap: 8px; cursor: default;">
-                <span class="navbar-brand-main" id="navbar-time" style="font-family: 'JetBrains Mono', monospace; font-size: 14px; font-weight: 700; color: var(--topbar-text); letter-spacing: 0.5px;"></span>
-                <span class="navbar-brand-main" id="navbar-date" style="font-family: 'JetBrains Mono', monospace; font-size: 14px; font-weight: 700; color: var(--topbar-text); letter-spacing: 0.5px;"></span>
+            <div class="navbar-datetime-tag" id="navbar-datetime">
+                <span class="navbar-brand-main" id="navbar-time"></span>
+                <span class="navbar-brand-main" id="navbar-date"></span>
             </div>
-            <button class="nav-link home-highlight" onclick="switchMainView('home-view')"><i class="fa-solid fa-house"></i> <span data-ar="الرئيسية" data-en="Home">الرئيسية</span></button>
+            <span class="topbar-divider"></span>
+            <button class="nav-link" onclick="switchMainView('home-view')"><i class="fa-solid fa-house"></i> <span data-ar="الرئيسية" data-en="Home">الرئيسية</span></button>
             <a class="nav-link tools-nav-link" href="tools/index.html" aria-label="Engineering Tools">
                     <i class="fa-solid fa-calculator"></i>
                     <span data-ar="Engineering Tools" data-en="Engineering Tools">Engineering Tools</span>
                 </a>
-            <button class="nav-link" id="login-nav-btn" onclick="handleLoginNavClick()"><i class="fa-solid fa-right-to-bracket"></i> <span data-ar="تسجيل الدخول" data-en="Login">تسجيل الدخول</span></button>
+            <button class="nav-link nav-cta" id="login-nav-btn" onclick="handleLoginNavClick()"><i class="fa-solid fa-right-to-bracket"></i> <span>Sign In</span></button>
         </div>
 
         <div class="topbar-group-left">
@@ -1350,6 +1421,8 @@
                 <button class="nav-link" onclick="switchMainView('articles-list-view')"><i class="fa-solid fa-newspaper"></i> <span data-ar="مقالات" data-en="Articles">مقالات</span></button>
                 <button class="nav-link" onclick="switchMainView('about-view')"><i class="fa-solid fa-circle-info"></i> <span data-ar="من نحن" data-en="About Us">من نحن</span></button>
             </nav>
+
+            <span class="topbar-divider"></span>
 
             <nav class="top-bar-actions">
                 <button class="nav-link" id="lang-toggle-btn" onclick="toggleLanguage()">
@@ -1425,25 +1498,8 @@
                 <h2 data-ar="لماذا أنشأنا BA Academy؟" data-en="Why did we create BA Academy?">لماذا أنشأنا BA Academy؟</h2>
                 <p>
                     <i class="fa-solid fa-quote-right" style="color: var(--accent-color); font-size: 1.3rem; margin-bottom: 8px; display: block;"></i>
-                    <span data-ar='"بدأت فكرة BA Academy من ملاحظة بسيطة: هناك فجوة بين ما ندرسه، وما نطبقه في المشاريع. لذلك صممنا منصة تقدم تعلمًا عمليًا، وأدوات ومرجعًا يساعد المهندس على تطوير مهاراته والرجوع إليه في مختلف مراحل حياته المهنية."' data-en='"The idea of BA Academy started from a simple observation: there is a gap between what we study and what we apply in projects. Thus, we created a platform providing practical learning and tools that help engineers grow throughout their career."'>"بدأت فكرة BA Academy من ملاحظة بسيطة: هناك فجوة بين ما ندرسه، وما نطبقه في المشاريع. لذلك صممنا منصة تقدم تعلمًا عمليًا، وأدوات ومرجعًا يساعد المهندس على تطوير مهاراته والرجوع إليه في مختلف مراحل حياته المهنية."</span>
+                    <span data-ar='"بدأت فكرة BA Academy من ملاحظة بسيطة: وقت أغلبنا لا يكفي لمناهج طويلة ومعقدة، رغم احتياجنا المستمر لتطوير مهاراتنا. لذلك صممنا تعليمًا موجزًا ومركّزًا يختصر لك المنهج دون أي إخلال بجودة المحتوى، مبنيًا على الأكواد والمواصفات المعتمدة، وخلاصة سنوات من الخبرة الميدانية، ليساعدك على التنفيذ الفعلي في مشاريعك باحترافية."' data-en='"The idea of BA Academy started from a simple observation: most of us don\'t have time for long, complex curricula, even though we constantly need to grow our skills. So we designed concise, focused learning that trims the curriculum without compromising content quality — built on recognized codes and standards, and distilled from years of field experience — to help you actually implement it professionally in your projects."'>"بدأت فكرة BA Academy من ملاحظة بسيطة: وقت أغلبنا لا يكفي لمناهج طويلة ومعقدة، رغم احتياجنا المستمر لتطوير مهاراتنا. لذلك صممنا تعليمًا موجزًا ومركّزًا يختصر لك المنهج دون أي إخلال بجودة المحتوى، مبنيًا على الأكواد والمواصفات المعتمدة، وخلاصة سنوات من الخبرة الميدانية، ليساعدك على التنفيذ الفعلي في مشاريعك باحترافية."</span>
                 </p>
-            </div>
-        </section>
-
-        <section class="trust-panel">
-            <div class="trust-panel-inner">
-                <div class="trust-lead">
-                    <div class="trust-lead-icon"><i class="fa-solid fa-shield-halved"></i></div>
-                    <div>
-                        <h3 data-ar="تعلم مبني على التطبيق" data-en="Learning Built Around Application">تعلم مبني على التطبيق</h3>
-                        <p data-ar="المحتوى مصمم ليقربك من طريقة التفكير والعمل داخل المشروع، لا مجرد حفظ المعلومات." data-en="Content is designed to bring you closer to how engineers think and work inside real projects—not just memorize information.">المحتوى مصمم ليقربك من طريقة التفكير والعمل داخل المشروع، لا مجرد حفظ المعلومات.</p>
-                    </div>
-                </div>
-                <div class="trust-points">
-                    <div class="trust-point"><i class="fa-solid fa-diagram-project"></i><strong data-ar="مشاريع وتطبيقات" data-en="Projects & Applications">مشاريع وتطبيقات</strong><span data-ar="أمثلة عملية" data-en="Practical examples">أمثلة عملية</span></div>
-                    <div class="trust-point"><i class="fa-solid fa-toolbox"></i><strong data-ar="أدوات هندسية" data-en="Engineering Tools">أدوات هندسية</strong><span data-ar="تساعدك على التطبيق" data-en="Built for application">تساعدك على التطبيق</span></div>
-                    <div class="trust-point"><i class="fa-solid fa-layer-group"></i><strong data-ar="مسارات متخصصة" data-en="Specialized Tracks">مسارات متخصصة</strong><span data-ar="Risk · VE · Contracts" data-en="Risk · VE · Contracts">Risk · VE · Contracts</span></div>
-                </div>
             </div>
         </section>
 
@@ -1452,14 +1508,19 @@
             <p class="features-subtitle" data-ar="نضع بين يديك معايير احترافية فريدة لتطوير مسيرتك الهندسية" data-en="We provide unique professional standards to elevate your engineering career">نضع بين يديك معايير احترافية فريدة لتطوير مسيرتك الهندسية</p>
             <div class="features-grid">
                 <div class="feature-card">
-                    <i class="fa-solid fa-briefcase"></i>
-                    <h4 data-ar="خبرة عملية ميدانية" data-en="Practical Field Experience">خبرة عملية ميدانية</h4>
-                    <p data-ar="محتوى مستخلص من مشاريع واقعية وخبرات هندسية ممتدة لسنوات طويلة." data-en="Content derived from real-world projects and extensive engineering experience.">محتوى مستخلص من مشاريع واقعية وخبرات هندسية ممتدة لسنوات طويلة.</p>
+                    <i class="fa-solid fa-stopwatch"></i>
+                    <h4 data-ar="تعليم موجز ومركّز" data-en="Concise, Focused Learning">تعليم موجز ومركّز</h4>
+                    <p data-ar="نختصر لك المنهج الطويل والمعقد لأن وقتك محدود، دون أي إخلال بجودة المحتوى." data-en="We compress long, complex curricula into a focused format because your time is limited — without compromising content quality.">نختصر لك المنهج الطويل والمعقد لأن وقتك محدود، دون أي إخلال بجودة المحتوى.</p>
                 </div>
                 <div class="feature-card">
-                    <i class="fa-solid fa-diagram-project"></i>
-                    <h4 data-ar="مشاريع حقيقية" data-en="Real Projects">مشاريع حقيقية</h4>
-                    <p data-ar="تطبيقات عملية وأمثلة حية تمكنك من التعامل مع تحديات المشاريع الكبرى بكفاءة." data-en="Practical applications enabling you to handle major project challenges efficiently.">تطبيقات عملية وأمثلة حية تمكنك من التعامل مع تحديات المشاريع الكبرى بكفاءة.</p>
+                    <i class="fa-solid fa-scale-balanced"></i>
+                    <h4 data-ar="مطابق للأكواد والمواصفات" data-en="Aligned With Codes & Standards">مطابق للأكواد والمواصفات</h4>
+                    <p data-ar="محتوى مبني على الأكواد والمواصفات الهندسية المعتمدة، بعيدًا عن الآراء الشخصية." data-en="Content built on recognized engineering codes and standards, not personal opinion.">محتوى مبني على الأكواد والمواصفات الهندسية المعتمدة، بعيدًا عن الآراء الشخصية.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fa-solid fa-briefcase"></i>
+                    <h4 data-ar="خبرة ميدانية حقيقية" data-en="Real Field Experience">خبرة ميدانية حقيقية</h4>
+                    <p data-ar="مشاريع وأمثلة حية مستخلصة من خبرة ميدانية حقيقية على مدار سنوات، يمكنك تطبيقها فعليًا في عملك." data-en="Live projects and examples distilled from real field experience over the years, that you can actually apply at work.">مشاريع وأمثلة حية مستخلصة من خبرة ميدانية حقيقية على مدار سنوات، يمكنك تطبيقها فعليًا في عملك.</p>
                 </div>
                 <div class="feature-card">
                     <i class="fa-solid fa-certificate"></i>
@@ -1469,7 +1530,7 @@
                 <div class="feature-card">
                     <i class="fa-solid fa-headset"></i>
                     <h4 data-ar="متابعة ودعم مستمر" data-en="Continuous Support">متابعة ودعم مستمر</h4>
-                    <p data-ar="إشراف مباشر ومتابعة مستمرة لضمان تحقيق الاستفادة القصوى وتجاوز العقبات." data-en="Direct supervision and ongoing support to ensure maximum learning outcomes.">إشراف مباشر ومتابعة مستمرة لضمان تحقيق الاستفادة القصوى وتجاوز العقبات.</p>
+                    <p data-ar="إشراف مباشر ومتابعة مستمرة لضمان تحقيق أقصى استفادة وتجاوز العقبات." data-en="Direct supervision and ongoing support to ensure maximum learning outcomes.">إشراف مباشر ومتابعة مستمرة لضمان تحقيق أقصى استفادة وتجاوز العقبات.</p>
                 </div>
             </div>
         </section>
@@ -2268,6 +2329,11 @@
                 const text = el.getAttribute(`data-${currentLang}`);
                 if (text) el.innerText = text;
             });
+
+            document.querySelectorAll('[data-ph-ar]').forEach(el => {
+                const ph = el.getAttribute(`data-ph-${currentLang}`);
+                if (ph) el.placeholder = ph;
+            });
         }
 
         function toggleTheme() {
@@ -2451,16 +2517,37 @@
             resBox.innerHTML = `<span style="color: var(--primary-blue);"><i class="fa-solid fa-clock"></i> <span data-ar="نظام التحقق من الشهادات سيتوفر قريباً" data-en="Certificate verification is coming soon">نظام التحقق من الشهادات سيتوفر قريباً</span></span>`;
         }
 
-        // Unified trainee login — one username/password (admin / 2026) unlocks every course.
+        // Unified trainee login — one username/password unlocks every course.
         // Successful logins are remembered on this browser/device via localStorage, so returning
         // trainees skip the login form entirely.
+        // NOTE: this is a client-side static site with no server, so this check only deters casual
+        // snooping (credentials aren't sitting in plain text in the page source) — it does not stop
+        // someone from bypassing login entirely via the browser console. Treat this as a soft gate,
+        // not real security. See the login-security notes for the full picture.
         const AUTH_STORAGE_KEY = 'ba_academy_auth';
+        const AUTH_TYPE_KEY = 'ba_academy_auth_type'; // 'student' or 'infra'
         const LOGIN_ATTEMPTS_KEY = 'ba_academy_login_attempts';
         const LOGIN_LOCKOUT_KEY = 'ba_academy_lockout_until';
         const MAX_LOGIN_ATTEMPTS = 5;
         const LOCKOUT_DURATION_MS = 10 * 60 * 1000; // 10 minutes
+        const CREDENTIALS_HASH = '84f828add7a57f54d85930316522cfe323fe144e00655bc55fdca2134af765a2';
+        // Dedicated login for the Infra Group Engineering Consultancy partner account (username: infra / password: 2026).
+        const CREDENTIALS_HASH_INFRA = 'ded3ff86b9a03dc1d947c602d52773077edf7784d34fb2b2f78ec9a4d13e0ea6';
+
+        // "Remember me" — stores the last-used username/password on this device only when the
+        // trainee explicitly opts in via the checkbox in the login modal.
+        const REMEMBER_FLAG_KEY = 'ba_academy_remember_me';
+        const REMEMBER_USER_KEY = 'ba_academy_remember_user';
+        const REMEMBER_PASS_KEY = 'ba_academy_remember_pass';
+
         let pendingLoginTarget = null;
         let lockoutIntervalId = null;
+
+        async function sha256Hex(text) {
+            const data = new TextEncoder().encode(text);
+            const digest = await crypto.subtle.digest('SHA-256', data);
+            return Array.from(new Uint8Array(digest)).map(b => b.toString(16).padStart(2, '0')).join('');
+        }
 
         function goToCourseTarget(target) {
             if (target === 'scroll-courses') {
@@ -2526,13 +2613,11 @@
             const btn = document.getElementById('login-nav-btn');
             if (!btn) return;
             const loggedIn = localStorage.getItem(AUTH_STORAGE_KEY) === 'true';
-            if (loggedIn) {
-                btn.innerHTML = '<i class="fa-solid fa-right-from-bracket"></i> <span data-ar="تسجيل الخروج" data-en="Logout">تسجيل الخروج</span>';
-                btn.setAttribute('onclick', 'handleLogoutNavClick()');
-            } else {
-                btn.innerHTML = '<i class="fa-solid fa-right-to-bracket"></i> <span data-ar="تسجيل الدخول" data-en="Login">تسجيل الدخول</span>';
-                btn.setAttribute('onclick', 'handleLoginNavClick()');
-            }
+            // Login/Logout is intentionally always shown in English, regardless of the site language toggle.
+            const label = loggedIn ? 'Sign Out' : 'Sign In';
+            const icon = loggedIn ? 'fa-right-from-bracket' : 'fa-right-to-bracket';
+            btn.innerHTML = `<i class="fa-solid ${icon}"></i> <span>${label}</span>`;
+            btn.setAttribute('onclick', loggedIn ? 'handleLogoutNavClick()' : 'handleLoginNavClick()');
         }
 
         function handleLoginNavClick() {
@@ -2543,8 +2628,21 @@
 
         function handleLogoutNavClick() {
             localStorage.removeItem(AUTH_STORAGE_KEY);
+            localStorage.removeItem(AUTH_TYPE_KEY);
+            closePartnerWelcomeBanner();
             updateLoginNavButton();
             showToast('تم تسجيل الخروج بنجاح', 'success');
+        }
+
+        // Shows the Infra Group partner welcome banner at the very top of the page (above the ticker),
+        // so it's the first thing visible. Stays open until the trainee dismisses it.
+        function showPartnerWelcomeBanner() {
+            const banner = document.getElementById('partner-welcome-banner');
+            if (banner) banner.classList.add('active');
+        }
+        function closePartnerWelcomeBanner() {
+            const banner = document.getElementById('partner-welcome-banner');
+            if (banner) banner.classList.remove('active');
         }
 
         function enterCourse(target) {
@@ -2579,23 +2677,61 @@
             }
         }
 
-        function openLoginModal() { document.getElementById('login-modal-overlay').classList.add('active'); document.getElementById('login-username').focus(); }
+        function openLoginModal() {
+            document.getElementById('login-modal-overlay').classList.add('active');
+            prefillRememberedLogin();
+            document.getElementById('login-username').focus();
+        }
         function closeModal() {
             document.getElementById('login-modal-overlay').classList.remove('active');
             document.getElementById('login-username').value = '';
             document.getElementById('login-password').value = '';
         }
 
-        function verifyLogin() {
+        // Pre-fills the login form from localStorage if the trainee previously checked "Remember me".
+        function prefillRememberedLogin() {
+            const remembered = localStorage.getItem(REMEMBER_FLAG_KEY) === 'true';
+            const rememberBox = document.getElementById('login-remember-me');
+            if (remembered) {
+                document.getElementById('login-username').value = localStorage.getItem(REMEMBER_USER_KEY) || '';
+                document.getElementById('login-password').value = localStorage.getItem(REMEMBER_PASS_KEY) || '';
+                if (rememberBox) rememberBox.checked = true;
+            } else if (rememberBox) {
+                rememberBox.checked = false;
+            }
+        }
+
+        async function verifyLogin() {
             if (getLockoutRemainingMs() > 0) { showLockoutOverlay(); return; }
             let user = document.getElementById('login-username').value.trim();
             let pass = document.getElementById('login-password').value;
-            if (user === "admin" && pass === "2026") {
+            const rememberChecked = document.getElementById('login-remember-me')?.checked;
+            const enteredHash = await sha256Hex(user + ':' + pass);
+
+            if (enteredHash === CREDENTIALS_HASH || enteredHash === CREDENTIALS_HASH_INFRA) {
                 localStorage.setItem(AUTH_STORAGE_KEY, 'true');
+                localStorage.setItem(AUTH_TYPE_KEY, enteredHash === CREDENTIALS_HASH_INFRA ? 'infra' : 'student');
                 localStorage.removeItem(LOGIN_ATTEMPTS_KEY);
+
+                // Handle "remember me": save credentials on this device only if the box is checked.
+                if (rememberChecked) {
+                    localStorage.setItem(REMEMBER_FLAG_KEY, 'true');
+                    localStorage.setItem(REMEMBER_USER_KEY, user);
+                    localStorage.setItem(REMEMBER_PASS_KEY, pass);
+                } else {
+                    localStorage.removeItem(REMEMBER_FLAG_KEY);
+                    localStorage.removeItem(REMEMBER_USER_KEY);
+                    localStorage.removeItem(REMEMBER_PASS_KEY);
+                }
+
                 closeModal();
                 updateLoginNavButton();
                 goToCourseTarget(pendingLoginTarget);
+
+                // Show the dedicated welcome banner for the Infra Group partner account.
+                if (enteredHash === CREDENTIALS_HASH_INFRA) {
+                    showPartnerWelcomeBanner();
+                }
             } else {
                 let attempts = parseInt(localStorage.getItem(LOGIN_ATTEMPTS_KEY) || '0', 10) + 1;
                 if (attempts >= MAX_LOGIN_ATTEMPTS) {
@@ -2620,6 +2756,12 @@
         // Initialize login button state and lockout status on page load.
         updateLoginNavButton();
         if (getLockoutRemainingMs() > 0) showLockoutOverlay();
+
+        // If the Infra Group partner account is already logged in on this device (remembered session),
+        // greet them again at the top of the page.
+        if (localStorage.getItem(AUTH_STORAGE_KEY) === 'true' && localStorage.getItem(AUTH_TYPE_KEY) === 'infra') {
+            showPartnerWelcomeBanner();
+        }
 
         // Contract course intro video — active, linked from the available-courses card and contracts-info-view.
 
