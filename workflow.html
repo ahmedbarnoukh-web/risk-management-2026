@@ -22,7 +22,7 @@
         </div>
     </header>
 
-    <main class="container mx-auto p-4 max-w-4xl">
+    <main class="container mx-auto p-4 max-w-5xl">
 
         <div id="loginBox" class="bg-white p-6 rounded shadow max-w-sm mx-auto mt-10">
             <h2 id="loginTitle" class="font-bold text-lg mb-4">تسجيل دخول</h2>
@@ -37,41 +37,61 @@
         <div id="appBox" class="hidden">
 
             <div class="bg-white p-6 rounded shadow mb-6">
-                <h3 class="font-bold mb-4">إضافة خطاب جديد</h3>
+                <h3 id="formTitle" class="font-bold mb-4">إضافة مستند جديد</h3>
                 <form id="addForm" class="grid grid-cols-2 gap-3">
-                    <input type="text" id="fRef" required placeholder="رقم الخطاب" class="border p-2 rounded col-span-1">
+                    <input type="hidden" id="editId" value="">
+                    <input type="text" id="fRef" required placeholder="رقم المرجع" class="border p-2 rounded col-span-1">
                     <input type="text" id="fRecipient" required placeholder="المرسل / الموجه اليه" class="border p-2 rounded col-span-1">
                     <input type="text" id="fSubject" required placeholder="الموضوع" class="border p-2 rounded col-span-2">
-                    <select id="fType" class="border p-2 rounded">
+
+                    <select id="fType" class="border p-2 rounded col-span-1">
+                        <option value="خطاب">خطاب</option>
+                        <option value="مادة">مادة</option>
+                        <option value="مخطط">مخطط</option>
+                        <option value="RFI">RFI</option>
+                        <option value="مستخلص">مستخلص</option>
+                        <option value="محضر استلام نهائي">محضر استلام نهائي</option>
+                        <option value="محضر استلام ابتدائي">محضر استلام ابتدائي</option>
+                    </select>
+                    <select id="fDirection" class="border p-2 rounded col-span-1">
                         <option value="صادر">صادر</option>
                         <option value="وارد">وارد</option>
                     </select>
-                    <select id="fPriority" class="border p-2 rounded">
+
+                    <select id="fPriority" class="border p-2 rounded col-span-1">
                         <option value="عادي">عادي</option>
                         <option value="عاجل">عاجل</option>
                     </select>
-                    <input type="date" id="fDate" required class="border p-2 rounded col-span-2">
-                    <button style="background-color:#0F2C52" class="text-white p-2 rounded col-span-2">حفظ</button>
+                    <input type="date" id="fDate" required class="border p-2 rounded col-span-1">
+
+                    <div class="col-span-2 flex gap-2">
+                        <button id="submitBtn" style="background-color:#0F2C52" class="flex-1 text-white p-2 rounded">حفظ</button>
+                        <button type="button" id="cancelEditBtn" class="hidden bg-gray-400 text-white p-2 rounded px-4">إلغاء</button>
+                    </div>
                 </form>
             </div>
 
             <div class="bg-white p-6 rounded shadow">
                 <h3 class="font-bold mb-4">سجل المراسلات</h3>
-                <table class="w-full text-sm text-right">
-                    <thead>
-                        <tr class="bg-gray-100">
-                            <th class="p-2">الرقم</th>
-                            <th class="p-2">الموضوع</th>
-                            <th class="p-2">النوع</th>
-                            <th class="p-2">الأولوية</th>
-                            <th class="p-2">الحالة</th>
-                            <th class="p-2">إجراء</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tableBody">
-                        <tr><td colspan="6" class="p-4 text-center">جاري التحميل...</td></tr>
-                    </tbody>
-                </table>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm text-right">
+                        <thead>
+                            <tr class="bg-gray-100">
+                                <th class="p-2">الرقم</th>
+                                <th class="p-2">الموضوع</th>
+                                <th class="p-2">النوع</th>
+                                <th class="p-2">الاتجاه</th>
+                                <th class="p-2">الأولوية</th>
+                                <th class="p-2">التاريخ</th>
+                                <th class="p-2">الحالة</th>
+                                <th class="p-2">إجراء</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableBody">
+                            <tr><td colspan="8" class="p-4 text-center">جاري التحميل...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </main>
@@ -83,6 +103,7 @@
         );
 
         let signUpMode = false;
+        let allRows = [];
 
         const loginBox = document.getElementById('loginBox');
         const appBox = document.getElementById('appBox');
@@ -134,33 +155,43 @@
             const { data, error } = await db.from('correspondence').select('*').order('created_at', { ascending: false });
 
             if (error) {
-                tbody.innerHTML = `<tr><td colspan="6" class="p-4 text-center text-red-500">${error.message}</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="8" class="p-4 text-center text-red-500">${error.message}</td></tr>`;
                 return;
             }
-            if (!data.length) {
-                tbody.innerHTML = `<tr><td colspan="6" class="p-4 text-center">مفيش خطابات لسه</td></tr>`;
+            allRows = data || [];
+
+            if (!allRows.length) {
+                tbody.innerHTML = `<tr><td colspan="8" class="p-4 text-center">مفيش مستندات لسه</td></tr>`;
                 return;
             }
 
-            tbody.innerHTML = data.map(row => `
+            tbody.innerHTML = allRows.map(row => `
                 <tr class="border-b">
                     <td class="p-2">${row.reference_no || '-'}</td>
                     <td class="p-2">${row.subject || '-'}</td>
                     <td class="p-2">${row.type || '-'}</td>
-                    <td class="p-2">${row.priority || '-'}</td>
+                    <td class="p-2">${row.direction || '-'}</td>
+                    <td class="p-2">${row.priority === 'عاجل' ? '<span class="text-red-600 font-semibold">عاجل</span>' : (row.priority || '-')}</td>
+                    <td class="p-2 text-gray-500">${row.correspondence_date || '-'}</td>
                     <td class="p-2">${row.status || 'جديد'}</td>
-                    <td class="p-2">${actionButtons(row)}</td>
+                    <td class="p-2 whitespace-nowrap">${actionButtons(row)}</td>
                 </tr>
             `).join('');
         }
 
         function actionButtons(row) {
-            if (row.status === 'معتمد' || row.status === 'مرفوض') {
-                return 'تم البت';
-            }
+            const decisionBtns = (row.status === 'معتمد' || row.status === 'مرفوض')
+                ? ''
+                : `
+                    <button onclick="changeStatus('${row.id}', 'معتمد')" class="bg-green-600 text-white text-xs px-2 py-1 rounded">اعتماد</button>
+                    <button onclick="changeStatus('${row.id}', 'مرفوض')" class="bg-red-600 text-white text-xs px-2 py-1 rounded">رفض</button>
+                `;
             return `
-                <button onclick="changeStatus('${row.id}', 'معتمد')" class="bg-green-600 text-white text-xs px-2 py-1 rounded">اعتماد</button>
-                <button onclick="changeStatus('${row.id}', 'مرفوض')" class="bg-red-600 text-white text-xs px-2 py-1 rounded">رفض</button>
+                <div class="flex gap-1 flex-wrap">
+                    ${decisionBtns}
+                    <button onclick="startEdit('${row.id}')" class="bg-yellow-500 text-white text-xs px-2 py-1 rounded">تعديل</button>
+                    <button onclick="deleteRow('${row.id}')" class="bg-gray-700 text-white text-xs px-2 py-1 rounded">حذف</button>
+                </div>
             `;
         }
 
@@ -171,26 +202,71 @@
             else loadTable();
         }
 
+        async function deleteRow(id) {
+            if (!confirm('هل أنت متأكد من حذف هذا المستند نهائيًا؟')) return;
+            const { error } = await db.from('correspondence').delete().eq('id', id);
+            if (error) alert('خطأ في الحذف: ' + error.message);
+            else loadTable();
+        }
+
+        function startEdit(id) {
+            const row = allRows.find(r => r.id === id);
+            if (!row) return;
+
+            document.getElementById('editId').value = row.id;
+            document.getElementById('fRef').value = row.reference_no || '';
+            document.getElementById('fRecipient').value = row.sender_recipient || '';
+            document.getElementById('fSubject').value = row.subject || '';
+            document.getElementById('fType').value = row.type || 'خطاب';
+            document.getElementById('fDirection').value = row.direction || 'صادر';
+            document.getElementById('fPriority').value = row.priority || 'عادي';
+            document.getElementById('fDate').value = row.correspondence_date || '';
+
+            document.getElementById('formTitle').textContent = 'تعديل مستند';
+            document.getElementById('submitBtn').textContent = 'حفظ التعديل';
+            document.getElementById('cancelEditBtn').classList.remove('hidden');
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function resetForm() {
+            document.getElementById('addForm').reset();
+            document.getElementById('editId').value = '';
+            document.getElementById('fDate').value = new Date().toISOString().split('T')[0];
+            document.getElementById('formTitle').textContent = 'إضافة مستند جديد';
+            document.getElementById('submitBtn').textContent = 'حفظ';
+            document.getElementById('cancelEditBtn').classList.add('hidden');
+        }
+        document.getElementById('cancelEditBtn').onclick = resetForm;
+
         document.getElementById('addForm').onsubmit = async (e) => {
             e.preventDefault();
             const { data: { session } } = await db.auth.getSession();
+            const editId = document.getElementById('editId').value;
 
-            const newRow = {
+            const rowData = {
                 reference_no: document.getElementById('fRef').value,
                 sender_recipient: document.getElementById('fRecipient').value,
                 subject: document.getElementById('fSubject').value,
                 type: document.getElementById('fType').value,
+                direction: document.getElementById('fDirection').value,
                 priority: document.getElementById('fPriority').value,
                 correspondence_date: document.getElementById('fDate').value,
-                status: 'جديد',
-                user_id: session.user.id
             };
 
-            const { error } = await db.from('correspondence').insert([newRow]);
-            if (error) {
-                alert('خطأ في الحفظ: ' + error.message);
+            let error;
+            if (editId) {
+                ({ error } = await db.from('correspondence').update(rowData).eq('id', editId));
             } else {
-                e.target.reset();
+                rowData.status = 'جديد';
+                rowData.user_id = session.user.id;
+                ({ error } = await db.from('correspondence').insert([rowData]));
+            }
+
+            if (error) {
+                alert('حدث خطأ: ' + error.message);
+            } else {
+                resetForm();
                 loadTable();
             }
         };
