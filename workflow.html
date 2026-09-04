@@ -25,11 +25,11 @@
     <!-- Main Container -->
     <main class="container mx-auto px-4 py-8">
         <div class="mb-8">
-            <h2 class="text-2xl font-bold text-gray-900 mb-2">لوحة المراسلات والاعتمادات الهندسية</h2>
-            <p class="text-gray-600 text-sm">متابعة الخطابات، مسودات الاعتمادات، وحالة سير العمل بشكل لحظي من قاعدة البيانات.</p>
+            <h2 class="text-2xl font-bold text-gray-900 mb-2">لوحة المراسلات والخطابات الهندسية</h2>
+            <p class="text-gray-600 text-sm">متابعة الخطابات والمسودات بشكل لحظي من قاعدة البيانات.</p>
         </div>
 
-        <!-- Section 1: Correspondence / الخطابات -->
+        <!-- Section: Correspondence / الخطابات -->
         <section class="bg-white rounded-lg shadow-md p-6 mb-8">
             <h3 class="text-lg font-semibold text-blue-900 mb-4 border-b pb-2">جدول المراسلات والخطابات</h3>
             <div class="overflow-x-auto">
@@ -46,28 +46,6 @@
                     <tbody id="correspondence-tbody" class="text-sm divide-y divide-gray-200">
                         <tr>
                             <td colspan="5" class="p-4 text-center text-gray-500">جاري تحميل البيانات...</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </section>
-
-        <!-- Section 2: Workflows & Approvals / الاعتمادات وسير العمل -->
-        <section class="bg-white rounded-lg shadow-md p-6">
-            <h3 class="text-lg font-semibold text-blue-900 mb-4 border-b pb-2">حالة اعتمادات المهام</h3>
-            <div class="overflow-x-auto">
-                <table class="w-full text-right border-collapse">
-                    <thead>
-                        <tr class="bg-gray-100 text-gray-700 text-sm">
-                            <th class="p-3 border-b">اسم المهمة / المشروع</th>
-                            <th class="p-3 border-b">المسؤول</th>
-                            <th class="p-3 border-b">المرحلة الحالية</th>
-                            <th class="p-3 border-b">حالة الاعتماد</th>
-                        </tr>
-                    </thead>
-                    <tbody id="workflows-tbody" class="text-sm divide-y divide-gray-200">
-                        <tr>
-                            <td colspan="4" class="p-4 text-center text-gray-500">جاري تحميل البيانات...</td>
                         </tr>
                     </tbody>
                 </table>
@@ -110,35 +88,9 @@
             `).join('');
         }
 
-        // جلب وعرض بيانات الاعتمادات
-        async function fetchWorkflowsData() {
-            const tbody = document.getElementById('workflows-tbody');
-            const { data, error } = await _supabase.from('workflows').select('*');
-
-            if (error) {
-                tbody.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-red-500">خطأ في جلب البيانات: ${error.message}</td></tr>`;
-                return;
-            }
-
-            if (!data || data.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-gray-500">لا توجد مسارح عمل أو اعتمادات مسجلة حالياً.</td></tr>`;
-                return;
-            }
-
-            tbody.innerHTML = data.map(item => `
-                <tr class="hover:bg-gray-50">
-                    <td class="p-3">${item.title || item.name || '-'}</td>
-                    <td class="p-3">${item.assignee || '-'}</td>
-                    <td class="p-3">${item.stage || '-'}</td>
-                    <td class="p-3"><span class="px-2 py-1 rounded text-xs bg-green-100 text-green-800">${item.approval_status || item.status || 'قيد المراجعة'}</span></td>
-                </tr>
-            `).join('');
-        }
-
-        // تشغيل الدوال عند فتح الصفحة
+        // تشغيل الدالة عند فتح الصفحة
         window.addEventListener('DOMContentLoaded', () => {
             fetchCorrespondenceData();
-            fetchWorkflowsData();
         });
     </script>
 </body>
