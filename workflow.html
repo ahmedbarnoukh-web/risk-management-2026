@@ -23,9 +23,9 @@
     </header>
 
     <!-- Main Container -->
-    <main class="container mx-auto px-4 py-8 max-w-4xl">
+    <main class="container mx-auto px-4 py-8 max-w-5xl">
 
-        <!-- Section 1: Auth Box (Login / Signup) - تظهر للمستخدم غير المسجل -->
+        <!-- Section 1: Auth Box (Login / Signup) -->
         <section id="auth-section" class="bg-white rounded-lg shadow-md p-6 max-w-md mx-auto my-12">
             <h2 id="auth-title" class="text-xl font-bold text-blue-900 mb-4 text-center">تسجيل دخول الشركة</h2>
             <form id="auth-form" class="space-y-4">
@@ -44,7 +44,7 @@
             </div>
         </section>
 
-        <!-- Section 2: Dashboard (Forms & Tables) - تظهر فقط بعد تسجيل الدخول -->
+        <!-- Section 2: Dashboard -->
         <div id="dashboard-section" class="hidden space-y-8">
             <div class="mb-4">
                 <h2 class="text-2xl font-bold text-gray-900 mb-1">لوحة مراسلات الشركة</h2>
@@ -76,6 +76,24 @@
                             <option value="مرفوض">مرفوض</option>
                         </select>
                     </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">نوع الخطاب</label>
+                        <select id="type" class="w-full border border-gray-300 rounded p-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                            <option value="صادر">صادر</option>
+                            <option value="وارد">وارد</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">الأولوية</label>
+                        <select id="priority" class="w-full border border-gray-300 rounded p-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                            <option value="عادي">عادي</option>
+                            <option value="عاجل">عاجل</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">تاريخ المراسلة</label>
+                        <input type="date" id="correspondence-date" class="w-full border border-gray-300 rounded p-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                    </div>
                     <div class="md:col-span-2 flex justify-end">
                         <button type="submit" id="submit-btn" class="bg-blue-900 text-white px-6 py-2 rounded text-sm font-medium hover:bg-blue-800 transition">حفظ وإضافة الخطاب</button>
                     </div>
@@ -92,13 +110,16 @@
                                 <th class="p-3 border-b">رقم الخطاب</th>
                                 <th class="p-3 border-b">الموضوع</th>
                                 <th class="p-3 border-b">المرسل / الموجه اليه</th>
+                                <th class="p-3 border-b">النوع</th>
+                                <th class="p-3 border-b">الأولوية</th>
                                 <th class="p-3 border-b">الحالة</th>
                                 <th class="p-3 border-b">التاريخ</th>
+                                <th class="p-3 border-b">الإجراء</th>
                             </tr>
                         </thead>
                         <tbody id="correspondence-tbody" class="text-sm divide-y divide-gray-200">
                             <tr>
-                                <td colspan="5" class="p-4 text-center text-gray-500">جاري التحميل...</td>
+                                <td colspan="6" class="p-4 text-center text-gray-500">جاري التحميل...</td>
                             </tr>
                         </tbody>
                     </table>
@@ -142,7 +163,6 @@
             const { data: { session } } = await _supabase.auth.getSession();
             manageSessionUI(session);
 
-            // الاستماع لأي تغيرات في حالة الدخول والخروج
             _supabase.auth.onAuthStateChange((event, session) => {
                 manageSessionUI(session);
             });
@@ -194,30 +214,68 @@
             await _supabase.auth.signOut();
         });
 
+        // خريطة ألوان لكل حالة
+        function statusBadgeClass(status) {
+            switch (status) {
+                case 'معتمد': return 'bg-green-100 text-green-800';
+                case 'مرفوض': return 'bg-red-100 text-red-800';
+                case 'قيد المراجعة': return 'bg-yellow-100 text-yellow-800';
+                default: return 'bg-blue-100 text-blue-800'; // جديد
+            }
+        }
+
         // جلب البيانات الخاصة بالشركة الحالية فقط
         async function fetchCorrespondenceData() {
             const tbody = document.getElementById('correspondence-tbody');
             const { data, error } = await _supabase.from('correspondence').select('*').order('created_at', { ascending: false });
 
             if (error) {
-                tbody.innerHTML = `<tr><td colspan="5" class="p-4 text-center text-red-500">خطأ في جلب البيانات: ${error.message}</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="8" class="p-4 text-center text-red-500">خطأ في جلب البيانات: ${error.message}</td></tr>`;
                 return;
             }
 
             if (!data || data.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="5" class="p-4 text-center text-gray-500">لا توجد خطابات مسجلة لشركتك حتى الآن.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="8" class="p-4 text-center text-gray-500">لا توجد خطابات مسجلة لشركتك حتى الآن.</td></tr>`;
                 return;
             }
 
-            tbody.innerHTML = data.map(item => `
+            tbody.innerHTML = data.map(item => {
+                // أزرار الاعتماد/الرفض تظهر فقط لو الحالة لسه "جديد" أو "قيد المراجعة"
+                const showActions = item.status !== 'معتمد' && item.status !== 'مرفوض';
+                const actionsHtml = showActions ? `
+                    <div class="flex gap-2 justify-end">
+                        <button onclick="updateStatus('${item.id}', 'معتمد')" class="bg-green-600 hover:bg-green-700 text-white text-xs px-3 py-1 rounded transition">اعتماد</button>
+                        <button onclick="updateStatus('${item.id}', 'مرفوض')" class="bg-red-600 hover:bg-red-700 text-white text-xs px-3 py-1 rounded transition">رفض</button>
+                    </div>
+                ` : `<span class="text-gray-400 text-xs">تم البت</span>`;
+
+                return `
                 <tr class="hover:bg-gray-50">
-                    <td class="p-3">${item.reference_number || '-'}</td>
+                    <td class="p-3">${item.reference_no || '-'}</td>
                     <td class="p-3">${item.subject || '-'}</td>
                     <td class="p-3">${item.recipient || '-'}</td>
-                    <td class="p-3"><span class="px-2 py-1 rounded text-xs bg-blue-100 text-blue-800">${item.status || 'جديد'}</span></td>
+                    <td class="p-3">${item.type || '-'}</td>
+                    <td class="p-3">${item.priority === 'عاجل' ? '<span class="text-red-600 font-semibold">عاجل</span>' : (item.priority || '-')}</td>
+                    <td class="p-3"><span class="px-2 py-1 rounded text-xs ${statusBadgeClass(item.status)}">${item.status || 'جديد'}</span></td>
                     <td class="p-3 text-gray-500">${item.created_at ? new Date(item.created_at).toLocaleDateString('ar-SA') : '-'}</td>
+                    <td class="p-3">${actionsHtml}</td>
                 </tr>
-            `).join('');
+            `;
+            }).join('');
+        }
+
+        // تحديث حالة خطاب معين (اعتماد أو رفض)
+        async function updateStatus(id, newStatus) {
+            const confirmMsg = newStatus === 'معتمد' ? 'هل أنت متأكد من اعتماد هذا الخطاب؟' : 'هل أنت متأكد من رفض هذا الخطاب؟';
+            if (!confirm(confirmMsg)) return;
+
+            const { error } = await _supabase.from('correspondence').update({ status: newStatus }).eq('id', id);
+
+            if (error) {
+                alert('حدث خطأ أثناء تحديث الحالة: ' + error.message);
+            } else {
+                fetchCorrespondenceData();
+            }
         }
 
         // إضافة خطاب جديد وربطه تلقائياً بالمستخدم الحالي
@@ -230,11 +288,14 @@
             const { data: { session } } = await _supabase.auth.getSession();
 
             const newRecord = {
-                reference_number: document.getElementById('ref-num').value,
+                reference_no: document.getElementById('ref-num').value,
                 subject: document.getElementById('subject').value,
                 recipient: document.getElementById('recipient').value,
                 status: document.getElementById('status').value,
-                user_id: session.user.id // ربط الخطاب بالشركة المسجلة حالياً
+                type: document.getElementById('type').value,
+                priority: document.getElementById('priority').value,
+                correspondence_date: document.getElementById('correspondence-date').value || null,
+                user_id: session.user.id
             };
 
             const { error } = await _supabase.from('correspondence').insert([newRecord]);
