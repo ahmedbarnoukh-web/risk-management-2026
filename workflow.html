@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BA Engineering — Correspondence Portal</title>
+    <title>BA Engineering — Enterprise Correspondence Platform</title>
     <link rel="icon" href="https://www.barnoukh-engineering.com/photo/logo.jpg">
     <meta name="theme-color" content="#0F2C52">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -12,177 +12,248 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
         :root {
-            --bg: #F7F8FA;
+            --bg: #F8FAFC;
             --surface: #FFFFFF;
-            --border: #E4E7EC;
-            --text-primary: #101828;
-            --text-secondary: #667085;
+            --border: #E2E8F0;
+            --text-primary: #0F172A;
+            --text-secondary: #64748B;
             --brand: #0F2C52;
-            --brand-light: #2E5AAC;
+            --brand-light: #2563EB;
         }
         * { font-family: 'Inter', -apple-system, sans-serif; }
         .mono { font-family: 'IBM Plex Mono', monospace; }
         body { background: var(--bg); color: var(--text-primary); }
-        .card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; }
+        .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05); }
         .btn-primary { background: var(--brand); color: #fff; transition: background .15s; }
         .btn-primary:hover { background: var(--brand-light); }
         .seg-btn { color: var(--text-secondary); border-bottom: 2px solid transparent; }
         .seg-btn.active { color: var(--brand); border-bottom-color: var(--brand); font-weight: 600; }
-        .status-pill { display:inline-flex; align-items:center; gap:5px; padding:3px 10px; border-radius:9999px; font-size:12px; font-weight:600; white-space:nowrap; }
-        .row-flag { box-shadow: inset 3px 0 0 #F79009; }
-        input:focus, select:focus, textarea:focus { outline:none; box-shadow: 0 0 0 3px rgba(46,90,172,0.15); border-color: var(--brand-light); }
-        .modal-overlay { background: rgba(16,24,40,0.5); backdrop-filter: blur(2px); }
-        table th { color: var(--text-secondary); font-weight:600; font-size:12px; text-transform:none; }
-        tbody tr:hover { background: #FBFCFD; }
+        .status-pill { display:inline-flex; align-items:center; gap:5px; padding:4px 12px; border-radius:9999px; font-size:12px; font-weight:600; white-space:nowrap; }
+        .row-flag { box-shadow: inset 3px 0 0 #F59E0B; background: #FFFBEB !important; }
+        input:focus, select:focus, textarea:focus { outline:none; box-shadow: 0 0 0 3px rgba(37,99,235,0.15); border-color: var(--brand-light); }
+        .modal-overlay { background: rgba(15,23,42,0.6); backdrop-filter: blur(4px); }
+        table th { color: var(--text-secondary); font-weight:600; font-size:12px; }
+        tbody tr:hover { background: #F8FAFC; }
     </style>
 </head>
-<body>
+<body class="min-h-screen flex flex-col justify-between">
 
-    <!-- ============ TOP BAR ============ -->
-    <header class="bg-white border-b" style="border-color:var(--border)">
-        <div class="max-w-7xl mx-auto px-5 h-16 flex items-center justify-between gap-4">
-            <div class="flex items-center gap-3 shrink-0">
-                <img src="https://www.barnoukh-engineering.com/photo/logo.jpg" class="h-8 w-8 rounded object-cover" alt="logo">
-                <span class="font-semibold text-sm hidden sm:inline">BA Engineering</span>
+    <div>
+        <!-- ============ TOP BAR ============ -->
+        <header class="bg-white border-b sticky top-0 z-30" style="border-color:var(--border)">
+            <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between gap-4">
+                <div class="flex items-center gap-3 shrink-0">
+                    <img src="https://www.barnoukh-engineering.com/photo/logo.jpg" class="h-9 w-9 rounded-lg object-cover shadow-sm" alt="logo">
+                    <div>
+                        <span class="font-bold text-sm tracking-tight block">BA Engineering</span>
+                        <span class="text-[10px] text-gray-500 uppercase tracking-wider font-semibold">EDMS Platform</span>
+                    </div>
+                </div>
+                <div id="userBar" class="hidden items-center gap-4 text-sm">
+                    <div class="relative hidden md:block">
+                        <input id="searchInput" type="text" placeholder="Search reference, subject, project..."
+                            class="border rounded-lg pl-9 pr-3 py-1.5 text-sm w-80 bg-gray-50" style="border-color:var(--border)">
+                        <svg class="w-4 h-4 text-gray-400 absolute left-3 top-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                    </div>
+                    <span id="userRoleBadge" class="text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wide" style="background:#EFF6FF;color:#1D4ED8"></span>
+                    <span id="userNameBadge" class="hidden md:inline font-medium text-gray-700"></span>
+                    <button id="logoutBtn" class="text-sm font-medium px-3.5 py-1.5 rounded-lg border hover:bg-gray-50 text-gray-700 transition" style="border-color:var(--border)">Log out</button>
+                </div>
             </div>
-            <div id="userBar" class="hidden items-center gap-3 text-sm">
-                <input id="searchInput" type="text" placeholder="Search reference, subject, project..."
-                    class="hidden md:block border rounded-lg px-3 py-1.5 text-sm w-72" style="border-color:var(--border)">
-                <span id="userRoleBadge" class="text-xs font-medium px-2.5 py-1 rounded-full" style="background:#EFF4FF;color:var(--brand-light)"></span>
-                <span id="userNameBadge" class="hidden md:inline" style="color:var(--text-secondary)"></span>
-                <button id="logoutBtn" class="text-sm font-medium px-3 py-1.5 rounded-lg border hover:bg-gray-50" style="border-color:var(--border)">Log out</button>
-            </div>
-        </div>
-    </header>
+        </header>
 
-    <!-- ============ LOGIN ============ -->
-    <div id="loginBox" class="card p-8 max-w-sm mx-auto mt-16">
-        <div class="flex gap-1 mb-6 p-1 rounded-lg" style="background:#F1F5F9">
-            <button id="tabLogin" class="flex-1 text-sm font-medium py-2 rounded-md" style="background:#fff;color:var(--brand)">Log in</button>
-            <button id="tabSignup" class="flex-1 text-sm font-medium py-2 rounded-md" style="color:var(--text-secondary)">Sign up</button>
-        </div>
-        <h2 id="loginTitle" class="font-semibold text-lg mb-1">Welcome back</h2>
-        <p id="loginSubtitle" class="text-sm mb-5" style="color:var(--text-secondary)">Log in with your existing account</p>
-        <form id="loginForm" class="space-y-3">
-            <input type="text" id="companyCode" required placeholder="Company code" class="w-full border rounded-lg p-2.5 text-sm" style="border-color:var(--border)">
-            <input type="text" id="fullName" placeholder="Full name" class="hidden w-full border rounded-lg p-2.5 text-sm" style="border-color:var(--border)">
-            <select id="roleSelect" class="hidden w-full border rounded-lg p-2.5 text-sm" style="border-color:var(--border)">
-                <option value="Manager">Manager</option>
-                <option value="Employee">Employee</option>
-            </select>
-            <input type="email" id="loginEmail" required placeholder="Email" class="w-full border rounded-lg p-2.5 text-sm" style="border-color:var(--border)">
-            <input type="password" id="loginPass" required placeholder="Password" class="w-full border rounded-lg p-2.5 text-sm" style="border-color:var(--border)">
-            <button id="loginSubmitBtn" class="btn-primary w-full rounded-lg p-2.5 text-sm font-medium">Log in</button>
-        </form>
-        <div class="mt-5 pt-4 border-t" style="border-color:var(--border)">
-            <p class="text-xs mb-2 text-center" style="color:var(--text-secondary)">Quick access while testing</p>
-            <div class="flex gap-2">
-                <button id="quickManagerBtn" type="button" class="flex-1 text-xs font-medium py-2 rounded-lg border" style="border-color:var(--border)">Quick Manager Login</button>
-                <button id="quickEmployeeBtn" type="button" class="flex-1 text-xs font-medium py-2 rounded-lg border" style="border-color:var(--border)">Quick Employee Login</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- ============ MAIN APP ============ -->
-    <main id="appBox" class="hidden max-w-7xl mx-auto px-5 py-6">
-
-        <div id="actionAlert" class="hidden mb-5 p-3.5 rounded-lg text-sm flex items-center gap-2" style="background:#FFFAEB;color:#B54708;border:1px solid #FEDF89">
-            <span>●</span> You have <b id="actionCount">0</b> document(s) awaiting your reply.
-        </div>
-
-        <!-- Page header -->
-        <div class="flex flex-wrap justify-between items-center gap-3 mb-5">
-            <div>
-                <h1 class="text-xl font-semibold">Correspondence</h1>
-                <p class="text-sm" style="color:var(--text-secondary)">Track, transfer, and approve project documents</p>
-            </div>
-            <button id="openAddModal" class="btn-primary rounded-lg px-4 py-2 text-sm font-medium">+ New Document</button>
-        </div>
-
-        <!-- Stats -->
-        <div id="statsRow" class="grid grid-cols-2 md:grid-cols-5 gap-3 mb-6"></div>
-
-        <!-- Filters -->
-        <div class="card p-1 mb-4 inline-flex flex-wrap gap-1" id="statusFiltersWrap">
-            <button data-filter="all" class="filter-btn seg-btn active px-3 py-2 text-sm">All</button>
-            <button data-filter="New" class="filter-btn seg-btn px-3 py-2 text-sm">New</button>
-            <button data-filter="In Progress" class="filter-btn seg-btn px-3 py-2 text-sm">In Progress</button>
-            <button data-filter="Pending Manager Review" class="filter-btn seg-btn px-3 py-2 text-sm">Pending Review</button>
-            <button data-filter="Approved" class="filter-btn seg-btn px-3 py-2 text-sm">Approved</button>
-            <button data-filter="Rejected" class="filter-btn seg-btn px-3 py-2 text-sm">Rejected</button>
-        </div>
-        <input id="searchInputMobile" type="text" placeholder="Search..." class="md:hidden w-full border rounded-lg p-2.5 text-sm mb-4" style="border-color:var(--border)">
-
-        <!-- Table -->
-        <div class="card overflow-hidden">
-            <div class="overflow-x-auto">
-                <table class="w-full text-sm text-left">
-                    <thead>
-                        <tr class="border-b" style="border-color:var(--border)">
-                            <th class="p-3">Project</th>
-                            <th class="p-3">Reference</th>
-                            <th class="p-3">Subject</th>
-                            <th class="p-3">Type</th>
-                            <th class="p-3">File</th>
-                            <th class="p-3">Assigned to</th>
-                            <th class="p-3">Status</th>
-                            <th class="p-3">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tableBody">
-                        <tr><td colspan="8" class="p-6 text-center" style="color:var(--text-secondary)">Loading...</td></tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </main>
-
-    <!-- ============ ADD/EDIT MODAL ============ -->
-    <div id="addModal" class="hidden fixed inset-0 modal-overlay z-40 flex items-center justify-center p-4">
-        <div class="card w-full max-w-lg p-6 max-h-[90vh] overflow-y-auto">
-            <div class="flex justify-between items-center mb-4">
-                <h3 id="formTitle" class="font-semibold text-lg">New Document</h3>
-                <button id="closeModalBtn" class="text-2xl leading-none" style="color:var(--text-secondary)">&times;</button>
-            </div>
-            <form id="addForm" class="grid grid-cols-2 gap-3">
-                <input type="hidden" id="editId" value="">
-                <input type="text" id="fProject" required placeholder="Project name" class="border rounded-lg p-2.5 text-sm col-span-2" style="border-color:var(--border)">
-                <input type="text" id="fRef" required placeholder="Reference no." class="border rounded-lg p-2.5 text-sm col-span-1 mono" style="border-color:var(--border)">
-                <input type="text" id="fRecipient" required placeholder="Sender / recipient" class="border rounded-lg p-2.5 text-sm col-span-1" style="border-color:var(--border)">
-                <input type="text" id="fSubject" required placeholder="Subject" class="border rounded-lg p-2.5 text-sm col-span-2" style="border-color:var(--border)">
-
-                <select id="fType" class="border rounded-lg p-2.5 text-sm col-span-1" style="border-color:var(--border)">
-                    <option value="Letter">Letter</option>
-                    <option value="Material">Material</option>
-                    <option value="Drawing">Drawing</option>
-                    <option value="RFI">RFI</option>
-                    <option value="Payment Certificate">Payment Certificate</option>
-                    <option value="Final Handover">Final Handover</option>
-                    <option value="Preliminary Handover">Preliminary Handover</option>
-                </select>
-                <select id="fDirection" class="border rounded-lg p-2.5 text-sm col-span-1" style="border-color:var(--border)">
-                    <option value="Outgoing">Outgoing</option>
-                    <option value="Incoming">Incoming</option>
-                </select>
-
-                <select id="fPriority" class="border rounded-lg p-2.5 text-sm col-span-1" style="border-color:var(--border)">
-                    <option value="Normal">Normal</option>
-                    <option value="Urgent">Urgent</option>
-                </select>
-                <input type="date" id="fDate" required class="border rounded-lg p-2.5 text-sm col-span-1" style="border-color:var(--border)">
-
-                <div class="col-span-2">
-                    <label class="text-xs mb-1 block" style="color:var(--text-secondary)">Attachment (PDF or image) — optional</label>
-                    <input type="file" id="fAttachment" accept=".pdf,.jpg,.jpeg,.png" class="border rounded-lg p-2 text-sm w-full" style="border-color:var(--border)">
+        <!-- ============ LOGIN / ONBOARDING ============ -->
+        <div id="loginBox" class="max-w-md mx-auto mt-16 px-4">
+            <div class="card p-8">
+                <div class="text-center mb-6">
+                    <h2 class="font-bold text-2xl text-gray-900 mb-1">Welcome to BA Platform</h2>
+                    <p class="text-sm text-gray-500">Secure Engineering Document Management System</p>
                 </div>
 
-                <div class="col-span-2 flex gap-2 mt-2">
-                    <button id="submitBtn" class="btn-primary flex-1 rounded-lg p-2.5 text-sm font-medium">Save</button>
-                    <button type="button" id="cancelEditBtn" class="rounded-lg p-2.5 text-sm font-medium px-5 border" style="border-color:var(--border)">Cancel</button>
+                <div class="flex gap-1 mb-6 p-1 rounded-xl bg-gray-100">
+                    <button id="tabLogin" class="flex-1 text-sm font-semibold py-2.5 rounded-lg bg-white shadow-sm text-blue-600 transition">Log in</button>
+                    <button id="tabSignup" class="flex-1 text-sm font-semibold py-2.5 rounded-lg text-gray-500 transition">Register Company</button>
+                </div>
+
+                <form id="loginForm" class="space-y-4">
+                    <div id="fullNameGroup" class="hidden">
+                        <label class="block text-xs font-semibold text-gray-700 mb-1">Full Name</label>
+                        <input type="text" id="fullName" placeholder="e.g. Eng. Ahmed Barnoukh" class="w-full border rounded-xl p-3 text-sm bg-gray-50" style="border-color:var(--border)">
+                    </div>
+
+                    <div id="roleGroup" class="hidden">
+                        <label class="block text-xs font-semibold text-gray-700 mb-1">Account Role</label>
+                        <select id="roleSelect" class="w-full border rounded-xl p-3 text-sm bg-gray-50" style="border-color:var(--border)">
+                            <option value="Manager">Manager / Project Director</option>
+                            <option value="Employee">Engineer / Team Member</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-700 mb-1">Work Email</label>
+                        <input type="email" id="loginEmail" required placeholder="name@company.com" class="w-full border rounded-xl p-3 text-sm bg-gray-50" style="border-color:var(--border)">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-700 mb-1">Password</label>
+                        <input type="password" id="loginPass" required placeholder="••••••••" class="w-full border rounded-xl p-3 text-sm bg-gray-50" style="border-color:var(--border)">
+                    </div>
+
+                    <button id="loginSubmitBtn" class="btn-primary w-full rounded-xl p-3 text-sm font-semibold shadow-sm">Log in to Workspace</button>
+                </form>
+
+                <div class="mt-6 pt-5 border-t text-center" style="border-color:var(--border)">
+                    <p class="text-xs text-gray-500 mb-3 font-medium">Instant Demo Access for Evaluation</p>
+                    <div class="flex gap-2">
+                        <button id="quickManagerBtn" type="button" class="flex-1 text-xs font-semibold py-2.5 rounded-xl border bg-gray-50 hover:bg-gray-100 text-gray-700 transition" style="border-color:var(--border)">⚡ Manager Demo</button>
+                        <button id="quickEmployeeBtn" type="button" class="flex-1 text-xs font-semibold py-2.5 rounded-xl border bg-gray-50 hover:bg-gray-100 text-gray-700 transition" style="border-color:var(--border)">⚡ Engineer Demo</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============ MAIN APP ============ -->
+        <main id="appBox" class="hidden max-w-7xl mx-auto px-6 py-8">
+
+            <div id="actionAlert" class="hidden mb-6 p-4 rounded-xl text-sm flex items-center justify-between shadow-sm" style="background:#FFFBEB;color:#92400E;border:1px solid #FDE68A">
+                <div class="flex items-center gap-2.5">
+                    <svg class="w-5 h-5 text-amber-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                    <span>You have <b id="actionCount" class="font-bold underline">0</b> document(s) requiring your action or reply.</span>
+                </div>
+            </div>
+
+            <!-- Page header -->
+            <div class="flex flex-wrap justify-between items-center gap-4 mb-6">
+                <div>
+                    <h1 class="text-2xl font-bold tracking-tight text-gray-900">Project Correspondence</h1>
+                    <p class="text-sm text-gray-500 mt-0.5">Track, review, transfer, and approve technical submittals and letters</p>
+                </div>
+                <button id="openAddModal" class="btn-primary rounded-xl px-5 py-2.5 text-sm font-semibold shadow-sm flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                    New Document
+                </button>
+            </div>
+
+            <!-- Stats -->
+            <div id="statsRow" class="grid grid-cols-2 md:grid-cols-5 gap-4 mb-6"></div>
+
+            <!-- Filters -->
+            <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+                <div class="card p-1 inline-flex flex-wrap gap-1" id="statusFiltersWrap">
+                    <button data-filter="all" class="filter-btn seg-btn active px-3.5 py-2 text-xs font-semibold rounded-lg">All Documents</button>
+                    <button data-filter="New" class="filter-btn seg-btn px-3.5 py-2 text-xs font-semibold rounded-lg">New</button>
+                    <button data-filter="In Progress" class="filter-btn seg-btn px-3.5 py-2 text-xs font-semibold rounded-lg">In Progress</button>
+                    <button data-filter="Pending Manager Review" class="filter-btn seg-btn px-3.5 py-2 text-xs font-semibold rounded-lg">Pending Review</button>
+                    <button data-filter="Approved" class="filter-btn seg-btn px-3.5 py-2 text-xs font-semibold rounded-lg">Approved</button>
+                    <button data-filter="Rejected" class="filter-btn seg-btn px-3.5 py-2 text-xs font-semibold rounded-lg">Rejected</button>
+                </div>
+                <input id="searchInputMobile" type="text" placeholder="Search correspondence..." class="md:hidden w-full border rounded-xl p-3 text-sm bg-white" style="border-color:var(--border)">
+            </div>
+
+            <!-- Table -->
+            <div class="card overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm text-left">
+                        <thead>
+                            <tr class="border-b bg-gray-50/75" style="border-color:var(--border)">
+                                <th class="p-4">Project</th>
+                                <th class="p-4">Reference No.</th>
+                                <th class="p-4">Subject & Notes</th>
+                                <th class="p-4">Type</th>
+                                <th class="p-4">Attachment</th>
+                                <th class="p-4">Assigned To</th>
+                                <th class="p-4">Status</th>
+                                <th class="p-4 text-right">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableBody">
+                            <tr><td colspan="8" class="p-8 text-center text-gray-500 font-medium">Loading documents workspace...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- ============ ADD DOCUMENT MODAL ============ -->
+    <div id="addModal" class="hidden fixed inset-0 modal-overlay z-50 flex items-center justify-center p-4">
+        <div class="card w-full max-w-xl p-7 max-h-[90vh] overflow-y-auto shadow-2xl">
+            <div class="flex justify-between items-center mb-5 pb-3 border-b" style="border-color:var(--border)">
+                <div>
+                    <h3 id="formTitle" class="font-bold text-lg text-gray-900">New Document Entry</h3>
+                    <p class="text-xs text-gray-500">Register incoming or outgoing project correspondence</p>
+                </div>
+                <button id="closeModalBtn" class="text-2xl text-gray-400 hover:text-gray-700 leading-none">&times;</button>
+            </div>
+            <form id="addForm" class="grid grid-cols-2 gap-4">
+                <input type="hidden" id="editId" value="">
+                <div class="col-span-2">
+                    <label class="block text-xs font-semibold text-gray-700 mb-1">Project Name</label>
+                    <input type="text" id="fProject" required placeholder="e.g. Riyadh Business Center Tower" class="border rounded-xl p-3 text-sm w-full bg-gray-50" style="border-color:var(--border)">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-gray-700 mb-1">Reference Number</label>
+                    <input type="text" id="fRef" required placeholder="REF-2026-001" class="border rounded-xl p-3 text-sm w-full mono bg-gray-50" style="border-color:var(--border)">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-700 mb-1">Sender / Recipient</label>
+                    <input type="text" id="fRecipient" required placeholder="Main Contractor / Consultant" class="border rounded-xl p-3 text-sm w-full bg-gray-50" style="border-color:var(--border)">
+                </div>
+
+                <div class="col-span-2">
+                    <label class="block text-xs font-semibold text-gray-700 mb-1">Subject Description</label>
+                    <input type="text" id="fSubject" required placeholder="Detailed subject of the correspondence..." class="border rounded-xl p-3 text-sm w-full bg-gray-50" style="border-color:var(--border)">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-gray-700 mb-1">Document Type</label>
+                    <select id="fType" class="border rounded-xl p-3 text-sm w-full bg-gray-50" style="border-color:var(--border)">
+                        <option value="Letter">Official Letter</option>
+                        <option value="Material">Material Submittal (MAR)</option>
+                        <option value="Drawing">Shop Drawing / REV</option>
+                        <option value="RFI">Request For Information (RFI)</option>
+                        <option value="Payment Certificate">Payment Certificate</option>
+                        <option value="Final Handover">Final Handover</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-700 mb-1">Direction</label>
+                    <select id="fDirection" class="border rounded-xl p-3 text-sm w-full bg-gray-50" style="border-color:var(--border)">
+                        <option value="Outgoing">Outgoing</option>
+                        <option value="Incoming">Incoming</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-gray-700 mb-1">Priority</label>
+                    <select id="fPriority" class="border rounded-xl p-3 text-sm w-full bg-gray-50" style="border-color:var(--border)">
+                        <option value="Normal">Normal</option>
+                        <option value="Urgent">Urgent / Critical</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-700 mb-1">Date</label>
+                    <input type="date" id="fDate" required class="border rounded-xl p-3 text-sm w-full bg-gray-50" style="border-color:var(--border)">
+                </div>
+
+                <div class="col-span-2">
+                    <label class="block text-xs font-semibold text-gray-700 mb-1">Attachment File (PDF, Image) — Optional</label>
+                    <input type="file" id="fAttachment" accept=".pdf,.jpg,.jpeg,.png" class="border rounded-xl p-2.5 text-sm w-full bg-gray-50" style="border-color:var(--border)">
+                </div>
+
+                <div class="col-span-2 flex gap-3 pt-3 border-t mt-2" style="border-color:var(--border)">
+                    <button id="submitBtn" class="btn-primary flex-1 rounded-xl p-3 text-sm font-semibold shadow-sm">Save Document</button>
+                    <button type="button" id="cancelEditBtn" class="rounded-xl p-3 text-sm font-semibold px-6 border bg-white hover:bg-gray-50 text-gray-700" style="border-color:var(--border)">Cancel</button>
                 </div>
             </form>
         </div>
     </div>
+
+    <!-- ============ FOOTER ============ -->
+    <footer class="text-center py-6 text-xs text-gray-400 border-t mt-12 bg-white" style="border-color:var(--border)">
+        BA Engineering Platform &copy; 2026. Secure Enterprise Document & Correspondence Management.
+    </footer>
 
     <script>
         const db = supabase.createClient(
@@ -197,13 +268,14 @@
         let myRole = null, myCompanyId = null, myUserId = null;
         let companyMembers = [];
 
-        // بيقبل القيم القديمة (عربي) أو الجديدة (إنجليزي) للدور، عشان الحسابات اللي اتعملت قبل التحديث تفضل شغالة
         const isManager = (role) => role === 'Manager' || role === 'مدير';
         const isEmployee = (role) => role === 'Employee' || role === 'موظف';
 
         const loginBox = document.getElementById('loginBox');
         const appBox = document.getElementById('appBox');
         const userBar = document.getElementById('userBar');
+        const fullNameGroup = document.getElementById('fullNameGroup');
+        const roleGroup = document.getElementById('roleGroup');
         const fullNameInput = document.getElementById('fullName');
         const roleSelect = document.getElementById('roleSelect');
         const addModal = document.getElementById('addModal');
@@ -212,107 +284,95 @@
 
         function setAuthMode(signup) {
             signUpMode = signup;
-            document.getElementById('tabLogin').style.background = signup ? '' : '#fff';
-            document.getElementById('tabLogin').style.color = signup ? 'var(--text-secondary)' : 'var(--brand)';
-            document.getElementById('tabSignup').style.background = signup ? '#fff' : '';
-            document.getElementById('tabSignup').style.color = signup ? 'var(--brand)' : 'var(--text-secondary)';
-            document.getElementById('loginTitle').textContent = signup ? 'Create your account' : 'Welcome back';
-            document.getElementById('loginSubtitle').textContent = signup ? 'Enter a new or existing company code to get started' : 'Log in with your existing account';
-            document.getElementById('loginSubmitBtn').textContent = signup ? 'Create account' : 'Log in';
-            fullNameInput.classList.toggle('hidden', !signup);
-            roleSelect.classList.toggle('hidden', !signup);
-            // كود الشركة مطلوب بس وقت إنشاء حساب جديد، مش وقت تسجيل الدخول العادي
-            const companyCodeInput = document.getElementById('companyCode');
-            companyCodeInput.classList.toggle('hidden', !signup);
-            companyCodeInput.required = signup;
+            document.getElementById('tabLogin').className = signup 
+                ? 'flex-1 text-sm font-semibold py-2.5 rounded-lg text-gray-500 transition' 
+                : 'flex-1 text-sm font-semibold py-2.5 rounded-lg bg-white shadow-sm text-blue-600 transition';
+            document.getElementById('tabSignup').className = signup 
+                ? 'flex-1 text-sm font-semibold py-2.5 rounded-lg bg-white shadow-sm text-blue-600 transition' 
+                : 'flex-1 text-sm font-semibold py-2.5 rounded-lg text-gray-500 transition';
+            
+            document.getElementById('loginSubmitBtn').textContent = signup ? 'Create Account & Workspace' : 'Log in to Workspace';
+            fullNameGroup.classList.toggle('hidden', !signup);
+            roleGroup.classList.toggle('hidden', !signup);
+            fullNameInput.required = signup;
         }
         document.getElementById('tabLogin').onclick = () => setAuthMode(false);
         document.getElementById('tabSignup').onclick = () => setAuthMode(true);
-        setAuthMode(false); // الوضع الافتراضي عند فتح الصفحة: تسجيل دخول عادي
+        setAuthMode(false);
 
-        // ============ Sign up / Log in ============
+        // ============ Authentication Handler ============
         document.getElementById('loginForm').onsubmit = async (e) => {
             e.preventDefault();
-            const email = document.getElementById('loginEmail').value;
+            const email = document.getElementById('loginEmail').value.trim();
             const password = document.getElementById('loginPass').value;
-            const companyCode = document.getElementById('companyCode').value.trim();
 
             if (signUpMode) {
+                const fullName = fullNameInput.value.trim();
                 const chosenRole = roleSelect.value;
                 const { data, error } = await db.auth.signUp({ email, password });
                 if (error) { alert('Error: ' + error.message); return; }
 
-                let { data: existingCompany } = await db.from('companies').select('*').eq('code', companyCode).maybeSingle();
-                let companyId;
-                if (existingCompany) {
-                    companyId = existingCompany.id;
-                } else {
-                    const { data: newCompany, error: cErr } = await db.from('companies').insert([{ code: companyCode }]).select().single();
-                    if (cErr) { alert('Error creating company: ' + cErr.message); return; }
-                    companyId = newCompany.id;
-                }
+                const defaultCompanyCode = 'COMP-' + Math.random().toString(36).substring(2, 7).toUpperCase();
+                const { data: newCompany, error: cErr } = await db.from('companies').insert([{ code: defaultCompanyCode }]).select().single();
+                if (cErr) { alert('Error creating company workspace: ' + cErr.message); return; }
 
                 const { error: pErr } = await db.from('profiles').insert([{
-                    id: data.user.id, company_id: companyId, full_name: document.getElementById('fullName').value, role: chosenRole
+                    id: data.user.id, company_id: newCompany.id, full_name: fullName, role: chosenRole
                 }]);
-                if (pErr) { alert('Error creating profile: ' + pErr.message); return; }
+                if (pErr) { alert('Error creating user profile: ' + pErr.message); return; }
 
-                alert(`Account created as ${chosenRole}! Please log in now.`);
-                setAuthMode(false);
+                alert('Account successfully created! You are now logged in.');
             } else {
                 const { error } = await db.auth.signInWithPassword({ email, password });
-                if (error) alert('Error: ' + error.message);
+                if (error) alert('Login failed: ' + error.message);
             }
         };
 
         document.getElementById('logoutBtn').onclick = () => db.auth.signOut();
 
-        // ============ Quick login (testing only — fixed demo accounts, auto-created on first use) ============
+        // ============ Quick Demo Access ============
         async function quickLogin(role) {
-            const email = role === 'Manager' ? 'demo.manager@test.local' : 'demo.employee@test.local';
-            const password = 'demo12345';
-            const companyCode = 'DEMOCO';
-            const fullName = role === 'Manager' ? 'Demo Manager' : 'Demo Employee';
+            const email = role === 'Manager' ? 'demo.manager@barnoukh.local' : 'demo.engineer@barnoukh.local';
+            const password = 'demo12345password';
+            const fullName = role === 'Manager' ? 'Eng. Ahmed (Director)' : 'Eng. Mohammed (Engineer)';
 
-            // نجرب دخول مباشر الأول (يعني الحساب موجود بالفعل من مرة قبل كده)
             let { error: loginErr } = await db.auth.signInWithPassword({ email, password });
-            if (!loginErr) return; // نجح الدخول، خلاص
+            if (!loginErr) return;
 
-            // لو فشل الدخول، غالبًا الحساب لسه مش موجود - ننشئه تلقائيًا
             const { data, error: signUpErr } = await db.auth.signUp({ email, password });
-            if (signUpErr) { alert('Quick login error: ' + signUpErr.message); return; }
+            if (signUpErr) { alert('Demo login error: ' + signUpErr.message); return; }
 
-            let { data: existingCompany } = await db.from('companies').select('*').eq('code', companyCode).maybeSingle();
-            let companyId;
-            if (existingCompany) {
-                companyId = existingCompany.id;
-            } else {
-                const { data: newCompany, error: cErr } = await db.from('companies').insert([{ code: companyCode }]).select().single();
-                if (cErr) { alert('Error creating demo company: ' + cErr.message); return; }
-                companyId = newCompany.id;
-            }
-
-            const { error: pErr } = await db.from('profiles').insert([{ id: data.user.id, company_id: companyId, full_name: fullName, role }]);
-            if (pErr) { alert('Error creating demo profile: ' + pErr.message); return; }
-
-            // بعض إعدادات Supabase تطلب تأكيد إيميل قبل السماح بالدخول مباشرة بعد signUp
-            const { error: reLoginErr } = await db.auth.signInWithPassword({ email, password });
-            if (reLoginErr) alert('Account created. If email confirmation is required in your Supabase settings, disable it (Authentication > Providers > Email > "Confirm email") to allow instant quick login.');
+            const { data: newCompany } = await db.from('companies').insert([{ code: 'DEMO-CO' }]).select().single();
+            await db.from('profiles').insert([{ id: data.user.id, company_id: newCompany.id, full_name: fullName, role }]);
+            await db.auth.signInWithPassword({ email, password });
         }
         document.getElementById('quickManagerBtn').onclick = () => quickLogin('Manager');
         document.getElementById('quickEmployeeBtn').onclick = () => quickLogin('Employee');
 
-        // ============ Modal controls ============
+        // ============ Modal Controls ============
         document.getElementById('openAddModal').onclick = () => { resetForm(); addModal.classList.remove('hidden'); };
         document.getElementById('closeModalBtn').onclick = () => addModal.classList.add('hidden');
         document.getElementById('cancelEditBtn').onclick = () => addModal.classList.add('hidden');
 
-        // ============ Auth state ============
+        // ============ Auth State Management ============
         db.auth.onAuthStateChange(async (event, session) => {
             if (session) {
                 myUserId = session.user.id;
-                const { data: profile } = await db.from('profiles').select('*').eq('id', session.user.id).maybeSingle();
-                if (!profile) return;
+                let { data: profile } = await db.from('profiles').select('*').eq('id', session.user.id).maybeSingle();
+                
+                if (!profile) {
+                    const { data: comp } = await db.from('companies').select('*').limit(1).maybeSingle();
+                    let compId = comp ? comp.id : null;
+                    if (!compId) {
+                        const { data: newC } = await db.from('companies').insert([{ code: 'DEF-CO' }]).select().single();
+                        compId = newC.id;
+                    }
+                    const { data: newP } = await db.from('profiles').insert([{
+                        id: myUserId, company_id: compId, full_name: session.user.email.split('@')[0], role: 'Manager'
+                    }]).select().single();
+                    profile = newP;
+                }
+
                 myRole = profile.role;
                 myCompanyId = profile.company_id;
 
@@ -323,7 +383,7 @@
                 appBox.classList.remove('hidden');
                 userBar.classList.remove('hidden');
                 userBar.classList.add('flex');
-                document.getElementById('userRoleBadge').textContent = isManager(myRole) ? 'Manager' : 'Employee';
+                document.getElementById('userRoleBadge').textContent = isManager(myRole) ? 'Project Director' : 'Engineer';
                 document.getElementById('userNameBadge').textContent = profile.full_name || '';
                 loadTable();
             } else {
@@ -335,7 +395,7 @@
             }
         });
 
-        // ============ Filters & search ============
+        // ============ Filters & Search ============
         document.querySelectorAll('.filter-btn').forEach(btn => {
             btn.addEventListener('click', () => {
                 activeFilter = btn.dataset.filter;
@@ -344,6 +404,7 @@
                 renderTable();
             });
         });
+
         function onSearch(e) {
             searchText = e.target.value.trim().toLowerCase();
             document.getElementById('searchInput').value = e.target.value;
@@ -355,25 +416,25 @@
 
         function statusStyle(status) {
             switch (status) {
-                case 'Approved': return 'background:#ECFDF3;color:#067647';
-                case 'Rejected': return 'background:#FEF3F2;color:#B42318';
-                case 'In Progress': return 'background:#FFFAEB;color:#B54708';
-                case 'Pending Manager Review': return 'background:#F4F3FF;color:#6938EF';
+                case 'Approved': return 'background:#ECFDF3;color:#047857';
+                case 'Rejected': return 'background:#FEF2F2;color:#DC2626';
+                case 'In Progress': return 'background:#FEF3C7;color:#D97706';
+                case 'Pending Manager Review': return 'background:#EEF2FF;color:#4F46E5';
                 default: return 'background:#F1F5F9;color:#475569';
             }
         }
 
         function memberName(id) {
             const m = companyMembers.find(x => x.id === id);
-            return m ? (m.full_name || m.role) : '—';
+            return m ? (m.full_name || m.role) : 'Unassigned';
         }
 
-        // ============ Load data ============
+        // ============ Data Loading ============
         async function loadTable() {
             const { data, error } = await db.from('correspondence').select('*').order('created_at', { ascending: false });
             const tbody = document.getElementById('tableBody');
             if (error) {
-                tbody.innerHTML = `<tr><td colspan="8" class="p-6 text-center text-red-600">${error.message}</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="8" class="p-8 text-center text-red-600">Error loading data: ${error.message}</td></tr>`;
                 return;
             }
             allRows = data || [];
@@ -384,11 +445,11 @@
         function renderStats() {
             const counts = { 'New': 0, 'In Progress': 0, 'Pending Manager Review': 0, 'Approved': 0, 'Rejected': 0 };
             allRows.forEach(r => { const s = r.status || 'New'; if (counts[s] !== undefined) counts[s]++; });
-            const labels = { 'New': 'New', 'In Progress': 'In Progress', 'Pending Manager Review': 'Pending Review', 'Approved': 'Approved', 'Rejected': 'Rejected' };
+            const labels = { 'New': 'New Received', 'In Progress': 'In Progress', 'Pending Manager Review': 'Pending Review', 'Approved': 'Approved', 'Rejected': 'Rejected' };
             document.getElementById('statsRow').innerHTML = Object.keys(counts).map(k => `
                 <div class="card p-4">
-                    <div class="text-2xl font-semibold">${counts[k]}</div>
-                    <div class="text-xs mt-0.5" style="color:var(--text-secondary)">${labels[k]}</div>
+                    <div class="text-2xl font-bold text-gray-900">${counts[k]}</div>
+                    <div class="text-xs text-gray-500 mt-0.5 font-medium">${labels[k]}</div>
                 </div>
             `).join('');
         }
@@ -415,29 +476,29 @@
             }
 
             if (!rows.length) {
-                tbody.innerHTML = `<tr><td colspan="8" class="p-8 text-center" style="color:var(--text-secondary)">No matching documents.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="8" class="p-10 text-center text-gray-400 font-medium">No matching correspondence found.</td></tr>`;
                 return;
             }
 
             tbody.innerHTML = rows.map(row => {
                 const flagged = (row.assigned_to === myUserId && row.status === 'In Progress') ? 'row-flag' : '';
                 const attachmentCell = row.attachment_url
-                    ? `<a href="${row.attachment_url}" target="_blank" class="text-xs font-medium" style="color:var(--brand-light)">View file</a>`
-                    : '<span style="color:var(--text-secondary)">—</span>';
+                    ? `<a href="${row.attachment_url}" target="_blank" class="text-xs font-semibold text-blue-600 hover:underline">View File</a>`
+                    : '<span class="text-gray-300">—</span>';
                 return `
                 <tr class="border-b ${flagged}" style="border-color:var(--border)">
-                    <td class="p-3">${row.project_name || '—'}</td>
-                    <td class="p-3 mono text-xs">${row.reference_no || '—'}</td>
-                    <td class="p-3">
-                        ${row.subject || '—'}
-                        ${row.reply_text ? `<div class="text-xs mt-1" style="color:var(--text-secondary)">💬 ${row.reply_text}</div>` : ''}
-                        ${row.reply_attachment_url ? `<a href="${row.reply_attachment_url}" target="_blank" class="text-xs font-medium block mt-0.5" style="color:var(--brand-light)">Reply attachment</a>` : ''}
+                    <td class="p-4 font-medium text-gray-900">${row.project_name || '—'}</td>
+                    <td class="p-4 mono text-xs font-semibold text-gray-600">${row.reference_no || '—'}</td>
+                    <td class="p-4 text-gray-700 max-w-xs">
+                        <div class="font-medium">${row.subject || '—'}</div>
+                        ${row.reply_text ? `<div class="text-xs text-gray-500 mt-1 bg-gray-50 p-2 rounded-lg border border-gray-100">💬 ${row.reply_text}</div>` : ''}
+                        ${row.reply_attachment_url ? `<a href="${row.reply_attachment_url}" target="_blank" class="text-xs font-semibold text-blue-600 block mt-1 hover:underline">📎 Reply attachment</a>` : ''}
                     </td>
-                    <td class="p-3">${row.type || '—'}</td>
-                    <td class="p-3">${attachmentCell}</td>
-                    <td class="p-3">${memberName(row.assigned_to)}</td>
-                    <td class="p-3"><span class="status-pill" style="${statusStyle(row.status)}">${row.status || 'New'}</span></td>
-                    <td class="p-3 whitespace-nowrap">${actionCell(row)}</td>
+                    <td class="p-4"><span class="text-xs font-semibold bg-gray-100 text-gray-700 px-2.5 py-1 rounded-md">${row.type || '—'}</span></td>
+                    <td class="p-4">${attachmentCell}</td>
+                    <td class="p-4 font-medium text-gray-600">${memberName(row.assigned_to)}</td>
+                    <td class="p-4"><span class="status-pill" style="${statusStyle(row.status)}">${row.status || 'New'}</span></td>
+                    <td class="p-4 text-right whitespace-nowrap">${actionCell(row)}</td>
                 </tr>
             `}).join('');
         }
@@ -448,39 +509,38 @@
             if (isManager(myRole)) {
                 if (status === 'New') {
                     const employees = companyMembers.filter(m => isEmployee(m.role));
-                    const options = employees.map(e => `<option value="${e.id}">${e.full_name || 'Employee'}</option>`).join('');
+                    const options = employees.map(e => `<option value="${e.id}">${e.full_name || 'Engineer'}</option>`).join('');
                     return `
-                        <div class="flex flex-col gap-1 min-w-[140px]">
-                            <select id="assign-${row.id}" class="border rounded text-xs p-1" style="border-color:var(--border)">${options || '<option value="">No employees</option>'}</select>
-                            <button onclick="assignToEmployee('${row.id}')" class="text-white text-xs px-2 py-1 rounded" style="background:var(--brand-light)">Transfer</button>
+                        <div class="flex items-center justify-end gap-2">
+                            <select id="assign-${row.id}" class="border rounded-lg text-xs p-2 bg-white" style="border-color:var(--border)">${options || '<option value="">No engineers</option>'}</select>
+                            <button onclick="assignToEmployee('${row.id}')" class="text-white text-xs px-3 py-2 rounded-lg font-semibold bg-blue-600 hover:bg-blue-700 shadow-sm transition">Assign</button>
                         </div>
                     `;
                 }
                 if (status === 'Pending Manager Review') {
                     return `
-                        <div class="flex gap-1 flex-wrap">
-                            <button onclick="changeStatus('${row.id}', 'Approved')" class="text-white text-xs px-2 py-1 rounded" style="background:#12B76A">Approve</button>
-                            <button onclick="changeStatus('${row.id}', 'Rejected')" class="text-white text-xs px-2 py-1 rounded" style="background:#F04438">Reject</button>
+                        <div class="flex items-center justify-end gap-1.5">
+                            <button onclick="changeStatus('${row.id}', 'Approved')" class="text-white text-xs px-3 py-1.5 rounded-lg font-semibold bg-emerald-600 hover:bg-emerald-700 shadow-sm transition">Approve</button>
+                            <button onclick="changeStatus('${row.id}', 'Rejected')" class="text-white text-xs px-3 py-1.5 rounded-lg font-semibold bg-red-600 hover:bg-red-700 shadow-sm transition">Reject</button>
                         </div>
                     `;
                 }
-                return `<button onclick="deleteRow('${row.id}')" class="text-xs px-2 py-1 rounded border" style="border-color:var(--border);color:var(--text-secondary)">Delete</button>`;
+                return `<button onclick="deleteRow('${row.id}')" class="text-xs px-3 py-1.5 rounded-lg border font-medium text-gray-500 hover:bg-gray-50 transition" style="border-color:var(--border)">Delete</button>`;
             }
 
             if (isEmployee(myRole) && row.assigned_to === myUserId && status === 'In Progress') {
                 return `
-                    <div class="flex flex-col gap-1 min-w-[160px]">
-                        <textarea id="reply-${row.id}" rows="2" placeholder="Write your reply..." class="border rounded text-xs p-1" style="border-color:var(--border)"></textarea>
-                        <input type="file" id="replyFile-${row.id}" accept=".pdf,.jpg,.jpeg,.png" class="text-xs">
-                        <button onclick="sendReply('${row.id}')" class="text-white text-xs px-2 py-1 rounded" style="background:var(--brand-light)">Reply & forward</button>
+                    <div class="flex flex-col gap-2 min-w-[200px] items-end">
+                        <textarea id="reply-${row.id}" rows="2" placeholder="Type technical reply or action taken..." class="border rounded-xl text-xs p-2 w-full bg-white" style="border-color:var(--border)"></textarea>
+                        <input type="file" id="replyFile-${row.id}" accept=".pdf,.jpg,.jpeg,.png" class="text-xs text-gray-500">
+                        <button onclick="sendReply('${row.id}')" class="text-white text-xs px-3 py-1.5 rounded-lg font-semibold bg-blue-600 hover:bg-blue-700 shadow-sm transition">Submit Review</button>
                     </div>
                 `;
             }
 
-            return `<span class="text-xs" style="color:var(--text-secondary)">—</span>`;
+            return `<span class="text-xs text-gray-400">—</span>`;
         }
 
-        // ============ Storage upload ============
         async function uploadFile(file, subfolder) {
             if (!file) return null;
             const path = `${myCompanyId}/${subfolder}/${Date.now()}_${file.name}`;
@@ -493,7 +553,7 @@
         async function assignToEmployee(id) {
             const select = document.getElementById('assign-' + id);
             const employeeId = select.value;
-            if (!employeeId) { alert('Select an employee first'); return; }
+            if (!employeeId) { alert('Please select an engineer first.'); return; }
             const { error } = await db.from('correspondence').update({ assigned_to: employeeId, status: 'In Progress' }).eq('id', id);
             if (error) alert('Error: ' + error.message);
             else loadTable();
@@ -503,7 +563,7 @@
             const textarea = document.getElementById('reply-' + id);
             const fileInput = document.getElementById('replyFile-' + id);
             const replyText = textarea.value.trim();
-            if (!replyText) { alert('Please write a reply first'); return; }
+            if (!replyText) { alert('Please enter your reply comments.'); return; }
 
             let replyAttachmentUrl = null;
             if (fileInput.files[0]) replyAttachmentUrl = await uploadFile(fileInput.files[0], 'replies');
@@ -516,14 +576,14 @@
         }
 
         async function changeStatus(id, newStatus) {
-            if (!confirm('Are you sure?')) return;
+            if (!confirm(`Are you sure you want to mark this document as ${newStatus}?`)) return;
             const { error } = await db.from('correspondence').update({ status: newStatus }).eq('id', id);
             if (error) alert('Error: ' + error.message);
             else loadTable();
         }
 
         async function deleteRow(id) {
-            if (!confirm('Permanently delete this document?')) return;
+            if (!confirm('Are you sure you want to permanently delete this record?')) return;
             const { error } = await db.from('correspondence').delete().eq('id', id);
             if (error) alert('Error: ' + error.message);
             else loadTable();
@@ -533,8 +593,8 @@
             document.getElementById('addForm').reset();
             document.getElementById('editId').value = '';
             document.getElementById('fDate').value = new Date().toISOString().split('T')[0];
-            document.getElementById('formTitle').textContent = 'New Document';
-            document.getElementById('submitBtn').textContent = 'Save';
+            document.getElementById('formTitle').textContent = 'New Document Entry';
+            document.getElementById('submitBtn').textContent = 'Save Document';
         }
 
         document.getElementById('addForm').onsubmit = async (e) => {
@@ -560,7 +620,7 @@
 
             const { error } = await db.from('correspondence').insert([rowData]);
             if (error) {
-                alert('Error: ' + error.message);
+                alert('Error saving record: ' + error.message);
             } else {
                 resetForm();
                 addModal.classList.add('hidden');
