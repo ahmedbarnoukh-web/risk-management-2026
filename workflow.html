@@ -10,26 +10,34 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
         .status-badge { display:inline-block; padding:2px 10px; border-radius:9999px; font-size:12px; font-weight:600; }
+        .needs-action { background-color:#FFFBEB !important; }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800 font-sans">
 
-    <header style="background-color:#0F2C52" class="text-white p-4 flex justify-between items-center shadow-md">
+    <header style="background-color:#0F2C52" class="text-white p-4 flex flex-wrap justify-between items-center shadow-md gap-2">
         <div class="flex items-center gap-3">
             <img src="https://www.barnoukh-engineering.com/photo/logo.jpg" alt="logo" class="h-10 w-10 rounded object-cover">
             <h1 class="font-bold text-sm md:text-base">BA Engineering Academy — بوابة المراسلات</h1>
         </div>
-        <div id="userBar" class="hidden items-center gap-3 text-sm">
+        <div id="userBar" class="hidden items-center gap-2 text-sm flex-wrap">
+            <select id="identitySelect" class="text-gray-800 rounded p-1 text-xs">
+                <option value="السكرتيرة">أنا: السكرتيرة</option>
+                <option value="موظف 1">أنا: موظف 1</option>
+                <option value="موظف 2">أنا: موظف 2</option>
+                <option value="موظف 3">أنا: موظف 3</option>
+                <option value="موظف 4">أنا: موظف 4</option>
+                <option value="موظف 5">أنا: موظف 5</option>
+            </select>
             <span id="adminBadge" class="hidden text-xs bg-green-500 px-2 py-1 rounded">صلاحيات المدير مفعّلة</span>
-            <button id="adminBtn" class="bg-white/20 px-3 py-1 rounded hover:bg-white/30">صلاحيات المدير</button>
-            <span id="userEmail" class="text-blue-200 hidden md:inline"></span>
-            <button id="logoutBtn" class="bg-red-600 px-3 py-1 rounded">خروج</button>
+            <button id="adminBtn" class="bg-white/20 px-3 py-1 rounded hover:bg-white/30 text-xs">صلاحيات المدير</button>
+            <button id="logoutBtn" class="bg-red-600 px-3 py-1 rounded text-xs">خروج</button>
         </div>
     </header>
 
     <main class="container mx-auto p-4 max-w-6xl">
 
-        <!-- ============ شاشة الدخول (بسيطة: إيميل وباسورد بس) ============ -->
+        <!-- ============ شاشة الدخول ============ -->
         <div id="loginBox" class="bg-white p-6 rounded-lg shadow max-w-sm mx-auto mt-10">
             <h2 id="loginTitle" class="font-bold text-lg mb-4">تسجيل دخول الشركة</h2>
             <form id="loginForm" class="space-y-3">
@@ -43,11 +51,17 @@
         <!-- ============ الصفحة الرئيسية ============ -->
         <div id="appBox" class="hidden">
 
-            <!-- فورم إضافة / تعديل -->
-            <div class="bg-white p-6 rounded-lg shadow mb-6">
+            <!-- تنبيه للموظف: عنده حاجة تحتاج إجراء -->
+            <div id="actionAlert" class="hidden bg-yellow-100 border border-yellow-400 text-yellow-800 p-3 rounded-lg mb-4 text-sm">
+                🔔 عندك <span id="actionCount">0</span> مستند محوّل لك محتاج ردك.
+            </div>
+
+            <!-- فورم إضافة / تعديل (خاص بالسكرتيرة أو المدير) -->
+            <div id="addFormBox" class="bg-white p-6 rounded-lg shadow mb-6">
                 <h3 id="formTitle" class="font-bold mb-4">إضافة مستند جديد</h3>
                 <form id="addForm" class="grid grid-cols-2 gap-3">
                     <input type="hidden" id="editId" value="">
+                    <input type="text" id="fProject" required placeholder="اسم المشروع" class="border p-2 rounded col-span-2">
                     <input type="text" id="fRef" required placeholder="رقم المرجع" class="border p-2 rounded col-span-1">
                     <input type="text" id="fRecipient" required placeholder="المرسل / الموجه اليه" class="border p-2 rounded col-span-1">
                     <input type="text" id="fSubject" required placeholder="الموضوع" class="border p-2 rounded col-span-2">
@@ -86,7 +100,8 @@
                     <div id="statusFilters" class="flex flex-wrap gap-2 text-xs">
                         <button data-filter="all" class="filter-btn active border px-3 py-1 rounded-full">الكل</button>
                         <button data-filter="جديد" class="filter-btn border px-3 py-1 rounded-full">جديد</button>
-                        <button data-filter="قيد المراجعة" class="filter-btn border px-3 py-1 rounded-full">قيد المراجعة</button>
+                        <button data-filter="قيد التنفيذ" class="filter-btn border px-3 py-1 rounded-full">قيد التنفيذ</button>
+                        <button data-filter="بانتظار مراجعة المدير" class="filter-btn border px-3 py-1 rounded-full">بانتظار المراجعة</button>
                         <button data-filter="معتمد" class="filter-btn border px-3 py-1 rounded-full">معتمد</button>
                         <button data-filter="مرفوض" class="filter-btn border px-3 py-1 rounded-full">مرفوض</button>
                     </div>
@@ -96,18 +111,17 @@
                     <table class="w-full text-sm text-right">
                         <thead>
                             <tr class="bg-gray-100">
+                                <th class="p-2">المشروع</th>
                                 <th class="p-2">الرقم</th>
                                 <th class="p-2">الموضوع</th>
                                 <th class="p-2">النوع</th>
-                                <th class="p-2">الاتجاه</th>
-                                <th class="p-2">الأولوية</th>
-                                <th class="p-2">التاريخ</th>
+                                <th class="p-2">محوّل لـ</th>
                                 <th class="p-2">الحالة</th>
                                 <th class="p-2">إجراء</th>
                             </tr>
                         </thead>
                         <tbody id="tableBody">
-                            <tr><td colspan="8" class="p-4 text-center">جاري التحميل...</td></tr>
+                            <tr><td colspan="7" class="p-4 text-center">جاري التحميل...</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -117,8 +131,9 @@
 
     <script>
         // ============================================================
-        // ✏️ غيّر الرقم السري ده لأي رقم تختاره إنت (بدل 2026)
+        // ✏️ تقدر تغيّر الرقم السري وأسامي الموظفين هنا بسهولة
         const ADMIN_PIN = '2026';
+        const EMPLOYEES = ['موظف 1', 'موظف 2', 'موظف 3', 'موظف 4', 'موظف 5'];
         // ============================================================
 
         const db = supabase.createClient(
@@ -129,7 +144,8 @@
         let signUpMode = false;
         let allRows = [];
         let activeFilter = 'all';
-        let isAdmin = false; // بتتفعل لجلسة المتصفح الحالية بس، مش دايمة
+        let isAdmin = false;
+        let currentIdentity = 'السكرتيرة';
 
         const loginBox = document.getElementById('loginBox');
         const appBox = document.getElementById('appBox');
@@ -163,6 +179,13 @@
 
         document.getElementById('logoutBtn').onclick = () => { isAdmin = false; db.auth.signOut(); };
 
+        // ============ اختيار الهوية (سكرتيرة / موظف 1-5) ============
+        document.getElementById('identitySelect').onchange = (e) => {
+            currentIdentity = e.target.value;
+            document.getElementById('addFormBox').classList.toggle('hidden', currentIdentity !== 'السكرتيرة' && !isAdmin);
+            renderTable();
+        };
+
         // ============ زرار صلاحيات المدير ============
         document.getElementById('adminBtn').onclick = () => {
             if (isAdmin) {
@@ -178,6 +201,7 @@
                     alert('رقم سري غلط.');
                 }
             }
+            document.getElementById('addFormBox').classList.toggle('hidden', currentIdentity !== 'السكرتيرة' && !isAdmin);
             renderTable();
         };
 
@@ -188,7 +212,6 @@
                 appBox.classList.remove('hidden');
                 userBar.classList.remove('hidden');
                 userBar.classList.add('flex');
-                document.getElementById('userEmail').textContent = session.user.email;
                 loadTable();
             } else {
                 isAdmin = false;
@@ -204,11 +227,9 @@
             const btn = e.target.closest('.filter-btn');
             if (!btn) return;
             activeFilter = btn.dataset.filter;
-            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active', 'text-white'));
-            btn.classList.add('active');
+            document.querySelectorAll('.filter-btn').forEach(b => { b.style.backgroundColor = ''; b.style.color = ''; });
             btn.style.backgroundColor = '#0F2C52';
             btn.style.color = '#fff';
-            document.querySelectorAll('.filter-btn').forEach(b => { if (b !== btn) { b.style.backgroundColor = ''; b.style.color = ''; } });
             renderTable();
         });
 
@@ -216,7 +237,8 @@
             switch (status) {
                 case 'معتمد': return 'bg-green-100 text-green-800';
                 case 'مرفوض': return 'bg-red-100 text-red-800';
-                case 'قيد المراجعة': return 'bg-yellow-100 text-yellow-800';
+                case 'قيد التنفيذ': return 'bg-yellow-100 text-yellow-800';
+                case 'بانتظار مراجعة المدير': return 'bg-purple-100 text-purple-800';
                 default: return 'bg-blue-100 text-blue-800';
             }
         }
@@ -226,7 +248,7 @@
             const { data, error } = await db.from('correspondence').select('*').order('created_at', { ascending: false });
             const tbody = document.getElementById('tableBody');
             if (error) {
-                tbody.innerHTML = `<tr><td colspan="8" class="p-4 text-center text-red-500">${error.message}</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="7" class="p-4 text-center text-red-500">${error.message}</td></tr>`;
                 return;
             }
             allRows = data || [];
@@ -235,46 +257,101 @@
 
         function renderTable() {
             const tbody = document.getElementById('tableBody');
-            const rows = activeFilter === 'all' ? allRows : allRows.filter(r => (r.status || 'جديد') === activeFilter);
+            let rows = activeFilter === 'all' ? allRows : allRows.filter(r => (r.status || 'جديد') === activeFilter);
+
+            // تنبيه الموظف بعدد المستندات المحتاجة رد منه
+            const needsAction = allRows.filter(r => r.assigned_to === currentIdentity && r.status === 'قيد التنفيذ');
+            const alertBox = document.getElementById('actionAlert');
+            if (EMPLOYEES.includes(currentIdentity) && needsAction.length > 0) {
+                alertBox.classList.remove('hidden');
+                document.getElementById('actionCount').textContent = needsAction.length;
+            } else {
+                alertBox.classList.add('hidden');
+            }
 
             if (!rows.length) {
-                tbody.innerHTML = `<tr><td colspan="8" class="p-4 text-center text-gray-500">مفيش مستندات مطابقة</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="7" class="p-4 text-center text-gray-500">مفيش مستندات مطابقة</td></tr>`;
                 return;
             }
 
-            tbody.innerHTML = rows.map(row => `
-                <tr class="border-b hover:bg-gray-50">
+            tbody.innerHTML = rows.map(row => {
+                const highlight = (row.assigned_to === currentIdentity && row.status === 'قيد التنفيذ') ? 'needs-action' : '';
+                return `
+                <tr class="border-b hover:bg-gray-50 align-top ${highlight}">
+                    <td class="p-2">${row.project_name || '-'}</td>
                     <td class="p-2">${row.reference_no || '-'}</td>
-                    <td class="p-2">${row.subject || '-'}</td>
+                    <td class="p-2">
+                        ${row.subject || '-'}
+                        ${row.reply_text ? `<div class="text-xs text-gray-500 mt-1">💬 ${row.reply_text}</div>` : ''}
+                    </td>
                     <td class="p-2">${row.type || '-'}</td>
-                    <td class="p-2">${row.direction || '-'}</td>
-                    <td class="p-2">${row.priority === 'عاجل' ? '<span class="text-red-600 font-semibold">عاجل</span>' : (row.priority || '-')}</td>
-                    <td class="p-2 text-gray-500">${row.correspondence_date || '-'}</td>
+                    <td class="p-2">${row.assigned_to || '-'}</td>
                     <td class="p-2"><span class="status-badge ${statusBadgeClass(row.status)}">${row.status || 'جديد'}</span></td>
-                    <td class="p-2 whitespace-nowrap">${actionButtons(row)}</td>
+                    <td class="p-2 whitespace-nowrap">${actionCell(row)}</td>
                 </tr>
-            `).join('');
+            `}).join('');
         }
 
-        // ============ أزرار الإجراء: بتظهر بس لو صلاحيات المدير مفعّلة ============
-        function actionButtons(row) {
-            if (!isAdmin) {
-                return `<span class="text-gray-400 text-xs">بانتظار المدير</span>`;
+        // ============ محتوى خلية الإجراء حسب الهوية والصلاحية ============
+        function actionCell(row) {
+            const status = row.status || 'جديد';
+
+            // === المدير (بعد إدخال الرقم السري) ===
+            if (isAdmin) {
+                if (status === 'جديد') {
+                    const options = EMPLOYEES.map(name => `<option value="${name}">${name}</option>`).join('');
+                    return `
+                        <div class="flex flex-col gap-1">
+                            <select id="assign-${row.id}" class="border rounded text-xs p-1">${options}</select>
+                            <button onclick="assignToEmployee('${row.id}')" class="bg-blue-600 text-white text-xs px-2 py-1 rounded">تحويل</button>
+                        </div>
+                    `;
+                }
+                if (status === 'بانتظار مراجعة المدير') {
+                    return `
+                        <div class="flex gap-1 flex-wrap">
+                            <button onclick="changeStatus('${row.id}', 'معتمد')" class="bg-green-600 text-white text-xs px-2 py-1 rounded">اعتماد</button>
+                            <button onclick="changeStatus('${row.id}', 'مرفوض')" class="bg-red-600 text-white text-xs px-2 py-1 rounded">رفض</button>
+                        </div>
+                    `;
+                }
+                return `<button onclick="deleteRow('${row.id}')" class="bg-gray-700 text-white text-xs px-2 py-1 rounded">حذف</button>`;
             }
 
-            const decisionBtns = (row.status === 'معتمد' || row.status === 'مرفوض')
-                ? ''
-                : `
-                    <button onclick="changeStatus('${row.id}', 'معتمد')" class="bg-green-600 text-white text-xs px-2 py-1 rounded">اعتماد</button>
-                    <button onclick="changeStatus('${row.id}', 'مرفوض')" class="bg-red-600 text-white text-xs px-2 py-1 rounded">رفض</button>
+            // === الموظف صاحب الخطاب المحوّل له ===
+            if (EMPLOYEES.includes(currentIdentity) && row.assigned_to === currentIdentity && status === 'قيد التنفيذ') {
+                return `
+                    <div class="flex flex-col gap-1">
+                        <textarea id="reply-${row.id}" rows="2" placeholder="اكتب ردك هنا..." class="border rounded text-xs p-1"></textarea>
+                        <button onclick="sendReply('${row.id}')" class="bg-blue-600 text-white text-xs px-2 py-1 rounded">الرد وتحويل للمدير</button>
+                    </div>
                 `;
-            return `
-                <div class="flex gap-1 flex-wrap">
-                    ${decisionBtns}
-                    <button onclick="startEdit('${row.id}')" class="bg-yellow-500 text-white text-xs px-2 py-1 rounded">تعديل</button>
-                    <button onclick="deleteRow('${row.id}')" class="bg-gray-700 text-white text-xs px-2 py-1 rounded">حذف</button>
-                </div>
-            `;
+            }
+
+            return `<span class="text-gray-400 text-xs">-</span>`;
+        }
+
+        // ============ المدير: تحويل لموظف ============
+        async function assignToEmployee(id) {
+            const select = document.getElementById('assign-' + id);
+            const employeeName = select.value;
+            const { error } = await db.from('correspondence').update({
+                assigned_to: employeeName, status: 'قيد التنفيذ'
+            }).eq('id', id);
+            if (error) alert('خطأ: ' + error.message);
+            else loadTable();
+        }
+
+        // ============ الموظف: إرسال الرد ============
+        async function sendReply(id) {
+            const textarea = document.getElementById('reply-' + id);
+            const replyText = textarea.value.trim();
+            if (!replyText) { alert('اكتب ردك الأول'); return; }
+            const { error } = await db.from('correspondence').update({
+                reply_text: replyText, status: 'بانتظار مراجعة المدير'
+            }).eq('id', id);
+            if (error) alert('خطأ: ' + error.message);
+            else loadTable();
         }
 
         async function changeStatus(id, newStatus) {
@@ -291,25 +368,6 @@
             else loadTable();
         }
 
-        function startEdit(id) {
-            const row = allRows.find(r => r.id === id);
-            if (!row) return;
-
-            document.getElementById('editId').value = row.id;
-            document.getElementById('fRef').value = row.reference_no || '';
-            document.getElementById('fRecipient').value = row.sender_recipient || '';
-            document.getElementById('fSubject').value = row.subject || '';
-            document.getElementById('fType').value = row.type || 'خطاب';
-            document.getElementById('fDirection').value = row.direction || 'صادر';
-            document.getElementById('fPriority').value = row.priority || 'عادي';
-            document.getElementById('fDate').value = row.correspondence_date || '';
-
-            document.getElementById('formTitle').textContent = 'تعديل مستند';
-            document.getElementById('submitBtn').textContent = 'حفظ التعديل';
-            document.getElementById('cancelEditBtn').classList.remove('hidden');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
         function resetForm() {
             document.getElementById('addForm').reset();
             document.getElementById('editId').value = '';
@@ -320,13 +378,13 @@
         }
         document.getElementById('cancelEditBtn').onclick = resetForm;
 
-        // ============ إضافة / تعديل مستند ============
+        // ============ إضافة مستند جديد (السكرتيرة أو المدير) ============
         document.getElementById('addForm').onsubmit = async (e) => {
             e.preventDefault();
             const { data: { session } } = await db.auth.getSession();
-            const editId = document.getElementById('editId').value;
 
             const rowData = {
+                project_name: document.getElementById('fProject').value,
                 reference_no: document.getElementById('fRef').value,
                 sender_recipient: document.getElementById('fRecipient').value,
                 subject: document.getElementById('fSubject').value,
@@ -334,17 +392,11 @@
                 direction: document.getElementById('fDirection').value,
                 priority: document.getElementById('fPriority').value,
                 correspondence_date: document.getElementById('fDate').value,
+                status: 'جديد',
+                user_id: session.user.id
             };
 
-            let error;
-            if (editId) {
-                ({ error } = await db.from('correspondence').update(rowData).eq('id', editId));
-            } else {
-                rowData.status = 'جديد';
-                rowData.user_id = session.user.id;
-                ({ error } = await db.from('correspondence').insert([rowData]));
-            }
-
+            const { error } = await db.from('correspondence').insert([rowData]);
             if (error) {
                 alert('حدث خطأ: ' + error.message);
             } else {
