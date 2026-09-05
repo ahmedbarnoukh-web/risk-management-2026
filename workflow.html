@@ -267,6 +267,7 @@
         let searchText = '';
         let myRole = null, myCompanyId = null, myUserId = null;
         let companyMembers = [];
+        let isDemoMode = false;
 
         const isManager = (role) => role === 'Manager' || role === 'مدير';
         const isEmployee = (role) => role === 'Employee' || role === 'موظف';
@@ -303,6 +304,7 @@
         // ============ Authentication Handler ============
         document.getElementById('loginForm').onsubmit = async (e) => {
             e.preventDefault();
+            isDemoMode = false;
             const email = document.getElementById('loginEmail').value.trim();
             const password = document.getElementById('loginPass').value;
 
@@ -328,26 +330,79 @@
             }
         };
 
-        document.getElementById('logoutBtn').onclick = () => db.auth.signOut();
+        document.getElementById('logoutBtn').onclick = () => {
+            isDemoMode = false;
+            db.auth.signOut();
+            checkSessionState(null);
+        };
 
-        // ============ Quick Demo Access ============
-        async function quickLogin(role) {
-            const email = role === 'Manager' ? 'demo.manager@barnoukh.local' : 'demo.engineer@barnoukh.local';
-            const password = 'demo12345password';
-            const fullName = role === 'Manager' ? 'Eng. Ahmed (Director)' : 'Eng. Mohammed (Engineer)';
+        // ============ Quick Demo Access (Bypasses Auth Constraints) ============
+        function startDemo(role) {
+            isDemoMode = true;
+            myUserId = role === 'Manager' ? 'demo-mgr-id' : 'demo-emp-id';
+            myCompanyId = 'demo-company-id';
+            myRole = role;
+            companyMembers = [
+                { id: 'demo-mgr-id', full_name: 'Eng. Ahmed Barnoukh (Director)', role: 'Manager' },
+                { id: 'demo-emp-id', full_name: 'Eng. Mohammed (Engineer)', role: 'Employee' }
+            ];
 
-            let { error: loginErr } = await db.auth.signInWithPassword({ email, password });
-            if (!loginErr) return;
+            // Mock initial demo data if empty
+            if (!allRows.length) {
+                allRows = [
+                    {
+                        id: '1',
+                        project_name: 'Riyadh Business Center Tower',
+                        reference_no: 'REF-2026-001',
+                        sender_recipient: 'Main Contractor',
+                        subject: 'Approval of Main Electrical Switchgear Submittal (MAR)',
+                        type: 'Material',
+                        direction: 'Incoming',
+                        priority: 'Urgent',
+                        correspondence_date: '2026-09-01',
+                        attachment_url: '#',
+                        status: 'In Progress',
+                        company_id: 'demo-company-id',
+                        assigned_to: 'demo-emp-id',
+                        reply_text: '',
+                        reply_attachment_url: null
+                    },
+                    {
+                        id: '2',
+                        project_name: 'Jeddah Commercial Mall',
+                        reference_no: 'REF-2026-002',
+                        sender_recipient: 'Consultant Office',
+                        subject: 'Request for Information (RFI) regarding HVAC duct routing',
+                        type: 'RFI',
+                        direction: 'Outgoing',
+                        priority: 'Normal',
+                        correspondence_date: '2026-09-03',
+                        attachment_url: '#',
+                        status: 'New',
+                        company_id: 'demo-company-id',
+                        assigned_to: null,
+                        reply_text: '',
+                        reply_attachment_url: null
+                    }
+                ];
+            }
 
-            const { data, error: signUpErr } = await db.auth.signUp({ email, password });
-            if (signUpErr) { alert('Demo login error: ' + signUpErr.message); return; }
-
-            const { data: newCompany } = await db.from('companies').insert([{ code: 'DEMO-CO' }]).select().single();
-            await db.from('profiles').insert([{ id: data.user.id, company_id: newCompany.id, full_name: fullName, role }]);
-            await db.auth.signInWithPassword({ email, password });
+            setupWorkspaceUI(role === 'Manager' ? 'Project Director' : 'Engineer', role === 'Manager' ? 'Eng. Ahmed Barnoukh' : 'Eng. Mohammed');
         }
-        document.getElementById('quickManagerBtn').onclick = () => quickLogin('Manager');
-        document.getElementById('quickEmployeeBtn').onclick = () => quickLogin('Employee');
+
+        document.getElementById('quickManagerBtn').onclick = () => startDemo('Manager');
+        document.getElementById('quickEmployeeBtn').onclick = () => startDemo('Employee');
+
+        function setupWorkspaceUI(roleTitle, fullName) {
+            loginBox.classList.add('hidden');
+            appBox.classList.remove('hidden');
+            userBar.classList.remove('hidden');
+            userBar.classList.add('flex');
+            document.getElementById('userRoleBadge').textContent = roleTitle;
+            document.getElementById('userNameBadge').textContent = fullName;
+            renderStats();
+            renderTable();
+        }
 
         // ============ Modal Controls ============
         document.getElementById('openAddModal').onclick = () => { resetForm(); addModal.classList.remove('hidden'); };
@@ -355,7 +410,8 @@
         document.getElementById('cancelEditBtn').onclick = () => addModal.classList.add('hidden');
 
         // ============ Auth State Management ============
-        db.auth.onAuthStateChange(async (event, session) => {
+        async function checkSessionState(session) {
+            if (isDemoMode) return;
             if (session) {
                 myUserId = session.user.id;
                 let { data: profile } = await db.from('profiles').select('*').eq('id', session.user.id).maybeSingle();
@@ -379,12 +435,7 @@
                 const { data: members } = await db.from('profiles').select('id, full_name, role').eq('company_id', myCompanyId);
                 companyMembers = members || [];
 
-                loginBox.classList.add('hidden');
-                appBox.classList.remove('hidden');
-                userBar.classList.remove('hidden');
-                userBar.classList.add('flex');
-                document.getElementById('userRoleBadge').textContent = isManager(myRole) ? 'Project Director' : 'Engineer';
-                document.getElementById('userNameBadge').textContent = profile.full_name || '';
+                setupWorkspaceUI(isManager(myRole) ? 'Project Director' : 'Engineer', profile.full_name || '');
                 loadTable();
             } else {
                 myRole = null; myCompanyId = null; myUserId = null;
@@ -393,6 +444,10 @@
                 userBar.classList.add('hidden');
                 userBar.classList.remove('flex');
             }
+        }
+
+        db.auth.onAuthStateChange((event, session) => {
+            if (!isDemoMode) checkSessionState(session);
         });
 
         // ============ Filters & Search ============
@@ -431,6 +486,11 @@
 
         // ============ Data Loading ============
         async function loadTable() {
+            if (isDemoMode) {
+                renderStats();
+                renderTable();
+                return;
+            }
             const { data, error } = await db.from('correspondence').select('*').order('created_at', { ascending: false });
             const tbody = document.getElementById('tableBody');
             if (error) {
@@ -482,7 +542,7 @@
 
             tbody.innerHTML = rows.map(row => {
                 const flagged = (row.assigned_to === myUserId && row.status === 'In Progress') ? 'row-flag' : '';
-                const attachmentCell = row.attachment_url
+                const attachmentCell = row.attachment_url && row.attachment_url !== '#'
                     ? `<a href="${row.attachment_url}" target="_blank" class="text-xs font-semibold text-blue-600 hover:underline">View File</a>`
                     : '<span class="text-gray-300">—</span>';
                 return `
@@ -543,6 +603,7 @@
 
         async function uploadFile(file, subfolder) {
             if (!file) return null;
+            if (isDemoMode) return '#';
             const path = `${myCompanyId}/${subfolder}/${Date.now()}_${file.name}`;
             const { error } = await db.storage.from('attachments').upload(path, file);
             if (error) { alert('Upload error: ' + error.message); return null; }
@@ -554,6 +615,14 @@
             const select = document.getElementById('assign-' + id);
             const employeeId = select.value;
             if (!employeeId) { alert('Please select an engineer first.'); return; }
+            
+            if (isDemoMode) {
+                const row = allRows.find(r => r.id === id);
+                if (row) { row.assigned_to = employeeId; row.status = 'In Progress'; }
+                loadTable();
+                return;
+            }
+
             const { error } = await db.from('correspondence').update({ assigned_to: employeeId, status: 'In Progress' }).eq('id', id);
             if (error) alert('Error: ' + error.message);
             else loadTable();
@@ -568,6 +637,17 @@
             let replyAttachmentUrl = null;
             if (fileInput.files[0]) replyAttachmentUrl = await uploadFile(fileInput.files[0], 'replies');
 
+            if (isDemoMode) {
+                const row = allRows.find(r => r.id === id);
+                if (row) {
+                    row.reply_text = replyText;
+                    row.reply_attachment_url = replyAttachmentUrl;
+                    row.status = 'Pending Manager Review';
+                }
+                loadTable();
+                return;
+            }
+
             const { error } = await db.from('correspondence').update({
                 reply_text: replyText, reply_attachment_url: replyAttachmentUrl, status: 'Pending Manager Review'
             }).eq('id', id);
@@ -577,6 +657,14 @@
 
         async function changeStatus(id, newStatus) {
             if (!confirm(`Are you sure you want to mark this document as ${newStatus}?`)) return;
+            
+            if (isDemoMode) {
+                const row = allRows.find(r => r.id === id);
+                if (row) row.status = newStatus;
+                loadTable();
+                return;
+            }
+
             const { error } = await db.from('correspondence').update({ status: newStatus }).eq('id', id);
             if (error) alert('Error: ' + error.message);
             else loadTable();
@@ -584,6 +672,13 @@
 
         async function deleteRow(id) {
             if (!confirm('Are you sure you want to permanently delete this record?')) return;
+            
+            if (isDemoMode) {
+                allRows = allRows.filter(r => r.id !== id);
+                loadTable();
+                return;
+            }
+
             const { error } = await db.from('correspondence').delete().eq('id', id);
             if (error) alert('Error: ' + error.message);
             else loadTable();
@@ -604,6 +699,7 @@
             if (fileInput.files[0]) attachmentUrl = await uploadFile(fileInput.files[0], 'documents');
 
             const rowData = {
+                id: Date.now().toString(),
                 project_name: document.getElementById('fProject').value,
                 reference_no: document.getElementById('fRef').value,
                 sender_recipient: document.getElementById('fRecipient').value,
@@ -615,8 +711,19 @@
                 attachment_url: attachmentUrl,
                 status: 'New',
                 company_id: myCompanyId,
-                user_id: myUserId
+                user_id: myUserId,
+                assigned_to: null,
+                reply_text: '',
+                reply_attachment_url: null
             };
+
+            if (isDemoMode) {
+                allRows.unshift(rowData);
+                resetForm();
+                addModal.classList.add('hidden');
+                loadTable();
+                return;
+            }
 
             const { error } = await db.from('correspondence').insert([rowData]);
             if (error) {
