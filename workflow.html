@@ -1,141 +1,180 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en" dir="ltr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BA Engineering Academy</title>
+    <title>BA Engineering — Correspondence Portal</title>
     <link rel="icon" href="https://www.barnoukh-engineering.com/photo/logo.jpg">
     <meta name="theme-color" content="#0F2C52">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
-        .status-badge { display:inline-block; padding:2px 10px; border-radius:9999px; font-size:12px; font-weight:600; }
-        .needs-action { background-color:#FFFBEB !important; }
+        :root {
+            --bg: #F7F8FA;
+            --surface: #FFFFFF;
+            --border: #E4E7EC;
+            --text-primary: #101828;
+            --text-secondary: #667085;
+            --brand: #0F2C52;
+            --brand-light: #2E5AAC;
+        }
+        * { font-family: 'Inter', -apple-system, sans-serif; }
+        .mono { font-family: 'IBM Plex Mono', monospace; }
+        body { background: var(--bg); color: var(--text-primary); }
+        .card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; }
+        .btn-primary { background: var(--brand); color: #fff; transition: background .15s; }
+        .btn-primary:hover { background: var(--brand-light); }
+        .seg-btn { color: var(--text-secondary); border-bottom: 2px solid transparent; }
+        .seg-btn.active { color: var(--brand); border-bottom-color: var(--brand); font-weight: 600; }
+        .status-pill { display:inline-flex; align-items:center; gap:5px; padding:3px 10px; border-radius:9999px; font-size:12px; font-weight:600; white-space:nowrap; }
+        .row-flag { box-shadow: inset 3px 0 0 #F79009; }
+        input:focus, select:focus, textarea:focus { outline:none; box-shadow: 0 0 0 3px rgba(46,90,172,0.15); border-color: var(--brand-light); }
+        .modal-overlay { background: rgba(16,24,40,0.5); backdrop-filter: blur(2px); }
+        table th { color: var(--text-secondary); font-weight:600; font-size:12px; text-transform:none; }
+        tbody tr:hover { background: #FBFCFD; }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-800 font-sans">
+<body>
 
-    <header style="background-color:#0F2C52" class="text-white p-4 flex flex-wrap justify-between items-center shadow-md gap-2">
-        <div class="flex items-center gap-3">
-            <img src="https://www.barnoukh-engineering.com/photo/logo.jpg" alt="logo" class="h-10 w-10 rounded object-cover">
-            <h1 class="font-bold text-sm md:text-base">BA Engineering Academy — بوابة المراسلات</h1>
-        </div>
-        <div id="userBar" class="hidden items-center gap-2 text-sm flex-wrap">
-            <select id="identitySelect" class="text-gray-800 rounded p-1 text-xs">
-                <option value="السكرتيرة">أنا: السكرتيرة</option>
-                <option value="موظف 1">أنا: موظف 1</option>
-                <option value="موظف 2">أنا: موظف 2</option>
-                <option value="موظف 3">أنا: موظف 3</option>
-                <option value="موظف 4">أنا: موظف 4</option>
-                <option value="موظف 5">أنا: موظف 5</option>
-            </select>
-            <span id="adminBadge" class="hidden text-xs bg-green-500 px-2 py-1 rounded">صلاحيات المدير مفعّلة</span>
-            <button id="adminBtn" class="bg-white/20 px-3 py-1 rounded hover:bg-white/30 text-xs">صلاحيات المدير</button>
-            <button id="logoutBtn" class="bg-red-600 px-3 py-1 rounded text-xs">خروج</button>
+    <!-- ============ TOP BAR ============ -->
+    <header class="bg-white border-b" style="border-color:var(--border)">
+        <div class="max-w-7xl mx-auto px-5 h-16 flex items-center justify-between gap-4">
+            <div class="flex items-center gap-3 shrink-0">
+                <img src="https://www.barnoukh-engineering.com/photo/logo.jpg" class="h-8 w-8 rounded object-cover" alt="logo">
+                <span class="font-semibold text-sm hidden sm:inline">BA Engineering</span>
+            </div>
+            <div id="userBar" class="hidden items-center gap-3 text-sm">
+                <input id="searchInput" type="text" placeholder="Search reference, subject, project..."
+                    class="hidden md:block border rounded-lg px-3 py-1.5 text-sm w-72" style="border-color:var(--border)">
+                <span id="userRoleBadge" class="text-xs font-medium px-2.5 py-1 rounded-full" style="background:#EFF4FF;color:var(--brand-light)"></span>
+                <span id="userNameBadge" class="hidden md:inline" style="color:var(--text-secondary)"></span>
+                <button id="logoutBtn" class="text-sm font-medium px-3 py-1.5 rounded-lg border hover:bg-gray-50" style="border-color:var(--border)">Log out</button>
+            </div>
         </div>
     </header>
 
-    <main class="container mx-auto p-4 max-w-6xl">
+    <!-- ============ LOGIN ============ -->
+    <div id="loginBox" class="card p-8 max-w-sm mx-auto mt-16">
+        <h2 id="loginTitle" class="font-semibold text-xl mb-1">Log in</h2>
+        <p class="text-sm mb-5" style="color:var(--text-secondary)">Access your company's correspondence portal</p>
+        <form id="loginForm" class="space-y-3">
+            <input type="text" id="companyCode" required placeholder="Company code" class="w-full border rounded-lg p-2.5 text-sm" style="border-color:var(--border)">
+            <input type="text" id="fullName" placeholder="Full name" class="hidden w-full border rounded-lg p-2.5 text-sm" style="border-color:var(--border)">
+            <select id="roleSelect" class="hidden w-full border rounded-lg p-2.5 text-sm" style="border-color:var(--border)">
+                <option value="Manager">Manager</option>
+                <option value="Employee">Employee</option>
+            </select>
+            <input type="email" id="loginEmail" required placeholder="Email" class="w-full border rounded-lg p-2.5 text-sm" style="border-color:var(--border)">
+            <input type="password" id="loginPass" required placeholder="Password" class="w-full border rounded-lg p-2.5 text-sm" style="border-color:var(--border)">
+            <button class="btn-primary w-full rounded-lg p-2.5 text-sm font-medium">Log in</button>
+        </form>
+        <button id="switchModeBtn" class="text-sm mt-4" style="color:var(--brand-light)">Don't have an account? Sign up</button>
+    </div>
 
-        <!-- ============ شاشة الدخول ============ -->
-        <div id="loginBox" class="bg-white p-6 rounded-lg shadow max-w-sm mx-auto mt-10">
-            <h2 id="loginTitle" class="font-bold text-lg mb-4">تسجيل دخول الشركة</h2>
-            <form id="loginForm" class="space-y-3">
-                <input type="email" id="loginEmail" required placeholder="البريد الإلكتروني للشركة" class="w-full border p-2 rounded">
-                <input type="password" id="loginPass" required placeholder="كلمة المرور" class="w-full border p-2 rounded">
-                <button style="background-color:#0F2C52" class="w-full text-white p-2 rounded">دخول</button>
-            </form>
-            <button id="switchModeBtn" class="text-blue-600 text-sm mt-3">ليس لديك حساب؟ أنشئ حساب جديد للشركة</button>
+    <!-- ============ MAIN APP ============ -->
+    <main id="appBox" class="hidden max-w-7xl mx-auto px-5 py-6">
+
+        <div id="actionAlert" class="hidden mb-5 p-3.5 rounded-lg text-sm flex items-center gap-2" style="background:#FFFAEB;color:#B54708;border:1px solid #FEDF89">
+            <span>●</span> You have <b id="actionCount">0</b> document(s) awaiting your reply.
         </div>
 
-        <!-- ============ الصفحة الرئيسية ============ -->
-        <div id="appBox" class="hidden">
-
-            <!-- تنبيه للموظف: عنده حاجة تحتاج إجراء -->
-            <div id="actionAlert" class="hidden bg-yellow-100 border border-yellow-400 text-yellow-800 p-3 rounded-lg mb-4 text-sm">
-                🔔 عندك <span id="actionCount">0</span> مستند محوّل لك محتاج ردك.
+        <!-- Page header -->
+        <div class="flex flex-wrap justify-between items-center gap-3 mb-5">
+            <div>
+                <h1 class="text-xl font-semibold">Correspondence</h1>
+                <p class="text-sm" style="color:var(--text-secondary)">Track, transfer, and approve project documents</p>
             </div>
+            <button id="openAddModal" class="btn-primary rounded-lg px-4 py-2 text-sm font-medium">+ New Document</button>
+        </div>
 
-            <!-- فورم إضافة / تعديل (خاص بالسكرتيرة أو المدير) -->
-            <div id="addFormBox" class="bg-white p-6 rounded-lg shadow mb-6">
-                <h3 id="formTitle" class="font-bold mb-4">إضافة مستند جديد</h3>
-                <form id="addForm" class="grid grid-cols-2 gap-3">
-                    <input type="hidden" id="editId" value="">
-                    <input type="text" id="fProject" required placeholder="اسم المشروع" class="border p-2 rounded col-span-2">
-                    <input type="text" id="fRef" required placeholder="رقم المرجع" class="border p-2 rounded col-span-1">
-                    <input type="text" id="fRecipient" required placeholder="المرسل / الموجه اليه" class="border p-2 rounded col-span-1">
-                    <input type="text" id="fSubject" required placeholder="الموضوع" class="border p-2 rounded col-span-2">
+        <!-- Stats -->
+        <div id="statsRow" class="grid grid-cols-2 md:grid-cols-5 gap-3 mb-6"></div>
 
-                    <select id="fType" class="border p-2 rounded col-span-1">
-                        <option value="خطاب">خطاب</option>
-                        <option value="مادة">مادة</option>
-                        <option value="مخطط">مخطط</option>
-                        <option value="RFI">RFI</option>
-                        <option value="مستخلص">مستخلص</option>
-                        <option value="محضر استلام نهائي">محضر استلام نهائي</option>
-                        <option value="محضر استلام ابتدائي">محضر استلام ابتدائي</option>
-                    </select>
-                    <select id="fDirection" class="border p-2 rounded col-span-1">
-                        <option value="صادر">صادر</option>
-                        <option value="وارد">وارد</option>
-                    </select>
+        <!-- Filters -->
+        <div class="card p-1 mb-4 inline-flex flex-wrap gap-1" id="statusFiltersWrap">
+            <button data-filter="all" class="filter-btn seg-btn active px-3 py-2 text-sm">All</button>
+            <button data-filter="New" class="filter-btn seg-btn px-3 py-2 text-sm">New</button>
+            <button data-filter="In Progress" class="filter-btn seg-btn px-3 py-2 text-sm">In Progress</button>
+            <button data-filter="Pending Manager Review" class="filter-btn seg-btn px-3 py-2 text-sm">Pending Review</button>
+            <button data-filter="Approved" class="filter-btn seg-btn px-3 py-2 text-sm">Approved</button>
+            <button data-filter="Rejected" class="filter-btn seg-btn px-3 py-2 text-sm">Rejected</button>
+        </div>
+        <input id="searchInputMobile" type="text" placeholder="Search..." class="md:hidden w-full border rounded-lg p-2.5 text-sm mb-4" style="border-color:var(--border)">
 
-                    <select id="fPriority" class="border p-2 rounded col-span-1">
-                        <option value="عادي">عادي</option>
-                        <option value="عاجل">عاجل</option>
-                    </select>
-                    <input type="date" id="fDate" required class="border p-2 rounded col-span-1">
-
-                    <div class="col-span-2 flex gap-2">
-                        <button id="submitBtn" style="background-color:#0F2C52" class="flex-1 text-white p-2 rounded">حفظ</button>
-                        <button type="button" id="cancelEditBtn" class="hidden bg-gray-400 text-white p-2 rounded px-4">إلغاء</button>
-                    </div>
-                </form>
-            </div>
-
-            <!-- الجدول + الفلتر -->
-            <div class="bg-white p-6 rounded-lg shadow">
-                <div class="flex flex-wrap justify-between items-center mb-4 gap-3">
-                    <h3 class="font-bold">سجل المراسلات</h3>
-                    <div id="statusFilters" class="flex flex-wrap gap-2 text-xs">
-                        <button data-filter="all" class="filter-btn active border px-3 py-1 rounded-full">الكل</button>
-                        <button data-filter="جديد" class="filter-btn border px-3 py-1 rounded-full">جديد</button>
-                        <button data-filter="قيد التنفيذ" class="filter-btn border px-3 py-1 rounded-full">قيد التنفيذ</button>
-                        <button data-filter="بانتظار مراجعة المدير" class="filter-btn border px-3 py-1 rounded-full">بانتظار المراجعة</button>
-                        <button data-filter="معتمد" class="filter-btn border px-3 py-1 rounded-full">معتمد</button>
-                        <button data-filter="مرفوض" class="filter-btn border px-3 py-1 rounded-full">مرفوض</button>
-                    </div>
-                </div>
-
-                <div class="overflow-x-auto">
-                    <table class="w-full text-sm text-right">
-                        <thead>
-                            <tr class="bg-gray-100">
-                                <th class="p-2">المشروع</th>
-                                <th class="p-2">الرقم</th>
-                                <th class="p-2">الموضوع</th>
-                                <th class="p-2">النوع</th>
-                                <th class="p-2">محوّل لـ</th>
-                                <th class="p-2">الحالة</th>
-                                <th class="p-2">إجراء</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tableBody">
-                            <tr><td colspan="7" class="p-4 text-center">جاري التحميل...</td></tr>
-                        </tbody>
-                    </table>
-                </div>
+        <!-- Table -->
+        <div class="card overflow-hidden">
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm text-left">
+                    <thead>
+                        <tr class="border-b" style="border-color:var(--border)">
+                            <th class="p-3">Project</th>
+                            <th class="p-3">Reference</th>
+                            <th class="p-3">Subject</th>
+                            <th class="p-3">Type</th>
+                            <th class="p-3">File</th>
+                            <th class="p-3">Assigned to</th>
+                            <th class="p-3">Status</th>
+                            <th class="p-3">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                        <tr><td colspan="8" class="p-6 text-center" style="color:var(--text-secondary)">Loading...</td></tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </main>
 
-    <script>
-        // ============================================================
-        // ✏️ تقدر تغيّر الرقم السري وأسامي الموظفين هنا بسهولة
-        const ADMIN_PIN = '2026';
-        const EMPLOYEES = ['موظف 1', 'موظف 2', 'موظف 3', 'موظف 4', 'موظف 5'];
-        // ============================================================
+    <!-- ============ ADD/EDIT MODAL ============ -->
+    <div id="addModal" class="hidden fixed inset-0 modal-overlay z-40 flex items-center justify-center p-4">
+        <div class="card w-full max-w-lg p-6 max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center mb-4">
+                <h3 id="formTitle" class="font-semibold text-lg">New Document</h3>
+                <button id="closeModalBtn" class="text-2xl leading-none" style="color:var(--text-secondary)">&times;</button>
+            </div>
+            <form id="addForm" class="grid grid-cols-2 gap-3">
+                <input type="hidden" id="editId" value="">
+                <input type="text" id="fProject" required placeholder="Project name" class="border rounded-lg p-2.5 text-sm col-span-2" style="border-color:var(--border)">
+                <input type="text" id="fRef" required placeholder="Reference no." class="border rounded-lg p-2.5 text-sm col-span-1 mono" style="border-color:var(--border)">
+                <input type="text" id="fRecipient" required placeholder="Sender / recipient" class="border rounded-lg p-2.5 text-sm col-span-1" style="border-color:var(--border)">
+                <input type="text" id="fSubject" required placeholder="Subject" class="border rounded-lg p-2.5 text-sm col-span-2" style="border-color:var(--border)">
 
+                <select id="fType" class="border rounded-lg p-2.5 text-sm col-span-1" style="border-color:var(--border)">
+                    <option value="Letter">Letter</option>
+                    <option value="Material">Material</option>
+                    <option value="Drawing">Drawing</option>
+                    <option value="RFI">RFI</option>
+                    <option value="Payment Certificate">Payment Certificate</option>
+                    <option value="Final Handover">Final Handover</option>
+                    <option value="Preliminary Handover">Preliminary Handover</option>
+                </select>
+                <select id="fDirection" class="border rounded-lg p-2.5 text-sm col-span-1" style="border-color:var(--border)">
+                    <option value="Outgoing">Outgoing</option>
+                    <option value="Incoming">Incoming</option>
+                </select>
+
+                <select id="fPriority" class="border rounded-lg p-2.5 text-sm col-span-1" style="border-color:var(--border)">
+                    <option value="Normal">Normal</option>
+                    <option value="Urgent">Urgent</option>
+                </select>
+                <input type="date" id="fDate" required class="border rounded-lg p-2.5 text-sm col-span-1" style="border-color:var(--border)">
+
+                <div class="col-span-2">
+                    <label class="text-xs mb-1 block" style="color:var(--text-secondary)">Attachment (PDF or image) — optional</label>
+                    <input type="file" id="fAttachment" accept=".pdf,.jpg,.jpeg,.png" class="border rounded-lg p-2 text-sm w-full" style="border-color:var(--border)">
+                </div>
+
+                <div class="col-span-2 flex gap-2 mt-2">
+                    <button id="submitBtn" class="btn-primary flex-1 rounded-lg p-2.5 text-sm font-medium">Save</button>
+                    <button type="button" id="cancelEditBtn" class="rounded-lg p-2.5 text-sm font-medium px-5 border" style="border-color:var(--border)">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
         const db = supabase.createClient(
             'https://rzhyuufqhuejamcpbzst.supabase.co',
             'sb_publishable_sUFjo5uXyaL0MJbRrDIiFg_ixhooI4p'
@@ -144,82 +183,94 @@
         let signUpMode = false;
         let allRows = [];
         let activeFilter = 'all';
-        let isAdmin = false;
-        let currentIdentity = 'السكرتيرة';
+        let searchText = '';
+        let myRole = null, myCompanyId = null, myUserId = null;
+        let companyMembers = [];
+
+        // بيقبل القيم القديمة (عربي) أو الجديدة (إنجليزي) للدور، عشان الحسابات اللي اتعملت قبل التحديث تفضل شغالة
+        const isManager = (role) => role === 'Manager' || role === 'مدير';
+        const isEmployee = (role) => role === 'Employee' || role === 'موظف';
 
         const loginBox = document.getElementById('loginBox');
         const appBox = document.getElementById('appBox');
         const userBar = document.getElementById('userBar');
+        const fullNameInput = document.getElementById('fullName');
+        const roleSelect = document.getElementById('roleSelect');
+        const addModal = document.getElementById('addModal');
 
         document.getElementById('fDate').value = new Date().toISOString().split('T')[0];
 
-        // ============ تبديل دخول / تسجيل ============
         document.getElementById('switchModeBtn').onclick = () => {
             signUpMode = !signUpMode;
-            document.getElementById('loginTitle').textContent = signUpMode ? 'إنشاء حساب جديد للشركة' : 'تسجيل دخول الشركة';
-            document.getElementById('switchModeBtn').textContent = signUpMode ? 'لديك حساب بالفعل؟ سجل دخولك' : 'ليس لديك حساب؟ أنشئ حساب جديد للشركة';
+            document.getElementById('loginTitle').textContent = signUpMode ? 'Create account' : 'Log in';
+            document.getElementById('switchModeBtn').textContent = signUpMode ? 'Already have an account? Log in' : "Don't have an account? Sign up";
+            fullNameInput.classList.toggle('hidden', !signUpMode);
+            roleSelect.classList.toggle('hidden', !signUpMode);
         };
 
+        // ============ Sign up / Log in ============
         document.getElementById('loginForm').onsubmit = async (e) => {
             e.preventDefault();
             const email = document.getElementById('loginEmail').value;
             const password = document.getElementById('loginPass').value;
+            const companyCode = document.getElementById('companyCode').value.trim();
 
-            const result = signUpMode
-                ? await db.auth.signUp({ email, password })
-                : await db.auth.signInWithPassword({ email, password });
+            if (signUpMode) {
+                const chosenRole = roleSelect.value;
+                const { data, error } = await db.auth.signUp({ email, password });
+                if (error) { alert('Error: ' + error.message); return; }
 
-            if (result.error) {
-                alert('خطأ: ' + result.error.message);
-            } else if (signUpMode) {
-                alert('تم إنشاء الحساب بنجاح! سجل دخولك دلوقتي.');
-                document.getElementById('switchModeBtn').click();
-            }
-        };
-
-        document.getElementById('logoutBtn').onclick = () => { isAdmin = false; db.auth.signOut(); };
-
-        // ============ اختيار الهوية (سكرتيرة / موظف 1-5) ============
-        document.getElementById('identitySelect').onchange = (e) => {
-            currentIdentity = e.target.value;
-            // لو اخترت هوية موظف، نلغي صلاحيات المدير تلقائيًا عشان محدش يتلخبط
-            if (currentIdentity !== 'السكرتيرة') {
-                isAdmin = false;
-                document.getElementById('adminBadge').classList.add('hidden');
-            }
-            document.getElementById('addFormBox').classList.toggle('hidden', currentIdentity !== 'السكرتيرة' && !isAdmin);
-            renderTable();
-        };
-
-        // ============ زرار صلاحيات المدير ============
-        document.getElementById('adminBtn').onclick = () => {
-            if (isAdmin) {
-                isAdmin = false;
-                document.getElementById('adminBadge').classList.add('hidden');
-                alert('تم إلغاء صلاحيات المدير.');
-            } else {
-                const code = prompt('ادخل الرقم السري لصلاحيات المدير:');
-                if (code === ADMIN_PIN) {
-                    isAdmin = true;
-                    document.getElementById('adminBadge').classList.remove('hidden');
-                } else if (code !== null) {
-                    alert('رقم سري غلط.');
+                let { data: existingCompany } = await db.from('companies').select('*').eq('code', companyCode).maybeSingle();
+                let companyId;
+                if (existingCompany) {
+                    companyId = existingCompany.id;
+                } else {
+                    const { data: newCompany, error: cErr } = await db.from('companies').insert([{ code: companyCode }]).select().single();
+                    if (cErr) { alert('Error creating company: ' + cErr.message); return; }
+                    companyId = newCompany.id;
                 }
+
+                const { error: pErr } = await db.from('profiles').insert([{
+                    id: data.user.id, company_id: companyId, full_name: document.getElementById('fullName').value, role: chosenRole
+                }]);
+                if (pErr) { alert('Error creating profile: ' + pErr.message); return; }
+
+                alert(`Account created as ${chosenRole}! Please log in now.`);
+                document.getElementById('switchModeBtn').click();
+            } else {
+                const { error } = await db.auth.signInWithPassword({ email, password });
+                if (error) alert('Error: ' + error.message);
             }
-            document.getElementById('addFormBox').classList.toggle('hidden', currentIdentity !== 'السكرتيرة' && !isAdmin);
-            renderTable();
         };
 
-        // ============ مراقبة حالة الدخول ============
-        db.auth.onAuthStateChange((event, session) => {
+        document.getElementById('logoutBtn').onclick = () => db.auth.signOut();
+
+        // ============ Modal controls ============
+        document.getElementById('openAddModal').onclick = () => { resetForm(); addModal.classList.remove('hidden'); };
+        document.getElementById('closeModalBtn').onclick = () => addModal.classList.add('hidden');
+        document.getElementById('cancelEditBtn').onclick = () => addModal.classList.add('hidden');
+
+        // ============ Auth state ============
+        db.auth.onAuthStateChange(async (event, session) => {
             if (session) {
+                myUserId = session.user.id;
+                const { data: profile } = await db.from('profiles').select('*').eq('id', session.user.id).maybeSingle();
+                if (!profile) return;
+                myRole = profile.role;
+                myCompanyId = profile.company_id;
+
+                const { data: members } = await db.from('profiles').select('id, full_name, role').eq('company_id', myCompanyId);
+                companyMembers = members || [];
+
                 loginBox.classList.add('hidden');
                 appBox.classList.remove('hidden');
                 userBar.classList.remove('hidden');
                 userBar.classList.add('flex');
+                document.getElementById('userRoleBadge').textContent = isManager(myRole) ? 'Manager' : 'Employee';
+                document.getElementById('userNameBadge').textContent = profile.full_name || '';
                 loadTable();
             } else {
-                isAdmin = false;
+                myRole = null; myCompanyId = null; myUserId = null;
                 loginBox.classList.remove('hidden');
                 appBox.classList.add('hidden');
                 userBar.classList.add('hidden');
@@ -227,47 +278,79 @@
             }
         });
 
-        // ============ فلتر الحالة ============
-        document.getElementById('statusFilters').addEventListener('click', (e) => {
-            const btn = e.target.closest('.filter-btn');
-            if (!btn) return;
-            activeFilter = btn.dataset.filter;
-            document.querySelectorAll('.filter-btn').forEach(b => { b.style.backgroundColor = ''; b.style.color = ''; });
-            btn.style.backgroundColor = '#0F2C52';
-            btn.style.color = '#fff';
-            renderTable();
+        // ============ Filters & search ============
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                activeFilter = btn.dataset.filter;
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                renderTable();
+            });
         });
+        function onSearch(e) {
+            searchText = e.target.value.trim().toLowerCase();
+            document.getElementById('searchInput').value = e.target.value;
+            document.getElementById('searchInputMobile').value = e.target.value;
+            renderTable();
+        }
+        document.getElementById('searchInput').addEventListener('input', onSearch);
+        document.getElementById('searchInputMobile').addEventListener('input', onSearch);
 
-        function statusBadgeClass(status) {
+        function statusStyle(status) {
             switch (status) {
-                case 'معتمد': return 'bg-green-100 text-green-800';
-                case 'مرفوض': return 'bg-red-100 text-red-800';
-                case 'قيد التنفيذ': return 'bg-yellow-100 text-yellow-800';
-                case 'بانتظار مراجعة المدير': return 'bg-purple-100 text-purple-800';
-                default: return 'bg-blue-100 text-blue-800';
+                case 'Approved': return 'background:#ECFDF3;color:#067647';
+                case 'Rejected': return 'background:#FEF3F2;color:#B42318';
+                case 'In Progress': return 'background:#FFFAEB;color:#B54708';
+                case 'Pending Manager Review': return 'background:#F4F3FF;color:#6938EF';
+                default: return 'background:#F1F5F9;color:#475569';
             }
         }
 
-        // ============ جلب المستندات ============
+        function memberName(id) {
+            const m = companyMembers.find(x => x.id === id);
+            return m ? (m.full_name || m.role) : '—';
+        }
+
+        // ============ Load data ============
         async function loadTable() {
             const { data, error } = await db.from('correspondence').select('*').order('created_at', { ascending: false });
             const tbody = document.getElementById('tableBody');
             if (error) {
-                tbody.innerHTML = `<tr><td colspan="7" class="p-4 text-center text-red-500">${error.message}</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="8" class="p-6 text-center text-red-600">${error.message}</td></tr>`;
                 return;
             }
             allRows = data || [];
+            renderStats();
             renderTable();
+        }
+
+        function renderStats() {
+            const counts = { 'New': 0, 'In Progress': 0, 'Pending Manager Review': 0, 'Approved': 0, 'Rejected': 0 };
+            allRows.forEach(r => { const s = r.status || 'New'; if (counts[s] !== undefined) counts[s]++; });
+            const labels = { 'New': 'New', 'In Progress': 'In Progress', 'Pending Manager Review': 'Pending Review', 'Approved': 'Approved', 'Rejected': 'Rejected' };
+            document.getElementById('statsRow').innerHTML = Object.keys(counts).map(k => `
+                <div class="card p-4">
+                    <div class="text-2xl font-semibold">${counts[k]}</div>
+                    <div class="text-xs mt-0.5" style="color:var(--text-secondary)">${labels[k]}</div>
+                </div>
+            `).join('');
         }
 
         function renderTable() {
             const tbody = document.getElementById('tableBody');
-            let rows = activeFilter === 'all' ? allRows : allRows.filter(r => (r.status || 'جديد') === activeFilter);
+            let rows = activeFilter === 'all' ? allRows : allRows.filter(r => (r.status || 'New') === activeFilter);
 
-            // تنبيه الموظف بعدد المستندات المحتاجة رد منه
-            const needsAction = allRows.filter(r => r.assigned_to === currentIdentity && r.status === 'قيد التنفيذ');
+            if (searchText) {
+                rows = rows.filter(r =>
+                    (r.reference_no || '').toLowerCase().includes(searchText) ||
+                    (r.subject || '').toLowerCase().includes(searchText) ||
+                    (r.project_name || '').toLowerCase().includes(searchText)
+                );
+            }
+
+            const needsAction = allRows.filter(r => r.assigned_to === myUserId && r.status === 'In Progress');
             const alertBox = document.getElementById('actionAlert');
-            if (EMPLOYEES.includes(currentIdentity) && needsAction.length > 0) {
+            if (isEmployee(myRole) && needsAction.length > 0) {
                 alertBox.classList.remove('hidden');
                 document.getElementById('actionCount').textContent = needsAction.length;
             } else {
@@ -275,101 +358,117 @@
             }
 
             if (!rows.length) {
-                tbody.innerHTML = `<tr><td colspan="7" class="p-4 text-center text-gray-500">مفيش مستندات مطابقة</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="8" class="p-8 text-center" style="color:var(--text-secondary)">No matching documents.</td></tr>`;
                 return;
             }
 
             tbody.innerHTML = rows.map(row => {
-                const highlight = (row.assigned_to === currentIdentity && row.status === 'قيد التنفيذ') ? 'needs-action' : '';
+                const flagged = (row.assigned_to === myUserId && row.status === 'In Progress') ? 'row-flag' : '';
+                const attachmentCell = row.attachment_url
+                    ? `<a href="${row.attachment_url}" target="_blank" class="text-xs font-medium" style="color:var(--brand-light)">View file</a>`
+                    : '<span style="color:var(--text-secondary)">—</span>';
                 return `
-                <tr class="border-b hover:bg-gray-50 align-top ${highlight}">
-                    <td class="p-2">${row.project_name || '-'}</td>
-                    <td class="p-2">${row.reference_no || '-'}</td>
-                    <td class="p-2">
-                        ${row.subject || '-'}
-                        ${row.reply_text ? `<div class="text-xs text-gray-500 mt-1">💬 ${row.reply_text}</div>` : ''}
+                <tr class="border-b ${flagged}" style="border-color:var(--border)">
+                    <td class="p-3">${row.project_name || '—'}</td>
+                    <td class="p-3 mono text-xs">${row.reference_no || '—'}</td>
+                    <td class="p-3">
+                        ${row.subject || '—'}
+                        ${row.reply_text ? `<div class="text-xs mt-1" style="color:var(--text-secondary)">💬 ${row.reply_text}</div>` : ''}
+                        ${row.reply_attachment_url ? `<a href="${row.reply_attachment_url}" target="_blank" class="text-xs font-medium block mt-0.5" style="color:var(--brand-light)">Reply attachment</a>` : ''}
                     </td>
-                    <td class="p-2">${row.type || '-'}</td>
-                    <td class="p-2">${row.assigned_to || '-'}</td>
-                    <td class="p-2"><span class="status-badge ${statusBadgeClass(row.status)}">${row.status || 'جديد'}</span></td>
-                    <td class="p-2 whitespace-nowrap">${actionCell(row)}</td>
+                    <td class="p-3">${row.type || '—'}</td>
+                    <td class="p-3">${attachmentCell}</td>
+                    <td class="p-3">${memberName(row.assigned_to)}</td>
+                    <td class="p-3"><span class="status-pill" style="${statusStyle(row.status)}">${row.status || 'New'}</span></td>
+                    <td class="p-3 whitespace-nowrap">${actionCell(row)}</td>
                 </tr>
             `}).join('');
         }
 
-        // ============ محتوى خلية الإجراء حسب الهوية والصلاحية ============
         function actionCell(row) {
-            const status = row.status || 'جديد';
+            const status = row.status || 'New';
 
-            // === المدير (بعد إدخال الرقم السري) ===
-            if (isAdmin) {
-                if (status === 'جديد') {
-                    const options = EMPLOYEES.map(name => `<option value="${name}">${name}</option>`).join('');
+            if (isManager(myRole)) {
+                if (status === 'New') {
+                    const employees = companyMembers.filter(m => isEmployee(m.role));
+                    const options = employees.map(e => `<option value="${e.id}">${e.full_name || 'Employee'}</option>`).join('');
                     return `
-                        <div class="flex flex-col gap-1">
-                            <select id="assign-${row.id}" class="border rounded text-xs p-1">${options}</select>
-                            <button onclick="assignToEmployee('${row.id}')" class="bg-blue-600 text-white text-xs px-2 py-1 rounded">تحويل</button>
+                        <div class="flex flex-col gap-1 min-w-[140px]">
+                            <select id="assign-${row.id}" class="border rounded text-xs p-1" style="border-color:var(--border)">${options || '<option value="">No employees</option>'}</select>
+                            <button onclick="assignToEmployee('${row.id}')" class="text-white text-xs px-2 py-1 rounded" style="background:var(--brand-light)">Transfer</button>
                         </div>
                     `;
                 }
-                if (status === 'بانتظار مراجعة المدير') {
+                if (status === 'Pending Manager Review') {
                     return `
                         <div class="flex gap-1 flex-wrap">
-                            <button onclick="changeStatus('${row.id}', 'معتمد')" class="bg-green-600 text-white text-xs px-2 py-1 rounded">اعتماد</button>
-                            <button onclick="changeStatus('${row.id}', 'مرفوض')" class="bg-red-600 text-white text-xs px-2 py-1 rounded">رفض</button>
+                            <button onclick="changeStatus('${row.id}', 'Approved')" class="text-white text-xs px-2 py-1 rounded" style="background:#12B76A">Approve</button>
+                            <button onclick="changeStatus('${row.id}', 'Rejected')" class="text-white text-xs px-2 py-1 rounded" style="background:#F04438">Reject</button>
                         </div>
                     `;
                 }
-                return `<button onclick="deleteRow('${row.id}')" class="bg-gray-700 text-white text-xs px-2 py-1 rounded">حذف</button>`;
+                return `<button onclick="deleteRow('${row.id}')" class="text-xs px-2 py-1 rounded border" style="border-color:var(--border);color:var(--text-secondary)">Delete</button>`;
             }
 
-            // === الموظف صاحب الخطاب المحوّل له ===
-            if (EMPLOYEES.includes(currentIdentity) && row.assigned_to === currentIdentity && status === 'قيد التنفيذ') {
+            if (isEmployee(myRole) && row.assigned_to === myUserId && status === 'In Progress') {
                 return `
-                    <div class="flex flex-col gap-1">
-                        <textarea id="reply-${row.id}" rows="2" placeholder="اكتب ردك هنا..." class="border rounded text-xs p-1"></textarea>
-                        <button onclick="sendReply('${row.id}')" class="bg-blue-600 text-white text-xs px-2 py-1 rounded">الرد وتحويل للمدير</button>
+                    <div class="flex flex-col gap-1 min-w-[160px]">
+                        <textarea id="reply-${row.id}" rows="2" placeholder="Write your reply..." class="border rounded text-xs p-1" style="border-color:var(--border)"></textarea>
+                        <input type="file" id="replyFile-${row.id}" accept=".pdf,.jpg,.jpeg,.png" class="text-xs">
+                        <button onclick="sendReply('${row.id}')" class="text-white text-xs px-2 py-1 rounded" style="background:var(--brand-light)">Reply & forward</button>
                     </div>
                 `;
             }
 
-            return `<span class="text-gray-400 text-xs">-</span>`;
+            return `<span class="text-xs" style="color:var(--text-secondary)">—</span>`;
         }
 
-        // ============ المدير: تحويل لموظف ============
+        // ============ Storage upload ============
+        async function uploadFile(file, subfolder) {
+            if (!file) return null;
+            const path = `${myCompanyId}/${subfolder}/${Date.now()}_${file.name}`;
+            const { error } = await db.storage.from('attachments').upload(path, file);
+            if (error) { alert('Upload error: ' + error.message); return null; }
+            const { data } = db.storage.from('attachments').getPublicUrl(path);
+            return data.publicUrl;
+        }
+
         async function assignToEmployee(id) {
             const select = document.getElementById('assign-' + id);
-            const employeeName = select.value;
-            const { error } = await db.from('correspondence').update({
-                assigned_to: employeeName, status: 'قيد التنفيذ'
-            }).eq('id', id);
-            if (error) alert('خطأ: ' + error.message);
+            const employeeId = select.value;
+            if (!employeeId) { alert('Select an employee first'); return; }
+            const { error } = await db.from('correspondence').update({ assigned_to: employeeId, status: 'In Progress' }).eq('id', id);
+            if (error) alert('Error: ' + error.message);
             else loadTable();
         }
 
-        // ============ الموظف: إرسال الرد ============
         async function sendReply(id) {
             const textarea = document.getElementById('reply-' + id);
+            const fileInput = document.getElementById('replyFile-' + id);
             const replyText = textarea.value.trim();
-            if (!replyText) { alert('اكتب ردك الأول'); return; }
+            if (!replyText) { alert('Please write a reply first'); return; }
+
+            let replyAttachmentUrl = null;
+            if (fileInput.files[0]) replyAttachmentUrl = await uploadFile(fileInput.files[0], 'replies');
+
             const { error } = await db.from('correspondence').update({
-                reply_text: replyText, status: 'بانتظار مراجعة المدير'
+                reply_text: replyText, reply_attachment_url: replyAttachmentUrl, status: 'Pending Manager Review'
             }).eq('id', id);
-            if (error) alert('خطأ: ' + error.message);
+            if (error) alert('Error: ' + error.message);
             else loadTable();
         }
 
         async function changeStatus(id, newStatus) {
-            if (!confirm('متأكد؟')) return;
+            if (!confirm('Are you sure?')) return;
             const { error } = await db.from('correspondence').update({ status: newStatus }).eq('id', id);
-            if (error) alert('خطأ: ' + error.message);
+            if (error) alert('Error: ' + error.message);
             else loadTable();
         }
 
         async function deleteRow(id) {
-            if (!confirm('هل أنت متأكد من حذف هذا المستند نهائيًا؟')) return;
+            if (!confirm('Permanently delete this document?')) return;
             const { error } = await db.from('correspondence').delete().eq('id', id);
-            if (error) alert('خطأ: ' + error.message);
+            if (error) alert('Error: ' + error.message);
             else loadTable();
         }
 
@@ -377,16 +476,15 @@
             document.getElementById('addForm').reset();
             document.getElementById('editId').value = '';
             document.getElementById('fDate').value = new Date().toISOString().split('T')[0];
-            document.getElementById('formTitle').textContent = 'إضافة مستند جديد';
-            document.getElementById('submitBtn').textContent = 'حفظ';
-            document.getElementById('cancelEditBtn').classList.add('hidden');
+            document.getElementById('formTitle').textContent = 'New Document';
+            document.getElementById('submitBtn').textContent = 'Save';
         }
-        document.getElementById('cancelEditBtn').onclick = resetForm;
 
-        // ============ إضافة مستند جديد (السكرتيرة أو المدير) ============
         document.getElementById('addForm').onsubmit = async (e) => {
             e.preventDefault();
-            const { data: { session } } = await db.auth.getSession();
+            const fileInput = document.getElementById('fAttachment');
+            let attachmentUrl = null;
+            if (fileInput.files[0]) attachmentUrl = await uploadFile(fileInput.files[0], 'documents');
 
             const rowData = {
                 project_name: document.getElementById('fProject').value,
@@ -397,15 +495,18 @@
                 direction: document.getElementById('fDirection').value,
                 priority: document.getElementById('fPriority').value,
                 correspondence_date: document.getElementById('fDate').value,
-                status: 'جديد',
-                user_id: session.user.id
+                attachment_url: attachmentUrl,
+                status: 'New',
+                company_id: myCompanyId,
+                user_id: myUserId
             };
 
             const { error } = await db.from('correspondence').insert([rowData]);
             if (error) {
-                alert('حدث خطأ: ' + error.message);
+                alert('Error: ' + error.message);
             } else {
                 resetForm();
+                addModal.classList.add('hidden');
                 loadTable();
             }
         };
