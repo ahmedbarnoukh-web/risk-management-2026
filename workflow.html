@@ -24,6 +24,8 @@
         .btn-primary:hover { background: var(--brand-light); }
         .seg-btn { color: var(--text-secondary); border-bottom: 2px solid transparent; }
         .seg-btn.active { color: var(--brand); border-bottom-color: var(--brand); font-weight: 600; }
+        .cat-btn { background: #fff; border-color: var(--border); color: var(--text-secondary); }
+        .cat-btn.active { background: var(--brand); border-color: var(--brand); color: #fff; }
         .status-pill { display:inline-flex; align-items:center; gap:5px; padding:4px 12px; border-radius:9999px; font-size:12px; font-weight:600; white-space:nowrap; }
         .row-flag { box-shadow: inset 3px 0 0 #F59E0B; background: #FFFBEB !important; }
         .row-overdue { box-shadow: inset 3px 0 0 #DC2626; background: #FEF2F2 !important; }
@@ -152,51 +154,73 @@
                 </div>
             </div>
 
-            <div id="statsRow" class="grid grid-cols-2 md:grid-cols-5 gap-4 mb-6"></div>
-
-            <!-- Department tabs -->
-            <div class="mb-3">
-                <p class="text-xs font-semibold text-gray-500 mb-1.5 uppercase tracking-wide">Department</p>
-                <div class="card p-1 inline-flex flex-wrap gap-1" id="deptFiltersWrap">
-                    <button data-dept="all" class="dept-btn seg-btn active px-3.5 py-2 text-xs font-semibold rounded-lg">All Departments</button>
-                    <button data-dept="Electrical" class="dept-btn seg-btn px-3.5 py-2 text-xs font-semibold rounded-lg">Electrical</button>
-                    <button data-dept="Civil / Structural" class="dept-btn seg-btn px-3.5 py-2 text-xs font-semibold rounded-lg">Civil</button>
-                    <button data-dept="Architectural" class="dept-btn seg-btn px-3.5 py-2 text-xs font-semibold rounded-lg">Architectural</button>
-                    <button data-dept="Mechanical" class="dept-btn seg-btn px-3.5 py-2 text-xs font-semibold rounded-lg">Mechanical</button>
-                    <button data-dept="Human Resources" class="dept-btn seg-btn px-3.5 py-2 text-xs font-semibold rounded-lg">HR</button>
-                </div>
+            <div id="statsRow" class="grid grid-cols-2 md:grid-cols-5 gap-4 mb-3"></div>
+            <div id="overdueBanner" class="hidden mb-4 text-xs font-semibold text-red-700 bg-red-50 border border-red-200 rounded-lg px-3 py-2 inline-flex items-center gap-2">
+                Showing overdue items only
+                <button onclick="toggleOverdueOnly()" class="underline">Clear</button>
             </div>
 
-            <!-- Document type tabs -->
-            <div class="mb-4">
-                <p class="text-xs font-semibold text-gray-500 mb-1.5 uppercase tracking-wide">Document Type</p>
-                <div class="card p-1 inline-flex flex-wrap gap-1" id="typeFiltersWrap">
-                    <button data-type="all" class="type-btn seg-btn active px-3.5 py-2 text-xs font-semibold rounded-lg">All Types</button>
-                    <button data-type="Letter" class="type-btn seg-btn px-3.5 py-2 text-xs font-semibold rounded-lg">Letters</button>
-                    <button data-type="Material" class="type-btn seg-btn px-3.5 py-2 text-xs font-semibold rounded-lg">Materials</button>
-                    <button data-type="RFI" class="type-btn seg-btn px-3.5 py-2 text-xs font-semibold rounded-lg">RFIs</button>
-                    <button data-type="Drawing" class="type-btn seg-btn px-3.5 py-2 text-xs font-semibold rounded-lg">Drawings</button>
-                    <button data-type="Payment Certificate" class="type-btn seg-btn px-3.5 py-2 text-xs font-semibold rounded-lg">Payment Certs</button>
-                    <button data-type="Final Handover" class="type-btn seg-btn px-3.5 py-2 text-xs font-semibold rounded-lg">Handovers</button>
-                </div>
+            <!-- Recent Activity -->
+            <div class="card p-4 mb-6">
+                <p class="text-xs font-semibold text-gray-500 mb-2 uppercase tracking-wide">Recent Activity</p>
+                <div id="recentActivity" class="divide-y" style="border-color:var(--border)"></div>
             </div>
 
-            <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
-                <div>
-                    <p class="text-xs font-semibold text-gray-500 mb-1.5 uppercase tracking-wide">Status</p>
-                    <div class="card p-1 inline-flex flex-wrap gap-1" id="statusFiltersWrap">
-                    <button data-filter="all" class="filter-btn seg-btn active px-3.5 py-2 text-xs font-semibold rounded-lg">All Documents</button>
+            <!-- Main category tabs -->
+            <div class="flex flex-wrap gap-2 mb-4">
+                <button data-cat="all" class="cat-btn active px-4 py-2.5 rounded-xl text-sm font-semibold border-2 transition">All Items</button>
+                <button data-cat="Correspondence" class="cat-btn px-4 py-2.5 rounded-xl text-sm font-semibold border-2 transition">✉️ Correspondence</button>
+                <button data-cat="Documents" class="cat-btn px-4 py-2.5 rounded-xl text-sm font-semibold border-2 transition">📄 Documents</button>
+                <button data-cat="Deliverables" class="cat-btn px-4 py-2.5 rounded-xl text-sm font-semibold border-2 transition">📦 Deliverables</button>
+            </div>
+
+            <!-- Status + Filters toggle -->
+            <div class="flex flex-wrap items-center justify-between gap-3 mb-3">
+                <div class="card p-1 inline-flex flex-wrap gap-1" id="statusFiltersWrap">
+                    <button data-filter="all" class="filter-btn seg-btn active px-3.5 py-2 text-xs font-semibold rounded-lg">All Status</button>
                     <button data-filter="New" class="filter-btn seg-btn px-3.5 py-2 text-xs font-semibold rounded-lg">New</button>
                     <button data-filter="In Progress" class="filter-btn seg-btn px-3.5 py-2 text-xs font-semibold rounded-lg">In Progress</button>
-                    <button data-filter="Pending Manager Review" class="filter-btn seg-btn px-3.5 py-2 text-xs font-semibold rounded-lg">Pending Review</button>
+                    <button data-filter="Under Review" class="filter-btn seg-btn px-3.5 py-2 text-xs font-semibold rounded-lg">Under Review</button>
                     <button data-filter="Approved" class="filter-btn seg-btn px-3.5 py-2 text-xs font-semibold rounded-lg">Approved</button>
                     <button data-filter="Rejected" class="filter-btn seg-btn px-3.5 py-2 text-xs font-semibold rounded-lg">Rejected</button>
-                    </div>
                 </div>
-                <input id="searchInputMobile" type="text" placeholder="Search correspondence..." class="md:hidden w-full border rounded-xl p-3 text-sm bg-white" style="border-color:var(--border)">
+                <div class="flex items-center gap-2">
+                    <button id="toggleFiltersBtn" class="rounded-lg px-3.5 py-2 text-xs font-semibold border bg-white hover:bg-gray-50 text-gray-700 flex items-center gap-1.5" style="border-color:var(--border)">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path></svg>
+                        Filters
+                    </button>
+                    <input id="searchInputMobile" type="text" placeholder="Search correspondence..." class="md:hidden border rounded-xl p-2.5 text-sm bg-white" style="border-color:var(--border)">
+                </div>
             </div>
 
-            <div class="card overflow-hidden">
+            <!-- Collapsible filter panel: Department + Document Type -->
+            <div id="filtersPanel" class="hidden card p-4 mb-4">
+                <div class="mb-3">
+                    <p class="text-xs font-semibold text-gray-500 mb-1.5 uppercase tracking-wide">Department</p>
+                    <div class="flex flex-wrap gap-1.5" id="deptFiltersWrap">
+                        <button data-dept="all" class="dept-btn seg-btn active px-3 py-1.5 text-xs font-medium rounded-lg border" style="border-color:var(--border)">All</button>
+                        <button data-dept="Electrical" class="dept-btn seg-btn px-3 py-1.5 text-xs font-medium rounded-lg border" style="border-color:var(--border)">Electrical</button>
+                        <button data-dept="Civil / Structural" class="dept-btn seg-btn px-3 py-1.5 text-xs font-medium rounded-lg border" style="border-color:var(--border)">Civil</button>
+                        <button data-dept="Architectural" class="dept-btn seg-btn px-3 py-1.5 text-xs font-medium rounded-lg border" style="border-color:var(--border)">Architectural</button>
+                        <button data-dept="Mechanical" class="dept-btn seg-btn px-3 py-1.5 text-xs font-medium rounded-lg border" style="border-color:var(--border)">Mechanical</button>
+                        <button data-dept="Human Resources" class="dept-btn seg-btn px-3 py-1.5 text-xs font-medium rounded-lg border" style="border-color:var(--border)">HR</button>
+                    </div>
+                </div>
+                <div>
+                    <p class="text-xs font-semibold text-gray-500 mb-1.5 uppercase tracking-wide">Document Type</p>
+                    <div class="flex flex-wrap gap-1.5" id="typeFiltersWrap">
+                        <button data-type="all" class="type-btn seg-btn active px-3 py-1.5 text-xs font-medium rounded-lg border" style="border-color:var(--border)">All</button>
+                        <button data-type="Letter" class="type-btn seg-btn px-3 py-1.5 text-xs font-medium rounded-lg border" style="border-color:var(--border)">Letters</button>
+                        <button data-type="Material" class="type-btn seg-btn px-3 py-1.5 text-xs font-medium rounded-lg border" style="border-color:var(--border)">Materials</button>
+                        <button data-type="RFI" class="type-btn seg-btn px-3 py-1.5 text-xs font-medium rounded-lg border" style="border-color:var(--border)">RFIs</button>
+                        <button data-type="Drawing" class="type-btn seg-btn px-3 py-1.5 text-xs font-medium rounded-lg border" style="border-color:var(--border)">Drawings</button>
+                        <button data-type="Payment Certificate" class="type-btn seg-btn px-3 py-1.5 text-xs font-medium rounded-lg border" style="border-color:var(--border)">Payment Certs</button>
+                        <button data-type="Final Handover" class="type-btn seg-btn px-3 py-1.5 text-xs font-medium rounded-lg border" style="border-color:var(--border)">Handovers</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card overflow-hidden hidden md:block">
                 <div class="overflow-x-auto">
                     <table class="w-full text-sm text-left">
                         <thead>
@@ -218,6 +242,9 @@
                     </table>
                 </div>
             </div>
+
+            <!-- Mobile card list — shown instead of the wide table on small screens -->
+            <div id="mobileList" class="md:hidden space-y-3"></div>
         </main>
     </div>
 
@@ -339,7 +366,16 @@
         let activeFilter = 'all';
         let activeDept = 'all';
         let activeType = 'all';
+        let activeCategory = 'all';
         let searchText = '';
+
+        // كل نوع مستند بينتمي لواحدة من التلاتة تصنيفات الرئيسية دي
+        function categoryOf(type) {
+            if (type === 'Letter') return 'Correspondence';
+            if (type === 'Material' || type === 'Drawing' || type === 'RFI') return 'Documents';
+            if (type === 'Payment Certificate' || type === 'Final Handover') return 'Deliverables';
+            return 'Documents';
+        }
         let myRole = null, myCompanyId = null, myUserId = null;
         let companyMembers = [];
         let isDemoMode = false;
@@ -458,7 +494,7 @@
                         sender_recipient: 'Main Contractor',
                         subject: 'Approval of Main Electrical Switchgear Submittal (MAR)',
                         type: 'Material', discipline: 'Electrical', direction: 'Incoming', priority: 'Urgent',
-                        correspondence_date: '2026-09-01', due_date: '2026-09-04',
+                        correspondence_date: '2026-09-01', due_date: '2026-09-04', created_at: '2026-09-01T09:00:00Z',
                         attachment_url: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf',
                         status: 'In Progress', company_id: 'demo-company-id', assigned_to: 'demo-emp-id',
                         reply_text: '', reply_attachment_url: null
@@ -470,7 +506,7 @@
                         sender_recipient: 'Consultant Office',
                         subject: 'Request for Information (RFI) regarding HVAC duct routing',
                         type: 'RFI', discipline: 'Mechanical', direction: 'Outgoing', priority: 'Normal',
-                        correspondence_date: '2026-09-03', due_date: '2026-09-20',
+                        correspondence_date: '2026-09-03', due_date: '2026-09-20', created_at: '2026-09-03T11:30:00Z',
                         attachment_url: null, status: 'New', company_id: 'demo-company-id', assigned_to: null,
                         reply_text: '', reply_attachment_url: null
                     }
@@ -542,7 +578,17 @@
         db.auth.onAuthStateChange((event, session) => { if (!isDemoMode) checkSessionState(session); });
 
         // ============ Filters & Search ============
-        document.querySelectorAll('.filter-btn').forEach(btn => {
+        document.querySelectorAll('.cat-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                activeCategory = btn.dataset.cat;
+                document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                renderTable();
+            });
+        });
+        document.getElementById('toggleFiltersBtn').addEventListener('click', () => {
+            document.getElementById('filtersPanel').classList.toggle('hidden');
+        });
             btn.addEventListener('click', () => {
                 activeFilter = btn.dataset.filter;
                 document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
@@ -580,7 +626,7 @@
                 case 'Approved': return 'background:#ECFDF3;color:#047857';
                 case 'Rejected': return 'background:#FEF2F2;color:#DC2626';
                 case 'In Progress': return 'background:#FEF3C7;color:#D97706';
-                case 'Pending Manager Review': return 'background:#EEF2FF;color:#4F46E5';
+                case 'Under Review': return 'background:#EEF2FF;color:#4F46E5';
                 default: return 'background:#F1F5F9;color:#475569';
             }
         }
@@ -589,9 +635,20 @@
             return m ? (m.full_name || m.role) : 'Unassigned';
         }
 
+        // للـ Deliverables (مستخلصات/محاضر استلام) نستخدم تسمية أقرب لمنطق "موعد التسليم"
+        // من غير ما نغيّر القيمة الفعلية المخزنة في status - بس شكل العرض بيتغيّر
+        function getStatusLabel(row) {
+            const status = row.status || 'New';
+            if (categoryOf(row.type) === 'Deliverables') {
+                if (status === 'New') return 'Upcoming';
+                if (status === 'In Progress') return 'Submitted';
+            }
+            return status;
+        }
+
         // ============ Data Loading ============
         async function loadTable() {
-            if (isDemoMode) { renderStats(); renderTable(); return; }
+            if (isDemoMode) { renderStats(); renderRecentActivity(); renderTable(); return; }
             const { data, error } = await db.from('correspondence').select('*').order('created_at', { ascending: false });
             const tbody = document.getElementById('tableBody');
             if (error) {
@@ -600,26 +657,84 @@
             }
             allRows = data || [];
             renderStats();
+            renderRecentActivity();
             renderTable();
         }
 
-        function renderStats() {
-            const counts = { 'New': 0, 'In Progress': 0, 'Pending Manager Review': 0, 'Approved': 0, 'Rejected': 0 };
-            allRows.forEach(r => { const s = r.status || 'New'; if (counts[s] !== undefined) counts[s]++; });
-            const labels = { 'New': 'New Received', 'In Progress': 'In Progress', 'Pending Manager Review': 'Pending Review', 'Approved': 'Approved', 'Rejected': 'Rejected' };
-            document.getElementById('statsRow').innerHTML = Object.keys(counts).map(k => `
-                <div class="card p-4">
-                    <div class="text-2xl font-bold text-gray-900">${counts[k]}</div>
-                    <div class="text-xs text-gray-500 mt-0.5 font-medium">${labels[k]}</div>
+        let overdueOnly = false;
+        let activeDirection = 'all';
+
+        function renderRecentActivity() {
+            const container = document.getElementById('recentActivity');
+            const recent = [...allRows].sort((a, b) => new Date(b.created_at || 0) - new Date(a.created_at || 0)).slice(0, 5);
+            if (!recent.length) {
+                container.innerHTML = `<p class="text-xs text-gray-400 py-2">No activity yet.</p>`;
+                return;
+            }
+            container.innerHTML = recent.map(r => `
+                <div class="flex items-center justify-between py-2 text-xs">
+                    <div class="flex items-center gap-2 min-w-0">
+                        <span class="mono font-semibold text-gray-500 shrink-0">${r.reference_no || '—'}</span>
+                        <span class="text-gray-700 truncate">${r.subject || '—'}</span>
+                        <span class="text-gray-400 shrink-0">· ${r.type || '—'}</span>
+                    </div>
+                    <div class="flex items-center gap-3 shrink-0">
+                        <span class="status-pill" style="${statusStyle(r.status)}">${getStatusLabel(r)}</span>
+                        <span class="text-gray-400">${r.correspondence_date || ''}</span>
+                    </div>
                 </div>
             `).join('');
+        }
+
+        function renderStats() {
+            const incoming = allRows.filter(r => r.direction === 'Incoming').length;
+            const outgoing = allRows.filter(r => r.direction === 'Outgoing').length;
+            const underReview = allRows.filter(r => r.status === 'Under Review').length;
+            const dueSoon = allRows.filter(r => r.due_date && r.due_date >= todayStr && r.status !== 'Approved' && r.status !== 'Rejected').length;
+            const overdue = allRows.filter(r => r.due_date && r.due_date < todayStr && r.status !== 'Approved' && r.status !== 'Rejected').length;
+
+            const cards = [
+                { label: 'Incoming', value: incoming, color: '#2563EB', onClick: "setDirectionQuickFilter('Incoming')" },
+                { label: 'Outgoing', value: outgoing, color: '#0891B2', onClick: "setDirectionQuickFilter('Outgoing')" },
+                { label: 'Under Review', value: underReview, color: '#7C3AED', onClick: "setStatusQuickFilter('Under Review')" },
+                { label: 'Submissions Due', value: dueSoon, color: '#D97706', onClick: null },
+                { label: 'Overdue', value: overdue, color: '#DC2626', onClick: "toggleOverdueOnly()" }
+            ];
+
+            document.getElementById('statsRow').innerHTML = cards.map(c => `
+                <div class="card p-4 ${c.onClick ? 'cursor-pointer hover:shadow-md transition' : ''}" style="${activeDirection === c.label ? `box-shadow: 0 0 0 2px ${c.color}` : ''}" ${c.onClick ? `onclick="${c.onClick}"` : ''}>
+                    <div class="text-2xl font-bold" style="color:${c.value > 0 ? c.color : 'var(--text-primary)'}">${c.value}</div>
+                    <div class="text-xs text-gray-500 mt-0.5 font-medium">${c.label}</div>
+                </div>
+            `).join('');
+        }
+
+        function setDirectionQuickFilter(direction) {
+            activeDirection = (activeDirection === direction) ? 'all' : direction;
+            renderStats();
+            renderTable();
+        }
+
+        function setStatusQuickFilter(status) {
+            activeFilter = status;
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.toggle('active', b.dataset.filter === status));
+            renderTable();
+        }
+
+        function toggleOverdueOnly() {
+            overdueOnly = !overdueOnly;
+            document.getElementById('overdueBanner').classList.toggle('hidden', !overdueOnly);
+            renderTable();
         }
 
         function renderTable() {
             const tbody = document.getElementById('tableBody');
             let rows = activeFilter === 'all' ? allRows : allRows.filter(r => (r.status || 'New') === activeFilter);
+            if (activeCategory !== 'all') rows = rows.filter(r => categoryOf(r.type) === activeCategory);
             if (activeDept !== 'all') rows = rows.filter(r => r.discipline === activeDept);
             if (activeType !== 'all') rows = rows.filter(r => r.type === activeType);
+            if (overdueOnly) rows = rows.filter(r => r.due_date && r.due_date < todayStr && r.status !== 'Approved' && r.status !== 'Rejected');
+            if (activeDirection !== 'all') rows = rows.filter(r => r.direction === activeDirection);
 
             if (searchText) {
                 rows = rows.filter(r =>
@@ -641,6 +756,7 @@
 
             if (!rows.length) {
                 tbody.innerHTML = `<tr><td colspan="9" class="p-10 text-center text-gray-400 font-medium">No matching correspondence found.</td></tr>`;
+                document.getElementById('mobileList').innerHTML = `<div class="card p-6 text-center text-gray-400 text-sm">No matching correspondence found.</div>`;
                 return;
             }
 
@@ -667,13 +783,41 @@
                     <td class="p-4 mono text-xs ${isOverdue ? 'text-red-600 font-bold' : 'text-gray-600'}">${row.due_date || '—'} ${isOverdue ? '⚠️' : ''}</td>
                     <td class="p-4">${attachmentCell}</td>
                     <td class="p-4 font-medium text-gray-600">${memberName(row.assigned_to)}</td>
-                    <td class="p-4"><span class="status-pill" style="${statusStyle(row.status)}">${row.status || 'New'}</span></td>
+                    <td class="p-4"><span class="status-pill" style="${statusStyle(row.status)}">${getStatusLabel(row)}</span></td>
                     <td class="p-4 text-right whitespace-nowrap">${actionCell(row)}</td>
                 </tr>
             `}).join('');
+
+            // نفس الصفوف المفلترة، بس بشكل كارت مناسب للشاشات الصغيرة
+            document.getElementById('mobileList').innerHTML = rows.map(row => {
+                const isOverdue = row.due_date && row.due_date < todayStr && row.status !== 'Approved' && row.status !== 'Rejected';
+                const flagged = isOverdue ? 'row-overdue' : ((row.assigned_to === myUserId && row.status === 'In Progress') ? 'row-flag' : '');
+                return `
+                <div class="card p-4 ${flagged}">
+                    <div class="flex justify-between items-start gap-2 mb-2">
+                        <div class="min-w-0">
+                            <div class="font-semibold text-gray-900 text-sm truncate">${row.project_name || '—'}</div>
+                            <div class="mono text-xs text-gray-500">${row.reference_no || '—'}</div>
+                        </div>
+                        <span class="status-pill shrink-0" style="${statusStyle(row.status)}">${getStatusLabel(row)}</span>
+                    </div>
+                    <p class="text-sm text-gray-700 mb-2">${row.subject || '—'}</p>
+                    <div class="flex flex-wrap gap-1.5 mb-3 text-[11px]">
+                        <span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-md font-medium">${row.type || '—'}</span>
+                        <span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-md font-medium">${row.discipline || 'General'}</span>
+                        ${row.due_date ? `<span class="px-2 py-0.5 rounded-md font-medium ${isOverdue ? 'bg-red-100 text-red-700' : 'bg-gray-100 text-gray-700'}">${isOverdue ? '⚠️ ' : ''}Due ${row.due_date}</span>` : ''}
+                    </div>
+                    <div class="flex justify-between items-center text-xs text-gray-500 mb-2">
+                        <span>Assigned: ${memberName(row.assigned_to)}</span>
+                        ${row.attachment_url ? `<button onclick="openPreview('${row.attachment_url}')" class="font-semibold" style="color:var(--brand-light)">View file</button>` : ''}
+                    </div>
+                    ${row.reply_text ? `<div class="text-xs text-gray-500 mb-2 bg-gray-50 p-2 rounded-lg border border-gray-100">💬 ${row.reply_text}</div>` : ''}
+                    <div class="pt-2 border-t flex justify-end" style="border-color:var(--border)">${actionCell(row, '-m')}</div>
+                </div>
+            `}).join('');
         }
 
-        function actionCell(row) {
+        function actionCell(row, suffix = '') {
             const status = row.status || 'New';
 
             if (isManager(myRole)) {
@@ -686,13 +830,13 @@
                         <div class="flex flex-col items-end gap-1">
                             ${fallbackNote && employees.length ? `<span class="text-[10px] text-amber-600">No ${row.discipline || 'matching'} dept. staff — showing all</span>` : ''}
                             <div class="flex items-center justify-end gap-2">
-                                <select id="assign-${row.id}" class="border rounded-lg text-xs p-2 bg-white" style="border-color:var(--border)">${options || '<option value="">No engineers</option>'}</select>
-                                <button onclick="assignToEmployee('${row.id}')" class="text-white text-xs px-3 py-2 rounded-lg font-semibold bg-blue-600 hover:bg-blue-700 shadow-sm transition">Assign</button>
+                                <select id="assign-${row.id}${suffix}" class="border rounded-lg text-xs p-2 bg-white" style="border-color:var(--border)">${options || '<option value="">No engineers</option>'}</select>
+                                <button onclick="assignToEmployee('${row.id}','${suffix}')" class="text-white text-xs px-3 py-2 rounded-lg font-semibold bg-blue-600 hover:bg-blue-700 shadow-sm transition">Assign</button>
                             </div>
                         </div>
                     `;
                 }
-                if (status === 'Pending Manager Review') {
+                if (status === 'Under Review') {
                     return `
                         <div class="flex items-center justify-end gap-1.5">
                             <button onclick="changeStatus('${row.id}', 'Approved')" class="text-white text-xs px-3 py-1.5 rounded-lg font-semibold bg-emerald-600 hover:bg-emerald-700 shadow-sm transition">Approve</button>
@@ -706,9 +850,9 @@
             if (isEmployee(myRole) && row.assigned_to === myUserId && status === 'In Progress') {
                 return `
                     <div class="flex flex-col gap-2 min-w-[200px] items-end">
-                        <textarea id="reply-${row.id}" rows="2" placeholder="Type technical reply or action taken..." class="border rounded-xl text-xs p-2 w-full bg-white" style="border-color:var(--border)"></textarea>
-                        <input type="file" id="replyFile-${row.id}" accept=".pdf,.jpg,.jpeg,.png" class="text-xs text-gray-500">
-                        <button onclick="sendReply('${row.id}')" class="text-white text-xs px-3 py-1.5 rounded-lg font-semibold bg-blue-600 hover:bg-blue-700 shadow-sm transition">Submit Review</button>
+                        <textarea id="reply-${row.id}${suffix}" rows="2" placeholder="Type technical reply or action taken..." class="border rounded-xl text-xs p-2 w-full bg-white" style="border-color:var(--border)"></textarea>
+                        <input type="file" id="replyFile-${row.id}${suffix}" accept=".pdf,.jpg,.jpeg,.png" class="text-xs text-gray-500">
+                        <button onclick="sendReply('${row.id}','${suffix}')" class="text-white text-xs px-3 py-1.5 rounded-lg font-semibold bg-blue-600 hover:bg-blue-700 shadow-sm transition">Submit Review</button>
                     </div>
                 `;
             }
@@ -725,8 +869,8 @@
             return data.publicUrl;
         }
 
-        async function assignToEmployee(id) {
-            const select = document.getElementById('assign-' + id);
+        async function assignToEmployee(id, suffix = '') {
+            const select = document.getElementById('assign-' + id + suffix);
             const employeeId = select.value;
             if (!employeeId) { alert('Please select an engineer first.'); return; }
             if (isDemoMode) {
@@ -739,9 +883,9 @@
             else loadTable();
         }
 
-        async function sendReply(id) {
-            const textarea = document.getElementById('reply-' + id);
-            const fileInput = document.getElementById('replyFile-' + id);
+        async function sendReply(id, suffix = '') {
+            const textarea = document.getElementById('reply-' + id + suffix);
+            const fileInput = document.getElementById('replyFile-' + id + suffix);
             const replyText = textarea.value.trim();
             if (!replyText) { alert('Please enter your reply comments.'); return; }
 
@@ -750,11 +894,11 @@
 
             if (isDemoMode) {
                 const row = allRows.find(r => r.id === id);
-                if (row) { row.reply_text = replyText; row.reply_attachment_url = replyAttachmentUrl; row.status = 'Pending Manager Review'; }
+                if (row) { row.reply_text = replyText; row.reply_attachment_url = replyAttachmentUrl; row.status = 'Under Review'; }
                 loadTable(); return;
             }
             const { error } = await db.from('correspondence').update({
-                reply_text: replyText, reply_attachment_url: replyAttachmentUrl, status: 'Pending Manager Review'
+                reply_text: replyText, reply_attachment_url: replyAttachmentUrl, status: 'Under Review'
             }).eq('id', id);
             if (error) alert('Error: ' + error.message);
             else loadTable();
@@ -831,7 +975,7 @@
             };
 
             if (isDemoMode) {
-                allRows.unshift({ id: 'demo-' + Date.now(), ...baseData });
+                allRows.unshift({ id: 'demo-' + Date.now(), created_at: new Date().toISOString(), ...baseData });
                 resetForm();
                 addModal.classList.add('hidden');
                 loadTable();
