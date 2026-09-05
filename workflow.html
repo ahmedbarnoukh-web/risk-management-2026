@@ -91,6 +91,17 @@
                         <p class="text-[11px] text-gray-400 mt-1">New company code → you become Manager. Existing code → joins as the role selected here.</p>
                     </div>
 
+                    <div id="departmentGroup" class="hidden">
+                        <label class="block text-xs font-semibold text-gray-700 mb-1">Department</label>
+                        <select id="departmentSelect" class="w-full border rounded-xl p-3 text-sm bg-gray-50" style="border-color:var(--border)">
+                            <option value="Electrical">Electrical</option>
+                            <option value="Civil / Structural">Civil / Structural</option>
+                            <option value="Architectural">Architectural</option>
+                            <option value="Mechanical">Mechanical</option>
+                            <option value="Human Resources">Human Resources</option>
+                        </select>
+                    </div>
+
                     <div>
                         <label class="block text-xs font-semibold text-gray-700 mb-1">Work Email</label>
                         <input type="email" id="loginEmail" required placeholder="name@company.com" class="w-full border rounded-xl p-3 text-sm bg-gray-50" style="border-color:var(--border)">
@@ -143,14 +154,44 @@
 
             <div id="statsRow" class="grid grid-cols-2 md:grid-cols-5 gap-4 mb-6"></div>
 
+            <!-- Department tabs -->
+            <div class="mb-3">
+                <p class="text-xs font-semibold text-gray-500 mb-1.5 uppercase tracking-wide">Department</p>
+                <div class="card p-1 inline-flex flex-wrap gap-1" id="deptFiltersWrap">
+                    <button data-dept="all" class="dept-btn seg-btn active px-3.5 py-2 text-xs font-semibold rounded-lg">All Departments</button>
+                    <button data-dept="Electrical" class="dept-btn seg-btn px-3.5 py-2 text-xs font-semibold rounded-lg">Electrical</button>
+                    <button data-dept="Civil / Structural" class="dept-btn seg-btn px-3.5 py-2 text-xs font-semibold rounded-lg">Civil</button>
+                    <button data-dept="Architectural" class="dept-btn seg-btn px-3.5 py-2 text-xs font-semibold rounded-lg">Architectural</button>
+                    <button data-dept="Mechanical" class="dept-btn seg-btn px-3.5 py-2 text-xs font-semibold rounded-lg">Mechanical</button>
+                    <button data-dept="Human Resources" class="dept-btn seg-btn px-3.5 py-2 text-xs font-semibold rounded-lg">HR</button>
+                </div>
+            </div>
+
+            <!-- Document type tabs -->
+            <div class="mb-4">
+                <p class="text-xs font-semibold text-gray-500 mb-1.5 uppercase tracking-wide">Document Type</p>
+                <div class="card p-1 inline-flex flex-wrap gap-1" id="typeFiltersWrap">
+                    <button data-type="all" class="type-btn seg-btn active px-3.5 py-2 text-xs font-semibold rounded-lg">All Types</button>
+                    <button data-type="Letter" class="type-btn seg-btn px-3.5 py-2 text-xs font-semibold rounded-lg">Letters</button>
+                    <button data-type="Material" class="type-btn seg-btn px-3.5 py-2 text-xs font-semibold rounded-lg">Materials</button>
+                    <button data-type="RFI" class="type-btn seg-btn px-3.5 py-2 text-xs font-semibold rounded-lg">RFIs</button>
+                    <button data-type="Drawing" class="type-btn seg-btn px-3.5 py-2 text-xs font-semibold rounded-lg">Drawings</button>
+                    <button data-type="Payment Certificate" class="type-btn seg-btn px-3.5 py-2 text-xs font-semibold rounded-lg">Payment Certs</button>
+                    <button data-type="Final Handover" class="type-btn seg-btn px-3.5 py-2 text-xs font-semibold rounded-lg">Handovers</button>
+                </div>
+            </div>
+
             <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
-                <div class="card p-1 inline-flex flex-wrap gap-1" id="statusFiltersWrap">
+                <div>
+                    <p class="text-xs font-semibold text-gray-500 mb-1.5 uppercase tracking-wide">Status</p>
+                    <div class="card p-1 inline-flex flex-wrap gap-1" id="statusFiltersWrap">
                     <button data-filter="all" class="filter-btn seg-btn active px-3.5 py-2 text-xs font-semibold rounded-lg">All Documents</button>
                     <button data-filter="New" class="filter-btn seg-btn px-3.5 py-2 text-xs font-semibold rounded-lg">New</button>
                     <button data-filter="In Progress" class="filter-btn seg-btn px-3.5 py-2 text-xs font-semibold rounded-lg">In Progress</button>
                     <button data-filter="Pending Manager Review" class="filter-btn seg-btn px-3.5 py-2 text-xs font-semibold rounded-lg">Pending Review</button>
                     <button data-filter="Approved" class="filter-btn seg-btn px-3.5 py-2 text-xs font-semibold rounded-lg">Approved</button>
                     <button data-filter="Rejected" class="filter-btn seg-btn px-3.5 py-2 text-xs font-semibold rounded-lg">Rejected</button>
+                    </div>
                 </div>
                 <input id="searchInputMobile" type="text" placeholder="Search correspondence..." class="md:hidden w-full border rounded-xl p-3 text-sm bg-white" style="border-color:var(--border)">
             </div>
@@ -223,13 +264,13 @@
                     </select>
                 </div>
                 <div>
-                    <label class="block text-xs font-semibold text-gray-700 mb-1">Engineering Discipline</label>
+                    <label class="block text-xs font-semibold text-gray-700 mb-1">Department</label>
                     <select id="fDiscipline" class="border rounded-xl p-3 text-sm w-full bg-gray-50" style="border-color:var(--border)">
                         <option value="Electrical">Electrical</option>
                         <option value="Mechanical">Mechanical</option>
                         <option value="Civil / Structural">Civil / Structural</option>
                         <option value="Architectural">Architectural</option>
-                        <option value="Contracts / Commercial">Contracts / Commercial</option>
+                        <option value="Human Resources">Human Resources</option>
                     </select>
                 </div>
 
@@ -296,6 +337,8 @@
         let signUpMode = false;
         let allRows = [];
         let activeFilter = 'all';
+        let activeDept = 'all';
+        let activeType = 'all';
         let searchText = '';
         let myRole = null, myCompanyId = null, myUserId = null;
         let companyMembers = [];
@@ -310,9 +353,11 @@
         const companyCodeGroup = document.getElementById('companyCodeGroup');
         const fullNameGroup = document.getElementById('fullNameGroup');
         const roleGroup = document.getElementById('roleGroup');
+        const departmentGroup = document.getElementById('departmentGroup');
         const companyCodeInput = document.getElementById('companyCode');
         const fullNameInput = document.getElementById('fullName');
         const roleSelect = document.getElementById('roleSelect');
+        const departmentSelect = document.getElementById('departmentSelect');
         const addModal = document.getElementById('addModal');
         const previewModal = document.getElementById('previewModal');
 
@@ -337,7 +382,13 @@
             roleGroup.classList.toggle('hidden', !signup);
             companyCodeInput.required = signup;
             fullNameInput.required = signup;
+            updateDepartmentVisibility();
         }
+        function updateDepartmentVisibility() {
+            const showDept = signUpMode && roleSelect.value === 'Employee';
+            departmentGroup.classList.toggle('hidden', !showDept);
+        }
+        roleSelect.addEventListener('change', updateDepartmentVisibility);
         document.getElementById('tabLogin').onclick = () => setAuthMode(false);
         document.getElementById('tabSignup').onclick = () => setAuthMode(true);
         setAuthMode(false);
@@ -369,7 +420,8 @@
                 }
 
                 const { error: pErr } = await db.from('profiles').insert([{
-                    id: data.user.id, company_id: companyId, full_name: fullName, role: chosenRole
+                    id: data.user.id, company_id: companyId, full_name: fullName, role: chosenRole,
+                    department: chosenRole === 'Employee' ? departmentSelect.value : null
                 }]);
                 if (pErr) { alert('Error creating user profile: ' + pErr.message); return; }
 
@@ -393,8 +445,8 @@
             myCompanyId = 'demo-company-id';
             myRole = role;
             companyMembers = [
-                { id: 'demo-mgr-id', full_name: 'Eng. Ahmed Barnoukh (Director)', role: 'Manager' },
-                { id: 'demo-emp-id', full_name: 'Eng. Mohammed (Engineer)', role: 'Employee' }
+                { id: 'demo-mgr-id', full_name: 'Eng. Ahmed Barnoukh (Director)', role: 'Manager', department: null },
+                { id: 'demo-emp-id', full_name: 'Eng. Mohammed (Engineer)', role: 'Employee', department: 'Electrical' }
             ];
 
             if (!allRows.length) {
@@ -474,7 +526,7 @@
                 myRole = profile.role;
                 myCompanyId = profile.company_id;
 
-                const { data: members } = await db.from('profiles').select('id, full_name, role').eq('company_id', myCompanyId);
+                const { data: members } = await db.from('profiles').select('id, full_name, role, department').eq('company_id', myCompanyId);
                 companyMembers = members || [];
 
                 setupWorkspaceUI(isManager(myRole) ? 'Project Director' : 'Engineer', profile.full_name || '');
@@ -494,6 +546,22 @@
             btn.addEventListener('click', () => {
                 activeFilter = btn.dataset.filter;
                 document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                renderTable();
+            });
+        });
+        document.querySelectorAll('.dept-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                activeDept = btn.dataset.dept;
+                document.querySelectorAll('.dept-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                renderTable();
+            });
+        });
+        document.querySelectorAll('.type-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                activeType = btn.dataset.type;
+                document.querySelectorAll('.type-btn').forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
                 renderTable();
             });
@@ -550,6 +618,8 @@
         function renderTable() {
             const tbody = document.getElementById('tableBody');
             let rows = activeFilter === 'all' ? allRows : allRows.filter(r => (r.status || 'New') === activeFilter);
+            if (activeDept !== 'all') rows = rows.filter(r => r.discipline === activeDept);
+            if (activeType !== 'all') rows = rows.filter(r => r.type === activeType);
 
             if (searchText) {
                 rows = rows.filter(r =>
@@ -608,12 +678,17 @@
 
             if (isManager(myRole)) {
                 if (status === 'New') {
-                    const employees = companyMembers.filter(m => isEmployee(m.role));
-                    const options = employees.map(e => `<option value="${e.id}">${e.full_name || 'Engineer'}</option>`).join('');
+                    let employees = companyMembers.filter(m => isEmployee(m.role) && m.department === row.discipline);
+                    const fallbackNote = employees.length === 0;
+                    if (employees.length === 0) employees = companyMembers.filter(m => isEmployee(m.role));
+                    const options = employees.map(e => `<option value="${e.id}">${e.full_name || 'Engineer'}${e.department ? ' — ' + e.department : ''}</option>`).join('');
                     return `
-                        <div class="flex items-center justify-end gap-2">
-                            <select id="assign-${row.id}" class="border rounded-lg text-xs p-2 bg-white" style="border-color:var(--border)">${options || '<option value="">No engineers</option>'}</select>
-                            <button onclick="assignToEmployee('${row.id}')" class="text-white text-xs px-3 py-2 rounded-lg font-semibold bg-blue-600 hover:bg-blue-700 shadow-sm transition">Assign</button>
+                        <div class="flex flex-col items-end gap-1">
+                            ${fallbackNote && employees.length ? `<span class="text-[10px] text-amber-600">No ${row.discipline || 'matching'} dept. staff — showing all</span>` : ''}
+                            <div class="flex items-center justify-end gap-2">
+                                <select id="assign-${row.id}" class="border rounded-lg text-xs p-2 bg-white" style="border-color:var(--border)">${options || '<option value="">No engineers</option>'}</select>
+                                <button onclick="assignToEmployee('${row.id}')" class="text-white text-xs px-3 py-2 rounded-lg font-semibold bg-blue-600 hover:bg-blue-700 shadow-sm transition">Assign</button>
+                            </div>
                         </div>
                     `;
                 }
