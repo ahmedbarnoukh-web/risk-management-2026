@@ -221,9 +221,14 @@
             document.getElementById('loginSubmitBtn').textContent = signup ? 'Create account' : 'Log in';
             fullNameInput.classList.toggle('hidden', !signup);
             roleSelect.classList.toggle('hidden', !signup);
+            // كود الشركة مطلوب بس وقت إنشاء حساب جديد، مش وقت تسجيل الدخول العادي
+            const companyCodeInput = document.getElementById('companyCode');
+            companyCodeInput.classList.toggle('hidden', !signup);
+            companyCodeInput.required = signup;
         }
         document.getElementById('tabLogin').onclick = () => setAuthMode(false);
         document.getElementById('tabSignup').onclick = () => setAuthMode(true);
+        setAuthMode(false); // الوضع الافتراضي عند فتح الصفحة: تسجيل دخول عادي
 
         // ============ Sign up / Log in ============
         document.getElementById('loginForm').onsubmit = async (e) => {
