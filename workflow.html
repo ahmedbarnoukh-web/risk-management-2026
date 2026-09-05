@@ -12,24 +12,21 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
         :root {
-            --bg: #F8FAFC;
-            --surface: #FFFFFF;
-            --border: #E2E8F0;
-            --text-primary: #0F172A;
-            --text-secondary: #64748B;
-            --brand: #0F2C52;
-            --brand-light: #2563EB;
+            --bg: #F8FAFC; --surface: #FFFFFF; --border: #E2E8F0;
+            --text-primary: #0F172A; --text-secondary: #64748B;
+            --brand: #0F2C52; --brand-light: #2563EB;
         }
         * { font-family: 'Inter', -apple-system, sans-serif; }
         .mono { font-family: 'IBM Plex Mono', monospace; }
         body { background: var(--bg); color: var(--text-primary); }
-        .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05); }
+        .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; box-shadow: 0 1px 3px 0 rgba(0,0,0,0.05); }
         .btn-primary { background: var(--brand); color: #fff; transition: background .15s; }
         .btn-primary:hover { background: var(--brand-light); }
         .seg-btn { color: var(--text-secondary); border-bottom: 2px solid transparent; }
         .seg-btn.active { color: var(--brand); border-bottom-color: var(--brand); font-weight: 600; }
         .status-pill { display:inline-flex; align-items:center; gap:5px; padding:4px 12px; border-radius:9999px; font-size:12px; font-weight:600; white-space:nowrap; }
         .row-flag { box-shadow: inset 3px 0 0 #F59E0B; background: #FFFBEB !important; }
+        .row-overdue { box-shadow: inset 3px 0 0 #DC2626; background: #FEF2F2 !important; }
         input:focus, select:focus, textarea:focus { outline:none; box-shadow: 0 0 0 3px rgba(37,99,235,0.15); border-color: var(--brand-light); }
         .modal-overlay { background: rgba(15,23,42,0.6); backdrop-filter: blur(4px); }
         table th { color: var(--text-secondary); font-weight:600; font-size:12px; }
@@ -39,7 +36,6 @@
 <body class="min-h-screen flex flex-col justify-between">
 
     <div>
-        <!-- ============ TOP BAR ============ -->
         <header class="bg-white border-b sticky top-0 z-30" style="border-color:var(--border)">
             <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between gap-4">
                 <div class="flex items-center gap-3 shrink-0">
@@ -72,10 +68,15 @@
 
                 <div class="flex gap-1 mb-6 p-1 rounded-xl bg-gray-100">
                     <button id="tabLogin" class="flex-1 text-sm font-semibold py-2.5 rounded-lg bg-white shadow-sm text-blue-600 transition">Log in</button>
-                    <button id="tabSignup" class="flex-1 text-sm font-semibold py-2.5 rounded-lg text-gray-500 transition">Register Company</button>
+                    <button id="tabSignup" class="flex-1 text-sm font-semibold py-2.5 rounded-lg text-gray-500 transition">Register / Join Company</button>
                 </div>
 
                 <form id="loginForm" class="space-y-4">
+                    <div id="companyCodeGroup" class="hidden">
+                        <label class="block text-xs font-semibold text-gray-700 mb-1">Company Code</label>
+                        <input type="text" id="companyCode" placeholder="New code creates a company, existing code joins it" class="w-full border rounded-xl p-3 text-sm bg-gray-50" style="border-color:var(--border)">
+                    </div>
+
                     <div id="fullNameGroup" class="hidden">
                         <label class="block text-xs font-semibold text-gray-700 mb-1">Full Name</label>
                         <input type="text" id="fullName" placeholder="e.g. Eng. Ahmed Barnoukh" class="w-full border rounded-xl p-3 text-sm bg-gray-50" style="border-color:var(--border)">
@@ -87,6 +88,7 @@
                             <option value="Manager">Manager / Project Director</option>
                             <option value="Employee">Engineer / Team Member</option>
                         </select>
+                        <p class="text-[11px] text-gray-400 mt-1">New company code → you become Manager. Existing code → joins as the role selected here.</p>
                     </div>
 
                     <div>
@@ -103,7 +105,7 @@
                 </form>
 
                 <div class="mt-6 pt-5 border-t text-center" style="border-color:var(--border)">
-                    <p class="text-xs text-gray-500 mb-3 font-medium">Instant Demo Access for Evaluation</p>
+                    <p class="text-xs text-gray-500 mb-3 font-medium">Instant Demo Access for Evaluation (no account needed)</p>
                     <div class="flex gap-2">
                         <button id="quickManagerBtn" type="button" class="flex-1 text-xs font-semibold py-2.5 rounded-xl border bg-gray-50 hover:bg-gray-100 text-gray-700 transition" style="border-color:var(--border)">⚡ Manager Demo</button>
                         <button id="quickEmployeeBtn" type="button" class="flex-1 text-xs font-semibold py-2.5 rounded-xl border bg-gray-50 hover:bg-gray-100 text-gray-700 transition" style="border-color:var(--border)">⚡ Engineer Demo</button>
@@ -122,22 +124,25 @@
                 </div>
             </div>
 
-            <!-- Page header -->
             <div class="flex flex-wrap justify-between items-center gap-4 mb-6">
                 <div>
                     <h1 class="text-2xl font-bold tracking-tight text-gray-900">Project Correspondence</h1>
                     <p class="text-sm text-gray-500 mt-0.5">Track, review, transfer, and approve technical submittals and letters</p>
                 </div>
-                <button id="openAddModal" class="btn-primary rounded-xl px-5 py-2.5 text-sm font-semibold shadow-sm flex items-center gap-2">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
-                    New Document
-                </button>
+                <div class="flex items-center gap-3">
+                    <button id="exportExcelBtn" class="rounded-xl px-4 py-2.5 text-sm font-semibold border bg-white hover:bg-gray-50 text-gray-700 shadow-sm flex items-center gap-2" style="border-color:var(--border)">
+                        <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                        Export Excel
+                    </button>
+                    <button id="openAddModal" class="btn-primary rounded-xl px-5 py-2.5 text-sm font-semibold shadow-sm flex items-center gap-2">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                        New Document
+                    </button>
+                </div>
             </div>
 
-            <!-- Stats -->
             <div id="statsRow" class="grid grid-cols-2 md:grid-cols-5 gap-4 mb-6"></div>
 
-            <!-- Filters -->
             <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
                 <div class="card p-1 inline-flex flex-wrap gap-1" id="statusFiltersWrap">
                     <button data-filter="all" class="filter-btn seg-btn active px-3.5 py-2 text-xs font-semibold rounded-lg">All Documents</button>
@@ -150,16 +155,16 @@
                 <input id="searchInputMobile" type="text" placeholder="Search correspondence..." class="md:hidden w-full border rounded-xl p-3 text-sm bg-white" style="border-color:var(--border)">
             </div>
 
-            <!-- Table -->
             <div class="card overflow-hidden">
                 <div class="overflow-x-auto">
                     <table class="w-full text-sm text-left">
                         <thead>
                             <tr class="border-b bg-gray-50/75" style="border-color:var(--border)">
-                                <th class="p-4">Project</th>
+                                <th class="p-4">Project / Discipline</th>
                                 <th class="p-4">Reference No.</th>
                                 <th class="p-4">Subject & Notes</th>
                                 <th class="p-4">Type</th>
+                                <th class="p-4">Due Date</th>
                                 <th class="p-4">Attachment</th>
                                 <th class="p-4">Assigned To</th>
                                 <th class="p-4">Status</th>
@@ -167,7 +172,7 @@
                             </tr>
                         </thead>
                         <tbody id="tableBody">
-                            <tr><td colspan="8" class="p-8 text-center text-gray-500 font-medium">Loading documents workspace...</td></tr>
+                            <tr><td colspan="9" class="p-8 text-center text-gray-500 font-medium">Loading documents workspace...</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -218,13 +223,23 @@
                     </select>
                 </div>
                 <div>
+                    <label class="block text-xs font-semibold text-gray-700 mb-1">Engineering Discipline</label>
+                    <select id="fDiscipline" class="border rounded-xl p-3 text-sm w-full bg-gray-50" style="border-color:var(--border)">
+                        <option value="Electrical">Electrical</option>
+                        <option value="Mechanical">Mechanical</option>
+                        <option value="Civil / Structural">Civil / Structural</option>
+                        <option value="Architectural">Architectural</option>
+                        <option value="Contracts / Commercial">Contracts / Commercial</option>
+                    </select>
+                </div>
+
+                <div>
                     <label class="block text-xs font-semibold text-gray-700 mb-1">Direction</label>
                     <select id="fDirection" class="border rounded-xl p-3 text-sm w-full bg-gray-50" style="border-color:var(--border)">
                         <option value="Outgoing">Outgoing</option>
                         <option value="Incoming">Incoming</option>
                     </select>
                 </div>
-
                 <div>
                     <label class="block text-xs font-semibold text-gray-700 mb-1">Priority</label>
                     <select id="fPriority" class="border rounded-xl p-3 text-sm w-full bg-gray-50" style="border-color:var(--border)">
@@ -232,9 +247,14 @@
                         <option value="Urgent">Urgent / Critical</option>
                     </select>
                 </div>
+
                 <div>
-                    <label class="block text-xs font-semibold text-gray-700 mb-1">Date</label>
+                    <label class="block text-xs font-semibold text-gray-700 mb-1">Correspondence Date</label>
                     <input type="date" id="fDate" required class="border rounded-xl p-3 text-sm w-full bg-gray-50" style="border-color:var(--border)">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-700 mb-1">Due Date / Action Deadline</label>
+                    <input type="date" id="fDueDate" required class="border rounded-xl p-3 text-sm w-full bg-gray-50" style="border-color:var(--border)">
                 </div>
 
                 <div class="col-span-2">
@@ -250,7 +270,19 @@
         </div>
     </div>
 
-    <!-- ============ FOOTER ============ -->
+    <!-- ============ PREVIEW MODAL ============ -->
+    <div id="previewModal" class="hidden fixed inset-0 modal-overlay z-50 flex items-center justify-center p-4">
+        <div class="card w-full max-w-3xl p-6 h-[85vh] flex flex-col shadow-2xl">
+            <div class="flex justify-between items-center pb-3 border-b mb-4" style="border-color:var(--border)">
+                <h3 class="font-bold text-lg text-gray-900">Attachment Preview</h3>
+                <button id="closePreviewBtn" class="text-2xl text-gray-400 hover:text-gray-700 leading-none">&times;</button>
+            </div>
+            <div id="previewContent" class="flex-1 bg-gray-100 rounded-xl flex items-center justify-center overflow-hidden">
+                <p class="text-gray-500 text-sm">Loading preview...</p>
+            </div>
+        </div>
+    </div>
+
     <footer class="text-center py-6 text-xs text-gray-400 border-t mt-12 bg-white" style="border-color:var(--border)">
         BA Engineering Platform &copy; 2026. Secure Enterprise Document & Correspondence Management.
     </footer>
@@ -275,26 +307,35 @@
         const loginBox = document.getElementById('loginBox');
         const appBox = document.getElementById('appBox');
         const userBar = document.getElementById('userBar');
+        const companyCodeGroup = document.getElementById('companyCodeGroup');
         const fullNameGroup = document.getElementById('fullNameGroup');
         const roleGroup = document.getElementById('roleGroup');
+        const companyCodeInput = document.getElementById('companyCode');
         const fullNameInput = document.getElementById('fullName');
         const roleSelect = document.getElementById('roleSelect');
         const addModal = document.getElementById('addModal');
+        const previewModal = document.getElementById('previewModal');
 
-        document.getElementById('fDate').value = new Date().toISOString().split('T')[0];
+        const todayStr = new Date().toISOString().split('T')[0];
+        document.getElementById('fDate').value = todayStr;
+        const nextWeek = new Date();
+        nextWeek.setDate(nextWeek.getDate() + 7);
+        document.getElementById('fDueDate').value = nextWeek.toISOString().split('T')[0];
 
         function setAuthMode(signup) {
             signUpMode = signup;
-            document.getElementById('tabLogin').className = signup 
-                ? 'flex-1 text-sm font-semibold py-2.5 rounded-lg text-gray-500 transition' 
+            document.getElementById('tabLogin').className = signup
+                ? 'flex-1 text-sm font-semibold py-2.5 rounded-lg text-gray-500 transition'
                 : 'flex-1 text-sm font-semibold py-2.5 rounded-lg bg-white shadow-sm text-blue-600 transition';
-            document.getElementById('tabSignup').className = signup 
-                ? 'flex-1 text-sm font-semibold py-2.5 rounded-lg bg-white shadow-sm text-blue-600 transition' 
+            document.getElementById('tabSignup').className = signup
+                ? 'flex-1 text-sm font-semibold py-2.5 rounded-lg bg-white shadow-sm text-blue-600 transition'
                 : 'flex-1 text-sm font-semibold py-2.5 rounded-lg text-gray-500 transition';
-            
-            document.getElementById('loginSubmitBtn').textContent = signup ? 'Create Account & Workspace' : 'Log in to Workspace';
+
+            document.getElementById('loginSubmitBtn').textContent = signup ? 'Create / Join Workspace' : 'Log in to Workspace';
+            companyCodeGroup.classList.toggle('hidden', !signup);
             fullNameGroup.classList.toggle('hidden', !signup);
             roleGroup.classList.toggle('hidden', !signup);
+            companyCodeInput.required = signup;
             fullNameInput.required = signup;
         }
         document.getElementById('tabLogin').onclick = () => setAuthMode(false);
@@ -311,19 +352,28 @@
             if (signUpMode) {
                 const fullName = fullNameInput.value.trim();
                 const chosenRole = roleSelect.value;
+                const companyCode = companyCodeInput.value.trim();
+                if (!companyCode) { alert('Please enter a company code.'); return; }
+
                 const { data, error } = await db.auth.signUp({ email, password });
                 if (error) { alert('Error: ' + error.message); return; }
 
-                const defaultCompanyCode = 'COMP-' + Math.random().toString(36).substring(2, 7).toUpperCase();
-                const { data: newCompany, error: cErr } = await db.from('companies').insert([{ code: defaultCompanyCode }]).select().single();
-                if (cErr) { alert('Error creating company workspace: ' + cErr.message); return; }
+                let { data: existingCompany } = await db.from('companies').select('*').eq('code', companyCode).maybeSingle();
+                let companyId;
+                if (existingCompany) {
+                    companyId = existingCompany.id;
+                } else {
+                    const { data: newCompany, error: cErr } = await db.from('companies').insert([{ code: companyCode }]).select().single();
+                    if (cErr) { alert('Error creating company workspace: ' + cErr.message); return; }
+                    companyId = newCompany.id;
+                }
 
                 const { error: pErr } = await db.from('profiles').insert([{
-                    id: data.user.id, company_id: newCompany.id, full_name: fullName, role: chosenRole
+                    id: data.user.id, company_id: companyId, full_name: fullName, role: chosenRole
                 }]);
                 if (pErr) { alert('Error creating user profile: ' + pErr.message); return; }
 
-                alert('Account successfully created! You are now logged in.');
+                alert(`Account created as ${chosenRole} in company "${companyCode}". You are now logged in.`);
             } else {
                 const { error } = await db.auth.signInWithPassword({ email, password });
                 if (error) alert('Login failed: ' + error.message);
@@ -336,7 +386,7 @@
             checkSessionState(null);
         };
 
-        // ============ Quick Demo Access (Bypasses Auth Constraints) ============
+        // ============ Quick Demo Access (fully client-side, never touches Supabase) ============
         function startDemo(role) {
             isDemoMode = true;
             myUserId = role === 'Manager' ? 'demo-mgr-id' : 'demo-emp-id';
@@ -347,49 +397,35 @@
                 { id: 'demo-emp-id', full_name: 'Eng. Mohammed (Engineer)', role: 'Employee' }
             ];
 
-            // Mock initial demo data if empty
             if (!allRows.length) {
                 allRows = [
                     {
-                        id: '1',
+                        id: 'demo-1',
                         project_name: 'Riyadh Business Center Tower',
                         reference_no: 'REF-2026-001',
                         sender_recipient: 'Main Contractor',
                         subject: 'Approval of Main Electrical Switchgear Submittal (MAR)',
-                        type: 'Material',
-                        direction: 'Incoming',
-                        priority: 'Urgent',
-                        correspondence_date: '2026-09-01',
-                        attachment_url: '#',
-                        status: 'In Progress',
-                        company_id: 'demo-company-id',
-                        assigned_to: 'demo-emp-id',
-                        reply_text: '',
-                        reply_attachment_url: null
+                        type: 'Material', discipline: 'Electrical', direction: 'Incoming', priority: 'Urgent',
+                        correspondence_date: '2026-09-01', due_date: '2026-09-04',
+                        attachment_url: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf',
+                        status: 'In Progress', company_id: 'demo-company-id', assigned_to: 'demo-emp-id',
+                        reply_text: '', reply_attachment_url: null
                     },
                     {
-                        id: '2',
+                        id: 'demo-2',
                         project_name: 'Jeddah Commercial Mall',
                         reference_no: 'REF-2026-002',
                         sender_recipient: 'Consultant Office',
                         subject: 'Request for Information (RFI) regarding HVAC duct routing',
-                        type: 'RFI',
-                        direction: 'Outgoing',
-                        priority: 'Normal',
-                        correspondence_date: '2026-09-03',
-                        attachment_url: '#',
-                        status: 'New',
-                        company_id: 'demo-company-id',
-                        assigned_to: null,
-                        reply_text: '',
-                        reply_attachment_url: null
+                        type: 'RFI', discipline: 'Mechanical', direction: 'Outgoing', priority: 'Normal',
+                        correspondence_date: '2026-09-03', due_date: '2026-09-20',
+                        attachment_url: null, status: 'New', company_id: 'demo-company-id', assigned_to: null,
+                        reply_text: '', reply_attachment_url: null
                     }
                 ];
             }
-
             setupWorkspaceUI(role === 'Manager' ? 'Project Director' : 'Engineer', role === 'Manager' ? 'Eng. Ahmed Barnoukh' : 'Eng. Mohammed');
         }
-
         document.getElementById('quickManagerBtn').onclick = () => startDemo('Manager');
         document.getElementById('quickEmployeeBtn').onclick = () => startDemo('Employee');
 
@@ -408,25 +444,31 @@
         document.getElementById('openAddModal').onclick = () => { resetForm(); addModal.classList.remove('hidden'); };
         document.getElementById('closeModalBtn').onclick = () => addModal.classList.add('hidden');
         document.getElementById('cancelEditBtn').onclick = () => addModal.classList.add('hidden');
+        document.getElementById('closePreviewBtn').onclick = () => previewModal.classList.add('hidden');
+
+        function openPreview(url) {
+            previewModal.classList.remove('hidden');
+            const container = document.getElementById('previewContent');
+            if (url.match(/\.(jpeg|jpg|png)$/i)) {
+                container.innerHTML = `<img src="${url}" class="max-h-full max-w-full object-contain rounded-lg">`;
+            } else {
+                container.innerHTML = `<iframe src="${url}" class="w-full h-full rounded-lg border-0"></iframe>`;
+            }
+        }
 
         // ============ Auth State Management ============
+        // ملحوظة أمان: لو حساب حقيقي مالوش بروفايل، منعملوش تلقائيًا بشركة عشوائية -
+        // ده كان بيسبب تسريب بيانات بين شركات مختلفة. بدل كده نطلب منه يكمل التسجيل صح.
         async function checkSessionState(session) {
             if (isDemoMode) return;
             if (session) {
                 myUserId = session.user.id;
-                let { data: profile } = await db.from('profiles').select('*').eq('id', session.user.id).maybeSingle();
-                
+                const { data: profile } = await db.from('profiles').select('*').eq('id', session.user.id).maybeSingle();
+
                 if (!profile) {
-                    const { data: comp } = await db.from('companies').select('*').limit(1).maybeSingle();
-                    let compId = comp ? comp.id : null;
-                    if (!compId) {
-                        const { data: newC } = await db.from('companies').insert([{ code: 'DEF-CO' }]).select().single();
-                        compId = newC.id;
-                    }
-                    const { data: newP } = await db.from('profiles').insert([{
-                        id: myUserId, company_id: compId, full_name: session.user.email.split('@')[0], role: 'Manager'
-                    }]).select().single();
-                    profile = newP;
+                    alert('Your account setup is incomplete (no company profile found). Please use "Register / Join Company" to finish setting up your account.');
+                    await db.auth.signOut();
+                    return;
                 }
 
                 myRole = profile.role;
@@ -445,10 +487,7 @@
                 userBar.classList.remove('flex');
             }
         }
-
-        db.auth.onAuthStateChange((event, session) => {
-            if (!isDemoMode) checkSessionState(session);
-        });
+        db.auth.onAuthStateChange((event, session) => { if (!isDemoMode) checkSessionState(session); });
 
         // ============ Filters & Search ============
         document.querySelectorAll('.filter-btn').forEach(btn => {
@@ -459,7 +498,6 @@
                 renderTable();
             });
         });
-
         function onSearch(e) {
             searchText = e.target.value.trim().toLowerCase();
             document.getElementById('searchInput').value = e.target.value;
@@ -478,7 +516,6 @@
                 default: return 'background:#F1F5F9;color:#475569';
             }
         }
-
         function memberName(id) {
             const m = companyMembers.find(x => x.id === id);
             return m ? (m.full_name || m.role) : 'Unassigned';
@@ -486,15 +523,11 @@
 
         // ============ Data Loading ============
         async function loadTable() {
-            if (isDemoMode) {
-                renderStats();
-                renderTable();
-                return;
-            }
+            if (isDemoMode) { renderStats(); renderTable(); return; }
             const { data, error } = await db.from('correspondence').select('*').order('created_at', { ascending: false });
             const tbody = document.getElementById('tableBody');
             if (error) {
-                tbody.innerHTML = `<tr><td colspan="8" class="p-8 text-center text-red-600">Error loading data: ${error.message}</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="9" class="p-8 text-center text-red-600">Error loading data: ${error.message}</td></tr>`;
                 return;
             }
             allRows = data || [];
@@ -522,7 +555,8 @@
                 rows = rows.filter(r =>
                     (r.reference_no || '').toLowerCase().includes(searchText) ||
                     (r.subject || '').toLowerCase().includes(searchText) ||
-                    (r.project_name || '').toLowerCase().includes(searchText)
+                    (r.project_name || '').toLowerCase().includes(searchText) ||
+                    (r.discipline || '').toLowerCase().includes(searchText)
                 );
             }
 
@@ -536,25 +570,31 @@
             }
 
             if (!rows.length) {
-                tbody.innerHTML = `<tr><td colspan="8" class="p-10 text-center text-gray-400 font-medium">No matching correspondence found.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="9" class="p-10 text-center text-gray-400 font-medium">No matching correspondence found.</td></tr>`;
                 return;
             }
 
             tbody.innerHTML = rows.map(row => {
-                const flagged = (row.assigned_to === myUserId && row.status === 'In Progress') ? 'row-flag' : '';
-                const attachmentCell = row.attachment_url && row.attachment_url !== '#'
-                    ? `<a href="${row.attachment_url}" target="_blank" class="text-xs font-semibold text-blue-600 hover:underline">View File</a>`
+                const isOverdue = row.due_date && row.due_date < todayStr && row.status !== 'Approved' && row.status !== 'Rejected';
+                const flagged = isOverdue ? 'row-overdue' : ((row.assigned_to === myUserId && row.status === 'In Progress') ? 'row-flag' : '');
+                const attachmentCell = row.attachment_url
+                    ? `<button onclick="openPreview('${row.attachment_url}')" class="text-xs font-semibold text-blue-600 hover:underline">View File</button>`
                     : '<span class="text-gray-300">—</span>';
+
                 return `
                 <tr class="border-b ${flagged}" style="border-color:var(--border)">
-                    <td class="p-4 font-medium text-gray-900">${row.project_name || '—'}</td>
+                    <td class="p-4">
+                        <div class="font-medium text-gray-900">${row.project_name || '—'}</div>
+                        <span class="text-[11px] text-gray-500 font-semibold bg-gray-100 px-2 py-0.5 rounded">${row.discipline || 'General'}</span>
+                    </td>
                     <td class="p-4 mono text-xs font-semibold text-gray-600">${row.reference_no || '—'}</td>
                     <td class="p-4 text-gray-700 max-w-xs">
                         <div class="font-medium">${row.subject || '—'}</div>
                         ${row.reply_text ? `<div class="text-xs text-gray-500 mt-1 bg-gray-50 p-2 rounded-lg border border-gray-100">💬 ${row.reply_text}</div>` : ''}
-                        ${row.reply_attachment_url ? `<a href="${row.reply_attachment_url}" target="_blank" class="text-xs font-semibold text-blue-600 block mt-1 hover:underline">📎 Reply attachment</a>` : ''}
+                        ${row.reply_attachment_url ? `<button onclick="openPreview('${row.reply_attachment_url}')" class="text-xs font-semibold text-blue-600 block mt-1 hover:underline">📎 Reply attachment</button>` : ''}
                     </td>
                     <td class="p-4"><span class="text-xs font-semibold bg-gray-100 text-gray-700 px-2.5 py-1 rounded-md">${row.type || '—'}</span></td>
+                    <td class="p-4 mono text-xs ${isOverdue ? 'text-red-600 font-bold' : 'text-gray-600'}">${row.due_date || '—'} ${isOverdue ? '⚠️' : ''}</td>
                     <td class="p-4">${attachmentCell}</td>
                     <td class="p-4 font-medium text-gray-600">${memberName(row.assigned_to)}</td>
                     <td class="p-4"><span class="status-pill" style="${statusStyle(row.status)}">${row.status || 'New'}</span></td>
@@ -597,13 +637,12 @@
                     </div>
                 `;
             }
-
             return `<span class="text-xs text-gray-400">—</span>`;
         }
 
         async function uploadFile(file, subfolder) {
             if (!file) return null;
-            if (isDemoMode) return '#';
+            if (isDemoMode) return 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf';
             const path = `${myCompanyId}/${subfolder}/${Date.now()}_${file.name}`;
             const { error } = await db.storage.from('attachments').upload(path, file);
             if (error) { alert('Upload error: ' + error.message); return null; }
@@ -615,14 +654,11 @@
             const select = document.getElementById('assign-' + id);
             const employeeId = select.value;
             if (!employeeId) { alert('Please select an engineer first.'); return; }
-            
             if (isDemoMode) {
                 const row = allRows.find(r => r.id === id);
                 if (row) { row.assigned_to = employeeId; row.status = 'In Progress'; }
-                loadTable();
-                return;
+                loadTable(); return;
             }
-
             const { error } = await db.from('correspondence').update({ assigned_to: employeeId, status: 'In Progress' }).eq('id', id);
             if (error) alert('Error: ' + error.message);
             else loadTable();
@@ -639,15 +675,9 @@
 
             if (isDemoMode) {
                 const row = allRows.find(r => r.id === id);
-                if (row) {
-                    row.reply_text = replyText;
-                    row.reply_attachment_url = replyAttachmentUrl;
-                    row.status = 'Pending Manager Review';
-                }
-                loadTable();
-                return;
+                if (row) { row.reply_text = replyText; row.reply_attachment_url = replyAttachmentUrl; row.status = 'Pending Manager Review'; }
+                loadTable(); return;
             }
-
             const { error } = await db.from('correspondence').update({
                 reply_text: replyText, reply_attachment_url: replyAttachmentUrl, status: 'Pending Manager Review'
             }).eq('id', id);
@@ -657,14 +687,11 @@
 
         async function changeStatus(id, newStatus) {
             if (!confirm(`Are you sure you want to mark this document as ${newStatus}?`)) return;
-            
             if (isDemoMode) {
                 const row = allRows.find(r => r.id === id);
                 if (row) row.status = newStatus;
-                loadTable();
-                return;
+                loadTable(); return;
             }
-
             const { error } = await db.from('correspondence').update({ status: newStatus }).eq('id', id);
             if (error) alert('Error: ' + error.message);
             else loadTable();
@@ -672,42 +699,53 @@
 
         async function deleteRow(id) {
             if (!confirm('Are you sure you want to permanently delete this record?')) return;
-            
-            if (isDemoMode) {
-                allRows = allRows.filter(r => r.id !== id);
-                loadTable();
-                return;
-            }
-
+            if (isDemoMode) { allRows = allRows.filter(r => r.id !== id); loadTable(); return; }
             const { error } = await db.from('correspondence').delete().eq('id', id);
             if (error) alert('Error: ' + error.message);
             else loadTable();
         }
 
+        document.getElementById('exportExcelBtn').onclick = () => {
+            if (!allRows.length) { alert('No data to export.'); return; }
+            let csv = '\uFEFFProject,Discipline,Reference,Subject,Type,Direction,Priority,Date,DueDate,Status\n';
+            allRows.forEach(r => {
+                csv += `"${r.project_name || ''}","${r.discipline || ''}","${r.reference_no || ''}","${(r.subject || '').replace(/"/g, '""')}","${r.type || ''}","${r.direction || ''}","${r.priority || ''}","${r.correspondence_date || ''}","${r.due_date || ''}","${r.status || ''}"\n`;
+            });
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `BA_Correspondence_Report_${todayStr}.csv`;
+            a.click();
+        };
+
         function resetForm() {
             document.getElementById('addForm').reset();
             document.getElementById('editId').value = '';
-            document.getElementById('fDate').value = new Date().toISOString().split('T')[0];
+            document.getElementById('fDate').value = todayStr;
+            document.getElementById('fDueDate').value = nextWeek.toISOString().split('T')[0];
             document.getElementById('formTitle').textContent = 'New Document Entry';
             document.getElementById('submitBtn').textContent = 'Save Document';
         }
 
+        // ============ Save Document (id removed for real inserts — DB generates its own uuid) ============
         document.getElementById('addForm').onsubmit = async (e) => {
             e.preventDefault();
             const fileInput = document.getElementById('fAttachment');
             let attachmentUrl = null;
             if (fileInput.files[0]) attachmentUrl = await uploadFile(fileInput.files[0], 'documents');
 
-            const rowData = {
-                id: Date.now().toString(),
+            const baseData = {
                 project_name: document.getElementById('fProject').value,
                 reference_no: document.getElementById('fRef').value,
                 sender_recipient: document.getElementById('fRecipient').value,
                 subject: document.getElementById('fSubject').value,
                 type: document.getElementById('fType').value,
+                discipline: document.getElementById('fDiscipline').value,
                 direction: document.getElementById('fDirection').value,
                 priority: document.getElementById('fPriority').value,
                 correspondence_date: document.getElementById('fDate').value,
+                due_date: document.getElementById('fDueDate').value,
                 attachment_url: attachmentUrl,
                 status: 'New',
                 company_id: myCompanyId,
@@ -718,14 +756,14 @@
             };
 
             if (isDemoMode) {
-                allRows.unshift(rowData);
+                allRows.unshift({ id: 'demo-' + Date.now(), ...baseData });
                 resetForm();
                 addModal.classList.add('hidden');
                 loadTable();
                 return;
             }
 
-            const { error } = await db.from('correspondence').insert([rowData]);
+            const { error } = await db.from('correspondence').insert([baseData]);
             if (error) {
                 alert('Error saving record: ' + error.message);
             } else {
