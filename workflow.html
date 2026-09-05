@@ -57,8 +57,12 @@
 
     <!-- ============ LOGIN ============ -->
     <div id="loginBox" class="card p-8 max-w-sm mx-auto mt-16">
-        <h2 id="loginTitle" class="font-semibold text-xl mb-1">Log in</h2>
-        <p class="text-sm mb-5" style="color:var(--text-secondary)">Access your company's correspondence portal</p>
+        <div class="flex gap-1 mb-6 p-1 rounded-lg" style="background:#F1F5F9">
+            <button id="tabLogin" class="flex-1 text-sm font-medium py-2 rounded-md" style="background:#fff;color:var(--brand)">Log in</button>
+            <button id="tabSignup" class="flex-1 text-sm font-medium py-2 rounded-md" style="color:var(--text-secondary)">Sign up</button>
+        </div>
+        <h2 id="loginTitle" class="font-semibold text-lg mb-1">Welcome back</h2>
+        <p id="loginSubtitle" class="text-sm mb-5" style="color:var(--text-secondary)">Log in with your existing account</p>
         <form id="loginForm" class="space-y-3">
             <input type="text" id="companyCode" required placeholder="Company code" class="w-full border rounded-lg p-2.5 text-sm" style="border-color:var(--border)">
             <input type="text" id="fullName" placeholder="Full name" class="hidden w-full border rounded-lg p-2.5 text-sm" style="border-color:var(--border)">
@@ -68,9 +72,15 @@
             </select>
             <input type="email" id="loginEmail" required placeholder="Email" class="w-full border rounded-lg p-2.5 text-sm" style="border-color:var(--border)">
             <input type="password" id="loginPass" required placeholder="Password" class="w-full border rounded-lg p-2.5 text-sm" style="border-color:var(--border)">
-            <button class="btn-primary w-full rounded-lg p-2.5 text-sm font-medium">Log in</button>
+            <button id="loginSubmitBtn" class="btn-primary w-full rounded-lg p-2.5 text-sm font-medium">Log in</button>
         </form>
-        <button id="switchModeBtn" class="text-sm mt-4" style="color:var(--brand-light)">Don't have an account? Sign up</button>
+        <div class="mt-5 pt-4 border-t" style="border-color:var(--border)">
+            <p class="text-xs mb-2 text-center" style="color:var(--text-secondary)">Quick access while testing</p>
+            <div class="flex gap-2">
+                <button id="quickManagerBtn" type="button" class="flex-1 text-xs font-medium py-2 rounded-lg border" style="border-color:var(--border)">Quick Manager Login</button>
+                <button id="quickEmployeeBtn" type="button" class="flex-1 text-xs font-medium py-2 rounded-lg border" style="border-color:var(--border)">Quick Employee Login</button>
+            </div>
+        </div>
     </div>
 
     <!-- ============ MAIN APP ============ -->
@@ -200,13 +210,20 @@
 
         document.getElementById('fDate').value = new Date().toISOString().split('T')[0];
 
-        document.getElementById('switchModeBtn').onclick = () => {
-            signUpMode = !signUpMode;
-            document.getElementById('loginTitle').textContent = signUpMode ? 'Create account' : 'Log in';
-            document.getElementById('switchModeBtn').textContent = signUpMode ? 'Already have an account? Log in' : "Don't have an account? Sign up";
-            fullNameInput.classList.toggle('hidden', !signUpMode);
-            roleSelect.classList.toggle('hidden', !signUpMode);
-        };
+        function setAuthMode(signup) {
+            signUpMode = signup;
+            document.getElementById('tabLogin').style.background = signup ? '' : '#fff';
+            document.getElementById('tabLogin').style.color = signup ? 'var(--text-secondary)' : 'var(--brand)';
+            document.getElementById('tabSignup').style.background = signup ? '#fff' : '';
+            document.getElementById('tabSignup').style.color = signup ? 'var(--brand)' : 'var(--text-secondary)';
+            document.getElementById('loginTitle').textContent = signup ? 'Create your account' : 'Welcome back';
+            document.getElementById('loginSubtitle').textContent = signup ? 'Enter a new or existing company code to get started' : 'Log in with your existing account';
+            document.getElementById('loginSubmitBtn').textContent = signup ? 'Create account' : 'Log in';
+            fullNameInput.classList.toggle('hidden', !signup);
+            roleSelect.classList.toggle('hidden', !signup);
+        }
+        document.getElementById('tabLogin').onclick = () => setAuthMode(false);
+        document.getElementById('tabSignup').onclick = () => setAuthMode(true);
 
         // ============ Sign up / Log in ============
         document.getElementById('loginForm').onsubmit = async (e) => {
@@ -236,7 +253,7 @@
                 if (pErr) { alert('Error creating profile: ' + pErr.message); return; }
 
                 alert(`Account created as ${chosenRole}! Please log in now.`);
-                document.getElementById('switchModeBtn').click();
+                setAuthMode(false);
             } else {
                 const { error } = await db.auth.signInWithPassword({ email, password });
                 if (error) alert('Error: ' + error.message);
@@ -244,6 +261,41 @@
         };
 
         document.getElementById('logoutBtn').onclick = () => db.auth.signOut();
+
+        // ============ Quick login (testing only — fixed demo accounts, auto-created on first use) ============
+        async function quickLogin(role) {
+            const email = role === 'Manager' ? 'demo.manager@test.local' : 'demo.employee@test.local';
+            const password = 'demo12345';
+            const companyCode = 'DEMOCO';
+            const fullName = role === 'Manager' ? 'Demo Manager' : 'Demo Employee';
+
+            // نجرب دخول مباشر الأول (يعني الحساب موجود بالفعل من مرة قبل كده)
+            let { error: loginErr } = await db.auth.signInWithPassword({ email, password });
+            if (!loginErr) return; // نجح الدخول، خلاص
+
+            // لو فشل الدخول، غالبًا الحساب لسه مش موجود - ننشئه تلقائيًا
+            const { data, error: signUpErr } = await db.auth.signUp({ email, password });
+            if (signUpErr) { alert('Quick login error: ' + signUpErr.message); return; }
+
+            let { data: existingCompany } = await db.from('companies').select('*').eq('code', companyCode).maybeSingle();
+            let companyId;
+            if (existingCompany) {
+                companyId = existingCompany.id;
+            } else {
+                const { data: newCompany, error: cErr } = await db.from('companies').insert([{ code: companyCode }]).select().single();
+                if (cErr) { alert('Error creating demo company: ' + cErr.message); return; }
+                companyId = newCompany.id;
+            }
+
+            const { error: pErr } = await db.from('profiles').insert([{ id: data.user.id, company_id: companyId, full_name: fullName, role }]);
+            if (pErr) { alert('Error creating demo profile: ' + pErr.message); return; }
+
+            // بعض إعدادات Supabase تطلب تأكيد إيميل قبل السماح بالدخول مباشرة بعد signUp
+            const { error: reLoginErr } = await db.auth.signInWithPassword({ email, password });
+            if (reLoginErr) alert('Account created. If email confirmation is required in your Supabase settings, disable it (Authentication > Providers > Email > "Confirm email") to allow instant quick login.');
+        }
+        document.getElementById('quickManagerBtn').onclick = () => quickLogin('Manager');
+        document.getElementById('quickEmployeeBtn').onclick = () => quickLogin('Employee');
 
         // ============ Modal controls ============
         document.getElementById('openAddModal').onclick = () => { resetForm(); addModal.classList.remove('hidden'); };
