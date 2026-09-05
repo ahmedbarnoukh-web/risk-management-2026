@@ -589,6 +589,7 @@
         document.getElementById('toggleFiltersBtn').addEventListener('click', () => {
             document.getElementById('filtersPanel').classList.toggle('hidden');
         });
+        document.querySelectorAll('.filter-btn').forEach(btn => {
             btn.addEventListener('click', () => {
                 activeFilter = btn.dataset.filter;
                 document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
