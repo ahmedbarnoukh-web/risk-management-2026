@@ -182,6 +182,11 @@
         // ============ اختيار الهوية (سكرتيرة / موظف 1-5) ============
         document.getElementById('identitySelect').onchange = (e) => {
             currentIdentity = e.target.value;
+            // لو اخترت هوية موظف، نلغي صلاحيات المدير تلقائيًا عشان محدش يتلخبط
+            if (currentIdentity !== 'السكرتيرة') {
+                isAdmin = false;
+                document.getElementById('adminBadge').classList.add('hidden');
+            }
             document.getElementById('addFormBox').classList.toggle('hidden', currentIdentity !== 'السكرتيرة' && !isAdmin);
             renderTable();
         };
