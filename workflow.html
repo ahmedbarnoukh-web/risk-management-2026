@@ -26,6 +26,8 @@
         .seg-btn.active { color: var(--brand); border-bottom-color: var(--brand); font-weight: 600; }
         .cat-btn { background: #fff; border-color: var(--border); color: var(--text-secondary); }
         .cat-btn.active { background: var(--brand); border-color: var(--brand); color: #fff; }
+        .nav-view-btn { color: var(--text-secondary); }
+        .nav-view-btn.active { background: #fff; color: var(--brand); box-shadow: 0 1px 2px rgba(0,0,0,0.06); }
         .status-pill { display:inline-flex; align-items:center; gap:5px; padding:4px 12px; border-radius:9999px; font-size:12px; font-weight:600; white-space:nowrap; }
         .row-flag { box-shadow: inset 3px 0 0 #F59E0B; background: #FFFBEB !important; }
         .row-overdue { box-shadow: inset 3px 0 0 #DC2626; background: #FEF2F2 !important; }
@@ -129,6 +131,36 @@
 
         <!-- ============ MAIN APP ============ -->
         <main id="appBox" class="hidden max-w-7xl mx-auto px-6 py-8">
+
+            <!-- Simple nav toggle: Dashboard vs Projects -->
+            <div class="flex items-center justify-between mb-6">
+                <div class="flex gap-1 p-1 rounded-xl bg-gray-100 inline-flex">
+                    <button id="navDashboardBtn" class="nav-view-btn active px-4 py-2 text-sm font-semibold rounded-lg">📊 Dashboard</button>
+                    <button id="navProjectsBtn" class="nav-view-btn px-4 py-2 text-sm font-semibold rounded-lg">📁 Projects</button>
+                </div>
+                <div id="activeProjectBanner" class="hidden text-xs font-semibold bg-blue-50 text-blue-700 border border-blue-200 rounded-lg px-3 py-2 items-center gap-2">
+                    Viewing: <span id="activeProjectName"></span>
+                    <button onclick="clearProjectFilter()" class="underline">Clear</button>
+                </div>
+            </div>
+
+            <!-- ============ PROJECTS VIEW ============ -->
+            <div id="projectsView" class="hidden">
+                <div class="flex flex-wrap justify-between items-center gap-4 mb-6">
+                    <div>
+                        <h1 class="text-2xl font-bold tracking-tight text-gray-900">Projects</h1>
+                        <p class="text-sm text-gray-500 mt-0.5">Every document belongs to a project</p>
+                    </div>
+                    <button id="openProjectModal" class="btn-primary rounded-xl px-5 py-2.5 text-sm font-semibold shadow-sm flex items-center gap-2">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                        New Project
+                    </button>
+                </div>
+                <div id="projectsList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+            </div>
+
+            <!-- ============ DASHBOARD VIEW (existing correspondence workspace) ============ -->
+            <div id="dashboardView">
 
             <div id="actionAlert" class="hidden mb-6 p-4 rounded-xl text-sm flex items-center justify-between shadow-sm" style="background:#FFFBEB;color:#92400E;border:1px solid #FDE68A">
                 <div class="flex items-center gap-2.5">
@@ -245,6 +277,7 @@
 
             <!-- Mobile card list — shown instead of the wide table on small screens -->
             <div id="mobileList" class="md:hidden space-y-3"></div>
+            </div>
         </main>
     </div>
 
@@ -261,8 +294,11 @@
             <form id="addForm" class="grid grid-cols-2 gap-4">
                 <input type="hidden" id="editId" value="">
                 <div class="col-span-2">
-                    <label class="block text-xs font-semibold text-gray-700 mb-1">Project Name</label>
-                    <input type="text" id="fProject" required placeholder="e.g. Riyadh Business Center Tower" class="border rounded-xl p-3 text-sm w-full bg-gray-50" style="border-color:var(--border)">
+                    <label class="block text-xs font-semibold text-gray-700 mb-1">Project</label>
+                    <select id="fProject" required class="border rounded-xl p-3 text-sm w-full bg-gray-50" style="border-color:var(--border)">
+                        <option value="">Select a project...</option>
+                    </select>
+                    <p id="noProjectsHint" class="hidden text-xs text-amber-600 mt-1">No projects yet — <button type="button" onclick="closeAddModalAndOpenProjectModal()" class="underline font-semibold">create one first</button></p>
                 </div>
 
                 <div>
@@ -338,6 +374,27 @@
         </div>
     </div>
 
+    <!-- ============ NEW PROJECT MODAL ============ -->
+    <div id="projectModal" class="hidden fixed inset-0 modal-overlay z-50 flex items-center justify-center p-4">
+        <div class="card w-full max-w-sm p-6 shadow-2xl">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="font-bold text-lg text-gray-900">New Project</h3>
+                <button id="closeProjectModalBtn" class="text-2xl text-gray-400 hover:text-gray-700 leading-none">&times;</button>
+            </div>
+            <form id="projectForm" class="space-y-3">
+                <div>
+                    <label class="block text-xs font-semibold text-gray-700 mb-1">Project Name</label>
+                    <input type="text" id="pName" required placeholder="e.g. Riyadh Business Center Tower" class="border rounded-xl p-3 text-sm w-full bg-gray-50" style="border-color:var(--border)">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-700 mb-1">Project Code (optional)</label>
+                    <input type="text" id="pCode" placeholder="e.g. RBC-001" class="border rounded-xl p-3 text-sm w-full mono bg-gray-50" style="border-color:var(--border)">
+                </div>
+                <button class="btn-primary w-full rounded-xl p-3 text-sm font-semibold shadow-sm mt-2">Create Project</button>
+            </form>
+        </div>
+    </div>
+
     <!-- ============ PREVIEW MODAL ============ -->
     <div id="previewModal" class="hidden fixed inset-0 modal-overlay z-50 flex items-center justify-center p-4">
         <div class="card w-full max-w-3xl p-6 h-[85vh] flex flex-col shadow-2xl">
@@ -378,6 +435,8 @@
         }
         let myRole = null, myCompanyId = null, myUserId = null;
         let companyMembers = [];
+        let companyProjects = [];
+        let activeProjectId = null;
         let isDemoMode = false;
 
         const isManager = (role) => role === 'Manager' || role === 'مدير';
@@ -396,6 +455,7 @@
         const departmentSelect = document.getElementById('departmentSelect');
         const addModal = document.getElementById('addModal');
         const previewModal = document.getElementById('previewModal');
+        const projectModal = document.getElementById('projectModal');
 
         const todayStr = new Date().toISOString().split('T')[0];
         document.getElementById('fDate').value = todayStr;
@@ -484,12 +544,16 @@
                 { id: 'demo-mgr-id', full_name: 'Eng. Ahmed Barnoukh (Director)', role: 'Manager', department: null },
                 { id: 'demo-emp-id', full_name: 'Eng. Mohammed (Engineer)', role: 'Employee', department: 'Electrical' }
             ];
+            companyProjects = [
+                { id: 'demo-proj-1', name: 'Riyadh Business Center Tower', code: 'RBC-001', status: 'Active' },
+                { id: 'demo-proj-2', name: 'Jeddah Commercial Mall', code: 'JCM-002', status: 'Active' }
+            ];
 
             if (!allRows.length) {
                 allRows = [
                     {
                         id: 'demo-1',
-                        project_name: 'Riyadh Business Center Tower',
+                        project_id: 'demo-proj-1',
                         reference_no: 'REF-2026-001',
                         sender_recipient: 'Main Contractor',
                         subject: 'Approval of Main Electrical Switchgear Submittal (MAR)',
@@ -501,7 +565,7 @@
                     },
                     {
                         id: 'demo-2',
-                        project_name: 'Jeddah Commercial Mall',
+                        project_id: 'demo-proj-2',
                         reference_no: 'REF-2026-002',
                         sender_recipient: 'Consultant Office',
                         subject: 'Request for Information (RFI) regarding HVAC duct routing',
@@ -524,15 +588,140 @@
             userBar.classList.add('flex');
             document.getElementById('userRoleBadge').textContent = roleTitle;
             document.getElementById('userNameBadge').textContent = fullName;
+            activeProjectId = null;
+            document.getElementById('activeProjectBanner').classList.add('hidden');
+            switchToDashboardView();
             renderStats();
             renderTable();
         }
 
         // ============ Modal Controls ============
-        document.getElementById('openAddModal').onclick = () => { resetForm(); addModal.classList.remove('hidden'); };
+        document.getElementById('openAddModal').onclick = () => {
+            if (!companyProjects.length) {
+                alert('Please create a project first before adding a document.');
+                switchToProjectsView();
+                return;
+            }
+            resetForm();
+            populateProjectSelect();
+            addModal.classList.remove('hidden');
+        };
         document.getElementById('closeModalBtn').onclick = () => addModal.classList.add('hidden');
         document.getElementById('cancelEditBtn').onclick = () => addModal.classList.add('hidden');
         document.getElementById('closePreviewBtn').onclick = () => previewModal.classList.add('hidden');
+
+        // ============ Projects: nav toggle ============
+        document.getElementById('navDashboardBtn').onclick = () => switchToDashboardView();
+        document.getElementById('navProjectsBtn').onclick = () => switchToProjectsView();
+
+        function switchToDashboardView() {
+            document.getElementById('dashboardView').classList.remove('hidden');
+            document.getElementById('projectsView').classList.add('hidden');
+            document.getElementById('navDashboardBtn').classList.add('active');
+            document.getElementById('navProjectsBtn').classList.remove('active');
+        }
+        function switchToProjectsView() {
+            document.getElementById('dashboardView').classList.add('hidden');
+            document.getElementById('projectsView').classList.remove('hidden');
+            document.getElementById('navProjectsBtn').classList.add('active');
+            document.getElementById('navDashboardBtn').classList.remove('active');
+            renderProjectsList();
+        }
+
+        // ============ Projects: create ============
+        document.getElementById('openProjectModal').onclick = () => { document.getElementById('projectForm').reset(); projectModal.classList.remove('hidden'); };
+        document.getElementById('closeProjectModalBtn').onclick = () => projectModal.classList.add('hidden');
+        function closeAddModalAndOpenProjectModal() {
+            addModal.classList.add('hidden');
+            document.getElementById('projectForm').reset();
+            projectModal.classList.remove('hidden');
+        }
+
+        document.getElementById('projectForm').onsubmit = async (e) => {
+            e.preventDefault();
+            const name = document.getElementById('pName').value.trim();
+            const code = document.getElementById('pCode').value.trim();
+
+            if (isDemoMode) {
+                companyProjects.push({ id: 'demo-proj-' + Date.now(), name, code, status: 'Active' });
+                projectModal.classList.add('hidden');
+                renderProjectsList();
+                populateProjectSelect();
+                return;
+            }
+
+            const { data, error } = await db.from('projects').insert([{ name, code, company_id: myCompanyId, status: 'Active' }]).select().single();
+            if (error) { alert('Error creating project: ' + error.message); return; }
+            companyProjects.push(data);
+            projectModal.classList.add('hidden');
+            renderProjectsList();
+            populateProjectSelect();
+        };
+
+        function populateProjectSelect() {
+            const select = document.getElementById('fProject');
+            const hint = document.getElementById('noProjectsHint');
+            select.innerHTML = '<option value="">Select a project...</option>' +
+                companyProjects.map(p => `<option value="${p.id}">${p.name}${p.code ? ' (' + p.code + ')' : ''}</option>`).join('');
+            hint.classList.toggle('hidden', companyProjects.length > 0);
+        }
+
+        function projectNameOf(row) {
+            if (row.project_id) {
+                const p = companyProjects.find(x => x.id === row.project_id);
+                if (p) return p.name;
+            }
+            return row.project_name || '—'; // بيانات قديمة قبل نظام المشاريع
+        }
+
+        function renderProjectsList() {
+            const container = document.getElementById('projectsList');
+            if (!companyProjects.length) {
+                container.innerHTML = `
+                    <div class="col-span-full card p-10 text-center">
+                        <p class="text-gray-500 text-sm mb-3">No projects yet — create your first project to start managing correspondence.</p>
+                        <button onclick="document.getElementById('openProjectModal').click()" class="btn-primary rounded-xl px-5 py-2.5 text-sm font-semibold">+ Create Project</button>
+                    </div>`;
+                return;
+            }
+            container.innerHTML = companyProjects.map(p => {
+                const docs = allRows.filter(r => r.project_id === p.id);
+                const pending = docs.filter(r => r.status !== 'Approved' && r.status !== 'Rejected').length;
+                const overdue = docs.filter(r => r.due_date && r.due_date < todayStr && r.status !== 'Approved' && r.status !== 'Rejected').length;
+                return `
+                <div class="card p-5">
+                    <div class="flex justify-between items-start mb-2">
+                        <div>
+                            <h3 class="font-bold text-gray-900">${p.name}</h3>
+                            ${p.code ? `<p class="mono text-xs text-gray-500">${p.code}</p>` : ''}
+                        </div>
+                        <span class="text-xs font-semibold px-2 py-1 rounded-full bg-emerald-50 text-emerald-700">${p.status || 'Active'}</span>
+                    </div>
+                    <div class="grid grid-cols-3 gap-2 my-4 text-center">
+                        <div><div class="font-bold text-lg text-gray-900">${docs.length}</div><div class="text-[10px] text-gray-500">Documents</div></div>
+                        <div><div class="font-bold text-lg text-amber-600">${pending}</div><div class="text-[10px] text-gray-500">Pending</div></div>
+                        <div><div class="font-bold text-lg text-red-600">${overdue}</div><div class="text-[10px] text-gray-500">Overdue</div></div>
+                    </div>
+                    <button onclick="openProjectFilter('${p.id}','${p.name.replace(/'/g, "\\'")}')" class="w-full rounded-lg py-2 text-sm font-semibold border hover:bg-gray-50" style="border-color:var(--border);color:var(--brand)">Open Project</button>
+                </div>
+            `}).join('');
+        }
+
+        function openProjectFilter(id, name) {
+            activeProjectId = id;
+            document.getElementById('activeProjectBanner').classList.remove('hidden');
+            document.getElementById('activeProjectBanner').classList.add('flex');
+            document.getElementById('activeProjectName').textContent = name;
+            switchToDashboardView();
+            renderStats();
+            renderTable();
+        }
+        function clearProjectFilter() {
+            activeProjectId = null;
+            document.getElementById('activeProjectBanner').classList.add('hidden');
+            renderStats();
+            renderTable();
+        }
 
         function openPreview(url) {
             previewModal.classList.remove('hidden');
@@ -564,6 +753,9 @@
 
                 const { data: members } = await db.from('profiles').select('id, full_name, role, department').eq('company_id', myCompanyId);
                 companyMembers = members || [];
+
+                const { data: projects } = await db.from('projects').select('*').eq('company_id', myCompanyId).order('created_at', { ascending: false });
+                companyProjects = projects || [];
 
                 setupWorkspaceUI(isManager(myRole) ? 'Project Director' : 'Engineer', profile.full_name || '');
                 loadTable();
@@ -688,11 +880,12 @@
         }
 
         function renderStats() {
-            const incoming = allRows.filter(r => r.direction === 'Incoming').length;
-            const outgoing = allRows.filter(r => r.direction === 'Outgoing').length;
-            const underReview = allRows.filter(r => r.status === 'Under Review').length;
-            const dueSoon = allRows.filter(r => r.due_date && r.due_date >= todayStr && r.status !== 'Approved' && r.status !== 'Rejected').length;
-            const overdue = allRows.filter(r => r.due_date && r.due_date < todayStr && r.status !== 'Approved' && r.status !== 'Rejected').length;
+            const scoped = activeProjectId ? allRows.filter(r => r.project_id === activeProjectId) : allRows;
+            const incoming = scoped.filter(r => r.direction === 'Incoming').length;
+            const outgoing = scoped.filter(r => r.direction === 'Outgoing').length;
+            const underReview = scoped.filter(r => r.status === 'Under Review').length;
+            const dueSoon = scoped.filter(r => r.due_date && r.due_date >= todayStr && r.status !== 'Approved' && r.status !== 'Rejected').length;
+            const overdue = scoped.filter(r => r.due_date && r.due_date < todayStr && r.status !== 'Approved' && r.status !== 'Rejected').length;
 
             const cards = [
                 { label: 'Incoming', value: incoming, color: '#2563EB', onClick: "setDirectionQuickFilter('Incoming')" },
@@ -730,7 +923,8 @@
 
         function renderTable() {
             const tbody = document.getElementById('tableBody');
-            let rows = activeFilter === 'all' ? allRows : allRows.filter(r => (r.status || 'New') === activeFilter);
+            let rows = activeProjectId ? allRows.filter(r => r.project_id === activeProjectId) : allRows;
+            rows = activeFilter === 'all' ? rows : rows.filter(r => (r.status || 'New') === activeFilter);
             if (activeCategory !== 'all') rows = rows.filter(r => categoryOf(r.type) === activeCategory);
             if (activeDept !== 'all') rows = rows.filter(r => r.discipline === activeDept);
             if (activeType !== 'all') rows = rows.filter(r => r.type === activeType);
@@ -771,7 +965,7 @@
                 return `
                 <tr class="border-b ${flagged}" style="border-color:var(--border)">
                     <td class="p-4">
-                        <div class="font-medium text-gray-900">${row.project_name || '—'}</div>
+                        <div class="font-medium text-gray-900">${projectNameOf(row)}</div>
                         <span class="text-[11px] text-gray-500 font-semibold bg-gray-100 px-2 py-0.5 rounded">${row.discipline || 'General'}</span>
                     </td>
                     <td class="p-4 mono text-xs font-semibold text-gray-600">${row.reference_no || '—'}</td>
@@ -797,7 +991,7 @@
                 <div class="card p-4 ${flagged}">
                     <div class="flex justify-between items-start gap-2 mb-2">
                         <div class="min-w-0">
-                            <div class="font-semibold text-gray-900 text-sm truncate">${row.project_name || '—'}</div>
+                            <div class="font-semibold text-gray-900 text-sm truncate">${projectNameOf(row)}</div>
                             <div class="mono text-xs text-gray-500">${row.reference_no || '—'}</div>
                         </div>
                         <span class="status-pill shrink-0" style="${statusStyle(row.status)}">${getStatusLabel(row)}</span>
@@ -956,7 +1150,7 @@
             if (fileInput.files[0]) attachmentUrl = await uploadFile(fileInput.files[0], 'documents');
 
             const baseData = {
-                project_name: document.getElementById('fProject').value,
+                project_id: document.getElementById('fProject').value,
                 reference_no: document.getElementById('fRef').value,
                 sender_recipient: document.getElementById('fRecipient').value,
                 subject: document.getElementById('fSubject').value,
