@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BA Engineering — Enterprise Correspondence Platform</title>
+    <title><span class="brand-lock" data-no-translate>BA Engineering</span> — Enterprise Correspondence Platform</title>
     <link rel="icon" href="https://www.barnoukh-engineering.com/photo/logo.jpg">
     <meta name="theme-color" content="#0F2C52">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -36,6 +36,157 @@
         table th { color: var(--text-secondary); font-weight:600; font-size:12px; }
         tbody tr:hover { background: #F8FAFC; }
     </style>
+
+<style id="company-ux-refresh">
+/* ===== Company / Enterprise UX refresh ===== */
+:root{
+  --ui-font-size: 14px;
+  --ui-line-height: 1.5;
+}
+body{
+  font-size: var(--ui-font-size);
+  line-height: var(--ui-line-height);
+  background:#f7f8fa;
+}
+button, input, select, textarea{
+  font-size:14px;
+}
+table{
+  font-size:14px !important;
+}
+table thead th{
+  font-size:12px !important;
+  letter-spacing:.01em;
+  white-space:nowrap;
+  padding:12px 14px !important;
+}
+table tbody td{
+  padding:13px 14px !important;
+  vertical-align:middle;
+}
+table tbody tr{
+  transition:background-color .12s ease;
+}
+table tbody tr:hover{
+  background:#f8fafc;
+}
+table tbody td .text-\[11px\],
+table tbody td .text-xs{
+  font-size:12px !important;
+  line-height:1.45;
+}
+#recentActivity{
+  font-size:13px;
+}
+#recentActivity .text-xs{
+  font-size:13px !important;
+}
+#statsRow > .card{
+  min-height:88px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+#statsRow > .card .text-2xl{
+  font-size:26px !important;
+  line-height:1.1;
+}
+#statsRow > .card .text-xs{
+  font-size:12px !important;
+}
+#actionAlert{
+  min-height:52px;
+}
+#activeProjectBanner{
+  font-size:13px;
+}
+#dashboardView > .flex.flex-wrap.justify-between.items-center.gap-4.mb-6{
+  margin-bottom:18px !important;
+}
+#projectsList .card{
+  padding:20px !important;
+}
+#projectsList .text-\[10px\]{
+  font-size:12px !important;
+}
+#projectsList h3{
+  font-size:16px;
+}
+#projectsList .text-lg{
+  font-size:20px !important;
+}
+/* Reduce visual noise in filters */
+.cat-btn, .filter-btn, .seg-btn{
+  min-height:38px;
+}
+#toggleFiltersBtn{
+  min-height:38px;
+}
+/* Details panel used by row click */
+.company-details-panel{
+  position:fixed;
+  inset:0;
+  z-index:70;
+  display:none;
+  background:rgba(15,23,42,.38);
+  backdrop-filter:blur(2px);
+}
+.company-details-panel.open{display:flex;justify-content:flex-end;}
+.company-details-sheet{
+  width:min(520px,100%);
+  height:100%;
+  background:#fff;
+  box-shadow:-12px 0 40px rgba(15,23,42,.16);
+  overflow:auto;
+  padding:24px;
+}
+.company-details-sheet h3{font-size:19px;font-weight:700;margin:0;}
+.company-detail-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-top:18px;
+}
+.company-detail-item{
+  border:1px solid var(--border,#e5e7eb);
+  border-radius:12px;
+  padding:11px 12px;
+  background:#fafafa;
+}
+.company-detail-item .label{
+  font-size:11px;color:#6b7280;font-weight:600;margin-bottom:3px;
+}
+.company-detail-item .value{
+  font-size:14px;color:#111827;font-weight:600;word-break:break-word;
+}
+.company-detail-section{
+  margin-top:18px;border-top:1px solid #e5e7eb;padding-top:16px;
+}
+.company-detail-section .section-title{
+  font-size:12px;font-weight:700;color:#6b7280;text-transform:uppercase;
+  letter-spacing:.04em;margin-bottom:8px;
+}
+.company-demo-banner{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  margin-bottom:16px;padding:11px 14px;border-radius:12px;
+  background:#eff6ff;border:1px solid #bfdbfe;color:#1e3a8a;
+  font-size:13px;font-weight:600;
+}
+.company-demo-banner button{
+  border:1px solid #93c5fd;background:#fff;color:#1d4ed8;
+  border-radius:8px;padding:5px 9px;font-weight:700;cursor:pointer;
+}
+@media(max-width:768px){
+  .company-detail-grid{grid-template-columns:1fr;}
+  .company-details-sheet{padding:18px;}
+  table{font-size:13px !important;}
+}
+html[dir="rtl"] .company-details-sheet{
+  direction:rtl;text-align:right;
+}
+html[dir="rtl"] .company-details-panel.open{justify-content:flex-start;}
+</style>
+
 </head>
 <body class="min-h-screen flex flex-col justify-between">
 
@@ -45,8 +196,8 @@
                 <div class="flex items-center gap-3 shrink-0">
                     <img src="https://www.barnoukh-engineering.com/photo/logo.jpg" class="h-9 w-9 rounded-lg object-cover shadow-sm" alt="logo">
                     <div>
-                        <span class="font-bold text-sm tracking-tight block">BA Engineering</span>
-                        <span class="text-[10px] text-gray-500 uppercase tracking-wider font-semibold">EDMS Platform</span>
+                        <span class="font-bold text-sm tracking-tight block"><span class="brand-lock" data-no-translate>BA Engineering</span></span>
+                        <span id="taglineText" class="text-[10px] text-gray-500 uppercase tracking-wider font-semibold">EDMS Platform</span>
                     </div>
                 </div>
                 <div id="userBar" class="hidden items-center gap-4 text-sm">
@@ -59,6 +210,10 @@
                     <span id="userNameBadge" class="hidden md:inline font-medium text-gray-700"></span>
                     <button id="logoutBtn" class="text-sm font-medium px-3.5 py-1.5 rounded-lg border hover:bg-gray-50 text-gray-700 transition" style="border-color:var(--border)">Log out</button>
                 </div>
+                <div class="flex items-center gap-1 text-xs font-semibold rounded-lg border overflow-hidden" style="border-color:var(--border)">
+                    <button id="langEnBtn" class="px-2.5 py-1.5">EN</button>
+                    <button id="langArBtn" class="px-2.5 py-1.5">عربي</button>
+                </div>
             </div>
         </header>
 
@@ -66,8 +221,8 @@
         <div id="loginBox" class="max-w-md mx-auto mt-16 px-4">
             <div class="card p-8">
                 <div class="text-center mb-6">
-                    <h2 class="font-bold text-2xl text-gray-900 mb-1">Welcome to BA Platform</h2>
-                    <p class="text-sm text-gray-500">Secure Engineering Document Management System</p>
+                    <h2 id="welcomeTitle" class="font-bold text-2xl text-gray-900 mb-1">Welcome to BA Platform</h2>
+                    <p id="welcomeSubtitle" class="text-sm text-gray-500">Secure Engineering Document Management System</p>
                 </div>
 
                 <div class="flex gap-1 mb-6 p-1 rounded-xl bg-gray-100">
@@ -77,26 +232,26 @@
 
                 <form id="loginForm" class="space-y-4">
                     <div id="companyCodeGroup" class="hidden">
-                        <label class="block text-xs font-semibold text-gray-700 mb-1">Company Code</label>
+                        <label id="lblCompanyCode" class="block text-xs font-semibold text-gray-700 mb-1">Company Code</label>
                         <input type="text" id="companyCode" placeholder="New code creates a company, existing code joins it" class="w-full border rounded-xl p-3 text-sm bg-gray-50" style="border-color:var(--border)">
                     </div>
 
                     <div id="fullNameGroup" class="hidden">
-                        <label class="block text-xs font-semibold text-gray-700 mb-1">Full Name</label>
+                        <label id="lblFullName" class="block text-xs font-semibold text-gray-700 mb-1">Full Name</label>
                         <input type="text" id="fullName" placeholder="e.g. Eng. Ahmed Barnoukh" class="w-full border rounded-xl p-3 text-sm bg-gray-50" style="border-color:var(--border)">
                     </div>
 
                     <div id="roleGroup" class="hidden">
-                        <label class="block text-xs font-semibold text-gray-700 mb-1">Account Role</label>
+                        <label id="lblRole" class="block text-xs font-semibold text-gray-700 mb-1">Account Role</label>
                         <select id="roleSelect" class="w-full border rounded-xl p-3 text-sm bg-gray-50" style="border-color:var(--border)">
-                            <option value="Manager">Manager / Project Director</option>
-                            <option value="Employee">Engineer / Team Member</option>
+                            <option value="Manager" id="roleOptManager">Manager / Project Director</option>
+                            <option value="Employee" id="roleOptEmployee">Engineer / Team Member</option>
                         </select>
-                        <p class="text-[11px] text-gray-400 mt-1">New company code → you become Manager. Existing code → joins as the role selected here.</p>
+                        <p id="roleHint" class="text-[11px] text-gray-400 mt-1">New company code → you become Manager. Existing code → joins as the role selected here.</p>
                     </div>
 
                     <div id="departmentGroup" class="hidden">
-                        <label class="block text-xs font-semibold text-gray-700 mb-1">Department</label>
+                        <label id="lblDepartment" class="block text-xs font-semibold text-gray-700 mb-1">Department</label>
                         <select id="departmentSelect" class="w-full border rounded-xl p-3 text-sm bg-gray-50" style="border-color:var(--border)">
                             <option value="Electrical">Electrical</option>
                             <option value="Civil / Structural">Civil / Structural</option>
@@ -107,12 +262,12 @@
                     </div>
 
                     <div>
-                        <label class="block text-xs font-semibold text-gray-700 mb-1">Work Email</label>
+                        <label id="lblEmail" class="block text-xs font-semibold text-gray-700 mb-1">Work Email</label>
                         <input type="email" id="loginEmail" required placeholder="name@company.com" class="w-full border rounded-xl p-3 text-sm bg-gray-50" style="border-color:var(--border)">
                     </div>
 
                     <div>
-                        <label class="block text-xs font-semibold text-gray-700 mb-1">Password</label>
+                        <label id="lblPassword" class="block text-xs font-semibold text-gray-700 mb-1">Password</label>
                         <input type="password" id="loginPass" required placeholder="••••••••" class="w-full border rounded-xl p-3 text-sm bg-gray-50" style="border-color:var(--border)">
                     </div>
 
@@ -120,9 +275,10 @@
                 </form>
 
                 <div class="mt-6 pt-5 border-t text-center" style="border-color:var(--border)">
-                    <p class="text-xs text-gray-500 mb-3 font-medium">Instant Demo Access for Evaluation (no account needed)</p>
+                    <p id="demoHintText" class="text-xs text-gray-500 mb-3 font-medium">Instant Demo Access for Evaluation (no account needed)</p>
                     <div class="flex gap-2">
-                        <button id="quickManagerBtn" type="button" class="flex-1 text-xs font-semibold py-2.5 rounded-xl border bg-gray-50 hover:bg-gray-100 text-gray-700 transition" style="border-color:var(--border)">⚡ Manager Demo</button>
+                        <button type="button" onclick="startCompanyTrial()" class="rounded-xl border bg-blue-50 hover:bg-blue-100 text-blue-800 px-3 py-2 text-sm font-semibold transition">Company Trial</button>
+                    <button id="quickManagerBtn" type="button" class="flex-1 text-xs font-semibold py-2.5 rounded-xl border bg-gray-50 hover:bg-gray-100 text-gray-700 transition" style="border-color:var(--border)">⚡ Manager Demo</button>
                         <button id="quickEmployeeBtn" type="button" class="flex-1 text-xs font-semibold py-2.5 rounded-xl border bg-gray-50 hover:bg-gray-100 text-gray-700 transition" style="border-color:var(--border)">⚡ Engineer Demo</button>
                     </div>
                 </div>
@@ -425,7 +581,7 @@
     </div>
 
     <footer class="text-center py-6 text-xs text-gray-400 border-t mt-12 bg-white" style="border-color:var(--border)">
-        BA Engineering Platform &copy; 2026. Secure Enterprise Document & Correspondence Management.
+        <span class="brand-lock" data-no-translate>BA Engineering</span> Platform &copy; 2026. Secure Enterprise Document & Correspondence Management.
     </footer>
 
     <script>
@@ -621,6 +777,7 @@
                 ];
             }
             setupWorkspaceUI(role === 'Manager' ? 'Project Director' : 'Engineer', role === 'Manager' ? 'Eng. Ahmed Barnoukh' : 'Eng. Mohammed');
+            if (role === 'Manager') showCompanyTrialBanner();
         }
         document.getElementById('quickManagerBtn').onclick = () => startDemo('Manager');
         document.getElementById('quickEmployeeBtn').onclick = () => startDemo('Employee');
@@ -758,13 +915,13 @@
             document.getElementById('activeProjectName').textContent = name;
             switchToDashboardView();
             renderStats();
-            renderTable();
+            if (!isDemoMode) loadTable(); else renderTable();
         }
         function clearProjectFilter() {
             activeProjectId = null;
             document.getElementById('activeProjectBanner').classList.add('hidden');
             renderStats();
-            renderTable();
+            if (!isDemoMode) loadTable(); else renderTable();
         }
 
         function openPreview(url) {
@@ -784,7 +941,19 @@
             if (isDemoMode) return;
             if (session) {
                 myUserId = session.user.id;
-                const { data: profile } = await db.from('profiles').select('*').eq('id', session.user.id).maybeSingle();
+                const { data: profile, error: profileError } = await db.from('profiles').select('*').eq('id', session.user.id).maybeSingle();
+
+                if (profileError) {
+                    console.error('Profile load failed:', profileError);
+                    // Do NOT sign the user out because of a temporary RLS/network error.
+                    loginBox.classList.add('hidden');
+                    appBox.classList.remove('hidden');
+                    userBar.classList.remove('hidden');
+                    userBar.classList.add('flex');
+                    document.getElementById('userRoleBadge').textContent = 'Loading...';
+                    document.getElementById('userNameBadge').textContent = session.user.email || '';
+                    return;
+                }
 
                 if (!profile) {
                     alert('Your account setup is incomplete (no company profile found). Please use "Register / Join Company" to finish setting up your account.');
@@ -811,7 +980,35 @@
                 userBar.classList.remove('flex');
             }
         }
-        db.auth.onAuthStateChange((event, session) => { if (!isDemoMode) checkSessionState(session); });
+        let authBootstrapped = false;
+        db.auth.onAuthStateChange((event, session) => {
+            if (isDemoMode) return;
+            // Ignore transient auth events while the initial session is being restored.
+            if (event === 'SIGNED_OUT') {
+                checkSessionState(null);
+                return;
+            }
+            if (session) checkSessionState(session);
+        });
+
+        // IMPORTANT: explicitly restore the persisted Supabase session on page refresh.
+        // Relying only on the auth event can briefly show the login screen and may
+        // race with profile loading in a static SPA.
+        (async function bootstrapAuthSession(){
+            try {
+                const { data, error } = await db.auth.getSession();
+                authBootstrapped = true;
+                if (error) {
+                    console.error('Session restore failed:', error);
+                    checkSessionState(null);
+                    return;
+                }
+                await checkSessionState(data?.session || null);
+            } catch (err) {
+                console.error('Session bootstrap error:', err);
+                checkSessionState(null);
+            }
+        })();
 
         // ============ Filters & Search ============
         document.querySelectorAll('.cat-btn').forEach(btn => {
@@ -886,7 +1083,12 @@
         // ============ Data Loading ============
         async function loadTable() {
             if (isDemoMode) { renderStats(); renderRecentActivity(); renderTable(); return; }
-            const { data, error } = await db.from('correspondence').select('*').order('created_at', { ascending: false });
+            let query = db.from('correspondence')
+                .select('*')
+                .eq('company_id', myCompanyId)
+                .order('created_at', { ascending: false });
+            if (activeProjectId) query = query.eq('project_id', activeProjectId);
+            const { data, error } = await query;
             const tbody = document.getElementById('tableBody');
             if (error) {
                 tbody.innerHTML = `<tr><td colspan="9" class="p-8 text-center text-red-600">Error loading data: ${error.message}</td></tr>`;
@@ -984,7 +1186,11 @@
                 );
             }
 
-            const needsAction = allRows.filter(r => r.assigned_to === myUserId && r.status === 'In Progress');
+            const needsAction = allRows.filter(r =>
+                r.assigned_to === myUserId &&
+                r.status === 'In Progress' &&
+                (!activeProjectId || r.project_id === activeProjectId)
+            );
             const alertBox = document.getElementById('actionAlert');
             if (isEmployee(myRole) && needsAction.length > 0) {
                 alertBox.classList.remove('hidden');
@@ -1003,11 +1209,11 @@
                 const isOverdue = row.due_date && row.due_date < todayStr && row.status !== 'Approved' && row.status !== 'Rejected';
                 const flagged = isOverdue ? 'row-overdue' : ((row.assigned_to === myUserId && row.status === 'In Progress') ? 'row-flag' : '');
                 const attachmentCell = row.attachment_url
-                    ? `<button onclick="openPreview('${row.attachment_url}')" class="text-xs font-semibold text-blue-600 hover:underline">View File</button>`
+                    ? `<button onclick="event.stopPropagation();openPreview('${row.attachment_url}')" class="text-xs font-semibold text-blue-600 hover:underline">View File</button>`
                     : '<span class="text-gray-300">—</span>';
 
                 return `
-                <tr class="border-b ${flagged}" style="border-color:var(--border)">
+                <tr class="border-b ${flagged} correspondence-row" data-row-id="${row.id}" onclick="openCorrespondenceDetails('${row.id}')" style="border-color:var(--border);cursor:pointer">
                     <td class="p-4">
                         <div class="font-medium text-gray-900">${projectNameOf(row)}</div>
                         <span class="text-[11px] text-gray-500 font-semibold bg-gray-100 px-2 py-0.5 rounded">${row.discipline || 'General'}</span>
@@ -1016,7 +1222,7 @@
                     <td class="p-4 text-gray-700 max-w-xs">
                         <div class="font-medium">${row.subject || '—'}</div>
                         ${row.reply_text ? `<div class="text-xs text-gray-500 mt-1 bg-gray-50 p-2 rounded-lg border border-gray-100">💬 ${row.reply_text}</div>` : ''}
-                        ${row.reply_attachment_url ? `<button onclick="openPreview('${row.reply_attachment_url}')" class="text-xs font-semibold text-blue-600 block mt-1 hover:underline">📎 Reply attachment</button>` : ''}
+                        ${row.reply_attachment_url ? `<button onclick="event.stopPropagation();openPreview('${row.reply_attachment_url}')" class="text-xs font-semibold text-blue-600 block mt-1 hover:underline">📎 Reply attachment</button>` : ''}
                     </td>
                     <td class="p-4"><span class="text-xs font-semibold bg-gray-100 text-gray-700 px-2.5 py-1 rounded-md">${row.type || '—'}</span></td>
                     <td class="p-4 mono text-xs ${isOverdue ? 'text-red-600 font-bold' : 'text-gray-600'}">${row.due_date || '—'} ${isOverdue ? '⚠️' : ''}</td>
@@ -1048,7 +1254,7 @@
                     </div>
                     <div class="flex justify-between items-center text-xs text-gray-500 mb-2">
                         <span>Assigned: ${memberName(row.assigned_to)}</span>
-                        ${row.attachment_url ? `<button onclick="openPreview('${row.attachment_url}')" class="font-semibold" style="color:var(--brand-light)">View file</button>` : ''}
+                        ${row.attachment_url ? `<button onclick="event.stopPropagation();openPreview('${row.attachment_url}')" class="font-semibold" style="color:var(--brand-light)">View file</button>` : ''}
                     </div>
                     ${row.reply_text ? `<div class="text-xs text-gray-500 mb-2 bg-gray-50 p-2 rounded-lg border border-gray-100">💬 ${row.reply_text}</div>` : ''}
                     <div class="pt-2 border-t flex justify-end" style="border-color:var(--border)">${actionCell(row, '-m')}</div>
@@ -1069,7 +1275,7 @@
                         <div class="flex flex-col items-end gap-1">
                             ${fallbackNote && employees.length ? `<span class="text-[10px] text-amber-600">No ${row.discipline || 'matching'} dept. staff — showing all</span>` : ''}
                             <div class="flex items-center justify-end gap-2">
-                                <select id="assign-${row.id}${suffix}" class="border rounded-lg text-xs p-2 bg-white" style="border-color:var(--border)">${options || '<option value="">No engineers</option>'}</select>
+                                <select onmousedown="event.stopPropagation()" onclick="event.stopPropagation()" id="assign-${row.id}${suffix}" class="border rounded-lg text-xs p-2 bg-white" style="border-color:var(--border)">${options || '<option value="">No engineers</option>'}</select>
                                 <button onclick="assignToEmployee('${row.id}','${suffix}')" class="text-white text-xs px-3 py-2 rounded-lg font-semibold bg-blue-600 hover:bg-blue-700 shadow-sm transition">Assign</button>
                             </div>
                         </div>
@@ -1166,7 +1372,8 @@
         }
 
         document.getElementById('exportExcelBtn').onclick = () => {
-            if (!allRows.length) { alert('No data to export.'); return; }
+            const exportRows = activeProjectId ? allRows.filter(r => r.project_id === activeProjectId) : allRows;
+            if (!exportRows.length) { alert('No data to export.'); return; }
             let csv = '\uFEFFProject,Discipline,Reference,Subject,Type,Direction,Priority,Date,DueDate,Status\n';
             allRows.forEach(r => {
                 csv += `"${r.project_name || ''}","${r.discipline || ''}","${r.reference_no || ''}","${(r.subject || '').replace(/"/g, '""')}","${r.type || ''}","${r.direction || ''}","${r.priority || ''}","${r.correspondence_date || ''}","${r.due_date || ''}","${r.status || ''}"\n`;
@@ -1233,5 +1440,445 @@
             }
         };
     </script>
+
+<!-- ============ CORRESPONDENCE DETAILS PANEL ============ -->
+<div id="companyDetailsPanel" class="company-details-panel" onclick="if(event.target===this) closeCorrespondenceDetails()">
+  <aside class="company-details-sheet">
+    <div class="flex items-center justify-between gap-3 pb-4 border-b" style="border-color:var(--border)">
+      <div>
+        <h3 id="detailTitle">Correspondence Details</h3>
+        <p id="detailReference" class="mono text-xs text-gray-500 mt-1"></p>
+      </div>
+      <button type="button" onclick="closeCorrespondenceDetails()" aria-label="Close"
+              class="text-2xl text-gray-400 hover:text-gray-700 leading-none">&times;</button>
+    </div>
+    <div class="company-detail-grid">
+      <div class="company-detail-item"><div class="label">Project</div><div id="detailProject" class="value">—</div></div>
+      <div class="company-detail-item"><div class="label">Discipline</div><div id="detailDiscipline" class="value">—</div></div>
+      <div class="company-detail-item"><div class="label">Type</div><div id="detailType" class="value">—</div></div>
+      <div class="company-detail-item"><div class="label">Direction</div><div id="detailDirection" class="value">—</div></div>
+      <div class="company-detail-item"><div class="label">Priority</div><div id="detailPriority" class="value">—</div></div>
+      <div class="company-detail-item"><div class="label">Due Date</div><div id="detailDue" class="value">—</div></div>
+      <div class="company-detail-item"><div class="label">Assigned To</div><div id="detailAssigned" class="value">—</div></div>
+      <div class="company-detail-item"><div class="label">Status</div><div id="detailStatus" class="value">—</div></div>
+    </div>
+    <div class="company-detail-section">
+      <div class="section-title">Subject</div>
+      <div id="detailSubject" class="text-sm text-gray-800 font-medium"></div>
+    </div>
+    <div class="company-detail-section">
+      <div class="section-title">Sender / Recipient</div>
+      <div id="detailRecipient" class="text-sm text-gray-700"></div>
+    </div>
+    <div id="detailReplySection" class="company-detail-section hidden">
+      <div class="section-title">Reply</div>
+      <div id="detailReply" class="text-sm text-gray-700 whitespace-pre-wrap"></div>
+    </div>
+    <div class="company-detail-section">
+      <div class="section-title">Attachments</div>
+      <div id="detailAttachments" class="flex flex-wrap gap-2"></div>
+    </div>
+  </aside>
+</div>
+
+
+<script id="company-demo-ux">
+/* ===== Company Trial Demo ===== */
+function showCompanyTrialBanner(){
+  if(document.getElementById('companyTrialBanner')) return;
+  const host=document.getElementById('dashboardView');
+  if(!host) return;
+  const el=document.createElement('div');
+  el.id='companyTrialBanner';
+  el.className='company-demo-banner';
+  el.innerHTML='<span>Company Trial Mode — explore the workflow with sample Riyadh & Jeddah projects.</span><button type="button" onclick="exitCompanyTrial()">Exit Demo</button>';
+  host.prepend(el);
+}
+function exitCompanyTrial(){
+  isDemoMode=false;
+  location.reload();
+}
+function startCompanyTrial(){
+  startDemo('Manager');
+  showCompanyTrialBanner();
+}
+function openCorrespondenceDetails(id){
+  const row=allRows.find(r=>r.id===id);
+  if(!row) return;
+  document.getElementById('detailTitle').textContent=row.subject || 'Correspondence Details';
+  document.getElementById('detailReference').textContent=row.reference_no || '—';
+  document.getElementById('detailProject').textContent=projectNameOf(row);
+  document.getElementById('detailDiscipline').textContent=row.discipline || 'General';
+  document.getElementById('detailType').textContent=row.type || '—';
+  document.getElementById('detailDirection').textContent=row.direction || '—';
+  document.getElementById('detailPriority').textContent=row.priority || '—';
+  document.getElementById('detailDue').textContent=row.due_date || '—';
+  const member=companyMembers.find(m=>m.id===row.assigned_to);
+  document.getElementById('detailAssigned').textContent=member ? (member.full_name || '—') : 'Unassigned';
+  document.getElementById('detailStatus').textContent=row.status || 'New';
+  document.getElementById('detailSubject').textContent=row.subject || '—';
+  document.getElementById('detailRecipient').textContent=row.sender_recipient || '—';
+  const replySec=document.getElementById('detailReplySection');
+  replySec.classList.toggle('hidden',!row.reply_text);
+  document.getElementById('detailReply').textContent=row.reply_text || '';
+  const att=document.getElementById('detailAttachments');
+  const items=[];
+  if(row.attachment_url) items.push(`<button type="button" class="text-sm font-semibold text-blue-600 border rounded-lg px-3 py-2 hover:bg-blue-50" onclick="openPreview('${row.attachment_url}')">View Document</button>`);
+  if(row.reply_attachment_url) items.push(`<button type="button" class="text-sm font-semibold text-blue-600 border rounded-lg px-3 py-2 hover:bg-blue-50" onclick="openPreview('${row.reply_attachment_url}')">View Reply</button>`);
+  att.innerHTML=items.length?items.join(''):'<span class="text-sm text-gray-400">No attachment</span>';
+  document.getElementById('companyDetailsPanel').classList.add('open');
+}
+function closeCorrespondenceDetails(){
+  document.getElementById('companyDetailsPanel')?.classList.remove('open');
+}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeCorrespondenceDetails();});
+</script>
+
+
+<!-- ============ BA Engineering BILINGUAL UI ============ -->
+<style id="ba-language-style">
+  html[dir="rtl"] body{
+    font-family:'Cairo','Tahoma','Arial',sans-serif;
+  }
+  html[dir="rtl"] .mono{
+    font-family:'IBM Plex Mono',monospace;
+  }
+  html[dir="rtl"] .search-wrap-icon{
+    left:auto !important;
+    right:.75rem !important;
+  }
+  html[dir="rtl"] #searchInput,
+  html[dir="rtl"] #searchInputMobile{
+    padding-left:.75rem !important;
+    padding-right:2.25rem !important;
+  }
+  html[dir="rtl"] .company-details-sheet{
+    direction:rtl;
+    text-align:right;
+  }
+  html[dir="rtl"] .company-details-panel.open{
+    justify-content:flex-start;
+  }
+  html[dir="rtl"] table{
+    direction:rtl;
+  }
+  html[dir="rtl"] .text-right{
+    text-align:left !important;
+  }
+  html[dir="rtl"] .text-left{
+    text-align:right !important;
+  }
+  #langEnBtn,#langArBtn{transition:.15s ease}
+  #langEnBtn.active,#langArBtn.active{
+    background:var(--brand);
+    color:#fff;
+  }
+</style>
+<script>
+(function(){
+  const T = {
+    "EDMS Platform":"منصة إدارة المستندات والمراسلات",
+    "Log out":"تسجيل الخروج",
+    "Welcome to BA Platform":"مرحبًا بك في BA Platform",
+    "Secure Engineering Document Management System":"نظام إدارة المستندات الهندسية والمراسلات",
+    "Log in":"تسجيل الدخول",
+    "Register / Join Company":"التسجيل / الانضمام إلى شركة",
+    "Company Code":"رمز الشركة",
+    "Full Name":"الاسم الكامل",
+    "Account Role":"دور الحساب",
+    "Manager / Project Director":"مدير / مدير مشروع",
+    "Engineer / Team Member":"مهندس / عضو فريق",
+    "New company code → you become Manager. Existing code → joins as the role selected here.":"رمز شركة جديد ← تصبح مديرًا. الرمز الموجود ← تنضم بالدور المحدد هنا.",
+    "Department":"القسم",
+    "Work Email":"البريد الإلكتروني للعمل",
+    "Password":"كلمة المرور",
+    "Log in to Workspace":"تسجيل الدخول إلى مساحة العمل",
+    "Instant Demo Access for Evaluation (no account needed)":"دخول تجريبي فوري للتقييم (بدون حساب)",
+    "Company Trial":"تجربة الشركات",
+    "⚡ Manager Demo":"⚡ تجربة المدير",
+    "⚡ Engineer Demo":"⚡ تجربة المهندس",
+    "📊 Dashboard":"📊 لوحة التحكم",
+    "📁 Projects":"📁 المشاريع",
+    "Viewing:":"عرض:",
+    "Clear":"مسح",
+    "Projects":"المشاريع",
+    "Every document belongs to a project":"كل مستند مرتبط بمشروع",
+    "New Project":"مشروع جديد",
+    "You have":"لديك",
+    "document(s) requiring your action or reply.":"مستند(ات) تحتاج إلى إجراء أو رد منك.",
+    "Project Correspondence":"مراسلات المشروع",
+    "Track, review, transfer, and approve technical submittals and letters":"متابعة ومراجعة وتحويل واعتماد المراسلات والمستندات الفنية",
+    "Export Excel":"تصدير Excel",
+    "New Document":"مستند جديد",
+    "Showing overdue items only":"عرض العناصر المتأخرة فقط",
+    "Recent Activity":"النشاط الأخير",
+    "All Items":"كل العناصر",
+    "✉️ Correspondence":"✉️ المراسلات",
+    "📄 Documents":"📄 المستندات",
+    "📦 Deliverables":"📦 التسليمات",
+    "All Status":"كل الحالات",
+    "New":"جديد",
+    "In Progress":"قيد التنفيذ",
+    "Under Review":"قيد المراجعة",
+    "Approved":"معتمد",
+    "Rejected":"مرفوض",
+    "Filters":"الفلاتر",
+    "All":"الكل",
+    "Electrical":"كهرباء",
+    "Civil":"مدني",
+    "Civil / Structural":"مدني / إنشائي",
+    "Architectural":"معماري",
+    "Mechanical":"ميكانيكا",
+    "HR":"الموارد البشرية",
+    "Human Resources":"الموارد البشرية",
+    "Document Type":"نوع المستند",
+    "Letters":"خطابات",
+    "Materials":"مواد",
+    "RFIs":"طلبات معلومات RFI",
+    "Drawings":"رسومات",
+    "Payment Certs":"مستخلصات",
+    "Handovers":"تسليمات",
+    "Project / Discipline":"المشروع / التخصص",
+    "Reference No.":"رقم المرجع",
+    "Subject & Notes":"الموضوع والملاحظات",
+    "Type":"النوع",
+    "Due Date":"تاريخ الاستحقاق",
+    "Attachment":"المرفق",
+    "Assigned To":"مسند إلى",
+    "Status":"الحالة",
+    "Action":"الإجراء",
+    "Loading documents workspace...":"جاري تحميل مساحة المستندات...",
+    "No matching correspondence found.":"لا توجد مراسلات مطابقة.",
+    "New Document Entry":"إضافة مستند جديد",
+    "Register incoming or outgoing project correspondence":"تسجيل مراسلة واردة أو صادرة للمشروع",
+    "Project":"المشروع",
+    "Select a project...":"اختر مشروعًا...",
+    "No projects yet —":"لا توجد مشاريع حتى الآن —",
+    "create one first":"أنشئ مشروعًا أولًا",
+    "Reference Number":"رقم المرجع",
+    "Sender / Recipient":"المرسل / المستلم",
+    "Subject Description":"وصف الموضوع",
+    "Detailed subject of the correspondence...":"اكتب موضوع المراسلة بالتفصيل...",
+    "Document Type":"نوع المستند",
+    "Official Letter":"خطاب رسمي",
+    "Material Submittal (MAR)":"اعتماد مواد (MAR)",
+    "Shop Drawing / REV":"رسومات تنفيذية / REV",
+    "Request For Information (RFI)":"طلب معلومات (RFI)",
+    "Payment Certificate":"مستخلص دفعة",
+    "Final Handover":"التسليم النهائي",
+    "Direction":"الاتجاه",
+    "Outgoing":"صادر",
+    "Incoming":"وارد",
+    "Priority":"الأولوية",
+    "Normal":"عادي",
+    "Urgent / Critical":"عاجل / حرج",
+    "Correspondence Date":"تاريخ المراسلة",
+    "Due Date / Action Deadline":"تاريخ الاستحقاق / الموعد النهائي للإجراء",
+    "Attachment File (PDF, Image) — Optional":"ملف مرفق (PDF أو صورة) — اختياري",
+    "Save Document":"حفظ المستند",
+    "Cancel":"إلغاء",
+    "Reject Document":"رفض المستند",
+    "Rejection Reason":"سبب الرفض",
+    "Explain what needs to be corrected...":"وضح ما الذي يحتاج إلى تصحيح...",
+    "Project Name":"اسم المشروع",
+    "Project Code (optional)":"رمز المشروع (اختياري)",
+    "Create Project":"إنشاء المشروع",
+    "Attachment Preview":"معاينة المرفق",
+    "Loading preview...":"جاري تحميل المعاينة...",
+    "Correspondence Details":"تفاصيل المراسلة",
+    "Subject":"الموضوع",
+    "Reply":"الرد",
+    "Attachments":"المرفقات",
+    "No attachment":"لا يوجد مرفق",
+    "View File":"عرض الملف",
+    "View file":"عرض الملف",
+    "View Document":"عرض المستند",
+    "View Reply":"عرض الرد",
+    "Reply attachment":"مرفق الرد",
+    "Assigned:":"مسند إلى:",
+    "Due":"الاستحقاق",
+    "Approve":"اعتماد",
+    "Reject":"رفض",
+    "Delete":"حذف",
+    "Assign":"إسناد",
+    "Submit Review":"إرسال للمراجعة",
+    "Resubmit for Review":"إعادة الإرسال للمراجعة",
+    "No engineers":"لا يوجد مهندسون",
+    "No attachment":"لا يوجد مرفق",
+    "General":"عام",
+    "Unassigned":"غير مسند",
+    "Loading...":"جاري التحميل...",
+    "Delete":"حذف"
+  };
+
+  const attrT = {
+    "Search reference, subject, project...":"ابحث بالمرجع أو الموضوع أو المشروع...",
+    "New code creates a company, existing code joins it":"الرمز الجديد ينشئ شركة، والرمز الموجود يتيح الانضمام إليها",
+    "e.g. Eng. Ahmed Barnoukh":"مثال: Eng. Ahmed Barnoukh",
+    "Please select an engineer first.":"يرجى اختيار مهندس أولًا.",
+    "Type technical reply or action taken...":"اكتب الرد الفني أو الإجراء الذي تم اتخاذه...",
+    "Explain the correction made...":"وضح التصحيح الذي تم إجراؤه...",
+    "Main Contractor / Consultant":"المقاول الرئيسي / الاستشاري",
+    "REF-2026-001":"REF-2026-001",
+    "Riyadh Business Center Tower":"Riyadh Business Center Tower",
+    "e.g. Riyadh Business Center Tower":"مثال: Riyadh Business Center Tower",
+    "e.g. RBC-001":"مثال: RBC-001"
+  };
+
+  function shouldSkip(node){
+    if(!node || !node.parentElement) return true;
+    const p=node.parentElement;
+    return p.closest("[data-no-translate],.brand-lock,script,style") !== null;
+  }
+
+  function translateTextNode(node){
+    if(shouldSkip(node)) return;
+    const raw=node.nodeValue;
+    const clean=raw.replace(/\s+/g," ").trim();
+    if(!clean) return;
+    if(T[clean]){
+      const leading=raw.match(/^\s*/)?.[0] || "";
+      const trailing=raw.match(/\s*$/)?.[0] || "";
+      node.nodeValue=leading+T[clean]+trailing;
+    } else if(/^Assigned:\s*/.test(clean)){
+      node.nodeValue=raw.replace("Assigned:", "مسند إلى:");
+    } else if(/^Due\s+/.test(clean)){
+      node.nodeValue=raw.replace(/^(\s*)Due\s+/, "$1الاستحقاق ");
+    }
+  }
+
+  function translateStatic(){
+    if(window.BA_LANG !== "ar") return;
+    const walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);
+    const nodes=[];
+    let n;
+    while(n=walker.nextNode()) nodes.push(n);
+    nodes.forEach(translateTextNode);
+
+    document.querySelectorAll("input[placeholder],textarea[placeholder]").forEach(el=>{
+      if(attrT[el.getAttribute("placeholder")]) el.setAttribute("placeholder",attrT[el.getAttribute("placeholder")]);
+    });
+
+    document.querySelectorAll("option").forEach(o=>{
+      const txt=o.textContent.trim();
+      if(T[txt]) o.textContent=T[txt];
+    });
+
+    // Mixed footer text: preserve BA Engineering exactly.
+    const footer=document.querySelector("footer");
+    if(footer && footer.querySelector(".brand-lock")){
+      footer.innerHTML='<span class="brand-lock" data-no-translate>BA Engineering</span> منصة إدارة المستندات والمراسلات الهندسية للمؤسسات © 2026.';
+    }
+
+    // Demo banner is generated dynamically.
+    const banner=document.getElementById("companyTrialBanner");
+    if(banner){
+      const span=banner.querySelector("span");
+      const btn=banner.querySelector("button");
+      if(span) span.textContent="وضع تجربة الشركات — استكشف سير العمل باستخدام مشروعي الرياض وجدة التجريبيين.";
+      if(btn) btn.textContent="خروج من التجربة";
+    }
+  }
+
+  function setLang(lang){
+    const ar=lang==="ar";
+    window.BA_LANG=lang;
+    document.documentElement.lang=ar?"ar":"en";
+    document.documentElement.dir=ar?"rtl":"ltr";
+    localStorage.setItem("ba_workflow_lang",lang);
+
+    document.getElementById("langArBtn")?.classList.toggle("active",ar);
+    document.getElementById("langEnBtn")?.classList.toggle("active",!ar);
+
+    if(ar){
+      // Translate from the original English source by reloading once, then applying AR.
+      // The current DOM is English on first load, so this path is deterministic.
+      translateStatic();
+      translateDynamicValues();
+    } else {
+      location.reload();
+      return;
+    }
+  }
+
+  function translateDynamicValues(){
+    if(window.BA_LANG!=="ar") return;
+
+    // Status/type/direction/priority values are data, not project names or user-entered text.
+    document.querySelectorAll(".status-pill").forEach(el=>{
+      const x=el.textContent.trim();
+      if(T[x]) el.textContent=T[x];
+    });
+
+    // Details panel fields.
+    ["detailDiscipline","detailType","detailDirection","detailPriority","detailStatus"].forEach(id=>{
+      const el=document.getElementById(id);
+      if(el && T[el.textContent.trim()]) el.textContent=T[el.textContent.trim()];
+    });
+
+    const assigned=document.getElementById("detailAssigned");
+    if(assigned && assigned.textContent.trim()==="Unassigned") assigned.textContent="غير مسند";
+
+    // Generated action controls.
+    document.querySelectorAll("button,select option").forEach(el=>{
+      const x=el.textContent.trim();
+      if(T[x]) el.textContent=T[x];
+    });
+
+    // Row/mobile labels that contain dynamic values.
+    document.querySelectorAll("#mobileList span,#mobileList div,#mobileList p").forEach(el=>{
+      if(el.children.length) return;
+      const x=el.textContent.trim();
+      if(x.startsWith("Assigned:")) el.textContent=x.replace(/^Assigned:/,"مسند إلى:");
+      if(x.startsWith("Due ")) el.textContent=x.replace(/^Due /,"الاستحقاق ");
+    });
+  }
+
+  function applySavedLanguage(){
+    const saved=localStorage.getItem("ba_workflow_lang") || "en";
+    window.BA_LANG=saved;
+    if(saved==="ar"){
+      document.documentElement.lang="ar";
+      document.documentElement.dir="rtl";
+      setTimeout(()=>{
+        translateStatic();
+        translateDynamicValues();
+      },50);
+    } else {
+      document.documentElement.lang="en";
+      document.documentElement.dir="ltr";
+    }
+    document.getElementById("langArBtn")?.addEventListener("click",()=>setLang("ar"));
+    document.getElementById("langEnBtn")?.addEventListener("click",()=>setLang("en"));
+  }
+
+  // Re-translate newly rendered dynamic content without touching project names,
+  // subjects, references, or engineer names.
+  const observer=new MutationObserver(()=>{
+    if(window.BA_LANG==="ar"){
+      clearTimeout(window.__baTranslateTimer);
+      window.__baTranslateTimer=setTimeout(translateDynamicValues,20);
+    }
+  });
+  observer.observe(document.body,{childList:true,subtree:true});
+
+  // Intercept row/action controls that are created dynamically.
+  document.addEventListener("click",function(e){
+    const el=e.target.closest("button,select");
+    if(!el) return;
+    if(el.id && (el.id==="langArBtn" || el.id==="langEnBtn")) return;
+    if(window.BA_LANG==="ar") setTimeout(translateDynamicValues,30);
+  },true);
+
+  // Add an ID to the header search icon so RTL positioning is reliable.
+  document.querySelectorAll("#searchInput").forEach(inp=>{
+    const icon=inp.parentElement?.querySelector("svg");
+    if(icon) icon.classList.add("search-wrap-icon");
+  });
+
+  applySavedLanguage();
+})();
+</script>
+
 </body>
 </html>
