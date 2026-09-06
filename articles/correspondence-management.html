@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لماذا تخسر شركات المقاولات ملايين بسبب فوضى المراسلات؟ | BA Engineering Academy</title>
+    <meta name="description" content="كيف تتحول المراسلات المبعثرة بين الإيميل والواتساب والورق إلى نظام واحد منظم يحمي أرباح شركتك الهندسية ويقلل النزاعات مع الاستشاري والمقاول.">
+    <meta name="theme-color" content="#0F2C52">
+    <link rel="icon" type="image/jpeg" href="../photo/logo.jpg">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-main: #EDF1F6;
+            --primary-blue: #163C6E;
+            --primary-blue-hover: #0F2C52;
+            --accent-color: #E2601F;
+            --accent-light: #F0813F;
+            --text-dark: #101826;
+            --text-muted: #57677A;
+            --border-color: rgba(22, 60, 110, 0.16);
+            --card-bg: rgba(255, 255, 255, 0.95);
+            --glass-shadow: 0 20px 40px -15px rgba(22, 60, 110, 0.14);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-dark);
+            line-height: 1.8;
+            -webkit-font-smoothing: antialiased;
+        }
+        .site-header {
+            background: #fff; border-bottom: 1px solid var(--border-color);
+            padding: 16px 24px; display: flex; align-items: center; gap: 12px;
+        }
+        .site-header img { height: 38px; width: 38px; border-radius: 8px; object-fit: cover; }
+        .site-header .brand-name { font-weight: 800; color: var(--primary-blue-hover); font-size: 1rem; }
+        .site-header a.back-link {
+            margin-inline-start: auto; text-decoration: none; color: var(--text-muted);
+            font-weight: 700; font-size: 0.85rem; display: flex; align-items: center; gap: 6px;
+        }
+
+        .article-wrap { max-width: 780px; margin: 0 auto; padding: 32px 20px 60px; }
+
+        .article-hero-header {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, #0a1128 100%);
+            color: white; padding: 45px 24px; text-align: center;
+            border-radius: 22px; margin-bottom: 30px; box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+        .article-card-tag {
+            color: var(--accent-light); font-size: 0.8rem; font-weight: 800;
+            display: flex; align-items: center; justify-content: center; gap: 6px; margin-bottom: 10px;
+        }
+        .article-hero-header h1 { font-size: clamp(1.5rem, 3.2vw, 2.2rem); font-weight: 900; margin-bottom: 12px; }
+        .article-meta-row {
+            display: flex; justify-content: center; gap: 14px; margin-top: 14px;
+            flex-wrap: wrap; font-size: 13px; color: #cbd5e1; font-weight: 700;
+        }
+
+        .article-body-text p { margin-bottom: 18px; font-size: 1.02rem; color: #2b3648; }
+        .article-body-text h2 { margin-top: 34px; margin-bottom: 12px; font-size: 1.35rem; color: var(--primary-blue-hover); font-weight: 800; }
+        .article-body-text h3 { margin-top: 26px; margin-bottom: 10px; font-size: 1.1rem; color: var(--primary-blue-hover); font-weight: 800; }
+        .article-body-text ul { margin: 0 0 18px 0; padding-inline-start: 22px; }
+        .article-body-text li { margin-bottom: 10px; color: #2b3648; }
+
+        .example-box {
+            background: var(--card-bg); border: 1px solid var(--border-color);
+            border-radius: 18px; padding: 26px; margin: 26px 0; box-shadow: var(--glass-shadow);
+        }
+        .example-box .example-label {
+            display: inline-block; background: rgba(226,96,31,0.12); color: var(--accent-color);
+            font-weight: 800; font-size: 0.78rem; padding: 5px 12px; border-radius: 20px; margin-bottom: 14px;
+        }
+        .example-box h3 { margin-top: 0; }
+        .stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 18px; }
+        .stat-box { text-align: center; background: var(--bg-main); border-radius: 14px; padding: 16px 8px; }
+        .stat-box .num { font-weight: 900; font-size: 1.4rem; color: var(--primary-blue-hover); display: block; }
+        .stat-box .lbl { font-size: 0.78rem; color: var(--text-muted); font-weight: 700; }
+
+        .article-cta-box {
+            margin-top: 36px; padding: 30px 24px; border-radius: 18px;
+            background: linear-gradient(135deg, rgba(22,60,110,0.08), rgba(226,96,31,0.08));
+            border: 1px dashed var(--primary-blue); text-align: center;
+        }
+        .article-cta-box p { font-weight: 800; color: var(--text-dark); margin-bottom: 16px; font-size: 1.05rem; }
+        .cta-button {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: var(--primary-blue-hover); color: #fff; text-decoration: none;
+            font-weight: 800; font-size: 0.95rem; padding: 14px 30px; border-radius: 12px;
+            box-shadow: 0 10px 24px rgba(15,44,82,0.28); transition: transform .2s, background .2s;
+        }
+        .cta-button:hover { background: var(--accent-color); transform: translateY(-2px); }
+        .cta-sub { margin-top: 10px; font-size: 0.8rem; color: var(--text-muted); font-weight: 600; }
+
+        @media (max-width: 640px) {
+            .article-hero-header { padding: 30px 18px; }
+            .stat-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="site-header">
+        <img src="../photo/logo.jpg" alt="BA Engineering">
+        <span class="brand-name">BA Engineering Academy</span>
+        <a class="back-link" href="../index.html">الرئيسية ←</a>
+    </header>
+
+    <main class="article-wrap">
+        <div class="article-hero-header">
+            <span class="article-card-tag">📁 كفاءة الشركات الهندسية</span>
+            <h1>لماذا تخسر شركات المقاولات وقتًا وأرباحًا بسبب فوضى المراسلات؟</h1>
+            <div class="article-meta-row">
+                <span>سبتمبر 2026</span>
+                <span>٥ دقائق قراءة</span>
+            </div>
+        </div>
+
+        <div class="article-body-text">
+            <p>
+                افتح صندوق الإيميل بتاع أي مهندس مشروع في شركة مقاولات متوسطة، هتلاقي RFI اتبعت من ٣ أسابيع لسه مستني رد، وخطاب اعتماد مادة ضاع وسط ٢٠٠ رسالة، ومحضر استلام اتبعت على واتساب وماحدش يعرف فين راح. مش لأن الفريق كسول أو غير محترف - المشكلة إن المراسلات نفسها بتتوزع على قنوات كتير مافيهاش نظام واحد يجمعها.
+            </p>
+            <p>
+                المشكلة دي مش تفصيلة إدارية بسيطة. في قطاع المقاولات والاستشارات الهندسية، كل خطاب متأخر أو RFI ضايع بيترجم لوقت حقيقي بيتاخر، ولو الموضوع وصل لنزاع مع الاستشاري أو المالك، غياب سجل واضح للمراسلات ممكن يكلف الشركة تعويضات فعلية.
+            </p>
+
+            <h2>ليه تنظيم المراسلات بيأثر على الأرباح مباشرة؟</h2>
+            <ul>
+                <li><strong>تقليل التأخيرات:</strong> لما كل خطاب له رقم مرجعي وحالة واضحة (جديد، قيد التنفيذ، بانتظار الاعتماد)، محدش بينسى حاجة معلقة.</li>
+                <li><strong>حماية قانونية وقت النزاعات:</strong> سجل مرتب بالتواريخ والردود بيبقى دليلك الأول لو حصل خلاف على مسؤولية تأخير معين.</li>
+                <li><strong>مساءلة واضحة:</strong> تعرف بالظبط مين المسؤول عن كل خطاب، ومن ساعة كام، من غير ما تدور في محادثات واتساب قديمة.</li>
+                <li><strong>قرارات أسرع:</strong> المدير بيشوف كل الخطابات المعلقة عنده في مكان واحد بدل ما يفتح ٥ تطبيقات مختلفة.</li>
+            </ul>
+
+            <h2>سيناريو واقعي من قطاع المقاولات</h2>
+            <div class="example-box">
+                <span class="example-label">سيناريو توضيحي مبني على أنماط شائعة في القطاع</span>
+                <h3>شركة مقاولات متوسطة الحجم، مشروع سكني بقيمة تتجاوز ٥٠ مليون ريال</h3>
+                <p>
+                    قبل تنظيم المراسلات، كانت الشركة بتعتمد على الإيميل والواتساب لتبادل RFIs واعتمادات المواد مع الاستشاري. النتيجة: بعض الردود كانت بتتأخر لأسابيع لأن الرسالة "ضاعت" وسط المحادثات، وحصل نزاع مع الاستشاري حول مين المسؤول عن تأخير اعتماد مخطط معين - ومافيش سجل واضح يثبت مين بعت إيه وإمتى.
+                </p>
+                <p>
+                    بعد ما الشركة بدأت تستخدم نظام مراسلات منظم بيوثق كل خطاب برقم مرجعي وتاريخ استحقاق وحالة واضحة، الفرق ظهر بسرعة: كل RFI بقى له مسؤول محدد ومهلة واضحة، والمدير بقى يقدر يشوف أي خطاب اتأخر عن موعده بضغطة واحدة بدل ما يفتش في الإيميل.
+                </p>
+                <div class="stat-grid">
+                    <div class="stat-box"><span class="num">أسرع</span><span class="lbl">في الرد على RFIs</span></div>
+                    <div class="stat-box"><span class="num">أوضح</span><span class="lbl">مسؤولية كل خطاب</span></div>
+                    <div class="stat-box"><span class="num">أقل</span><span class="lbl">نزاعات مع الاستشاري</span></div>
+                </div>
+            </div>
+
+            <h2>الخلاصة</h2>
+            <p>
+                تنظيم المراسلات مش رفاهية إدارية - هو خط دفاع أساسي عن وقت شركتك وأرباحها وسمعتها المهنية. والخبر الحلو إنك مش محتاج نظام معقد وغالي عشان تبدأ؛ محتاج بس مكان واحد يجمع كل خطاباتك ومستنداتك، بيوضحلك مين مسؤول عن إيه، وإمتى المهلة بتخلص.
+            </p>
+        </div>
+
+        <div class="article-cta-box">
+            <p>جرب بنفسك إزاي شركتك ممكن توقف فوضى المراسلات من النهاردة</p>
+            <a class="cta-button" href="../workflow.html" target="_blank" rel="noopener">
+                ⚡ جرّب منصة BA لإدارة المراسلات مجانًا
+            </a>
+            <p class="cta-sub">تجربة مباشرة فورية - من غير أي حساب أو التزام</p>
+        </div>
+    </main>
+
+</body>
+</html>
