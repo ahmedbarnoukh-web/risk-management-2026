@@ -1,1884 +1,306 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><span class="brand-lock" data-no-translate>BA Engineering</span> — Enterprise Correspondence Platform</title>
-    <link rel="icon" href="https://www.barnoukh-engineering.com/photo/logo.jpg">
-    <meta name="theme-color" content="#0F2C52">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <style>
-        :root {
-            --bg: #F8FAFC; --surface: #FFFFFF; --border: #E2E8F0;
-            --text-primary: #0F172A; --text-secondary: #64748B;
-            --brand: #0F2C52; --brand-light: #2563EB;
-        }
-        * { font-family: 'Inter', -apple-system, sans-serif; }
-        .mono { font-family: 'IBM Plex Mono', monospace; }
-        body { background: var(--bg); color: var(--text-primary); }
-        .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; box-shadow: 0 1px 3px 0 rgba(0,0,0,0.05); }
-        .btn-primary { background: var(--brand); color: #fff; transition: background .15s; }
-        .btn-primary:hover { background: var(--brand-light); }
-        .seg-btn { color: var(--text-secondary); border-bottom: 2px solid transparent; }
-        .seg-btn.active { color: var(--brand); border-bottom-color: var(--brand); font-weight: 600; }
-        .cat-btn { background: #fff; border-color: var(--border); color: var(--text-secondary); }
-        .cat-btn.active { background: var(--brand); border-color: var(--brand); color: #fff; }
-        .nav-view-btn { color: var(--text-secondary); }
-        .nav-view-btn.active { background: #fff; color: var(--brand); box-shadow: 0 1px 2px rgba(0,0,0,0.06); }
-        .status-pill { display:inline-flex; align-items:center; gap:5px; padding:4px 12px; border-radius:9999px; font-size:12px; font-weight:600; white-space:nowrap; }
-        .row-flag { box-shadow: inset 3px 0 0 #F59E0B; background: #FFFBEB !important; }
-        .row-overdue { box-shadow: inset 3px 0 0 #DC2626; background: #FEF2F2 !important; }
-        input:focus, select:focus, textarea:focus { outline:none; box-shadow: 0 0 0 3px rgba(37,99,235,0.15); border-color: var(--brand-light); }
-        .modal-overlay { background: rgba(15,23,42,0.6); backdrop-filter: blur(4px); }
-        table th { color: var(--text-secondary); font-weight:600; font-size:12px; }
-        tbody tr:hover { background: #F8FAFC; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>منصة المراسلات (EDMS) | BA Solutions — قريبًا</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0F2C52">
 
-<style id="company-ux-refresh">
-/* ===== Company / Enterprise UX refresh ===== */
-:root{
-  --ui-font-size: 14px;
-  --ui-line-height: 1.5;
-}
-body{
-  font-size: var(--ui-font-size);
-  line-height: var(--ui-line-height);
-  background:#f7f8fa;
-}
-button, input, select, textarea{
-  font-size:14px;
-}
-table{
-  font-size:14px !important;
-}
-table thead th{
-  font-size:12px !important;
-  letter-spacing:.01em;
-  white-space:nowrap;
-  padding:12px 14px !important;
-}
-table tbody td{
-  padding:13px 14px !important;
-  vertical-align:middle;
-}
-table tbody tr{
-  transition:background-color .12s ease;
-}
-table tbody tr:hover{
-  background:#f8fafc;
-}
-table tbody td .text-\[11px\],
-table tbody td .text-xs{
-  font-size:12px !important;
-  line-height:1.45;
-}
-#recentActivity{
-  font-size:13px;
-}
-#recentActivity .text-xs{
-  font-size:13px !important;
-}
-#statsRow > .card{
-  min-height:88px;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-}
-#statsRow > .card .text-2xl{
-  font-size:26px !important;
-  line-height:1.1;
-}
-#statsRow > .card .text-xs{
-  font-size:12px !important;
-}
-#actionAlert{
-  min-height:52px;
-}
-#activeProjectBanner{
-  font-size:13px;
-}
-#dashboardView > .flex.flex-wrap.justify-between.items-center.gap-4.mb-6{
-  margin-bottom:18px !important;
-}
-#projectsList .card{
-  padding:20px !important;
-}
-#projectsList .text-\[10px\]{
-  font-size:12px !important;
-}
-#projectsList h3{
-  font-size:16px;
-}
-#projectsList .text-lg{
-  font-size:20px !important;
-}
-/* Reduce visual noise in filters */
-.cat-btn, .filter-btn, .seg-btn{
-  min-height:38px;
-}
-#toggleFiltersBtn{
-  min-height:38px;
-}
-/* Details panel used by row click */
-.company-details-panel{
-  position:fixed;
-  inset:0;
-  z-index:70;
-  display:none;
-  background:rgba(15,23,42,.38);
-  backdrop-filter:blur(2px);
-}
-.company-details-panel.open{display:flex;justify-content:flex-end;}
-.company-details-sheet{
-  width:min(520px,100%);
-  height:100%;
-  background:#fff;
-  box-shadow:-12px 0 40px rgba(15,23,42,.16);
-  overflow:auto;
-  padding:24px;
-}
-.company-details-sheet h3{font-size:19px;font-weight:700;margin:0;}
-.company-detail-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
-  margin-top:18px;
-}
-.company-detail-item{
-  border:1px solid var(--border,#e5e7eb);
-  border-radius:12px;
-  padding:11px 12px;
-  background:#fafafa;
-}
-.company-detail-item .label{
-  font-size:11px;color:#6b7280;font-weight:600;margin-bottom:3px;
-}
-.company-detail-item .value{
-  font-size:14px;color:#111827;font-weight:600;word-break:break-word;
-}
-.company-detail-section{
-  margin-top:18px;border-top:1px solid #e5e7eb;padding-top:16px;
-}
-.company-detail-section .section-title{
-  font-size:12px;font-weight:700;color:#6b7280;text-transform:uppercase;
-  letter-spacing:.04em;margin-bottom:8px;
-}
-.company-demo-banner{
-  display:flex;align-items:center;justify-content:space-between;gap:12px;
-  margin-bottom:16px;padding:11px 14px;border-radius:12px;
-  background:#eff6ff;border:1px solid #bfdbfe;color:#1e3a8a;
-  font-size:13px;font-weight:600;
-}
-.company-demo-banner button{
-  border:1px solid #93c5fd;background:#fff;color:#1d4ed8;
-  border-radius:8px;padding:5px 9px;font-weight:700;cursor:pointer;
-}
-@media(max-width:768px){
-  .company-detail-grid{grid-template-columns:1fr;}
-  .company-details-sheet{padding:18px;}
-  table{font-size:13px !important;}
-}
-html[dir="rtl"] .company-details-sheet{
-  direction:rtl;text-align:right;
-}
-html[dir="rtl"] .company-details-panel.open{justify-content:flex-start;}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=JetBrains+Mono:wght@600;700;800&display=swap" rel="stylesheet">
+
+<style>
+    :root {
+        --bg-main: #EDF1F6;
+        --primary-blue: #163C6E;
+        --primary-blue-hover: #0F2C52;
+        --accent-color: #E2601F;
+        --accent-light: #F0813F;
+        --text-dark: #101826;
+        --text-muted: #57677A;
+        --border-color: rgba(22, 60, 110, 0.16);
+        --card-bg: rgba(255, 255, 255, 0.92);
+        --glass-shadow: 0 20px 40px -15px rgba(22, 60, 110, 0.16);
+        --glass-border: 1px solid rgba(255, 255, 255, 0.6);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
+
+    body {
+        background-color: var(--bg-main);
+        background-image: radial-gradient(circle, rgba(148, 163, 184, 0.18) 1px, transparent 1px);
+        background-size: 26px 26px;
+        color: var(--text-dark);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        overflow-x: hidden;
+        -webkit-font-smoothing: antialiased;
+    }
+
+    /* Ambient background blobs, same family as the main site */
+    .ambient-mesh {
+        position: fixed; inset: 0; overflow: hidden; z-index: -1;
+        pointer-events: none; filter: blur(100px); opacity: 0.65;
+    }
+    .mesh-blob { position: absolute; border-radius: 50%; will-change: transform; }
+    .mesh-blob-1 { width: 480px; height: 480px; background: rgba(22, 60, 110, 0.20); top: -8%; right: -6%; animation: floatMesh 20s ease-in-out infinite alternate; }
+    .mesh-blob-2 { width: 520px; height: 520px; background: rgba(226, 96, 31, 0.16); bottom: -10%; left: -8%; animation: floatMesh 24s ease-in-out infinite alternate-reverse; }
+    .mesh-blob-3 { width: 360px; height: 360px; background: rgba(14, 165, 233, 0.12); top: 45%; left: 38%; animation: floatMesh 18s ease-in-out infinite; }
+    @keyframes floatMesh {
+        0% { transform: translate(0, 0) scale(1); }
+        50% { transform: translate(35px, -40px) scale(1.06); }
+        100% { transform: translate(-25px, 25px) scale(0.94); }
+    }
+
+    /* Header */
+    .mini-header {
+        display: flex; align-items: center; justify-content: space-between;
+        padding: 18px 6%; flex-wrap: wrap; gap: 12px;
+    }
+    .mini-brand { display: flex; align-items: center; gap: 10px; font-weight: 800; color: var(--primary-blue); font-size: 1.05rem; }
+    .mini-brand i { color: var(--accent-color); font-size: 1.25rem; }
+    .back-home-link {
+        display: flex; align-items: center; gap: 8px; color: var(--text-dark); text-decoration: none;
+        background: #ffffff; border: 1px solid rgba(255,255,255,0.6); font-weight: 700; font-size: 13.5px;
+        height: 40px; padding: 0 16px; border-radius: 10px; box-shadow: 0 3px 10px rgba(3,9,22,0.1);
+        transition: all 0.25s ease;
+    }
+    .back-home-link:hover { color: var(--primary-blue); transform: translateY(-2px); box-shadow: 0 6px 14px rgba(3,9,22,0.14); }
+
+    /* Main */
+    main { flex: 1; display: flex; flex-direction: column; align-items: center; padding: 20px 6% 60px; }
+
+    .hero-card {
+        width: 100%; max-width: 760px; text-align: center;
+        background: var(--card-bg); backdrop-filter: blur(18px);
+        border: var(--glass-border); border-radius: 28px; box-shadow: var(--glass-shadow);
+        padding: 56px 40px; margin-top: 18px;
+    }
+
+    .hero-icon-badge {
+        width: 78px; height: 78px; border-radius: 22px; margin: 0 auto 26px;
+        background: linear-gradient(135deg, var(--primary-blue), var(--primary-blue-hover));
+        display: flex; align-items: center; justify-content: center;
+        box-shadow: 0 12px 28px rgba(22, 60, 110, 0.35);
+        animation: gentlePulse 3.2s ease-in-out infinite;
+    }
+    .hero-icon-badge i { font-size: 2.1rem; color: #FFD27A; }
+    @keyframes gentlePulse {
+        0%, 100% { transform: scale(1); box-shadow: 0 12px 28px rgba(22, 60, 110, 0.35); }
+        50% { transform: scale(1.05); box-shadow: 0 16px 34px rgba(22, 60, 110, 0.45); }
+    }
+
+    h1 {
+        font-size: clamp(1.7rem, 3.4vw, 2.5rem); font-weight: 900; color: var(--text-dark);
+        line-height: 1.4; margin-bottom: 16px;
+    }
+    .hero-subtitle {
+        font-size: 1.05rem; color: var(--text-muted); font-weight: 600; line-height: 1.85;
+        max-width: 560px; margin: 0 auto 34px;
+    }
+
+    /* Countdown */
+    .countdown-label { font-weight: 800; color: var(--primary-blue); font-size: 0.95rem; margin-bottom: 14px; }
+    .countdown-row { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin-bottom: 30px; }
+    .countdown-unit {
+        background: linear-gradient(160deg, var(--primary-blue) 0%, #0a1128 100%);
+        color: #fff; border-radius: 16px; padding: 14px 18px; min-width: 82px;
+        box-shadow: 0 10px 22px rgba(22, 60, 110, 0.3);
+    }
+    .countdown-value {
+        font-family: 'JetBrains Mono', monospace; font-size: 1.9rem; font-weight: 800;
+        line-height: 1; display: block;
+    }
+    .countdown-unit-label { font-size: 0.75rem; color: #cbd5e1; font-weight: 700; margin-top: 6px; display: block; }
+
+    .launch-badge {
+        display: inline-flex; align-items: center; gap: 10px;
+        background: rgba(226, 96, 31, 0.1); border: 1px solid rgba(226, 96, 31, 0.35);
+        color: var(--accent-color); font-weight: 800; font-size: 0.95rem;
+        padding: 12px 22px; border-radius: 14px;
+    }
+    .launch-badge i { font-size: 1rem; }
+
+    /* Features */
+    .features-heading {
+        text-align: center; margin: 56px 0 26px; font-size: 1.5rem; font-weight: 900; color: var(--text-dark);
+    }
+    .features-grid {
+        width: 100%; max-width: 1000px; display: grid;
+        grid-template-columns: repeat(3, 1fr); gap: 20px;
+    }
+    @media (max-width: 900px) { .features-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 600px) { .features-grid { grid-template-columns: 1fr; } }
+
+    .feature-card {
+        background: var(--card-bg); backdrop-filter: blur(14px);
+        border: var(--glass-border); border-radius: 18px; padding: 26px 22px;
+        box-shadow: 0 12px 26px -12px rgba(22, 60, 110, 0.14);
+    }
+    .feature-icon {
+        width: 46px; height: 46px; border-radius: 12px; margin-bottom: 16px;
+        background: rgba(22, 60, 110, 0.08); display: flex; align-items: center; justify-content: center;
+    }
+    .feature-icon i { color: var(--primary-blue); font-size: 1.2rem; }
+    .feature-card h3 { font-size: 1.05rem; font-weight: 800; color: var(--text-dark); margin-bottom: 8px; }
+    .feature-card p { font-size: 0.92rem; color: var(--text-muted); font-weight: 600; line-height: 1.75; }
+
+    /* Value / persuasion section for company decision-makers */
+    .value-section {
+        width: 100%; max-width: 760px; text-align: center; margin-top: 50px;
+        background: linear-gradient(160deg, var(--primary-blue) 0%, #0a1128 100%);
+        border-radius: 26px; padding: 46px 38px; box-shadow: 0 20px 40px -12px rgba(22, 60, 110, 0.35);
+    }
+    .value-section h2 { color: #ffffff; font-size: 1.4rem; font-weight: 900; margin-bottom: 16px; }
+    .value-section p {
+        color: #cbd5e1; font-size: 0.98rem; font-weight: 600; line-height: 1.9;
+        max-width: 600px; margin: 0 auto 28px;
+    }
+    .value-cta-btn {
+        display: inline-flex; align-items: center; gap: 10px; text-decoration: none;
+        background: var(--accent-color); color: #ffffff; font-weight: 800; font-size: 0.98rem;
+        padding: 15px 28px; border-radius: 14px; box-shadow: 0 10px 24px rgba(226, 96, 31, 0.4);
+        transition: all 0.25s ease;
+    }
+    .value-cta-btn:hover { background: var(--accent-light); transform: translateY(-2px); box-shadow: 0 14px 30px rgba(226, 96, 31, 0.5); }
+
+    footer {
+        text-align: center; padding: 26px 6% 34px; color: var(--text-muted); font-size: 0.85rem; font-weight: 600;
+    }
+    footer a { color: var(--primary-blue); text-decoration: none; font-weight: 800; }
+    footer a:hover { text-decoration: underline; }
+
+    @media (max-width: 480px) {
+        .hero-card { padding: 40px 22px; }
+        .countdown-unit { min-width: 68px; padding: 12px 12px; }
+        .countdown-value { font-size: 1.5rem; }
+    }
 </style>
-
 </head>
-<body class="min-h-screen flex flex-col justify-between">
+<body>
 
-    <div>
-        <header class="bg-white border-b sticky top-0 z-30" style="border-color:var(--border)">
-            <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between gap-4">
-                <div class="flex items-center gap-3 shrink-0">
-                    <img src="https://www.barnoukh-engineering.com/photo/logo.jpg" class="h-9 w-9 rounded-lg object-cover shadow-sm" alt="logo">
-                    <div>
-                        <span class="font-bold text-sm tracking-tight block"><span class="brand-lock" data-no-translate>BA Engineering</span></span>
-                        <span id="taglineText" class="text-[10px] text-gray-500 uppercase tracking-wider font-semibold">EDMS Platform</span>
-                    </div>
-                </div>
-                <div id="userBar" class="hidden items-center gap-4 text-sm">
-                    <div class="relative hidden md:block">
-                        <input id="searchInput" type="text" placeholder="Search reference, subject, project..."
-                            class="border rounded-lg pl-9 pr-3 py-1.5 text-sm w-80 bg-gray-50" style="border-color:var(--border)">
-                        <svg class="w-4 h-4 text-gray-400 absolute left-3 top-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-                    </div>
-                    <span id="userRoleBadge" class="text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wide" style="background:#EFF6FF;color:#1D4ED8"></span>
-                    <span id="userNameBadge" class="hidden md:inline font-medium text-gray-700"></span>
-                    <button id="logoutBtn" class="text-sm font-medium px-3.5 py-1.5 rounded-lg border hover:bg-gray-50 text-gray-700 transition" style="border-color:var(--border)">Log out</button>
-                </div>
-                <div class="flex items-center gap-1 text-xs font-semibold rounded-lg border overflow-hidden" style="border-color:var(--border)">
-                    <button id="langEnBtn" class="px-2.5 py-1.5">EN</button>
-                    <button id="langArBtn" class="px-2.5 py-1.5">عربي</button>
-                </div>
+    <div class="ambient-mesh">
+        <div class="mesh-blob mesh-blob-1"></div>
+        <div class="mesh-blob mesh-blob-2"></div>
+        <div class="mesh-blob mesh-blob-3"></div>
+    </div>
+
+    <header class="mini-header">
+        <div class="mini-brand"><i class="fa-solid fa-diagram-project"></i> BA Solutions</div>
+        <a href="index.html" class="back-home-link">
+            <i class="fa-solid fa-arrow-right"></i> العودة للموقع الرئيسي
+        </a>
+    </header>
+
+    <main>
+        <div class="hero-card">
+            <div class="hero-icon-badge"><i class="fa-solid fa-bolt"></i></div>
+
+            <h1>نظام إدارة المراسلات الهندسية قيد الإعداد</h1>
+            <p class="hero-subtitle">
+                نعمل حاليًا على إعداد نظام متكامل لإدارة مراسلات المشاريع الهندسية،
+                يشمل الخطابات العامة، وخطابات المواد، والمستخلصات، ومحاضر التسليم والاستلام،
+                في مكان واحد منظم. تبقّت خطوات بسيطة قبل الإطلاق.
+            </p>
+
+            <div class="countdown-label">الإطلاق المتوقع خلال</div>
+            <div class="countdown-row">
+                <div class="countdown-unit"><span class="countdown-value" id="cd-days">--</span><span class="countdown-unit-label">يوم</span></div>
+                <div class="countdown-unit"><span class="countdown-value" id="cd-hours">--</span><span class="countdown-unit-label">ساعة</span></div>
+                <div class="countdown-unit"><span class="countdown-value" id="cd-minutes">--</span><span class="countdown-unit-label">دقيقة</span></div>
+                <div class="countdown-unit"><span class="countdown-value" id="cd-seconds">--</span><span class="countdown-unit-label">ثانية</span></div>
             </div>
-        </header>
 
-        <!-- ============ LOGIN / ONBOARDING ============ -->
-        <div id="loginBox" class="max-w-md mx-auto mt-16 px-4">
-            <div class="card p-8">
-                <div class="text-center mb-6">
-                    <h2 id="welcomeTitle" class="font-bold text-2xl text-gray-900 mb-1">Welcome to BA Platform</h2>
-                    <p id="welcomeSubtitle" class="text-sm text-gray-500">Secure Engineering Document Management System</p>
-                </div>
-
-                <div class="flex gap-1 mb-6 p-1 rounded-xl bg-gray-100">
-                    <button id="tabLogin" class="flex-1 text-sm font-semibold py-2.5 rounded-lg bg-white shadow-sm text-blue-600 transition">Log in</button>
-                    <button id="tabSignup" class="flex-1 text-sm font-semibold py-2.5 rounded-lg text-gray-500 transition">Register / Join Company</button>
-                </div>
-
-                <form id="loginForm" class="space-y-4">
-                    <div id="companyCodeGroup" class="hidden">
-                        <label id="lblCompanyCode" class="block text-xs font-semibold text-gray-700 mb-1">Company Code</label>
-                        <input type="text" id="companyCode" placeholder="New code creates a company, existing code joins it" class="w-full border rounded-xl p-3 text-sm bg-gray-50" style="border-color:var(--border)">
-                    </div>
-
-                    <div id="fullNameGroup" class="hidden">
-                        <label id="lblFullName" class="block text-xs font-semibold text-gray-700 mb-1">Full Name</label>
-                        <input type="text" id="fullName" placeholder="e.g. Eng. Ahmed Barnoukh" class="w-full border rounded-xl p-3 text-sm bg-gray-50" style="border-color:var(--border)">
-                    </div>
-
-                    <div id="roleGroup" class="hidden">
-                        <label id="lblRole" class="block text-xs font-semibold text-gray-700 mb-1">Account Role</label>
-                        <select id="roleSelect" class="w-full border rounded-xl p-3 text-sm bg-gray-50" style="border-color:var(--border)">
-                            <option value="Manager" id="roleOptManager">Manager / Project Director</option>
-                            <option value="Employee" id="roleOptEmployee">Engineer / Team Member</option>
-                        </select>
-                        <p id="roleHint" class="text-[11px] text-gray-400 mt-1">New company code → you become Manager. Existing code → joins as the role selected here.</p>
-                    </div>
-
-                    <div id="departmentGroup" class="hidden">
-                        <label id="lblDepartment" class="block text-xs font-semibold text-gray-700 mb-1">Department</label>
-                        <select id="departmentSelect" class="w-full border rounded-xl p-3 text-sm bg-gray-50" style="border-color:var(--border)">
-                            <option value="Electrical">Electrical</option>
-                            <option value="Civil / Structural">Civil / Structural</option>
-                            <option value="Architectural">Architectural</option>
-                            <option value="Mechanical">Mechanical</option>
-                            <option value="Human Resources">Human Resources</option>
-                        </select>
-                    </div>
-
-                    <div>
-                        <label id="lblEmail" class="block text-xs font-semibold text-gray-700 mb-1">Work Email</label>
-                        <input type="email" id="loginEmail" required placeholder="name@company.com" class="w-full border rounded-xl p-3 text-sm bg-gray-50" style="border-color:var(--border)">
-                    </div>
-
-                    <div>
-                        <label id="lblPassword" class="block text-xs font-semibold text-gray-700 mb-1">Password</label>
-                        <input type="password" id="loginPass" required placeholder="••••••••" class="w-full border rounded-xl p-3 text-sm bg-gray-50" style="border-color:var(--border)">
-                    </div>
-
-                    <button id="loginSubmitBtn" class="btn-primary w-full rounded-xl p-3 text-sm font-semibold shadow-sm">Log in to Workspace</button>
-                </form>
-
-                <div class="mt-6 pt-5 border-t text-center" style="border-color:var(--border)">
-                    <p id="demoHintText" class="text-xs text-gray-500 mb-3 font-medium">Instant Demo Access for Evaluation (no account needed)</p>
-                    <div class="flex gap-2">
-                        <button type="button" onclick="startCompanyTrial()" class="rounded-xl border bg-blue-50 hover:bg-blue-100 text-blue-800 px-3 py-2 text-sm font-semibold transition">Company Trial</button>
-                    <button id="quickManagerBtn" type="button" class="flex-1 text-xs font-semibold py-2.5 rounded-xl border bg-gray-50 hover:bg-gray-100 text-gray-700 transition" style="border-color:var(--border)">⚡ Manager Demo</button>
-                        <button id="quickEmployeeBtn" type="button" class="flex-1 text-xs font-semibold py-2.5 rounded-xl border bg-gray-50 hover:bg-gray-100 text-gray-700 transition" style="border-color:var(--border)">⚡ Engineer Demo</button>
-                    </div>
-                </div>
+            <div class="launch-badge">
+                <i class="fa-regular fa-calendar-check"></i>
+                الإطلاق المتوقع: الثلاثاء، 8 سبتمبر 2026
             </div>
         </div>
 
-        <!-- ============ MAIN APP ============ -->
-        <main id="appBox" class="hidden max-w-7xl mx-auto px-6 py-8">
-
-            <!-- Simple nav toggle: Dashboard vs Projects -->
-            <div class="flex items-center justify-between mb-6">
-                <div class="flex gap-1 p-1 rounded-xl bg-gray-100 inline-flex">
-                    <button id="navDashboardBtn" class="nav-view-btn active px-4 py-2 text-sm font-semibold rounded-lg">📊 Dashboard</button>
-                    <button id="navProjectsBtn" class="nav-view-btn px-4 py-2 text-sm font-semibold rounded-lg">📁 Projects</button>
-                </div>
-                <div id="activeProjectBanner" class="hidden text-xs font-semibold bg-blue-50 text-blue-700 border border-blue-200 rounded-lg px-3 py-2 items-center gap-2">
-                    Viewing: <span id="activeProjectName"></span>
-                    <button onclick="clearProjectFilter()" class="underline">Clear</button>
-                </div>
+        <h2 class="features-heading">ماذا تتضمن المنصة؟</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fa-solid fa-envelope-open-text"></i></div>
+                <h3>المراسلات العامة</h3>
+                <p>إدارة جميع الخطابات الرسمية بين أطراف المشروع في مكان واحد منظم.</p>
             </div>
-
-            <!-- ============ PROJECTS VIEW ============ -->
-            <div id="projectsView" class="hidden">
-                <div class="flex flex-wrap justify-between items-center gap-4 mb-6">
-                    <div>
-                        <h1 class="text-2xl font-bold tracking-tight text-gray-900">Projects</h1>
-                        <p class="text-sm text-gray-500 mt-0.5">Every document belongs to a project</p>
-                    </div>
-                    <button id="openProjectModal" class="btn-primary rounded-xl px-5 py-2.5 text-sm font-semibold shadow-sm flex items-center gap-2">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
-                        New Project
-                    </button>
-                </div>
-                <div id="projectsList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fa-solid fa-stamp"></i></div>
+                <h3>خطابات المواد</h3>
+                <p>متابعة طلبات اعتماد المواد وتوثيق الردود عليها بدقة وسهولة.</p>
             </div>
-
-            <!-- ============ DASHBOARD VIEW (existing correspondence workspace) ============ -->
-            <div id="dashboardView">
-
-            <div id="actionAlert" class="hidden mb-6 p-4 rounded-xl text-sm flex items-center justify-between shadow-sm" style="background:#FFFBEB;color:#92400E;border:1px solid #FDE68A">
-                <div class="flex items-center gap-2.5">
-                    <svg class="w-5 h-5 text-amber-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
-                    <span>You have <b id="actionCount" class="font-bold underline">0</b> document(s) requiring your action or reply.</span>
-                </div>
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fa-solid fa-file-invoice-dollar"></i></div>
+                <h3>المستخلصات</h3>
+                <p>تنظيم مستخلصات المقاولين ومتابعة اعتمادها دون أي تأخير.</p>
             </div>
-
-            <div class="flex flex-wrap justify-between items-center gap-4 mb-6">
-                <div>
-                    <h1 class="text-2xl font-bold tracking-tight text-gray-900">Project Correspondence</h1>
-                    <p class="text-sm text-gray-500 mt-0.5">Track, review, transfer, and approve technical submittals and letters</p>
-                </div>
-                <div class="flex items-center gap-3">
-                    <button id="exportExcelBtn" class="rounded-xl px-4 py-2.5 text-sm font-semibold border bg-white hover:bg-gray-50 text-gray-700 shadow-sm flex items-center gap-2" style="border-color:var(--border)">
-                        <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
-                        Export Excel
-                    </button>
-                    <button id="openAddModal" class="btn-primary rounded-xl px-5 py-2.5 text-sm font-semibold shadow-sm flex items-center gap-2">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
-                        New Document
-                    </button>
-                </div>
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fa-solid fa-clipboard-check"></i></div>
+                <h3>محاضر التسليم والاستلام</h3>
+                <p>توثيق كامل لجميع محاضر التسليم والاستلام في مختلف مراحل المشروع.</p>
             </div>
-
-            <div id="statsRow" class="grid grid-cols-2 md:grid-cols-5 gap-4 mb-3"></div>
-            <div id="overdueBanner" class="hidden mb-4 text-xs font-semibold text-red-700 bg-red-50 border border-red-200 rounded-lg px-3 py-2 inline-flex items-center gap-2">
-                Showing overdue items only
-                <button onclick="toggleOverdueOnly()" class="underline">Clear</button>
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fa-solid fa-bell"></i></div>
+                <h3>تنبيهات فورية</h3>
+                <p>إشعار فوري عند وصول أي مراسلة جديدة أو اقتراب موعد استحقاق.</p>
             </div>
-
-            <!-- Recent Activity -->
-            <div class="card p-4 mb-6">
-                <p class="text-xs font-semibold text-gray-500 mb-2 uppercase tracking-wide">Recent Activity</p>
-                <div id="recentActivity" class="divide-y" style="border-color:var(--border)"></div>
-            </div>
-
-            <!-- Main category tabs -->
-            <div class="flex flex-wrap gap-2 mb-4">
-                <button data-cat="all" class="cat-btn active px-4 py-2.5 rounded-xl text-sm font-semibold border-2 transition">All Items</button>
-                <button data-cat="Correspondence" class="cat-btn px-4 py-2.5 rounded-xl text-sm font-semibold border-2 transition">✉️ Correspondence</button>
-                <button data-cat="Documents" class="cat-btn px-4 py-2.5 rounded-xl text-sm font-semibold border-2 transition">📄 Documents</button>
-                <button data-cat="Deliverables" class="cat-btn px-4 py-2.5 rounded-xl text-sm font-semibold border-2 transition">📦 Deliverables</button>
-            </div>
-
-            <!-- Status + Filters toggle -->
-            <div class="flex flex-wrap items-center justify-between gap-3 mb-3">
-                <div class="card p-1 inline-flex flex-wrap gap-1" id="statusFiltersWrap">
-                    <button data-filter="all" class="filter-btn seg-btn active px-3.5 py-2 text-xs font-semibold rounded-lg">All Status</button>
-                    <button data-filter="New" class="filter-btn seg-btn px-3.5 py-2 text-xs font-semibold rounded-lg">New</button>
-                    <button data-filter="In Progress" class="filter-btn seg-btn px-3.5 py-2 text-xs font-semibold rounded-lg">In Progress</button>
-                    <button data-filter="Under Review" class="filter-btn seg-btn px-3.5 py-2 text-xs font-semibold rounded-lg">Under Review</button>
-                    <button data-filter="Approved" class="filter-btn seg-btn px-3.5 py-2 text-xs font-semibold rounded-lg">Approved</button>
-                    <button data-filter="Rejected" class="filter-btn seg-btn px-3.5 py-2 text-xs font-semibold rounded-lg">Rejected</button>
-                </div>
-                <div class="flex items-center gap-2">
-                    <button id="toggleFiltersBtn" class="rounded-lg px-3.5 py-2 text-xs font-semibold border bg-white hover:bg-gray-50 text-gray-700 flex items-center gap-1.5" style="border-color:var(--border)">
-                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path></svg>
-                        Filters
-                    </button>
-                    <input id="searchInputMobile" type="text" placeholder="Search correspondence..." class="md:hidden border rounded-xl p-2.5 text-sm bg-white" style="border-color:var(--border)">
-                </div>
-            </div>
-
-            <!-- Collapsible filter panel: Department + Document Type -->
-            <div id="filtersPanel" class="hidden card p-4 mb-4">
-                <div class="mb-3">
-                    <p class="text-xs font-semibold text-gray-500 mb-1.5 uppercase tracking-wide">Department</p>
-                    <div class="flex flex-wrap gap-1.5" id="deptFiltersWrap">
-                        <button data-dept="all" class="dept-btn seg-btn active px-3 py-1.5 text-xs font-medium rounded-lg border" style="border-color:var(--border)">All</button>
-                        <button data-dept="Electrical" class="dept-btn seg-btn px-3 py-1.5 text-xs font-medium rounded-lg border" style="border-color:var(--border)">Electrical</button>
-                        <button data-dept="Civil / Structural" class="dept-btn seg-btn px-3 py-1.5 text-xs font-medium rounded-lg border" style="border-color:var(--border)">Civil</button>
-                        <button data-dept="Architectural" class="dept-btn seg-btn px-3 py-1.5 text-xs font-medium rounded-lg border" style="border-color:var(--border)">Architectural</button>
-                        <button data-dept="Mechanical" class="dept-btn seg-btn px-3 py-1.5 text-xs font-medium rounded-lg border" style="border-color:var(--border)">Mechanical</button>
-                        <button data-dept="Human Resources" class="dept-btn seg-btn px-3 py-1.5 text-xs font-medium rounded-lg border" style="border-color:var(--border)">HR</button>
-                    </div>
-                </div>
-                <div>
-                    <p class="text-xs font-semibold text-gray-500 mb-1.5 uppercase tracking-wide">Document Type</p>
-                    <div class="flex flex-wrap gap-1.5" id="typeFiltersWrap">
-                        <button data-type="all" class="type-btn seg-btn active px-3 py-1.5 text-xs font-medium rounded-lg border" style="border-color:var(--border)">All</button>
-                        <button data-type="Letter" class="type-btn seg-btn px-3 py-1.5 text-xs font-medium rounded-lg border" style="border-color:var(--border)">Letters</button>
-                        <button data-type="Material" class="type-btn seg-btn px-3 py-1.5 text-xs font-medium rounded-lg border" style="border-color:var(--border)">Materials</button>
-                        <button data-type="RFI" class="type-btn seg-btn px-3 py-1.5 text-xs font-medium rounded-lg border" style="border-color:var(--border)">RFIs</button>
-                        <button data-type="Drawing" class="type-btn seg-btn px-3 py-1.5 text-xs font-medium rounded-lg border" style="border-color:var(--border)">Drawings</button>
-                        <button data-type="Payment Certificate" class="type-btn seg-btn px-3 py-1.5 text-xs font-medium rounded-lg border" style="border-color:var(--border)">Payment Certs</button>
-                        <button data-type="Final Handover" class="type-btn seg-btn px-3 py-1.5 text-xs font-medium rounded-lg border" style="border-color:var(--border)">Handovers</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card overflow-hidden hidden md:block">
-                <div class="overflow-x-auto">
-                    <table class="w-full text-sm text-left">
-                        <thead>
-                            <tr class="border-b bg-gray-50/75" style="border-color:var(--border)">
-                                <th class="p-4">Project / Discipline</th>
-                                <th class="p-4">Reference No.</th>
-                                <th class="p-4">Subject & Notes</th>
-                                <th class="p-4">Type</th>
-                                <th class="p-4">Due Date</th>
-                                <th class="p-4">Attachment</th>
-                                <th class="p-4">Assigned To</th>
-                                <th class="p-4">Status</th>
-                                <th class="p-4 text-right">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tableBody">
-                            <tr><td colspan="9" class="p-8 text-center text-gray-500 font-medium">Loading documents workspace...</td></tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <!-- Mobile card list — shown instead of the wide table on small screens -->
-            <div id="mobileList" class="md:hidden space-y-3"></div>
-            </div>
-        </main>
-    </div>
-
-    <!-- ============ ADD DOCUMENT MODAL ============ -->
-    <div id="addModal" class="hidden fixed inset-0 modal-overlay z-50 flex items-center justify-center p-4">
-        <div class="card w-full max-w-xl p-7 max-h-[90vh] overflow-y-auto shadow-2xl">
-            <div class="flex justify-between items-center mb-5 pb-3 border-b" style="border-color:var(--border)">
-                <div>
-                    <h3 id="formTitle" class="font-bold text-lg text-gray-900">New Document Entry</h3>
-                    <p class="text-xs text-gray-500">Register incoming or outgoing project correspondence</p>
-                </div>
-                <button id="closeModalBtn" class="text-2xl text-gray-400 hover:text-gray-700 leading-none">&times;</button>
-            </div>
-            <form id="addForm" class="grid grid-cols-2 gap-4">
-                <input type="hidden" id="editId" value="">
-                <div class="col-span-2">
-                    <label class="block text-xs font-semibold text-gray-700 mb-1">Project</label>
-                    <select id="fProject" required class="border rounded-xl p-3 text-sm w-full bg-gray-50" style="border-color:var(--border)">
-                        <option value="">Select a project...</option>
-                    </select>
-                    <p id="noProjectsHint" class="hidden text-xs text-amber-600 mt-1">No projects yet — <button type="button" onclick="closeAddModalAndOpenProjectModal()" class="underline font-semibold">create one first</button></p>
-                </div>
-
-                <div>
-                    <label class="block text-xs font-semibold text-gray-700 mb-1">Reference Number</label>
-                    <input type="text" id="fRef" required placeholder="REF-2026-001" class="border rounded-xl p-3 text-sm w-full mono bg-gray-50" style="border-color:var(--border)">
-                </div>
-                <div>
-                    <label class="block text-xs font-semibold text-gray-700 mb-1">Sender / Recipient</label>
-                    <input type="text" id="fRecipient" required placeholder="Main Contractor / Consultant" class="border rounded-xl p-3 text-sm w-full bg-gray-50" style="border-color:var(--border)">
-                </div>
-
-                <div class="col-span-2">
-                    <label class="block text-xs font-semibold text-gray-700 mb-1">Subject Description</label>
-                    <input type="text" id="fSubject" required placeholder="Detailed subject of the correspondence..." class="border rounded-xl p-3 text-sm w-full bg-gray-50" style="border-color:var(--border)">
-                </div>
-
-                <div>
-                    <label class="block text-xs font-semibold text-gray-700 mb-1">Document Type</label>
-                    <select id="fType" class="border rounded-xl p-3 text-sm w-full bg-gray-50" style="border-color:var(--border)">
-                        <option value="Letter">Official Letter</option>
-                        <option value="Material">Material Submittal (MAR)</option>
-                        <option value="Drawing">Shop Drawing / REV</option>
-                        <option value="RFI">Request For Information (RFI)</option>
-                        <option value="Payment Certificate">Payment Certificate</option>
-                        <option value="Final Handover">Final Handover</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-xs font-semibold text-gray-700 mb-1">Department</label>
-                    <select id="fDiscipline" class="border rounded-xl p-3 text-sm w-full bg-gray-50" style="border-color:var(--border)">
-                        <option value="Electrical">Electrical</option>
-                        <option value="Mechanical">Mechanical</option>
-                        <option value="Civil / Structural">Civil / Structural</option>
-                        <option value="Architectural">Architectural</option>
-                        <option value="Human Resources">Human Resources</option>
-                    </select>
-                </div>
-
-                <div>
-                    <label class="block text-xs font-semibold text-gray-700 mb-1">Direction</label>
-                    <select id="fDirection" class="border rounded-xl p-3 text-sm w-full bg-gray-50" style="border-color:var(--border)">
-                        <option value="Outgoing">Outgoing</option>
-                        <option value="Incoming">Incoming</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-xs font-semibold text-gray-700 mb-1">Priority</label>
-                    <select id="fPriority" class="border rounded-xl p-3 text-sm w-full bg-gray-50" style="border-color:var(--border)">
-                        <option value="Normal">Normal</option>
-                        <option value="Urgent">Urgent / Critical</option>
-                    </select>
-                </div>
-
-                <div>
-                    <label class="block text-xs font-semibold text-gray-700 mb-1">Correspondence Date</label>
-                    <input type="date" id="fDate" required class="border rounded-xl p-3 text-sm w-full bg-gray-50" style="border-color:var(--border)">
-                </div>
-                <div>
-                    <label class="block text-xs font-semibold text-gray-700 mb-1">Due Date / Action Deadline</label>
-                    <input type="date" id="fDueDate" required class="border rounded-xl p-3 text-sm w-full bg-gray-50" style="border-color:var(--border)">
-                </div>
-
-                <div class="col-span-2">
-                    <label class="block text-xs font-semibold text-gray-700 mb-1">Attachment File (PDF, Image) — Optional</label>
-                    <input type="file" id="fAttachment" accept=".pdf,.jpg,.jpeg,.png" class="border rounded-xl p-2.5 text-sm w-full bg-gray-50" style="border-color:var(--border)">
-                </div>
-
-                <div class="col-span-2 flex gap-3 pt-3 border-t mt-2" style="border-color:var(--border)">
-                    <button id="submitBtn" class="btn-primary flex-1 rounded-xl p-3 text-sm font-semibold shadow-sm">Save Document</button>
-                    <button type="button" id="cancelEditBtn" class="rounded-xl p-3 text-sm font-semibold px-6 border bg-white hover:bg-gray-50 text-gray-700" style="border-color:var(--border)">Cancel</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- ============ REJECT REASON MODAL ============ -->
-    <div id="rejectModal" class="hidden fixed inset-0 modal-overlay z-50 flex items-center justify-center p-4">
-        <div class="card w-full max-w-sm p-6 shadow-2xl">
-            <div class="flex justify-between items-center mb-4">
-                <h3 class="font-bold text-lg text-gray-900">Reject Document</h3>
-                <button id="closeRejectModalBtn" class="text-2xl text-gray-400 hover:text-gray-700 leading-none">&times;</button>
-            </div>
-            <label class="block text-xs font-semibold text-gray-700 mb-1">Rejection Reason</label>
-            <textarea id="rejectReasonInput" rows="4" placeholder="Explain what needs to be corrected..." class="border rounded-xl p-3 text-sm w-full bg-gray-50" style="border-color:var(--border)"></textarea>
-            <div class="flex gap-2 mt-4">
-                <button id="confirmRejectBtn" class="flex-1 rounded-xl p-3 text-sm font-semibold text-white bg-red-600 hover:bg-red-700 shadow-sm">Reject Document</button>
-                <button id="cancelRejectBtn" type="button" class="rounded-xl p-3 text-sm font-semibold px-5 border bg-white hover:bg-gray-50 text-gray-700" style="border-color:var(--border)">Cancel</button>
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fa-solid fa-user-shield"></i></div>
+                <h3>صلاحيات دقيقة</h3>
+                <p>تحديد صلاحيات الاطلاع والاعتماد بحسب دور كل مستخدم في المشروع.</p>
             </div>
         </div>
-    </div>
 
-    <!-- ============ NEW PROJECT MODAL ============ -->
-    <div id="projectModal" class="hidden fixed inset-0 modal-overlay z-50 flex items-center justify-center p-4">
-        <div class="card w-full max-w-sm p-6 shadow-2xl">
-            <div class="flex justify-between items-center mb-4">
-                <h3 class="font-bold text-lg text-gray-900">New Project</h3>
-                <button id="closeProjectModalBtn" class="text-2xl text-gray-400 hover:text-gray-700 leading-none">&times;</button>
-            </div>
-            <form id="projectForm" class="space-y-3">
-                <div>
-                    <label class="block text-xs font-semibold text-gray-700 mb-1">Project Name</label>
-                    <input type="text" id="pName" required placeholder="e.g. Riyadh Business Center Tower" class="border rounded-xl p-3 text-sm w-full bg-gray-50" style="border-color:var(--border)">
-                </div>
-                <div>
-                    <label class="block text-xs font-semibold text-gray-700 mb-1">Project Code (optional)</label>
-                    <input type="text" id="pCode" placeholder="e.g. RBC-001" class="border rounded-xl p-3 text-sm w-full mono bg-gray-50" style="border-color:var(--border)">
-                </div>
-                <button class="btn-primary w-full rounded-xl p-3 text-sm font-semibold shadow-sm mt-2">Create Project</button>
-            </form>
+        <div class="value-section">
+            <h2>لماذا تحتاج شركتك إلى هذا النظام؟</h2>
+            <p>
+                تفقد كثير من الشركات وقتًا وجهدًا كبيرًا في متابعة المراسلات يدويًا عبر البريد الإلكتروني
+                والمكالمات والملفات المتفرقة. يوفر هذا النظام لشركتك سجلًا موثقًا ومنظمًا لكل مراسلة،
+                يقلل من التأخير، ويحفظ حقوق جميع الأطراف، ويمنح فريقك وقتًا أكبر للتركيز على تنفيذ
+                المشروع بدلًا من متابعة الأوراق.
+            </p>
+            <a href="mailto:info@barnoukh-engineering.com?subject=تجربة%20منصة%20المراسلات&body=اسم%20الشركة%3A%0Aمتطلبات%20الشركة%3A%0A" class="value-cta-btn">
+                <i class="fa-regular fa-paper-plane"></i> تواصل معنا لتجربة المنصة أو تسجيل اسم شركتك ومتطلباتها
+            </a>
         </div>
-    </div>
+    </main>
 
-    <!-- ============ PREVIEW MODAL ============ -->
-    <div id="previewModal" class="hidden fixed inset-0 modal-overlay z-50 flex items-center justify-center p-4">
-        <div class="card w-full max-w-3xl p-6 h-[85vh] flex flex-col shadow-2xl">
-            <div class="flex justify-between items-center pb-3 border-b mb-4" style="border-color:var(--border)">
-                <h3 class="font-bold text-lg text-gray-900">Attachment Preview</h3>
-                <button id="closePreviewBtn" class="text-2xl text-gray-400 hover:text-gray-700 leading-none">&times;</button>
-            </div>
-            <div id="previewContent" class="flex-1 bg-gray-100 rounded-xl flex items-center justify-center overflow-hidden">
-                <p class="text-gray-500 text-sm">Loading preview...</p>
-            </div>
-        </div>
-    </div>
-
-    <footer class="text-center py-6 text-xs text-gray-400 border-t mt-12 bg-white" style="border-color:var(--border)">
-        <span class="brand-lock" data-no-translate>BA Engineering</span> Platform &copy; 2026. Secure Enterprise Document & Correspondence Management.
+    <footer>
+        لأي استفسار قبل الإطلاق، راسلنا على
+        <a href="mailto:info@barnoukh-engineering.com">info@barnoukh-engineering.com</a>
     </footer>
 
     <script>
-        const db = supabase.createClient(
-            'https://rzhyuufqhuejamcpbzst.supabase.co',
-            'sb_publishable_sUFjo5uXyaL0MJbRrDIiFg_ixhooI4p'
-        );
+        // Countdown to the official launch date.
+        const launchDate = new Date('2026-09-08T00:00:00');
 
-        let signUpMode = false;
-        let allRows = [];
-        let activeFilter = 'all';
-        let activeDept = 'all';
-        let activeType = 'all';
-        let activeCategory = 'all';
-        let searchText = '';
+        function updateCountdown() {
+            const now = new Date();
+            let diff = launchDate - now;
 
-        // كل نوع مستند بينتمي لواحدة من التلاتة تصنيفات الرئيسية دي
-        function categoryOf(type) {
-            if (type === 'Letter') return 'Correspondence';
-            if (type === 'Material' || type === 'Drawing' || type === 'RFI') return 'Documents';
-            if (type === 'Payment Certificate' || type === 'Final Handover') return 'Deliverables';
-            return 'Documents';
-        }
-        let myRole = null, myCompanyId = null, myUserId = null;
-        let companyMembers = [];
-        let companyProjects = [];
-        let activeProjectId = null;
-        let isDemoMode = false;
-
-        const isManager = (role) => role === 'Manager' || role === 'مدير';
-        const isEmployee = (role) => role === 'Employee' || role === 'موظف';
-
-        const loginBox = document.getElementById('loginBox');
-        const appBox = document.getElementById('appBox');
-        const userBar = document.getElementById('userBar');
-        const companyCodeGroup = document.getElementById('companyCodeGroup');
-        const fullNameGroup = document.getElementById('fullNameGroup');
-        const roleGroup = document.getElementById('roleGroup');
-        const departmentGroup = document.getElementById('departmentGroup');
-        const companyCodeInput = document.getElementById('companyCode');
-        const fullNameInput = document.getElementById('fullName');
-        const roleSelect = document.getElementById('roleSelect');
-        const departmentSelect = document.getElementById('departmentSelect');
-        const addModal = document.getElementById('addModal');
-        const previewModal = document.getElementById('previewModal');
-        const projectModal = document.getElementById('projectModal');
-        const rejectModal = document.getElementById('rejectModal');
-        let rejectingRowId = null;
-
-        function openRejectModal(id) {
-            rejectingRowId = id;
-            document.getElementById('rejectReasonInput').value = '';
-            rejectModal.classList.remove('hidden');
-        }
-        document.getElementById('cancelRejectBtn').onclick = () => rejectModal.classList.add('hidden');
-        document.getElementById('closeRejectModalBtn').onclick = () => rejectModal.classList.add('hidden');
-
-        document.getElementById('confirmRejectBtn').onclick = async () => {
-            const reason = document.getElementById('rejectReasonInput').value.trim();
-            if (!reason) { alert('Please enter a rejection reason.'); return; }
-
-            if (isDemoMode) {
-                const row = allRows.find(r => r.id === rejectingRowId);
-                if (row) { row.status = 'Rejected'; row.rejection_reason = reason; }
-                rejectModal.classList.add('hidden');
-                loadTable();
+            if (diff <= 0) {
+                document.getElementById('cd-days').textContent = '00';
+                document.getElementById('cd-hours').textContent = '00';
+                document.getElementById('cd-minutes').textContent = '00';
+                document.getElementById('cd-seconds').textContent = '00';
                 return;
             }
 
-            const { error } = await db.from('correspondence').update({ status: 'Rejected', rejection_reason: reason }).eq('id', rejectingRowId);
-            rejectModal.classList.add('hidden');
-            if (error) alert('Error: ' + error.message);
-            else loadTable();
-        };
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+            const minutes = Math.floor((diff / (1000 * 60)) % 60);
+            const seconds = Math.floor((diff / 1000) % 60);
 
-        const todayStr = new Date().toISOString().split('T')[0];
-        document.getElementById('fDate').value = todayStr;
-        const nextWeek = new Date();
-        nextWeek.setDate(nextWeek.getDate() + 7);
-        document.getElementById('fDueDate').value = nextWeek.toISOString().split('T')[0];
-
-        function setAuthMode(signup) {
-            signUpMode = signup;
-            document.getElementById('tabLogin').className = signup
-                ? 'flex-1 text-sm font-semibold py-2.5 rounded-lg text-gray-500 transition'
-                : 'flex-1 text-sm font-semibold py-2.5 rounded-lg bg-white shadow-sm text-blue-600 transition';
-            document.getElementById('tabSignup').className = signup
-                ? 'flex-1 text-sm font-semibold py-2.5 rounded-lg bg-white shadow-sm text-blue-600 transition'
-                : 'flex-1 text-sm font-semibold py-2.5 rounded-lg text-gray-500 transition';
-
-            document.getElementById('loginSubmitBtn').textContent = signup ? 'Create / Join Workspace' : 'Log in to Workspace';
-            companyCodeGroup.classList.toggle('hidden', !signup);
-            fullNameGroup.classList.toggle('hidden', !signup);
-            roleGroup.classList.toggle('hidden', !signup);
-            companyCodeInput.required = signup;
-            fullNameInput.required = signup;
-            updateDepartmentVisibility();
-        }
-        function updateDepartmentVisibility() {
-            const showDept = signUpMode && roleSelect.value === 'Employee';
-            departmentGroup.classList.toggle('hidden', !showDept);
-        }
-        roleSelect.addEventListener('change', updateDepartmentVisibility);
-        document.getElementById('tabLogin').onclick = () => setAuthMode(false);
-        document.getElementById('tabSignup').onclick = () => setAuthMode(true);
-        setAuthMode(false);
-
-        // ============ Authentication Handler ============
-        document.getElementById('loginForm').onsubmit = async (e) => {
-            e.preventDefault();
-            isDemoMode = false;
-            const email = document.getElementById('loginEmail').value.trim();
-            const password = document.getElementById('loginPass').value;
-
-            if (signUpMode) {
-                const fullName = fullNameInput.value.trim();
-                const chosenRole = roleSelect.value;
-                const companyCode = companyCodeInput.value.trim();
-                if (!companyCode) { alert('Please enter a company code.'); return; }
-
-                const { data, error } = await db.auth.signUp({ email, password });
-                if (error) { alert('Error: ' + error.message); return; }
-
-                let { data: existingCompany } = await db.from('companies').select('*').eq('code', companyCode).maybeSingle();
-                let companyId;
-                if (existingCompany) {
-                    companyId = existingCompany.id;
-                } else {
-                    const { data: newCompany, error: cErr } = await db.from('companies').insert([{ code: companyCode }]).select().single();
-                    if (cErr) { alert('Error creating company workspace: ' + cErr.message); return; }
-                    companyId = newCompany.id;
-                }
-
-                const { error: pErr } = await db.from('profiles').insert([{
-                    id: data.user.id, company_id: companyId, full_name: fullName, role: chosenRole,
-                    department: chosenRole === 'Employee' ? departmentSelect.value : null
-                }]);
-                if (pErr) { alert('Error creating user profile: ' + pErr.message); return; }
-
-                alert(`Account created as ${chosenRole} in company "${companyCode}". You are now logged in.`);
-            } else {
-                const { error } = await db.auth.signInWithPassword({ email, password });
-                if (error) alert('Login failed: ' + error.message);
-            }
-        };
-
-        document.getElementById('logoutBtn').onclick = () => {
-            isDemoMode = false;
-            db.auth.signOut();
-            checkSessionState(null);
-        };
-
-        // ============ Quick Demo Access (fully client-side, never touches Supabase) ============
-        function startDemo(role) {
-            isDemoMode = true;
-            myUserId = role === 'Manager' ? 'demo-mgr-id' : 'demo-emp-id';
-            myCompanyId = 'demo-company-id';
-            myRole = role;
-            companyMembers = [
-                { id: 'demo-mgr-id', full_name: 'Eng. Ahmed Barnoukh (Director)', role: 'Manager', department: null },
-                { id: 'demo-emp-id', full_name: 'Eng. Mohammed (Engineer)', role: 'Employee', department: 'Electrical' }
-            ];
-            companyProjects = [
-                { id: 'demo-proj-1', name: 'Riyadh Business Center Tower', code: 'RBC-001', status: 'Active' },
-                { id: 'demo-proj-2', name: 'Jeddah Commercial Mall', code: 'JCM-002', status: 'Active' }
-            ];
-
-            if (!allRows.length) {
-                allRows = [
-                    {
-                        id: 'demo-1',
-                        project_id: 'demo-proj-1',
-                        reference_no: 'REF-2026-001',
-                        sender_recipient: 'Main Contractor',
-                        subject: 'Approval of Main Electrical Switchgear Submittal (MAR)',
-                        type: 'Material', discipline: 'Electrical', direction: 'Incoming', priority: 'Urgent',
-                        correspondence_date: '2026-09-01', due_date: '2026-09-04', created_at: '2026-09-01T09:00:00Z',
-                        attachment_url: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf',
-                        status: 'In Progress', company_id: 'demo-company-id', assigned_to: 'demo-emp-id',
-                        reply_text: '', reply_attachment_url: null
-                    },
-                    {
-                        id: 'demo-2',
-                        project_id: 'demo-proj-2',
-                        reference_no: 'REF-2026-002',
-                        sender_recipient: 'Consultant Office',
-                        subject: 'Request for Information (RFI) regarding HVAC duct routing',
-                        type: 'RFI', discipline: 'Mechanical', direction: 'Outgoing', priority: 'Normal',
-                        correspondence_date: '2026-09-03', due_date: '2026-09-20', created_at: '2026-09-03T11:30:00Z',
-                        attachment_url: null, status: 'New', company_id: 'demo-company-id', assigned_to: null,
-                        reply_text: '', reply_attachment_url: null
-                    }
-                ];
-            }
-            setupWorkspaceUI(role === 'Manager' ? 'Project Director' : 'Engineer', role === 'Manager' ? 'Eng. Ahmed Barnoukh' : 'Eng. Mohammed');
-            if (role === 'Manager') showCompanyTrialBanner();
-        }
-        document.getElementById('quickManagerBtn').onclick = () => startDemo('Manager');
-        document.getElementById('quickEmployeeBtn').onclick = () => startDemo('Employee');
-
-        function setupWorkspaceUI(roleTitle, fullName) {
-            loginBox.classList.add('hidden');
-            appBox.classList.remove('hidden');
-            userBar.classList.remove('hidden');
-            userBar.classList.add('flex');
-            document.getElementById('userRoleBadge').textContent = roleTitle;
-            document.getElementById('userNameBadge').textContent = fullName;
-            activeProjectId = null;
-            document.getElementById('activeProjectBanner').classList.add('hidden');
-            switchToDashboardView();
-            renderStats();
-            renderTable();
+            document.getElementById('cd-days').textContent = String(days).padStart(2, '0');
+            document.getElementById('cd-hours').textContent = String(hours).padStart(2, '0');
+            document.getElementById('cd-minutes').textContent = String(minutes).padStart(2, '0');
+            document.getElementById('cd-seconds').textContent = String(seconds).padStart(2, '0');
         }
 
-        // ============ Modal Controls ============
-        document.getElementById('openAddModal').onclick = () => {
-            if (!companyProjects.length) {
-                alert('Please create a project first before adding a document.');
-                switchToProjectsView();
-                return;
-            }
-            resetForm();
-            populateProjectSelect();
-            addModal.classList.remove('hidden');
-        };
-        document.getElementById('closeModalBtn').onclick = () => addModal.classList.add('hidden');
-        document.getElementById('cancelEditBtn').onclick = () => addModal.classList.add('hidden');
-        document.getElementById('closePreviewBtn').onclick = () => previewModal.classList.add('hidden');
-
-        // ============ Projects: nav toggle ============
-        document.getElementById('navDashboardBtn').onclick = () => switchToDashboardView();
-        document.getElementById('navProjectsBtn').onclick = () => switchToProjectsView();
-
-        function switchToDashboardView() {
-            document.getElementById('dashboardView').classList.remove('hidden');
-            document.getElementById('projectsView').classList.add('hidden');
-            document.getElementById('navDashboardBtn').classList.add('active');
-            document.getElementById('navProjectsBtn').classList.remove('active');
-        }
-        function switchToProjectsView() {
-            document.getElementById('dashboardView').classList.add('hidden');
-            document.getElementById('projectsView').classList.remove('hidden');
-            document.getElementById('navProjectsBtn').classList.add('active');
-            document.getElementById('navDashboardBtn').classList.remove('active');
-            renderProjectsList();
-        }
-
-        // ============ Projects: create ============
-        document.getElementById('openProjectModal').onclick = () => { document.getElementById('projectForm').reset(); projectModal.classList.remove('hidden'); };
-        document.getElementById('closeProjectModalBtn').onclick = () => projectModal.classList.add('hidden');
-        function closeAddModalAndOpenProjectModal() {
-            addModal.classList.add('hidden');
-            document.getElementById('projectForm').reset();
-            projectModal.classList.remove('hidden');
-        }
-
-        document.getElementById('projectForm').onsubmit = async (e) => {
-            e.preventDefault();
-            const name = document.getElementById('pName').value.trim();
-            const code = document.getElementById('pCode').value.trim();
-
-            if (isDemoMode) {
-                companyProjects.push({ id: 'demo-proj-' + Date.now(), name, code, status: 'Active' });
-                projectModal.classList.add('hidden');
-                renderProjectsList();
-                populateProjectSelect();
-                return;
-            }
-
-            const { data, error } = await db.from('projects').insert([{ name, code, company_id: myCompanyId, status: 'Active' }]).select().single();
-            if (error) { alert('Error creating project: ' + error.message); return; }
-            companyProjects.push(data);
-            projectModal.classList.add('hidden');
-            renderProjectsList();
-            populateProjectSelect();
-        };
-
-        function populateProjectSelect() {
-            const select = document.getElementById('fProject');
-            const hint = document.getElementById('noProjectsHint');
-            select.innerHTML = '<option value="">Select a project...</option>' +
-                companyProjects.map(p => `<option value="${p.id}">${p.name}${p.code ? ' (' + p.code + ')' : ''}</option>`).join('');
-            hint.classList.toggle('hidden', companyProjects.length > 0);
-        }
-
-        function projectNameOf(row) {
-            if (row.project_id) {
-                const p = companyProjects.find(x => x.id === row.project_id);
-                if (p) return p.name;
-            }
-            return row.project_name || '—'; // بيانات قديمة قبل نظام المشاريع
-        }
-
-        function renderProjectsList() {
-            const container = document.getElementById('projectsList');
-            if (!companyProjects.length) {
-                container.innerHTML = `
-                    <div class="col-span-full card p-10 text-center">
-                        <p class="text-gray-500 text-sm mb-3">No projects yet — create your first project to start managing correspondence.</p>
-                        <button onclick="document.getElementById('openProjectModal').click()" class="btn-primary rounded-xl px-5 py-2.5 text-sm font-semibold">+ Create Project</button>
-                    </div>`;
-                return;
-            }
-            container.innerHTML = companyProjects.map(p => {
-                const docs = allRows.filter(r => r.project_id === p.id);
-                const pending = docs.filter(r => r.status !== 'Approved' && r.status !== 'Rejected').length;
-                const overdue = docs.filter(r => r.due_date && r.due_date < todayStr && r.status !== 'Approved' && r.status !== 'Rejected').length;
-                return `
-                <div class="card p-5">
-                    <div class="flex justify-between items-start mb-2">
-                        <div>
-                            <h3 class="font-bold text-gray-900">${p.name}</h3>
-                            ${p.code ? `<p class="mono text-xs text-gray-500">${p.code}</p>` : ''}
-                        </div>
-                        <span class="text-xs font-semibold px-2 py-1 rounded-full bg-emerald-50 text-emerald-700">${p.status || 'Active'}</span>
-                    </div>
-                    <div class="grid grid-cols-3 gap-2 my-4 text-center">
-                        <div><div class="font-bold text-lg text-gray-900">${docs.length}</div><div class="text-[10px] text-gray-500">Documents</div></div>
-                        <div><div class="font-bold text-lg text-amber-600">${pending}</div><div class="text-[10px] text-gray-500">Pending</div></div>
-                        <div><div class="font-bold text-lg text-red-600">${overdue}</div><div class="text-[10px] text-gray-500">Overdue</div></div>
-                    </div>
-                    <button onclick="openProjectFilter('${p.id}','${p.name.replace(/'/g, "\\'")}')" class="w-full rounded-lg py-2 text-sm font-semibold border hover:bg-gray-50" style="border-color:var(--border);color:var(--brand)">Open Project</button>
-                </div>
-            `}).join('');
-        }
-
-        function openProjectFilter(id, name) {
-            activeProjectId = id;
-            document.getElementById('activeProjectBanner').classList.remove('hidden');
-            document.getElementById('activeProjectBanner').classList.add('flex');
-            document.getElementById('activeProjectName').textContent = name;
-            switchToDashboardView();
-            renderStats();
-            if (!isDemoMode) loadTable(); else renderTable();
-        }
-        function clearProjectFilter() {
-            activeProjectId = null;
-            document.getElementById('activeProjectBanner').classList.add('hidden');
-            renderStats();
-            if (!isDemoMode) loadTable(); else renderTable();
-        }
-
-        function openPreview(url) {
-            previewModal.classList.remove('hidden');
-            const container = document.getElementById('previewContent');
-            if (url.match(/\.(jpeg|jpg|png)$/i)) {
-                container.innerHTML = `<img src="${url}" class="max-h-full max-w-full object-contain rounded-lg">`;
-            } else {
-                container.innerHTML = `<iframe src="${url}" class="w-full h-full rounded-lg border-0"></iframe>`;
-            }
-        }
-
-        // ============ Auth State Management ============
-        // ملحوظة أمان: لو حساب حقيقي مالوش بروفايل، منعملوش تلقائيًا بشركة عشوائية -
-        // ده كان بيسبب تسريب بيانات بين شركات مختلفة. بدل كده نطلب منه يكمل التسجيل صح.
-        async function checkSessionState(session) {
-            if (isDemoMode) return;
-            if (session) {
-                myUserId = session.user.id;
-                const { data: profile, error: profileError } = await db.from('profiles').select('*').eq('id', session.user.id).maybeSingle();
-
-                if (profileError) {
-                    console.error('Profile load failed:', profileError);
-                    // Do NOT sign the user out because of a temporary RLS/network error.
-                    loginBox.classList.add('hidden');
-                    appBox.classList.remove('hidden');
-                    userBar.classList.remove('hidden');
-                    userBar.classList.add('flex');
-                    document.getElementById('userRoleBadge').textContent = 'Loading...';
-                    document.getElementById('userNameBadge').textContent = session.user.email || '';
-                    return;
-                }
-
-                if (!profile) {
-                    alert('Your account setup is incomplete (no company profile found). Please use "Register / Join Company" to finish setting up your account.');
-                    await db.auth.signOut();
-                    return;
-                }
-
-                myRole = profile.role;
-                myCompanyId = profile.company_id;
-
-                const { data: members } = await db.from('profiles').select('id, full_name, role, department').eq('company_id', myCompanyId);
-                companyMembers = members || [];
-
-                const { data: projects } = await db.from('projects').select('*').eq('company_id', myCompanyId).order('created_at', { ascending: false });
-                companyProjects = projects || [];
-
-                setupWorkspaceUI(isManager(myRole) ? 'Project Director' : 'Engineer', profile.full_name || '');
-                loadTable();
-            } else {
-                myRole = null; myCompanyId = null; myUserId = null;
-                loginBox.classList.remove('hidden');
-                appBox.classList.add('hidden');
-                userBar.classList.add('hidden');
-                userBar.classList.remove('flex');
-            }
-        }
-        let authBootstrapped = false;
-        db.auth.onAuthStateChange((event, session) => {
-            if (isDemoMode) return;
-            // Ignore transient auth events while the initial session is being restored.
-            if (event === 'SIGNED_OUT') {
-                checkSessionState(null);
-                return;
-            }
-            if (session) checkSessionState(session);
-        });
-
-        // IMPORTANT: explicitly restore the persisted Supabase session on page refresh.
-        // Relying only on the auth event can briefly show the login screen and may
-        // race with profile loading in a static SPA.
-        (async function bootstrapAuthSession(){
-            try {
-                const { data, error } = await db.auth.getSession();
-                authBootstrapped = true;
-                if (error) {
-                    console.error('Session restore failed:', error);
-                    checkSessionState(null);
-                    return;
-                }
-                await checkSessionState(data?.session || null);
-            } catch (err) {
-                console.error('Session bootstrap error:', err);
-                checkSessionState(null);
-            }
-        })();
-
-        // ============ Filters & Search ============
-        document.querySelectorAll('.cat-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                activeCategory = btn.dataset.cat;
-                document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                renderTable();
-            });
-        });
-        document.getElementById('toggleFiltersBtn').addEventListener('click', () => {
-            document.getElementById('filtersPanel').classList.toggle('hidden');
-        });
-        document.querySelectorAll('.filter-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                activeFilter = btn.dataset.filter;
-                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                renderTable();
-            });
-        });
-        document.querySelectorAll('.dept-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                activeDept = btn.dataset.dept;
-                document.querySelectorAll('.dept-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                renderTable();
-            });
-        });
-        document.querySelectorAll('.type-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                activeType = btn.dataset.type;
-                document.querySelectorAll('.type-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                renderTable();
-            });
-        });
-        function onSearch(e) {
-            searchText = e.target.value.trim().toLowerCase();
-            document.getElementById('searchInput').value = e.target.value;
-            document.getElementById('searchInputMobile').value = e.target.value;
-            renderTable();
-        }
-        document.getElementById('searchInput').addEventListener('input', onSearch);
-        document.getElementById('searchInputMobile').addEventListener('input', onSearch);
-
-        function statusStyle(status) {
-            switch (status) {
-                case 'Approved': return 'background:#ECFDF3;color:#047857';
-                case 'Rejected': return 'background:#FEF2F2;color:#DC2626';
-                case 'In Progress': return 'background:#FEF3C7;color:#D97706';
-                case 'Under Review': return 'background:#EEF2FF;color:#4F46E5';
-                default: return 'background:#F1F5F9;color:#475569';
-            }
-        }
-        function memberName(id) {
-            const m = companyMembers.find(x => x.id === id);
-            return m ? (m.full_name || m.role) : 'Unassigned';
-        }
-
-        // للـ Deliverables (مستخلصات/محاضر استلام) نستخدم تسمية أقرب لمنطق "موعد التسليم"
-        // من غير ما نغيّر القيمة الفعلية المخزنة في status - بس شكل العرض بيتغيّر
-        function getStatusLabel(row) {
-            const status = row.status || 'New';
-            if (categoryOf(row.type) === 'Deliverables') {
-                if (status === 'New') return 'Upcoming';
-                if (status === 'In Progress') return 'Submitted';
-            }
-            return status;
-        }
-
-        // ============ Data Loading ============
-        async function loadTable() {
-            if (isDemoMode) { renderStats(); renderRecentActivity(); renderTable(); return; }
-            let query = db.from('correspondence')
-                .select('*')
-                .eq('company_id', myCompanyId)
-                .order('created_at', { ascending: false });
-            if (activeProjectId) query = query.eq('project_id', activeProjectId);
-            const { data, error } = await query;
-            const tbody = document.getElementById('tableBody');
-            if (error) {
-                tbody.innerHTML = `<tr><td colspan="9" class="p-8 text-center text-red-600">Error loading data: ${error.message}</td></tr>`;
-                return;
-            }
-            allRows = data || [];
-            renderStats();
-            renderRecentActivity();
-            renderTable();
-        }
-
-        let overdueOnly = false;
-        let activeDirection = 'all';
-
-        function renderRecentActivity() {
-            const container = document.getElementById('recentActivity');
-            const recent = [...allRows].sort((a, b) => new Date(b.created_at || 0) - new Date(a.created_at || 0)).slice(0, 5);
-            if (!recent.length) {
-                container.innerHTML = `<p class="text-xs text-gray-400 py-2">No activity yet.</p>`;
-                return;
-            }
-            container.innerHTML = recent.map(r => `
-                <div class="flex items-center justify-between py-2 text-xs">
-                    <div class="flex items-center gap-2 min-w-0">
-                        <span class="mono font-semibold text-gray-500 shrink-0">${r.reference_no || '—'}</span>
-                        <span class="text-gray-700 truncate">${r.subject || '—'}</span>
-                        <span class="text-gray-400 shrink-0">· ${r.type || '—'}</span>
-                    </div>
-                    <div class="flex items-center gap-3 shrink-0">
-                        <span class="status-pill" style="${statusStyle(r.status)}">${getStatusLabel(r)}</span>
-                        <span class="text-gray-400">${r.correspondence_date || ''}</span>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function renderStats() {
-            const scoped = activeProjectId ? allRows.filter(r => r.project_id === activeProjectId) : allRows;
-            const incoming = scoped.filter(r => r.direction === 'Incoming').length;
-            const outgoing = scoped.filter(r => r.direction === 'Outgoing').length;
-            const underReview = scoped.filter(r => r.status === 'Under Review').length;
-            const dueSoon = scoped.filter(r => r.due_date && r.due_date >= todayStr && r.status !== 'Approved' && r.status !== 'Rejected').length;
-            const overdue = scoped.filter(r => r.due_date && r.due_date < todayStr && r.status !== 'Approved' && r.status !== 'Rejected').length;
-
-            const cards = [
-                { label: 'Incoming', value: incoming, color: '#2563EB', onClick: "setDirectionQuickFilter('Incoming')" },
-                { label: 'Outgoing', value: outgoing, color: '#0891B2', onClick: "setDirectionQuickFilter('Outgoing')" },
-                { label: 'Under Review', value: underReview, color: '#7C3AED', onClick: "setStatusQuickFilter('Under Review')" },
-                { label: 'Submissions Due', value: dueSoon, color: '#D97706', onClick: null },
-                { label: 'Overdue', value: overdue, color: '#DC2626', onClick: "toggleOverdueOnly()" }
-            ];
-
-            document.getElementById('statsRow').innerHTML = cards.map(c => `
-                <div class="card p-4 ${c.onClick ? 'cursor-pointer hover:shadow-md transition' : ''}" style="${activeDirection === c.label ? `box-shadow: 0 0 0 2px ${c.color}` : ''}" ${c.onClick ? `onclick="${c.onClick}"` : ''}>
-                    <div class="text-2xl font-bold" style="color:${c.value > 0 ? c.color : 'var(--text-primary)'}">${c.value}</div>
-                    <div class="text-xs text-gray-500 mt-0.5 font-medium">${c.label}</div>
-                </div>
-            `).join('');
-        }
-
-        function setDirectionQuickFilter(direction) {
-            activeDirection = (activeDirection === direction) ? 'all' : direction;
-            renderStats();
-            renderTable();
-        }
-
-        function setStatusQuickFilter(status) {
-            activeFilter = status;
-            document.querySelectorAll('.filter-btn').forEach(b => b.classList.toggle('active', b.dataset.filter === status));
-            renderTable();
-        }
-
-        function toggleOverdueOnly() {
-            overdueOnly = !overdueOnly;
-            document.getElementById('overdueBanner').classList.toggle('hidden', !overdueOnly);
-            renderTable();
-        }
-
-        function renderTable() {
-            const tbody = document.getElementById('tableBody');
-            let rows = activeProjectId ? allRows.filter(r => r.project_id === activeProjectId) : allRows;
-            rows = activeFilter === 'all' ? rows : rows.filter(r => (r.status || 'New') === activeFilter);
-            if (activeCategory !== 'all') rows = rows.filter(r => categoryOf(r.type) === activeCategory);
-            if (activeDept !== 'all') rows = rows.filter(r => r.discipline === activeDept);
-            if (activeType !== 'all') rows = rows.filter(r => r.type === activeType);
-            if (overdueOnly) rows = rows.filter(r => r.due_date && r.due_date < todayStr && r.status !== 'Approved' && r.status !== 'Rejected');
-            if (activeDirection !== 'all') rows = rows.filter(r => r.direction === activeDirection);
-
-            if (searchText) {
-                rows = rows.filter(r =>
-                    (r.reference_no || '').toLowerCase().includes(searchText) ||
-                    (r.subject || '').toLowerCase().includes(searchText) ||
-                    (r.project_name || '').toLowerCase().includes(searchText) ||
-                    (r.discipline || '').toLowerCase().includes(searchText)
-                );
-            }
-
-            const needsAction = allRows.filter(r =>
-                r.assigned_to === myUserId &&
-                r.status === 'In Progress' &&
-                (!activeProjectId || r.project_id === activeProjectId)
-            );
-            const alertBox = document.getElementById('actionAlert');
-            if (isEmployee(myRole) && needsAction.length > 0) {
-                alertBox.classList.remove('hidden');
-                document.getElementById('actionCount').textContent = needsAction.length;
-            } else {
-                alertBox.classList.add('hidden');
-            }
-
-            if (!rows.length) {
-                tbody.innerHTML = `<tr><td colspan="9" class="p-10 text-center text-gray-400 font-medium">No matching correspondence found.</td></tr>`;
-                document.getElementById('mobileList').innerHTML = `<div class="card p-6 text-center text-gray-400 text-sm">No matching correspondence found.</div>`;
-                return;
-            }
-
-            tbody.innerHTML = rows.map(row => {
-                const isOverdue = row.due_date && row.due_date < todayStr && row.status !== 'Approved' && row.status !== 'Rejected';
-                const flagged = isOverdue ? 'row-overdue' : ((row.assigned_to === myUserId && row.status === 'In Progress') ? 'row-flag' : '');
-                const attachmentCell = row.attachment_url
-                    ? `<button onclick="event.stopPropagation();openPreview('${row.attachment_url}')" class="text-xs font-semibold text-blue-600 hover:underline">View File</button>`
-                    : '<span class="text-gray-300">—</span>';
-
-                return `
-                <tr class="border-b ${flagged} correspondence-row" data-row-id="${row.id}" onclick="openCorrespondenceDetails('${row.id}')" style="border-color:var(--border);cursor:pointer">
-                    <td class="p-4">
-                        <div class="font-medium text-gray-900">${projectNameOf(row)}</div>
-                        <span class="text-[11px] text-gray-500 font-semibold bg-gray-100 px-2 py-0.5 rounded">${row.discipline || 'General'}</span>
-                    </td>
-                    <td class="p-4 mono text-xs font-semibold text-gray-600">${row.reference_no || '—'}</td>
-                    <td class="p-4 text-gray-700 max-w-xs">
-                        <div class="font-medium">${row.subject || '—'}</div>
-                        ${row.reply_text ? `<div class="text-xs text-gray-500 mt-1 bg-gray-50 p-2 rounded-lg border border-gray-100">💬 ${row.reply_text}</div>` : ''}
-                        ${row.reply_attachment_url ? `<button onclick="event.stopPropagation();openPreview('${row.reply_attachment_url}')" class="text-xs font-semibold text-blue-600 block mt-1 hover:underline">📎 Reply attachment</button>` : ''}
-                    </td>
-                    <td class="p-4"><span class="text-xs font-semibold bg-gray-100 text-gray-700 px-2.5 py-1 rounded-md">${row.type || '—'}</span></td>
-                    <td class="p-4 mono text-xs ${isOverdue ? 'text-red-600 font-bold' : 'text-gray-600'}">${row.due_date || '—'} ${isOverdue ? '⚠️' : ''}</td>
-                    <td class="p-4">${attachmentCell}</td>
-                    <td class="p-4 font-medium text-gray-600">${memberName(row.assigned_to)}</td>
-                    <td class="p-4"><span class="status-pill" style="${statusStyle(row.status)}">${getStatusLabel(row)}</span></td>
-                    <td class="p-4 text-right whitespace-nowrap">${actionCell(row)}</td>
-                </tr>
-            `}).join('');
-
-            // نفس الصفوف المفلترة، بس بشكل كارت مناسب للشاشات الصغيرة
-            document.getElementById('mobileList').innerHTML = rows.map(row => {
-                const isOverdue = row.due_date && row.due_date < todayStr && row.status !== 'Approved' && row.status !== 'Rejected';
-                const flagged = isOverdue ? 'row-overdue' : ((row.assigned_to === myUserId && row.status === 'In Progress') ? 'row-flag' : '');
-                return `
-                <div class="card p-4 ${flagged}">
-                    <div class="flex justify-between items-start gap-2 mb-2">
-                        <div class="min-w-0">
-                            <div class="font-semibold text-gray-900 text-sm truncate">${projectNameOf(row)}</div>
-                            <div class="mono text-xs text-gray-500">${row.reference_no || '—'}</div>
-                        </div>
-                        <span class="status-pill shrink-0" style="${statusStyle(row.status)}">${getStatusLabel(row)}</span>
-                    </div>
-                    <p class="text-sm text-gray-700 mb-2">${row.subject || '—'}</p>
-                    <div class="flex flex-wrap gap-1.5 mb-3 text-[11px]">
-                        <span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-md font-medium">${row.type || '—'}</span>
-                        <span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-md font-medium">${row.discipline || 'General'}</span>
-                        ${row.due_date ? `<span class="px-2 py-0.5 rounded-md font-medium ${isOverdue ? 'bg-red-100 text-red-700' : 'bg-gray-100 text-gray-700'}">${isOverdue ? '⚠️ ' : ''}Due ${row.due_date}</span>` : ''}
-                    </div>
-                    <div class="flex justify-between items-center text-xs text-gray-500 mb-2">
-                        <span>Assigned: ${memberName(row.assigned_to)}</span>
-                        ${row.attachment_url ? `<button onclick="event.stopPropagation();openPreview('${row.attachment_url}')" class="font-semibold" style="color:var(--brand-light)">View file</button>` : ''}
-                    </div>
-                    ${row.reply_text ? `<div class="text-xs text-gray-500 mb-2 bg-gray-50 p-2 rounded-lg border border-gray-100">💬 ${row.reply_text}</div>` : ''}
-                    <div class="pt-2 border-t flex justify-end" style="border-color:var(--border)">${actionCell(row, '-m')}</div>
-                </div>
-            `}).join('');
-        }
-
-        function actionCell(row, suffix = '') {
-            const status = row.status || 'New';
-
-            if (isManager(myRole)) {
-                if (status === 'New') {
-                    let employees = companyMembers.filter(m => isEmployee(m.role) && m.department === row.discipline);
-                    const fallbackNote = employees.length === 0;
-                    if (employees.length === 0) employees = companyMembers.filter(m => isEmployee(m.role));
-                    const options = employees.map(e => `<option value="${e.id}">${e.full_name || 'Engineer'}${e.department ? ' — ' + e.department : ''}</option>`).join('');
-                    return `
-                        <div class="flex flex-col items-end gap-1">
-                            ${fallbackNote && employees.length ? `<span class="text-[10px] text-amber-600">No ${row.discipline || 'matching'} dept. staff — showing all</span>` : ''}
-                            <div class="flex items-center justify-end gap-2">
-                                <select onmousedown="event.stopPropagation()" onclick="event.stopPropagation()" id="assign-${row.id}${suffix}" class="border rounded-lg text-xs p-2 bg-white" style="border-color:var(--border)">${options || '<option value="">No engineers</option>'}</select>
-                                <button onclick="assignToEmployee('${row.id}','${suffix}')" class="text-white text-xs px-3 py-2 rounded-lg font-semibold bg-blue-600 hover:bg-blue-700 shadow-sm transition">Assign</button>
-                            </div>
-                        </div>
-                    `;
-                }
-                if (status === 'Under Review') {
-                    return `
-                        <div class="flex items-center justify-end gap-1.5">
-                            <button onclick="changeStatus('${row.id}', 'Approved')" class="text-white text-xs px-3 py-1.5 rounded-lg font-semibold bg-emerald-600 hover:bg-emerald-700 shadow-sm transition">Approve</button>
-                            <button onclick="openRejectModal('${row.id}')" class="text-white text-xs px-3 py-1.5 rounded-lg font-semibold bg-red-600 hover:bg-red-700 shadow-sm transition">Reject</button>
-                        </div>
-                    `;
-                }
-                return `<button onclick="deleteRow('${row.id}')" class="text-xs px-3 py-1.5 rounded-lg border font-medium text-gray-500 hover:bg-gray-50 transition" style="border-color:var(--border)">Delete</button>`;
-            }
-
-            if (isEmployee(myRole) && row.assigned_to === myUserId && (status === 'In Progress' || status === 'Rejected')) {
-                const isResubmit = status === 'Rejected';
-                return `
-                    <div class="flex flex-col gap-2 min-w-[200px] items-end">
-                        ${isResubmit ? `<div class="text-xs bg-red-50 text-red-700 border border-red-200 rounded-lg p-2 w-full">Manager's reason: ${row.rejection_reason || '—'}</div>` : ''}
-                        <textarea id="reply-${row.id}${suffix}" rows="2" placeholder="${isResubmit ? 'Explain the correction made...' : 'Type technical reply or action taken...'}" class="border rounded-xl text-xs p-2 w-full bg-white" style="border-color:var(--border)"></textarea>
-                        <input type="file" id="replyFile-${row.id}${suffix}" accept=".pdf,.jpg,.jpeg,.png" class="text-xs text-gray-500">
-                        <button onclick="sendReply('${row.id}','${suffix}')" class="text-white text-xs px-3 py-1.5 rounded-lg font-semibold bg-blue-600 hover:bg-blue-700 shadow-sm transition">${isResubmit ? 'Resubmit for Review' : 'Submit Review'}</button>
-                    </div>
-                `;
-            }
-            return `<span class="text-xs text-gray-400">—</span>`;
-        }
-
-        async function uploadFile(file, subfolder) {
-            if (!file) return null;
-            if (isDemoMode) return 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf';
-            const path = `${myCompanyId}/${subfolder}/${Date.now()}_${file.name}`;
-            const { error } = await db.storage.from('attachments').upload(path, file);
-            if (error) { alert('Upload error: ' + error.message); return null; }
-            const { data } = db.storage.from('attachments').getPublicUrl(path);
-            return data.publicUrl;
-        }
-
-        async function assignToEmployee(id, suffix = '') {
-            const select = document.getElementById('assign-' + id + suffix);
-            const employeeId = select.value;
-            if (!employeeId) { alert('Please select an engineer first.'); return; }
-            if (isDemoMode) {
-                const row = allRows.find(r => r.id === id);
-                if (row) { row.assigned_to = employeeId; row.status = 'In Progress'; }
-                loadTable(); return;
-            }
-            const { error } = await db.from('correspondence').update({ assigned_to: employeeId, status: 'In Progress' }).eq('id', id);
-            if (error) alert('Error: ' + error.message);
-            else loadTable();
-        }
-
-        async function sendReply(id, suffix = '') {
-            const textarea = document.getElementById('reply-' + id + suffix);
-            const fileInput = document.getElementById('replyFile-' + id + suffix);
-            const replyText = textarea.value.trim();
-            if (!replyText) { alert('Please enter your reply comments.'); return; }
-
-            let replyAttachmentUrl = null;
-            if (fileInput.files[0]) replyAttachmentUrl = await uploadFile(fileInput.files[0], 'replies');
-
-            if (isDemoMode) {
-                const row = allRows.find(r => r.id === id);
-                if (row) { row.reply_text = replyText; row.reply_attachment_url = replyAttachmentUrl; row.status = 'Under Review'; }
-                loadTable(); return;
-            }
-            const { error } = await db.from('correspondence').update({
-                reply_text: replyText, reply_attachment_url: replyAttachmentUrl, status: 'Under Review'
-            }).eq('id', id);
-            if (error) alert('Error: ' + error.message);
-            else loadTable();
-        }
-
-        async function changeStatus(id, newStatus) {
-            if (!confirm(`Are you sure you want to mark this document as ${newStatus}?`)) return;
-            if (isDemoMode) {
-                const row = allRows.find(r => r.id === id);
-                if (row) row.status = newStatus;
-                loadTable(); return;
-            }
-            const { error } = await db.from('correspondence').update({ status: newStatus }).eq('id', id);
-            if (error) alert('Error: ' + error.message);
-            else loadTable();
-        }
-
-        async function deleteRow(id) {
-            if (!confirm('Are you sure you want to permanently delete this record?')) return;
-            if (isDemoMode) { allRows = allRows.filter(r => r.id !== id); loadTable(); return; }
-            const { error } = await db.from('correspondence').delete().eq('id', id);
-            if (error) alert('Error: ' + error.message);
-            else loadTable();
-        }
-
-        document.getElementById('exportExcelBtn').onclick = () => {
-            const exportRows = activeProjectId ? allRows.filter(r => r.project_id === activeProjectId) : allRows;
-            if (!exportRows.length) { alert('No data to export.'); return; }
-            let csv = '\uFEFFProject,Discipline,Reference,Subject,Type,Direction,Priority,Date,DueDate,Status\n';
-            allRows.forEach(r => {
-                csv += `"${r.project_name || ''}","${r.discipline || ''}","${r.reference_no || ''}","${(r.subject || '').replace(/"/g, '""')}","${r.type || ''}","${r.direction || ''}","${r.priority || ''}","${r.correspondence_date || ''}","${r.due_date || ''}","${r.status || ''}"\n`;
-            });
-            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `BA_Correspondence_Report_${todayStr}.csv`;
-            a.click();
-        };
-
-        function resetForm() {
-            document.getElementById('addForm').reset();
-            document.getElementById('editId').value = '';
-            document.getElementById('fDate').value = todayStr;
-            document.getElementById('fDueDate').value = nextWeek.toISOString().split('T')[0];
-            document.getElementById('formTitle').textContent = 'New Document Entry';
-            document.getElementById('submitBtn').textContent = 'Save Document';
-        }
-
-        // ============ Save Document (id removed for real inserts — DB generates its own uuid) ============
-        document.getElementById('addForm').onsubmit = async (e) => {
-            e.preventDefault();
-            const fileInput = document.getElementById('fAttachment');
-            let attachmentUrl = null;
-            if (fileInput.files[0]) attachmentUrl = await uploadFile(fileInput.files[0], 'documents');
-
-            const baseData = {
-                project_id: document.getElementById('fProject').value,
-                reference_no: document.getElementById('fRef').value,
-                sender_recipient: document.getElementById('fRecipient').value,
-                subject: document.getElementById('fSubject').value,
-                type: document.getElementById('fType').value,
-                discipline: document.getElementById('fDiscipline').value,
-                direction: document.getElementById('fDirection').value,
-                priority: document.getElementById('fPriority').value,
-                correspondence_date: document.getElementById('fDate').value,
-                due_date: document.getElementById('fDueDate').value,
-                attachment_url: attachmentUrl,
-                status: 'New',
-                company_id: myCompanyId,
-                user_id: myUserId,
-                assigned_to: null,
-                reply_text: '',
-                reply_attachment_url: null
-            };
-
-            if (isDemoMode) {
-                allRows.unshift({ id: 'demo-' + Date.now(), created_at: new Date().toISOString(), ...baseData });
-                resetForm();
-                addModal.classList.add('hidden');
-                loadTable();
-                return;
-            }
-
-            const { error } = await db.from('correspondence').insert([baseData]);
-            if (error) {
-                alert('Error saving record: ' + error.message);
-            } else {
-                resetForm();
-                addModal.classList.add('hidden');
-                loadTable();
-            }
-        };
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
     </script>
-
-<!-- ============ CORRESPONDENCE DETAILS PANEL ============ -->
-<div id="companyDetailsPanel" class="company-details-panel" onclick="if(event.target===this) closeCorrespondenceDetails()">
-  <aside class="company-details-sheet">
-    <div class="flex items-center justify-between gap-3 pb-4 border-b" style="border-color:var(--border)">
-      <div>
-        <h3 id="detailTitle">Correspondence Details</h3>
-        <p id="detailReference" class="mono text-xs text-gray-500 mt-1"></p>
-      </div>
-      <button type="button" onclick="closeCorrespondenceDetails()" aria-label="Close"
-              class="text-2xl text-gray-400 hover:text-gray-700 leading-none">&times;</button>
-    </div>
-    <div class="company-detail-grid">
-      <div class="company-detail-item"><div class="label">Project</div><div id="detailProject" class="value">—</div></div>
-      <div class="company-detail-item"><div class="label">Discipline</div><div id="detailDiscipline" class="value">—</div></div>
-      <div class="company-detail-item"><div class="label">Type</div><div id="detailType" class="value">—</div></div>
-      <div class="company-detail-item"><div class="label">Direction</div><div id="detailDirection" class="value">—</div></div>
-      <div class="company-detail-item"><div class="label">Priority</div><div id="detailPriority" class="value">—</div></div>
-      <div class="company-detail-item"><div class="label">Due Date</div><div id="detailDue" class="value">—</div></div>
-      <div class="company-detail-item"><div class="label">Assigned To</div><div id="detailAssigned" class="value">—</div></div>
-      <div class="company-detail-item"><div class="label">Status</div><div id="detailStatus" class="value">—</div></div>
-    </div>
-    <div class="company-detail-section">
-      <div class="section-title">Subject</div>
-      <div id="detailSubject" class="text-sm text-gray-800 font-medium"></div>
-    </div>
-    <div class="company-detail-section">
-      <div class="section-title">Sender / Recipient</div>
-      <div id="detailRecipient" class="text-sm text-gray-700"></div>
-    </div>
-    <div id="detailReplySection" class="company-detail-section hidden">
-      <div class="section-title">Reply</div>
-      <div id="detailReply" class="text-sm text-gray-700 whitespace-pre-wrap"></div>
-    </div>
-    <div class="company-detail-section">
-      <div class="section-title">Attachments</div>
-      <div id="detailAttachments" class="flex flex-wrap gap-2"></div>
-    </div>
-  </aside>
-</div>
-
-
-<script id="company-demo-ux">
-/* ===== Company Trial Demo ===== */
-function showCompanyTrialBanner(){
-  if(document.getElementById('companyTrialBanner')) return;
-  const host=document.getElementById('dashboardView');
-  if(!host) return;
-  const el=document.createElement('div');
-  el.id='companyTrialBanner';
-  el.className='company-demo-banner';
-  el.innerHTML='<span>Company Trial Mode — explore the workflow with sample Riyadh & Jeddah projects.</span><button type="button" onclick="exitCompanyTrial()">Exit Demo</button>';
-  host.prepend(el);
-}
-function exitCompanyTrial(){
-  isDemoMode=false;
-  location.reload();
-}
-function startCompanyTrial(){
-  startDemo('Manager');
-  showCompanyTrialBanner();
-}
-function openCorrespondenceDetails(id){
-  const row=allRows.find(r=>r.id===id);
-  if(!row) return;
-  document.getElementById('detailTitle').textContent=row.subject || 'Correspondence Details';
-  document.getElementById('detailReference').textContent=row.reference_no || '—';
-  document.getElementById('detailProject').textContent=projectNameOf(row);
-  document.getElementById('detailDiscipline').textContent=row.discipline || 'General';
-  document.getElementById('detailType').textContent=row.type || '—';
-  document.getElementById('detailDirection').textContent=row.direction || '—';
-  document.getElementById('detailPriority').textContent=row.priority || '—';
-  document.getElementById('detailDue').textContent=row.due_date || '—';
-  const member=companyMembers.find(m=>m.id===row.assigned_to);
-  document.getElementById('detailAssigned').textContent=member ? (member.full_name || '—') : 'Unassigned';
-  document.getElementById('detailStatus').textContent=row.status || 'New';
-  document.getElementById('detailSubject').textContent=row.subject || '—';
-  document.getElementById('detailRecipient').textContent=row.sender_recipient || '—';
-  const replySec=document.getElementById('detailReplySection');
-  replySec.classList.toggle('hidden',!row.reply_text);
-  document.getElementById('detailReply').textContent=row.reply_text || '';
-  const att=document.getElementById('detailAttachments');
-  const items=[];
-  if(row.attachment_url) items.push(`<button type="button" class="text-sm font-semibold text-blue-600 border rounded-lg px-3 py-2 hover:bg-blue-50" onclick="openPreview('${row.attachment_url}')">View Document</button>`);
-  if(row.reply_attachment_url) items.push(`<button type="button" class="text-sm font-semibold text-blue-600 border rounded-lg px-3 py-2 hover:bg-blue-50" onclick="openPreview('${row.reply_attachment_url}')">View Reply</button>`);
-  att.innerHTML=items.length?items.join(''):'<span class="text-sm text-gray-400">No attachment</span>';
-  document.getElementById('companyDetailsPanel').classList.add('open');
-}
-function closeCorrespondenceDetails(){
-  document.getElementById('companyDetailsPanel')?.classList.remove('open');
-}
-document.addEventListener('keydown',e=>{if(e.key==='Escape')closeCorrespondenceDetails();});
-</script>
-
-
-<!-- ============ BA Engineering BILINGUAL UI ============ -->
-<style id="ba-language-style">
-  html[dir="rtl"] body{
-    font-family:'Cairo','Tahoma','Arial',sans-serif;
-  }
-  html[dir="rtl"] .mono{
-    font-family:'IBM Plex Mono',monospace;
-  }
-  html[dir="rtl"] .search-wrap-icon{
-    left:auto !important;
-    right:.75rem !important;
-  }
-  html[dir="rtl"] #searchInput,
-  html[dir="rtl"] #searchInputMobile{
-    padding-left:.75rem !important;
-    padding-right:2.25rem !important;
-  }
-  html[dir="rtl"] .company-details-sheet{
-    direction:rtl;
-    text-align:right;
-  }
-  html[dir="rtl"] .company-details-panel.open{
-    justify-content:flex-start;
-  }
-  html[dir="rtl"] table{
-    direction:rtl;
-  }
-  html[dir="rtl"] .text-right{
-    text-align:left !important;
-  }
-  html[dir="rtl"] .text-left{
-    text-align:right !important;
-  }
-  #langEnBtn,#langArBtn{transition:.15s ease}
-  #langEnBtn.active,#langArBtn.active{
-    background:var(--brand);
-    color:#fff;
-  }
-</style>
-<script>
-(function(){
-  const T = {
-    "EDMS Platform":"منصة إدارة المستندات والمراسلات",
-    "Log out":"تسجيل الخروج",
-    "Welcome to BA Platform":"مرحبًا بك في BA Platform",
-    "Secure Engineering Document Management System":"نظام إدارة المستندات الهندسية والمراسلات",
-    "Log in":"تسجيل الدخول",
-    "Register / Join Company":"التسجيل / الانضمام إلى شركة",
-    "Company Code":"رمز الشركة",
-    "Full Name":"الاسم الكامل",
-    "Account Role":"دور الحساب",
-    "Manager / Project Director":"مدير / مدير مشروع",
-    "Engineer / Team Member":"مهندس / عضو فريق",
-    "New company code → you become Manager. Existing code → joins as the role selected here.":"رمز شركة جديد ← تصبح مديرًا. الرمز الموجود ← تنضم بالدور المحدد هنا.",
-    "Department":"القسم",
-    "Work Email":"البريد الإلكتروني للعمل",
-    "Password":"كلمة المرور",
-    "Log in to Workspace":"تسجيل الدخول إلى مساحة العمل",
-    "Instant Demo Access for Evaluation (no account needed)":"دخول تجريبي فوري للتقييم (بدون حساب)",
-    "Company Trial":"تجربة الشركات",
-    "⚡ Manager Demo":"⚡ تجربة المدير",
-    "⚡ Engineer Demo":"⚡ تجربة المهندس",
-    "📊 Dashboard":"📊 لوحة التحكم",
-    "📁 Projects":"📁 المشاريع",
-    "Viewing:":"عرض:",
-    "Clear":"مسح",
-    "Projects":"المشاريع",
-    "Every document belongs to a project":"كل مستند مرتبط بمشروع",
-    "New Project":"مشروع جديد",
-    "You have":"لديك",
-    "document(s) requiring your action or reply.":"مستند(ات) تحتاج إلى إجراء أو رد منك.",
-    "Project Correspondence":"مراسلات المشروع",
-    "Track, review, transfer, and approve technical submittals and letters":"متابعة ومراجعة وتحويل واعتماد المراسلات والمستندات الفنية",
-    "Export Excel":"تصدير Excel",
-    "New Document":"مستند جديد",
-    "Showing overdue items only":"عرض العناصر المتأخرة فقط",
-    "Recent Activity":"النشاط الأخير",
-    "All Items":"كل العناصر",
-    "✉️ Correspondence":"✉️ المراسلات",
-    "📄 Documents":"📄 المستندات",
-    "📦 Deliverables":"📦 التسليمات",
-    "All Status":"كل الحالات",
-    "New":"جديد",
-    "In Progress":"قيد التنفيذ",
-    "Under Review":"قيد المراجعة",
-    "Approved":"معتمد",
-    "Rejected":"مرفوض",
-    "Filters":"الفلاتر",
-    "All":"الكل",
-    "Electrical":"كهرباء",
-    "Civil":"مدني",
-    "Civil / Structural":"مدني / إنشائي",
-    "Architectural":"معماري",
-    "Mechanical":"ميكانيكا",
-    "HR":"الموارد البشرية",
-    "Human Resources":"الموارد البشرية",
-    "Document Type":"نوع المستند",
-    "Letters":"خطابات",
-    "Materials":"مواد",
-    "RFIs":"طلبات معلومات RFI",
-    "Drawings":"رسومات",
-    "Payment Certs":"مستخلصات",
-    "Handovers":"تسليمات",
-    "Project / Discipline":"المشروع / التخصص",
-    "Reference No.":"رقم المرجع",
-    "Subject & Notes":"الموضوع والملاحظات",
-    "Type":"النوع",
-    "Due Date":"تاريخ الاستحقاق",
-    "Attachment":"المرفق",
-    "Assigned To":"مسند إلى",
-    "Status":"الحالة",
-    "Action":"الإجراء",
-    "Loading documents workspace...":"جاري تحميل مساحة المستندات...",
-    "No matching correspondence found.":"لا توجد مراسلات مطابقة.",
-    "New Document Entry":"إضافة مستند جديد",
-    "Register incoming or outgoing project correspondence":"تسجيل مراسلة واردة أو صادرة للمشروع",
-    "Project":"المشروع",
-    "Select a project...":"اختر مشروعًا...",
-    "No projects yet —":"لا توجد مشاريع حتى الآن —",
-    "create one first":"أنشئ مشروعًا أولًا",
-    "Reference Number":"رقم المرجع",
-    "Sender / Recipient":"المرسل / المستلم",
-    "Subject Description":"وصف الموضوع",
-    "Detailed subject of the correspondence...":"اكتب موضوع المراسلة بالتفصيل...",
-    "Document Type":"نوع المستند",
-    "Official Letter":"خطاب رسمي",
-    "Material Submittal (MAR)":"اعتماد مواد (MAR)",
-    "Shop Drawing / REV":"رسومات تنفيذية / REV",
-    "Request For Information (RFI)":"طلب معلومات (RFI)",
-    "Payment Certificate":"مستخلص دفعة",
-    "Final Handover":"التسليم النهائي",
-    "Direction":"الاتجاه",
-    "Outgoing":"صادر",
-    "Incoming":"وارد",
-    "Priority":"الأولوية",
-    "Normal":"عادي",
-    "Urgent / Critical":"عاجل / حرج",
-    "Correspondence Date":"تاريخ المراسلة",
-    "Due Date / Action Deadline":"تاريخ الاستحقاق / الموعد النهائي للإجراء",
-    "Attachment File (PDF, Image) — Optional":"ملف مرفق (PDF أو صورة) — اختياري",
-    "Save Document":"حفظ المستند",
-    "Cancel":"إلغاء",
-    "Reject Document":"رفض المستند",
-    "Rejection Reason":"سبب الرفض",
-    "Explain what needs to be corrected...":"وضح ما الذي يحتاج إلى تصحيح...",
-    "Project Name":"اسم المشروع",
-    "Project Code (optional)":"رمز المشروع (اختياري)",
-    "Create Project":"إنشاء المشروع",
-    "Attachment Preview":"معاينة المرفق",
-    "Loading preview...":"جاري تحميل المعاينة...",
-    "Correspondence Details":"تفاصيل المراسلة",
-    "Subject":"الموضوع",
-    "Reply":"الرد",
-    "Attachments":"المرفقات",
-    "No attachment":"لا يوجد مرفق",
-    "View File":"عرض الملف",
-    "View file":"عرض الملف",
-    "View Document":"عرض المستند",
-    "View Reply":"عرض الرد",
-    "Reply attachment":"مرفق الرد",
-    "Assigned:":"مسند إلى:",
-    "Due":"الاستحقاق",
-    "Approve":"اعتماد",
-    "Reject":"رفض",
-    "Delete":"حذف",
-    "Assign":"إسناد",
-    "Submit Review":"إرسال للمراجعة",
-    "Resubmit for Review":"إعادة الإرسال للمراجعة",
-    "No engineers":"لا يوجد مهندسون",
-    "No attachment":"لا يوجد مرفق",
-    "General":"عام",
-    "Unassigned":"غير مسند",
-    "Loading...":"جاري التحميل...",
-    "Delete":"حذف"
-  };
-
-  const attrT = {
-    "Search reference, subject, project...":"ابحث بالمرجع أو الموضوع أو المشروع...",
-    "New code creates a company, existing code joins it":"الرمز الجديد ينشئ شركة، والرمز الموجود يتيح الانضمام إليها",
-    "e.g. Eng. Ahmed Barnoukh":"مثال: Eng. Ahmed Barnoukh",
-    "Please select an engineer first.":"يرجى اختيار مهندس أولًا.",
-    "Type technical reply or action taken...":"اكتب الرد الفني أو الإجراء الذي تم اتخاذه...",
-    "Explain the correction made...":"وضح التصحيح الذي تم إجراؤه...",
-    "Main Contractor / Consultant":"المقاول الرئيسي / الاستشاري",
-    "REF-2026-001":"REF-2026-001",
-    "Riyadh Business Center Tower":"Riyadh Business Center Tower",
-    "e.g. Riyadh Business Center Tower":"مثال: Riyadh Business Center Tower",
-    "e.g. RBC-001":"مثال: RBC-001"
-  };
-
-  function shouldSkip(node){
-    if(!node || !node.parentElement) return true;
-    const p=node.parentElement;
-    return p.closest("[data-no-translate],.brand-lock,script,style") !== null;
-  }
-
-  function translateTextNode(node){
-    if(shouldSkip(node)) return;
-    const raw=node.nodeValue;
-    const clean=raw.replace(/\s+/g," ").trim();
-    if(!clean) return;
-    if(T[clean]){
-      const leading=raw.match(/^\s*/)?.[0] || "";
-      const trailing=raw.match(/\s*$/)?.[0] || "";
-      node.nodeValue=leading+T[clean]+trailing;
-    } else if(/^Assigned:\s*/.test(clean)){
-      node.nodeValue=raw.replace("Assigned:", "مسند إلى:");
-    } else if(/^Due\s+/.test(clean)){
-      node.nodeValue=raw.replace(/^(\s*)Due\s+/, "$1الاستحقاق ");
-    }
-  }
-
-  function translateStatic(){
-    if(window.BA_LANG !== "ar") return;
-    const walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);
-    const nodes=[];
-    let n;
-    while(n=walker.nextNode()) nodes.push(n);
-    nodes.forEach(translateTextNode);
-
-    document.querySelectorAll("input[placeholder],textarea[placeholder]").forEach(el=>{
-      if(attrT[el.getAttribute("placeholder")]) el.setAttribute("placeholder",attrT[el.getAttribute("placeholder")]);
-    });
-
-    document.querySelectorAll("option").forEach(o=>{
-      const txt=o.textContent.trim();
-      if(T[txt]) o.textContent=T[txt];
-    });
-
-    // Mixed footer text: preserve BA Engineering exactly.
-    const footer=document.querySelector("footer");
-    if(footer && footer.querySelector(".brand-lock")){
-      footer.innerHTML='<span class="brand-lock" data-no-translate>BA Engineering</span> منصة إدارة المستندات والمراسلات الهندسية للمؤسسات © 2026.';
-    }
-
-    // Demo banner is generated dynamically.
-    const banner=document.getElementById("companyTrialBanner");
-    if(banner){
-      const span=banner.querySelector("span");
-      const btn=banner.querySelector("button");
-      if(span) span.textContent="وضع تجربة الشركات — استكشف سير العمل باستخدام مشروعي الرياض وجدة التجريبيين.";
-      if(btn) btn.textContent="خروج من التجربة";
-    }
-  }
-
-  function setLang(lang){
-    const ar=lang==="ar";
-    window.BA_LANG=lang;
-    document.documentElement.lang=ar?"ar":"en";
-    document.documentElement.dir=ar?"rtl":"ltr";
-    localStorage.setItem("ba_workflow_lang",lang);
-
-    document.getElementById("langArBtn")?.classList.toggle("active",ar);
-    document.getElementById("langEnBtn")?.classList.toggle("active",!ar);
-
-    if(ar){
-      // Translate from the original English source by reloading once, then applying AR.
-      // The current DOM is English on first load, so this path is deterministic.
-      translateStatic();
-      translateDynamicValues();
-    } else {
-      location.reload();
-      return;
-    }
-  }
-
-  function translateDynamicValues(){
-    if(window.BA_LANG!=="ar") return;
-
-    // Status/type/direction/priority values are data, not project names or user-entered text.
-    document.querySelectorAll(".status-pill").forEach(el=>{
-      const x=el.textContent.trim();
-      if(T[x]) el.textContent=T[x];
-    });
-
-    // Details panel fields.
-    ["detailDiscipline","detailType","detailDirection","detailPriority","detailStatus"].forEach(id=>{
-      const el=document.getElementById(id);
-      if(el && T[el.textContent.trim()]) el.textContent=T[el.textContent.trim()];
-    });
-
-    const assigned=document.getElementById("detailAssigned");
-    if(assigned && assigned.textContent.trim()==="Unassigned") assigned.textContent="غير مسند";
-
-    // Generated action controls.
-    document.querySelectorAll("button,select option").forEach(el=>{
-      const x=el.textContent.trim();
-      if(T[x]) el.textContent=T[x];
-    });
-
-    // Row/mobile labels that contain dynamic values.
-    document.querySelectorAll("#mobileList span,#mobileList div,#mobileList p").forEach(el=>{
-      if(el.children.length) return;
-      const x=el.textContent.trim();
-      if(x.startsWith("Assigned:")) el.textContent=x.replace(/^Assigned:/,"مسند إلى:");
-      if(x.startsWith("Due ")) el.textContent=x.replace(/^Due /,"الاستحقاق ");
-    });
-  }
-
-  function applySavedLanguage(){
-    const saved=localStorage.getItem("ba_workflow_lang") || "en";
-    window.BA_LANG=saved;
-    if(saved==="ar"){
-      document.documentElement.lang="ar";
-      document.documentElement.dir="rtl";
-      setTimeout(()=>{
-        translateStatic();
-        translateDynamicValues();
-      },50);
-    } else {
-      document.documentElement.lang="en";
-      document.documentElement.dir="ltr";
-    }
-    document.getElementById("langArBtn")?.addEventListener("click",()=>setLang("ar"));
-    document.getElementById("langEnBtn")?.addEventListener("click",()=>setLang("en"));
-  }
-
-  // Re-translate newly rendered dynamic content without touching project names,
-  // subjects, references, or engineer names.
-  const observer=new MutationObserver(()=>{
-    if(window.BA_LANG==="ar"){
-      clearTimeout(window.__baTranslateTimer);
-      window.__baTranslateTimer=setTimeout(translateDynamicValues,20);
-    }
-  });
-  observer.observe(document.body,{childList:true,subtree:true});
-
-  // Intercept row/action controls that are created dynamically.
-  document.addEventListener("click",function(e){
-    const el=e.target.closest("button,select");
-    if(!el) return;
-    if(el.id && (el.id==="langArBtn" || el.id==="langEnBtn")) return;
-    if(window.BA_LANG==="ar") setTimeout(translateDynamicValues,30);
-  },true);
-
-  // Add an ID to the header search icon so RTL positioning is reliable.
-  document.querySelectorAll("#searchInput").forEach(inp=>{
-    const icon=inp.parentElement?.querySelector("svg");
-    if(icon) icon.classList.add("search-wrap-icon");
-  });
-
-  applySavedLanguage();
-})();
-</script>
-
 </body>
 </html>
