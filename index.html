@@ -210,10 +210,11 @@
             width: 100%;
             max-width: 1420px;
             display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
             justify-content: space-between;
             align-items: center;
-            flex-wrap: wrap;
-            gap: 14px;
+            gap: 10px;
         }
 
         .brand-logo-container {
@@ -253,8 +254,42 @@
             gap: 12px;
         }
 
-        .topbar-group-right { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
-        .topbar-group-left { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+        .topbar-group-right { display: flex; align-items: center; gap: 10px; flex-wrap: nowrap; flex-shrink: 0; }
+        .topbar-group-left { display: flex; align-items: center; gap: 10px; flex-wrap: nowrap; flex-shrink: 0; }
+
+        /* BA Solutions dropdown (merges Engineering Tools + EDMS under one nav item) */
+        .nav-dropdown { position: relative; }
+        .nav-dropdown-menu {
+            position: absolute;
+            top: calc(100% + 10px);
+            right: 0;
+            min-width: 240px;
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: var(--glass-border);
+            border-radius: 14px;
+            box-shadow: var(--glass-shadow);
+            padding: 8px;
+            display: none;
+            flex-direction: column;
+            gap: 4px;
+            z-index: 200;
+        }
+        html[dir="ltr"] .nav-dropdown-menu { right: auto; left: 0; }
+        .nav-dropdown:hover .nav-dropdown-menu,
+        .nav-dropdown.open .nav-dropdown-menu { display: flex; }
+        .nav-dropdown-menu a, .nav-dropdown-menu button {
+            display: flex; align-items: center; gap: 10px; width: 100%;
+            padding: 11px 14px; border-radius: 10px; text-align: right;
+            color: var(--text-dark); text-decoration: none; background: transparent; border: none;
+            font-weight: 700; font-size: 13.5px; cursor: pointer; font-family: 'Cairo', sans-serif;
+        }
+        html[dir="ltr"] .nav-dropdown-menu a, html[dir="ltr"] .nav-dropdown-menu button { text-align: left; }
+        .nav-dropdown-menu a:hover, .nav-dropdown-menu button:hover { background: var(--active-blue); color: var(--primary-blue); }
+        .nav-dropdown-menu i { color: var(--accent-color); width: 16px; text-align: center; flex-shrink: 0; }
+        .nav-dropdown-caret { font-size: 9px !important; width: auto !important; margin-inline-start: 2px; transition: transform 0.2s ease; opacity: 0.7; }
+        .nav-dropdown:hover .nav-dropdown-caret, .nav-dropdown.open .nav-dropdown-caret { transform: rotate(180deg); }
 
         .top-bar-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
         
@@ -262,7 +297,7 @@
             color: var(--text-dark); text-decoration: none; background: rgba(255, 255, 255, 0.96); border: 1px solid rgba(255, 255, 255, 0.6);
             font-size: 13.5px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 8px; 
             height: 40px; padding: 0 16px; border-radius: 10px; transition: all 0.3s ease; box-sizing: border-box;
-            box-shadow: 0 3px 10px rgba(3, 9, 22, 0.28);
+            box-shadow: 0 3px 10px rgba(3, 9, 22, 0.28); white-space: nowrap; flex-shrink: 0;
         }
         .nav-link i { font-size: 13px; width: 14px; text-align: center; flex-shrink: 0; }
         .nav-link:hover { color: var(--primary-blue); background: #ffffff; transform: translateY(-2px); box-shadow: 0 6px 16px rgba(3, 9, 22, 0.32); }
@@ -292,6 +327,44 @@
             box-shadow: 0 3px 10px rgba(226, 96, 31, 0.35);
         }
         .nav-link.nav-cta:hover { color: #ffffff; background: var(--accent-light); box-shadow: 0 6px 16px rgba(226, 96, 31, 0.45); }
+
+        /* BA Solutions (EDMS) nav entry — same family as tools-nav-link but its own identity */
+        .solutions-nav-link {
+            background: rgba(255, 255, 255, 0.96) !important;
+            color: var(--primary-blue) !important;
+            border: 1px solid var(--primary-blue) !important;
+            font-weight: 800 !important;
+        }
+        .solutions-nav-link i { color: var(--primary-blue) !important; }
+        .solutions-nav-link:hover {
+            background: var(--primary-blue) !important;
+            color: #fff !important;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(22, 60, 110, 0.34) !important;
+        }
+        .solutions-nav-link:hover i { color: #fff !important; }
+
+        /* EDMS Live Demo — the single most prominent action in the header */
+        .nav-link.edms-cta-btn {
+            background: var(--primary-blue);
+            color: #ffffff !important;
+            border: 1px solid var(--primary-blue);
+            font-weight: 800;
+            box-shadow: 0 3px 12px rgba(22, 60, 110, 0.45);
+        }
+        .nav-link.edms-cta-btn i { color: #FFD27A !important; }
+        .nav-link.edms-cta-btn:hover {
+            background: var(--primary-blue-hover);
+            color: #ffffff !important;
+            box-shadow: 0 8px 22px rgba(22, 60, 110, 0.55);
+        }
+
+        /* Slightly compact the header on mid-size desktops so everything keeps to one row */
+        @media (max-width: 1360px) {
+            .nav-link { padding: 0 12px; font-size: 12.5px; gap: 6px; }
+            .topbar-group-right, .topbar-group-left { gap: 7px; }
+            .top-bar-actions { gap: 7px; }
+        }
 
         .theme-btn {
             background: rgba(255, 255, 255, 0.96); border: 1px solid rgba(255, 255, 255, 0.6); color: var(--primary-blue);
@@ -1417,10 +1490,23 @@
             </div>
             <span class="topbar-divider"></span>
             <button class="nav-link" onclick="switchMainView('home-view')"><i class="fa-solid fa-house"></i> <span data-ar="الرئيسية" data-en="Home">الرئيسية</span></button>
-            <a class="nav-link tools-nav-link" href="tools/index.html" aria-label="Engineering Tools">
-                    <i class="fa-solid fa-calculator"></i>
-                    <span data-ar="Engineering Tools" data-en="Engineering Tools">Engineering Tools</span>
-                </a>
+            <div class="nav-dropdown" id="solutions-dropdown">
+                <button class="nav-link solutions-nav-link" onclick="toggleSolutionsMenu(event)" aria-haspopup="true" aria-label="BA Solutions">
+                    <i class="fa-solid fa-diagram-project"></i>
+                    <span data-ar="BA Solutions" data-en="BA Solutions">BA Solutions</span>
+                    <i class="fa-solid fa-chevron-down nav-dropdown-caret"></i>
+                </button>
+                <div class="nav-dropdown-menu">
+                    <button onclick="switchMainView('solutions-view'); closeSolutionsMenu();">
+                        <i class="fa-solid fa-bolt"></i>
+                        <span data-ar="منصة المراسلات (EDMS)" data-en="Correspondence Platform (EDMS)">منصة المراسلات (EDMS)</span>
+                    </button>
+                    <a href="tools/index.html" onclick="closeSolutionsMenu();">
+                        <i class="fa-solid fa-calculator"></i>
+                        <span data-ar="الأدوات الهندسية" data-en="Engineering Tools">الأدوات الهندسية</span>
+                    </a>
+                </div>
+            </div>
             <button class="nav-link nav-cta" id="login-nav-btn" onclick="handleLoginNavClick()"><i class="fa-solid fa-right-to-bracket"></i> <span>Sign In</span></button>
         </div>
 
@@ -1428,12 +1514,16 @@
             <nav class="nav-center-group">
                 <button class="nav-link" onclick="document.getElementById('courses-section').scrollIntoView({behavior: 'smooth'})"><i class="fa-solid fa-graduation-cap"></i> <span data-ar="الدورات المتاحة" data-en="Available Courses">الدورات المتاحة</span></button>
                 <button class="nav-link" onclick="switchMainView('articles-list-view')"><i class="fa-solid fa-newspaper"></i> <span data-ar="مقالات" data-en="Articles">مقالات</span></button>
-                <button class="nav-link" onclick="switchMainView('about-view')"><i class="fa-solid fa-circle-info"></i> <span data-ar="من نحن" data-en="About Us">من نحن</span></button>
             </nav>
 
             <span class="topbar-divider"></span>
 
             <nav class="top-bar-actions">
+                <a class="nav-link edms-cta-btn" href="workflow.html" target="_blank" rel="noopener" aria-label="EDMS Live Demo">
+                    <i class="fa-solid fa-bolt"></i>
+                    <span data-ar="تجربة منصة المراسلات للشركات" data-en="EDMS Demo for Companies">تجربة منصة المراسلات للشركات</span>
+                </a>
+
                 <button class="nav-link" id="lang-toggle-btn" onclick="toggleLanguage()">
                     <i class="fa-solid fa-globe"></i> <span id="lang-btn-text">English</span>
                 </button>
@@ -1718,6 +1808,60 @@
                 </div>
             </div>
         </section>
+    </main>
+
+    <main id="solutions-view" class="app-view">
+        <div class="dashboard-content" style="padding-top: 25px;">
+            <div class="course-details-header" style="background: linear-gradient(135deg, var(--primary-blue) 0%, #0a1128 100%);">
+                <h2 data-ar="BA Solutions — نظام إدارة المراسلات والمستندات (EDMS)" data-en="BA Solutions — Engineering Document & Correspondence Management System (EDMS)">BA Solutions — نظام إدارة المراسلات والمستندات (EDMS)</h2>
+                <p data-ar="حل رقمي متكامل لشركات المقاولات والمكاتب الاستشارية لإدارة المراسلات، طلبات المعلومات (RFI)، واعتمادات المواد في مكان واحد منظم" data-en="A complete digital solution for contractors and consulting offices to manage correspondence, RFIs, and material approvals in one organized place">حل رقمي متكامل لشركات المقاولات والمكاتب الاستشارية لإدارة المراسلات، طلبات المعلومات (RFI)، واعتمادات المواد في مكان واحد منظم</p>
+                <div class="course-meta">
+                    <div class="meta-item"><i class="fa-solid fa-building"></i> <span data-ar="مخصص للشركات والمكاتب الهندسية" data-en="Built for Companies & Consulting Offices">مخصص للشركات والمكاتب الهندسية</span></div>
+                    <div class="meta-item"><i class="fa-solid fa-bolt"></i> <span data-ar="تجربة تفاعلية فورية بدون تسجيل" data-en="Instant Live Demo, No Sign-up">تجربة تفاعلية فورية بدون تسجيل</span></div>
+                    <div class="meta-item"><i class="fa-solid fa-shield-halved"></i> <span data-ar="صلاحيات وتتبع كامل لكل مراسلة" data-en="Full Permissions & Correspondence Tracking">صلاحيات وتتبع كامل لكل مراسلة</span></div>
+                </div>
+            </div>
+
+            <div class="course-content-split">
+                <div class="content-box">
+                    <h3 style="margin-top: 0;"><i class="fa-solid fa-triangle-exclamation" style="color: var(--accent-color);"></i> <span data-ar="المشكلة اللي بتواجه أي مشروع" data-en="The Problem Every Project Faces">المشكلة اللي بتواجه أي مشروع</span></h3>
+                    <p data-ar="مراسلات المشاريع (RFI، اعتماد مواد، مطالبات، ملاحظات) بتتوزع بين الإيميل والواتساب وملفات إكسل منفصلة، وده بيسبب ضياع المتابعة، تأخير في الردود، وصعوبة إثبات مين رد على إيه وإمتى." data-en="Project correspondence (RFIs, material approvals, claims, notes) gets scattered across email, WhatsApp, and separate spreadsheets — causing lost follow-up, delayed responses, and difficulty proving who responded to what and when.">مراسلات المشاريع (RFI، اعتماد مواد، مطالبات، ملاحظات) بتتوزع بين الإيميل والواتساب وملفات إكسل منفصلة، وده بيسبب ضياع المتابعة، تأخير في الردود، وصعوبة إثبات مين رد على إيه وإمتى.</p>
+
+                    <h3><i class="fa-solid fa-layer-group"></i> <span data-ar="إيه اللي هتلاقيه في المنصة" data-en="What's Inside the Platform">إيه اللي هتلاقيه في المنصة</span></h3>
+                    <ul class="sales-checklist">
+                        <li><i class="fa-solid fa-check-circle"></i> <strong data-ar="تتبع الـ RFI:" data-en="RFI Tracking:">تتبع الـ RFI:</strong> <span data-ar="إرسال ومتابعة طلبات المعلومات مع تنبيهات لمواعيد الاستحقاق." data-en="Send and follow up on RFIs with due-date alerts.">إرسال ومتابعة طلبات المعلومات مع تنبيهات لمواعيد الاستحقاق.</span></li>
+                        <li><i class="fa-solid fa-check-circle"></i> <strong data-ar="اعتماد المواد (MAR):" data-en="Material Approvals (MAR):">اعتماد المواد (MAR):</strong> <span data-ar="دورة اعتماد واضحة بين المقاول والاستشاري مع سجل كامل للقرارات." data-en="A clear approval cycle between contractor and consultant with a full decision log.">دورة اعتماد واضحة بين المقاول والاستشاري مع سجل كامل للقرارات.</span></li>
+                        <li><i class="fa-solid fa-check-circle"></i> <strong data-ar="التنبيهات:" data-en="Alerts:">التنبيهات:</strong> <span data-ar="إشعار فوري لأي مراسلة جديدة أو موعد استحقاق قريب." data-en="Instant notifications for new correspondence or upcoming deadlines.">إشعار فوري لأي مراسلة جديدة أو موعد استحقاق قريب.</span></li>
+                        <li><i class="fa-solid fa-check-circle"></i> <strong data-ar="الصلاحيات:" data-en="Permissions:">الصلاحيات:</strong> <span data-ar="تحكم دقيق في مين يشوف ومين يعتمد حسب دوره في المشروع." data-en="Precise control over who can view or approve based on their project role.">تحكم دقيق في مين يشوف ومين يعتمد حسب دوره في المشروع.</span></li>
+                        <li><i class="fa-solid fa-check-circle"></i> <strong data-ar="لوحة نظرة عامة:" data-en="Overview Dashboard:">لوحة نظرة عامة:</strong> <span data-ar="كل مشروعاتك ومراسلاتك الواردة والصادرة في شاشة واحدة." data-en="All your projects and inbound/outbound correspondence in one screen.">كل مشروعاتك ومراسلاتك الواردة والصادرة في شاشة واحدة.</span></li>
+                    </ul>
+
+                    <div class="before-after-grid">
+                        <div class="ba-card before-card">
+                            <div class="ba-card-label"><i class="fa-solid fa-circle-xmark"></i> <span data-ar="قبل المنصة" data-en="Before">قبل المنصة</span></div>
+                            <p data-ar="مراسلات متفرقة بين الإيميل والواتساب والإكسل، ومتابعة يدوية بتضيع فيها المواعيد." data-en="Scattered correspondence across email, WhatsApp, and spreadsheets, with manual tracking that misses deadlines.">مراسلات متفرقة بين الإيميل والواتساب والإكسل، ومتابعة يدوية بتضيع فيها المواعيد.</p>
+                        </div>
+                        <div class="ba-card after-card">
+                            <div class="ba-card-label"><i class="fa-solid fa-circle-check"></i> <span data-ar="بعد المنصة" data-en="After">بعد المنصة</span></div>
+                            <p data-ar="كل مراسلة موثقة ومتابعة في مكان واحد، مع تنبيهات تلقائية وسجل واضح لكل قرار." data-en="Every correspondence is documented and tracked in one place, with automatic alerts and a clear decision log.">كل مراسلة موثقة ومتابعة في مكان واحد، مع تنبيهات تلقائية وسجل واضح لكل قرار.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-box" style="text-align: center; padding: 28px 22px;">
+                    <i class="fa-solid fa-bolt" style="font-size: 3.2rem; color: var(--primary-blue); margin-bottom: 14px;"></i>
+                    <h3 style="margin-top: 0; color: var(--text-dark); justify-content: center;" data-ar="جرّب المنصة دلوقتي" data-en="Try the Platform Now">جرّب المنصة دلوقتي</h3>
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 18px;" data-ar="نسخة تفاعلية كاملة ببيانات تجريبية، بدون تسجيل دخول وبدون أي التزام." data-en="A full interactive demo with sample data — no login, no commitment.">نسخة تفاعلية كاملة ببيانات تجريبية، بدون تسجيل دخول وبدون أي التزام.</p>
+                    <hr style="border: 0; border-top: 1px solid var(--border-color); margin: 18px 0;">
+                    <a href="workflow.html" target="_blank" rel="noopener" class="btn-primary btn-start-course" style="width: 100%; font-size: 16px; padding: 15px 26px; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                        <i class="fa-solid fa-bolt"></i> <span data-ar="تجربة حيّة الآن" data-en="Live Demo Now">تجربة حيّة الآن</span>
+                    </a>
+                    <button class="btn-outline" onclick="showWhatsAppNotice(event)" style="width: 100%; margin-top: 12px; border-radius: 12px; padding: 12px 20px;">
+                        <i class="fa-brands fa-whatsapp"></i> <span data-ar="اطلب عرض تفصيلي لشركتك" data-en="Request a Company Demo">اطلب عرض تفصيلي لشركتك</span>
+                    </button>
+                </div>
+            </div>
+        </div>
     </main>
 
     <main id="course-landing-view" class="app-view">
@@ -2315,6 +2459,22 @@
         let currentProgress = 0;
         let countersAnimated = false; 
         let currentLang = 'ar';
+
+        // BA Solutions dropdown: hover works on desktop via CSS; this click toggle
+        // makes it usable on touch devices too, and closes on outside click.
+        function toggleSolutionsMenu(e) {
+            e.stopPropagation();
+            document.getElementById('solutions-dropdown')?.classList.toggle('open');
+        }
+        function closeSolutionsMenu() {
+            document.getElementById('solutions-dropdown')?.classList.remove('open');
+        }
+        document.addEventListener('click', function (e) {
+            const dropdown = document.getElementById('solutions-dropdown');
+            if (dropdown && !dropdown.contains(e.target)) {
+                dropdown.classList.remove('open');
+            }
+        });
 
         function toggleLanguage() {
             currentLang = currentLang === 'ar' ? 'en' : 'ar';
