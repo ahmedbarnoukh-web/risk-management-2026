@@ -812,8 +812,285 @@ body:has(#loginBox:not(.hidden)) #edmsPremiumHeader .edms-header-user-tools{disp
  body:has(#loginBox:not(.hidden)) #edmsPremiumHeader .edms-logo-mark{display:none;}
 }
 </style>
+
+<style id="edms-v64-final-clarity-fixes">
+/* Final clarity pass — visual only; no workflow/data/function changes. */
+.edms-search-wrap{
+  background:#fff !important;
+  border-radius:12px !important;
+  box-shadow:0 2px 8px rgba(15,23,42,.10) !important;
+}
+.edms-search-input{
+  background:#fff !important;
+  color:#10233d !important;
+  border:1px solid #cbd5e1 !important;
+  font-family:'Cairo','Inter',sans-serif !important;
+  font-size:13px !important;
+  font-weight:700 !important;
+}
+.edms-search-input::placeholder{color:#64748b !important;opacity:1 !important;font-weight:600 !important;}
+.edms-search-icon{color:#173f73 !important;}
+.edms-search-input:focus{border-color:#2563eb !important;box-shadow:0 0 0 3px rgba(37,99,235,.12) !important;}
+
+#openAddModal{
+  color:#fff !important;
+  background:#0f2c52 !important;
+  border:1px solid #0f2c52 !important;
+  font-weight:850 !important;
+  min-height:44px !important;
+  text-shadow:0 1px 1px rgba(0,0,0,.16) !important;
+}
+#openAddModal svg{stroke:#fff !important;color:#fff !important;opacity:1 !important;}
+#openAddModal:hover{background:#17477f !important;border-color:#17477f !important;}
+
+.edms-tool-chip{
+  color:#fff !important;
+  font-family:'Cairo','Inter',sans-serif !important;
+}
+.edms-role-chip{
+  background:#173f73 !important;
+  border:1px solid #2d5d91 !important;
+  min-width:128px !important;
+  width:auto !important;
+  padding:8px 13px !important;
+}
+.edms-role-chip #userRoleBadge{
+  color:#fff !important;
+  font-family:'Cairo','Inter',sans-serif !important;
+  font-size:12.5px !important;
+  font-weight:850 !important;
+}
+
+#liveClock{
+  background:#173f73 !important;
+  border:1px solid #2d5d91 !important;
+  color:#fff !important;
+  min-width:255px !important;
+  justify-content:center !important;
+  gap:7px !important;
+  padding:9px 12px !important;
+}
+#liveClockDate,#liveClockTime{
+  color:#fff !important;
+  font-family:'Cairo','Inter',sans-serif !important;
+  font-weight:800 !important;
+  text-shadow:none !important;
+}
+#liveClockTime{font-family:'IBM Plex Mono','Cairo',monospace !important;font-size:12.5px !important;}
+.edms-clock-icon{
+  display:inline-flex !important;align-items:center;justify-content:center;
+  width:18px;height:18px;border-radius:50%;
+  color:#fff !important;font-size:19px;line-height:1;
+  font-family:Arial,sans-serif !important;
+}
+
+/* Make Arabic header labels read as clear UI labels, not decorative micro-text. */
+html[dir="rtl"] .edms-role-chip #userRoleBadge{font-size:13px !important;}
+html[dir="rtl"] #liveClockDate{font-size:12.5px !important;}
+
+/* The file must always open on the public entry/login screen. */
+body.edms-force-login #appBox{display:none !important;}
+body.edms-force-login #loginBox{display:block !important;}
+
+@media(max-width:1320px){
+  #liveClock{min-width:220px !important;}
+  .edms-role-chip{min-width:116px !important;}
+}
+@media(max-width:980px){
+  #liveClock{min-width:205px !important;}
+  .edms-role-chip{min-width:105px !important;}
+}
+</style>
+
+
+<style id="edms-header-professional-v2">
+/* ===== Professional Header V2 ===== */
+:root{
+  --hdr-navy:#0B2A4A;
+  --hdr-blue:#0F5EA8;
+  --hdr-cyan:#0E7490;
+  --hdr-line:#D8E2EC;
+  --hdr-ink:#102A43;
+}
+.edms-premium-header{
+  height:82px !important;
+  min-height:82px !important;
+  background:#fff !important;
+  border-bottom:1px solid var(--hdr-line) !important;
+  box-shadow:0 3px 14px rgba(16,42,67,.10) !important;
+  overflow:visible !important;
+  position:sticky !important;
+}
+.edms-premium-header:before,.edms-header-glow{display:none !important;}
+.edms-header-inner{
+  width:100% !important; max-width:none !important; height:82px !important;
+  padding:0 14px !important; gap:10px !important; box-sizing:border-box !important;
+  display:flex !important; align-items:center !important;
+}
+/* Brand block */
+.edms-brand-block{
+  order:1 !important; flex:0 0 220px !important; min-width:220px !important; max-width:220px !important;
+  height:60px !important; padding:0 8px !important; box-sizing:border-box !important;
+  border-right:1px solid #E3EAF1 !important; display:flex !important; align-items:center !important; justify-content:flex-start !important;
+}
+html[dir="rtl"] .edms-brand-block{border-right:0 !important;border-left:1px solid #E3EAF1 !important;}
+.edms-logo-mark{width:42px !important;height:42px !important;border-radius:12px !important;background:#0F5EA8 !important;box-shadow:none !important;flex:0 0 42px !important;}
+.edms-logo-paper{color:#fff !important;font-size:24px !important;}
+.edms-logo-fold{color:#F7B84B !important;}
+.edms-brand-copy{padding-inline-start:9px !important;}
+.edms-wordmark{font-size:28px !important;line-height:1 !important;color:#123B63 !important;letter-spacing:-.04em !important;}
+.edms-wordmark span{color:#123B63 !important;}
+.edms-wordmark strong{color:#0F8B8D !important;}
+.edms-platform-name{font-size:11px !important;font-weight:800 !important;color:#0B2A4A !important;letter-spacing:.03em !important;}
+.edms-en-name{font-size:7px !important;color:#708399 !important;white-space:nowrap !important;}
+/* Company/title become compact utility area */
+.edms-company-block{order:2 !important;flex:0 0 110px !important;min-width:110px !important;max-width:130px !important;text-align:center !important;}
+.edms-company-name{font-size:15px !important;font-weight:900 !important;color:#102A43 !important;white-space:nowrap !important;overflow:hidden !important;text-overflow:ellipsis !important;}
+.edms-workspace-label{font-size:9px !important;color:#718096 !important;}
+.edms-workspace-name{font-size:10px !important;color:#123B63 !important;font-weight:800 !important;}
+.edms-header-login-title{display:none !important;}
+/* Main controls */
+.edms-header-actions{order:3 !important;flex:1 1 auto !important;min-width:0 !important;height:100% !important;display:flex !important;align-items:center !important;}
+.edms-header-user-tools{width:100% !important;min-width:0 !important;}
+.edms-header-tools{width:100% !important;display:flex !important;align-items:center !important;justify-content:flex-start !important;gap:8px !important;min-width:0 !important;}
+.edms-search-wrap{order:1 !important;flex:1 1 330px !important;width:auto !important;min-width:260px !important;max-width:390px !important;}
+.edms-search-input{
+  height:44px !important;background:#fff !important;color:#102A43 !important;border:1px solid #C7D3DF !important;
+  border-radius:12px !important;box-shadow:0 1px 3px rgba(16,42,67,.08) !important;
+  font-size:13px !important;font-weight:700 !important;padding-inline:42px 14px !important;opacity:1 !important;
+}
+.edms-search-input::placeholder{color:#657A8F !important;opacity:1 !important;font-weight:700 !important;}
+.edms-search-icon{color:#0F5EA8 !important;width:18px !important;height:18px !important;}
+/* Clock */
+#liveClock{order:2 !important;display:flex !important;flex:0 0 172px !important;width:172px !important;min-width:172px !important;height:54px !important;
+  flex-direction:column !important;align-items:center !important;justify-content:center !important;gap:1px !important;padding:4px 10px !important;
+  background:#0B2A4A !important;color:#fff !important;border:0 !important;border-radius:12px !important;box-shadow:none !important;overflow:hidden !important;}
+#liveClockDate,#liveClockTime{color:#fff !important;opacity:1 !important;display:block !important;white-space:nowrap !important;line-height:1.25 !important;text-align:center !important;}
+#liveClockDate{font-family:'Cairo','Inter',sans-serif !important;font-size:11px !important;font-weight:800 !important;}
+#liveClockTime{font-family:'IBM Plex Mono','Cairo',monospace !important;font-size:13px !important;font-weight:900 !important;letter-spacing:.02em !important;}
+/* Role */
+.edms-role-chip{order:3 !important;display:flex !important;align-items:center !important;justify-content:center !important;flex:0 0 128px !important;min-width:128px !important;height:44px !important;padding:0 12px !important;
+  background:#EEF5FB !important;color:#0B2A4A !important;border:1px solid #C7DCEB !important;border-radius:12px !important;font-size:12px !important;font-weight:900 !important;box-shadow:none !important;}
+.edms-role-chip *{color:#0B2A4A !important;}
+/* utility buttons */
+.edms-tool-btn{order:4 !important;flex:0 0 auto !important;height:44px !important;min-width:44px !important;padding:0 12px !important;border-radius:11px !important;
+  background:#F4F7FA !important;color:#0B2A4A !important;border:1px solid #D6E0E8 !important;box-shadow:none !important;font-weight:800 !important;}
+.edms-tool-btn:hover{background:#E8F1F8 !important;border-color:#B9CBD9 !important;}
+.header-platform-intro-btn{order:5 !important;height:44px !important;border-radius:11px !important;background:#fff !important;color:#0F5EA8 !important;border:1px solid #C9D8E5 !important;box-shadow:none !important;font-weight:800 !important;}
+.header-logout-btn{order:6 !important;height:44px !important;background:#0F5EA8 !important;color:#fff !important;border:1px solid #0F5EA8 !important;border-radius:11px !important;font-weight:900 !important;padding:0 17px !important;}
+.header-logout-btn:hover{background:#0B4D89 !important;}
+/* Hide redundant text on utility controls at desktop; keep accessible titles/icons */
+#saveDataBtnLabel,#loadDataBtnLabel{display:none !important;}
+/* Add-document button below header: make it unmistakable */
+#openAddModal{
+  background:#0F5EA8 !important;color:#fff !important;border:1px solid #0F5EA8 !important;
+  min-height:46px !important;border-radius:12px !important;box-shadow:0 4px 10px rgba(15,94,168,.20) !important;font-weight:900 !important;
+}
+#openAddModal svg{stroke:#fff !important;color:#fff !important;}
+#openAddModal:hover{background:#0B4D89 !important;}
+/* Cleaner page background immediately below header */
+body{background:#F5F8FB !important;}
+/* No translucent/blurred header effects */
+.edms-premium-header *{backdrop-filter:none !important;-webkit-backdrop-filter:none !important;}
+@media(max-width:1200px){
+  .edms-brand-block{flex-basis:190px !important;min-width:190px !important;max-width:190px !important;}
+  .edms-company-block{display:none !important;}
+  .edms-search-wrap{min-width:220px !important;}
+  #liveClock{flex-basis:155px !important;width:155px !important;min-width:155px !important;}
+  .edms-role-chip{flex-basis:108px !important;min-width:108px !important;}
+}
+@media(max-width:900px){
+  .edms-brand-block{flex-basis:150px !important;min-width:150px !important;max-width:150px !important;}
+  .edms-platform-name,.edms-en-name{display:none !important;}
+  .edms-search-wrap{min-width:170px !important;}
+  .edms-role-chip{display:none !important;}
+}
+</style>
+
+<style id="ba-interactive-io-v1">
+/* Interactive Incoming / Outgoing ring — lightweight SVG, no external library. */
+#kpiChartsRow{grid-template-columns:minmax(0,1.05fr) minmax(420px,1.25fr)!important;gap:14px!important;}
+.ba-status-card,.ba-io-card{background:#fff!important;border:1px solid #D9E3EE!important;box-shadow:0 5px 18px rgba(15,44,82,.06)!important;border-radius:14px!important;}
+.ba-io-card{padding:15px 17px!important;overflow:hidden;}
+.ba-io-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:5px;}
+.ba-io-head h4{margin:0!important;font-size:13px!important;font-weight:900!important;color:#173F73!important;}
+.ba-io-total{font-size:27px;line-height:1.05;font-weight:900;color:#102A43;margin-top:3px;}
+.ba-io-sub{font-size:10px;color:#6B7F94;font-weight:700;margin-top:2px;}
+.ba-io-details{border:1px solid #D6E2EF;background:#F8FBFF;color:#173F73;border-radius:8px;padding:7px 10px;font-size:11px;font-weight:850;cursor:pointer;}
+.ba-io-details:hover{background:#EEF6FF;border-color:#B8D2EE;}
+.ba-io-main{display:grid;grid-template-columns:170px minmax(0,1fr);gap:16px;align-items:center;}
+.ba-io-ring-wrap{text-align:center;position:relative;}
+.ba-io-ring{width:154px;height:154px;overflow:visible;filter:drop-shadow(0 4px 7px rgba(15,44,82,.08));}
+.ba-io-segment{cursor:pointer;transition:stroke-width .16s ease,filter .16s ease,opacity .16s ease;outline:none;stroke-dashoffset:0;stroke-dasharray:0 1000;}
+.ba-io-segment.is-ready{animation:baRingDraw .9s cubic-bezier(.22,.7,.25,1) forwards;}
+.ba-io-segment.is-hovered,.ba-io-segment.is-selected{stroke-width:16;filter:drop-shadow(0 2px 4px rgba(15,44,82,.16));}
+.ba-io-segment:focus{stroke-width:16;}
+.ba-io-center-rate{font-size:17px;font-weight:900;fill:#102A43;}
+.ba-io-center-label{font-size:5.4px;font-weight:800;fill:#6B7F94;}
+.ba-io-ring-caption{font-size:9.5px;color:#8090A1;font-weight:700;margin-top:-2px;}
+.ba-io-breakdown{display:flex;flex-direction:column;gap:8px;min-width:0;}
+.ba-io-item{position:relative;display:grid;grid-template-columns:10px minmax(55px,1fr) auto auto;align-items:center;column-gap:7px;row-gap:5px;border:1px solid transparent;background:#FAFCFE;border-radius:10px;padding:9px 10px;text-align:start;cursor:pointer;transition:background .15s,border-color .15s,transform .15s;}
+.ba-io-item:hover,.ba-io-item.is-selected{background:#F2F7FC;border-color:#C9D9E8;transform:translateY(-1px);}
+.ba-io-dot{width:9px;height:9px;border-radius:50%;}
+.ba-io-item-label{font-size:12px;font-weight:850;color:#173F73;}
+.ba-io-item strong{font-size:19px;color:#102A43;font-weight:900;}
+.ba-io-pct{font-size:10px;color:#708298;font-weight:800;}
+.ba-io-mini-track{grid-column:1/-1;height:5px;background:#E9EFF5;border-radius:999px;overflow:hidden;margin-top:1px;}
+.ba-io-mini-track i{display:block;height:100%;border-radius:999px;transition:width .55s ease;}
+.ba-io-hint{font-size:10px;color:#7B8B9C;font-weight:700;padding:2px 2px 0;line-height:1.45;}
+.ba-io-detail-panel{margin-top:9px;border-top:1px solid #E5ECF3;padding-top:9px;animation:baDetailIn .2s ease;}
+.ba-detail-title{font-size:11px;font-weight:900;color:#173F73;display:flex;justify-content:space-between;}
+.ba-detail-title span{font-size:14px;color:#102A43;}
+.ba-detail-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:7px;}
+.ba-detail-grid>div{background:#F7FAFD;border:1px solid #E2EAF2;border-radius:8px;padding:7px;text-align:center;}
+.ba-detail-grid b{display:block;font-size:16px;color:#102A43;}
+.ba-detail-grid small{font-size:9px;color:#708298;font-weight:800;}
+@keyframes baRingDraw{to{stroke-dasharray:var(--ba-dash,1) var(--ba-gap,1000);}}
+@keyframes baDetailIn{from{opacity:0;transform:translateY(-3px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:900px){#kpiChartsRow{grid-template-columns:1fr!important}.ba-io-main{grid-template-columns:150px minmax(0,1fr)}.ba-io-ring{width:140px;height:140px}}
+@media(max-width:600px){.ba-io-main{grid-template-columns:1fr}.ba-io-ring{width:150px;height:150px}.ba-io-ring-wrap{margin:auto}.ba-detail-grid{grid-template-columns:1fr 1fr 1fr}}
+</style>
+<style id="ba-io-final-visibility-fix">
+/* Final IO dashboard visibility: the interactive ring is intentionally prominent and readable. */
+#kpiChartsRow{display:grid!important;grid-template-columns:minmax(0,1fr) minmax(520px,1.35fr)!important;gap:16px!important;align-items:stretch!important;}
+#kpiChartsRow .ba-status-card{min-height:220px!important;}
+#kpiChartsRow .ba-io-card{min-height:220px!important;}
+.ba-io-ring{width:178px!important;height:178px!important;}
+.ba-io-main{grid-template-columns:195px minmax(0,1fr)!important;}
+.ba-io-center-rate{font-size:19px!important;}
+.ba-io-center-label{font-size:5.8px!important;}
+.ba-io-item-label{font-size:13px!important;}
+.ba-io-item strong{font-size:21px!important;}
+.ba-io-details{font-family:'Cairo','Inter',sans-serif!important;}
+@media(max-width:1000px){#kpiChartsRow{grid-template-columns:1fr!important}.ba-io-main{grid-template-columns:190px minmax(0,1fr)!important;}}
+@media(max-width:620px){.ba-io-main{grid-template-columns:1fr!important}.ba-io-ring{margin:auto!important;display:block!important;}}
+</style>
+
+<style id="ba-dashboard-status-cards-v2">
+#statsRow{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:14px!important;margin-bottom:16px!important;align-items:stretch!important;}
+.ba-stat-card{position:relative;min-width:0;min-height:112px!important;border:1px solid #D7E1EC!important;border-radius:14px!important;background:#fff!important;box-shadow:0 6px 18px rgba(15,44,82,.07)!important;padding:17px 16px 14px 18px!important;display:flex!important;align-items:center!important;gap:12px!important;text-align:start!important;cursor:pointer!important;overflow:hidden!important;transition:transform .16s ease,box-shadow .16s ease,border-color .16s ease!important;font-family:'Cairo','Inter',sans-serif!important;}
+.ba-stat-card:hover{transform:translateY(-2px);box-shadow:0 9px 22px rgba(15,44,82,.11)!important;border-color:#B9CDE1!important;}
+.ba-stat-card.is-selected{border-color:#1D5FA7!important;box-shadow:0 9px 24px rgba(29,95,167,.18)!important;background:#F7FBFF!important;}
+.ba-stat-accent{position:absolute;inset-inline:0;top:0;height:4px;}
+.ba-stat-icon{width:46px;height:46px;min-width:46px;border:1px solid;display:grid;place-items:center;border-radius:50%;font-size:22px;font-weight:900;line-height:1;}
+.ba-stat-content{display:flex;flex-direction:column;min-width:0;flex:1;}
+.ba-stat-label{font-size:13px!important;font-weight:900!important;color:#163A63!important;white-space:nowrap;}
+.ba-stat-value{font-size:31px!important;line-height:1.02!important;font-weight:950!important;color:#0F2C52!important;margin-top:3px!important;letter-spacing:-.03em;}
+.ba-stat-sub{font-size:10px!important;font-weight:700!important;color:#8091A4!important;margin-top:4px!important;white-space:nowrap;}
+.ba-stat-percent{font-size:11px!important;font-weight:900!important;align-self:flex-end;margin-bottom:4px;}
+#kpiChartsRow{grid-template-columns:minmax(0,1fr) minmax(560px,1.35fr)!important;gap:16px!important;}
+.ba-status-card{min-height:230px!important;padding:18px 20px!important;}
+.ba-io-card{min-height:230px!important;padding:18px 20px!important;}
+.ba-io-ring{width:190px!important;height:190px!important;}
+.ba-io-main{grid-template-columns:210px minmax(0,1fr)!important;gap:20px!important;}
+.ba-io-center-rate{font-size:20px!important;}
+.ba-io-item{padding:10px 12px!important;}
+@media(max-width:1050px){#statsRow{grid-template-columns:repeat(2,minmax(0,1fr))!important}#kpiChartsRow{grid-template-columns:1fr!important}.ba-io-main{grid-template-columns:190px minmax(0,1fr)!important;}}
+@media(max-width:600px){#statsRow{grid-template-columns:1fr!important}.ba-io-main{grid-template-columns:1fr!important}.ba-io-ring{margin:auto!important;display:block!important;}}
+</style>
 </head>
 <body class="min-h-screen flex flex-col justify-between">
+    <script>document.body.classList.add("edms-force-login");</script>
 
     <div>
         <header id="edmsPremiumHeader" class="edms-premium-header sticky top-0 z-30">
@@ -848,10 +1125,10 @@ body:has(#loginBox:not(.hidden)) #edmsPremiumHeader .edms-header-user-tools{disp
                         <div id="userBar" class="edms-header-tools hidden">
                             <div class="edms-search-wrap">
                                 <svg class="edms-search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-                                <input id="searchInput" type="text" placeholder="Search by correspondence number, project, subject, or correspondence content..." class="edms-search-input">
+                                <input id="searchInput" type="text" placeholder="Search by correspondence no., project, or subject" class="edms-search-input">
                             </div>
                             <div id="liveClock" class="edms-tool-chip hidden lg:flex">
-                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 11-18 0z"></path></svg>
+                                <span class="edms-clock-icon" aria-hidden="true">◷</span>
                                 <span id="liveClockDate"></span><span class="edms-dot">·</span><span id="liveClockTime" class="mono"></span>
                             </div>
                             <div class="edms-tool-chip edms-role-chip">
@@ -1156,7 +1433,7 @@ body:has(#loginBox:not(.hidden)) #edmsPremiumHeader .edms-header-user-tools{disp
                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path></svg>
                         Filters
                     </button>
-                    <input id="searchInputMobile" type="text" placeholder="Search by correspondence number, project, or correspondence content..." class="md:hidden border rounded-xl p-2.5 text-sm bg-white" style="border-color:var(--border)">
+                    <input id="searchInputMobile" type="text" placeholder="Search by correspondence no., project, or subject" class="md:hidden border rounded-xl p-2.5 text-sm bg-white" style="border-color:var(--border)">
                 </div>
             </div>
 
@@ -1407,7 +1684,7 @@ body:has(#loginBox:not(.hidden)) #edmsPremiumHeader .edms-header-user-tools{disp
             timeEl.textContent = now.toLocaleTimeString(locale, { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
         }
         updateLiveClock();
-        setInterval(updateLiveClock, 1000);
+        window.__baClockInterval = setInterval(updateLiveClock, 1000);
         const companyCodeGroup = document.getElementById('companyCodeGroup');
         const fullNameGroup = document.getElementById('fullNameGroup');
         const roleGroup = document.getElementById('roleGroup');
@@ -1632,9 +1909,16 @@ body:has(#loginBox:not(.hidden)) #edmsPremiumHeader .edms-header-user-tools{disp
 
             if (isDemoMode) {
                 allRows = [];
+                companyProjects = [];
+                activeProjectId = null;
+                document.getElementById('activeProjectBanner')?.classList.add('hidden');
                 renderStats();
                 renderRecentActivity();
                 renderTable();
+                renderProjectsList();
+                populateProjectSelect();
+                if (typeof renderMasterLogTree === 'function') renderMasterLogTree();
+                saveDemoSession();
                 alert(window.BA_LANG === 'ar' ? 'تم مسح بيانات الديمو.' : 'Demo data cleared.');
                 return;
             }
@@ -1793,7 +2077,54 @@ body:has(#loginBox:not(.hidden)) #edmsPremiumHeader .edms-header-user-tools{disp
             e.target.value = '';
         });
 
+        // ============ Rich demo seed data ============
+        // Builds a realistic, populated starting workspace for first-time demo visitors
+        // (multiple engineers across departments, real-looking projects, and correspondences
+        // in every status/urgency state) instead of an empty workspace.
+        function buildDemoSeedData() {
+            const projects = [
+                { id: 'demo-proj-1', name: 'Palm Tower — Phase 2', code: 'PN2024', status: 'Active', company_id: 'demo-company-id' },
+                { id: 'demo-proj-2', name: 'Marina Business Park', code: 'MBP2023', status: 'Active', company_id: 'demo-company-id' },
+                { id: 'demo-proj-3', name: 'Al Noor Medical Center', code: 'ANMC2024', status: 'Active', company_id: 'demo-company-id' }
+            ];
+            const members = [
+                { id: 'demo-mgr-id', full_name: 'Ahmed Al-Sayed', role: 'Manager', department: null },
+                { id: 'demo-emp-id', full_name: 'Mohamed Nabil', role: 'Employee', department: 'Electrical' },
+                { id: 'demo-emp-2', full_name: 'Sara Youssef', role: 'Employee', department: 'Civil / Structural' },
+                { id: 'demo-emp-3', full_name: 'Omar Khaled', role: 'Employee', department: 'Architectural' },
+                { id: 'demo-emp-4', full_name: 'Laila Hassan', role: 'Employee', department: 'Mechanical' },
+                { id: 'demo-emp-5', full_name: 'Youssef Ibrahim', role: 'Employee', department: 'Electrical' }
+            ];
+            const mk = (over) => ({
+                company_id: 'demo-company-id', user_id: 'demo-mgr-id',
+                sender_recipient: 'Client Office', type: 'Letter', direction: 'Outgoing', priority: 'Normal',
+                attachment_url: null, assigned_to: null, discipline: null,
+                reply_text: '', reply_attachment_url: null,
+                ...over
+            });
+            const rows = [
+                mk({ id: 'demo-1', project_id: 'demo-proj-1', reference_no: 'PN2024-OUT-LTR-0001', subject: 'Site handover schedule confirmation', status: 'New', correspondence_date: demoDate(-2), due_date: demoDate(10), created_at: demoDate(-2) }),
+                mk({ id: 'demo-2', project_id: 'demo-proj-2', reference_no: 'MBP2023-IN-RFI-0002', subject: 'Clarification on foundation rebar spacing', type: 'RFI', direction: 'Incoming', priority: 'Urgent', status: 'New', correspondence_date: demoDate(-6), due_date: demoDate(-3), created_at: demoDate(-6) }),
+                mk({ id: 'demo-3', project_id: 'demo-proj-1', reference_no: 'PN2024-OUT-MAT-0003', subject: 'Cable tray material submittal — Building A', type: 'Material', status: 'In Progress', discipline: 'Electrical', assigned_to: 'demo-emp-id', correspondence_date: demoDate(-4), due_date: demoDate(2), created_at: demoDate(-4), assigned_at: demoDate(-3) }),
+                mk({ id: 'demo-4', project_id: 'demo-proj-3', reference_no: 'ANMC2024-IN-DRW-0004', subject: 'Structural shop drawing revision — Level 3', type: 'Drawing', direction: 'Incoming', status: 'In Progress', discipline: 'Civil / Structural', assigned_to: 'demo-emp-2', correspondence_date: demoDate(-9), due_date: demoDate(-5), created_at: demoDate(-9), assigned_at: demoDate(-8) }),
+                mk({ id: 'demo-5', project_id: 'demo-proj-2', reference_no: 'MBP2023-OUT-MAT-0005', subject: 'HVAC ductwork material approval request', type: 'Material', status: 'In Progress', discipline: 'Mechanical', assigned_to: 'demo-emp-4', correspondence_date: demoDate(-1), due_date: demoDate(15), created_at: demoDate(-1), assigned_at: demoDate(-1) }),
+                mk({ id: 'demo-6', project_id: 'demo-proj-1', reference_no: 'PN2024-OUT-DRW-0006', subject: 'Facade cladding shop drawing — Tower B', type: 'Drawing', status: 'Under Review', discipline: 'Architectural', assigned_to: 'demo-emp-3', reply_text: 'Reviewed and aligned with the approved elevation. Recommending approval.', correspondence_date: demoDate(-12), due_date: demoDate(20), created_at: demoDate(-12), assigned_at: demoDate(-11), replied_at: demoDate(-2) }),
+                mk({ id: 'demo-7', project_id: 'demo-proj-2', reference_no: 'MBP2023-IN-LTR-0007', subject: 'Utility company coordination letter', direction: 'Incoming', status: 'Under Review', discipline: 'Electrical', assigned_to: 'demo-emp-5', reply_text: 'Coordinated with utility provider, confirmed connection date.', correspondence_date: demoDate(-15), due_date: demoDate(5), created_at: demoDate(-15), assigned_at: demoDate(-14), replied_at: demoDate(-3) }),
+                mk({ id: 'demo-8', project_id: 'demo-proj-1', reference_no: 'PN2024-OUT-PAY-0008', subject: 'Payment certificate #4 — Electrical works', type: 'Payment Certificate', status: 'Approved', discipline: 'Electrical', assigned_to: 'demo-emp-id', reply_text: 'Quantities verified against BOQ.', correspondence_date: demoDate(-20), due_date: demoDate(-10), created_at: demoDate(-20), assigned_at: demoDate(-19), replied_at: demoDate(-14), last_action_at: demoDate(-12), last_action_by: 'demo-mgr-id' }),
+                mk({ id: 'demo-9', project_id: 'demo-proj-3', reference_no: 'ANMC2024-OUT-LTR-0009', subject: 'Handover documentation — Civil works package', status: 'Approved', discipline: 'Civil / Structural', assigned_to: 'demo-emp-2', reply_text: 'All civil deliverables completed and verified.', correspondence_date: demoDate(-25), due_date: demoDate(-18), created_at: demoDate(-25), assigned_at: demoDate(-24), replied_at: demoDate(-19), last_action_at: demoDate(-17), last_action_by: 'demo-mgr-id' }),
+                mk({ id: 'demo-10', project_id: 'demo-proj-2', reference_no: 'MBP2023-OUT-DRW-0010', subject: 'Roof waterproofing detail — REV02', type: 'Drawing', status: 'Rejected', discipline: 'Architectural', assigned_to: 'demo-emp-3', reply_text: 'Submitted revised waterproofing detail per site conditions.', rejection_reason: 'Detail does not match approved specification section 07.13. Please resubmit.', correspondence_date: demoDate(-8), due_date: demoDate(-1), created_at: demoDate(-8), assigned_at: demoDate(-7), replied_at: demoDate(-4), last_action_at: demoDate(-2), last_action_by: 'demo-mgr-id' }),
+                mk({ id: 'demo-11', project_id: 'demo-proj-1', reference_no: 'PN2024-IN-RFI-0011', subject: 'RFI — Mechanical room ventilation clearance', type: 'RFI', direction: 'Incoming', status: 'Rejected', discipline: 'Mechanical', assigned_to: 'demo-emp-4', reply_text: 'Proposed clearance of 600mm based on equipment layout.', rejection_reason: 'Insufficient clearance per code minimum, revise and resubmit.', correspondence_date: demoDate(-10), due_date: demoDate(-4), created_at: demoDate(-10), assigned_at: demoDate(-9), replied_at: demoDate(-6), last_action_at: demoDate(-3), last_action_by: 'demo-mgr-id' }),
+                mk({ id: 'demo-12', project_id: 'demo-proj-2', reference_no: 'MBP2023-OUT-LTR-0012', subject: 'Request for extension of completion date', priority: 'Urgent', status: 'New', correspondence_date: demoDate(0), due_date: demoDate(3), created_at: demoDate(0) }),
+                mk({ id: 'demo-13', project_id: 'demo-proj-1', reference_no: 'PN2024-OUT-MAT-0013', subject: 'Lighting fixtures submittal — Common areas', type: 'Material', priority: 'Urgent', status: 'In Progress', discipline: 'Electrical', assigned_to: 'demo-emp-id', correspondence_date: demoDate(-7), due_date: demoDate(-2), created_at: demoDate(-7), assigned_at: demoDate(-6) }),
+                mk({ id: 'demo-14', project_id: 'demo-proj-3', reference_no: 'ANMC2024-OUT-FHO-0014', subject: 'Final handover certificate — Phase 1', type: 'Final Handover', status: 'Approved', discipline: 'Mechanical', assigned_to: 'demo-emp-4', reply_text: 'Final testing and commissioning completed.', correspondence_date: demoDate(-30), due_date: demoDate(-22), created_at: demoDate(-30), assigned_at: demoDate(-29), replied_at: demoDate(-25), last_action_at: demoDate(-23), last_action_by: 'demo-mgr-id' }),
+                mk({ id: 'demo-15', project_id: 'demo-proj-2', reference_no: 'MBP2023-IN-DRW-0015', subject: 'Structural steel connection detail review', type: 'Drawing', direction: 'Incoming', status: 'Under Review', discipline: 'Civil / Structural', assigned_to: 'demo-emp-2', reply_text: 'Connection detail reviewed against structural calculations.', correspondence_date: demoDate(-5), due_date: demoDate(8), created_at: demoDate(-5), assigned_at: demoDate(-4), replied_at: demoDate(-1) }),
+                mk({ id: 'demo-16', project_id: 'demo-proj-3', reference_no: 'ANMC2024-IN-LTR-0016', subject: 'Client query — landscaping scope inclusion', direction: 'Incoming', status: 'New', correspondence_date: demoDate(-1), due_date: demoDate(6), created_at: demoDate(-1) })
+            ];
+            return { members, projects, rows };
+        }
+
         function startDemo(role, companyName) {
+            document.body.classList.remove('edms-force-login');
             // Robust one-click demo entry: show the workspace FIRST, then render its data.
             // This prevents a non-critical rendering error from leaving the user on a blank/login screen.
             isDemoMode = true;
@@ -1801,13 +2132,15 @@ body:has(#loginBox:not(.hidden)) #edmsPremiumHeader .edms-header-user-tools{disp
             myUserId = role === 'Manager' ? 'demo-mgr-id' : 'demo-emp-id';
             myCompanyId = 'demo-company-id';
             myRole = role;
-            companyMembers = [
-                { id: 'demo-mgr-id', full_name: 'Project Manager', role: 'Manager', department: null },
-                { id: 'demo-emp-id', full_name: 'Engineer', role: 'Employee', department: null }
-            ];
-            // A new demo company always starts clean. Data is then kept in this same workspace.
-            companyProjects = [];
-            allRows = [];
+            // A new demo company always starts populated with realistic sample data
+            // (multiple engineers/departments, real-looking projects, and correspondences
+            // covering every status — New / In Progress / Under Review / Approved / Rejected —
+            // plus overdue and due-soon items) so first-time visitors see a working system
+            // instead of an empty one. Everything below stays fully editable/deletable.
+            const seed = buildDemoSeedData();
+            companyMembers = seed.members;
+            companyProjects = seed.projects;
+            allRows = seed.rows;
 
             // Make the app visible immediately so entering the company name can never trap the user.
             loginBox?.classList.add('hidden');
@@ -2013,6 +2346,7 @@ body:has(#loginBox:not(.hidden)) #edmsPremiumHeader .edms-header-user-tools{disp
         }
 
         function setupWorkspaceUI(roleTitle, fullName) {
+            document.body.classList.remove('edms-force-login');
             loginBox.classList.add('hidden');
             appBox.classList.remove('hidden');
             userBar.classList.remove('hidden');
@@ -2082,6 +2416,32 @@ body:has(#loginBox:not(.hidden)) #edmsPremiumHeader .edms-header-user-tools{disp
             populateProjectSelect();
             if (typeof renderMasterLogTree === 'function') renderMasterLogTree();
         };
+
+        // ============ Projects: delete ============
+        async function deleteProject(id, name) {
+            const msg = window.BA_LANG === 'ar'
+                ? `هيتم حذف المشروع "${name}" نهائيًا. المستندات المرتبطة بيه هتفضل موجودة في السجل بدون مشروع مرتبط. متأكد؟`
+                : `This will permanently delete the project "${name}". Correspondence linked to it will remain in the log but unlinked from any project. Continue?`;
+            if (!confirm(msg)) return;
+
+            if (isDemoMode) {
+                companyProjects = companyProjects.filter(p => p.id !== id);
+                if (activeProjectId === id) clearProjectFilter();
+                renderProjectsList();
+                populateProjectSelect();
+                if (typeof renderMasterLogTree === 'function') renderMasterLogTree();
+                saveDemoSession();
+                return;
+            }
+
+            const { error } = await db.from('projects').delete().eq('id', id);
+            if (error) { alert('Error deleting project: ' + error.message); return; }
+            companyProjects = companyProjects.filter(p => p.id !== id);
+            if (activeProjectId === id) clearProjectFilter();
+            renderProjectsList();
+            populateProjectSelect();
+            if (typeof renderMasterLogTree === 'function') renderMasterLogTree();
+        }
 
         function populateProjectSelect() {
             const select = document.getElementById('fProject');
@@ -2156,7 +2516,10 @@ body:has(#loginBox:not(.hidden)) #edmsPremiumHeader .edms-header-user-tools{disp
                         <div><div class="font-bold text-lg text-amber-600">${pending}</div><div class="text-[10px] text-gray-500">Pending</div></div>
                         <div><div class="font-bold text-lg text-red-600">${overdue}</div><div class="text-[10px] text-gray-500">Overdue</div></div>
                     </div>
-                    <button onclick="openProjectFilter('${p.id}','${p.name.replace(/'/g, "\\'")}')" class="w-full rounded-lg py-2 text-sm font-semibold border hover:bg-gray-50" style="border-color:var(--border);color:var(--brand)">Open Project</button>
+                    <div class="flex gap-2">
+                        <button onclick="openProjectFilter('${p.id}','${p.name.replace(/'/g, "\\'")}')" class="flex-1 rounded-lg py-2 text-sm font-semibold border hover:bg-gray-50" style="border-color:var(--border);color:var(--brand)">Open Project</button>
+                        ${isManager(myRole) ? `<button onclick="deleteProject('${p.id}','${p.name.replace(/'/g, "\\'")}')" title="${window.BA_LANG === 'ar' ? 'حذف المشروع' : 'Delete project'}" class="rounded-lg px-3 py-2 text-sm font-semibold border hover:bg-red-50" style="border-color:var(--border);color:#DC2626">🗑️</button>` : ''}
+                    </div>
                 </div>
             `}).join('');
         }
@@ -2425,45 +2788,74 @@ body:has(#loginBox:not(.hidden)) #edmsPremiumHeader .edms-header-user-tools{disp
 
         function renderStats() {
             const scoped = activeProjectId ? allRows.filter(r => r.project_id === activeProjectId) : allRows;
+            const total = scoped.length;
             const incoming = scoped.filter(r => r.direction === 'Incoming').length;
             const outgoing = scoped.filter(r => r.direction === 'Outgoing').length;
+            const approved = scoped.filter(r => r.status === 'Approved').length;
             const underReview = scoped.filter(r => r.status === 'Under Review').length;
-            const overdue = scoped.filter(r => r.due_date && r.due_date < todayStr && r.status !== 'Approved' && r.status !== 'Rejected').length;
+            const newItems = scoped.filter(r => (r.status || 'New') === 'New').length;
+            const rejected = scoped.filter(r => r.status === 'Rejected').length;
 
             const isAr = window.BA_LANG === 'ar';
-            const cardMeta = isAr ? {
-                'Incoming': 'مستندات وصلتك من المقاول أو الاستشاري، بانتظار إجراء منك',
-                'Outgoing': 'مستندات أرسلتها شركتك إلى المقاول أو الاستشاري',
-                'Under Review': 'تم إرسالها وبانتظار اعتماد أو رفض المدير',
-                'Overdue': 'عناصر فات تاريخ استحقاقها ولسه ما اتعتمدتش أو اترفضتش'
-            } : {
-                'Incoming': 'Documents received from the contractor or consultant, awaiting your action',
-                'Outgoing': 'Documents your company has sent out to the contractor or consultant',
-                'Under Review': 'Submitted and waiting for the manager to approve or reject',
-                'Overdue': 'Items past their due date that are not yet approved or rejected'
-            };
             const cards = [
-                { label: 'Incoming', value: incoming, color: '#2563EB', onClick: "setDirectionQuickFilter('Incoming')" },
-                { label: 'Outgoing', value: outgoing, color: '#0891B2', onClick: "setDirectionQuickFilter('Outgoing')" },
-                { label: 'Under Review', value: underReview, color: '#7C3AED', onClick: "setStatusQuickFilter('Under Review')" },
-                { label: 'Overdue', value: overdue, color: '#DC2626', onClick: "toggleOverdueOnly()" }
+                {
+                    key:'Approved', label:isAr ? 'المعتمدة' : 'Approved', value:approved,
+                    sub:isAr ? `من إجمالي ${total}` : `of ${total} total`, color:'#16A34A',
+                    icon:'✓', onClick:"setStatusQuickFilter('Approved')"
+                },
+                {
+                    key:'Under Review', label:isAr ? 'قيد المراجعة' : 'Under Review', value:underReview,
+                    sub:isAr ? `من إجمالي ${total}` : `of ${total} total`, color:'#2563EB',
+                    icon:'◷', onClick:"setStatusQuickFilter('Under Review')"
+                },
+                {
+                    key:'New', label:isAr ? 'قيد الإدخال' : 'New', value:newItems,
+                    sub:isAr ? `من إجمالي ${total}` : `of ${total} total`, color:'#F59E0B',
+                    icon:'＋', onClick:"setStatusQuickFilter('New')"
+                },
+                {
+                    key:'Rejected', label:isAr ? 'مرفوضة' : 'Rejected', value:rejected,
+                    sub:isAr ? `من إجمالي ${total}` : `of ${total} total`, color:'#DC2626',
+                    icon:'!', onClick:"setStatusQuickFilter('Rejected')"
+                }
             ];
 
             document.getElementById('statsRow').innerHTML = cards.map(c => {
-                const isActive = (c.label === 'Incoming' || c.label === 'Outgoing') ? activeDirection === c.label
-                    : c.label === 'Under Review' ? activeFilter === 'Under Review'
-                    : c.label === 'Overdue' ? overdueOnly
-                    : false;
+                const isActive = activeFilter === c.key;
+                const pct = total ? Math.round((c.value / total) * 100) : 0;
                 return `
-                <div class="card p-4 stats-card ${isActive ? 'is-selected' : ''}" title="${cardMeta[c.label]}" style="--card-accent:${c.color};${isActive ? `background:#2563EB;border-color:#2563EB;box-shadow:0 6px 18px rgba(37,99,235,.22);` : ''}" ${c.onClick ? `onclick="${c.onClick}"` : ''}>
-                    <div class="text-2xl font-bold" style="color:${isActive ? '#fff' : 'var(--text-primary)'}">${c.value}</div>
-                    <div class="text-xs mt-0.5 font-medium" style="color:${isActive ? 'rgba(255,255,255,.92)' : '#64748B'}">${c.label}</div>
-                </div>
-            `;
+                <button type="button" class="ba-stat-card ${isActive ? 'is-selected' : ''}" onclick="${c.onClick}" aria-label="${c.label} ${c.value}">
+                    <span class="ba-stat-accent" style="background:${c.color}"></span>
+                    <span class="ba-stat-icon" style="color:${c.color};background:${c.color}18;border-color:${c.color}30">${c.icon}</span>
+                    <span class="ba-stat-content">
+                        <span class="ba-stat-label">${c.label}</span>
+                        <strong class="ba-stat-value" data-target="${c.value}">0</strong>
+                        <span class="ba-stat-sub">${c.sub}</span>
+                    </span>
+                    <span class="ba-stat-percent" style="color:${c.color}">${pct}%</span>
+                </button>`;
             }).join('');
 
-            // Keep sidebar badges/tree in sync without letting a task-card render
-            // interrupt the main dashboard/table refresh.
+            // Lightweight count animation: no interval loop, no extra library.
+            requestAnimationFrame(() => {
+                document.querySelectorAll('#statsRow .ba-stat-value').forEach(el => {
+                    const target = Number(el.dataset.target || 0);
+                    const started = performance.now();
+                    const duration = 420;
+                    function tick(now){
+                        const p = Math.min(1, (now - started) / duration);
+                        const eased = 1 - Math.pow(1 - p, 3);
+                        el.textContent = String(Math.round(target * eased));
+                        if(p < 1) requestAnimationFrame(tick);
+                    }
+                    requestAnimationFrame(tick);
+                });
+            });
+
+            // Keep the action alert language in sync after dynamic dashboard renders.
+            const actionAlertCta = document.getElementById('actionAlertCta');
+            if (actionAlertCta) actionAlertCta.textContent = isAr ? 'عرضها' : 'View them';
+
             if (typeof renderMasterLogTree === 'function') renderMasterLogTree();
             const scopedForBadges = activeProjectId ? allRows.filter(r => r.project_id === activeProjectId) : allRows;
             const taskBadgeRows = isManager(myRole)
@@ -2473,7 +2865,6 @@ body:has(#loginBox:not(.hidden)) #edmsPremiumHeader .edms-header-user-tools{disp
             if (tb) tb.textContent = taskBadgeRows.length;
             const db2 = document.getElementById('draftsBadgeCount');
             if (db2) db2.textContent = allRows.filter(r => r.user_id === myUserId && (r.status || 'New') === 'New').length;
-
             const notifRows = isManager(myRole)
                 ? scopedForBadges.filter(r => (r.status || 'New') === 'New' || r.status === 'Under Review')
                 : scopedForBadges.filter(r => r.assigned_to === myUserId && ['In Progress','Rejected','Under Review','Approved'].includes(r.status || 'New'));
@@ -3343,8 +3734,8 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeCorrespondenceD
   };
 
   const attrT = {
-    "Search by correspondence number, project, subject, or correspondence content...":"ابحث برقم الخطاب أو المشروع أو الموضوع أو محتوى المراسلة...",
-    "Search by correspondence number, project, or correspondence content...":"ابحث برقم الخطاب أو المشروع أو محتوى المراسلة...",
+    "Search by correspondence no., project, or subject":"البحث برقم الخطاب أو المشروع أو الموضوع",
+    "Search by correspondence no., project, or subject":"البحث برقم الخطاب أو المشروع أو الموضوع",
     "Search reference, subject, project...":"ابحث بالمرجع أو الموضوع أو المشروع...",
     "New code creates a company, existing code joins it":"الرمز الجديد ينشئ شركة، والرمز الموجود يتيح الانضمام إليها",
     "e.g. Eng. Faisal Al-Harbi":"مثال: م. فيصل الحربي",
@@ -3644,7 +4035,8 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeCorrespondenceD
       window.__baTranslateTimer=setTimeout(translateDynamicValues,20);
     }
   });
-  observer.observe(document.body,{childList:true,subtree:true});
+  // Performance: avoid observing the entire document; renderers already handle their language labels.
+  // observer.observe(document.body,{childList:true,subtree:true});
 
   // Intercept row/action controls that are created dynamically.
   document.addEventListener("click",function(e){
@@ -4170,27 +4562,111 @@ document.addEventListener('click', function(e){
       return { label:d.label, color:d.color, value: scoped.filter(function(r){ return (r.status || 'New') === d.key; }).length };
     });
 
-    var incoming = scoped.filter(function(r){ return r.direction === 'Incoming'; }).length;
-    var outgoing = scoped.filter(function(r){ return r.direction === 'Outgoing'; }).length;
-    var donutItems = [
-      { label: ar ? 'وارد' : 'Incoming', value: incoming, color:'#2563EB' },
-      { label: ar ? 'صادر' : 'Outgoing', value: outgoing, color:'#0891B2' }
+    /* Interactive Incoming / Outgoing ring. The approval percentage is calculated
+       only from the current Incoming + Outgoing population, never from unrelated cards. */
+    var incomingRows = scoped.filter(function(r){ return r.direction === 'Incoming'; });
+    var outgoingRows = scoped.filter(function(r){ return r.direction === 'Outgoing'; });
+    var incoming = incomingRows.length;
+    var outgoing = outgoingRows.length;
+    var totalIO = incoming + outgoing;
+    var approvedIO = scoped.filter(function(r){ return (r.direction === 'Incoming' || r.direction === 'Outgoing') && r.status === 'Approved'; }).length;
+    var approvalRate = totalIO ? Math.round((approvedIO / totalIO) * 100) : 0;
+
+    var ringData = [
+      {key:'Incoming', label:ar?'وارد':'Incoming', value:incoming, color:'#16A34A', rows:incomingRows, icon:'↓'},
+      {key:'Outgoing', label:ar?'صادر':'Outgoing', value:outgoing, color:'#2563EB', rows:outgoingRows, icon:'↑'}
     ];
+    var radius=47, circumference=2*Math.PI*radius, offset=0;
+    var ring = ringData.map(function(item){
+      var dash = totalIO ? (item.value/totalIO)*circumference : 0;
+      var gap = circumference-dash;
+      var out = '<circle class="ba-io-segment" data-direction="'+item.key+'" cx="60" cy="60" r="'+radius+'" fill="none" stroke="'+item.color+'" stroke-width="12" stroke-linecap="round" stroke-dasharray="'+dash.toFixed(2)+' '+gap.toFixed(2)+'" stroke-dashoffset="'+(-offset).toFixed(2)+'" style="--ba-dash:'+dash.toFixed(2)+'px;--ba-gap:'+gap.toFixed(2)+'px" transform="rotate(-90 60 60)" tabindex="0" role="button" aria-label="'+item.label+' '+item.value+'"></circle>';
+      offset += dash;
+      return out;
+    }).join('');
+
+    var detailText = ar ? 'اضغط على الوارد أو الصادر لعرض تفاصيله' : 'Select Incoming or Outgoing to see details';
+    var ioCard = '<div class="card ba-io-card" id="baInteractiveIOCard">' +
+      '<div class="ba-io-head"><div><h4>'+(ar?'إجمالي المعاملات':'Total Transactions')+'</h4><div class="ba-io-total">'+totalIO+'</div><div class="ba-io-sub">'+(ar?'وارد + صادر':'Incoming + Outgoing')+'</div></div><button type="button" class="ba-io-details" onclick="baToggleIODetails()">'+(ar?'التفاصيل':'Details')+'</button></div>'+
+      '<div class="ba-io-main">' +
+        '<div class="ba-io-ring-wrap">' +
+          '<svg class="ba-io-ring" viewBox="0 0 120 120" aria-label="'+(ar?'دائرة الوارد والصادر':'Incoming and Outgoing chart')+'">' +
+            '<circle cx="60" cy="60" r="47" fill="none" stroke="#E8EEF5" stroke-width="12"></circle>' + ring +
+            '<circle cx="60" cy="60" r="34" fill="#fff"></circle>' +
+            '<text x="60" y="57" text-anchor="middle" class="ba-io-center-rate">'+approvalRate+'%</text>' +
+            '<text x="60" y="72" text-anchor="middle" class="ba-io-center-label">'+(ar?'نسبة الاعتماد':'Approval rate')+'</text>' +
+          '</svg>' +
+          '<div class="ba-io-ring-caption">'+(ar?'يتم تحديثها تلقائيًا':'Updates automatically')+'</div>' +
+        '</div>' +
+        '<div class="ba-io-breakdown">' +
+          ringData.map(function(item){
+            var pct=totalIO?Math.round(item.value/totalIO*100):0;
+            return '<button type="button" class="ba-io-item" data-direction="'+item.key+'" onclick="baSelectIODirection(\''+item.key+'\')" onmouseenter="baHoverIODirection(\''+item.key+'\',true)" onmouseleave="baHoverIODirection(\''+item.key+'\',false)">' +
+              '<span class="ba-io-dot" style="background:'+item.color+'"></span><span class="ba-io-item-label">'+item.label+'</span><strong>'+item.value+'</strong><span class="ba-io-pct">('+pct+'%)</span>' +
+              '<span class="ba-io-mini-track"><i style="width:'+pct+'%;background:'+item.color+'"></i></span>' +
+            '</button>';
+          }).join('') +
+          '<div class="ba-io-hint" id="baIOHint">'+detailText+'</div>' +
+        '</div>' +
+      '</div>' +
+      '<div class="ba-io-detail-panel" id="baIODetailPanel" hidden></div>' +
+    '</div>';
 
     container.innerHTML =
-      '<div class="card">' +
-        '<h4>' + (ar ? 'حالة المراسلات' : 'Correspondence by Status') + '</h4>' +
-        baBarChartHTML(statusItems, ar) +
-      '</div>' +
-      '<div class="card">' +
-        '<h4>' + (ar ? 'الوارد والصادر' : 'Incoming vs Outgoing') + '</h4>' +
-        '<div class="kpi-donut-wrap">' + baDonutSVG(donutItems) +
-          '<div class="kpi-donut-legend">' + donutItems.map(function(i){
-            return '<div><span class="dot" style="background:' + i.color + '"></span>' + i.label + ' — ' + i.value + '</div>';
-          }).join('') + '</div>' +
-        '</div>' +
-      '</div>';
+      '<div class="card ba-status-card"><h4>' + (ar ? 'حالة المراسلات' : 'Correspondence by Status') + '</h4>' + baBarChartHTML(statusItems, ar) + '</div>' +
+      ioCard;
+
+    var segments=container.querySelectorAll('.ba-io-segment');
+    requestAnimationFrame(function(){ segments.forEach(function(seg){ seg.classList.add('is-ready'); }); });
+    segments.forEach(function(seg){
+      seg.addEventListener('mouseenter',function(){baHoverIODirection(seg.getAttribute('data-direction'),true);});
+      seg.addEventListener('mouseleave',function(){baHoverIODirection(seg.getAttribute('data-direction'),false);});
+      seg.addEventListener('click',function(){baSelectIODirection(seg.getAttribute('data-direction'));});
+      seg.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();baSelectIODirection(seg.getAttribute('data-direction'));}});
+    });
   }
+
+  window.baHoverIODirection = function(direction, active){
+    var root=document.getElementById('baInteractiveIOCard'); if(!root) return;
+    root.querySelectorAll('[data-direction]').forEach(function(el){
+      if(active && el.getAttribute('data-direction')===direction) el.classList.add('is-hovered');
+      else if(!active) el.classList.remove('is-hovered');
+    });
+  };
+
+  window.baSelectIODirection = function(direction){
+    var root=document.getElementById('baInteractiveIOCard'); if(!root) return;
+    var ar=window.BA_LANG==='ar';
+    var scoped=(typeof activeProjectId!=='undefined'&&activeProjectId)?allRows.filter(function(r){return r.project_id===activeProjectId;}):allRows;
+    var rows=scoped.filter(function(r){return r.direction===direction;});
+    var approved=rows.filter(function(r){return r.status==='Approved';}).length;
+    var review=rows.filter(function(r){return r.status==='Under Review';}).length;
+    var overdue=rows.filter(function(r){return r.due_date && r.due_date<todayStr && r.status!=='Approved' && r.status!=='Rejected';}).length;
+    var label=direction==='Incoming'?(ar?'الوارد':'Incoming'):(ar?'الصادر':'Outgoing');
+    var panel=root.querySelector('#baIODetailPanel');
+    var hint=root.querySelector('#baIOHint');
+    if(hint) hint.textContent=ar ? ('تم اختيار '+label+' — اضغط مرة أخرى للانتقال إلى القائمة') : (label+' selected — click again to open the list');
+    if(panel){
+      panel.hidden=false;
+      panel.innerHTML='<div class="ba-detail-title">'+label+' <span>'+rows.length+'</span></div><div class="ba-detail-grid">'+
+        '<div><b>'+approved+'</b><small>'+(ar?'معتمد':'Approved')+'</small></div>'+
+        '<div><b>'+review+'</b><small>'+(ar?'قيد المراجعة':'Under review')+'</small></div>'+
+        '<div><b>'+overdue+'</b><small>'+(ar?'متأخر':'Overdue')+'</small></div>'+
+      '</div>';
+    }
+    root.querySelectorAll('.ba-io-item').forEach(function(el){el.classList.toggle('is-selected',el.getAttribute('data-direction')===direction);});
+    root.querySelectorAll('.ba-io-segment').forEach(function(el){el.classList.toggle('is-selected',el.getAttribute('data-direction')===direction);});
+    if(typeof setDirectionQuickFilter==='function') setDirectionQuickFilter(direction);
+  };
+
+  window.baToggleIODetails = function(){
+    var root=document.getElementById('baInteractiveIOCard'); if(!root) return;
+    var panel=root.querySelector('#baIODetailPanel'); if(!panel) return;
+    if(panel.hidden){
+      var first=root.querySelector('.ba-io-item');
+      if(first) baSelectIODirection(first.getAttribute('data-direction'));
+    } else panel.hidden=true;
+  };
 
   // ---------- Wrap renderStats so the banner + charts always stay in sync ----------
   var origRenderStats = window.renderStats;
@@ -4207,17 +4683,10 @@ document.addEventListener('click', function(e){
 
 <script id="edms-v33-demo-persistence-fix">
 (function(){
-  function tryRestore(){
-    if(window.__baDemoRestoreAttempted) return;
-    window.__baDemoRestoreAttempted = true;
-    try{
-      if(!window.isDemoMode && typeof restoreDemoSession === 'function'){
-        restoreDemoSession();
-      }
-    }catch(e){ console.warn('EDMS demo session restore failed:', e); }
-  }
-  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', tryRestore, {once:true});
-  else tryRestore();
+  /* Intentionally do not restore the demo session automatically.
+     Every fresh file open starts at the public login/entry page.
+     The explicit demo buttons still call startDemo() normally. */
+  window.__baDemoRestoreAttempted = true;
 })();
 </script>
 
@@ -4932,6 +5401,296 @@ body:not(.edms-login-active) #edmsPremiumHeader .edms-header-login-title{display
   try{new MutationObserver(function(){setTimeout(rerenderOpen,0);}).observe(document.documentElement,{attributes:true,attributeFilter:['dir']});}catch(e){}
 })();
 </script>
+
+
+<style id="stage1-simple-polish">
+/* Stage 1 — simple dashboard polish. Presentation only; existing structure/data/functions stay intact. */
+#dashboardView{padding-top:2px !important;}
+#statsRow{gap:12px !important;margin-bottom:12px !important;}
+#statsRow .stats-card{
+  min-height:96px !important;padding:16px 18px !important;border-radius:13px !important;
+  border:1px solid #DCE5EE !important;box-shadow:0 4px 14px rgba(15,23,42,.055) !important;
+}
+#statsRow .stats-card .text-2xl{font-size:29px !important;font-weight:850 !important;}
+#statsRow .stats-card .text-xs{font-size:12px !important;font-weight:750 !important;}
+#statsRow .stats-card.is-selected{box-shadow:0 6px 16px rgba(37,99,235,.18) !important;}
+#actionAlert{margin-bottom:12px !important;padding:11px 14px !important;border-radius:11px !important;}
+#actionAlert .w-9{width:34px !important;height:34px !important;}
+#dueSoonBanner,#overdueBanner,#directionBanner{margin-bottom:10px !important;}
+#kpiChartsRow{grid-template-columns:minmax(0,1.35fr) minmax(300px,.9fr) !important;gap:12px !important;margin-bottom:14px !important;}
+#kpiChartsRow .card{min-height:154px !important;padding:15px 17px !important;border-radius:13px !important;box-shadow:0 4px 14px rgba(15,23,42,.045) !important;}
+#kpiChartsRow h4{font-size:12px !important;font-weight:850 !important;color:#334155 !important;margin-bottom:13px !important;}
+.kpi-bar-row{gap:9px !important;margin-bottom:8px !important;}
+.kpi-bar-label{font-size:11.5px !important;font-weight:750 !important;}
+.kpi-bar-track{height:9px !important;background:#EEF2F7 !important;}
+.kpi-bar-value{font-size:12px !important;font-weight:850 !important;}
+.kpi-donut-wrap{gap:20px !important;justify-content:center !important;min-height:112px !important;}
+.kpi-donut-wrap svg{width:112px !important;height:112px !important;}
+.kpi-donut-legend{font-size:12px !important;gap:9px !important;}
+#recentActivity{min-height:48px !important;}
+#dashboardView > .card{border-radius:13px !important;box-shadow:0 4px 14px rgba(15,23,42,.045) !important;}
+#statusFiltersWrap{box-shadow:0 2px 8px rgba(15,23,42,.045) !important;}
+#liveClock{min-width:185px !important;height:42px !important;padding-inline:13px !important;border-radius:10px !important;}
+#liveClockDate{font-size:12px !important;font-weight:800 !important;}
+#liveClockTime{font-size:14px !important;font-weight:850 !important;}
+/* Workflow: larger, complete circles and clean connectors. */
+.ba-v60-workflow{padding:16px 18px 13px !important;border-radius:15px !important;box-shadow:0 5px 18px rgba(15,23,42,.055) !important;}
+.ba-v60-flow{gap:30px !important;padding:16px 5px 9px !important;}
+.ba-v60-button{min-height:122px !important;padding:14px 12px !important;border-radius:15px !important;box-shadow:0 4px 13px rgba(15,23,42,.055) !important;}
+.ba-v60-button .icon{width:46px !important;height:46px !important;min-width:46px !important;min-height:46px !important;border-radius:50% !important;font-size:18px !important;line-height:1 !important;}
+.ba-v60-button .title{font-size:14px !important;line-height:1.3 !important;}
+.ba-v60-button .detail{font-size:10.5px !important;}
+.ba-v60-button .date{font-size:10.5px !important;margin-top:6px !important;}
+.ba-v60-connector{right:-40px !important;width:27px !important;height:4px !important;border-radius:999px !important;}
+.ba-v60-connector:after{right:-1px !important;border-top-width:6px !important;border-bottom-width:6px !important;border-left-width:9px !important;}
+.ba-v60-stage.current .ba-v60-button{box-shadow:0 0 0 3px rgba(34,160,90,.08),0 7px 18px rgba(34,160,90,.13) !important;}
+.ba-v60-legend{gap:22px !important;margin-top:5px !important;padding-top:8px !important;}
+@media(max-width:1000px){
+  #kpiChartsRow{grid-template-columns:1fr !important;}
+  .ba-v60-flow{gap:18px !important;}
+  .ba-v60-connector{right:-26px !important;width:16px !important;}
+  .ba-v60-button{min-height:112px !important;}
+}
+@media(max-width:700px){
+  #statsRow{gap:9px !important;}
+  #statsRow .stats-card{min-height:88px !important;padding:14px !important;}
+  .ba-v60-button .icon{width:42px !important;height:42px !important;min-width:42px !important;min-height:42px !important;}
+}
+</style>
+
+
+<style id="edms-v64-clarity-performance">
+/* V64 — final clarity + performance pass: no content/function changes */
+:root{--bg:#F4F7FB !important;--surface:#FFFFFF !important;--border:#D7E0EA !important;--text-primary:#102A43 !important;--text-secondary:#53677D !important;}
+body{background:#F4F7FB !important;color:#102A43 !important;-webkit-font-smoothing:antialiased !important;text-rendering:optimizeLegibility !important;}
+/* Header search: solid white, dark text, no transparency/blur */
+.edms-search-wrap{width:min(320px,26vw) !important;}
+.edms-search-input{background:#FFFFFF !important;color:#102A43 !important;border:1px solid #B8C7D8 !important;box-shadow:0 1px 3px rgba(15,44,82,.08) !important;backdrop-filter:none !important;-webkit-backdrop-filter:none !important;font-size:13px !important;font-weight:650 !important;}
+.edms-search-input::placeholder{color:#53677D !important;opacity:1 !important;font-weight:600 !important;}
+.edms-search-icon{color:#173F73 !important;}
+/* New document button: guaranteed readable in both directions/languages */
+#openAddModal{display:inline-flex !important;align-items:center !important;justify-content:center !important;gap:8px !important;background:#0F2C52 !important;color:#FFFFFF !important;border:1px solid #0F2C52 !important;min-height:46px !important;padding:0 18px !important;font-size:14px !important;font-weight:850 !important;line-height:1 !important;opacity:1 !important;}
+#openAddModal,#openAddModal *{color:#FFFFFF !important;fill:none !important;stroke:#FFFFFF !important;opacity:1 !important;}
+#openAddModal svg{width:18px !important;height:18px !important;flex:none !important;}
+#openAddModal:hover{background:#123D6A !important;border-color:#123D6A !important;}
+/* Clock and role: solid surfaces + stronger typography; never hide on desktop */
+#liveClock{display:flex !important;align-items:center !important;justify-content:center !important;min-width:275px !important;height:44px !important;padding:0 14px !important;background:#173F73 !important;border:1px solid #2B5D90 !important;color:#FFFFFF !important;box-shadow:0 2px 7px rgba(15,44,82,.14) !important;backdrop-filter:none !important;-webkit-backdrop-filter:none !important;}
+#liveClockDate,#liveClockTime{color:#FFFFFF !important;font-family:'Cairo','Inter',sans-serif !important;font-weight:850 !important;opacity:1 !important;text-shadow:none !important;}
+#liveClockDate{font-size:12.5px !important;}
+#liveClockTime{font-family:'IBM Plex Mono','Cairo',monospace !important;font-size:13px !important;}
+#liveClock .edms-dot{color:#DCEBFF !important;font-weight:900 !important;}
+.edms-clock-icon{color:#FFFFFF !important;opacity:1 !important;}
+.edms-role-chip{min-width:170px !important;height:44px !important;justify-content:center !important;background:#214F7F !important;border:1px solid #47749F !important;color:#FFFFFF !important;box-shadow:0 2px 7px rgba(15,44,82,.12) !important;backdrop-filter:none !important;-webkit-backdrop-filter:none !important;}
+.edms-role-chip #userRoleBadge,.edms-role-chip #userNameBadge{color:#FFFFFF !important;font-family:'Cairo','Inter',sans-serif !important;font-size:12.5px !important;font-weight:850 !important;opacity:1 !important;}
+/* Remove costly blur from header controls */
+.edms-tool-chip,.edms-tool-btn{backdrop-filter:none !important;-webkit-backdrop-filter:none !important;}
+/* Clear, compact cards and controls */
+.card{box-shadow:0 2px 8px rgba(15,23,42,.055) !important;border-color:#D7E0EA !important;}
+button,input,select,textarea{font-family:'Cairo','Inter',sans-serif;}
+@media(max-width:1180px){.edms-search-wrap{width:250px !important;}#liveClock{min-width:235px !important;}.edms-role-chip{min-width:145px !important;}}
+@media(max-width:860px){#liveClock{display:flex !important;min-width:0 !important;flex:1 1 220px !important;} .edms-role-chip{min-width:0 !important;flex:1 1 160px !important;}.edms-search-wrap{width:100% !important;}}
+</style>
+<script id="edms-v64-clock-performance">
+(function(){
+  // Keep the existing clock logic, but ensure the header controls remain visible/readable.
+  function ensureClockVisible(){
+    var c=document.getElementById('liveClock');
+    if(c && !c.classList.contains('hidden')) c.style.display='flex';
+  }
+  document.addEventListener('DOMContentLoaded',ensureClockVisible);
+  setTimeout(ensureClockVisible,300);
+})();
+</script>
+
+
+<style id="edms-login-header-professional-v2">
+/* ===== Login / Public Entry Header — clean professional identity ===== */
+body:has(#loginBox:not(.hidden)) #edmsPremiumHeader{
+  height:92px !important;
+  min-height:92px !important;
+  background:#0A2B4F !important;
+  background-image:linear-gradient(90deg,#071F3A 0%,#0B3157 52%,#0A4163 100%) !important;
+  border-bottom:3px solid #2B9DEB !important;
+  box-shadow:0 5px 18px rgba(7,31,58,.20) !important;
+  overflow:visible !important;
+}
+body:has(#loginBox:not(.hidden)) #edmsPremiumHeader .edms-header-glow,
+body:has(#loginBox:not(.hidden)) #edmsPremiumHeader:before{display:none !important;}
+body:has(#loginBox:not(.hidden)) #edmsPremiumHeader .edms-header-inner{
+  max-width:1500px !important;
+  height:100% !important;
+  padding:0 30px !important;
+  gap:24px !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:space-between !important;
+}
+/* Brand: replace the old ▱◆ glyph treatment with a crisp document mark. */
+body:has(#loginBox:not(.hidden)) #edmsPremiumHeader .edms-brand-block{
+  display:flex !important;
+  align-items:center !important;
+  gap:14px !important;
+  min-width:270px !important;
+  flex:0 0 auto !important;
+  padding:0 !important;
+  border:0 !important;
+}
+body:has(#loginBox:not(.hidden)) #edmsPremiumHeader .edms-logo-mark{
+  width:58px !important;
+  height:62px !important;
+  flex:0 0 58px !important;
+  border:1px solid rgba(255,255,255,.25) !important;
+  border-radius:13px !important;
+  background:#FFFFFF !important;
+  box-shadow:0 5px 14px rgba(0,0,0,.18) !important;
+  overflow:hidden !important;
+  position:relative !important;
+}
+body:has(#loginBox:not(.hidden)) #edmsPremiumHeader .edms-logo-paper,
+body:has(#loginBox:not(.hidden)) #edmsPremiumHeader .edms-logo-fold{display:none !important;}
+body:has(#loginBox:not(.hidden)) #edmsPremiumHeader .edms-logo-mark:before{
+  content:"" !important;
+  position:absolute !important;
+  width:30px !important;
+  height:38px !important;
+  left:13px !important;
+  top:10px !important;
+  border:3px solid #0B4D80 !important;
+  border-radius:3px !important;
+  background:#F7FBFF !important;
+  box-sizing:border-box !important;
+}
+body:has(#loginBox:not(.hidden)) #edmsPremiumHeader .edms-logo-mark:after{
+  content:"" !important;
+  position:absolute !important;
+  width:12px !important;
+  height:12px !important;
+  left:29px !important;
+  top:10px !important;
+  background:#FFFFFF !important;
+  border-left:3px solid #0B4D80 !important;
+  border-bottom:3px solid #0B4D80 !important;
+  transform:skew(-28deg) !important;
+}
+body:has(#loginBox:not(.hidden)) #edmsPremiumHeader .edms-brand-copy{
+  display:flex !important;
+  flex-direction:column !important;
+  justify-content:center !important;
+  gap:2px !important;
+  min-width:0 !important;
+}
+body:has(#loginBox:not(.hidden)) #edmsPremiumHeader .edms-brand-line{display:block !important;}
+body:has(#loginBox:not(.hidden)) #edmsPremiumHeader .edms-wordmark{
+  font-family:'Inter','Arial',sans-serif !important;
+  font-size:40px !important;
+  line-height:.95 !important;
+  font-weight:900 !important;
+  letter-spacing:.04em !important;
+  color:#FFFFFF !important;
+}
+body:has(#loginBox:not(.hidden)) #edmsPremiumHeader .edms-wordmark strong{color:#55B9FF !important;}
+body:has(#loginBox:not(.hidden)) #edmsPremiumHeader .edms-platform-name{
+  display:block !important;
+  margin-top:4px !important;
+  font-family:'Inter','Arial',sans-serif !important;
+  font-size:13px !important;
+  line-height:1.1 !important;
+  font-weight:800 !important;
+  letter-spacing:.15em !important;
+  color:#DDEEFF !important;
+}
+body:has(#loginBox:not(.hidden)) #edmsPremiumHeader .edms-en-name{
+  display:block !important;
+  margin-top:2px !important;
+  font-size:9px !important;
+  line-height:1.1 !important;
+  letter-spacing:.05em !important;
+  color:#9FC2DF !important;
+}
+/* Public-entry title in the center */
+body:has(#loginBox:not(.hidden)) #edmsPremiumHeader #headerSecureTitle{
+  display:block !important;
+  position:static !important;
+  order:2 !important;
+  flex:1 1 auto !important;
+  min-width:220px !important;
+  max-width:520px !important;
+  padding:12px 24px !important;
+  border-inline:1px solid rgba(255,255,255,.16) !important;
+  text-align:center !important;
+  color:#FFFFFF !important;
+  font-family:'Cairo','Tahoma','Arial',sans-serif !important;
+  font-size:19px !important;
+  line-height:1.55 !important;
+  font-weight:800 !important;
+  white-space:normal !important;
+}
+body:has(#loginBox:not(.hidden)) #edmsPremiumHeader .edms-header-actions{
+  order:3 !important;
+  flex:0 0 auto !important;
+  display:flex !important;
+  align-items:center !important;
+  min-width:auto !important;
+}
+body:has(#loginBox:not(.hidden)) #edmsPremiumHeader .edms-header-user-tools{display:none !important;}
+body:has(#loginBox:not(.hidden)) #edmsPremiumHeader .edms-login-language{
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  margin:0 !important;
+  padding:4px !important;
+  height:46px !important;
+  border:1px solid rgba(255,255,255,.24) !important;
+  border-radius:11px !important;
+  background:rgba(255,255,255,.08) !important;
+}
+body:has(#loginBox:not(.hidden)) #edmsPremiumHeader .edms-lang-switch{
+  display:flex !important;
+  align-items:center !important;
+  gap:3px !important;
+  padding:0 !important;
+  background:transparent !important;
+  border:0 !important;
+}
+body:has(#loginBox:not(.hidden)) #edmsPremiumHeader .edms-lang-switch button{
+  height:36px !important;
+  min-width:48px !important;
+  padding:0 12px !important;
+  border:0 !important;
+  border-radius:8px !important;
+  color:#DCEBFA !important;
+  background:transparent !important;
+  font-family:'Cairo','Arial',sans-serif !important;
+  font-size:12px !important;
+  font-weight:800 !important;
+}
+body:has(#loginBox:not(.hidden)) #edmsPremiumHeader .edms-lang-switch button.active{
+  background:#FFFFFF !important;
+  color:#0A3760 !important;
+  box-shadow:0 2px 7px rgba(0,0,0,.16) !important;
+}
+/* RTL: brand on the right, title centered, language on the left. */
+html[dir="rtl"] body:has(#loginBox:not(.hidden)) #edmsPremiumHeader .edms-brand-block{order:3 !important;}
+html[dir="rtl"] body:has(#loginBox:not(.hidden)) #edmsPremiumHeader #headerSecureTitle{order:2 !important;}
+html[dir="rtl"] body:has(#loginBox:not(.hidden)) #edmsPremiumHeader .edms-header-actions{order:1 !important;}
+@media(max-width:900px){
+  body:has(#loginBox:not(.hidden)) #edmsPremiumHeader{height:auto !important;min-height:78px !important;}
+  body:has(#loginBox:not(.hidden)) #edmsPremiumHeader .edms-header-inner{padding:10px 16px !important;gap:10px !important;}
+  body:has(#loginBox:not(.hidden)) #edmsPremiumHeader .edms-logo-mark{width:46px !important;height:50px !important;flex-basis:46px !important;}
+  body:has(#loginBox:not(.hidden)) #edmsPremiumHeader .edms-logo-mark:before{left:10px !important;top:8px !important;transform:scale(.8) !important;transform-origin:top left !important;}
+  body:has(#loginBox:not(.hidden)) #edmsPremiumHeader .edms-logo-mark:after{display:none !important;}
+  body:has(#loginBox:not(.hidden)) #edmsPremiumHeader .edms-wordmark{font-size:29px !important;}
+  body:has(#loginBox:not(.hidden)) #edmsPremiumHeader .edms-platform-name{font-size:10px !important;}
+  body:has(#loginBox:not(.hidden)) #edmsPremiumHeader .edms-en-name{display:none !important;}
+  body:has(#loginBox:not(.hidden)) #edmsPremiumHeader #headerSecureTitle{font-size:14px !important;padding:6px 10px !important;min-width:0 !important;}
+  body:has(#loginBox:not(.hidden)) #edmsPremiumHeader .edms-brand-block{min-width:0 !important;}
+}
+@media(max-width:620px){
+  body:has(#loginBox:not(.hidden)) #edmsPremiumHeader #headerSecureTitle{display:none !important;}
+  body:has(#loginBox:not(.hidden)) #edmsPremiumHeader .edms-header-inner{justify-content:space-between !important;}
+}
+</style>
+
 </body>
 
 <style id="edms-v40-header-definitive">
@@ -5191,6 +5950,97 @@ body:not(.edms-login-active) #edmsPremiumHeader .edms-header-login-title{display
   .ba-flow-line,.ba-flow-arrow{display:none !important;}
 }
 </style>
+
+<style id="stage1-clear-contrast">
+/* Stage 1 visual clarity — stronger contrast, clean white surfaces, no content/function changes. */
+:root{
+  --bg:#F3F6FA !important;
+  --surface:#FFFFFF !important;
+  --border:#D5DEE8 !important;
+  --text-primary:#13263A !important;
+  --text-secondary:#526579 !important;
+}
+body{background:#F3F6FA !important;color:#13263A !important;}
+body,[class*="text-slate"],.text-gray-500,.text-gray-600,.text-gray-700{color:inherit;}
+[dir="rtl"] body{font-family:Cairo,Inter,Arial,sans-serif !important;}
+[dir="ltr"] body{font-family:Inter,Cairo,Arial,sans-serif !important;}
+
+/* Main surfaces */
+.card,#dashboardView > .card,#kpiChartsRow .card,#statusFiltersWrap,
+.ba-v60-workflow,.modal-content,.dropdown-menu,[role="dialog"] .card{
+  background:#fff !important;
+  border-color:#D5DEE8 !important;
+  box-shadow:0 5px 18px rgba(15,35,55,.075) !important;
+}
+
+/* Header / page titles */
+#dashboardView h1,#dashboardView h2,#dashboardView h3,#dashboardView h4,
+#dashboardView .font-semibold,#dashboardView .font-bold{color:#13263A !important;}
+#dashboardView p,.text-slate-500,.text-slate-600,.text-gray-500,.text-gray-600{color:#526579 !important;}
+
+/* KPI cards: crisp numbers and labels */
+#statsRow .stats-card{
+  background:#fff !important;
+  border:1px solid #CFDAE5 !important;
+  box-shadow:0 5px 16px rgba(15,35,55,.075) !important;
+}
+#statsRow .stats-card .text-2xl{color:#102A43 !important;text-shadow:none !important;}
+#statsRow .stats-card .text-xs{color:#435A70 !important;letter-spacing:.05px !important;}
+
+/* Controls and tabs */
+button,.btn-primary,.seg-btn,.cat-btn,.nav-view-btn{font-weight:750 !important;}
+.seg-btn,.cat-btn,.nav-view-btn{
+  color:#334E68 !important;border-color:#CFDAE5 !important;background:#F8FAFC !important;
+}
+.seg-btn:hover,.cat-btn:hover,.nav-view-btn:hover{background:#EEF3F8 !important;color:#102A43 !important;}
+.seg-btn.active,.cat-btn.active,.nav-view-btn.active,
+.seg-btn[aria-selected="true"],.nav-view-btn[aria-selected="true"]{
+  color:#fff !important;background:#123B63 !important;border-color:#123B63 !important;
+  box-shadow:0 3px 10px rgba(18,59,99,.20) !important;
+}
+input,select,textarea{
+  background:#fff !important;color:#172B3D !important;border-color:#C9D5E1 !important;
+}
+input::placeholder,textarea::placeholder{color:#718397 !important;opacity:1 !important;}
+input:focus,select:focus,textarea:focus{border-color:#2563EB !important;box-shadow:0 0 0 3px rgba(37,99,235,.11) !important;}
+
+/* Charts */
+#kpiChartsRow .card{border:1px solid #D5DEE8 !important;}
+#kpiChartsRow h4{color:#203B55 !important;}
+.kpi-bar-label,.kpi-donut-legend{color:#435A70 !important;}
+.kpi-bar-track{background:#E6EDF4 !important;border:1px solid #D9E2EB !important;}
+
+/* Alerts: visible without becoming loud */
+#actionAlert,#dueSoonBanner,#overdueBanner,#directionBanner{border-color:#D2DCE6 !important;box-shadow:0 4px 12px rgba(15,35,55,.055) !important;}
+
+/* Date/time */
+#liveClock{background:#fff !important;border:1px solid #CFDAE5 !important;box-shadow:0 4px 12px rgba(15,35,55,.07) !important;}
+#liveClockDate{color:#526579 !important;}
+#liveClockTime{color:#123B63 !important;}
+
+/* Table readability */
+table thead th{background:#EEF3F7 !important;color:#29445E !important;border-bottom-color:#CBD7E2 !important;font-weight:800 !important;}
+table tbody td{color:#243B53 !important;border-bottom-color:#E1E8EF !important;}
+table tbody tr:hover{background:#F7FAFC !important;}
+
+/* Workflow: clear white canvas, dark text, one green active stage. */
+.ba-v60-workflow{background:#fff !important;border:1px solid #D2DDE7 !important;}
+.ba-v60-title{color:#163A59 !important;font-weight:850 !important;}
+.ba-v60-sub{color:#5A6F82 !important;}
+.ba-v60-button{border-color:#C7D4E0 !important;background:#FAFCFE !important;}
+.ba-v60-stage:not(.current) .ba-v60-button .title{color:#263F59 !important;font-weight:800 !important;}
+.ba-v60-stage:not(.current) .ba-v60-button .detail,.ba-v60-stage:not(.current) .ba-v60-button .date{color:#64798D !important;}
+.ba-v60-connector{background:#9AAFC2 !important;box-shadow:none !important;}
+.ba-v60-stage.current .ba-v60-button{background:#F1FBF5 !important;border-color:#1F9D57 !important;}
+.ba-v60-stage.current .ba-v60-button .title{color:#11663A !important;}
+.ba-v60-stage.current .ba-v60-button .detail,.ba-v60-stage.current .ba-v60-button .date{color:#397456 !important;}
+.ba-v60-legend{color:#526579 !important;}
+
+/* Avoid washed-out disabled-looking text in the dashboard. */
+#dashboardView .opacity-50{opacity:.72 !important;}
+#dashboardView .text-xs{font-weight:650;}
+</style>
+
 </html>
 
 <style id="edms-v36-large-interactive-workflow">
@@ -7578,5 +8428,95 @@ body:has(#loginBox:not(.hidden)) #loginLangSwitch{display:none !important;}
   var previous=window.openCorrespondenceDetails;
   if(typeof previous==='function')window.openCorrespondenceDetails=function(id){var r=previous.apply(this,arguments);setTimeout(function(){render(id);},60);return r;};
   document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('.ba-v60-button');if(b){document.querySelectorAll('.ba-v60-button').forEach(function(x){x.classList.remove('selected');});b.classList.add('selected');}});
+})();
+</script>
+
+<style id="edms-final-header-fix-v2">
+/* Final focused header correction: clarity + compact layout, no functional changes. */
+.edms-premium-header{height:86px !important;overflow:visible !important;}
+.edms-premium-header:before,.edms-header-glow{display:none !important;}
+.edms-header-inner{max-width:none !important;width:100% !important;box-sizing:border-box !important;padding:0 18px !important;gap:12px !important;}
+.edms-brand-block{min-width:205px !important;max-width:235px !important;flex:0 0 225px !important;}
+.edms-brand-copy{min-width:0 !important;}
+.edms-header-actions{flex:1 1 auto !important;min-width:0 !important;}
+.edms-header-user-tools{width:100% !important;min-width:0 !important;}
+.edms-header-tools{width:100% !important;display:flex !important;align-items:center !important;justify-content:flex-start !important;gap:7px !important;min-width:0 !important;}
+.edms-search-wrap{flex:1 1 220px !important;width:220px !important;min-width:190px !important;max-width:255px !important;}
+.edms-search-input{height:42px !important;background:#FFFFFF !important;color:#102A43 !important;border:1px solid #B9C8D8 !important;box-shadow:0 1px 3px rgba(15,44,82,.12) !important;backdrop-filter:none !important;-webkit-backdrop-filter:none !important;font-size:12px !important;font-weight:800 !important;}
+.edms-search-input::placeholder{color:#50657A !important;opacity:1 !important;font-weight:700 !important;}
+.edms-search-icon{color:#123B63 !important;}
+
+/* Compact clock: two clear lines prevent clipping in Arabic. */
+#liveClock{display:flex !important;flex:0 0 205px !important;width:205px !important;min-width:205px !important;height:50px !important;box-sizing:border-box !important;flex-direction:column !important;align-items:center !important;justify-content:center !important;gap:1px !important;padding:4px 8px !important;background:#123B63 !important;color:#FFFFFF !important;border:1px solid #2B6698 !important;border-radius:10px !important;box-shadow:0 2px 7px rgba(15,44,82,.16) !important;overflow:hidden !important;backdrop-filter:none !important;-webkit-backdrop-filter:none !important;}
+#liveClock .edms-clock-icon{display:none !important;}
+#liveClock .edms-dot{display:none !important;}
+#liveClockDate,#liveClockTime{display:block !important;max-width:100% !important;overflow:hidden !important;text-overflow:ellipsis !important;white-space:nowrap !important;color:#FFFFFF !important;opacity:1 !important;text-shadow:none !important;line-height:1.25 !important;}
+#liveClockDate{font-family:'Cairo','Tahoma','Arial',sans-serif !important;font-size:11.5px !important;font-weight:800 !important;}
+#liveClockTime{font-family:'IBM Plex Mono','Cairo',monospace !important;font-size:13px !important;font-weight:900 !important;letter-spacing:.02em !important;}
+
+.edms-role-chip{flex:0 0 105px !important;width:105px !important;min-width:105px !important;height:42px !important;justify-content:center !important;padding:0 8px !important;background:#173F73 !important;border:1px solid #2B6698 !important;color:#FFFFFF !important;overflow:hidden !important;}
+.edms-role-chip #userRoleBadge{color:#FFFFFF !important;font-family:'Cairo','Tahoma','Arial',sans-serif !important;font-size:12px !important;font-weight:900 !important;white-space:nowrap !important;}
+.edms-role-chip #userNameBadge{display:none !important;}
+
+/* Save / Load become compact icon buttons to free header width. */
+.edms-header-tools > #saveDataBtn,.edms-header-tools > #loadDataBtn{flex:0 0 42px !important;width:42px !important;min-width:42px !important;height:42px !important;padding:0 !important;justify-content:center !important;font-size:16px !important;background:#FFFFFF !important;color:#123B63 !important;border:1px solid #D4DFEA !important;box-shadow:0 1px 3px rgba(15,44,82,.10) !important;}
+.edms-header-tools > #saveDataBtn span,.edms-header-tools > #loadDataBtn span{display:none !important;}
+.edms-header-tools > #saveDataBtn,.edms-header-tools > #loadDataBtn{font-family:Arial,sans-serif !important;}
+
+#openAddModal{display:inline-flex !important;align-items:center !important;justify-content:center !important;gap:8px !important;min-width:138px !important;height:46px !important;padding:0 18px !important;background:#0B2F5B !important;background-image:none !important;border:1px solid #0B2F5B !important;border-radius:10px !important;color:#FFFFFF !important;-webkit-text-fill-color:#FFFFFF !important;font-family:'Cairo','Tahoma','Arial',sans-serif !important;font-size:14px !important;font-weight:900 !important;line-height:1 !important;opacity:1 !important;box-shadow:0 3px 9px rgba(11,47,91,.16) !important;}
+#openAddModal::first-line,#openAddModal *{color:#FFFFFF !important;-webkit-text-fill-color:#FFFFFF !important;fill:#FFFFFF !important;stroke:#FFFFFF !important;opacity:1 !important;}
+#openAddModal:hover{background:#123D6A !important;border-color:#123D6A !important;}
+#openAddModal svg{width:18px !important;height:18px !important;stroke:#FFFFFF !important;}
+
+/* Avoid expensive visual effects in the main header. */
+.edms-tool-chip,.edms-tool-btn,.edms-search-input{backdrop-filter:none !important;-webkit-backdrop-filter:none !important;}
+.edms-tool-btn,.header-platform-intro-btn{transition:none !important;}
+
+@media(max-width:1320px){
+  .edms-brand-block{flex-basis:190px !important;min-width:185px !important;max-width:200px !important;}
+  .edms-search-wrap{flex-basis:200px !important;min-width:175px !important;max-width:220px !important;}
+  #liveClock{flex-basis:190px !important;width:190px !important;min-width:190px !important;}
+  .edms-role-chip{flex-basis:95px !important;width:95px !important;min-width:95px !important;}
+}
+@media(max-width:1050px){
+  .edms-brand-block{flex-basis:165px !important;min-width:160px !important;}
+  .edms-search-wrap{min-width:160px !important;max-width:190px !important;}
+  #liveClock{flex-basis:175px !important;width:175px !important;min-width:175px !important;}
+  .edms-role-chip{display:none !important;}
+  .edms-header-tools{gap:5px !important;}
+}
+</style>
+
+<script id="edms-final-clock-text-fix-v3">
+(function(){
+  // Single clock owner: prevents competing timers/locales from making the clock flicker.
+  try{ if(window.__baClockInterval) clearInterval(window.__baClockInterval); }catch(e){}
+  if(window.__baClockInterval2) try{ clearInterval(window.__baClockInterval2); }catch(e){}
+
+  function updateLockedClock(){
+    var dateEl=document.getElementById('liveClockDate');
+    var timeEl=document.getElementById('liveClockTime');
+    if(!dateEl || !timeEl) return;
+    var isArabic = window.BA_LANG === 'ar';
+    var locale = isArabic ? 'ar-SA-u-nu-latn' : 'en-US';
+    var now = new Date();
+    try{
+      dateEl.textContent = now.toLocaleDateString(locale, {
+        weekday:'long', day:'numeric', month:'long', year:'numeric'
+      });
+      timeEl.textContent = now.toLocaleTimeString(locale, {
+        hour:'2-digit', minute:'2-digit', second:'2-digit', hour12:true
+      });
+    }catch(e){
+      dateEl.textContent = now.toLocaleDateString(isArabic?'ar-SA':'en-US');
+      timeEl.textContent = now.toLocaleTimeString(isArabic?'ar-SA':'en-US');
+    }
+  }
+
+  updateLockedClock();
+  window.__baClockInterval2 = setInterval(updateLockedClock,1000);
+  window.__baUpdateClock = updateLockedClock;
+  window.addEventListener('languagechange',updateLockedClock);
+  document.addEventListener('visibilitychange',function(){ if(!document.hidden) updateLockedClock(); });
 })();
 </script>
